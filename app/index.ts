@@ -1,19 +1,19 @@
-import "reflect-metadata";
+import 'reflect-metadata';
 
+import * as HapiSwagger from 'hapi-swagger';
 import * as Inert from 'inert';
 import * as Vision from 'vision';
-import * as HapiSwagger from 'hapi-swagger';
 
-import { server } from "./server";
-import { db } from "./db";
+import { db } from './db';
+import { server } from './server';
 
-import * as pgk from '../package.json'
 import * as Hapi from 'hapi';
+import * as pgk from '../package.json';
 
 const swaggerOptions = {
   info: {
-    version: (<any>pgk).version as string
-  }
+    version: (pgk as any).version as string,
+  },
 };
 
 db.then(() => {
@@ -21,9 +21,9 @@ db.then(() => {
     Inert as Hapi.PluginFunction<{}>,
     Vision as Hapi.PluginFunction<{}>,
     {
+      options: swaggerOptions,
       register: HapiSwagger,
-      options: swaggerOptions
-    }
+    },
   ], () => {
     server.start((err) => {
       if (err) {
@@ -31,6 +31,5 @@ db.then(() => {
       }
       console.log(`Server running at: ${server.info!.uri}`);
     });
-  })
-}).catch(err => console.error(err))
-
+  });
+}).catch((err) => console.error(err));

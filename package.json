@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js --ext js,ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tslint -p ./tsconfig.json --type-check"
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +27,7 @@
     "@types/inert": "4.2.3",
     "@types/node": "8.0.44",
     "@types/vision": "4.1.2",
-    "nodemon": "1.12.1"
+    "nodemon": "1.12.1",
+    "tslint": "5.7.0"
   }
 }

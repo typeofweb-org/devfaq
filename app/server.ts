@@ -7,9 +7,9 @@ server.connection({ port: 3000, host: 'localhost' });
 server.route({
   method: 'GET',
   path: '/',
-  handler: function (_request, reply) {
+  handler(_request, reply) {
     reply('Hello, world!');
-  }
+  },
 });
 
-export { server }
+export { server };
