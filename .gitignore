@@ -3,6 +3,7 @@ config/database.json
 .tmp
 .idea
 .DS_Store
+fefaq.sqlite
 
 
 # Logs

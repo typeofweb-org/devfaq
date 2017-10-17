@@ -4,20 +4,29 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "start": "nodemon server.js --ext js,ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "boom": "6.0.0",
     "hapi": "16.6.2",
+    "hapi-swagger": "7.8.1",
+    "inert": "4.2.1",
     "reflect-metadata": "0.1.10",
     "sqlite3": "3.1.13",
     "ts-node": "3.3.0",
     "typeorm": "0.1.1",
-    "typescript": "2.5.3"
+    "typescript": "2.5.3",
+    "vision": "4.1.1"
   },
   "devDependencies": {
+    "@types/boom": "4.3.7",
     "@types/hapi": "16.1.10",
-    "@types/node": "8.0.44"
+    "@types/inert": "4.2.3",
+    "@types/node": "8.0.44",
+    "@types/vision": "4.1.2",
+    "nodemon": "1.12.1"
   }
 }
