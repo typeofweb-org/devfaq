@@ -1,0 +1,8 @@
+{
+  "ignore": [
+    "./app/validation-schema-types"
+  ],
+  "events": {
+    "restart": "npm run prestart"
+  }
+}

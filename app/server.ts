@@ -4,6 +4,7 @@ import * as Inert from 'inert';
 import * as Vision from 'vision';
 import * as pgk from '../package.json';
 
+import { authRoutes } from './modules/tokens/tokens.routes';
 import { auth } from './plugins/auth';
 
 const swaggerOptions = {
@@ -14,7 +15,11 @@ const swaggerOptions = {
 
 const server = new Hapi.Server();
 
-server.connection({ port: 3000, host: 'localhost' });
+server.connection({
+  port: 3000,
+  host: 'localhost',
+  routes: { cors: true },
+});
 
 const serverPromise = new Promise<Hapi.Server>((resolve, reject) => {
   server.register([
@@ -29,6 +34,17 @@ const serverPromise = new Promise<Hapi.Server>((resolve, reject) => {
     if (err) {
       return reject(err);
     }
+
+    server.ext('onPreResponse', (request, reply) => {
+      if (request.response && request.response.output && request.response.output.statusCode === 500) {
+        const e = request.response as Hapi.Response & { stack: string };
+        console.error(new Date(), e.name, e.message, e.stack);
+
+        return reply(new Error('Internal server error'));
+      }
+
+      return reply.continue();
+    });
 
     server.route({
       config: {
@@ -54,6 +70,10 @@ const serverPromise = new Promise<Hapi.Server>((resolve, reject) => {
       method: 'GET',
       path: '/no',
     });
+
+    server.route(
+      authRoutes,
+    );
 
     return resolve(server);
   });

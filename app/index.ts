@@ -11,19 +11,16 @@ const init = async () => {
   const server = await serverPromise;
   await server.start();
 
-  console.log(UserService);
   const userService = Container.get(UserService);
-  // const userService = getCustomRepository(UserService);
-  await userService.repository.clear();
+  await userService.removeAll();
 
-  const user = userService.repository.create({
+  const user = await userService.addNew({
     emailAddress: 'michal@miszczyszyn.com',
     password: 'qwerty123',
   });
-  await userService.repository.save(user);
 
-  const users = await userService.repository.find();
-  console.log(users);
+  const users = await userService.findAll();
+  console.log(user, users);
 
   return server;
 };
