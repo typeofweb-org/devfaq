@@ -5,15 +5,19 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js --ext js,ts",
-    "test": "tslint -p ./tsconfig.json --type-check"
+    "test": "tslint -p ./tsconfig.json --type-check --fix"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "3.5.1",
     "boom": "6.0.0",
     "hapi": "16.6.2",
+    "hapi-auth-jwt2": "7.3.0",
     "hapi-swagger": "7.8.1",
     "inert": "4.2.1",
+    "joi": "13.0.0",
+    "jsonwebtoken": "8.1.0",
     "reflect-metadata": "0.1.10",
     "sqlite3": "3.1.13",
     "ts-node": "3.3.0",
@@ -22,9 +26,14 @@
     "vision": "4.1.1"
   },
   "devDependencies": {
+    "@types/bluebird": "3.5.16",
+    "@types/bluebird-global": "3.5.3",
     "@types/boom": "4.3.7",
     "@types/hapi": "16.1.10",
+    "@types/hapi-auth-jwt2": "7.0.5",
     "@types/inert": "4.2.3",
+    "@types/joi": "10.4.4",
+    "@types/jsonwebtoken": "7.2.3",
     "@types/node": "8.0.44",
     "@types/vision": "4.1.2",
     "nodemon": "1.12.1",

@@ -6,6 +6,7 @@ const db = createConnection().then(async (connection) => {
     const user = new User();
     user.firstName = 'Timber';
     user.lastName = 'Saw';
+    // tslint:disable-next-line
     user.age = 25;
     await connection.manager.save(user);
     console.log('Saved a new user with id: ' + user.id);

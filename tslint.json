@@ -10,16 +10,27 @@
             "single",
             "avoid-escape"
         ],
-        "no-console": [
-            false
-        ],
+        "no-console": false,
         "variable-name": [
             true,
             "ban-keywords",
             "check-format",
             "allow-leading-underscore",
             "allow-pascal-case"
+        ],
+        "no-floating-promises": true,
+        "return-undefined": true,
+        "no-unnecessary-type-assertion": true,
+        "no-unnecessary-callback-wrapper": true,
+        "only-arrow-functions": true,
+        "arrow-parens": true,
+        "arrow-return-shorthand": true,
+        "no-magic-numbers": true,
+        "interface-name": [
+            true,
+            "never-prefix"
         ]
     },
-    "rulesDirectory": []
+    "rulesDirectory": [],
+    "autoFixOnSave": true
 }
