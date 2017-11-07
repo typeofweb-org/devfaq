@@ -10,10 +10,5 @@ export const CreateTokenRequestSchema = {
 };
 
 export const CreateTokenResponseSchema = Joi.object().keys({
-  token: Joi.string().required(),
-  user: Joi.object().required().keys({
-    id: Joi.number().required(),
-    email: Joi.string().email().required(),
-    role: Joi.string().required(),
-  }).notes('type:UserToken'),
+  token: Joi.string().required().description(`JWT – split by <code>.</code> and base64 decode`)
 });

@@ -11,6 +11,7 @@ const swaggerOptions = {
   info: {
     version: (pgk as any).version as string,
   },
+  auth: false
 };
 
 const server = new Hapi.Server();

@@ -9,11 +9,4 @@ export interface CreateTokenRequestPayload {
 // Unknown type: CreateTokenRequest ([object Object])}
 export interface CreateTokenResponse {
   token: string;
-  user: UserToken;
-}
-
-export interface UserToken {
-  id: number;
-  email: string;
-  role: string;
 }

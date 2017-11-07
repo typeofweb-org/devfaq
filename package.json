@@ -17,7 +17,7 @@
     "boom": "6.0.0",
     "hapi": "16.6.2",
     "hapi-auth-jwt2": "7.3.0",
-    "hapi-swagger": "7.8.1",
+    "hapi-swagger": "8.0.0",
     "inert": "4.2.1",
     "joi": "13.0.0",
     "jsonwebtoken": "8.1.0",
@@ -44,7 +44,7 @@
     "@types/vision": "4.1.2",
     "nodemon": "1.12.1",
     "tslint": "5.7.0",
-    "typescript": "2.5.3"
+    "typescript": "2.6.1"
   },
   "joiTsGenerator": {
     "input": "./app/modules/tokens/tokens.schema.ts",

@@ -2,7 +2,7 @@ import * as Hapi from 'hapi';
 import * as HapiAuthJwt from 'hapi-auth-jwt2';
 
 // tslint:disable-next-line:no-empty-interface
-interface AuthPluginOptions { }
+export interface AuthPluginOptions { }
 
 export interface AuthInfo {
   id: string;

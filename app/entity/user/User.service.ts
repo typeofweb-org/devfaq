@@ -23,32 +23,15 @@ export class UserService {
     return this.repository.find();
   }
 
-  // public async verifyCredentials(emailAddress: string, password: string): Promise<UserEntity> {
-  //   const user = await this.repository.findOne({ emailAddress });
-  //   if (!user) {
-  //     throw new UserNotFound();
-  //   }
-
-  //   const comparison = await bcrypt.compare(password, user.password);
-  //   if (!comparison) {
-  //     throw new UserIncorrectPassword();
-  //   }
-
-  //   return user;
-  // }
-
-  public verifyCredentials(emailAddress: string, password: string): Promise<UserEntity> {
-    return this.repository.findOne({ emailAddress })
-      .then<UserEntity>((user) => {
-        if (!user) {
-          throw new UserNotFound();
-        }
-        return bcrypt.compare(password, user.password).then((comparison) => {
-          if (!comparison) {
-            throw new UserIncorrectPassword();
-          }
-          return user;
-        });
-      });
+  public async verifyCredentials(emailAddress: string, password: string): Promise<UserEntity> {
+    const user = await this.repository.findOne({ emailAddress });
+    if (!user) {
+      throw new UserNotFound();
+    }
+    const comparison = await bcrypt.compare(password, user.password);
+    if (!comparison) {
+      throw new UserIncorrectPassword();
+    }
+    return user;
   }
 }

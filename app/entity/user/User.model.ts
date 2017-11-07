@@ -8,6 +8,7 @@ export type UserRoles = 'admin' | 'user';
 export class UserEntity extends AbstractEntity {
     @Column({
         unique: true,
+        nullable: false,
     }) public emailAddress: string;
 
     @Column() public password: string;
@@ -23,8 +24,7 @@ export class UserEntity extends AbstractEntity {
 
     @BeforeInsert()
     public async hashPassword() {
-        return encryptionService
-            .hash(this.password)
-            .then((hash) => this.password = hash);
+        const hash = await encryptionService.hash(this.password);
+        this.password = hash;
     }
 }
