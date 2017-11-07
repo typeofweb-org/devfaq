@@ -17,7 +17,7 @@ const createToken = (user: UserEntity): string => {
       id: user.id,
       role: user.role,
     },
-    'NeverShareYourSecret', // @todo
+    String(process.env.JWT_SECRET),
     { algorithm: 'HS256', expiresIn: '1h' }
   );
 };

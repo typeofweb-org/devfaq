@@ -15,6 +15,7 @@
     "bcrypt": "1.0.3",
     "bluebird": "3.5.1",
     "boom": "6.0.0",
+    "dotenv": "4.0.0",
     "hapi": "16.6.2",
     "hapi-auth-jwt2": "7.3.0",
     "hapi-swagger": "8.0.0",

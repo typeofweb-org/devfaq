@@ -18,7 +18,7 @@ const validate = (decoded: AuthInfo, _request: Hapi.Request, callback: Hapi.Serv
 
 const after = (server: Hapi.Server) => {
   server.auth.strategy('jwt', 'jwt', {
-    key: 'NeverShareYourSecret', // @todo
+    key: String(process.env.JWT_SECRET),
     tokenType: 'Bearer',
     urlKey: false,
     validateFunc: validate,
