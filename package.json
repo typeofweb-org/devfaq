@@ -44,11 +44,12 @@
     "@types/node": "8.0.44",
     "@types/vision": "4.1.2",
     "nodemon": "1.12.1",
+    "require-glob": "3.2.0",
     "tslint": "5.7.0",
     "typescript": "2.6.1"
   },
   "joiTsGenerator": {
-    "input": "./app/modules/tokens/tokens.schema.ts",
+    "input": "./allschemas.ts",
     "nullableMode": "nullable",
     "outputs": {
       "library": "./app/validation-schema-types/library.ts",
