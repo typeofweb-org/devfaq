@@ -1,3 +1,5 @@
+// @todo
+// hack
 const requireGlob = require('require-glob');
 
 const newExports = requireGlob.sync('./app/modules/**/*.schema.ts');
