@@ -26,5 +26,8 @@ const init = async () => {
 };
 
 init()
-  .then((server) => console.log(`Server running at: ${server.info!.uri}`))
+  .then((server) => {
+    console.log(`Server running at: ${server.info!.uri}`)
+    console.log(server.info);
+  })
   .catch((err) => console.error(err));

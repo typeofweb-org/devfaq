@@ -24,7 +24,6 @@ export class UserEntity extends AbstractEntity {
 
     @BeforeInsert()
     public async hashPassword() {
-        const hash = await encryptionService.hash(this.password);
-        this.password = hash;
+        this.password = await encryptionService.hash(this.password);
     }
 }

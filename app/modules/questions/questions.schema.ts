@@ -1,6 +1,6 @@
 import * as Joi from 'joi';
 
-export const QuestionCategory = Joi.string().allow('html', 'css', 'js').required();
+export const QuestionCategory = Joi.string().allow().required();
 
 export const GetQuestionsRequestQuerySchema = Joi.object().keys({
   category: Joi.string().required()

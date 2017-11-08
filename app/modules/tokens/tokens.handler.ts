@@ -1,26 +1,14 @@
 import * as Boom from 'boom';
 import * as Hapi from 'hapi';
-import * as Jwt from 'jsonwebtoken';
 import { Container } from 'typedi';
-import { UserEntity } from '../../entity/user/User.model';
 import { UserService } from '../../entity/user/User.service';
 import { UserIncorrectPassword, UserNotFound } from '../../exception/exceptions';
+import { encryptionService } from '../../services/encryptionService';
 import { CreateTokenRequestPayload, CreateTokenResponse } from '../../validation-schema-types/types';
 
 interface CreateTokenRequest extends Hapi.Request {
   payload: CreateTokenRequestPayload;
 }
-
-const createToken = (user: UserEntity): string => {
-  return Jwt.sign(
-    {
-      id: user.id,
-      role: user.role,
-    },
-    String(process.env.JWT_SECRET),
-    { algorithm: 'HS256', expiresIn: '1h' }
-  );
-};
 
 export const createTokenHandler: Hapi.RouteHandler = async (req: CreateTokenRequest, reply) => {
   const userService = Container.get(UserService);
@@ -35,7 +23,7 @@ export const createTokenHandler: Hapi.RouteHandler = async (req: CreateTokenRequ
       })
       .then((user) => {
         const response: CreateTokenResponse = {
-          token: createToken(user)
+          token: encryptionService.createToken(user)
         };
         return response;
       })

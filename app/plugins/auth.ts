@@ -1,5 +1,6 @@
 import * as Hapi from 'hapi';
 import * as HapiAuthJwt from 'hapi-auth-jwt2';
+import { configService } from '../services/configService';
 
 // tslint:disable-next-line:no-empty-interface
 export interface AuthPluginOptions { }
@@ -18,7 +19,7 @@ const validate = (decoded: AuthInfo, _request: Hapi.Request, callback: Hapi.Serv
 
 const after = (server: Hapi.Server) => {
   server.auth.strategy('jwt', 'jwt', {
-    key: String(process.env.JWT_SECRET),
+    key: configService.getJwtSecret(),
     tokenType: 'Bearer',
     urlKey: false,
     validateFunc: validate,

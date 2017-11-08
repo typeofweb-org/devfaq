@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js --ext js,ts",
+    "start": "nodemon -L server.js --ext js,ts",
     "test": "tslint -p ./tsconfig.json --type-check --fix",
     "prestart": "npm run joi-ts-gen",
     "joi-ts-gen": "joi-ts-gen"
@@ -22,11 +22,12 @@
     "inert": "4.2.1",
     "joi": "13.0.0",
     "jsonwebtoken": "8.1.0",
+    "pg": "7.4.0",
     "reflect-metadata": "0.1.10",
     "sqlite3": "3.1.13",
     "ts-node": "3.3.0",
     "typedi": "0.5.2",
-    "typeorm": "0.1.1",
+    "typeorm": "0.1.2",
     "typeorm-typedi-extensions": "0.1.0",
     "vision": "4.1.1"
   },
