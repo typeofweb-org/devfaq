@@ -1,5 +1,6 @@
 import * as Boom from 'boom';
 import * as Hapi from 'hapi';
+import { RequestAuthenticationInformation } from 'hapi';
 import { Container } from 'typedi';
 import { QuestionCategory, QuestionStatus } from '../../entity/question/Question.model';
 import { QuestionService } from '../../entity/question/Question.service';
@@ -21,13 +22,16 @@ interface CreateQuestionRequest extends Hapi.Request {
   payload: CreateQuestionRequestPayload;
 }
 
+const getQuestionStatusForAuth = (auth: RequestAuthenticationInformation): QuestionStatus => {
+  const user = auth.isAuthenticated ? auth.credentials as AuthInfo : null;
+  const status: QuestionStatus = (user && user.role === 'admin') ? QuestionStatus.accepted : QuestionStatus.pending;
+  return status;
+};
+
 export const createQuestionHandler: Hapi.RouteHandler = async (req: CreateQuestionRequest, reply) => {
   const questionService = Container.get(QuestionService);
 
   const { question, level, category } = req.payload;
-
-  const user = req.auth.isAuthenticated ? req.auth.credentials as AuthInfo : null;
-  const status: QuestionStatus = (user && user.role === 'admin') ? QuestionStatus.accepted : QuestionStatus.pending;
 
   const sameQuestionCount = await questionService.countByQuestion(question);
   if (sameQuestionCount > 0) {
@@ -39,7 +43,7 @@ export const createQuestionHandler: Hapi.RouteHandler = async (req: CreateQuesti
     question,
     level,
     category: category as QuestionCategory,
-    status
+    status: getQuestionStatusForAuth(req.auth)
   });
   reply(addedQuestion);
 };
