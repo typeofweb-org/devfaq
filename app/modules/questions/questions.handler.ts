@@ -24,7 +24,7 @@ interface CreateQuestionRequest extends Hapi.Request {
 
 const getQuestionStatusForAuth = (auth: RequestAuthenticationInformation): QuestionStatus => {
   const user = auth.isAuthenticated ? auth.credentials as AuthInfo : null;
-  const status: QuestionStatus = (user && user.role === 'admin') ? QuestionStatus.accepted : QuestionStatus.pending;
+  const status = (user && user.role === 'admin') ? QuestionStatus.accepted : QuestionStatus.pending;
   return status;
 };
 

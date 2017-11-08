@@ -1,8 +1,8 @@
 import * as Joi from 'joi';
 import { questionCategories, questionStatuses } from '../../entity/question/Question.model';
 
-const QuestionCategorySchema = Joi.string().valid(questionCategories);
-const QuestionStatusSchema = Joi.string().valid(questionStatuses);
+export const QuestionCategoryJoiSchema = Joi.string().valid(questionCategories);
+export const QuestionStatusJoiSchema = Joi.string().valid(questionStatuses);
 
 export const GetQuestionsRequestQuerySchema = Joi.object().keys({
   category: Joi.string().required()
@@ -15,7 +15,7 @@ export const GetQuestionsRequestSchema = {
 export const GetQuestionsResponseSchema = Joi.object().keys({
   id: Joi.number().integer().required(),
   question: Joi.string().required(),
-  category: QuestionCategorySchema.required(),
+  category: QuestionCategoryJoiSchema,
   level: Joi.string().optional(),
   answer: Joi.string().optional()
 });
@@ -23,7 +23,7 @@ export const GetQuestionsResponseSchema = Joi.object().keys({
 export const CreateQuestionRequestPayloadSchema = Joi.object().keys({
   question: Joi.string().required(),
   level: Joi.string().required(),
-  category: QuestionCategorySchema.required()
+  category: QuestionCategoryJoiSchema
 });
 
 export const CreateQuestionRequestSchema = {
@@ -33,8 +33,8 @@ export const CreateQuestionRequestSchema = {
 export const CreateQuestionResponseSchema = Joi.object().keys({
   id: Joi.number().integer().required(),
   question: Joi.string().required(),
-  category: QuestionCategorySchema.required(),
+  category: QuestionCategoryJoiSchema.required(),
   level: Joi.string().optional(),
   answer: Joi.string().optional(),
-  status: QuestionStatusSchema.required()
+  status: QuestionStatusJoiSchema.required()
 });

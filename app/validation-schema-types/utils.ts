@@ -40,3 +40,11 @@ export const GetQuestionsRequestQueryUtils = {
 export const GetQuestionsResponseUtils = {
   coerce: coerceValue<t.GetQuestionsResponse>(s.GetQuestionsResponseSchema),
 };
+
+export const QuestionCategoryJoiUtils = {
+  coerce: coerceValue<t.QuestionCategoryJoi>(s.QuestionCategoryJoiSchema),
+};
+
+export const QuestionStatusJoiUtils = {
+  coerce: coerceValue<t.QuestionStatusJoi>(s.QuestionStatusJoiSchema),
+};
