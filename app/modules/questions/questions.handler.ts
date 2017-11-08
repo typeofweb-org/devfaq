@@ -26,7 +26,7 @@ export const createQuestionHandler: Hapi.RouteHandler = async (req: CreateQuesti
 
   const { question, level, category } = req.payload;
 
-  const user: AuthInfo = req.auth.credentials;
+  const user = req.auth.isAuthenticated ? req.auth.credentials as AuthInfo : null;
   const status: QuestionStatus = (user && user.role === 'admin') ? QuestionStatus.accepted : QuestionStatus.pending;
 
   const sameQuestionCount = await questionService.countByQuestion(question);
