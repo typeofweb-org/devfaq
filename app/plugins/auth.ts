@@ -1,12 +1,14 @@
 import * as Hapi from 'hapi';
 import * as HapiAuthJwt from 'hapi-auth-jwt2';
+import { UserRoles } from '../entity/user/User.model';
 import { configService } from '../services/configService';
 
 // tslint:disable-next-line:no-empty-interface
 export interface AuthPluginOptions { }
 
 export interface AuthInfo {
-  id: string;
+  id: number;
+  role: UserRoles;
 }
 
 const validate = (decoded: AuthInfo, _request: Hapi.Request, callback: Hapi.ServerMethodNext) => {

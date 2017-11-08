@@ -9,8 +9,8 @@ export const CreateQuestionRequestUtils = {
   coerce: coerceValue<t.CreateQuestionRequest>(s.CreateQuestionRequestSchema),
 };
 
-export const CreateQuestionRequestQueryUtils = {
-  coerce: coerceValue<t.CreateQuestionRequestQuery>(s.CreateQuestionRequestQuerySchema),
+export const CreateQuestionRequestPayloadUtils = {
+  coerce: coerceValue<t.CreateQuestionRequestPayload>(s.CreateQuestionRequestPayloadSchema),
 };
 
 export const CreateQuestionResponseUtils = {

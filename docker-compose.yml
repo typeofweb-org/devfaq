@@ -16,7 +16,7 @@ services:
       DATABASE_DB: fefaq
       DATABASE_PASSWORD: fefaq
   postgres:
-    image: postgres:9.3-alpine
+    image: postgres:10-alpine
     environment:
       POSTGRES_USER: fefaq
       POSTGRES_DB: fefaq

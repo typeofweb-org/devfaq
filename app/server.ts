@@ -4,6 +4,7 @@ import * as Inert from 'inert';
 import * as Vision from 'vision';
 import * as pgk from '../package.json';
 
+import { questionsRoutes } from './modules/questions/questions.routes';
 import { authRoutes } from './modules/tokens/tokens.routes';
 import { auth } from './plugins/auth';
 
@@ -19,7 +20,15 @@ const server = new Hapi.Server();
 server.connection({
   port: 3000,
   host: '0.0.0.0',
-  routes: { cors: true },
+  routes: {
+    cors: true,
+    response: {
+      modify: true,
+      options: {
+        stripUnknown: true
+      }
+    }
+  },
 });
 
 const serverPromise = new Promise<Hapi.Server>((resolve, reject) => {
@@ -72,9 +81,10 @@ const serverPromise = new Promise<Hapi.Server>((resolve, reject) => {
       path: '/no',
     });
 
-    server.route(
-      authRoutes,
-    );
+    server.route([
+      ...authRoutes,
+      ...questionsRoutes
+    ]);
 
     return resolve(server);
   });

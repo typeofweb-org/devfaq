@@ -15,7 +15,7 @@ const getQuestionsRoute: RouteConfiguration = {
   method: 'GET',
   handler: getQuestionsHandler,
   config: {
-    auth: false,
+    auth: { mode: 'optional' },
     tags: ['api', 'questions'],
     validate: GetQuestionsRequestSchema,
     description: 'Creates a question',
@@ -30,7 +30,7 @@ const createQuestionRoute: RouteConfiguration = {
   method: 'POST',
   handler: createQuestionHandler,
   config: {
-    auth: false,
+    auth: { mode: 'optional' },
     tags: ['api', 'questions'],
     validate: CreateQuestionRequestSchema,
     description: 'Creates a question',

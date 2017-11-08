@@ -7,24 +7,27 @@ export interface GetQuestionsRequestQuery {
 
 // Unknown type: GetQuestionsRequest ([object Object])}
 export interface GetQuestionsResponse {
-  id: string;
+  id: number;
   question: string;
-  category: string;
+  category: undefined;
   level?: string;
   answer?: string;
 }
 
-export interface CreateQuestionRequestQuery {
-  category: string;
+export interface CreateQuestionRequestPayload {
+  question: string;
+  level: string;
+  category: undefined;
 }
 
 // Unknown type: CreateQuestionRequest ([object Object])}
 export interface CreateQuestionResponse {
-  id: string;
+  id: number;
   question: string;
-  category: string;
+  category: undefined;
   level?: string;
   answer?: string;
+  status: undefined;
 }
 
 export interface CreateTokenRequestPayload {
