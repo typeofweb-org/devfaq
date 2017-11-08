@@ -11,6 +11,7 @@ services:
     depends_on:
       - postgres
     environment:
+      DATABASE_TYPE: postgres
       DATABASE_HOST: postgres
       DATABASE_USER: fefaq
       DATABASE_DB: fefaq

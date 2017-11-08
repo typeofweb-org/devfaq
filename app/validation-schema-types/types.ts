@@ -12,14 +12,14 @@ export type QuestionStatusJoi =
   | "rejected";
 
 export interface GetQuestionsRequestQuery {
-  category: string;
+  category: QuestionCategoryJoi;
 }
 
 // Unknown type: GetQuestionsRequest ([object Object])}
 export interface GetQuestionsResponse {
   id: number;
   question: string;
-  category?: QuestionCategoryJoi;
+  category: QuestionCategoryJoi;
   level?: string;
   answer?: string;
 }
@@ -27,17 +27,17 @@ export interface GetQuestionsResponse {
 export interface CreateQuestionRequestPayload {
   question: string;
   level: string;
-  category?: QuestionCategoryJoi;
+  category: QuestionCategoryJoi;
 }
 
 // Unknown type: CreateQuestionRequest ([object Object])}
 export interface CreateQuestionResponse {
   id: number;
   question: string;
-  category: undefined;
+  category: QuestionCategoryJoi;
   level?: string;
   answer?: string;
-  status: undefined;
+  status: QuestionStatusJoi;
 }
 
 export interface CreateTokenRequestPayload {

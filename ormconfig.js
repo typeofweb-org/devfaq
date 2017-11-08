@@ -1,10 +1,9 @@
 module.exports = {
-  "type": "postgres",
-  "database": "fefaq",
   "synchronize": true,
   "logging": true,
 
-  "host": "postgres",
+  "type": process.env.DATABASE_TYPE,
+  "host": process.env.DATABASE_HOST,
   "username": process.env.DATABASE_USER,
   "database": process.env.DATABASE_DB,
   "password": process.env.DATABASE_PASSWORD,
