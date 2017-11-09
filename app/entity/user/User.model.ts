@@ -1,4 +1,4 @@
-import { BeforeInsert, Column, Entity } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 import { encryptionService } from '../../services/encryptionService';
 import { AbstractEntity } from '../AbstractEntity';
 
@@ -19,11 +19,20 @@ export class UserEntity extends AbstractEntity {
     @Column({ nullable: true, type: String })
     public lastName?: string | null;
 
-    @Column({ default: 'admin' })
+    @Column({ default: 'user' })
     public role: UserRoles;
 
+    @BeforeUpdate()
+    public async onBeforeUpdate() {
+        return this.hashPassword();
+    }
+
     @BeforeInsert()
-    public async hashPassword() {
+    public async onBeforeInsert() {
+        return this.hashPassword();
+    }
+
+    private async hashPassword() {
         this.password = await encryptionService.hash(this.password);
     }
 }

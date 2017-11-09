@@ -1,4 +1,4 @@
-import { Column, Entity } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 import { AbstractEntity } from '../AbstractEntity';
 
 export enum QuestionCategory {
@@ -34,4 +34,24 @@ export class QuestionEntity extends AbstractEntity {
     type: String, // 'enum',
     enum: questionStatuses
   }) public status: QuestionStatus;
+
+  @Column({
+    nullable: true
+  }) public acceptedAt?: Date;
+
+  @BeforeUpdate()
+  public async onBeforeUpdate() {
+    return this.setAcceptedAt();
+  }
+
+  @BeforeInsert()
+  public async onBeforeInsert() {
+    return this.setAcceptedAt();
+  }
+
+  private async setAcceptedAt() {
+    if (!this.acceptedAt && this.status === 'accepted') {
+      this.acceptedAt = new Date();
+    }
+  }
 }

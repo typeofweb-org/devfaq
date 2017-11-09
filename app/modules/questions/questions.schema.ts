@@ -9,6 +9,7 @@ export const OneQuestionJoiSchema = Joi.object().keys({
   category: QuestionCategoryJoiSchema,
   level: Joi.string().optional(),
   answer: Joi.string().allow('').optional(),
+  acceptedAt: Joi.date().optional()
 });
 
 export const GetQuestionsRequestQuerySchema = Joi.object().keys({

@@ -19,6 +19,7 @@ export interface OneQuestionJoi {
   category: QuestionCategoryJoi;
   level?: string;
   answer?: string;
+  acceptedAt?: Date;
 }
 
 export interface GetQuestionsRequestQuery {

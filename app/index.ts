@@ -16,8 +16,12 @@ const init = async () => {
 
   const user = await userService.addNew({
     emailAddress: 'michal@miszczyszyn.com',
-    password: 'qwerty123',
+    password: 'qwerty',
+    role: 'admin'
   });
+
+  user.password = 'qwerty123';
+  await userService.update(user);
 
   const users = await userService.findAll();
   console.log(user, users);
@@ -27,7 +31,7 @@ const init = async () => {
 
 init()
   .then((server) => {
-    console.log(`Server running at: ${server.info!.uri}`)
+    console.log(`Server running at: ${server.info!.uri}`);
     console.log(server.info);
   })
   .catch((err) => console.error(err));

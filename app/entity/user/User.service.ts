@@ -15,6 +15,10 @@ export class UserService {
     return this.repository.save(userEntity);
   }
 
+  public update(user: UserEntity) {
+    return this.repository.save(user);
+  }
+
   public removeAll() {
     return this.repository.clear();
   }

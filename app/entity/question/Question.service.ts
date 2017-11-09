@@ -1,7 +1,7 @@
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { OrmRepository } from 'typeorm-typedi-extensions';
-import { QuestionCategory, QuestionEntity } from './Question.model';
+import { QuestionEntity, QuestionStatus } from './Question.model';
 
 @Service()
 export class QuestionService {
@@ -19,10 +19,11 @@ export class QuestionService {
     });
   }
 
-  public async findByCategory(category: QuestionCategory) {
+  public async findAcceptedBy(where: Partial<QuestionEntity>) {
     return this.repository.find({
       where: {
-        category
+        ...where,
+        status: QuestionStatus.accepted
       }
     });
   }

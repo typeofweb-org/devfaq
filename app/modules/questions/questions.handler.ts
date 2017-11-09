@@ -19,7 +19,7 @@ export const getQuestionsHandler: Hapi.RouteHandler = async (req: GetQuestionsRe
   const category = QuestionCategory[req.query.category];
 
   return reply(
-    questionService.findByCategory(category)
+    questionService.findAcceptedBy({ category })
   );
 };
 
