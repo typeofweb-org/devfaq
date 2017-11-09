@@ -41,6 +41,10 @@ export const GetQuestionsResponseUtils = {
   coerce: coerceValue<t.GetQuestionsResponse>(s.GetQuestionsResponseSchema),
 };
 
+export const OneQuestionJoiUtils = {
+  coerce: coerceValue<t.OneQuestionJoi>(s.OneQuestionJoiSchema),
+};
+
 export const QuestionCategoryJoiUtils = {
   coerce: coerceValue<t.QuestionCategoryJoi>(s.QuestionCategoryJoiSchema),
 };

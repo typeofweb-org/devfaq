@@ -14,8 +14,13 @@ interface GetQuestionsRequest extends Hapi.Request {
   query: GetQuestionsRequestQuery;
 }
 
-export const getQuestionsHandler: Hapi.RouteHandler = async (_req: GetQuestionsRequest, reply) => {
-  return reply(Boom.notImplemented());
+export const getQuestionsHandler: Hapi.RouteHandler = async (req: GetQuestionsRequest, reply) => {
+  const questionService = Container.get(QuestionService);
+  const category = QuestionCategory[req.query.category];
+
+  return reply(
+    questionService.findByCategory(category)
+  );
 };
 
 interface CreateQuestionRequest extends Hapi.Request {
@@ -33,17 +38,19 @@ export const createQuestionHandler: Hapi.RouteHandler = async (req: CreateQuesti
 
   const { question, level, category } = req.payload;
 
-  const sameQuestionCount = await questionService.countByQuestion(question);
-  if (sameQuestionCount > 0) {
-    reply(Boom.conflict('This question exists'));
-    return;
-  }
+  return reply(
+    questionService.countByQuestion(question)
+      .then((sameQuestionCount) => {
+        if (sameQuestionCount > 0) {
+          throw Boom.conflict('This question exists');
+        }
 
-  const addedQuestion = await questionService.addNew({
-    question,
-    level,
-    category: category as QuestionCategory,
-    status: getQuestionStatusForAuth(req.auth)
-  });
-  reply(addedQuestion);
+        return questionService.addNew({
+          question,
+          level,
+          category: category as QuestionCategory,
+          status: getQuestionStatusForAuth(req.auth)
+        });
+      })
+  );
 };

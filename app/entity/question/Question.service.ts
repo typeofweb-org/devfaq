@@ -1,7 +1,7 @@
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { OrmRepository } from 'typeorm-typedi-extensions';
-import { QuestionEntity } from './Question.model';
+import { QuestionCategory, QuestionEntity } from './Question.model';
 
 @Service()
 export class QuestionService {
@@ -19,7 +19,11 @@ export class QuestionService {
     });
   }
 
-  public async findAll() {
-    return this.repository.find();
+  public async findByCategory(category: QuestionCategory) {
+    return this.repository.find({
+      where: {
+        category
+      }
+    });
   }
 }

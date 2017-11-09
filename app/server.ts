@@ -25,7 +25,9 @@ server.connection({
     response: {
       modify: true,
       options: {
-        stripUnknown: true
+        allowUnknown: true,
+        convert: true,
+        stripUnknown: { objects: true },
       }
     }
   },

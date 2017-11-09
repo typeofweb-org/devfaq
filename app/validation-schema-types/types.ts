@@ -11,12 +11,9 @@ export type QuestionStatusJoi =
   | "pending"
   | "rejected";
 
-export interface GetQuestionsRequestQuery {
-  category: QuestionCategoryJoi;
-}
+export type GetQuestionsResponse = OneQuestionJoi[];
 
-// Unknown type: GetQuestionsRequest ([object Object])}
-export interface GetQuestionsResponse {
+export interface OneQuestionJoi {
   id: number;
   question: string;
   category: QuestionCategoryJoi;
@@ -24,6 +21,11 @@ export interface GetQuestionsResponse {
   answer?: string;
 }
 
+export interface GetQuestionsRequestQuery {
+  category: QuestionCategoryJoi;
+}
+
+// Unknown type: GetQuestionsRequest ([object Object])}
 export interface CreateQuestionRequestPayload {
   question: string;
   level: string;
