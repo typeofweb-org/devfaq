@@ -53,9 +53,9 @@
     "input": "./allschemas.ts",
     "nullableMode": "nullable",
     "outputs": {
-      "library": "./app/validation-schema-types/library.ts",
       "types": "./app/validation-schema-types/types.ts",
-      "utils": "./app/validation-schema-types/utils.ts"
+      "library": "./.devnull",
+      "utils": "./.devnull"
     }
   }
 }

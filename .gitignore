@@ -4,6 +4,7 @@ config/database.json
 .idea
 .DS_Store
 fefaq.sqlite
+.devnull
 
 
 # Logs
