@@ -18,7 +18,7 @@ const getQuestionsRoute: RouteConfiguration = {
     auth: { mode: 'optional' },
     tags: ['api', 'questions'],
     validate: GetQuestionsRequestSchema,
-    description: 'Creates a question',
+    description: 'Returns questions',
     response: {
       schema: GetQuestionsResponseSchema,
     },
