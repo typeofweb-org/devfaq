@@ -12,8 +12,42 @@ export const OneQuestionJoiSchema = Joi.object().keys({
   acceptedAt: Joi.date().optional()
 });
 
+type JoiConstructor = (typeof Joi);
+type JoiWithCommaDelimited = JoiConstructor & {
+  commaDelimited(): {
+    items(params: any): Joi.Schema
+  };
+};
+
+const customJoi = Joi.extend({
+  name: 'commaDelimited',
+  base: Joi.string(),
+  language: {
+    items: '{{error}}',
+  },
+  pre(value: string, _state, _options): any {
+    return value.split(',');
+  },
+  rules: [{
+    name: 'items',
+    params: {
+      items: Joi.any()
+    },
+    validate(params: { items: Joi.Schema }, value: string[], state, options): any {
+      const validation = Joi.array().items(params.items).validate(value);
+      if (validation.error) {
+        return this.createError('commaDelimited.items', { error: validation.error }, state, options);
+      } else {
+        return validation.value;
+      }
+    }
+  }]
+}) as JoiWithCommaDelimited;
+
 export const GetQuestionsRequestQuerySchema = Joi.object().keys({
-  category: QuestionCategoryJoiSchema
+  category: QuestionCategoryJoiSchema,
+  status: customJoi.commaDelimited().items(QuestionStatusJoiSchema)
+  // .array().items(QuestionStatusJoiSchema).optional(),
 });
 
 export const GetQuestionsRequestSchema = {

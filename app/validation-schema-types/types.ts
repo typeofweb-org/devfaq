@@ -24,6 +24,7 @@ export interface OneQuestionJoi {
 
 export interface GetQuestionsRequestQuery {
   category: QuestionCategoryJoi;
+  status?: undefined;
 }
 
 // Unknown type: GetQuestionsRequest ([object Object])}
