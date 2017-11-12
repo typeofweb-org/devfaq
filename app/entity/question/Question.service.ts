@@ -37,7 +37,10 @@ export class QuestionService {
 
   public async findBy(where: WhereBy<QuestionEntity>) {
     return this.repository.find({
-      where: removeUndefinedWhere(where)
+      where: removeUndefinedWhere(where),
+      order: {
+        acceptedAt: 'DESC'
+      }
     });
   }
 }
