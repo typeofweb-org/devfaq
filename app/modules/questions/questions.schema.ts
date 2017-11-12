@@ -10,12 +10,13 @@ export const OneQuestionJoiSchema = Joi.object().keys({
   category: QuestionCategorySchema,
   level: Joi.string().optional(),
   answer: Joi.string().allow('').optional(),
-  acceptedAt: Joi.date().optional()
+  acceptedAt: Joi.date().optional().allow(null)
 });
 
 export const GetQuestionsRequestQuerySchema = Joi.object().keys({
   category: QuestionCategorySchema,
-  status: JoiCommaDelimited.commaDelimited().items(QuestionStatusSchema).notes('type:QuestionStatuses')
+  status: JoiCommaDelimited.commaDelimited().items(QuestionStatusSchema).notes('type:QuestionStatuses'),
+  level: Joi.string().optional().notes('type:QuestionLevel')
 });
 
 export const GetQuestionsRequestSchema = {

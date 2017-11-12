@@ -17,10 +17,30 @@ interface GetQuestionsRequest extends Hapi.Request {
 export const getQuestionsHandler: Hapi.RouteHandler = async (req: GetQuestionsRequest, reply) => {
   const questionService = Container.get(QuestionService);
   const category = QuestionCategory[req.query.category];
+  const level = req.query.level;
+
+  if (!req.query.status || !isAdmin(req.auth)) {
+    return reply(
+      questionService.findAcceptedBy({ category, level })
+    );
+  }
+
+  if (req.query.status.length === 1) {
+    const status = req.query.status[0];
+    return reply(
+      questionService.findBy({ category, level, status })
+    );
+  }
 
   return reply(
-    questionService.findAcceptedBy({ category })
+    questionService.findBy({ category, level })
   );
+};
+
+const isAdmin = (auth: RequestAuthenticationInformation): boolean => {
+  const user = auth && auth.isAuthenticated ? auth.credentials as AuthInfo : null;
+  const isUserAdmin = (user && user.role === 'admin') || false;
+  return isUserAdmin;
 };
 
 interface CreateQuestionRequest extends Hapi.Request {
@@ -28,9 +48,7 @@ interface CreateQuestionRequest extends Hapi.Request {
 }
 
 const getQuestionStatusForAuth = (auth: RequestAuthenticationInformation): QuestionStatus => {
-  const user = auth.isAuthenticated ? auth.credentials as AuthInfo : null;
-  const status = (user && user.role === 'admin') ? QuestionStatus.accepted : QuestionStatus.pending;
-  return status;
+  return isAdmin(auth) ? QuestionStatus.accepted : QuestionStatus.pending;
 };
 
 export const createQuestionHandler: Hapi.RouteHandler = async (req: CreateQuestionRequest, reply) => {

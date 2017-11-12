@@ -11,11 +11,12 @@ export const questionCategories: QuestionCategories = Object.values(QuestionCate
 
 export enum QuestionStatus {
   accepted = 'accepted',
-  pending = 'pending',
-  rejected = 'rejected'
+  pending = 'pending'
 }
 export type QuestionStatuses = QuestionStatus[];
 export const questionStatuses: QuestionStatuses = Object.values(QuestionStatus) as QuestionStatuses;
+
+export type QuestionLevel = string;
 
 @Entity()
 export class QuestionEntity extends AbstractEntity {
@@ -26,7 +27,7 @@ export class QuestionEntity extends AbstractEntity {
     enum: questionCategories
   }) public category: QuestionCategory;
 
-  @Column() public level: string;
+  @Column() public level: QuestionLevel;
 
   @Column({
     default: ''
