@@ -6,14 +6,16 @@ export enum QuestionCategory {
   css = 'css',
   js = 'js'
 }
-export const questionCategories: QuestionCategory[] = Object.values(QuestionCategory) as QuestionCategory[];
+export type QuestionCategories = QuestionCategory[];
+export const questionCategories: QuestionCategories = Object.values(QuestionCategory) as QuestionCategories;
 
 export enum QuestionStatus {
   accepted = 'accepted',
   pending = 'pending',
   rejected = 'rejected'
 }
-export const questionStatuses: QuestionStatus[] = Object.values(QuestionStatus) as QuestionStatus[];
+export type QuestionStatuses = QuestionStatus[];
+export const questionStatuses: QuestionStatuses = Object.values(QuestionStatus) as QuestionStatuses;
 
 @Entity()
 export class QuestionEntity extends AbstractEntity {

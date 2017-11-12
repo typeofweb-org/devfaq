@@ -56,6 +56,12 @@
       "types": "./app/validation-schema-types/types.ts",
       "library": "./.devnull",
       "utils": "./.devnull"
+    },
+    "typeImports": {
+      "QuestionCategory": "../entity/question/Question.model",
+      "QuestionCategories": "../entity/question/Question.model",
+      "QuestionStatus": "../entity/question/Question.model",
+      "QuestionStatuses": "../entity/question/Question.model"
     }
   }
 }
