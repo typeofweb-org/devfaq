@@ -1,9 +1,10 @@
 import * as Boom from 'boom';
-import { RequestAuthenticationInformation } from 'hapi';
 import * as Hapi from 'hapi';
+import { RequestAuthenticationInformation } from 'hapi';
 import { Container } from 'typedi';
 import { QuestionCategory, QuestionStatus } from '../../entity/question/Question.model';
 import { QuestionService } from '../../entity/question/Question.service';
+import { QuestionNotFound } from '../../exception/exceptions';
 import { AuthInfo } from '../../plugins/auth';
 import {
   CreateQuestionRequestPayload,
@@ -13,6 +14,7 @@ import {
   PartiallyUpdateQuestionRequestParams,
   PartiallyUpdateQuestionRequestPayload
 } from '../../validation-schema-types/types';
+import { DeleteQuestionRequestParams } from '../../validation-schema-types/types';
 import { PartiallyUpdateQuestionRequest } from './questions.handler';
 
 interface GetQuestionsRequest extends Hapi.Request {
@@ -87,6 +89,33 @@ export interface PartiallyUpdateQuestionRequest {
 export const partiallyUpdateQuestionHandler: Hapi.RouteHandlerParam<PartiallyUpdateQuestionRequest> = (async (req, reply) => {
   const questionService = Container.get(QuestionService);
   return reply(
-    questionService.updateStatusById(req.params.id, req.payload.status)
+    questionService
+      .updateStatusById(req.params.id, req.payload.status)
+      .catch((err) => {
+        if (err instanceof QuestionNotFound) {
+          throw Boom.notFound('Question does not exist');
+        }
+        throw err;
+      })
   );
+});
+
+export interface DeleteQuestionRequest {
+  params: DeleteQuestionRequestParams;
+}
+
+export const deleteQuestionHandler: Hapi.RouteHandlerParam<DeleteQuestionRequest> = (async (req, reply) => {
+  const questionService = Container.get(QuestionService);
+  const noContentStatus = 204;
+
+  return reply(
+    questionService
+      .removeById(req.params.id)
+      .catch((err) => {
+        if (err instanceof QuestionNotFound) {
+          throw Boom.notFound('Question does not exist');
+        }
+        throw err;
+      })
+  ).code(noContentStatus);
 });

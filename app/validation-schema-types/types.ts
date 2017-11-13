@@ -54,6 +54,12 @@ export interface PartiallyUpdateQuestionResponse {
   acceptedAt?: Date;
 }
 
+export interface DeleteQuestionRequestParams {
+  id: number;
+}
+
+// Unknown type: DeleteQuestionRequest ([object Object])}
+// Unknown type: DeleteQuestionResponse ([object Object])}
 export interface CreateTokenRequestPayload {
   email: string;
   password: string;

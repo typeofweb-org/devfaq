@@ -50,6 +50,15 @@ export class QuestionService {
 
     return question;
   }
+
+  public async removeById(id: number) {
+    const question = await this.repository.findOneById(id);
+    if (!question) {
+      throw new QuestionNotFound();
+    }
+
+    return this.repository.remove(question);
+  }
 }
 
 export type WhereBy<T> = {

@@ -1,6 +1,7 @@
 import * as Joi from 'joi';
 import { questionCategories, questionStatuses } from '../../entity/question/Question.model';
 import { JoiCommaDelimited } from '../../services/commaDelimited.joi';
+import { CommonHeaders } from '../common.schema';
 
 const QuestionCategorySchema = Joi.string().valid(questionCategories).required().notes('type:QuestionCategory');
 const QuestionStatusSchema = Joi.string().valid(questionStatuses).required().notes('type:QuestionStatus');
@@ -20,6 +21,7 @@ export const GetQuestionsRequestQuerySchema = Joi.object().keys({
 });
 
 export const GetQuestionsRequestSchema = {
+  headers: CommonHeaders,
   query: GetQuestionsRequestQuerySchema
 };
 
@@ -32,6 +34,7 @@ export const CreateQuestionRequestPayloadSchema = Joi.object().keys({
 });
 
 export const CreateQuestionRequestSchema = {
+  headers: CommonHeaders,
   payload: CreateQuestionRequestPayloadSchema
 };
 
@@ -46,8 +49,20 @@ export const PartiallyUpdateQuestionRequestParamsSchema = Joi.object().keys({
 });
 
 export const PartiallyUpdateQuestionRequestSchema = {
+  headers: CommonHeaders,
   payload: PartiallyUpdateQuestionRequestPayloadSchema,
   params: PartiallyUpdateQuestionRequestParamsSchema
 };
 
 export const PartiallyUpdateQuestionResponseSchema = OneQuestionJoiSchema;
+
+export const DeleteQuestionRequestParamsSchema = Joi.object().keys({
+  id: Joi.number().integer().required()
+});
+
+export const DeleteQuestionRequestSchema = {
+  headers: CommonHeaders,
+  params: DeleteQuestionRequestParamsSchema
+};
+
+export const DeleteQuestionResponseSchema = Joi.any();

@@ -16,10 +16,13 @@ export const createTokenHandler: Hapi.RouteHandler = async (req: CreateTokenRequ
   return reply(
     userService
       .verifyCredentials(req.payload.email, req.payload.password)
-      .catch(UserNotFound, () => {
-        throw Boom.notFound('User does not exist');
-      }).catch(UserIncorrectPassword, () => {
-        throw Boom.forbidden('Provided password is incorrect');
+      .catch((err) => {
+        if (err instanceof UserNotFound) {
+          throw Boom.notFound('User does not exist');
+        } else if (err instanceof UserIncorrectPassword) {
+          throw Boom.forbidden('Provided password is incorrect');
+        }
+        throw err;
       })
       .then((user) => {
         const response: CreateTokenResponse = {

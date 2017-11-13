@@ -3,8 +3,13 @@ import {
   createQuestionHandler,
   getQuestionsHandler
 } from './questions.handler';
-import { partiallyUpdateQuestionHandler } from './questions.handler';
-import { PartiallyUpdateQuestionRequestSchema, PartiallyUpdateQuestionResponseSchema } from './questions.schema';
+import { deleteQuestionHandler, partiallyUpdateQuestionHandler } from './questions.handler';
+import {
+  DeleteQuestionRequestSchema,
+  DeleteQuestionResponseSchema,
+  PartiallyUpdateQuestionRequestSchema,
+  PartiallyUpdateQuestionResponseSchema
+} from './questions.schema';
 import {
   CreateQuestionRequestSchema,
   CreateQuestionResponseSchema,
@@ -55,10 +60,32 @@ const partiallyUpdateQuestion: RouteConfiguration = {
     },
     tags: ['api', 'questions'],
     validate: PartiallyUpdateQuestionRequestSchema,
-    description: 'Creates a question',
-    notes: `When user is not an admin, it won't publish the question`,
+    description: 'Updates status of a question',
+    notes: `When user is not an admin, it won't have any effect.`,
     response: {
       schema: PartiallyUpdateQuestionResponseSchema
+    },
+  },
+};
+
+const deleteQuestion: RouteConfiguration = {
+  path: '/questions/{id}',
+  method: 'DELETE',
+  handler: deleteQuestionHandler as any, // @todo hapi definitions are incorrect
+  config: {
+    auth: {
+      access: {
+        scope: ['admin']
+      }
+    },
+    tags: ['api', 'questions'],
+    validate: DeleteQuestionRequestSchema,
+    description: 'Deletes a question',
+    notes: `When user is not an admin, it won't delete the question`,
+    response: {
+      status: {
+        204: DeleteQuestionResponseSchema
+      }
     },
   },
 };
@@ -66,5 +93,6 @@ const partiallyUpdateQuestion: RouteConfiguration = {
 export const questionsRoutes: RouteConfiguration[] = [
   getQuestionsRoute,
   createQuestionRoute,
-  partiallyUpdateQuestion
+  partiallyUpdateQuestion,
+  deleteQuestion
 ];

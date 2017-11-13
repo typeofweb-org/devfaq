@@ -12,6 +12,7 @@ const swaggerOptions = {
   info: {
     version: (pgk as any).version as string,
   },
+  jsonEditor: true,
   auth: false
 };
 
