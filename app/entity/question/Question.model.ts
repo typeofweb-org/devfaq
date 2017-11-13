@@ -1,4 +1,8 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
+import {
+  Column,
+  Entity
+} from 'typeorm';
+import { BeforeInsert, BeforeUpdate } from 'typeorm';
 import { AbstractEntity } from '../AbstractEntity';
 
 export enum QuestionCategory {
@@ -39,8 +43,9 @@ export class QuestionEntity extends AbstractEntity {
   }) public status: QuestionStatus;
 
   @Column({
-    nullable: true
-  }) public acceptedAt?: Date;
+    nullable: true,
+    type: Date
+  }) public acceptedAt?: Date | null;
 
   @BeforeUpdate()
   public async onBeforeUpdate() {
@@ -55,6 +60,9 @@ export class QuestionEntity extends AbstractEntity {
   private async setAcceptedAt() {
     if (!this.acceptedAt && this.status === 'accepted') {
       this.acceptedAt = new Date();
+    }
+    if (this.acceptedAt && this.status === 'pending') {
+      this.acceptedAt = null;
     }
   }
 }

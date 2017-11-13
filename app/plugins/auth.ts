@@ -9,13 +9,17 @@ export interface AuthPluginOptions { }
 export interface AuthInfo {
   id: number;
   role: UserRoles;
+  scope: false | string | string[];
 }
 
-const validate = (decoded: AuthInfo, _request: Hapi.Request, callback: Hapi.ServerMethodNext) => {
+type AuthMethodNext = (err: Error | null, result: any, options?: AuthInfo) => void;
+
+const validate = (decoded: AuthInfo, _request: Hapi.Request, callback: AuthMethodNext) => {
   if (!decoded || !decoded.id) {
     return callback(null, false);
   } else {
-    return callback(null, true);
+    const scope = [decoded.role];
+    return callback(null, true, { ...decoded, scope });
   }
 };
 

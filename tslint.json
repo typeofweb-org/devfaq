@@ -12,6 +12,10 @@
         ],
         "no-console": false,
         "trailing-comma": false,
+        "max-line-length": [
+            true,
+            150
+        ],
         "variable-name": [
             true,
             "ban-keywords",

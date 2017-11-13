@@ -2,15 +2,8 @@ import { isUndefined, omitBy } from 'lodash';
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { OrmRepository } from 'typeorm-typedi-extensions';
+import { QuestionNotFound } from '../../exception/exceptions';
 import { QuestionEntity, QuestionStatus } from './Question.model';
-
-export type WhereBy<T> = {
-  [P in keyof T]?: T[P];
-};
-
-const removeUndefinedWhere = <T extends object>(where: T): Partial<T> => {
-  return omitBy<T>(where, isUndefined);
-};
 
 @Service()
 export class QuestionService {
@@ -43,4 +36,26 @@ export class QuestionService {
       }
     });
   }
+
+  public async updateStatusById(id: number, status: QuestionStatus) {
+    const question = await this.repository.findOneById(id);
+    if (!question) {
+      throw new QuestionNotFound();
+    }
+
+    if (question.status !== status) {
+      question.status = status;
+      return this.repository.save(question);
+    }
+
+    return question;
+  }
 }
+
+export type WhereBy<T> = {
+  [P in keyof T]?: T[P];
+};
+
+const removeUndefinedWhere = <T extends object>(where: T): Partial<T> => {
+  return omitBy<T>(where, isUndefined);
+};

@@ -1,6 +1,6 @@
 import * as Boom from 'boom';
-import * as Hapi from 'hapi';
 import { RequestAuthenticationInformation } from 'hapi';
+import * as Hapi from 'hapi';
 import { Container } from 'typedi';
 import { QuestionCategory, QuestionStatus } from '../../entity/question/Question.model';
 import { QuestionService } from '../../entity/question/Question.service';
@@ -9,6 +9,11 @@ import {
   CreateQuestionRequestPayload,
   GetQuestionsRequestQuery
 } from '../../validation-schema-types/types';
+import {
+  PartiallyUpdateQuestionRequestParams,
+  PartiallyUpdateQuestionRequestPayload
+} from '../../validation-schema-types/types';
+import { PartiallyUpdateQuestionRequest } from './questions.handler';
 
 interface GetQuestionsRequest extends Hapi.Request {
   query: GetQuestionsRequestQuery;
@@ -38,12 +43,13 @@ export const getQuestionsHandler: Hapi.RouteHandler = async (req: GetQuestionsRe
 };
 
 const isAdmin = (auth: RequestAuthenticationInformation): boolean => {
+  console.log(auth);
   const user = auth && auth.isAuthenticated ? auth.credentials as AuthInfo : null;
   const isUserAdmin = (user && user.role === 'admin') || false;
   return isUserAdmin;
 };
 
-interface CreateQuestionRequest extends Hapi.Request {
+export interface CreateQuestionRequest extends Hapi.Request {
   payload: CreateQuestionRequestPayload;
 }
 
@@ -51,7 +57,7 @@ const getQuestionStatusForAuth = (auth: RequestAuthenticationInformation): Quest
   return isAdmin(auth) ? QuestionStatus.accepted : QuestionStatus.pending;
 };
 
-export const createQuestionHandler: Hapi.RouteHandler = async (req: CreateQuestionRequest, reply) => {
+export const createQuestionHandler: Hapi.RouteHandlerParam<CreateQuestionRequest> = async (req, reply) => {
   const questionService = Container.get(QuestionService);
 
   const { question, level, category } = req.payload;
@@ -72,3 +78,15 @@ export const createQuestionHandler: Hapi.RouteHandler = async (req: CreateQuesti
       })
   );
 };
+
+export interface PartiallyUpdateQuestionRequest {
+  payload: PartiallyUpdateQuestionRequestPayload;
+  params: PartiallyUpdateQuestionRequestParams;
+}
+
+export const partiallyUpdateQuestionHandler: Hapi.RouteHandlerParam<PartiallyUpdateQuestionRequest> = (async (req, reply) => {
+  const questionService = Container.get(QuestionService);
+  return reply(
+    questionService.updateStatusById(req.params.id, req.payload.status)
+  );
+});

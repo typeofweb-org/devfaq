@@ -35,11 +35,19 @@ export const CreateQuestionRequestSchema = {
   payload: CreateQuestionRequestPayloadSchema
 };
 
-export const CreateQuestionResponseSchema = Joi.object().keys({
-  id: Joi.number().integer().required(),
-  question: Joi.string().required(),
-  category: QuestionCategorySchema,
-  level: Joi.string().optional(),
-  answer: Joi.string().allow('').optional(),
-  status: QuestionStatusSchema
+export const CreateQuestionResponseSchema = OneQuestionJoiSchema;
+
+export const PartiallyUpdateQuestionRequestPayloadSchema = Joi.object().keys({
+  status: QuestionStatusSchema,
 });
+
+export const PartiallyUpdateQuestionRequestParamsSchema = Joi.object().keys({
+  id: Joi.number().integer().required()
+});
+
+export const PartiallyUpdateQuestionRequestSchema = {
+  payload: PartiallyUpdateQuestionRequestPayloadSchema,
+  params: PartiallyUpdateQuestionRequestParamsSchema
+};
+
+export const PartiallyUpdateQuestionResponseSchema = OneQuestionJoiSchema;

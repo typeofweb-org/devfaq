@@ -20,3 +20,13 @@ export class UserIncorrectPassword extends Error {
         Object.setPrototypeOf(this, UserIncorrectPassword.prototype);
     }
 }
+
+export class QuestionNotFound extends Error {
+    public name = 'QuestionNotFoundException';
+    public message = 'Question not found!';
+
+    constructor(...args: any[]) {
+        super(...args);
+        Object.setPrototypeOf(this, QuestionNotFound.prototype);
+    }
+}
