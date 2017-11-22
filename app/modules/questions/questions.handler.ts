@@ -1,21 +1,28 @@
 import * as Boom from 'boom';
-import * as Hapi from 'hapi';
+import * as fs from 'fs';
+import * as Handlebars from 'handlebars';
 import { RequestAuthenticationInformation } from 'hapi';
+import * as Hapi from 'hapi';
+import * as htmlPdf from 'html-pdf';
+import * as path from 'path';
 import { Container } from 'typedi';
 import { QuestionCategory, QuestionStatus } from '../../entity/question/Question.model';
 import { QuestionService } from '../../entity/question/Question.service';
 import { QuestionNotFound } from '../../exception/exceptions';
 import { AuthInfo } from '../../plugins/auth';
 import {
-  CreateQuestionRequestPayload,
-  GetQuestionsRequestQuery
-} from '../../validation-schema-types/types';
-import {
   PartiallyUpdateQuestionRequestParams,
   PartiallyUpdateQuestionRequestPayload
 } from '../../validation-schema-types/types';
-import { DeleteQuestionRequestParams } from '../../validation-schema-types/types';
+import { DeleteQuestionRequestParams, GeneratePdfRequestQuery } from '../../validation-schema-types/types';
+import {
+  CreateQuestionRequestPayload,
+  GetQuestionsRequestQuery
+} from '../../validation-schema-types/types';
 import { PartiallyUpdateQuestionRequest } from './questions.handler';
+
+const templateFile = fs.readFileSync(path.join(__dirname, 'pdf-questions.html'), { encoding: 'utf-8' });
+const templateFn = Handlebars.compile(templateFile);
 
 interface GetQuestionsRequest extends Hapi.Request {
   query: GetQuestionsRequestQuery;
@@ -118,4 +125,28 @@ export const deleteQuestionHandler: Hapi.RouteHandlerParam<DeleteQuestionRequest
         throw err;
       })
   ).code(noContentStatus);
+});
+
+interface GeneratePdfRequest extends Hapi.Request {
+  query: GeneratePdfRequestQuery;
+}
+
+export const generatePdfHandler: Hapi.RouteHandlerParam<GeneratePdfRequest> = (async (req, reply) => {
+  const ids = req.query.question ? req.query.question : [];
+
+  const questionService = Container.get(QuestionService);
+
+  const questions = await questionService.getQuestionsByIds(ids);
+
+  const html = templateFn({ questions });
+  htmlPdf.create(html).toBuffer((err, res) => {
+    if (err) {
+      reply(err);
+      return;
+    }
+
+    reply(res)
+      .header('Content-Type', 'application/pdf')
+      .header('Content-Disposition', 'attachment; filename=fefaq-questions.pdf');
+  });
 });

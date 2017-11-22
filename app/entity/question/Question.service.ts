@@ -10,6 +10,10 @@ export class QuestionService {
   @OrmRepository(QuestionEntity)
   private repository: Repository<QuestionEntity>;
 
+  public async getQuestionsByIds(ids: number[]) {
+    return this.repository.findByIds(ids);
+  }
+
   public async addNew(question: Partial<QuestionEntity>) {
     const questionEntity = this.repository.create(question);
     return this.repository.save(questionEntity);

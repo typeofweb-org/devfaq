@@ -20,6 +20,10 @@ export const GetQuestionsRequestQuerySchema = Joi.object().keys({
   level: Joi.string().optional().notes('type:QuestionLevel')
 });
 
+export const GeneratePdfRequestQuerySchema = Joi.object().keys({
+  question: JoiCommaDelimited.commaDelimited().items(Joi.number()).notes('type:number[]'),
+});
+
 export const GetQuestionsRequestSchema = {
   headers: CommonHeaders,
   query: GetQuestionsRequestQuerySchema

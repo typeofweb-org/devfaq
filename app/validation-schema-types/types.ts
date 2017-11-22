@@ -19,6 +19,10 @@ export interface GetQuestionsRequestQuery {
   level?: QuestionLevel;
 }
 
+export interface GeneratePdfRequestQuery {
+  question?: number[];
+}
+
 // Unknown type: GetQuestionsRequest ([object Object])}
 export interface CreateQuestionRequestPayload {
   question: string;
@@ -70,4 +74,5 @@ export interface CreateTokenResponse {
   token: string;
 }
 
+// Unknown type: number[] ([object Object])}
 export { QuestionCategories, QuestionCategory, QuestionLevel, QuestionStatus, QuestionStatuses };

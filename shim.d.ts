@@ -16,3 +16,8 @@ declare module 'vision' {
   const inert: Hapi.PluginFunction<{}>;
   export = inert;
 }
+
+declare module 'pdfmake' {
+  const pdfmake: any;
+  export = pdfmake;
+}

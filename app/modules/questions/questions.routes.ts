@@ -3,7 +3,7 @@ import {
   createQuestionHandler,
   getQuestionsHandler
 } from './questions.handler';
-import { deleteQuestionHandler, partiallyUpdateQuestionHandler } from './questions.handler';
+import { deleteQuestionHandler, generatePdfHandler, partiallyUpdateQuestionHandler } from './questions.handler';
 import {
   DeleteQuestionRequestSchema,
   DeleteQuestionResponseSchema,
@@ -90,9 +90,20 @@ const deleteQuestion: RouteConfiguration = {
   },
 };
 
+const generatePdf: RouteConfiguration = {
+  path: '/pdf-questions',
+  method: 'GET',
+  handler: generatePdfHandler,
+  config: {
+    auth: { mode: 'optional' },
+    tags: ['api', 'questions']
+  },
+};
+
 export const questionsRoutes: RouteConfiguration[] = [
   getQuestionsRoute,
   createQuestionRoute,
   partiallyUpdateQuestion,
-  deleteQuestion
+  deleteQuestion,
+  generatePdf
 ];
