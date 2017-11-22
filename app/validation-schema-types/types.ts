@@ -20,9 +20,10 @@ export interface GetQuestionsRequestQuery {
 }
 
 export interface GeneratePdfRequestQuery {
-  question?: number[];
+  question: number[];
 }
 
+// Unknown type: GeneratePdfRequest ([object Object])}
 // Unknown type: GetQuestionsRequest ([object Object])}
 export interface CreateQuestionRequestPayload {
   question: string;

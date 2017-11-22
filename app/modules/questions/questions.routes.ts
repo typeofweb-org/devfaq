@@ -4,6 +4,7 @@ import {
   getQuestionsHandler
 } from './questions.handler';
 import { deleteQuestionHandler, generatePdfHandler, partiallyUpdateQuestionHandler } from './questions.handler';
+import { GeneratePdfRequestSchema } from './questions.schema';
 import {
   DeleteQuestionRequestSchema,
   DeleteQuestionResponseSchema,
@@ -95,6 +96,7 @@ const generatePdf: RouteConfiguration = {
   method: 'GET',
   handler: generatePdfHandler,
   config: {
+    validate: GeneratePdfRequestSchema,
     auth: { mode: 'optional' },
     tags: ['api', 'questions']
   },
