@@ -15,7 +15,7 @@ export const OneQuestionJoiSchema = Joi.object().keys({
 });
 
 export const GetQuestionsRequestQuerySchema = Joi.object().keys({
-  category: QuestionCategorySchema,
+  category: QuestionCategorySchema.optional(),
   status: JoiCommaDelimited.commaDelimited().items(QuestionStatusSchema).notes('type:QuestionStatuses'),
   level: Joi.string().optional().notes('type:QuestionLevel')
 });

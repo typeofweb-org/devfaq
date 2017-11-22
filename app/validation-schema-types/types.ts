@@ -14,7 +14,7 @@ export interface PartiallyUpdateQuestionResponse {
 }
 
 export interface GetQuestionsRequestQuery {
-  category: QuestionCategory;
+  category?: QuestionCategory;
   status?: QuestionStatuses;
   level?: QuestionLevel;
 }

@@ -23,7 +23,7 @@ interface GetQuestionsRequest extends Hapi.Request {
 
 export const getQuestionsHandler: Hapi.RouteHandler = async (req: GetQuestionsRequest, reply) => {
   const questionService = Container.get(QuestionService);
-  const category = QuestionCategory[req.query.category];
+  const category = req.query.category && QuestionCategory[req.query.category];
   const level = req.query.level;
 
   if (!req.query.status || !isAdmin(req.auth)) {
