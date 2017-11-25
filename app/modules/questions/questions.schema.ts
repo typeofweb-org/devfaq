@@ -5,6 +5,7 @@ import { CommonHeaders } from '../common.schema';
 
 const QuestionCategorySchema = Joi.string().valid(questionCategories).required().notes('type:QuestionCategory');
 const QuestionStatusSchema = Joi.string().valid(questionStatuses).required().notes('type:QuestionStatus');
+const QuestionLevelSchema = Joi.string();
 export const OneQuestionJoiSchema = Joi.object().keys({
   id: Joi.number().integer().required(),
   question: Joi.string().required(),
@@ -17,7 +18,7 @@ export const OneQuestionJoiSchema = Joi.object().keys({
 export const GetQuestionsRequestQuerySchema = Joi.object().keys({
   category: QuestionCategorySchema.optional(),
   status: JoiCommaDelimited.commaDelimited().items(QuestionStatusSchema).notes('type:QuestionStatuses'),
-  level: Joi.string().optional().notes('type:QuestionLevel')
+  level: JoiCommaDelimited.commaDelimited().items(QuestionLevelSchema).notes('type:QuestionLevels'),
 });
 
 export const GeneratePdfRequestQuerySchema = Joi.object().keys({

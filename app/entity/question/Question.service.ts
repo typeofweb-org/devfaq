@@ -2,7 +2,9 @@ import { isUndefined, omitBy } from 'lodash';
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { OrmRepository } from 'typeorm-typedi-extensions';
+import { SelectQueryBuilder } from 'typeorm/query-builder/SelectQueryBuilder';
 import { QuestionNotFound } from '../../exception/exceptions';
+import { GetQuestionsRequestQuery } from '../../validation-schema-types/types';
 import { QuestionEntity, QuestionStatus } from './Question.model';
 
 @Service()
@@ -25,20 +27,22 @@ export class QuestionService {
     });
   }
 
-  public async findAcceptedBy(where: WhereBy<QuestionEntity>) {
+  public async findAcceptedBy(where: GetQuestionsRequestQuery) {
     return this.findBy({
       ...where,
-      status: QuestionStatus.accepted
+      status: [QuestionStatus.accepted]
     });
   }
 
-  public async findBy(where: WhereBy<QuestionEntity>) {
-    return this.repository.find({
-      where: removeUndefinedWhere(where),
-      order: {
-        acceptedAt: 'DESC'
-      }
-    });
+  public async findBy(optionalWhere: GetQuestionsRequestQuery) {
+    const where = removeUndefinedWhere(optionalWhere);
+    const query = this.repository
+      .createQueryBuilder('QuestionEntity')
+      .select('*');
+
+    buildQueryForWhere(query, where);
+
+    return query.getRawMany();
   }
 
   public async updateStatusById(id: number, status: QuestionStatus) {
@@ -65,8 +69,15 @@ export class QuestionService {
   }
 }
 
-export type WhereBy<T> = {
-  [P in keyof T]?: T[P];
+const buildQueryForWhere = <T>(query: SelectQueryBuilder<T>, where: object): SelectQueryBuilder<T> => {
+  for (const [key, val] of Object.entries(where)) {
+    if (Array.isArray(val)) {
+      query.andWhere(`QuestionEntity.${key} in (:${key})`, { [key]: val });
+    } else {
+      query.andWhere(`QuestionEntity.${key} = :${key}`, { [key]: val });
+    }
+  }
+  return query;
 };
 
 const removeUndefinedWhere = <T extends object>(where: T): Partial<T> => {
