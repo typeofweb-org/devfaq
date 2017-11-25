@@ -70,7 +70,8 @@
       "QuestionCategories": "../entity/question/Question.model",
       "QuestionStatus": "../entity/question/Question.model",
       "QuestionStatuses": "../entity/question/Question.model",
-      "QuestionLevel": "../entity/question/Question.model"
+      "QuestionLevel": "../entity/question/Question.model",
+      "QuestionLevels": "../entity/question/Question.model"
     }
   }
 }

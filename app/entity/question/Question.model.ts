@@ -21,6 +21,7 @@ export type QuestionStatuses = QuestionStatus[];
 export const questionStatuses: QuestionStatuses = Object.values(QuestionStatus) as QuestionStatuses;
 
 export type QuestionLevel = string;
+export type QuestionLevels = QuestionLevel[];
 
 @Entity()
 export class QuestionEntity extends AbstractEntity {

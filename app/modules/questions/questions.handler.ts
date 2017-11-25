@@ -33,26 +33,19 @@ export const getQuestionsHandler: Hapi.RouteHandler = async (req: GetQuestionsRe
   const category = req.query.category && QuestionCategory[req.query.category];
   const level = req.query.level;
 
-  if (!req.query.status || !isAdmin(req.auth)) {
-    return reply(
-      questionService.findAcceptedBy({ category, level })
-    );
-  }
-
-  if (req.query.status.length === 1) {
-    const status = req.query.status[0];
+  if (req.query.status && isAdmin(req.auth)) {
+    const status = req.query.status;
     return reply(
       questionService.findBy({ category, level, status })
     );
   }
 
   return reply(
-    questionService.findBy({ category, level })
+    questionService.findAcceptedBy({ category, level })
   );
 };
 
 const isAdmin = (auth: RequestAuthenticationInformation): boolean => {
-  console.log(auth);
   const user = auth && auth.isAuthenticated ? auth.credentials as AuthInfo : null;
   const isUserAdmin = (user && user.role === 'admin') || false;
   return isUserAdmin;
