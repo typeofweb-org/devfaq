@@ -8,7 +8,11 @@ import { AbstractEntity } from '../AbstractEntity';
 export enum QuestionCategory {
   html = 'html',
   css = 'css',
-  js = 'js'
+  js = 'js',
+  angular = 'angular',
+  react = 'react',
+  git = 'git',
+  other = 'other',
 }
 export type QuestionCategories = QuestionCategory[];
 export const questionCategories: QuestionCategories = Object.values(QuestionCategory) as QuestionCategories;
