@@ -74,7 +74,7 @@ export const createQuestionHandler: Hapi.RouteHandlerParam<CreateQuestionRequest
         return questionService.addNew({
           question,
           level,
-          category: category as QuestionCategory,
+          category,
           status: getQuestionStatusForAuth(req.auth)
         });
       })

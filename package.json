@@ -38,8 +38,8 @@
     "sqlite3": "3.1.13",
     "ts-node": "3.3.0",
     "typedi": "0.5.2",
-    "typeorm": "0.2.0-alpha.1",
-    "typeorm-typedi-extensions": "0.1.0",
+    "typeorm": "0.1.7",
+    "typeorm-typedi-extensions": "0.1.1",
     "vision": "4.1.1"
   },
   "devDependencies": {

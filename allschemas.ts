@@ -1,5 +1,6 @@
 // @todo
 // hack
+// tslint:disable-next-line:no-var-requires
 const requireGlob = require('require-glob');
 
 const newExports = requireGlob.sync('./app/modules/**/*.schema.ts');

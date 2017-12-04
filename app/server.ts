@@ -49,7 +49,8 @@ const serverPromise = new Promise<Hapi.Server>((resolve, reject) => {
     }
 
     server.ext('onPreResponse', (request, reply) => {
-      if (request.response && request.response.output && request.response.output.statusCode === 500) {
+      const INTERNAL_SERVER_ERROR_CODE = 500;
+      if (request.response && request.response.output && request.response.output.statusCode === INTERNAL_SERVER_ERROR_CODE) {
         const e = request.response as Hapi.Response & { stack: string };
         console.error(new Date(), e.name, e.message, e.stack);
 
