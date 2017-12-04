@@ -5,6 +5,7 @@ config/database.json
 .DS_Store
 fefaq.sqlite
 .devnull
+.env
 
 
 # Logs
