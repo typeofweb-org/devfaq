@@ -2,15 +2,20 @@
   "name": "fefaq-api",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon -L server.js --ext js,ts",
+    "start": "nodemon -L app.js --ext js,ts",
     "test": "tslint -p ./tsconfig.json --type-check --fix",
     "prestart": "npm run joi-ts-gen",
     "joi-ts-gen": "joi-ts-gen"
   },
+  "private": true,
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mmiszy/fefaq-api.git"
+  },
   "dependencies": {
     "bcrypt": "1.0.3",
     "bluebird": "3.5.1",
