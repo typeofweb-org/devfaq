@@ -7,7 +7,7 @@ function kill_ssh_agent {
 echo "Trying to kill existing connections…"
 kill_ssh_agent
 
-cd ~/domains/sinpai.usermd.net/public_nodejs
+cd ~/domains/api.fefaq.pl/public_nodejs
 
 eval $(ssh-agent -s) && ssh-add ~/.ssh/github_rsa
 
@@ -27,8 +27,8 @@ npm i
 npm prune
 
 echo "Restarting the server…"
-devil www restart sinpai.usermd.net
-curl -I sinpai.usermd.net
+devil www restart api.fefaq.pl
+curl -I api.fefaq.pl
 
 kill_ssh_agent
 
