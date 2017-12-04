@@ -57,6 +57,7 @@
     "@types/lodash": "4.14.85",
     "@types/node": "8.0.44",
     "@types/vision": "4.1.2",
+    "flightplan": "0.6.17",
     "nodemon": "1.12.1",
     "require-glob": "3.2.0",
     "tslint": "5.7.0",
