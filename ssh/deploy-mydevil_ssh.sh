@@ -26,6 +26,8 @@ echo "Installing deps…"
 npm i
 npm prune
 
+echo `git rev-parse HEAD` > .version
+
 echo "Restarting the server…"
 devil www restart api.fefaq.pl
 curl -I api.fefaq.pl
