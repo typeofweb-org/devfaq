@@ -90,7 +90,7 @@ export const partiallyUpdateQuestionHandler: Hapi.RouteHandlerParam<PartiallyUpd
   const questionService = Container.get(QuestionService);
   return reply(
     questionService
-      .updateStatusById(req.params.id, req.payload.status)
+      .updateById(req.params.id, req.payload)
       .catch((err) => {
         if (err instanceof QuestionNotFound) {
           throw Boom.notFound('Question does not exist');

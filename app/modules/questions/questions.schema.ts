@@ -10,7 +10,7 @@ export const OneQuestionJoiSchema = Joi.object().keys({
   id: Joi.number().integer().required(),
   question: Joi.string().required(),
   category: QuestionCategorySchema,
-  level: Joi.string().optional(),
+  level: QuestionLevelSchema.optional(),
   answer: Joi.string().allow('').optional(),
   acceptedAt: Joi.date().optional().allow(null)
 });
@@ -38,7 +38,7 @@ export const GetQuestionsResponseSchema = Joi.array().items(OneQuestionJoiSchema
 
 export const CreateQuestionRequestPayloadSchema = Joi.object().keys({
   question: Joi.string().required(),
-  level: Joi.string().required(),
+  level: QuestionLevelSchema,
   category: QuestionCategorySchema
 });
 
@@ -50,7 +50,11 @@ export const CreateQuestionRequestSchema = {
 export const CreateQuestionResponseSchema = OneQuestionJoiSchema;
 
 export const PartiallyUpdateQuestionRequestPayloadSchema = Joi.object().keys({
-  status: QuestionStatusSchema,
+  status: QuestionStatusSchema.optional(),
+  question: Joi.string().optional(),
+  category: QuestionCategorySchema.optional(),
+  level: QuestionLevelSchema.optional(),
+  answer: Joi.string().allow('').optional(),
 });
 
 export const PartiallyUpdateQuestionRequestParamsSchema = Joi.object().keys({
