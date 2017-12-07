@@ -1,16 +1,18 @@
+import * as fs from 'fs';
 import * as Hapi from 'hapi';
 import * as HapiSwagger from 'hapi-swagger';
 import * as Inert from 'inert';
 import * as Vision from 'vision';
-import * as pgk from '../package.json';
 
 import { questionsRoutes } from './modules/questions/questions.routes';
 import { authRoutes } from './modules/tokens/tokens.routes';
 import { auth } from './plugins/auth';
 
+const version = fs.readFileSync('./.version', 'utf8');
+
 const swaggerOptions = {
   info: {
-    version: (pgk as any).version as string,
+    version
   },
   jsonEditor: true,
   auth: false
