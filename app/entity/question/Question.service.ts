@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { OrmRepository } from 'typeorm-typedi-extensions';
 import { SelectQueryBuilder } from 'typeorm/query-builder/SelectQueryBuilder';
 import { QuestionNotFound } from '../../exception/exceptions';
-import { GetQuestionsRequestQuery } from '../../validation-schema-types/types';
+import { GetQuestionsRequestQuery, PartiallyUpdateQuestionRequestPayload } from '../../validation-schema-types/types';
 import { QuestionEntity, QuestionStatus } from './Question.model';
 
 @Service()
@@ -43,6 +43,19 @@ export class QuestionService {
     buildQueryForWhere(query, where);
 
     return query.getRawMany();
+  }
+
+  public async updateById(id: number, updates: PartiallyUpdateQuestionRequestPayload) {
+    const question = await this.repository.findOneById(id);
+    if (!question) {
+      throw new QuestionNotFound();
+    }
+
+    Object.entries(updates).forEach(([key, val]) => {
+      question[key] = val;
+    });
+
+    return this.repository.save(question);
   }
 
   public async updateStatusById(id: number, status: QuestionStatus) {

@@ -21,3 +21,7 @@ declare module 'pdfmake' {
   const pdfmake: any;
   export = pdfmake;
 }
+
+interface ObjectConstructor {
+  entries<T>(o: T): [keyof T, any][];
+}
