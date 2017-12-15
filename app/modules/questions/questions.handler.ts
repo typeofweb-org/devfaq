@@ -21,7 +21,14 @@ import {
 } from '../../validation-schema-types/types';
 import { PartiallyUpdateQuestionRequest } from './questions.handler';
 
+import * as Commonmark from 'commonmark';
+const CommonmarkReader = new Commonmark.Parser();
+const CommonmarkWriter = new Commonmark.HtmlRenderer();
+
 const templateFile = fs.readFileSync(path.join(__dirname, 'pdf-questions.html'), { encoding: 'utf-8' });
+Handlebars.registerHelper('inc', (value: any) => {
+  return Number.parseInt(value) + 1;
+});
 const templateFn = Handlebars.compile(templateFile);
 
 interface GetQuestionsRequest extends Hapi.Request {
@@ -129,17 +136,42 @@ export const generatePdfHandler: Hapi.RouteHandlerParam<GeneratePdfRequest> = (a
 
   const questionService = Container.get(QuestionService);
 
-  const questions = await questionService.getQuestionsByIds(ids);
+  const questions = await questionService.getAcceptedQuestionsByIds(ids);
+  const renderedQuestions = questions.map((item) => {
+    const question = CommonmarkReader.parse(item.question);
+    item.question = CommonmarkWriter.render(question);
+    return item;
+  });
 
-  const html = templateFn({ questions });
-  htmlPdf.create(html).toBuffer((err, res) => {
+  const html = templateFn({ questions: renderedQuestions });
+  htmlPdf.create(html, {
+    format: 'A4',
+    orientation: 'portrait',
+    border: {
+      top: '0.5cm',
+      bottom: '0',
+      left: '2.5cm',
+      right: '2.5cm',
+    },
+    header: {
+      height: '1cm',
+      contents: 'FeFaq.pl',
+    },
+    footer: {
+      height: '1cm',
+      contents: {
+        default: 'FeFaq.pl'
+      }
+    },
+    type: 'pdf'
+  }).toBuffer((err, _res) => {
     if (err) {
       reply(err);
       return;
     }
 
-    reply(res)
-      .header('Content-Type', 'application/pdf')
-      .header('Content-Disposition', 'attachment; filename=fefaq-questions.pdf');
+    reply(html);
+    // .header('Content-Type', 'application/pdf');
+    // .header('Content-Disposition', 'attachment; filename=fefaq-questions.pdf');
   });
 });
