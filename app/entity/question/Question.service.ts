@@ -4,16 +4,25 @@ import { Repository } from 'typeorm';
 import { OrmRepository } from 'typeorm-typedi-extensions';
 import { SelectQueryBuilder } from 'typeorm/query-builder/SelectQueryBuilder';
 import { QuestionNotFound } from '../../exception/exceptions';
-import { GetQuestionsRequestQuery, PartiallyUpdateQuestionRequestPayload } from '../../validation-schema-types/types';
-import { QuestionEntity, QuestionStatus } from './Question.model';
+import { PartiallyUpdateQuestionRequestPayload } from '../../validation-schema-types/types';
+import { QuestionCategory, QuestionEntity, QuestionLevels, QuestionStatus, QuestionStatuses } from './Question.model';
+
+export interface QuestionWhere {
+  category?: QuestionCategory;
+  status?: QuestionStatuses;
+  level?: QuestionLevels;
+  id?: number | number[];
+}
 
 @Service()
 export class QuestionService {
   @OrmRepository(QuestionEntity)
   private repository: Repository<QuestionEntity>;
 
-  public async getQuestionsByIds(ids: number[]) {
-    return this.repository.findByIds(ids);
+  public async getAcceptedQuestionsByIds(ids: number[]) {
+    return this.findAcceptedBy({
+      id: ids
+    });
   }
 
   public async addNew(question: Partial<QuestionEntity>) {
@@ -27,14 +36,14 @@ export class QuestionService {
     });
   }
 
-  public async findAcceptedBy(where: GetQuestionsRequestQuery) {
+  public async findAcceptedBy(where: QuestionWhere) {
     return this.findBy({
       ...where,
       status: [QuestionStatus.accepted]
     });
   }
 
-  public async findBy(optionalWhere: GetQuestionsRequestQuery) {
+  public async findBy(optionalWhere: QuestionWhere): Promise<QuestionEntity[]> {
     const where = removeUndefinedWhere(optionalWhere);
     const query = this.repository
       .createQueryBuilder('QuestionEntity')
