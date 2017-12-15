@@ -164,14 +164,14 @@ export const generatePdfHandler: Hapi.RouteHandlerParam<GeneratePdfRequest> = (a
       }
     },
     type: 'pdf'
-  }).toBuffer((err, _res) => {
+  }).toBuffer((err, pdf) => {
     if (err) {
       reply(err);
       return;
     }
 
-    reply(html);
-    // .header('Content-Type', 'application/pdf');
-    // .header('Content-Disposition', 'attachment; filename=fefaq-questions.pdf');
+    reply(pdf)
+      .header('Content-Type', 'application/pdf')
+      .header('Content-Disposition', 'attachment; filename=fefaq-questions.pdf');
   });
 });
