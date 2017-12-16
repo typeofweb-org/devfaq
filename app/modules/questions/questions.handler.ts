@@ -150,17 +150,17 @@ export const generatePdfHandler: Hapi.RouteHandlerParam<GeneratePdfRequest> = (a
     border: {
       top: '0.5cm',
       bottom: '0',
-      left: '2.5cm',
-      right: '2.5cm',
+      left: '1cm',
+      right: '1cm',
     },
     header: {
       height: '1cm',
-      contents: 'FeFaq.pl',
+      contents: 'FeFaq.pl — pytania rekrutacyjne dla front-end developerów',
     },
     footer: {
       height: '1cm',
       contents: {
-        default: 'FeFaq.pl'
+        default: 'FeFaq.pl — strona {{page}} z {{pages}}'
       }
     },
     type: 'pdf'
