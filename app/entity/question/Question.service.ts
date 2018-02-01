@@ -50,7 +50,7 @@ export class QuestionService {
     const query = this.repository
       .createQueryBuilder('QuestionEntity')
       .select('*')
-      .orderBy(orderBy, 'DESC');
+      .orderBy(`QuestionEntity.${orderBy}`, 'DESC');
 
     buildQueryForWhere(query, where);
 
