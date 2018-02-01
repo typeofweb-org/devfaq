@@ -14,6 +14,8 @@ export interface QuestionWhere {
   id?: number | number[];
 }
 
+export type QuestionOrderBy = keyof QuestionEntity;
+
 @Service()
 export class QuestionService {
   @OrmRepository(QuestionEntity)
@@ -43,11 +45,12 @@ export class QuestionService {
     });
   }
 
-  public async findBy(optionalWhere: QuestionWhere): Promise<QuestionEntity[]> {
+  public async findBy(optionalWhere: QuestionWhere, orderBy: QuestionOrderBy = 'acceptedAt'): Promise<QuestionEntity[]> {
     const where = removeUndefinedWhere(optionalWhere);
     const query = this.repository
       .createQueryBuilder('QuestionEntity')
-      .select('*');
+      .select('*')
+      .orderBy(orderBy, 'DESC');
 
     buildQueryForWhere(query, where);
 
