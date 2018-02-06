@@ -6,7 +6,7 @@ import * as Hapi from 'hapi';
 import * as htmlPdf from 'html-pdf';
 import * as path from 'path';
 import { Container } from 'typedi';
-import { QuestionCategory, QuestionStatus } from '../../entity/question/Question.model';
+import { QuestionCategory, QuestionEntity, QuestionStatus } from '../../entity/question/Question.model';
 import { QuestionService } from '../../entity/question/Question.service';
 import { QuestionNotFound } from '../../exception/exceptions';
 import { AuthInfo } from '../../plugins/auth';
@@ -143,7 +143,16 @@ export const generatePdfHandler: Hapi.RouteHandlerParam<GeneratePdfRequest> = (a
     return item;
   });
 
-  const html = templateFn({ questions: renderedQuestions });
+  type QuestionsByCategory = {
+    [category in keyof typeof QuestionCategory]?: QuestionEntity[]
+  };
+  const questionsByCategory = renderedQuestions.reduce<QuestionsByCategory>((acc, question) => {
+    (acc[question.category] as QuestionEntity[]) = acc[question.category] || [];
+    (acc[question.category] as QuestionEntity[]).push(question);
+    return acc;
+  }, {});
+
+  const html = templateFn({ questionsByCategory });
   htmlPdf.create(html, {
     format: 'A4',
     orientation: 'portrait',
@@ -155,7 +164,7 @@ export const generatePdfHandler: Hapi.RouteHandlerParam<GeneratePdfRequest> = (a
     },
     header: {
       height: '1cm',
-      contents: 'FeFaq.pl — pytania rekrutacyjne dla front-end developerów',
+      contents: 'FeFaq.pl — największa baza pytań z Front-Endu tworzona przez społeczność',
     },
     footer: {
       height: '1cm',

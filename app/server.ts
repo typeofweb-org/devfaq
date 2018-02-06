@@ -1,12 +1,13 @@
 import * as fs from 'fs';
 import * as Hapi from 'hapi';
+import * as HapiRaven from 'hapi-raven';
 import * as HapiSwagger from 'hapi-swagger';
 import * as Inert from 'inert';
 import * as Vision from 'vision';
-
 import { questionsRoutes } from './modules/questions/questions.routes';
 import { authRoutes } from './modules/tokens/tokens.routes';
 import { auth } from './plugins/auth';
+import { configService } from './services/configService';
 
 const version = fs.readFileSync('./.version', 'utf8');
 
@@ -38,6 +39,16 @@ server.connection({
 
 const serverPromise = new Promise<Hapi.Server>((resolve, reject) => {
   server.register([
+    {
+      register: HapiRaven,
+      options: {
+        dsn: configService.getRavenUrl(),
+        release: version,
+        environment: process.env.NODE_ENV,
+        autoBreadcrumbs: true,
+        captureUnhandledRejections: true
+      }
+    },
     Inert,
     Vision,
     {
@@ -50,11 +61,33 @@ const serverPromise = new Promise<Hapi.Server>((resolve, reject) => {
       return reject(err);
     }
 
+    process.on('unhandledRejection', (reason, promise: Promise<any> & any) => {
+      const error = new Error(`unhandledRejection: ${reason}`);
+
+      console.error(error);
+      try {
+        console.log(promise.toJSON().rejectionReason);
+        // tslint:disable-next-line:no-empty
+      } catch (e) { }
+
+      if (server.plugins['hapi-raven']) {
+        server.plugins['hapi-raven'].client.captureException(error, {
+          extra: {
+            promise
+          }
+        });
+      }
+    });
+
     server.ext('onPreResponse', (request, reply) => {
       const INTERNAL_SERVER_ERROR_CODE = 500;
       if (request.response && request.response.output && request.response.output.statusCode === INTERNAL_SERVER_ERROR_CODE) {
         const e = request.response as Hapi.Response & { stack: string };
         console.error(new Date(), e.name, e.message, e.stack);
+
+        if (server.plugins['hapi-raven']) {
+          server.plugins['hapi-raven'].client.captureException(e, { request });
+        }
 
         return reply(new Error('Internal server error'));
       }

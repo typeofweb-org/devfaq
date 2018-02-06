@@ -17,6 +17,13 @@ declare module 'vision' {
   export = inert;
 }
 
+declare module 'hapi-raven' {
+  import * as Hapi from 'hapi';
+
+  const HapiRaven: Hapi.PluginFunction<{}>;
+  export = HapiRaven;
+}
+
 declare module 'pdfmake' {
   const pdfmake: any;
   export = pdfmake;
@@ -24,4 +31,8 @@ declare module 'pdfmake' {
 
 interface ObjectConstructor {
   entries<T>(o: T): [keyof T, any][];
+}
+
+type Writable<T extends { [x: string]: any }, K extends string = keyof T> = {
+  [P in K]: T[P];
 }

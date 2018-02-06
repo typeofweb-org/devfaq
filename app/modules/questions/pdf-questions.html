@@ -4,6 +4,8 @@
   <meta charset="utf8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FeFaq.pl</title>
+  <link href="https://code.cdn.mozilla.net/fonts/fira.css" rel="stylesheet">
+  <link href="https://cdn.rawgit.com/tonsky/FiraCode/1.204/distr/fira_code.css" rel="stylesheet">
   <style>
     html,
     a,
@@ -20,14 +22,27 @@
     }
 
     html,
-    body {
+    body,
+    h1,
+    h2,
+    a,
+    p,
+    li,
+    table,
+    tr,
+    td {
       margin: 0;
       padding: 0;
-      font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-      font-weight: 500;
+      font-family: 'Fira Sans', Myriad, 'Myriad Pro', Helvetica, Arial, sans-serif;
+      font-weight: 400;
       background: white;
       -webkit-print-color-adjust: exact;
       box-sizing: border-box;
+    }
+
+    h1,
+    h2 {
+      font-weight: 700;
     }
 
     html,
@@ -281,14 +296,17 @@
 
 <body>
   <div class="page">
-    <table class="group">
-      {{#each questions}}
+    {{#each questionsByCategory as |questions category|}}
+    <h2>Technologia: {{category}}</h2>
+    <table>
+      {{#each questions as |question index|}}
       <tr>
-        <td class="index">{{inc @index}}.</td>
-        <td class="question">{{{question}}}</td>
+        <td class="index">{{inc index}}.</td>
+        <td class="question">{{{question.question}}}</td>
       </tr>
       {{/each}}
     </table>
+    {{/each}}
   </div>
 </body>
 
