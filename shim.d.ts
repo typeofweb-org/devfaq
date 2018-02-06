@@ -25,3 +25,7 @@ declare module 'pdfmake' {
 interface ObjectConstructor {
   entries<T>(o: T): [keyof T, any][];
 }
+
+type Writable<T extends { [x: string]: any }, K extends string = keyof T> = {
+  [P in K]: T[P];
+}
