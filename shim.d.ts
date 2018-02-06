@@ -17,6 +17,13 @@ declare module 'vision' {
   export = inert;
 }
 
+declare module 'hapi-raven' {
+  import * as Hapi from 'hapi';
+
+  const HapiRaven: Hapi.PluginFunction<{}>;
+  export = HapiRaven;
+}
+
 declare module 'pdfmake' {
   const pdfmake: any;
   export = pdfmake;
