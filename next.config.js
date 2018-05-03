@@ -26,6 +26,7 @@ const withPolyfills = (module.exports = (nextConfig = {}) => {
 });
 
 const config = withPolyfills(withImages(withTypescript(withSass())));
+config.useFileSystemPublicRoutes = false;
 
 module.exports = config;
 

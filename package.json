@@ -6,6 +6,8 @@
   "dependencies": {
     "@zeit/next-typescript": "0.1.1",
     "classnames": "2.2.5",
+    "express": "4.16.3",
+    "next-routes": "1.4.1",
     "normalize-scss": "7.0.1",
     "react": "16.3.2",
     "react-dom": "16.3.2",
@@ -18,10 +20,13 @@
     "@zeit/next-sass": "0.1.2",
     "next": "5.1.0",
     "next-images": "0.10.2",
-    "node-sass": "4.9.0"
+    "node-sass": "4.9.0",
+    "nodemon": "1.17.3"
   },
   "scripts": {
-    "start": "next"
+    "dev": "nodemon server.js --watch server.js --watch routes.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
   },
   "keywords": [],
   "author": "Michał Miszczyszyn <michal@mmiszy.pl> (https://typeofweb.com/)",
