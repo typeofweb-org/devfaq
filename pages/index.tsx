@@ -1,16 +1,13 @@
 import * as React from 'react';
-import { Http2ServerRequest } from 'http2';
 import '../styles/index.scss';
+import Layout from '../components/Layout';
 
-type IndexProps = {};
-type IndexState = {};
-
-export default class Index extends React.Component<IndexProps, IndexState> {
-  static async getInitialProps({ req }: { req: Http2ServerRequest }) {
-    return {};
-  }
-
+export default class Index extends React.Component {
   render() {
-    return <div>Hello, world!</div>;
+    return (
+      <Layout title="Siema">
+        <div>Hello, world 2!</div>
+      </Layout>
+    );
   }
 }
