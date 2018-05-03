@@ -1,22 +1,11 @@
 @import './common';
 @import 'node_modules/normalize-scss/sass/normalize.scss';
 @include normalize();
+@import "base";
+@import "../components/headers/navigationHeader";
+@import "../components/layout/layout.scss";
+@import "../components/logo/logo.scss";
 
-html {
-  overflow-y: scroll;
-  font-size: 10px;
-}
-
-html,
-a,
-p,
-li {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-html,
 body {
-  height: 100%;
-  width: 100%;
+  overflow-y: scroll;
 }

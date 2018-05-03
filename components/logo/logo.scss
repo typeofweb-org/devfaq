@@ -1,0 +1,24 @@
+@import "common";
+.app-logo {
+  display: block;
+  width: 100px;
+  height: 40px;
+  @include mediaquery('gt-sm') {
+    width: 140px;
+    height: $navigation-header-height;
+  }
+}
+
+.scaling-svg-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+}
+.scaling-svg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
