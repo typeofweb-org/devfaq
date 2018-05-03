@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import * as React from 'react';
-import NavigationHeader from './../headers/NavigationHeader';
+import NavigationHeader from '../headers/navigationHeader/NavigationHeader';
+import './layout.scss';
 
 type LayoutProps = {
   title?: string;

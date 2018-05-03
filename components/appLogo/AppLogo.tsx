@@ -1,3 +1,5 @@
+import './appLogo.scss';
+
 const AppLogo = ({ fill = '#ffffff' }) => {
   return (
     <div className="app-logo">

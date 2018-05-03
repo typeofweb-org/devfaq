@@ -2,9 +2,6 @@
 @import 'node_modules/normalize-scss/sass/normalize.scss';
 @include normalize();
 @import "base";
-@import "../components/headers/navigationHeader";
-@import "../components/layout/layout.scss";
-@import "../components/logo/logo.scss";
 
 body {
   overflow-y: scroll;
