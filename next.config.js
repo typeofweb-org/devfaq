@@ -25,7 +25,17 @@ const withPolyfills = (module.exports = (nextConfig = {}) => {
   });
 });
 
-const config = withPolyfills(withImages(withTypescript(withSass())));
+const config = withPolyfills(
+  withImages(
+    withTypescript(
+      withSass({
+        sassLoaderOptions: {
+          includePaths: ['styles/'],
+        },
+      })
+    )
+  )
+);
 config.useFileSystemPublicRoutes = false;
 
 module.exports = config;

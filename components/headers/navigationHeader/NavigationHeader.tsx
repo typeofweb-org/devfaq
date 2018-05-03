@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
-import AppLogo from '../logo/Logo';
+import AppLogo from '../../appLogo/AppLogo';
+import './navigationHeader.scss';
 
 type NavigationHeaderProps = {};
 type NavigationHeaderState = {
