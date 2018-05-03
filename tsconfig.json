@@ -16,7 +16,7 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "typeRoots": ["./node_modules/@types"],
-    "esModuleInterop": true,
+    // "esModuleInterop": false,
     "preserveConstEnums": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false

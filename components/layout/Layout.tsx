@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import * as React from 'react';
+import NavigationHeader from './../headers/NavigationHeader';
 
 type LayoutProps = {
   title?: string;
@@ -14,7 +15,6 @@ export default class Layout extends React.Component<LayoutProps> {
   };
 
   render() {
-    console.log('yyy');
     const { title, description, children } = this.props;
     return (
       <React.Fragment>
@@ -24,7 +24,10 @@ export default class Layout extends React.Component<LayoutProps> {
           <meta property="og:title" content={title} />
           <meta property="og:description" content={description} />
         </Head>
-        {children}
+        <div className="app-root">
+          <NavigationHeader />
+          {children}
+        </div>
       </React.Fragment>
     );
   }

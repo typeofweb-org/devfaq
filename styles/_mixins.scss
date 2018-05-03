@@ -1,16 +1,23 @@
-@mixin media($query) {
+@mixin hardwareAcceleration() {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+
+@mixin mediaquery($query) {
   $breakpoints: (
-    'gt-sm': '(min-width: 640px)',
-    'ls-md': '(max-width: 639px)',
-    /* xs, sm, md, lg */
+      'gt-sm': '(min-width: 640px)',
+      'ls-md': '(max-width: 639px)',
+      'large-filters': '(min-height: 800px), screen and (max-width: 639px)'
+      // xs, sm, md, lg
   );
 
   @if map-has-key($breakpoints, $query) {
-    @media screen and #{map-get($breakpoints, $query)} {
-      @content;
-    }
+      @media screen and #{map-get($breakpoints, $query)} {
+          @content;
+      }
   } @else {
-    @error "ERROR: No breakpoint specified for query '#{$query}'";
+      @error "ERROR: No breakpoint specified for query '#{$query}'";
   }
 }
 

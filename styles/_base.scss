@@ -1,0 +1,178 @@
+@import "common";
+@import "typography";
+@import "buttons";
+// @import "forms";
+// @import "devicons";
+// @import "icons";
+// @import "global";
+.container {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: $container-small-width;
+  padding: 0 $container-small-padding;
+  @include mediaquery('gt-sm') {
+    max-width: $container-large-width;
+    padding: 0 $container-large-padding;
+  }
+}
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  clip-path: none;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+  white-space: inherit;
+}
+
+.not-scrollable {
+  overflow: hidden;
+  position: fixed;
+  touch-action: none;
+}
+
+.app-static-page {
+  background: $white;
+  margin: 15px 0;
+  padding: 15px;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  color: $black-text-light;
+  pre {
+    white-space: pre-wrap;
+  }
+  p {
+    font-size: 1.5rem;
+  }
+}
+
+pre[class*=language-]::after,
+pre[class*=language-]::before {
+  /* remove shadow from PRISM */
+  display: none !important;
+}
+
+.spinner {
+  color: $purple;
+  font-size: 90px;
+  text-indent: -9999em;
+  overflow: hidden;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  transform: translateZ(0);
+  animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+  position: fixed;
+  left: 50%;
+  top: 30%;
+  transform: translate3d(-50%, -50%, 0.00001px);
+  z-index: $z-index-spinner;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  99.9999% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes load6 {
+  0% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+  5%,
+  95% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+  10%,
+  59% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+  }
+  20% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em, -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em, -0.749em -0.34em 0 -0.477em;
+  }
+  38% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em, -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em, -0.82em -0.09em 0 -0.477em;
+  }
+  100% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+}
+
+@keyframes round {
+  0% {
+    transform: translate3d(-50%, -50%, 0.00001px) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0.00001px) rotate(360deg);
+  }
+}
+
+html,
+body {
+  background-color: $purple-branding;
+}
+
+html.ios-standalone {
+  $size: 20px;
+  padding-top: $size;
+
+  body.not-scrollable {
+    margin-top: $size;
+  }
+
+  .main-nav .menu-button.open {
+    margin-top: $size;
+  }
+
+  .app-modal-container::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: $size;
+    background-color: $purple-branding;
+    z-index: $z-index-modal;
+  }
+
+  .app-modal {
+    top: $size;
+  }
+
+  .app-sidebar {
+    top: $size;
+    height: calc(100% - #{$size});
+  }
+
+  app-navigation-header {
+    z-index: $z-index-modal;
+  }
+
+  app-cta-header {
+    padding-top: $size;
+    margin-top: #{-$size};
+  }
+}
