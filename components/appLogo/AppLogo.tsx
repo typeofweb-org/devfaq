@@ -11,7 +11,7 @@ const AppLogo = ({ fill = '#ffffff' }) => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 472 104"
         >
-          <g fill="none" fill-rule="evenodd">
+          <g fill="none" fillRule="evenodd">
             <path style={{ fill: 'transparent !important;' }} d="M-10-10h124v124H-10z" />
             <path
               style={{ fill }}

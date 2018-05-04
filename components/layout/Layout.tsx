@@ -2,6 +2,7 @@ import Head from 'next/head';
 import * as React from 'react';
 import NavigationHeader from '../headers/navigationHeader/NavigationHeader';
 import './layout.scss';
+import CtaHeader from '../headers/ctaHeader/CtaHeader';
 
 type LayoutProps = {
   title?: string;
@@ -27,6 +28,7 @@ export default class Layout extends React.Component<LayoutProps> {
         </Head>
         <div className="app-root">
           <NavigationHeader />
+          <CtaHeader />
           {children}
         </div>
       </React.Fragment>
