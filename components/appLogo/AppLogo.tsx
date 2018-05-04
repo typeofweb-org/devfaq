@@ -12,7 +12,7 @@ const AppLogo = ({ fill = '#ffffff' }) => {
           viewBox="0 0 472 104"
         >
           <g fill="none" fillRule="evenodd">
-            <path style={{ fill: 'transparent !important;' }} d="M-10-10h124v124H-10z" />
+            <path style={{ fill: 'transparent !important' }} d="M-10-10h124v124H-10z" />
             <path
               style={{ fill }}
               d="M78 52c0 3-2 5-5 5H21L0 78V6c0-3 3-6 6-6h67c3 0 5 3 5 6v46zM51 15l-2-3-4-2-4-1c-4 0-7 1-9 4l-2 3-1 3v1h7v-1c0-1 1-3 5-3 1 0 3 0 3 3 0 1 0 2-2 3l-3 3c-2 0-3 1-3 3l-1 7h8v-5l1-1 2-2c2-1 6-4 6-8l-1-4zm-8 25l-4-2-3 2a4 4 0 0 0 0 6l3 1 4-1 1-3-1-3z"
