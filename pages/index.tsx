@@ -1,5 +1,5 @@
 import * as React from 'react';
-import '../styles/index.scss';
+import './index.scss';
 import Layout from '../components/layout/Layout';
 
 export default class Index extends React.Component {
