@@ -1,0 +1,21 @@
+@import "common";
+.app-static-page {
+  .app-authors {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .app-author {
+    padding: 30px;
+    box-sizing: border-box;
+    flex: 1;
+    text-align: center;
+  }
+  .app-author__image {
+    width: 200px;
+    height: 200px;
+  }
+  .app-author__name {
+    font-weight: 700;
+    font-size: 20px;
+  }
+}

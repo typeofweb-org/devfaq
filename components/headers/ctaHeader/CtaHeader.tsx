@@ -14,7 +14,7 @@ type CtaHeaderState = {
 class CtaHeader extends React.Component<CtaHeaderProps, CtaHeaderState> {
   state = {
     isDownloadEnabled: false,
-    downloadUrl: '',
+    downloadUrl: 'a',
   };
 
   render() {

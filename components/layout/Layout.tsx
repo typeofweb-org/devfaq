@@ -29,7 +29,7 @@ export default class Layout extends React.Component<LayoutProps> {
         <div className="app-root">
           <NavigationHeader />
           <CtaHeader />
-          {children}
+          <div className="app-content">{children}</div>
         </div>
       </React.Fragment>
     );
