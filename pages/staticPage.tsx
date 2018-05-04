@@ -4,9 +4,10 @@ import './index.scss';
 import './staticPage.scss';
 import { AboutPage, AuthorsPage } from './staticPages';
 
-const pathToContent: Record<string, React.ComponentType> = {
-  '/about': AboutPage,
-  '/authors': AuthorsPage,
+type StaticPageContent = { component: React.ComponentType; title: string };
+const pathToContent: Record<string, StaticPageContent> = {
+  '/about': { component: AboutPage, title: 'Jak korzystać? FAQ' },
+  '/authors': { component: AuthorsPage, title: 'Autorzy' },
 };
 
 export default class Index extends React.Component<{ asPath: string }> {
@@ -17,11 +18,12 @@ export default class Index extends React.Component<{ asPath: string }> {
   }
 
   render() {
-    const Content = pathToContent[this.props.asPath];
+    const content = pathToContent[this.props.asPath];
+    const Component = content.component;
     return (
-      <Layout title="Static page">
+      <Layout title={content.title}>
         <div className="container">
-          <Content />
+          <Component />
         </div>
       </Layout>
     );
