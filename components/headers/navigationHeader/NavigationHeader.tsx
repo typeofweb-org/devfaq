@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 import AppLogo from '../../appLogo/AppLogo';
 import './navigationHeader.scss';
+import ActiveLink from '../../activeLink/ActiveLink';
 
 type NavigationHeaderProps = {};
 type NavigationHeaderState = {
@@ -21,23 +22,25 @@ export default class NavigationHeader extends React.Component<
     return (
       <div className="navigation-header">
         <header className={classNames('app-header--main', 'container', { open })}>
-          <a href="/questions">
-            <h1>
-              <span className="visuallyhidden">Fefaq.pl</span>
-              <AppLogo />
-            </h1>
-          </a>
+          <ActiveLink route="/questions">
+            <a href="/questions">
+              <h1>
+                <span className="visuallyhidden">Fefaq.pl</span>
+                <AppLogo />
+              </h1>
+            </a>
+          </ActiveLink>
           <nav className={classNames('main-nav', { open })}>
             <ul>
               <li>
-                <a href="/about" onClick={this.onAboutClick}>
-                  Jak korzystać?
-                </a>
+                <ActiveLink route="/about">
+                  <a onClick={this.onAboutClick}>Jak korzystać?</a>
+                </ActiveLink>
               </li>
               <li>
-                <a href="/authors" onClick={this.onAuthorsClick}>
-                  Autorzy
-                </a>
+                <ActiveLink route="/authors">
+                  <a onClick={this.onAuthorsClick}>Autorzy</a>
+                </ActiveLink>
               </li>
               <li>
                 <a
