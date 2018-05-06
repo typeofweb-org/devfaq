@@ -5,6 +5,7 @@ routes
   .add('questions', '/questions', 'index')
   .add('selected-questions', '/selected-questions', 'index')
   .add('about', '/about', 'staticPage')
-  .add('authors', '/authors', 'staticPage');
+  .add('authors', '/authors', 'staticPage')
+  .add('regulations', '/regulations', 'staticPage');
 // .add('blog', '/blog/:slug')
 // .add('user', '/user/:id', 'profile');

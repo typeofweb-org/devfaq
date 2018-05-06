@@ -3,11 +3,13 @@ import Layout from '../components/layout/Layout';
 import './index.scss';
 import './staticPage.scss';
 import { AboutPage, AuthorsPage } from './staticPages';
+import AppRegulations from './staticPages/AppRegulations';
 
 type StaticPageContent = { component: React.ComponentType; title: string };
 const pathToContent: Record<string, StaticPageContent> = {
   '/about': { component: AboutPage, title: 'Jak korzystać? FAQ' },
   '/authors': { component: AuthorsPage, title: 'Autorzy' },
+  '/regulations': { component: AppRegulations, title: 'Regulations' },
 };
 
 export default class Index extends React.Component<{ asPath: string }> {
