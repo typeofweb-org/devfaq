@@ -7,6 +7,7 @@
     "@zeit/next-typescript": "0.1.1",
     "classnames": "2.2.5",
     "express": "4.16.3",
+    "htmlescape": "1.1.1",
     "next": "6.0.0",
     "next-images": "0.10.2",
     "next-redux-wrapper": "2.0.0-beta.4",
@@ -33,7 +34,7 @@
   },
   "scripts": {
     "dev": "nodemon server.js --watch server.js --watch routes.js",
-    "build": "next build",
+    "build": "NODE_ENV=production next build",
     "start": "NODE_ENV=production node server.js"
   },
   "keywords": [],
