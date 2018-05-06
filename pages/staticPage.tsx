@@ -3,7 +3,6 @@ import Layout from '../components/layout/Layout';
 import './index.scss';
 import './staticPage.scss';
 import { AboutPage, AuthorsPage } from './staticPages';
-import env from '../utils/env';
 
 type StaticPageContent = { component: React.ComponentType; title: string };
 const pathToContent: Record<string, StaticPageContent> = {
@@ -24,7 +23,6 @@ export default class Index extends React.Component<{ asPath: string }> {
     return (
       <Layout title={content.title}>
         <div className="container">
-          Process.env: {JSON.stringify(env.API_URL, null, 4)}
           <Component />
         </div>
       </Layout>

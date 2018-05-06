@@ -1,0 +1,49 @@
+@import "common";
+.footer-container {
+  margin-top: auto;
+  display: block;
+  height: $footer-height;
+  background-color: $purple-branding;
+  z-index: 30;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  @include mediaquery('gt-sm') {}
+  .footer-navigation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    @include mediaquery('gt-sm') {
+      justify-content: flex-end;
+    }
+    &--links {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: row;
+      margin-left: -30px;
+      @include mediaquery('gt-sm') {
+        margin-left: 0;
+      }
+      &--item {
+        a {
+          color: $white-text;
+          font-size: 1.4rem;
+          text-decoration: none;
+          display: block;
+          margin-left: 30px;
+          text-align: center;
+          @include mediaquery('gt-sm') {
+            text-align-last: left;
+          }
+        }
+        &:first-child a {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+}
