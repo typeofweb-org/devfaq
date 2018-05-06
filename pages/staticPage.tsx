@@ -1,9 +1,8 @@
 import * as React from 'react';
 import Layout from '../components/layout/Layout';
 import './index.scss';
-import './staticPage.scss';
-import { AboutPage, AuthorsPage } from './staticPages';
-import AppRegulations from './staticPages/AppRegulations';
+import './staticPages/staticPage.scss';
+import { AboutPage, AuthorsPage, AppRegulations } from './staticPages';
 
 type StaticPageContent = { component: React.ComponentType; title: string };
 const pathToContent: Record<string, StaticPageContent> = {
