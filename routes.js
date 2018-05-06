@@ -2,7 +2,7 @@ const routes = (module.exports = require('next-routes')());
 
 routes
   .add('index', '/')
-  .add('questions', '/questions', 'index')
+  .add('questions', '/questions')
   .add('selected-questions', '/selected-questions', 'index')
   .add('about', '/about', 'staticPage')
   .add('authors', '/authors', 'staticPage')
