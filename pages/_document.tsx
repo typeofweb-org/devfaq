@@ -1,16 +1,11 @@
 import Document, { Main, Head, NextScript } from 'next/document';
-import * as url from 'url';
 
-export default class extends Document {
+export default class MyDocument extends Document {
   static async getInitialProps(ctx: any) {
     const initialProps = await Document.getInitialProps(ctx);
     return {
       ...initialProps,
-      absoluteUrl: url.format({
-        protocol: 'https',
-        host: ctx.req.get('host'),
-        pathname: ctx.req.originalUrl,
-      }),
+      absoluteUrl: ctx.pathname,
     };
   }
 
