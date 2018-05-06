@@ -1,4 +1,5 @@
 import Document, { Main, Head, NextScript } from 'next/document';
+import { unsafe_getEnvScriptForDocument } from '../utils/env';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: any) {
@@ -60,6 +61,8 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Fira+Sans:200,400,700&amp;subset=latin-ext"
             rel="stylesheet"
           />
+
+          <script dangerouslySetInnerHTML={unsafe_getEnvScriptForDocument()} />
         </Head>
         <body>
           <Main />
