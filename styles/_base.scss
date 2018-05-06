@@ -186,3 +186,9 @@ html.ios-standalone {
     flex: 1;
   }
 }
+
+.mobile-hide {
+  @include mediaquery('ls-md') {
+    display: none;
+  }
+}
