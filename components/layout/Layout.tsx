@@ -3,6 +3,7 @@ import * as React from 'react';
 import NavigationHeader from '../headers/navigationHeader/NavigationHeader';
 import './layout.scss';
 import CtaHeader from '../headers/ctaHeader/CtaHeader';
+import AppFooter from '../footer/AppFooter';
 
 type LayoutProps = {
   title?: string;
@@ -30,6 +31,7 @@ export default class Layout extends React.Component<LayoutProps> {
           <NavigationHeader />
           <CtaHeader />
           <div className="app-content">{children}</div>
+          <AppFooter />
         </div>
       </React.Fragment>
     );

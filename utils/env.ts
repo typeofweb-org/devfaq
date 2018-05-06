@@ -5,8 +5,8 @@ export default env;
 export type ProcessENV = ReturnType<typeof getEnvObjForDocument>;
 
 const getEnvObjForDocument = () => {
-  const { API_URL } = process.env;
-  const env = { API_URL };
+  const { API_URL, VERSION } = process.env;
+  const env = { API_URL, VERSION };
   return env;
 };
 
