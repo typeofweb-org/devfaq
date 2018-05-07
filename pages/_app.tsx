@@ -39,7 +39,7 @@ class MyApp extends React.Component<MyAppProps> {
 }
 type Omit<T, K> = Pick<T, Exclude<keyof T, K>>;
 const options: Omit<withReduxType.Options<AppState, any, any, any, any>, 'createStore'> = {
-  debug: true,
+  debug: false,
 };
 // @todo update next-redux-wrapper definitions
 export default withRedux(makeStore, options as any)(MyApp);
