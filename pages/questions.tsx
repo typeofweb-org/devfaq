@@ -1,10 +1,9 @@
 import * as React from 'react';
 import './index.scss';
 import Layout from '../components/layout/Layout';
-import { AppState } from '../redux/reducers/index';
 import QuestionsListView from '../components/questions/questionsListLayout/QuestionsListView';
 
-export default class Index extends React.Component<ReturnType<typeof mapStateToProps>> {
+export default class Index extends React.Component {
   render() {
     return (
       <Layout title="Pytania">
@@ -13,9 +12,3 @@ export default class Index extends React.Component<ReturnType<typeof mapStateToP
     );
   }
 }
-
-const mapStateToProps = (state: AppState) => {
-  return {
-    foo: state.foo,
-  };
-};

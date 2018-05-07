@@ -1,6 +1,6 @@
 import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
 import { NextStoreCreator } from 'next-redux-wrapper';
-import { createStore } from 'redux';
+import { createStore, Store } from 'redux';
 import { reducers } from './reducers';
 import { AppState } from './reducers/index';
 
@@ -12,6 +12,6 @@ export const makeStore: NextStoreCreator<AppState, any, any, any, any> = (
   initialState,
   _options
 ) => {
-  const store = createStore(reducers, initialState, composeEnhancers());
+  const store = createStore(reducers, initialState, composeEnhancers()) as Store<AppState>;
   return store;
 };
