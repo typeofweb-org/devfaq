@@ -3,13 +3,18 @@ import * as React from 'react';
 import { AppState } from '../../../redux/reducers';
 import { connect } from 'react-redux';
 import * as classNames from 'classnames';
+import { ActionCreators } from '../../../redux/actions';
+import {
+  isDownloadEnabledSelector,
+  getDownloadUrlSelector,
+} from '../../../redux/selectors/selectors';
 
 type MobileActionButtonsProps = {
   justDownload: boolean;
 };
 
 class MobileActionButtons extends React.Component<
-  MobileActionButtonsProps & ReturnType<typeof mapStateToProps>
+  MobileActionButtonsProps & ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 > {
   render() {
     const { justDownload } = this.props;
@@ -20,7 +25,7 @@ class MobileActionButtons extends React.Component<
             className="open-sidebar circle-button"
             title="Filtruj wyniki"
             aria-label="Filtruj wyniki"
-            onClick={this.openSidebar}
+            onClick={this.props.uiOpenSidebar}
           />
         )}
         {!justDownload && (
@@ -28,28 +33,28 @@ class MobileActionButtons extends React.Component<
             className="add-question circle-button"
             title="Dodaj pytanie"
             aria-label="Dodaj pytanie"
-            onClick={this.openAddQuestionModal}
+            onClick={this.props.uiOpenAddQuestionModal}
           />
         )}
         {!justDownload && (
           <a
             className={classNames('download', 'circle-button', {
-              disabled: !this.isDownloadEnabled(),
+              disabled: !this.props.isDownloadEnabled,
             })}
             title="Pobierz PDF"
             aria-label="Pobierz PDF"
-            href={this.getDownloadUrl()}
+            href={this.props.downloadUrl}
             onClick={this.onDownloadClick}
             target="_blank"
-            tabIndex={this.isDownloadEnabled() ? 0 : -1}
-            aria-disabled={!this.isDownloadEnabled()}
+            tabIndex={this.props.isDownloadEnabled ? 0 : -1}
+            aria-disabled={!this.props.isDownloadEnabled}
           />
         )}
         {justDownload &&
-          this.isDownloadEnabled() && (
+          this.props.isDownloadEnabled && (
             <a
               className="round-button alert-button"
-              href={this.getDownloadUrl()}
+              href={this.props.downloadUrl}
               onClick={this.onDownloadClick}
               target="_blank"
             >
@@ -59,22 +64,21 @@ class MobileActionButtons extends React.Component<
       </div>
     );
   }
-
-  isDownloadEnabled = () => {
-    return false;
-  };
-  getDownloadUrl = () => {
-    return 'a';
-  };
-  openSidebar = () => {};
-  openAddQuestionModal = () => {};
   onDownloadClick = () => {};
 }
 
 const mapStateToProps = (state: AppState, ownProps: MobileActionButtonsProps) => {
   return {
+    isDownloadEnabled: isDownloadEnabledSelector(state),
+    downloadUrl: getDownloadUrlSelector(state),
+
     ...ownProps,
   };
+};
+
+const mapDispatchToProps = {
+  uiOpenSidebar: ActionCreators.uiOpenSidebar,
+  uiOpenAddQuestionModal: ActionCreators.uiOpenAddQuestionModal,
 };
 
 export default connect(mapStateToProps)(MobileActionButtons);

@@ -1,8 +1,12 @@
-import { foo } from './foo';
 import { combineReducers } from 'redux';
+import { questions } from './questions';
+import { selectedQuestions } from './selectedQuestions';
+import { ui } from './ui';
 
 const reducersObj = {
-  foo,
+  questions,
+  selectedQuestions,
+  ui,
 };
 export const reducers = combineReducers(reducersObj as any);
 

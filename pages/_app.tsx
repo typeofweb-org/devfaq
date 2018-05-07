@@ -25,7 +25,7 @@ type MyAppProps = {
 
 class MyApp extends React.Component<MyAppProps> {
   static async getInitialProps({ Component, ctx }: AppGetInitialPropsArg) {
-    await ctx.store.dispatch(ActionCreators.foo('some text'));
+    // await ctx.store.dispatch(ActionCreators.foo('some text'));
 
     const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
 

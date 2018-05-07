@@ -1,7 +1,7 @@
 @import "common";
 
 .mobile-action-buttons {
-  // display: none;
+  display: none;
   @include mediaquery('ls-md') {
     display: flex;
     position: fixed;
