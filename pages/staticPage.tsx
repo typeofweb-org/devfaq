@@ -13,6 +13,8 @@ const pathToContent: Record<string, StaticPageContent> = {
 
 export default class Index extends React.Component<{ asPath: string }> {
   static async getInitialProps(ctx: { asPath: string }) {
+    // @todo remove
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     return {
       asPath: ctx.asPath,
     };
