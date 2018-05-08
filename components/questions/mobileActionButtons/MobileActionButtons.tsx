@@ -67,12 +67,10 @@ class MobileActionButtons extends React.Component<
   onDownloadClick = () => {};
 }
 
-const mapStateToProps = (state: AppState, ownProps: MobileActionButtonsProps) => {
+const mapStateToProps = (state: AppState) => {
   return {
     isDownloadEnabled: isDownloadEnabledSelector(state),
     downloadUrl: getDownloadUrlSelector(state),
-
-    ...ownProps,
   };
 };
 
@@ -81,4 +79,4 @@ const mapDispatchToProps = {
   uiOpenAddQuestionModal: ActionCreators.uiOpenAddQuestionModal,
 };
 
-export default connect(mapStateToProps)(MobileActionButtons);
+export default connect(mapStateToProps, mapDispatchToProps)(MobileActionButtons);
