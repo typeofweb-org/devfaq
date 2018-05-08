@@ -1,17 +1,6 @@
 import { Actions, ActionTypes } from '../actions';
 import { Question } from './questions';
-
-export enum Technology {
-  html = 'HTML',
-  css = 'CSS',
-  js = 'JS',
-  angular = 'Angular',
-  react = 'React',
-  git = 'GIT',
-  other = 'Inne',
-}
-
-export type TechnologyKey = keyof typeof Technology;
+import { TechnologyKey } from '../../constants/technology-icon-items';
 
 type SelectedQuestions = { [key in TechnologyKey]: Question[] };
 

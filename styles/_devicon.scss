@@ -1,0 +1,29 @@
+@import "common";
+
+[class*="devicon-"] {
+  font-size: 3rem;
+}
+
+.devicon {
+  &-html5-plain {
+    color: $html5-color;
+  }
+  &-css3-plain {
+    color: $css3-color;
+  }
+  &-javascript-plain {
+    color: $javascript-color;
+  }
+  &-angularjs-plain {
+    color: $angularjs-color;
+  }
+  &-react-original {
+    color: $react-color;
+  }
+  &-git-plain {
+    color: $git-color;
+  }
+  &-devicon-plain {
+    color: $other-color;
+  }
+}
