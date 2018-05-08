@@ -6,6 +6,7 @@ import { addRouterEventListener, removeRouterEventListener } from '../../utils/r
 
 type ActiveLinkOwnProps = {
   activeClassName?: string;
+  exact?: boolean;
 };
 type ActiveLinkRouterProps = {
   router: SingletonRouter;
@@ -60,19 +61,28 @@ class ActiveLinkComponent extends React.Component<
 
   render() {
     const { children, route, activeClassName = '' } = this.props;
-    const shouldAddActiveClass = this.state.asPath === route;
     const child = React.Children.only(children);
 
     return (
       <Link route={route}>
-        {conditionallyAddClassToChild(shouldAddActiveClass, activeClassName, child)}
+        {conditionallyAddClassToChild(this.isMatch(), activeClassName, child)}
       </Link>
     );
   }
 
-  onRouteChangeComplete = () => {
+  private onRouteChangeComplete = () => {
     const nextState = ActiveLinkComponent.getDerivedStateFromProps(this.props, this.state);
     this.setState(nextState as Required<ActiveLinkComponentState>);
+  };
+
+  private isMatch = (): boolean => {
+    if (this.state.asPath === this.props.route) {
+      return true;
+    }
+    if (this.state.asPath && !this.props.exact) {
+      return this.state.asPath.startsWith(this.props.route);
+    }
+    return false;
   };
 }
 
