@@ -5,6 +5,7 @@ import { AppState } from '../../../redux/reducers/index';
 import { ActionCreators } from '../../../redux/actions';
 import { connect } from 'react-redux';
 import { TechnologyFilter } from './technologyFilter/TechnologyFilter';
+import LevelFilter from './levelFilter/LevelFilter';
 
 class QuestionsSidebarComponent extends React.Component<
   ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
@@ -16,7 +17,9 @@ class QuestionsSidebarComponent extends React.Component<
           <section className="app-sidebar--section">
             <TechnologyFilter />
           </section>
-          <section className="app-sidebar--section">app-level-filter</section>
+          <section className="app-sidebar--section">
+            <LevelFilter />
+          </section>
           <button
             className="app-sidebar--accept round-button branding-button-inverse"
             onClick={this.props.uiCloseSidebar}
