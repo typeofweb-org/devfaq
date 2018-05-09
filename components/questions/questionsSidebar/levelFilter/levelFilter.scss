@@ -1,4 +1,13 @@
 @import "common";
+.app-filter--title {
+  color: $purple-branding;
+  font-size: 1.4rem;
+  border-bottom: 1px solid $purple-branding;
+  font-weight: 400;
+  margin: 0;
+  padding-bottom: 7px;
+}
+
 .app-filter {
   &--levels {
     display: flex;
