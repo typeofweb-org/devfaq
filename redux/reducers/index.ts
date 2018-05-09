@@ -2,11 +2,13 @@ import { combineReducers } from 'redux';
 import { questions } from './questions';
 import { selectedQuestions } from './selectedQuestions';
 import { ui } from './ui';
+import { selectedLevels } from './selectedLevels';
 
 const reducersObj = {
   questions,
   selectedQuestions,
   ui,
+  selectedLevels,
 };
 export const reducers = combineReducers(reducersObj as any);
 
