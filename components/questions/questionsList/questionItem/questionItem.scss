@@ -1,0 +1,186 @@
+@import "common";
+.app-questions--question {
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
+  background-color: $white-text;
+  box-sizing: border-box;
+  padding: 15px 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  border: 1px solid $white-text;
+  overflow: hidden;
+  @include mediaquery('gt-sm') {
+    padding: 20px;
+  }
+  &.active {
+    border-color: $purple-branding;
+    article.ng-trigger-questionExit.ng-animating & {
+      display: none;
+    }
+  }
+  &_deleted {
+    background-color: $purple-branding-superlight;
+    align-items: center;
+    color: $red-branding;
+    width: 100%;
+    border: 0;
+    height: 71px;
+    position: absolute;
+    article.ng-trigger-questionExit.ng-animating & {
+      position: relative;
+      z-index: 1;
+    }
+    .action-icon,
+    p {
+      margin: 0;
+    }
+    .action-icon {
+      position: absolute;
+    }
+    p {
+      margin-left: 60px;
+    }
+    &--progress {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 5px;
+      &::before {
+        @keyframes fill {
+          0% {
+            width: 0%;
+          }
+          100% {
+            width: 100%;
+          }
+        }
+        content: '';
+        width: 0;
+        height: 5px;
+        display: block;
+        background: rgba(0, 0, 0, 0.19);
+        animation: fill 5s linear;
+      }
+    }
+  }
+  .edit-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+  &--remove-container {
+    border-left: 1px solid $grey-background;
+    width: 35px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+    margin-right: -5px;
+    margin-top: -15px;
+    margin-bottom: -15px;
+    margin-left: 10px;
+    @include mediaquery('gt-sm') {
+      margin-right: -20px;
+      margin-top: -20px;
+      margin-bottom: -20px;
+    }
+  }
+  &--remove--icon {
+    width: 35px;
+    height: 30px;
+    cursor: pointer;
+    background-color: transparent;
+    appearance: none;
+    border: none;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-image: url(/static/images/delete_forever_icon.svg);
+    background-size: 20px;
+  }
+  &--checkbox {
+    cursor: pointer;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    flex: 0 0 25px;
+    border: none;
+    box-sizing: border-box;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-image: url(/static/images/checkbox.svg);
+    background-size: 25px 54px;
+    background-color: transparent;
+    &:checked {
+      background-position: 0 100%;
+    }
+    &:focus {
+      outline: 0;
+    }
+  }
+  &--text {
+    flex: 1;
+    margin-top: 2px;
+    min-width: 0;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    @include mediaquery('gt-sm') {
+      margin-left: 1em;
+      margin-right: 1em;
+    }
+  }
+  &--meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    font-size: 0.9em;
+  }
+  &--date {
+    &_long {
+      display: none;
+    }
+    &_short {
+      display: block;
+    }
+    @include mediaquery('gt-sm') {
+      &_long {
+        display: block;
+      }
+      &_short {
+        display: none;
+      }
+    }
+  }
+  &--tag {
+    width: 60px;
+    height: 30px;
+    box-sizing: border-box;
+    display: block;
+    line-height: 30px;
+    border-radius: 30px;
+    text-align: center;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+    @include mediaquery('gt-sm') {
+      width: 80px;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &_junior {
+      background-color: $junior-main-color;
+      color: $white-text;
+    }
+    &_mid {
+      background-color: $mid-main-color;
+      color: $white-text;
+    }
+    &_senior {
+      background-color: $senior-main-color;
+      color: $white-text;
+    }
+  }
+}

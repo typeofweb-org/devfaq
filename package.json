@@ -6,6 +6,7 @@
   "dependencies": {
     "@zeit/next-typescript": "0.1.1",
     "classnames": "2.2.5",
+    "date-fns": "2.0.0-alpha.7",
     "express": "4.16.3",
     "htmlescape": "1.1.1",
     "next": "6.0.0",
@@ -34,7 +35,7 @@
     "@types/redux": "3.6.0",
     "@zeit/next-sass": "0.1.2",
     "cross-env": "5.1.4",
-    "nodemon": "1.17.3",
+    "nodemon": "1.17.4",
     "webpack-bundle-analyzer": "2.11.1"
   },
   "scripts": {
