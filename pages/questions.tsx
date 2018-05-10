@@ -14,6 +14,7 @@ export default class Index extends React.Component {
       return redirect(ctx, '/questions/js');
     }
   }
+
   render() {
     return (
       <Layout title="Pytania">

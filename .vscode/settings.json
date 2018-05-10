@@ -21,6 +21,5 @@
     "**/bower_components": true,
     ".next": true
   },
-  "editor.lineNumbers": "relative",
   "tsimporter.preferRelative": true
 }
