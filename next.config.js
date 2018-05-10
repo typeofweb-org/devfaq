@@ -1,4 +1,5 @@
 const withTypescript = require('@zeit/next-typescript');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const withSass = require('@zeit/next-sass');
 const withImages = require('next-images');
 
@@ -81,8 +82,9 @@ const config = withPolyfills(
         sassLoaderOptions: {
           includePaths: ['styles/'],
         },
-        webpack: (config) => {
+        webpack: (config, options) => {
           config = commonsChunkConfig(config, /\.(sass|scss|css)$/);
+          if (options.isServer) config.plugins.push(new ForkTsCheckerWebpackPlugin());
           return config;
         },
       })

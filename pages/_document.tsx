@@ -1,9 +1,12 @@
 import Document, { Main, Head, NextScript } from 'next/document';
 import { unsafe_getEnvScriptForDocument } from '../utils/env';
+import { GetInitialProps } from '../utils/types';
+
+type DocumentComponentType = typeof Document & { getInitialProps: GetInitialProps };
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: any) {
-    const initialProps = await Document.getInitialProps(ctx);
+    const initialProps = await (Document as DocumentComponentType).getInitialProps(ctx);
     return {
       ...initialProps,
       absoluteUrl: ctx.pathname,

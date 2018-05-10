@@ -1,22 +1,16 @@
 import { Actions, ActionTypes } from '../actions';
 import { Question } from './questions';
-import { TechnologyKey } from '../../constants/technology-icon-items';
-
-type SelectedQuestions = { [key in TechnologyKey]: Question[] };
-
-const initialSelectedQuestions: SelectedQuestions = {
-  html: [],
-  css: [],
-  js: [],
-  angular: [],
-  react: [],
-  git: [],
-  other: [],
-};
 
 export const selectedQuestions = (
-  selectedQuestions = initialSelectedQuestions,
-  _action: Actions
-) => {
-  return selectedQuestions;
+  selectedQuestions: Question[] = [],
+  action: Actions
+): Question[] => {
+  switch (action.type) {
+    case ActionTypes.SELECT_QUESTION:
+      return [...selectedQuestions, action.payload];
+    case ActionTypes.DESELECT_QUESTION:
+      return selectedQuestions.filter((question) => question.id !== action.payload.id);
+    default:
+      return selectedQuestions;
+  }
 };
