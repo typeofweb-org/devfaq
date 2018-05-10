@@ -1,0 +1,19 @@
+@import "common";
+.app-questions--footer {
+  display: none;
+  @include mediaquery('gt-sm') {
+    background-color: $grey-shadow;
+    display: flex;
+    padding: 15px;
+    box-shadow: inset rgba(60, 60, 60, 0.5) 0 1px 3px 0;
+    color: $black-text-light;
+    text-align: left;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 60px;
+    p {
+      margin: 0;
+    }
+  }
+}
