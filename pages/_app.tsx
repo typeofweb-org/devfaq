@@ -3,7 +3,6 @@ import { Store } from 'redux';
 import * as withReduxType from 'next-redux-wrapper';
 import { NextReduxWrappedComponent } from 'next-redux-wrapper';
 import { makeStore } from '../redux/store';
-import { ActionCreators } from '../redux/actions';
 import { AppState } from '../redux/reducers/index';
 
 // hack because of incorrect d.ts file

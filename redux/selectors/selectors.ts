@@ -1,6 +1,8 @@
 import { createSelector } from 'reselect';
 import { AppState } from '../reducers';
 import env from '../../utils/env';
+import { Question } from '../reducers/questions';
+import { TechnologyKey } from '../../constants/technology-icon-items';
 
 const questionsSelector = (state: AppState) => state.questions;
 const selectedQuestionsSelector = (state: AppState) => state.selectedQuestions;
@@ -10,21 +12,35 @@ export const isDownloadEnabledSelector = createSelector(
   (questions) => questions && questions.length > 0
 );
 
-export const getSelectedIdsSelector = createSelector(
-  selectedQuestionsSelector,
-  (selectedQuestions) =>
-    (Object.keys(selectedQuestions) as (keyof typeof selectedQuestions)[])
-      .map((category) => selectedQuestions[category])
-      .reduce((acc, next) => acc.concat(next), [])
-      .map(({ id }) => id)
-);
-
 export const areAnyQuestionSelected = createSelector(
   selectedQuestionsSelector,
-  (selectedQuestions) => Object.values(selectedQuestions).some((questions) => questions.length > 0)
+  (selectedQuestions) => selectedQuestions.length > 0
 );
 
 export const getDownloadUrlSelector = createSelector(
-  getSelectedIdsSelector,
+  selectedQuestionsSelector,
   (selectedIds) => `${env.API_URL}/pdf-questions?question=${selectedIds.join(',')}`
+);
+
+type SelectedQuestionsByTechnology = { [key in TechnologyKey]: Question[] };
+
+export const getSelectedQuestionsByCategory = createSelector(
+  selectedQuestionsSelector,
+  (selectedQuestions): SelectedQuestionsByTechnology => {
+    return selectedQuestions.reduce<SelectedQuestionsByTechnology>(
+      (acc, selectedQuestion) => {
+        acc[selectedQuestion.category].push(selectedQuestion);
+        return acc;
+      },
+      {
+        html: [],
+        css: [],
+        js: [],
+        angular: [],
+        react: [],
+        git: [],
+        other: [],
+      }
+    );
+  }
 );

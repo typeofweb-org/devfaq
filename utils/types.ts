@@ -22,3 +22,7 @@ type BrowserContext = CommonContext & {
 };
 
 export type GetInitialPropsContext = ServerContext | BrowserContext;
+export type GetInitialProps = <T>(ctx: GetInitialPropsContext) => Promise<T>;
+// export type HasGetInitialProps<T extends React.Component> = React.Component & {
+//   getInitialProps: GetInitialProps;
+// };
