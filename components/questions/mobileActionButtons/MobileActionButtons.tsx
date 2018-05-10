@@ -13,7 +13,7 @@ type MobileActionButtonsProps = {
   justDownload: boolean;
 };
 
-class MobileActionButtons extends React.Component<
+class MobileActionButtonsComponent extends React.Component<
   MobileActionButtonsProps & ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 > {
   render() {
@@ -79,4 +79,7 @@ const mapDispatchToProps = {
   uiOpenAddQuestionModal: ActionCreators.uiOpenAddQuestionModal,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MobileActionButtons);
+const MobileActionButtons = connect(mapStateToProps, mapDispatchToProps)(
+  MobileActionButtonsComponent
+);
+export default MobileActionButtons;
