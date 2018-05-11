@@ -5,6 +5,7 @@ import * as classNames from 'classnames';
 
 import { pl } from 'date-fns/locale';
 import { formatWithOptions } from 'date-fns/fp';
+import { isQuestionSelected } from '../../questionsUtils';
 
 const longDate = formatWithOptions({ locale: pl }, 'LL');
 const shortDate = formatWithOptions({ locale: pl }, 'L');
@@ -33,7 +34,7 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps> 
         >
           {this.props.selectable && (
             <input
-              onClick={() => this.toggleQuestion(question)}
+              onClick={() => this.props.toggleQuestion(question)}
               checked={isSelected}
               type="checkbox"
               className="app-questions--question--checkbox"
@@ -90,10 +91,9 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps> 
   }
 
   private isCurrentQuestionSelected = () => {
-    return this.props.selectedQuestionIds.includes(this.props.question.id);
+    return isQuestionSelected(this.props.selectedQuestionIds, this.props.question);
   };
 
   editQuestion = (_question: Question) => {};
   deleteQuestionForever = (_question: Question) => {};
-  toggleQuestion = (_question: Question) => {};
 }

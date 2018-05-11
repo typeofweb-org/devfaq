@@ -11,7 +11,9 @@ const defaultProps = {
   selectedQuestionIds: [] as number[],
 };
 
-export default class QuestionsList extends React.Component<typeof defaultProps> {
+export default class QuestionsList extends React.Component<
+  typeof defaultProps & { toggleQuestion(question: Question): any }
+> {
   static defaultProps = defaultProps;
 
   render() {
@@ -25,7 +27,7 @@ export default class QuestionsList extends React.Component<typeof defaultProps> 
             editable={this.props.editable}
             removable={this.props.removable}
             selectedQuestionIds={this.props.selectedQuestionIds}
-            toggleQuestion={console.log}
+            toggleQuestion={this.props.toggleQuestion}
           />
         ))}
       </div>
