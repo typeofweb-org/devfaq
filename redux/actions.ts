@@ -1,6 +1,7 @@
 import { ActionsUnion, createAction } from './types';
 import { LevelKey } from '../constants/level';
 import { Question } from './reducers/questions';
+import { RouteDetails } from '../utils/types';
 
 export const enum ActionTypes {
   UI_OPEN_SIDEBAR = 'UI_OPEN_SIDEBAR',
@@ -11,6 +12,7 @@ export const enum ActionTypes {
   DESELECT_LEVEL = 'DESELECT_LEVEL',
   SELECT_QUESTION = 'SELECT_QUESTION',
   DESELECT_QUESTION = 'DESELECT_QUESTION',
+  UPDATE_ROUTE = 'UPDATE_ROUTE',
 }
 
 export const ActionCreators = {
@@ -22,6 +24,7 @@ export const ActionCreators = {
   deselectLevel: (level: LevelKey) => createAction(ActionTypes.DESELECT_LEVEL, level),
   selectQuestion: (q: Question) => createAction(ActionTypes.SELECT_QUESTION, q),
   deselectQuestion: (q: Question) => createAction(ActionTypes.DESELECT_QUESTION, q),
+  updateRoute: (routeDetails: RouteDetails) => createAction(ActionTypes.UPDATE_ROUTE, routeDetails),
 };
 
 export type Actions = ActionsUnion<typeof ActionCreators>;
