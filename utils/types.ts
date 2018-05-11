@@ -3,10 +3,7 @@ import { Http2ServerRequest, Http2ServerResponse } from 'http2';
 import { Store } from 'redux';
 import { AppState } from '../redux/reducers/index';
 
-type CommonContext = {
-  pathname: SingletonRouter['pathname'];
-  query: SingletonRouter['query'];
-  asPath: SingletonRouter['asPath'];
+type CommonContext = RouteDetails & {
   store: Store<AppState>;
 };
 
@@ -26,3 +23,10 @@ export type GetInitialProps = <T>(ctx: GetInitialPropsContext) => Promise<T>;
 // export type HasGetInitialProps<T extends React.Component> = React.Component & {
 //   getInitialProps: GetInitialProps;
 // };
+
+export type RouteDetails = {
+  pathname: SingletonRouter['pathname'];
+  query?: SingletonRouter['query'];
+  asPath?: SingletonRouter['asPath'];
+  route: SingletonRouter['route'];
+};
