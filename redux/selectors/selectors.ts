@@ -17,8 +17,12 @@ export const areAnyQuestionSelected = createSelector(
   (selectedQuestions) => selectedQuestions.length > 0
 );
 
+export const getSelectedQuestionsIds = createSelector(selectedQuestionsSelector, (questions) =>
+  questions.map((q) => q.id)
+);
+
 export const getDownloadUrlSelector = createSelector(
-  selectedQuestionsSelector,
+  getSelectedQuestionsIds,
   (selectedIds) => `${env.API_URL}/pdf-questions?question=${selectedIds.join(',')}`
 );
 

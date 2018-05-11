@@ -6,8 +6,12 @@ import './allQuestions.scss';
 import { AllQuestionsHeader } from './allQuestionsHeader/AllQuestionsHeader';
 import { AllQuestionsFooter } from './allQuestionsFooter/AllQuestionsFooter';
 import QuestionsList from '../questionsList/QuestionsList';
+import { Question } from '../../../redux/reducers/questions';
+import { getSelectedQuestionsIds } from '../../../redux/selectors/selectors';
+import { ActionCreators } from '../../../redux/actions';
+import { isQuestionSelected } from '../questionsUtils';
 
-type AllQuestionsComponentProps = ReturnType<typeof mapStateToProps>;
+type AllQuestionsComponentProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 type AllQuestionsComponentState = {
   technology: TechnologyKey | undefined;
 };
@@ -52,12 +56,21 @@ class AllQuestionsComponent extends React.Component<
               acceptedAt: '2018-01-01',
             },
           ]}
-          selectedQuestionIds={[]}
+          selectedQuestionIds={this.props.selectedQuestionsIds}
+          toggleQuestion={this.toggleQuestion}
         />
         <AllQuestionsFooter onAddNewClick={() => {}} />
       </section>
     );
   }
+
+  toggleQuestion = (question: Question) => {
+    if (isQuestionSelected(this.props.selectedQuestionsIds, question)) {
+      this.props.deselectQuestion(question);
+    } else {
+      this.props.selectQuestion(question);
+    }
+  };
 
   onRouteChangeComplete = () => {
     const nextState = AllQuestionsComponent.getDerivedStateFromProps(this.props, this.state);
@@ -69,8 +82,14 @@ const mapStateToProps = (state: AppState) => {
   return {
     routeDetails: state.routeDetails,
     questions: state.questions,
+    selectedQuestionsIds: getSelectedQuestionsIds(state),
   };
 };
 
-const AllQuestions = connect(mapStateToProps)(AllQuestionsComponent);
+const mapDispatchToProps = {
+  selectQuestion: ActionCreators.selectQuestion,
+  deselectQuestion: ActionCreators.deselectQuestion,
+};
+
+const AllQuestions = connect(mapStateToProps, mapDispatchToProps)(AllQuestionsComponent);
 export default AllQuestions;
