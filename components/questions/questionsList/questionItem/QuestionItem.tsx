@@ -60,7 +60,12 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps> 
             {question.question}
           </div>
           <div className="app-questions--question--meta">
-            <span className="app-questions--question--tag app-questions--question--tag_{{question.level}}">
+            <span
+              className={classNames(
+                'app-questions--question--tag',
+                `app-questions--question--tag_${question.level}`
+              )}
+            >
               {question.level}
             </span>
             <time

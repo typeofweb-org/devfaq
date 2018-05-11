@@ -9,7 +9,7 @@
     "date-fns": "2.0.0-alpha.7",
     "express": "4.16.3",
     "htmlescape": "1.1.1",
-    "next": "6.0.0",
+    "next": "6.0.1",
     "next-images": "0.10.2",
     "next-redux-wrapper": "2.0.0-beta.6",
     "next-routes": "1.4.1",
@@ -34,9 +34,12 @@
     "@types/react-redux": "6.0.0",
     "@types/redux": "3.6.0",
     "@zeit/next-sass": "0.2.0",
+    "autoprefixer": "8.4.1",
     "cross-env": "5.1.4",
     "fork-ts-checker-webpack-plugin": "0.4.1",
     "nodemon": "1.17.4",
+    "postcss-easy-import": "3.0.0",
+    "postcss-loader": "2.1.5",
     "webpack-bundle-analyzer": "2.11.1"
   },
   "scripts": {
