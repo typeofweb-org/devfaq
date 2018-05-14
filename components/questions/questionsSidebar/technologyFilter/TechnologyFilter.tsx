@@ -21,7 +21,11 @@ export class TechnologyFilter extends React.Component {
   renderTechnologyItem = (technology: TechnologyIconItem) => {
     return (
       <li className="app-filter--technology" key={technology.name}>
-        <ActiveLink route={'/questions/' + technology.name} activeClassName="active">
+        <ActiveLink
+          disabledWhenActive={true}
+          route={'/questions/' + technology.name}
+          activeClassName="active"
+        >
           <button title={technology.label}>
             <span className="app-filter--technology--label">{technology.label}</span>
             <span className={technology.icon} />

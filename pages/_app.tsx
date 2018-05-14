@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Store } from 'redux';
 import * as withReduxType from 'next-redux-wrapper';
 import { NextReduxWrappedComponent } from 'next-redux-wrapper';
 import { makeStore } from '../redux/store';
@@ -9,7 +8,7 @@ import App, { Container } from 'next/app';
 import { addRouterEventListener, removeRouterEventListener } from '../utils/routerEvents';
 import { withRouter, SingletonRouter } from 'next/router';
 import { ActionCreators } from '../redux/actions';
-import { RouteDetails, GetInitialPropsContext } from '../utils/types';
+import { RouteDetails, GetInitialPropsContext, AppStore } from '../utils/types';
 const AppComponent = App as React.ComponentClass<MyAppProps>;
 
 // hack because of incorrect d.ts file
@@ -23,11 +22,11 @@ type AppGetInitialPropsArg = {
 type MyAppProps = {
   Component: React.ComponentType;
   pageProps: object;
-  store: Store;
+  store: AppStore;
   router: SingletonRouter;
 };
 
-function updateRoute(routeDetails: RouteDetails, dispatch: Store['dispatch']) {
+function updateRoute(routeDetails: RouteDetails, dispatch: AppStore['dispatch']) {
   const { pathname, query, asPath, route } = routeDetails;
   const newRouteDetails: RouteDetails = {
     pathname,

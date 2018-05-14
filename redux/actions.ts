@@ -1,7 +1,14 @@
 import { ActionsUnion, createAction } from './types';
 import { LevelKey } from '../constants/level';
 import { Question } from './reducers/questions';
-import { RouteDetails } from '../utils/types';
+import { RouteDetails, AppStore } from '../utils/types';
+import { Api } from '../services/Api';
+import { getTechnology } from './selectors/selectors';
+
+export type AsyncAction<R = any> = (
+  dispatch: AppStore['dispatch'],
+  getState: AppStore['getState']
+) => R;
 
 export enum ActionTypes {
   UI_OPEN_SIDEBAR = 'UI_OPEN_SIDEBAR',
@@ -13,9 +20,10 @@ export enum ActionTypes {
   SELECT_QUESTION = 'SELECT_QUESTION',
   DESELECT_QUESTION = 'DESELECT_QUESTION',
   UPDATE_ROUTE = 'UPDATE_ROUTE',
+  FETCH_QUESTIONS = 'FETCH_QUESTIONS',
 }
 
-export const ActionCreators = {
+const SyncActionCreators = {
   uiOpenSidebar: () => createAction(ActionTypes.UI_OPEN_SIDEBAR),
   uiCloseSidebar: () => createAction(ActionTypes.UI_CLOSE_SIDEBAR),
   uiOpenAddQuestionModal: () => createAction(ActionTypes.UI_OPEN_ADD_QUESTION_MODAL),
@@ -25,6 +33,28 @@ export const ActionCreators = {
   selectQuestion: (q: Question) => createAction(ActionTypes.SELECT_QUESTION, q),
   deselectQuestion: (q: Question) => createAction(ActionTypes.DESELECT_QUESTION, q),
   updateRoute: (routeDetails: RouteDetails) => createAction(ActionTypes.UPDATE_ROUTE, routeDetails),
+  fetchQuestionsStarted: () => createAction(ActionTypes.FETCH_QUESTIONS, {}),
+  fetchQuestionsError: (error: Error) => createAction(ActionTypes.FETCH_QUESTIONS, { error }),
+  fetchQuestionsSuccess: (questions: Question[]) =>
+    createAction(ActionTypes.FETCH_QUESTIONS, { data: questions }),
 };
 
-export type Actions = ActionsUnion<typeof ActionCreators>;
+const AsyncActionCreators = {
+  fetchQuestions: (): AsyncAction => (dispatch, getState) => {
+    dispatch(SyncActionCreators.fetchQuestionsStarted());
+    const technology = getTechnology(getState());
+    if (!technology) {
+      return dispatch(SyncActionCreators.fetchQuestionsError(new Error('Invalid category')));
+    }
+    return Api.getQuestionsForCategory(technology)
+      .then((data) => dispatch(SyncActionCreators.fetchQuestionsSuccess(data)))
+      .catch((err) => dispatch(SyncActionCreators.fetchQuestionsError(err)));
+  },
+};
+
+export const ActionCreators = {
+  ...SyncActionCreators,
+  ...AsyncActionCreators,
+};
+
+export type Actions = ActionsUnion<typeof SyncActionCreators>;

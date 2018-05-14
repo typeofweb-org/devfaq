@@ -7,65 +7,33 @@ import { AllQuestionsHeader } from './allQuestionsHeader/AllQuestionsHeader';
 import { AllQuestionsFooter } from './allQuestionsFooter/AllQuestionsFooter';
 import QuestionsList from '../questionsList/QuestionsList';
 import { Question } from '../../../redux/reducers/questions';
-import { getSelectedQuestionsIds } from '../../../redux/selectors/selectors';
+import { getSelectedQuestionsIds, getTechnology } from '../../../redux/selectors/selectors';
 import { ActionCreators } from '../../../redux/actions';
 import { isQuestionSelected } from '../questionsUtils';
-import { routeDetails } from '../../../redux/reducers/routeDetails';
 
 type AllQuestionsComponentProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
-type AllQuestionsComponentState = {
-  technology: TechnologyKey | undefined;
-};
 
-class AllQuestionsComponent extends React.Component<
-  AllQuestionsComponentProps,
-  AllQuestionsComponentState
-> {
-  state = {
-    technology: undefined,
-  };
-
-  static getDerivedStateFromProps(
-    nextProps: AllQuestionsComponentProps,
-    _prevState: AllQuestionsComponentState
-  ): Partial<AllQuestionsComponentState> {
-    return {
-      technology:
-        nextProps.routeDetails.query &&
-        (nextProps.routeDetails.query['technology'] as TechnologyKey),
-    };
-  }
-
-  componentDidUpdate(
-    _prevProps: AllQuestionsComponentProps,
-    prevState: AllQuestionsComponentState
-  ) {
-    if (prevState.technology === this.state.technology) {
-      return;
-    }
-
-    this.fetchProductsForTechnology(this.state.technology);
-  }
-
-  fetchProductsForTechnology = (technology: TechnologyKey | undefined) => {
-    if (!this.state.technology) {
-      return;
-    }
-    console.log('Fetching…', technology);
-  };
-
+class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> {
   render() {
-    const { technology } = this.state;
+    const { technology } = this.props;
     const technologyIconItem = technologyIconItems.find((t) => t.name === technology);
     const category = (technologyIconItem && technologyIconItem.label) || '';
+
+    if (!this.props.questions.data) {
+      return null; // @todo handle errors and loading
+    }
+
     return (
       <section className="app-questions">
-        <AllQuestionsHeader category={category} questionsLength={this.props.questions.length} />
+        <AllQuestionsHeader
+          category={category}
+          questionsLength={this.props.questions.data.length}
+        />
         <QuestionsList
           selectable={true}
           removable={false}
           editable={false}
-          questions={this.props.questions}
+          questions={this.props.questions.data}
           selectedQuestionIds={this.props.selectedQuestionsIds}
           toggleQuestion={this.toggleQuestion}
         />
@@ -81,16 +49,11 @@ class AllQuestionsComponent extends React.Component<
       this.props.selectQuestion(question);
     }
   };
-
-  onRouteChangeComplete = () => {
-    const nextState = AllQuestionsComponent.getDerivedStateFromProps(this.props, this.state);
-    this.setState(nextState as Required<AllQuestionsComponentState>);
-  };
 }
 
 const mapStateToProps = (state: AppState) => {
   return {
-    routeDetails: state.routeDetails,
+    technology: getTechnology(state),
     questions: state.questions,
     selectedQuestionsIds: getSelectedQuestionsIds(state),
   };

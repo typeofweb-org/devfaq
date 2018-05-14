@@ -2,9 +2,14 @@ import { SingletonRouter } from 'next/router';
 import { Http2ServerRequest, Http2ServerResponse } from 'http2';
 import { Store } from 'redux';
 import { AppState } from '../redux/reducers/index';
+import { AsyncAction } from '../redux/actions';
+
+export type AppStore = Store<AppState> & {
+  dispatch<R>(asyncAction: AsyncAction<R>): R;
+};
 
 type CommonContext = RouteDetails & {
-  store: Store<AppState>;
+  store: AppStore;
 };
 
 type ServerContext = CommonContext & {

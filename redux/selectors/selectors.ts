@@ -6,10 +6,16 @@ import { TechnologyKey } from '../../constants/technology-icon-items';
 
 const questionsSelector = (state: AppState) => state.questions;
 const selectedQuestionsSelector = (state: AppState) => state.selectedQuestions;
+const routeDetailsSelector = (state: AppState) => state.routeDetails;
+
+export const getTechnology = createSelector(
+  routeDetailsSelector,
+  (routeDetails) => routeDetails.query && (routeDetails.query['technology'] as TechnologyKey)
+);
 
 export const isDownloadEnabledSelector = createSelector(
   questionsSelector,
-  (questions) => questions && questions.length > 0
+  (questions) => questions && questions.data && questions.data.length > 0
 );
 
 export const areAnyQuestionSelected = createSelector(
