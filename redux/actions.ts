@@ -3,7 +3,7 @@ import { LevelKey } from '../constants/level';
 import { Question } from './reducers/questions';
 import { RouteDetails } from '../utils/types';
 
-export const enum ActionTypes {
+export enum ActionTypes {
   UI_OPEN_SIDEBAR = 'UI_OPEN_SIDEBAR',
   UI_CLOSE_SIDEBAR = 'UI_CLOSE_SIDEBAR',
   UI_OPEN_ADD_QUESTION_MODAL = 'UI_OPEN_ADD_QUESTION_MODAL',

@@ -10,6 +10,7 @@ import { Question } from '../../../redux/reducers/questions';
 import { getSelectedQuestionsIds } from '../../../redux/selectors/selectors';
 import { ActionCreators } from '../../../redux/actions';
 import { isQuestionSelected } from '../questionsUtils';
+import { routeDetails } from '../../../redux/reducers/routeDetails';
 
 type AllQuestionsComponentProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 type AllQuestionsComponentState = {
@@ -35,6 +36,24 @@ class AllQuestionsComponent extends React.Component<
     };
   }
 
+  componentDidUpdate(
+    _prevProps: AllQuestionsComponentProps,
+    prevState: AllQuestionsComponentState
+  ) {
+    if (prevState.technology === this.state.technology) {
+      return;
+    }
+
+    this.fetchProductsForTechnology(this.state.technology);
+  }
+
+  fetchProductsForTechnology = (technology: TechnologyKey | undefined) => {
+    if (!this.state.technology) {
+      return;
+    }
+    console.log('Fetching…', technology);
+  };
+
   render() {
     const { technology } = this.state;
     const technologyIconItem = technologyIconItems.find((t) => t.name === technology);
@@ -46,16 +65,7 @@ class AllQuestionsComponent extends React.Component<
           selectable={true}
           removable={false}
           editable={false}
-          questions={[
-            {
-              id: 1,
-              question: 'something something bla bla',
-              category: 'js',
-              status: 'accepted',
-              level: 'junior',
-              acceptedAt: '2018-01-01',
-            },
-          ]}
+          questions={this.props.questions}
           selectedQuestionIds={this.props.selectedQuestionsIds}
           toggleQuestion={this.toggleQuestion}
         />
