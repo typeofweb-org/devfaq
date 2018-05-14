@@ -1,4 +1,4 @@
-import { Actions } from '../actions';
+import { Actions, ActionTypes } from '../actions';
 import { TechnologyKey } from '../../constants/technology-icon-items';
 
 export type Question = {
@@ -10,6 +10,20 @@ export type Question = {
   acceptedAt?: string;
 };
 
-export const questions = (questions: Question[] = [], _action: Actions) => {
-  return questions;
+const intialState: {
+  error?: Error;
+  data?: Question[];
+  isLoading: boolean;
+} = { isLoading: false, data: [], error: undefined };
+
+export const questions = (questions = intialState, action: Actions): typeof intialState => {
+  switch (action.type) {
+    case ActionTypes.FETCH_QUESTIONS:
+      return {
+        ...action.payload,
+        isLoading: !('error' in action.payload) && !('data' in action.payload),
+      };
+    default:
+      return questions;
+  }
 };

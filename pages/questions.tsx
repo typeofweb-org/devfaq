@@ -7,12 +7,15 @@ import { GetInitialPropsContext } from '../utils/types';
 import QuestionsSidebar from '../components/questions/questionsSidebar/QuestionsSidebar';
 import MobileActionButtons from '../components/questions/mobileActionButtons/MobileActionButtons';
 import AllQuestions from '../components/questions/allQuestions/AllQuestions';
+import { ActionCreators } from '../redux/actions';
 
-export default class Index extends React.Component {
+export default class IndexComponent extends React.Component {
   static async getInitialProps(ctx: GetInitialPropsContext) {
     if (!ctx.query || !ctx.query.technology) {
       return redirect(ctx, '/questions/js');
     }
+
+    await ctx.store.dispatch(ActionCreators.fetchQuestions());
   }
 
   render() {

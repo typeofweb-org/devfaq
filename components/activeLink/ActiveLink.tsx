@@ -7,6 +7,7 @@ import { addRouterEventListener, removeRouterEventListener } from '../../utils/r
 type ActiveLinkOwnProps = {
   activeClassName?: string;
   exact?: boolean;
+  disabledWhenActive?: boolean;
 };
 type ActiveLinkRouterProps = {
   router: SingletonRouter;
@@ -62,12 +63,14 @@ class ActiveLinkComponent extends React.Component<
   render() {
     const { children, route, activeClassName = '' } = this.props;
     const child = React.Children.only(children);
+    const isMatch = this.isMatch();
+    const newChild = conditionallyAddClassToChild(isMatch, activeClassName, child);
 
-    return (
-      <Link route={route}>
-        {conditionallyAddClassToChild(this.isMatch(), activeClassName, child)}
-      </Link>
-    );
+    if (isMatch && this.props.disabledWhenActive) {
+      return <div aria-disabled="true">{newChild}</div>;
+    }
+
+    return <Link route={route}>{newChild}</Link>;
   }
 
   private onRouteChangeComplete = () => {
