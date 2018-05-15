@@ -41,6 +41,7 @@
     "cross-env": "5.1.5",
     "fork-ts-checker-webpack-plugin": "0.4.1",
     "nodemon": "1.17.4",
+    "now": "11.1.9",
     "postcss-easy-import": "3.0.0",
     "postcss-loader": "2.1.5",
     "webpack-bundle-analyzer": "2.11.3"
