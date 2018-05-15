@@ -1,4 +1,4 @@
-import { levelsWithLabels, LevelWithLabel, Level } from '../../../../constants/level';
+import { levelsWithLabels, LevelWithLabel } from '../../../../constants/level';
 import * as React from 'react';
 import * as classNames from 'classnames';
 import './levelFilter.scss';
@@ -32,7 +32,7 @@ class LevelFilterComponent extends React.Component<
   };
 
   isSelected = (level: LevelWithLabel): boolean => {
-    return this.props.selectedLevels.includes(Level[level.value]);
+    return this.props.selectedLevels.includes(level.value);
   };
 
   toggleSelectedLevel = (level: LevelWithLabel) => {

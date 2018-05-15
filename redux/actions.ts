@@ -42,11 +42,12 @@ const SyncActionCreators = {
 const AsyncActionCreators = {
   fetchQuestions: (): AsyncAction => (dispatch, getState) => {
     dispatch(SyncActionCreators.fetchQuestionsStarted());
-    const technology = getTechnology(getState());
+    const state = getState();
+    const technology = getTechnology(state);
     if (!technology) {
       return dispatch(SyncActionCreators.fetchQuestionsError(new Error('Invalid category')));
     }
-    return Api.getQuestionsForCategory(technology)
+    return Api.getQuestionsForCategoryAndLevels(technology, state.selectedLevels)
       .then((data) => dispatch(SyncActionCreators.fetchQuestionsSuccess(data)))
       .catch((err) => dispatch(SyncActionCreators.fetchQuestionsError(err)));
   },
