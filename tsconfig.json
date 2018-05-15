@@ -19,6 +19,7 @@
     // "esModuleInterop": false,
     "preserveConstEnums": true,
     "allowUnreachableCode": false,
-    "allowUnusedLabels": false
+    "allowUnusedLabels": false,
+    "skipLibCheck": true
   }
 }

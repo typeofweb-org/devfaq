@@ -47,7 +47,8 @@
     "dev": "nodemon server.js --watch server.js --watch routes.js",
     "build": "NODE_ENV=production next build",
     "start": "NODE_ENV=production node server.js",
-    "analyze": "cross-env ANALYZE=1 next build"
+    "analyze": "cross-env ANALYZE=1 next build",
+    "test": "./node_modules/.bin/tsc -p tsconfig.json --noEmit"
   },
   "engines": {
     "node": "8.x.x"
