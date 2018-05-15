@@ -1,4 +1,4 @@
-import Router from 'next/router';
+import { Router } from '../routes';
 import { GetInitialPropsContext } from './types';
 
 export function redirect(ctx: GetInitialPropsContext, path: string) {
@@ -6,6 +6,6 @@ export function redirect(ctx: GetInitialPropsContext, path: string) {
     ctx.res.writeHead(302, { Location: path });
     ctx.res.end();
   } else {
-    Router.push(path);
+    Router.replaceRoute(path);
   }
 }

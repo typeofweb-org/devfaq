@@ -3,7 +3,7 @@ import QuestionsListLayout from '../components/questions/questionsListLayout/Que
 import Layout from '../components/layout/Layout';
 import './index.scss';
 import MobileActionButtons from '../components/questions/mobileActionButtons/MobileActionButtons';
-import AllQuestions from '../components/questions/allQuestions/AllQuestions';
+import SelectedQuestions from '../components/questions/selectedQuestions/SelectedQuestions';
 
 export default class SelectedQuestionsPage extends React.Component {
   render() {
@@ -11,7 +11,7 @@ export default class SelectedQuestionsPage extends React.Component {
       <Layout title="Wybrane pytania">
         <MobileActionButtons justDownload={true} />
         <QuestionsListLayout>
-          <AllQuestions />
+          <SelectedQuestions />
         </QuestionsListLayout>
       </Layout>
     );

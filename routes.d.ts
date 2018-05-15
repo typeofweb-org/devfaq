@@ -5,3 +5,4 @@ export const Link: Registry['Link'];
 export interface LinkProps extends LinkProps {
   children: ReactNode;
 }
+export const Router: Registry['Router'];
