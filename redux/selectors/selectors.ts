@@ -4,7 +4,7 @@ import env from '../../utils/env';
 import { Question } from '../reducers/questions';
 import { TechnologyKey } from '../../constants/technology-icon-items';
 
-const questionsSelector = (state: AppState) => state.questions;
+// const questionsSelector = (state: AppState) => state.questions;
 const selectedQuestionsSelector = (state: AppState) => state.selectedQuestions;
 const routeDetailsSelector = (state: AppState) => state.routeDetails;
 
