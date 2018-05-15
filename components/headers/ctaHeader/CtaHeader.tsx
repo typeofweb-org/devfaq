@@ -22,7 +22,7 @@ class CtaHeader extends React.Component<CtaHeaderProps, CtaHeaderState> {
       <div className="cta-header">
         <header className="app-header--cta container">
           <nav role="tablist" className="app-tabs">
-            <ActiveLink route="/questions/js" activeClassName="active">
+            <ActiveLink route="/questions" activeClassName="active">
               <a className="app-tabs--tab" onClick={() => reportEvent('Lista pytań')}>
                 Lista pytań
               </a>
