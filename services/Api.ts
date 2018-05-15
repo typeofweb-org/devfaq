@@ -1,6 +1,7 @@
 import { TechnologyKey } from '../constants/technology-icon-items';
 import env from '../utils/env';
 import { LevelKey } from '../constants/level';
+import { Question } from '../redux/reducers/questions';
 
 type QsValues = string | number;
 type QsObject = Record<string, QsValues | QsValues[]>;
@@ -29,6 +30,6 @@ async function makeRequest<T>(path: string, query: QsObject = {}): Promise<T> {
 
 export const Api = {
   async getQuestionsForCategoryAndLevels(category: TechnologyKey, levels: LevelKey[]) {
-    return makeRequest('questions', { category, level: levels });
+    return makeRequest<Question[]>('questions', { category, level: levels });
   },
 };
