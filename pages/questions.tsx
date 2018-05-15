@@ -8,14 +8,25 @@ import QuestionsSidebar from '../components/questions/questionsSidebar/Questions
 import MobileActionButtons from '../components/questions/mobileActionButtons/MobileActionButtons';
 import AllQuestions from '../components/questions/allQuestions/AllQuestions';
 import { ActionCreators } from '../redux/actions';
+import { connect } from 'react-redux';
+import { AppState } from '../redux/reducers/index';
 
-export default class QuestionsPage extends React.Component {
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+class QuestionsPageComponent extends React.Component<Props> {
   static async getInitialProps(ctx: GetInitialPropsContext) {
     if (!ctx.query || !ctx.query.technology) {
       return redirect(ctx, '/questions/js');
     }
 
     await ctx.store.dispatch(ActionCreators.fetchQuestions());
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.selectedLevels.length === prevProps.selectedLevels.length) {
+      return;
+    }
+
+    this.props.fetchQuestions();
   }
 
   render() {
@@ -32,3 +43,14 @@ export default class QuestionsPage extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state: AppState) => {
+  return {
+    selectedLevels: state.selectedLevels,
+  };
+};
+
+const mapDispatchToProps = { fetchQuestions: ActionCreators.fetchQuestions };
+
+const QuestionsPage = connect(mapStateToProps, mapDispatchToProps)(QuestionsPageComponent);
+export default QuestionsPage;
