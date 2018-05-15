@@ -4,10 +4,7 @@ import { AppState } from '../../../redux/reducers';
 import { connect } from 'react-redux';
 import * as classNames from 'classnames';
 import { ActionCreators } from '../../../redux/actions';
-import {
-  isDownloadEnabledSelector,
-  getDownloadUrlSelector,
-} from '../../../redux/selectors/selectors';
+import { getAreAnyQuestionSelected, getDownloadUrl } from '../../../redux/selectors/selectors';
 
 type MobileActionButtonsProps = {
   justDownload: boolean;
@@ -39,19 +36,19 @@ class MobileActionButtonsComponent extends React.Component<
         {!justDownload && (
           <a
             className={classNames('download', 'circle-button', {
-              disabled: !this.props.isDownloadEnabled,
+              disabled: !this.props.areAnyQuestionSelected,
             })}
             title="Pobierz PDF"
             aria-label="Pobierz PDF"
             href={this.props.downloadUrl}
             onClick={this.onDownloadClick}
             target="_blank"
-            tabIndex={this.props.isDownloadEnabled ? 0 : -1}
-            aria-disabled={!this.props.isDownloadEnabled}
+            tabIndex={this.props.areAnyQuestionSelected ? 0 : -1}
+            aria-disabled={!this.props.areAnyQuestionSelected}
           />
         )}
         {justDownload &&
-          this.props.isDownloadEnabled && (
+          this.props.areAnyQuestionSelected && (
             <a
               className="round-button alert-button"
               href={this.props.downloadUrl}
@@ -69,8 +66,8 @@ class MobileActionButtonsComponent extends React.Component<
 
 const mapStateToProps = (state: AppState) => {
   return {
-    isDownloadEnabled: isDownloadEnabledSelector(state),
-    downloadUrl: getDownloadUrlSelector(state),
+    areAnyQuestionSelected: getAreAnyQuestionSelected(state),
+    downloadUrl: getDownloadUrl(state),
   };
 };
 

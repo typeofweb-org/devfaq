@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import * as React from 'react';
 import { AppState } from '../../../redux/reducers/index';
 import {
-  areAnyQuestionSelected,
+  getAreAnyQuestionSelected,
   getSelectedQuestionsIds,
   getSelectedQuestionsWithCategories,
 } from '../../../redux/selectors/selectors';
@@ -41,7 +41,7 @@ class SelectedQuestionsComponent extends React.Component<ReturnType<typeof mapSt
             selectedQuestionIds={this.props.selectedQuestionIds}
             questions={questions}
             selectable={false}
-            removable={false}
+            removable={true}
             editable={false}
             toggleQuestion={() => {}}
           />
@@ -55,7 +55,7 @@ const mapStateToProps = (state: AppState) => {
   return {
     selectedQuestionsWithCategories: getSelectedQuestionsWithCategories(state),
     selectedQuestionIds: getSelectedQuestionsIds(state),
-    areAnyQuestionSelected: areAnyQuestionSelected(state),
+    areAnyQuestionSelected: getAreAnyQuestionSelected(state),
   };
 };
 

@@ -62,13 +62,12 @@
     }
     &::after {
       content: "";
+      display: inline-block;
       border-radius: 50%;
       width: 6px;
       height: 6px;
       margin-left: 6px;
       transition: background-color 0.2s;
-      position: absolute;
-      top: 50%;
       transform: translateY(-50%); // right: 15px;
     }
     &.has-notification {

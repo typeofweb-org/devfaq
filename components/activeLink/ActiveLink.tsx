@@ -13,6 +13,10 @@ type ActiveLinkRouterProps = {
   router: SingletonRouter;
 };
 
+const defaultProps: Partial<ActiveLinkComponentProps> = {
+  activeClassName: 'active',
+};
+
 const conditionallyAddClassToChild = (
   shouldAddActiveClass: boolean,
   activeClassName: string,
@@ -42,6 +46,8 @@ class ActiveLinkComponent extends React.Component<
   ActiveLinkComponentProps,
   ActiveLinkComponentState
 > {
+  static defaultProps = defaultProps;
+
   static getDerivedStateFromProps(
     nextProps: ActiveLinkComponentProps,
     _prevState: ActiveLinkComponentState

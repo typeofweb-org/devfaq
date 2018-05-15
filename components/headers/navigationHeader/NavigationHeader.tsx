@@ -23,7 +23,7 @@ export default class NavigationHeader extends React.Component<
       <div className="navigation-header">
         <header className={classNames('app-header--main', 'container', { open })}>
           <ActiveLink route="/questions">
-            <a href="/questions">
+            <a>
               <h1>
                 <span className="visuallyhidden">Fefaq.pl</span>
                 <AppLogo />
