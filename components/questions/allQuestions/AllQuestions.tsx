@@ -23,6 +23,10 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
       return null; // @todo handle errors and loading
     }
 
+    if (!technology) {
+      return null;
+    }
+
     return (
       <section className="app-questions">
         <AllQuestionsHeader
