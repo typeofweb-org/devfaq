@@ -34,7 +34,7 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps> 
         >
           {this.props.selectable && (
             <input
-              onClick={() => this.props.toggleQuestion(question)}
+              onChange={() => this.props.toggleQuestion(question)}
               checked={isSelected}
               type="checkbox"
               className="app-questions--question--checkbox"
