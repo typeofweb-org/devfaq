@@ -54,3 +54,12 @@ export const getSelectedQuestionsByCategory = createSelector(
     );
   }
 );
+
+export const getSelectedQuestionsWithCategories = createSelector(
+  getSelectedQuestionsByCategory,
+  (selectedQuestionsByCategory) => {
+    return Object.entries(selectedQuestionsByCategory).filter(
+      ([_, questions]) => questions.length > 0
+    ) as [TechnologyKey, Question[]][];
+  }
+);
