@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppState } from '../../../redux/reducers/index';
 import { connect } from 'react-redux';
-import { technologyIconItems, TechnologyKey } from '../../../constants/technology-icon-items';
+import { technologyIconItems } from '../../../constants/technology-icon-items';
 import './allQuestions.scss';
 import { AllQuestionsHeader } from './allQuestionsHeader/AllQuestionsHeader';
 import { AllQuestionsFooter } from './allQuestionsFooter/AllQuestionsFooter';

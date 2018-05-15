@@ -9,7 +9,7 @@ import MobileActionButtons from '../components/questions/mobileActionButtons/Mob
 import AllQuestions from '../components/questions/allQuestions/AllQuestions';
 import { ActionCreators } from '../redux/actions';
 
-export default class IndexComponent extends React.Component {
+export default class QuestionsPage extends React.Component {
   static async getInitialProps(ctx: GetInitialPropsContext) {
     if (!ctx.query || !ctx.query.technology) {
       return redirect(ctx, '/questions/js');
