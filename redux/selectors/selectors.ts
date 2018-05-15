@@ -13,12 +13,7 @@ export const getTechnology = createSelector(
   (routeDetails) => routeDetails.query && (routeDetails.query['technology'] as TechnologyKey)
 );
 
-export const isDownloadEnabledSelector = createSelector(
-  questionsSelector,
-  (questions) => questions && questions.data && questions.data.length > 0
-);
-
-export const areAnyQuestionSelected = createSelector(
+export const getAreAnyQuestionSelected = createSelector(
   selectedQuestionsSelector,
   (selectedQuestions) => selectedQuestions.length > 0
 );
@@ -27,7 +22,7 @@ export const getSelectedQuestionsIds = createSelector(selectedQuestionsSelector,
   questions.map((q) => q.id)
 );
 
-export const getDownloadUrlSelector = createSelector(
+export const getDownloadUrl = createSelector(
   getSelectedQuestionsIds,
   (selectedIds) => `${env.API_URL}/pdf-questions?question=${selectedIds.join(',')}`
 );

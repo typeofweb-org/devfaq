@@ -2,39 +2,33 @@ import * as classNames from 'classnames';
 import * as React from 'react';
 import './ctaHeader.scss';
 import ActiveLink from '../../activeLink/ActiveLink';
+import { connect } from 'react-redux';
+import { AppState } from '../../../redux/reducers/index';
+import { getAreAnyQuestionSelected, getDownloadUrl } from '../../../redux/selectors/selectors';
 
 const reportEvent = (_t: string) => {};
 
-type CtaHeaderProps = {};
-type CtaHeaderState = {
-  isDownloadEnabled: boolean;
-  downloadUrl: string;
-};
-
-class CtaHeader extends React.Component<CtaHeaderProps, CtaHeaderState> {
-  state = {
-    isDownloadEnabled: false,
-    downloadUrl: 'a',
-  };
-
+class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToProps>> {
   render() {
     return (
       <div className="cta-header">
         <header className="app-header--cta container">
           <nav role="tablist" className="app-tabs">
-            <ActiveLink route="/questions" activeClassName="active">
+            <ActiveLink route="/questions">
               <a className="app-tabs--tab" onClick={() => reportEvent('Lista pytań')}>
                 Lista pytań
               </a>
             </ActiveLink>
-            <ActiveLink route="/selected-questions" activeClassName="active">
+            <ActiveLink route="/selected-questions">
               <a
                 className={classNames('app-tabs--tab', {
-                  'has-notification': this.state.isDownloadEnabled,
+                  'has-notification': this.props.areAnyQuestionSelected,
                 })}
                 onClick={() =>
                   reportEvent(
-                    this.state.isDownloadEnabled ? 'Wybrane pytania' : 'Wybrane pytania (puste)'
+                    this.props.areAnyQuestionSelected
+                      ? 'Wybrane pytania'
+                      : 'Wybrane pytania (puste)'
                   )
                 }
               >
@@ -44,14 +38,14 @@ class CtaHeader extends React.Component<CtaHeaderProps, CtaHeaderState> {
           </nav>
 
           <div className="call-to-action-buttons">
-            <ActiveLink route={this.state.downloadUrl}>
+            <ActiveLink route={this.props.downloadUrl}>
               <a
                 onClick={this.onDownloadClick}
                 target="_blank"
-                tabIndex={this.state.isDownloadEnabled ? 0 : -1}
-                aria-disabled={!this.state.isDownloadEnabled}
+                tabIndex={this.props.areAnyQuestionSelected ? 0 : -1}
+                aria-disabled={!this.props.areAnyQuestionSelected}
                 className={classNames('round-button', 'alert-button', {
-                  disabled: !this.state.isDownloadEnabled,
+                  disabled: !this.props.areAnyQuestionSelected,
                 })}
               >
                 Pobierz plik PDF
@@ -73,4 +67,12 @@ class CtaHeader extends React.Component<CtaHeaderProps, CtaHeaderState> {
   onOpenAddQuestionModalClick: React.MouseEventHandler<HTMLElement> = (_event) => {};
 }
 
+const mapStateToProps = (state: AppState) => {
+  return {
+    areAnyQuestionSelected: getAreAnyQuestionSelected(state),
+    downloadUrl: getDownloadUrl(state),
+  };
+};
+
+const CtaHeader = connect(mapStateToProps)(CtaHeaderComponent);
 export default CtaHeader;

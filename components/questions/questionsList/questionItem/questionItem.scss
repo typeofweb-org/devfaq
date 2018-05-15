@@ -137,6 +137,7 @@
     justify-content: flex-start;
     align-items: flex-end;
     font-size: 0.9em;
+    text-align: center;
   }
   &--date {
     &_long {
@@ -144,10 +145,12 @@
     }
     &_short {
       display: block;
+      width: 100%;
     }
     @include mediaquery('gt-sm') {
       &_long {
         display: block;
+        width: 100%;
       }
       &_short {
         display: none;
