@@ -52,7 +52,7 @@
     "start": "NODE_ENV=production node server.js",
     "analyze": "cross-env ANALYZE=1 next build",
     "test": "./node_modules/.bin/tsc -p tsconfig.json --noEmit",
-    "deploy": "now -e NODE_ENV=production --token $NOW_TOKEN --npm"
+    "deploy": "now --public -e NODE_ENV=production --token $NOW_TOKEN --npm"
   },
   "engines": {
     "node": "8.x.x"
