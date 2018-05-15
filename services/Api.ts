@@ -1,8 +1,8 @@
 import { TechnologyKey } from '../constants/technology-icon-items';
-const API_URL = 'http://api.fefaq.pl';
+import env from '../utils/env';
 
 export const Api = {
   getQuestionsForCategory(category: TechnologyKey) {
-    return fetch(`${API_URL}/questions?category=${category}`).then((res) => res.json());
+    return fetch(`${env.API_URL}/questions?category=${category}`).then((res) => res.json());
   },
 };
