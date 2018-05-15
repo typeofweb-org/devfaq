@@ -1,3 +1,7 @@
+require('dotenv').config({
+  path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
+});
+
 const withTypescript = require('@zeit/next-typescript');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const withSass = require('@zeit/next-sass');
@@ -84,8 +88,9 @@ const config = withPolyfills(
         },
         webpack: (config, options) => {
           config = commonsChunkConfig(config, /\.(sass|scss|css)$/);
-          if (options.isServer && process.env.NODE_ENV !== 'production')
+          if (options.isServer && process.env.NODE_ENV !== 'production') {
             config.plugins.push(new ForkTsCheckerWebpackPlugin());
+          }
           return config;
         },
       })

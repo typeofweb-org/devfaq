@@ -8,7 +8,9 @@
     "@zeit/next-typescript": "1.0.0",
     "classnames": "2.2.5",
     "date-fns": "2.0.0-alpha.7",
+    "dotenv": "5.0.1",
     "express": "4.16.3",
+    "fs": "0.0.1-security",
     "htmlescape": "1.1.1",
     "next": "6.0.2",
     "next-images": "0.10.2",
@@ -48,7 +50,8 @@
     "build": "NODE_ENV=production next build",
     "start": "NODE_ENV=production node server.js",
     "analyze": "cross-env ANALYZE=1 next build",
-    "test": "./node_modules/.bin/tsc -p tsconfig.json --noEmit"
+    "test": "./node_modules/.bin/tsc -p tsconfig.json --noEmit",
+    "deploy": "now -e NODE_ENV=production --token $NOW_TOKEN --npm"
   },
   "engines": {
     "node": "8.x.x"
