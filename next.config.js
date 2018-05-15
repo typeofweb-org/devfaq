@@ -84,7 +84,8 @@ const config = withPolyfills(
         },
         webpack: (config, options) => {
           config = commonsChunkConfig(config, /\.(sass|scss|css)$/);
-          if (options.isServer) config.plugins.push(new ForkTsCheckerWebpackPlugin());
+          if (options.isServer && process.env.NODE_ENV !== 'production')
+            config.plugins.push(new ForkTsCheckerWebpackPlugin());
           return config;
         },
       })
