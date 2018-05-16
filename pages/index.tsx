@@ -1,9 +1,9 @@
 import * as React from 'react';
-import './index.scss';
-import Layout from '../components/layout/Layout';
+import { GetInitialPropsContext } from '../utils/types';
+import { redirect } from '../utils/redirect';
 
 export default class Index extends React.Component {
-  render() {
-    return <Layout title="Siema" />;
+  static async getInitialProps(ctx: GetInitialPropsContext) {
+    return redirect(ctx, '/questions/js');
   }
 }
