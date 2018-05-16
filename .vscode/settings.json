@@ -2,7 +2,7 @@
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
   "prettier.parser": "typescript",
-  "prettier.printWidth": 100,
+  "prettier.printWidth": 120,
   "prettier.singleQuote": true,
   "prettier.trailingComma": "es5",
   "prettier.arrowParens": "always",
@@ -15,7 +15,6 @@
     "editor.formatOnSave": false,
     "editor.formatOnType": false
   },
-  "eslint.enable": false,
   "search.exclude": {
     "**/node_modules": true,
     "**/bower_components": true,

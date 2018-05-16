@@ -5,10 +5,7 @@ import { RouteDetails, AppStore } from '../utils/types';
 import { Api } from '../services/Api';
 import { getTechnology } from './selectors/selectors';
 
-export type AsyncAction<R = any> = (
-  dispatch: AppStore['dispatch'],
-  getState: AppStore['getState']
-) => R;
+export type AsyncAction<R = any> = (dispatch: AppStore['dispatch'], getState: AppStore['getState']) => R;
 
 export enum ActionTypes {
   UI_OPEN_SIDEBAR = 'UI_OPEN_SIDEBAR',
@@ -19,7 +16,11 @@ export enum ActionTypes {
   DESELECT_LEVEL = 'DESELECT_LEVEL',
   SELECT_QUESTION = 'SELECT_QUESTION',
   DESELECT_QUESTION = 'DESELECT_QUESTION',
-  UPDATE_ROUTE = 'UPDATE_ROUTE',
+
+  UPDATE_ROUTE_STARTED = 'UPDATE_ROUTE_STARTED',
+  UPDATE_ROUTE_ERROR = 'UPDATE_ROUTE_ERROR',
+  UPDATE_ROUTE_SUCCESS = 'UPDATE_ROUTE_SUCCESS',
+
   FETCH_QUESTIONS = 'FETCH_QUESTIONS',
 }
 
@@ -32,11 +33,14 @@ const SyncActionCreators = {
   deselectLevel: (level: LevelKey) => createAction(ActionTypes.DESELECT_LEVEL, level),
   selectQuestion: (q: Question) => createAction(ActionTypes.SELECT_QUESTION, q),
   deselectQuestion: (q: Question) => createAction(ActionTypes.DESELECT_QUESTION, q),
-  updateRoute: (routeDetails: RouteDetails) => createAction(ActionTypes.UPDATE_ROUTE, routeDetails),
+
+  updateRouteStarted: () => createAction(ActionTypes.UPDATE_ROUTE_STARTED),
+  updateRouteError: (error: Error) => createAction(ActionTypes.UPDATE_ROUTE_ERROR, error),
+  updateRouteSuccess: (route: RouteDetails) => createAction(ActionTypes.UPDATE_ROUTE_SUCCESS, route),
+
   fetchQuestionsStarted: () => createAction(ActionTypes.FETCH_QUESTIONS, {}),
   fetchQuestionsError: (error: Error) => createAction(ActionTypes.FETCH_QUESTIONS, { error }),
-  fetchQuestionsSuccess: (questions: Question[]) =>
-    createAction(ActionTypes.FETCH_QUESTIONS, { data: questions }),
+  fetchQuestionsSuccess: (questions: Question[]) => createAction(ActionTypes.FETCH_QUESTIONS, { data: questions }),
 };
 
 const AsyncActionCreators = {
