@@ -130,6 +130,18 @@
       margin-left: 1em;
       margin-right: 1em;
     }
+    p,
+    ul,
+    blockquote {
+      word-break: break-word;
+      word-wrap: break-word;
+    }
+    *:first-child {
+      margin-top: 0;
+    }
+    *:last-child {
+      margin-bottom: 0;
+    }
   }
   &--meta {
     display: flex;

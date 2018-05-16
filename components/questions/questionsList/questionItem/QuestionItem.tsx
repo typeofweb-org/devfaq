@@ -6,6 +6,7 @@ import * as classNames from 'classnames';
 import { pl } from 'date-fns/locale';
 import { formatWithOptions } from 'date-fns/fp';
 import { isQuestionSelected } from '../../questionsUtils';
+import MarkdownText from '../../../markdownText/MarkdownText';
 
 const longDate = formatWithOptions({ locale: pl }, 'LL');
 const shortDate = formatWithOptions({ locale: pl }, 'L');
@@ -53,12 +54,8 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps> 
             </div>
           )}
 
-          <div
-            className="app-questions--question--text"
-            // appPrism
-          >
-            {question.question}
-          </div>
+          <MarkdownText className="app-questions--question--text" value={question.question} />
+
           <div className="app-questions--question--meta">
             <span
               className={classNames(
