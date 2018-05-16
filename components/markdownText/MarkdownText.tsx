@@ -21,7 +21,15 @@ export default class MarkdownText extends React.Component<Props> {
     return this.props.value !== nextProps.value;
   }
 
-  componentDidUpdate(_prevProps: Props) {
+  componentDidMount() {
+    this.highlight();
+  }
+
+  componentDidUpdate() {
+    this.highlight();
+  }
+
+  highlight() {
     if (!this.markdownRef.current) {
       return;
     }
