@@ -10,7 +10,7 @@ const routeDetailsSelector = (state: AppState) => state.routeDetails;
 
 export const getTechnology = createSelector(
   routeDetailsSelector,
-  (routeDetails) => routeDetails.query && (routeDetails.query['technology'] as TechnologyKey)
+  ({ current }) => current.query && (current.query['technology'] as TechnologyKey)
 );
 
 export const getAreAnyQuestionSelected = createSelector(
@@ -53,8 +53,9 @@ export const getSelectedQuestionsByCategory = createSelector(
 export const getSelectedQuestionsWithCategories = createSelector(
   getSelectedQuestionsByCategory,
   (selectedQuestionsByCategory) => {
-    return Object.entries(selectedQuestionsByCategory).filter(
-      ([_, questions]) => questions.length > 0
-    ) as [TechnologyKey, Question[]][];
+    return Object.entries(selectedQuestionsByCategory).filter(([_, questions]) => questions.length > 0) as [
+      TechnologyKey,
+      Question[]
+    ][];
   }
 );

@@ -26,35 +26,49 @@ type MyAppProps = {
   router: SingletonRouter;
 };
 
-function updateRoute(routeDetails: RouteDetails, dispatch: AppStore['dispatch']) {
+function getRouteDetails(routeDetails: RouteDetails) {
   const { pathname, query, asPath, route } = routeDetails;
   const newRouteDetails: RouteDetails = {
     pathname,
-    query,
+    query: { ...query },
     asPath,
     route,
   };
-  return dispatch(ActionCreators.updateRoute(newRouteDetails));
+  return newRouteDetails;
 }
 
 class MyApp extends AppComponent {
   static async getInitialProps({ Component, ctx }: AppGetInitialPropsArg) {
-    await updateRoute(ctx, ctx.store.dispatch);
+    const newRouteDetails = getRouteDetails(ctx);
+    await ctx.store.dispatch(ActionCreators.updateRouteSuccess(newRouteDetails));
+
     const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
 
     return { pageProps };
   }
 
   componentDidMount() {
-    addRouterEventListener('onRouteChangeComplete', this.onRouteChange);
+    addRouterEventListener('onRouteChangeComplete', this.onRouteChangeComplete);
+    addRouterEventListener('onRouteChangeStart', this.onRouteChangeStart);
+    addRouterEventListener('onRouteChangeError', this.onRouteChangeError);
   }
 
   componentWillUnmount() {
-    removeRouterEventListener('onRouteChangeComplete', this.onRouteChange);
+    removeRouterEventListener('onRouteChangeComplete', this.onRouteChangeComplete);
+    removeRouterEventListener('onRouteChangeStart', this.onRouteChangeStart);
+    removeRouterEventListener('onRouteChangeError', this.onRouteChangeError);
   }
 
-  onRouteChange = () => {
-    updateRoute(this.props.router, this.props.store.dispatch);
+  onRouteChangeComplete = (_url: string) => {
+    const newRouteDetails = getRouteDetails(this.props.router);
+    this.props.store.dispatch(ActionCreators.updateRouteSuccess(newRouteDetails));
+  };
+
+  onRouteChangeStart = (_url: string) => {
+    this.props.store.dispatch(ActionCreators.updateRouteStarted());
+  };
+  onRouteChangeError = (error: any, _url: string) => {
+    this.props.store.dispatch(ActionCreators.updateRouteError(error));
   };
 
   render() {
@@ -73,6 +87,4 @@ const options = {
   debug: false,
 };
 
-export default withRedux(makeStore, options as any)(
-  withRouter(MyApp as React.ComponentType<MyAppProps>)
-);
+export default withRedux(makeStore, options as any)(withRouter(MyApp as React.ComponentType<MyAppProps>));
