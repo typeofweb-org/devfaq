@@ -11,8 +11,11 @@ import NoQuestionsSelectedInfo from './NoQuestionsSelectedInfo';
 import './selectedQuestions.scss';
 import { Question } from 'redux/reducers/questions';
 import { TechnologyKey, technologyIconItems } from '../../../constants/technology-icon-items';
+import { ActionCreators } from '../../../redux/actions';
 
-class SelectedQuestionsComponent extends React.Component<ReturnType<typeof mapStateToProps>> {
+class SelectedQuestionsComponent extends React.Component<
+  ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
+> {
   render() {
     if (this.props.areAnyQuestionSelected) {
       return this.renderSelectedQuestionsList();
@@ -42,12 +45,16 @@ class SelectedQuestionsComponent extends React.Component<ReturnType<typeof mapSt
             questions={questions}
             selectable={false}
             removable={true}
-            toggleQuestion={() => {}}
+            toggleQuestion={this.toggleQuestion}
           />
         </div>
       </section>
     );
   }
+
+  toggleQuestion = (questionId: Question['id']) => {
+    this.props.deselectQuestion(questionId);
+  };
 }
 
 const mapStateToProps = (state: AppState) => {
@@ -58,5 +65,7 @@ const mapStateToProps = (state: AppState) => {
   };
 };
 
-const SelectedQuestions = connect(mapStateToProps)(SelectedQuestionsComponent);
+const mapDispatchToProps = { deselectQuestion: ActionCreators.deselectQuestion };
+
+const SelectedQuestions = connect(mapStateToProps, mapDispatchToProps)(SelectedQuestionsComponent);
 export default SelectedQuestions;
