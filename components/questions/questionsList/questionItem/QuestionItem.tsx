@@ -14,10 +14,9 @@ const shortDate = formatWithOptions({ locale: pl }, 'L');
 type QuestionItemOwnProps = {
   question: Question;
   selectable: boolean;
-  editable: boolean;
   removable: boolean;
   selectedQuestionIds: number[];
-  toggleQuestion(question: Question): any;
+  toggleQuestion(questionId: Question['id']): any;
 };
 
 export default class QuestionItem extends React.Component<QuestionItemOwnProps> {
@@ -35,33 +34,18 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps> 
         >
           {this.props.selectable && (
             <input
-              onChange={() => this.props.toggleQuestion(question)}
+              onChange={() => this.props.toggleQuestion(question.id)}
               checked={isSelected}
               type="checkbox"
               className="app-questions--question--checkbox"
             />
           )}
 
-          {this.props.editable && (
-            <div>
-              <button onClick={() => this.editQuestion(question)} className="edit-btn">
-                <img src="/static/images/action-icons/edit.svg" />
-              </button>
-              <button
-                onClick={() => this.deleteQuestionForever(question)}
-                className="app-questions--question--remove--icon"
-              />
-            </div>
-          )}
-
           <MarkdownText className="app-questions--question--text" value={question.question} />
 
           <div className="app-questions--question--meta">
             <span
-              className={classNames(
-                'app-questions--question--tag',
-                `app-questions--question--tag_${question.level}`
-              )}
+              className={classNames('app-questions--question--tag', `app-questions--question--tag_${question.level}`)}
             >
               {question.level}
             </span>
@@ -83,7 +67,7 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps> 
             <div className="app-questions--question--remove-container">
               <button
                 className="app-questions--question--remove--icon"
-                onClick={() => this.props.toggleQuestion(question)}
+                onClick={() => this.props.toggleQuestion(question.id)}
               />
             </div>
           )}
@@ -93,7 +77,7 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps> 
   }
 
   private isCurrentQuestionSelected = () => {
-    return isQuestionSelected(this.props.selectedQuestionIds, this.props.question);
+    return isQuestionSelected(this.props.selectedQuestionIds, this.props.question.id);
   };
 
   editQuestion = (_question: Question) => {};

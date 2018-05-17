@@ -29,14 +29,10 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
 
     return (
       <section className="app-questions">
-        <AllQuestionsHeader
-          category={category}
-          questionsLength={this.props.questions.data.length}
-        />
+        <AllQuestionsHeader category={category} questionsLength={this.props.questions.data.length} />
         <QuestionsList
           selectable={true}
           removable={false}
-          editable={false}
           questions={this.props.questions.data}
           selectedQuestionIds={this.props.selectedQuestionsIds}
           toggleQuestion={this.toggleQuestion}
@@ -46,11 +42,14 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
     );
   }
 
-  toggleQuestion = (question: Question) => {
-    if (isQuestionSelected(this.props.selectedQuestionsIds, question)) {
-      this.props.deselectQuestion(question);
+  toggleQuestion = (questionId: Question['id']) => {
+    if (isQuestionSelected(this.props.selectedQuestionsIds, questionId)) {
+      this.props.deselectQuestion(questionId);
     } else {
-      this.props.selectQuestion(question);
+      const question = this.props.questions.data && this.props.questions.data.find((q) => q.id === questionId);
+      if (question) {
+        this.props.selectQuestion(question);
+      }
     }
   };
 }

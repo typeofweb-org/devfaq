@@ -31,7 +31,7 @@ class SelectedQuestionsComponent extends React.Component<ReturnType<typeof mapSt
     const icon = technologyIconItems.find((i) => i.name === category)!;
 
     return (
-      <section>
+      <section key={category}>
         <div className="selected-questions-container">
           <div className="technology-icon-container">
             <span className="technology-icon-label">{icon.label}</span>
@@ -42,7 +42,6 @@ class SelectedQuestionsComponent extends React.Component<ReturnType<typeof mapSt
             questions={questions}
             selectable={false}
             removable={true}
-            editable={false}
             toggleQuestion={() => {}}
           />
         </div>

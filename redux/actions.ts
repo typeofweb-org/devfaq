@@ -32,7 +32,7 @@ const SyncActionCreators = {
   selectLevel: (level: LevelKey) => createAction(ActionTypes.SELECT_LEVEL, level),
   deselectLevel: (level: LevelKey) => createAction(ActionTypes.DESELECT_LEVEL, level),
   selectQuestion: (q: Question) => createAction(ActionTypes.SELECT_QUESTION, q),
-  deselectQuestion: (q: Question) => createAction(ActionTypes.DESELECT_QUESTION, q),
+  deselectQuestion: (id: Question['id']) => createAction(ActionTypes.DESELECT_QUESTION, id),
 
   updateRouteStarted: () => createAction(ActionTypes.UPDATE_ROUTE_STARTED),
   updateRouteError: (error: Error) => createAction(ActionTypes.UPDATE_ROUTE_ERROR, error),

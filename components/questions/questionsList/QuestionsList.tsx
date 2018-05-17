@@ -6,13 +6,12 @@ import QuestionItem from './questionItem/QuestionItem';
 const defaultProps = {
   selectable: true,
   removable: false,
-  editable: false,
   questions: [] as Question[],
-  selectedQuestionIds: [] as number[],
+  selectedQuestionIds: [] as Question['id'][],
 };
 
 export default class QuestionsList extends React.Component<
-  typeof defaultProps & { toggleQuestion(question: Question): any }
+  typeof defaultProps & { toggleQuestion(questionId: Question['id']): any }
 > {
   static defaultProps = defaultProps;
 
@@ -24,7 +23,6 @@ export default class QuestionsList extends React.Component<
             key={question.id}
             question={question}
             selectable={this.props.selectable}
-            editable={this.props.editable}
             removable={this.props.removable}
             selectedQuestionIds={this.props.selectedQuestionIds}
             toggleQuestion={this.props.toggleQuestion}
