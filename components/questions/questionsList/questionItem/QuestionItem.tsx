@@ -19,14 +19,26 @@ type QuestionItemOwnProps = {
   toggleQuestion(questionId: Question['id']): any;
 };
 
-export default class QuestionItem extends React.Component<QuestionItemOwnProps> {
+type QuestionItemState = {
+  questionRemovalTimer?: NodeJS.Timer;
+  isQuestionBeingRemoved: boolean;
+};
+
+const QUESTION_DELETION_DELAY = 5000;
+
+export default class QuestionItem extends React.Component<QuestionItemOwnProps, QuestionItemState> {
+  state: QuestionItemState = {
+    isQuestionBeingRemoved: false,
+  };
+
   render() {
     const { question } = this.props;
-
     const isSelected = this.isCurrentQuestionSelected();
 
     return (
       <article key={question.id}>
+        {this.maybeRenderDeleteProgress()}
+
         <div
           className={classNames('app-questions--question', {
             active: isSelected,
@@ -43,17 +55,48 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps> 
     );
   }
 
+  componentWillUnmount() {
+    if (this.state.isQuestionBeingRemoved) {
+      this.stopDeletionTimer();
+      this.props.toggleQuestion(this.props.question.id);
+    }
+  }
+
+  maybeRenderDeleteProgress() {
+    if (!this.props.removable) {
+      return null;
+    }
+
+    if (!this.state.isQuestionBeingRemoved) {
+      return null;
+    }
+
+    return (
+      <div
+        className="app-questions--question app-questions--question_deleted"
+        onMouseOver={this.stopDeletionTimer}
+        onMouseLeave={this.startDeletionTimer}
+      >
+        <div className="action-icon action-icon_warning icon-small" />
+        <p>Usunąłeś pytanie ze swojej listy!</p>
+        <button className="round-button branding-button-inverse" onClick={this.undoDeleteQuestion}>
+          Cofnij
+        </button>
+        {this.state.questionRemovalTimer && <div className="app-questions--question_deleted--progress" />}
+      </div>
+    );
+  }
+
   maybeRenderCheckbox() {
     if (!this.props.selectable) {
       return null;
     }
 
-    const { question } = this.props;
     const isSelected = this.isCurrentQuestionSelected();
 
     return (
       <input
-        onChange={() => this.props.toggleQuestion(question.id)}
+        onChange={this.toggleQuestion}
         checked={isSelected}
         type="checkbox"
         className="app-questions--question--checkbox"
@@ -90,19 +133,64 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps> 
       return null;
     }
 
-    const { question } = this.props;
-
     return (
       <div className="app-questions--question--remove-container">
-        <button
-          className="app-questions--question--remove--icon"
-          onClick={() => this.props.toggleQuestion(question.id)}
-        />
+        <button className="app-questions--question--remove--icon" onClick={this.deleteQuestion} />
       </div>
     );
   }
 
-  private isCurrentQuestionSelected = () => {
+  toggleQuestion = () => {
+    this.props.toggleQuestion(this.props.question.id);
+  };
+
+  deleteQuestion = () => {
+    this.setState({ isQuestionBeingRemoved: true }, () => {
+      this.startDeletionTimer();
+    });
+  };
+
+  undoDeleteQuestion = () => {
+    this.setState({ isQuestionBeingRemoved: false }, () => {
+      this.stopDeletionTimer();
+    });
+  };
+
+  startDeletionTimer = () => {
+    const { question } = this.props;
+
+    if (!this.state.isQuestionBeingRemoved) {
+      return;
+    }
+    if (this.state.questionRemovalTimer) {
+      return;
+    }
+
+    const questionRemovalTimer = setTimeout(() => {
+      console.log(question.id);
+      this.props.toggleQuestion(question.id);
+    }, QUESTION_DELETION_DELAY);
+
+    this.setState({
+      questionRemovalTimer,
+    });
+  };
+
+  stopDeletionTimer = () => {
+    if (!this.state.isQuestionBeingRemoved) {
+      return;
+    }
+    if (!this.state.questionRemovalTimer) {
+      return;
+    }
+
+    clearTimeout(this.state.questionRemovalTimer);
+    this.setState({
+      questionRemovalTimer: undefined,
+    });
+  };
+
+  isCurrentQuestionSelected = () => {
     return isQuestionSelected(this.props.selectedQuestionIds, this.props.question.id);
   };
 }
