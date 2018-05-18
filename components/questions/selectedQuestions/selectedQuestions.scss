@@ -28,6 +28,9 @@
     box-sizing: border-box;
     width: 100%;
     margin: 0;
+    article {
+      min-height: 110px;
+    }
     @include mediaquery('gt-sm') {
       flex: 0 1 calc(100% - 245px);
       padding-left: 45px;

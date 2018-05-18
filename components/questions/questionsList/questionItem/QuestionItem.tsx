@@ -24,7 +24,7 @@ type QuestionItemState = {
   isQuestionBeingRemoved: boolean;
 };
 
-const QUESTION_DELETION_DELAY = 5000;
+const QUESTION_DELETION_DELAY = 50000;
 
 type QuestionContentProps = {
   selectable: boolean;
@@ -127,18 +127,20 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
 
     return (
       <article key={question.id}>
-        {this.maybeRenderDeleteProgress()}
-        <AnimateHeight isIn={!isQuestionBeingRemoved} time={500}>
-          <QuestionContent
-            selectable={selectable}
-            removable={removable}
-            isSelected={isSelected}
-            isQuestionBeingRemoved={isQuestionBeingRemoved}
-            question={question}
-            toggleQuestion={this.toggleQuestion}
-            deleteQuestion={this.deleteQuestion}
-          />
-        </AnimateHeight>
+        <div className="app-questions--question-container">
+          {this.maybeRenderDeleteProgress()}
+          <AnimateHeight in={!isQuestionBeingRemoved} time={500}>
+            <QuestionContent
+              selectable={selectable}
+              removable={removable}
+              isSelected={isSelected}
+              isQuestionBeingRemoved={isQuestionBeingRemoved}
+              question={question}
+              toggleQuestion={this.toggleQuestion}
+              deleteQuestion={this.deleteQuestion}
+            />
+          </AnimateHeight>
+        </div>
       </article>
     );
   }

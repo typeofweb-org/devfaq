@@ -3,11 +3,8 @@
   margin-top: 15px;
   margin-bottom: 15px;
   article {
-    min-height: 81px;
+    @include hardwareAcceleration();
     position: relative;
-    margin-bottom: 10px;
-    @include mediaquery('gt-sm') {
-      margin-bottom: 15px;
-    }
+    overflow: hidden;
   }
 }
