@@ -2,11 +2,11 @@ import './questionItem.scss';
 import * as React from 'react';
 import { Question } from '../../../../redux/reducers/questions';
 import * as classNames from 'classnames';
-
 import { pl } from 'date-fns/locale';
 import { formatWithOptions } from 'date-fns/fp';
 import { isQuestionSelected } from '../../questionsUtils';
 import MarkdownText from '../../../markdownText/MarkdownText';
+import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
 
 const longDate = formatWithOptions({ locale: pl }, 'LL');
 const shortDate = formatWithOptions({ locale: pl }, 'L');
@@ -26,63 +26,32 @@ type QuestionItemState = {
 
 const QUESTION_DELETION_DELAY = 5000;
 
-export default class QuestionItem extends React.Component<QuestionItemOwnProps, QuestionItemState> {
-  state: QuestionItemState = {
-    isQuestionBeingRemoved: false,
-  };
+type QuestionContentProps = {
+  selectable: boolean;
+  removable: boolean;
+  isSelected: boolean;
+  isQuestionBeingRemoved: boolean;
+  question: Question;
+  toggleQuestion(): any;
+  deleteQuestion(): any;
+};
 
+class QuestionContent extends React.Component<QuestionContentProps> {
   render() {
-    const { question } = this.props;
-    const isSelected = this.isCurrentQuestionSelected();
-
-    return (
-      <article key={question.id}>
-        {this.maybeRenderDeleteProgress()}
-
-        <div
-          className={classNames('app-questions--question', {
-            active: isSelected,
-          })}
-        >
-          {this.maybeRenderCheckbox()}
-
-          <MarkdownText className="app-questions--question--text" value={question.question} />
-
-          {this.renderMeta()}
-          {this.maybeRenderDeleteButton()}
-        </div>
-      </article>
-    );
-  }
-
-  componentWillUnmount() {
-    if (this.state.isQuestionBeingRemoved) {
-      this.stopDeletionTimer();
-      this.props.toggleQuestion(this.props.question.id);
-    }
-  }
-
-  maybeRenderDeleteProgress() {
-    if (!this.props.removable) {
-      return null;
-    }
-
-    if (!this.state.isQuestionBeingRemoved) {
-      return null;
-    }
+    const { question, isSelected } = this.props;
 
     return (
       <div
-        className="app-questions--question app-questions--question_deleted"
-        onMouseOver={this.stopDeletionTimer}
-        onMouseLeave={this.startDeletionTimer}
+        className={classNames('app-questions--question', {
+          active: isSelected,
+        })}
       >
-        <div className="action-icon action-icon_warning icon-small" />
-        <p>Usunąłeś pytanie ze swojej listy!</p>
-        <button className="round-button branding-button-inverse" onClick={this.undoDeleteQuestion}>
-          Cofnij
-        </button>
-        {this.state.questionRemovalTimer && <div className="app-questions--question_deleted--progress" />}
+        {this.maybeRenderCheckbox()}
+
+        <MarkdownText className="app-questions--question--text" value={question.question} />
+
+        {this.renderMeta()}
+        {this.maybeRenderDeleteButton()}
       </div>
     );
   }
@@ -92,12 +61,10 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
       return null;
     }
 
-    const isSelected = this.isCurrentQuestionSelected();
-
     return (
       <input
-        onChange={this.toggleQuestion}
-        checked={isSelected}
+        onChange={this.props.toggleQuestion}
+        checked={this.props.isSelected}
         type="checkbox"
         className="app-questions--question--checkbox"
       />
@@ -135,7 +102,66 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
 
     return (
       <div className="app-questions--question--remove-container">
-        <button className="app-questions--question--remove--icon" onClick={this.deleteQuestion} />
+        <button className="app-questions--question--remove--icon" onClick={this.props.deleteQuestion} />
+      </div>
+    );
+  }
+}
+
+export default class QuestionItem extends React.Component<QuestionItemOwnProps, QuestionItemState> {
+  state: QuestionItemState = {
+    isQuestionBeingRemoved: false,
+  };
+
+  componentWillUnmount() {
+    if (this.state.isQuestionBeingRemoved) {
+      this.stopDeletionTimer();
+      this.props.toggleQuestion(this.props.question.id);
+    }
+  }
+
+  render() {
+    const { question, selectable, removable } = this.props;
+    const { isQuestionBeingRemoved } = this.state;
+    const isSelected = this.isCurrentQuestionSelected();
+
+    return (
+      <article key={question.id}>
+        {this.maybeRenderDeleteProgress()}
+        <AnimateHeight isIn={!isQuestionBeingRemoved} time={500}>
+          <QuestionContent
+            selectable={selectable}
+            removable={removable}
+            isSelected={isSelected}
+            isQuestionBeingRemoved={isQuestionBeingRemoved}
+            question={question}
+            toggleQuestion={this.toggleQuestion}
+            deleteQuestion={this.deleteQuestion}
+          />
+        </AnimateHeight>
+      </article>
+    );
+  }
+
+  maybeRenderDeleteProgress() {
+    if (!this.props.removable) {
+      return null;
+    }
+
+    return (
+      <div
+        className={classNames('app-questions--question', 'app-questions--question_deleted', {
+          'being-removed': this.state.isQuestionBeingRemoved,
+        })}
+        onMouseOver={this.stopDeletionTimer}
+        onMouseLeave={this.startDeletionTimer}
+      >
+        <div className="action-icon action-icon_warning icon-small" />
+        <p>Usunąłeś pytanie ze swojej listy!</p>
+        <button className="round-button branding-button-inverse" onClick={this.undoDeleteQuestion}>
+          Cofnij
+        </button>
+        {this.state.questionRemovalTimer && <div className="app-questions--question_deleted--progress" />}
       </div>
     );
   }
