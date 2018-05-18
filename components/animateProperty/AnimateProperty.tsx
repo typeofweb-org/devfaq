@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Transition } from 'react-transition-group';
 import { EndHandler, EnterHandler, ExitHandler } from 'react-transition-group/Transition';
 
-export class AnimateHeight extends React.Component<{ isIn: boolean; time: number }> {
+export class AnimateHeight extends React.Component<{ in?: boolean; time: number }> {
   private reflow(el: HTMLElement): void {
     // @ts-ignore
     const _ignore = el.scrollTop;
@@ -15,6 +15,7 @@ export class AnimateHeight extends React.Component<{ isIn: boolean; time: number
 
   onExit: ExitHandler = (el) => {
     console.log('onExit');
+    (el.style as any).willChange = 'height, opacity';
     el.style.height = el.scrollHeight + 'px';
     el.style.opacity = '1';
     this.reflow(el);
@@ -23,7 +24,6 @@ export class AnimateHeight extends React.Component<{ isIn: boolean; time: number
   onExiting: ExitHandler = (el) => {
     console.log('onExiting');
     el.style.height = '0';
-    el.style.overflow = 'hidden';
     el.style.opacity = '0';
     el.style.transition = `height ${this.duration}, opacity ${this.duration}`;
   };
@@ -31,15 +31,14 @@ export class AnimateHeight extends React.Component<{ isIn: boolean; time: number
   onExited: ExitHandler = (el) => {
     console.log('onExited');
     el.style.height = '';
-    el.style.overflow = '';
     el.style.opacity = '';
     el.style.transition = '';
   };
 
   onEnter: EnterHandler = (el) => {
     console.log('onEnter');
+    (el.style as any).willChange = 'height, opacity';
     el.style.height = '0';
-    el.style.overflow = 'hidden';
     el.style.opacity = '0';
     this.reflow(el);
   };
@@ -47,7 +46,6 @@ export class AnimateHeight extends React.Component<{ isIn: boolean; time: number
   onEntering: EnterHandler = (el) => {
     console.log('onEntering');
     el.style.height = el.scrollHeight + 'px';
-    el.style.overflow = 'hidden';
     el.style.opacity = '1';
     el.style.transition = `height ${this.duration}, opacity ${this.duration}`;
   };
@@ -55,7 +53,6 @@ export class AnimateHeight extends React.Component<{ isIn: boolean; time: number
   onEntered: EnterHandler = (el) => {
     console.log('onEntered');
     el.style.height = '';
-    el.style.overflow = '';
     el.style.opacity = '';
     el.style.transition = '';
   };
@@ -66,7 +63,10 @@ export class AnimateHeight extends React.Component<{ isIn: boolean; time: number
   };
 
   render() {
-    const { isIn, time } = this.props;
+    const { in: isIn, time } = this.props;
+
+    // @ts-ignore
+    const isBrowser = !process || !!process['browser'];
 
     return (
       <Transition
@@ -79,7 +79,7 @@ export class AnimateHeight extends React.Component<{ isIn: boolean; time: number
         onEntering={this.onEntering}
         onEntered={this.onEntered}
         addEndListener={this.addEndListener}
-        unmountOnExit={true}
+        unmountOnExit={isBrowser}
       >
         {() => this.props.children}
       </Transition>

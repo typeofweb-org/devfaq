@@ -1,7 +1,15 @@
 @import "common";
 $transition-time: 300ms;
+$shadow-width: 2px;
+.app-questions--question-container {
+  padding: 0 $shadow-width;
+  margin: 10px 0;
+  @include mediaquery('gt-sm') {
+    margin: 15px 0;
+  }
+}
 .app-questions--question {
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0.19), 0 2px 4px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.19), 0 $shadow-width 4px rgba(0, 0, 0, 0.23);
   background-color: $white-text;
   box-sizing: border-box;
   padding: 15px 5px;
@@ -26,7 +34,7 @@ $transition-time: 300ms;
     background-color: $purple-branding-superlight;
     align-items: center;
     color: $red-branding;
-    width: 100%;
+    width: calc(100% - #{$shadow-width * 2});
     border: 0;
     height: 71px;
     position: absolute;

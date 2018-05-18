@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Question } from '../../../redux/reducers/questions';
 import './questionsList.scss';
 import QuestionItem from './questionItem/QuestionItem';
+import { TransitionGroup } from 'react-transition-group';
+import { AnimateHeight } from '../../animateProperty/AnimateProperty';
 
 const defaultProps = {
   selectable: true,
@@ -17,18 +19,20 @@ export default class QuestionsList extends React.Component<
 
   render() {
     return (
-      <div className="app-questions--list">
+      <TransitionGroup className="app-questions--list" component="div">
         {this.props.questions.map((question) => (
-          <QuestionItem
-            key={question.id}
-            question={question}
-            selectable={this.props.selectable}
-            removable={this.props.removable}
-            selectedQuestionIds={this.props.selectedQuestionIds}
-            toggleQuestion={this.props.toggleQuestion}
-          />
+          <AnimateHeight time={700} key={question.id}>
+            <QuestionItem
+              key={question.id}
+              question={question}
+              selectable={this.props.selectable}
+              removable={this.props.removable}
+              selectedQuestionIds={this.props.selectedQuestionIds}
+              toggleQuestion={this.props.toggleQuestion}
+            />
+          </AnimateHeight>
         ))}
-      </div>
+      </TransitionGroup>
     );
   }
 }
