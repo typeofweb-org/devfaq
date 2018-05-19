@@ -36,7 +36,8 @@ const SyncActionCreators = {
 
   updateRouteStarted: () => createAction(ActionTypes.UPDATE_ROUTE_STARTED),
   updateRouteError: (error: Error) => createAction(ActionTypes.UPDATE_ROUTE_ERROR, error),
-  updateRouteSuccess: (route: RouteDetails) => createAction(ActionTypes.UPDATE_ROUTE_SUCCESS, route),
+  updateRouteSuccess: (route: RouteDetails, inProgress = false) =>
+    createAction(ActionTypes.UPDATE_ROUTE_SUCCESS, { route, inProgress }),
 
   fetchQuestionsStarted: () => createAction(ActionTypes.FETCH_QUESTIONS, {}),
   fetchQuestionsError: (error: Error) => createAction(ActionTypes.FETCH_QUESTIONS, { error }),

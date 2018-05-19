@@ -16,10 +16,8 @@ type AllQuestionsComponentProps = ReturnType<typeof mapStateToProps> & typeof ma
 class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> {
   render() {
     const { technology } = this.props;
-    const technologyIconItem = technologyIconItems.find((t) => t.name === technology);
-    const category = (technologyIconItem && technologyIconItem.label) || '';
 
-    if (!this.props.questions.data) {
+    if (!this.props.questions.data || this.props.questions.data.length === 0) {
       return null; // @todo handle errors and loading
     }
 
@@ -27,13 +25,16 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
       return null;
     }
 
+    const technologyIconItem = technologyIconItems.find((t) => t.name === technology);
+    const category = (technologyIconItem && technologyIconItem.label) || '';
+
     return (
       <section className="app-questions">
         <AllQuestionsHeader category={category} questionsLength={this.props.questions.data.length} />
         <QuestionsList
           selectable={true}
           removable={false}
-          questions={this.props.questions.data}
+          questions={this.props.questions}
           selectedQuestionIds={this.props.selectedQuestionsIds}
           toggleQuestion={this.toggleQuestion}
         />

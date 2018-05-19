@@ -195,7 +195,6 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
     }
 
     const questionRemovalTimer = setTimeout(() => {
-      console.log(question.id);
       this.props.toggleQuestion(question.id);
     }, QUESTION_DELETION_DELAY);
 

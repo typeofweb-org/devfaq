@@ -40,7 +40,11 @@ function getRouteDetails(routeDetails: RouteDetails) {
 class MyApp extends AppComponent {
   static async getInitialProps({ Component, ctx }: AppGetInitialPropsArg) {
     const newRouteDetails = getRouteDetails(ctx);
-    await ctx.store.dispatch(ActionCreators.updateRouteSuccess(newRouteDetails));
+
+    // when changing routes on the client side
+    // it's actually still in progress at this point
+    const routeChangeInProgress = !ctx.isServer;
+    await ctx.store.dispatch(ActionCreators.updateRouteSuccess(newRouteDetails, routeChangeInProgress));
 
     const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
 
