@@ -42,8 +42,8 @@ export const routeDetails = (routeDetails = initialState, action: Actions): Init
     case ActionTypes.UPDATE_ROUTE_SUCCESS:
       return {
         previous: copyRouteDetails(routeDetails.current),
-        current: copyRouteDetails(action.payload),
-        isTransitioning: false,
+        current: copyRouteDetails(action.payload.route),
+        isTransitioning: action.payload.inProgress,
       };
     default:
       return routeDetails;

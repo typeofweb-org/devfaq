@@ -4,11 +4,12 @@ import './questionsList.scss';
 import QuestionItem from './questionItem/QuestionItem';
 import { TransitionGroup } from 'react-transition-group';
 import { AnimateHeight } from '../../animateProperty/AnimateProperty';
+import { AppState } from '../../../redux/reducers/index';
 
 const defaultProps = {
   selectable: true,
   removable: false,
-  questions: [] as Question[],
+  questions: {} as AppState['questions'],
   selectedQuestionIds: [] as Question['id'][],
 };
 
@@ -18,9 +19,12 @@ export default class QuestionsList extends React.Component<
   static defaultProps = defaultProps;
 
   render() {
+    if (!this.props.questions.data) {
+      return null;
+    }
     return (
-      <TransitionGroup className="app-questions--list" component="div">
-        {this.props.questions.map((question) => (
+      <TransitionGroup appear={false} enter={false} className="app-questions--list" component="div">
+        {this.props.questions.data.map((question) => (
           <AnimateHeight time={700} key={question.id}>
             <QuestionItem
               key={question.id}

@@ -1,31 +1,19 @@
 import * as React from 'react';
-import { addRouterEventListener, removeRouterEventListener } from '../../utils/routerEvents';
 import './appSpinner.scss';
+import { connect } from 'react-redux';
+import { AppState } from '../../redux/reducers';
 
-const initialState = {
-  isLoading: false,
+class AppSpinnerComponent extends React.Component<ReturnType<typeof mapStateToProps>> {
+  render() {
+    return this.props.isLoading && <div className="spinner" />;
+  }
+}
+
+const mapStateToProps = (state: AppState) => {
+  return {
+    isLoading: state.routeDetails.isTransitioning,
+  };
 };
 
-export default class AppSpinner extends React.Component<{}, typeof initialState> {
-  state = initialState;
-
-  componentDidMount() {
-    addRouterEventListener('onRouteChangeStart', this.onRouteChangeStart);
-    addRouterEventListener('onRouteChangeComplete', this.onRouteChangeComplete);
-    addRouterEventListener('onRouteChangeError', this.onRouteChangeError);
-  }
-
-  componentWillUnmount() {
-    removeRouterEventListener('onRouteChangeStart', this.onRouteChangeStart);
-    removeRouterEventListener('onRouteChangeComplete', this.onRouteChangeComplete);
-    removeRouterEventListener('onRouteChangeError', this.onRouteChangeError);
-  }
-
-  render() {
-    return this.state.isLoading && <div className="spinner" />;
-  }
-
-  onRouteChangeStart = () => this.setState({ isLoading: true });
-  onRouteChangeComplete = () => this.setState({ isLoading: false });
-  onRouteChangeError = () => this.setState({ isLoading: false });
-}
+const AppSpinner = connect(mapStateToProps)(AppSpinnerComponent);
+export default AppSpinner;

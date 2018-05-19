@@ -14,7 +14,7 @@ export class AnimateHeight extends React.Component<{ in?: boolean; time: number 
   }
 
   onExit: ExitHandler = (el) => {
-    console.log('onExit');
+    // console.log('onExit');
     (el.style as any).willChange = 'height, opacity';
     el.style.height = el.scrollHeight + 'px';
     el.style.opacity = '1';
@@ -22,21 +22,21 @@ export class AnimateHeight extends React.Component<{ in?: boolean; time: number 
   };
 
   onExiting: ExitHandler = (el) => {
-    console.log('onExiting');
+    // console.log('onExiting');
     el.style.height = '0';
     el.style.opacity = '0';
     el.style.transition = `height ${this.duration}, opacity ${this.duration}`;
   };
 
   onExited: ExitHandler = (el) => {
-    console.log('onExited');
+    // console.log('onExited');
     el.style.height = '';
     el.style.opacity = '';
     el.style.transition = '';
   };
 
   onEnter: EnterHandler = (el) => {
-    console.log('onEnter');
+    // console.log('onEnter');
     (el.style as any).willChange = 'height, opacity';
     el.style.height = '0';
     el.style.opacity = '0';
@@ -44,21 +44,21 @@ export class AnimateHeight extends React.Component<{ in?: boolean; time: number 
   };
 
   onEntering: EnterHandler = (el) => {
-    console.log('onEntering');
+    // console.log('onEntering');
     el.style.height = el.scrollHeight + 'px';
     el.style.opacity = '1';
     el.style.transition = `height ${this.duration}, opacity ${this.duration}`;
   };
 
   onEntered: EnterHandler = (el) => {
-    console.log('onEntered');
+    // console.log('onEntered');
     el.style.height = '';
     el.style.opacity = '';
     el.style.transition = '';
   };
 
   addEndListener: EndHandler = (el, done) => {
-    console.log('addEndListener');
+    // console.log('addEndListener');
     el.addEventListener('transitionend', () => done(), { once: true, passive: true });
   };
 

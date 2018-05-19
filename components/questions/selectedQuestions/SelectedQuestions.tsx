@@ -42,7 +42,7 @@ class SelectedQuestionsComponent extends React.Component<
           </div>
           <QuestionsList
             selectedQuestionIds={this.props.selectedQuestionIds}
-            questions={questions}
+            questions={{ isLoading: false, data: questions }}
             selectable={false}
             removable={true}
             toggleQuestion={this.toggleQuestion}
