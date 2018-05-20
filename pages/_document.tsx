@@ -28,21 +28,25 @@ export default class MyDocument extends Document {
 
           <meta property="og:type" content="website" />
 
-          <meta property="og:url" content={this.props.absoluteUrl} />
+          <meta property="og:url" itemProp="url" content={this.props.absoluteUrl} />
 
-          <meta property="og:image" content="https://fefaq.pl/img/fefaq-cover-facebook.png" />
+          <meta
+            property="og:image"
+            itemProp="logo image"
+            content={`${this.props.absoluteUrl}/img/fefaq-cover-facebook.png`}
+          />
 
           <meta property="og:site_name" content="Fefaq.pl" />
 
           <meta property="fb:app_id" content="2005583769700691" />
           <meta property="og:locale" content="pl_PL" />
 
-          <link rel="apple-touch-icon" sizes="180x180" href="/static/favicons/apple-touch-icon.png" />
-          <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png" />
-          <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png" />
-          <link rel="manifest" href="/static/favicons/manifest.json" />
-          <link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg" color="#673ab7" />
-          <link rel="apple-touch-startup-image" href="/static/favicons/splash-iphone-8.png" />
+          <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+          <link rel="manifest" href="/manifest.json" />
+          <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#673ab7" />
+          <link rel="apple-touch-startup-image" href="/splash-iphone-8.png" />
           <meta name="msapplication-TileColor" content="#673ab7" />
           <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
           <meta name="theme-color" content="#ffffff" />
