@@ -2,8 +2,8 @@ import './appLogo.scss';
 
 const AppLogo = ({ fill = '#ffffff' }) => {
   return (
-    <div className="app-logo">
-      <div className="scaling-svg-container" style={{ height: '100%' }}>
+    <span className="app-logo">
+      <span className="scaling-svg-container" style={{ height: '100%' }}>
         <svg
           className="scaling-svg"
           width="472px"
@@ -23,8 +23,8 @@ const AppLogo = ({ fill = '#ffffff' }) => {
             />
           </g>
         </svg>
-      </div>
-    </div>
+      </span>
+    </span>
   );
 };
 

@@ -2,15 +2,23 @@ import * as React from 'react';
 import { Transition } from 'react-transition-group';
 import { EndHandler, EnterHandler, ExitHandler } from 'react-transition-group/Transition';
 
-export class AnimateHeight extends React.Component<{ in?: boolean; time: number }> {
+export class AnimateHeight extends React.Component<{
+  in?: boolean;
+  enterTime: number;
+  exitTime: number;
+}> {
   private reflow(el: HTMLElement): void {
     // @ts-ignore
     const _ignore = el.scrollTop;
     return;
   }
 
-  get duration() {
-    return `${this.props.time}ms`;
+  get enterDuration() {
+    return `${this.props.enterTime}ms`;
+  }
+
+  get exitDuration() {
+    return `${this.props.exitTime}ms`;
   }
 
   onExit: ExitHandler = (el) => {
@@ -25,7 +33,8 @@ export class AnimateHeight extends React.Component<{ in?: boolean; time: number 
     // console.log('onExiting');
     el.style.height = '0';
     el.style.opacity = '0';
-    el.style.transition = `height ${this.duration}, opacity ${this.duration}`;
+    el.style.minHeight = '0';
+    el.style.transition = `height ${this.exitDuration}, opacity ${this.exitDuration}`;
   };
 
   onExited: ExitHandler = (el) => {
@@ -33,6 +42,7 @@ export class AnimateHeight extends React.Component<{ in?: boolean; time: number 
     el.style.height = '';
     el.style.opacity = '';
     el.style.transition = '';
+    el.style.minHeight = '';
   };
 
   onEnter: EnterHandler = (el) => {
@@ -40,6 +50,7 @@ export class AnimateHeight extends React.Component<{ in?: boolean; time: number 
     (el.style as any).willChange = 'height, opacity';
     el.style.height = '0';
     el.style.opacity = '0';
+    el.style.minHeight = '0';
     this.reflow(el);
   };
 
@@ -47,7 +58,7 @@ export class AnimateHeight extends React.Component<{ in?: boolean; time: number 
     // console.log('onEntering');
     el.style.height = el.scrollHeight + 'px';
     el.style.opacity = '1';
-    el.style.transition = `height ${this.duration}, opacity ${this.duration}`;
+    el.style.transition = `height ${this.enterDuration}, opacity ${this.enterDuration}`;
   };
 
   onEntered: EnterHandler = (el) => {
@@ -55,6 +66,7 @@ export class AnimateHeight extends React.Component<{ in?: boolean; time: number 
     el.style.height = '';
     el.style.opacity = '';
     el.style.transition = '';
+    el.style.minHeight = '';
   };
 
   addEndListener: EndHandler = (el, done) => {
@@ -63,7 +75,7 @@ export class AnimateHeight extends React.Component<{ in?: boolean; time: number 
   };
 
   render() {
-    const { in: isIn, time } = this.props;
+    const { in: isIn, enterTime, exitTime } = this.props;
 
     // @ts-ignore
     const isBrowser = !process || !!process['browser'];
@@ -71,7 +83,7 @@ export class AnimateHeight extends React.Component<{ in?: boolean; time: number 
     return (
       <Transition
         in={isIn}
-        timeout={time}
+        timeout={{ enter: enterTime, exit: exitTime }}
         onExit={this.onExit}
         onExiting={this.onExiting}
         onExited={this.onExited}

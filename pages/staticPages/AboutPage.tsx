@@ -1,17 +1,17 @@
 const AboutPage = () => (
   <article className="app-static-page">
-    <h1>Jak korzystać? FAQ</h1>
-    <h2>Co to jest FeFaq.pl?</h2>
+    <h2>Jak korzystać? FAQ</h2>
+    <h3>Co to jest FeFaq.pl?</h3>
     <p>FeFaq.pl jest serwisem internetowym służącym do udostępniania i wymiany pytań rekrutacyjnych na stanowiska front-end
       developerów oraz inne pokrewne. Został stworzony przez programistów dla programistów, a jego celem jest wymiana wiedzy
       oraz możliwość przygotowania się do rozmów rekrutacyjnych.</p>
 
-    <h2>Jak można dodać pytanie?</h2>
+    <h3>Jak można dodać pytanie?</h3>
     <p>Każdy użytkownik FeFaq może dodać treść pytania, przydzielić mu kategorię oraz poziom trudności. Następnie po kliknięciu
       „Dodaj” pytanie trafia do moderacji. Po zaakceptowaniu przez administratorów, pojawi się na stronie. Może to zająć
       kilka dni!</p>
 
-    <h2>Jakie są ogólne zasady korzystania z serwisu?</h2>
+    <h3>Jakie są ogólne zasady korzystania z serwisu?</h3>
     <ul>
       <li>W treści nie podawaj nazwy firmy, w której padło pytanie.</li>
       <li>Przed dodaniem pytania, upewnij się czy treść jest wolna od błędów ortograficznych, zaoszczędzisz pracy moderacji.</li>
@@ -20,7 +20,7 @@ const AboutPage = () => (
       <li>Wszystkie pytania są moderowane. Moderatorzy dbają również o to, aby pytania się nie powtarzały.</li>
     </ul>
 
-    <h2>Czy mogę formatować jakoś treść dodawanych pytań?</h2>
+    <h3>Czy mogę formatować jakoś treść dodawanych pytań?</h3>
     <p>Tak! Możesz skorzystać z powszechnie znanego Markdown:</p>
     <ul>
       <li>``` Code block ```</li>
@@ -31,7 +31,7 @@ const AboutPage = () => (
       <li>* List</li>
     </ul>
 
-    <h3>Przykład użycia</h3>
+    <h4>Przykład użycia</h4>
     <p>Przykładowe pytanie napisane w Markdown może wyglądać tak:</p>
 
     <pre>Czy funkcja `sayHello` zwraca **string**?{'\n'}

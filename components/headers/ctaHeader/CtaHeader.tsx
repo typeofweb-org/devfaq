@@ -13,7 +13,7 @@ class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToPro
     return (
       <div className="cta-header">
         <header className="app-header--cta container">
-          <nav role="tablist" className="app-tabs">
+          <nav className="app-tabs">
             <ActiveLink route="/questions">
               <a className="app-tabs--tab" onClick={() => reportEvent('Lista pytań')}>
                 Lista pytań
@@ -25,11 +25,7 @@ class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToPro
                   'has-notification': this.props.areAnyQuestionSelected,
                 })}
                 onClick={() =>
-                  reportEvent(
-                    this.props.areAnyQuestionSelected
-                      ? 'Wybrane pytania'
-                      : 'Wybrane pytania (puste)'
-                  )
+                  reportEvent(this.props.areAnyQuestionSelected ? 'Wybrane pytania' : 'Wybrane pytania (puste)')
                 }
               >
                 Wybrane pytania
@@ -51,10 +47,7 @@ class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToPro
                 Pobierz plik PDF
               </a>
             </ActiveLink>
-            <button
-              className="round-button branding-button-inverse"
-              onClick={this.onOpenAddQuestionModalClick}
-            >
+            <button className="round-button branding-button-inverse" onClick={this.onOpenAddQuestionModalClick}>
               Dodaj pytanie
             </button>
           </div>

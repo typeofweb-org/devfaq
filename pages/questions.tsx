@@ -10,6 +10,8 @@ import AllQuestions from '../components/questions/allQuestions/AllQuestions';
 import { ActionCreators } from '../redux/actions';
 import { connect } from 'react-redux';
 import { AppState } from '../redux/reducers/index';
+import { getTechnology } from '../redux/selectors/selectors';
+import { Technology } from '../constants/technology-icon-items';
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 class QuestionsPageComponent extends React.Component<Props> {
@@ -30,8 +32,11 @@ class QuestionsPageComponent extends React.Component<Props> {
   }
 
   render() {
+    const { technology } = this.props;
+    const label = technology ? Technology[technology] : '';
+
     return (
-      <Layout title="Pytania">
+      <Layout title={`Pytania ${label}`}>
         <QuestionsListLayout>
           <MobileActionButtons justDownload={false} />
           <div className="questions-container">
@@ -46,6 +51,7 @@ class QuestionsPageComponent extends React.Component<Props> {
 
 const mapStateToProps = (state: AppState) => {
   return {
+    technology: getTechnology(state),
     selectedLevels: state.selectedLevels,
   };
 };

@@ -1,11 +1,19 @@
 @import "common";
 .selected-questions-container {
+  margin: 20px 0;
+}
+
+.selected-questions--category {
+  overflow: hidden;
+}
+
+.selected-questions--list-container {
   display: flex;
   flex-direction: column;
   @include mediaquery('gt-sm') {
     flex-direction: row;
     justify-content: flex-end;
-    margin: 40px 0;
+    margin: 20px 0;
   }
   .technology-icon-container {
     width: 50px;

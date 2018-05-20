@@ -25,7 +25,7 @@ export default class QuestionsList extends React.Component<
     return (
       <TransitionGroup appear={false} enter={false} className="app-questions--list" component="div">
         {this.props.questions.data.map((question) => (
-          <AnimateHeight time={700} key={question.id}>
+          <AnimateHeight enterTime={700} exitTime={700} key={question.id}>
             <QuestionItem
               key={question.id}
               question={question}

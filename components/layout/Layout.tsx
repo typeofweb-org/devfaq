@@ -13,9 +13,9 @@ type LayoutProps = {
 
 export default class Layout extends React.Component<LayoutProps> {
   static defaultProps = {
-    title: 'Fefaq.pl - Front-end Frequently Asked Questions',
+    title: 'Front-end Frequently Asked Questions',
     description:
-      'Fefaq.pl - największa baza pytań z front-endu tworzona przez społeczność. Fefaq.pl jest serwisem internetowym służącym do udostępniania i wymiany pytań rekrutacyjnych na stanowiska front-end developerów.',
+      'Fefaq.pl — największa baza pytań z front-endu tworzona przez społeczność. Fefaq.pl jest serwisem internetowym służącym do udostępniania i wymiany pytań rekrutacyjnych na stanowiska front-end developerów.',
   };
 
   render() {
@@ -23,10 +23,10 @@ export default class Layout extends React.Component<LayoutProps> {
     return (
       <React.Fragment>
         <Head>
-          <title key="title">{title}</title>
+          <title key="title">Fefaq.pl &bull; {title}</title>
           <meta key="description" name="description" content={description} />
-          <meta property="og:title" content={title} />
-          <meta property="og:description" content={description} />
+          <meta property="og:title" itemProp="title name" content={`Fefaq.pl &bull; ${title}`} />
+          <meta property="og:description" itemProp="description" content={description} />
         </Head>
         <div className="app-root">
           <AppSpinner />

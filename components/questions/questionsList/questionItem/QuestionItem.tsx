@@ -24,7 +24,7 @@ type QuestionItemState = {
   isQuestionBeingRemoved: boolean;
 };
 
-const QUESTION_DELETION_DELAY = 50000;
+const QUESTION_DELETION_DELAY = 5000;
 
 type QuestionContentProps = {
   selectable: boolean;
@@ -48,7 +48,9 @@ class QuestionContent extends React.Component<QuestionContentProps> {
       >
         {this.maybeRenderCheckbox()}
 
-        <MarkdownText className="app-questions--question--text" value={question.question} />
+        <div className="app-questions--question--text" itemProp="text">
+          <MarkdownText value={question.question} />
+        </div>
 
         {this.renderMeta()}
         {this.maybeRenderDeleteButton()}
@@ -73,12 +75,15 @@ class QuestionContent extends React.Component<QuestionContentProps> {
 
   renderMeta() {
     const { question } = this.props;
+    const keywords = [question.level, question.category].join(', ');
 
     return (
       <div className="app-questions--question--meta">
         <span className={classNames('app-questions--question--tag', `app-questions--question--tag_${question.level}`)}>
           {question.level}
         </span>
+        <meta itemProp="dateCreated" content={question.acceptedAt} />
+        <meta itemProp="keywords" content={keywords} />
         <time
           dateTime={question.acceptedAt}
           className="app-questions--question--date app-questions--question--date_long"
@@ -126,10 +131,10 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
     const isSelected = this.isCurrentQuestionSelected();
 
     return (
-      <article key={question.id}>
+      <article key={question.id} itemScope itemType="http://schema.org/Question">
         <div className="app-questions--question-container">
           {this.maybeRenderDeleteProgress()}
-          <AnimateHeight in={!isQuestionBeingRemoved} time={500}>
+          <AnimateHeight enterTime={700} exitTime={700} in={!isQuestionBeingRemoved}>
             <QuestionContent
               selectable={selectable}
               removable={removable}
