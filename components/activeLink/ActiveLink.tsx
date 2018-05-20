@@ -9,6 +9,7 @@ type ActiveLinkOwnProps = {
   exact?: boolean;
   disabledWhenActive?: boolean;
 };
+
 type ActiveLinkRouterProps = {
   router: SingletonRouter;
 };
@@ -42,10 +43,7 @@ const initialState = {
 type ActiveLinkComponentProps = LinkProps & ActiveLinkOwnProps & ActiveLinkRouterProps;
 type ActiveLinkComponentState = typeof initialState;
 
-class ActiveLinkComponent extends React.Component<
-  ActiveLinkComponentProps,
-  ActiveLinkComponentState
-> {
+class ActiveLinkComponent extends React.Component<ActiveLinkComponentProps, ActiveLinkComponentState> {
   static defaultProps = defaultProps;
 
   static getDerivedStateFromProps(
@@ -67,7 +65,18 @@ class ActiveLinkComponent extends React.Component<
   }
 
   render() {
-    const { children, route, activeClassName = '' } = this.props;
+    const {
+      children,
+      route,
+      activeClassName = '',
+      prefetch,
+      shallow,
+      scroll,
+      replace,
+      href,
+      as,
+      passHref,
+    } = this.props;
     const child = React.Children.only(children);
     const isMatch = this.isMatch();
     const newChild = conditionallyAddClassToChild(isMatch, activeClassName, child);
@@ -76,7 +85,20 @@ class ActiveLinkComponent extends React.Component<
       return <div aria-disabled="true">{newChild}</div>;
     }
 
-    return <Link route={route}>{newChild}</Link>;
+    return (
+      <Link
+        prefetch={prefetch}
+        route={route}
+        shallow={shallow}
+        scroll={scroll}
+        replace={replace}
+        href={href}
+        as={as}
+        passHref={passHref}
+      >
+        {newChild}
+      </Link>
+    );
   }
 
   private onRouteChangeComplete = () => {
