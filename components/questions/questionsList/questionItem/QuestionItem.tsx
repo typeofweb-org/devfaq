@@ -131,7 +131,7 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
     const isSelected = this.isCurrentQuestionSelected();
 
     return (
-      <article key={question.id} itemScope itemType="http://schema.org/Question">
+      <article key={question.id} itemScope itemType="http://schema.org/Question" id={`question-${question.id}`}>
         <div className="app-questions--question-container">
           {this.maybeRenderDeleteProgress()}
           <AnimateHeight enterTime={700} exitTime={700} in={!isQuestionBeingRemoved}>
