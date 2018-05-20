@@ -19,7 +19,7 @@ class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToPro
                 Lista pytań
               </a>
             </ActiveLink>
-            <ActiveLink route="/selected-questions">
+            <ActiveLink prefetch={true} route="/selected-questions">
               <a
                 className={classNames('app-tabs--tab', {
                   'has-notification': this.props.areAnyQuestionSelected,
