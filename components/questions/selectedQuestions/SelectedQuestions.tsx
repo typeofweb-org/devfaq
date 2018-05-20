@@ -12,43 +12,51 @@ import './selectedQuestions.scss';
 import { Question } from 'redux/reducers/questions';
 import { TechnologyKey, technologyIconItems } from '../../../constants/technology-icon-items';
 import { ActionCreators } from '../../../redux/actions';
+import { TransitionGroup } from 'react-transition-group';
+import { AnimateHeight } from '../../animateProperty/AnimateProperty';
 
 class SelectedQuestionsComponent extends React.Component<
   ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 > {
   render() {
     if (this.props.areAnyQuestionSelected) {
-      return this.renderSelectedQuestionsList();
+      return (
+        <TransitionGroup appear={false} enter={false} className="selected-questions-container" component="div">
+          {this.renderSelectedQuestionsList()}
+        </TransitionGroup>
+      );
     } else {
       return <NoQuestionsSelectedInfo />;
     }
   }
 
   renderSelectedQuestionsList() {
-    return this.props.selectedQuestionsWithCategories.map(([category, questions]) =>
-      this.renderSelectedQuestionsCategory(category, questions)
-    );
+    return this.props.selectedQuestionsWithCategories.map(([category, questions]) => {
+      return this.renderSelectedQuestionsCategory(category, questions);
+    });
   }
 
   renderSelectedQuestionsCategory(category: TechnologyKey, questions: Question[]) {
     const icon = technologyIconItems.find((i) => i.name === category)!;
 
     return (
-      <section key={category}>
-        <div className="selected-questions-container">
-          <div className="technology-icon-container">
-            <span className="technology-icon-label">{icon.label}</span>
-            <span className={icon.icon} />
+      <AnimateHeight enterTime={700} exitTime={700} key={category}>
+        <section className="selected-questions--category">
+          <div className="selected-questions--list-container">
+            <div className="technology-icon-container">
+              <span className="technology-icon-label">{icon.label}</span>
+              <span className={icon.icon} />
+            </div>
+            <QuestionsList
+              selectedQuestionIds={this.props.selectedQuestionIds}
+              questions={{ isLoading: false, data: questions }}
+              selectable={false}
+              removable={true}
+              toggleQuestion={this.toggleQuestion}
+            />
           </div>
-          <QuestionsList
-            selectedQuestionIds={this.props.selectedQuestionIds}
-            questions={{ isLoading: false, data: questions }}
-            selectable={false}
-            removable={true}
-            toggleQuestion={this.toggleQuestion}
-          />
-        </div>
-      </section>
+        </section>
+      </AnimateHeight>
     );
   }
 

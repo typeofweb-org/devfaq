@@ -7,7 +7,7 @@ export type TechnologyIconItem = {
 export enum Technology {
   html = 'HTML',
   css = 'CSS',
-  js = 'JS',
+  js = 'JavaScript',
   angular = 'Angular',
   react = 'React',
   git = 'GIT',
