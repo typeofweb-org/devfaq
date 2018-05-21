@@ -4,20 +4,44 @@ import * as commonmark from 'commonmark';
 import * as Prism from 'prismjs';
 import './markdownText.scss';
 
-type Props = { className?: string; value: string };
+type MarkdownTextProps = { className?: string; value: string };
 
-export default class MarkdownText extends React.Component<Props> {
+export class MarkdownRenderer {
+  private static instance: MarkdownRenderer;
+  static getInstance(): MarkdownRenderer {
+    if (!MarkdownRenderer.instance) {
+      MarkdownRenderer.instance = new MarkdownRenderer();
+    }
+
+    return MarkdownRenderer.instance;
+  }
+
   private reader = new commonmark.Parser();
   private writer = new commonmark.HtmlRenderer();
-
-  markdownRef = React.createRef<HTMLDivElement>();
 
   getHtmlFromMarkdown(markdown: string): string {
     const parsed = this.reader.parse(markdown);
     return this.writer.render(parsed);
   }
 
-  shouldComponentUpdate(nextProps: Props): boolean {
+  highlightSyntax(el: Element): void {
+    Prism.highlightAllUnder(el);
+  }
+
+  /**
+   * @deprecated @see MarkdownRenderer#getInstance
+   */
+  private constructor() {}
+}
+
+export default class MarkdownText extends React.Component<MarkdownTextProps> {
+  markdownRef = React.createRef<HTMLDivElement>();
+
+  getHtmlFromMarkdown(markdown: string): string {
+    return MarkdownRenderer.getInstance().getHtmlFromMarkdown(markdown);
+  }
+
+  shouldComponentUpdate(nextProps: MarkdownTextProps): boolean {
     return this.props.value !== nextProps.value;
   }
 
@@ -33,8 +57,11 @@ export default class MarkdownText extends React.Component<Props> {
     if (!this.markdownRef.current) {
       return;
     }
+    if (!window) {
+      return;
+    }
 
-    Prism.highlightAllUnder(this.markdownRef.current);
+    MarkdownRenderer.getInstance().highlightSyntax(this.markdownRef.current);
   }
 
   render() {
