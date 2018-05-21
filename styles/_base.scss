@@ -1,9 +1,9 @@
 @import "common";
 @import "typography";
 @import "buttons";
-// @import "forms";
+@import "forms";
 @import "devicon";
-// @import "icons";
+@import "icons";
 // @import "global";
 .container {
   width: 100%;
@@ -97,15 +97,12 @@ body {
 html.ios-standalone {
   $size: 20px;
   padding-top: $size;
-
   body.not-scrollable {
     margin-top: $size;
   }
-
   .main-nav .menu-button.open {
     margin-top: $size;
   }
-
   .app-modal-container::before {
     content: '';
     display: block;
@@ -117,20 +114,16 @@ html.ios-standalone {
     background-color: $purple-branding;
     z-index: $z-index-modal;
   }
-
   .app-modal {
     top: $size;
   }
-
   .app-sidebar {
     top: $size;
     height: calc(100% - #{$size});
   }
-
   app-navigation-header {
     z-index: $z-index-modal;
   }
-
   app-cta-header {
     padding-top: $size;
     margin-top: #{-$size};
@@ -141,7 +134,6 @@ html.ios-standalone {
   display: flex;
   flex-direction: column;
   min-height: 100%;
-
   .app-root {
     flex: 1;
   }

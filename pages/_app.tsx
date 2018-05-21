@@ -9,6 +9,7 @@ import { addRouterEventListener, removeRouterEventListener } from '../utils/rout
 import { withRouter, SingletonRouter } from 'next/router';
 import { ActionCreators } from '../redux/actions';
 import { RouteDetails, GetInitialPropsContext, AppStore } from '../utils/types';
+import AddQuestionModal from '../components/modals/addQuestionModal/AddQuestionModal';
 const AppComponent = App as React.ComponentClass<MyAppProps>;
 
 // hack because of incorrect d.ts file
@@ -71,6 +72,7 @@ class MyApp extends AppComponent {
   onRouteChangeStart = (_url: string) => {
     this.props.store.dispatch(ActionCreators.updateRouteStarted());
   };
+
   onRouteChangeError = (error: any, _url: string) => {
     this.props.store.dispatch(ActionCreators.updateRouteError(error));
   };
@@ -82,6 +84,7 @@ class MyApp extends AppComponent {
         <Provider store={store}>
           <Component {...pageProps} />
         </Provider>
+        <AddQuestionModal />
       </Container>
     );
   }
