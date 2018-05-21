@@ -9,10 +9,11 @@ import QuestionEditor from '../../questionEditor/QuestionEditor';
 type AddQuestionModalState = {
   technology?: TechnologyKey;
   level?: LevelKey;
+  questionText: string;
 };
 
 export default class AddQuestionModal extends React.Component<{}, AddQuestionModalState> {
-  state: AddQuestionModalState = {};
+  state: AddQuestionModalState = { questionText: '' };
 
   render() {
     return (
@@ -69,7 +70,11 @@ export default class AddQuestionModal extends React.Component<{}, AddQuestionMod
               </select>
             </div>
 
-            <QuestionEditor id="add-question-modal" />
+            <QuestionEditor
+              id="add-question-modal"
+              onChange={this.handleChangeQuestionText}
+              value={this.state.questionText}
+            />
           </div>
         </form>
       </div>
@@ -109,7 +114,13 @@ export default class AddQuestionModal extends React.Component<{}, AddQuestionMod
     });
   };
 
+  handleChangeQuestionText = (text: string) => {
+    this.setState({
+      questionText: text,
+    });
+  };
+
   isValid = (): boolean => {
-    return Boolean(this.state.level && this.state.technology);
+    return Boolean(this.state.level && this.state.technology && this.state.questionText.trim());
   };
 }
