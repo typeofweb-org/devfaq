@@ -6,7 +6,7 @@ import * as SimpleMDE from 'react-simplemde-editor';
 type QuestionEditorProps = {
   id?: string;
   label?: string;
-  onChange?(): any;
+  onChange?(text: string): any;
   value?: string;
 };
 

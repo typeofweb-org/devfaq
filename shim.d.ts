@@ -2,7 +2,7 @@ declare module 'react-simplemde-editor' {
   export interface SimpleMDEProps {
     id?: string;
     label?: string;
-    onChange?(): any;
+    onChange?(text: string): any;
     value?: string;
     options?: SimpleMDE.Options;
     extraKeys?: object;
