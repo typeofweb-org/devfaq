@@ -144,3 +144,27 @@ html.ios-standalone {
     display: none;
   }
 }
+
+.fade-enter, .fade-exit {
+  will-change: opacity, transition;
+}
+
+.fade-enter-active, .fade-exit-active {
+  transition: opacity 200ms;
+}
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+}

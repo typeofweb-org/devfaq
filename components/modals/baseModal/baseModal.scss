@@ -1,12 +1,18 @@
 @import "common";
 .app-modal-container {
-  position: fixed;
+  @include hardwareAcceleration();
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   background-color: transparentize($white-text, 0.1);
   z-index: $z-index-modal-container;
+  display: none;
+
+  &.fade-enter, &.fade-exit, &.fade-enter-done {
+    display: block;
+  }
 }
 
 .app-modal {

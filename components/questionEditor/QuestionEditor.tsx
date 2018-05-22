@@ -39,7 +39,7 @@ export default class QuestionEditor extends React.Component<QuestionEditorProps>
             toggleFullScreen: '',
           },
           previewRender: (plainText, previewEl) => {
-            if (!previewEl || !window) {
+            if (!previewEl || typeof window === 'undefined') {
               return plainText;
             }
             const markdownPreview = MarkdownRenderer.getInstance().getHtmlFromMarkdown(plainText);

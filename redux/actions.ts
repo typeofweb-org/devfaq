@@ -2,7 +2,7 @@ import { ActionsUnion, createAction } from './types';
 import { LevelKey } from '../constants/level';
 import { Question } from './reducers/questions';
 import { RouteDetails, AppStore } from '../utils/types';
-import { Api } from '../services/Api';
+import { Api, CreateQuestionRequestBody } from '../services/Api';
 import { getTechnology } from './selectors/selectors';
 
 export type AsyncAction<R = any> = (dispatch: AppStore['dispatch'], getState: AppStore['getState']) => R;
@@ -12,6 +12,8 @@ export enum ActionTypes {
   UI_CLOSE_SIDEBAR = 'UI_CLOSE_SIDEBAR',
   UI_OPEN_ADD_QUESTION_MODAL = 'UI_OPEN_ADD_QUESTION_MODAL',
   UI_CLOSE_ADD_QUESTION_MODAL = 'UI_CLOSE_ADD_QUESTION_MODAL',
+  UI_OPEN_ADD_QUESTION_CONFIRMATION_MODAL = 'UI_OPEN_ADD_QUESTION_CONFIRMATION_MODAL',
+  UI_CLOSE_ADD_QUESTION_CONFIRMATION_MODAL = 'UI_CLOSE_ADD_QUESTION_CONFIRMATION_MODAL',
   SELECT_LEVEL = 'SELECT_LEVEL',
   DESELECT_LEVEL = 'DESELECT_LEVEL',
   SELECT_QUESTION = 'SELECT_QUESTION',
@@ -22,6 +24,8 @@ export enum ActionTypes {
   UPDATE_ROUTE_SUCCESS = 'UPDATE_ROUTE_SUCCESS',
 
   FETCH_QUESTIONS = 'FETCH_QUESTIONS',
+
+  CREATE_QUESTION = 'CREATE_QUESTION',
 }
 
 const SyncActionCreators = {
@@ -29,6 +33,8 @@ const SyncActionCreators = {
   uiCloseSidebar: () => createAction(ActionTypes.UI_CLOSE_SIDEBAR),
   uiOpenAddQuestionModal: () => createAction(ActionTypes.UI_OPEN_ADD_QUESTION_MODAL),
   uiCloseAddQuestionModal: () => createAction(ActionTypes.UI_CLOSE_ADD_QUESTION_MODAL),
+  uiOpenAddQuestionConfirmationModal: () => createAction(ActionTypes.UI_OPEN_ADD_QUESTION_CONFIRMATION_MODAL),
+  uiCloseAddQuestionConfirmationModal: () => createAction(ActionTypes.UI_CLOSE_ADD_QUESTION_CONFIRMATION_MODAL),
   selectLevel: (level: LevelKey) => createAction(ActionTypes.SELECT_LEVEL, level),
   deselectLevel: (level: LevelKey) => createAction(ActionTypes.DESELECT_LEVEL, level),
   selectQuestion: (q: Question) => createAction(ActionTypes.SELECT_QUESTION, q),

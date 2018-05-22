@@ -5,10 +5,11 @@ import ActiveLink from '../../activeLink/ActiveLink';
 import { connect } from 'react-redux';
 import { AppState } from '../../../redux/reducers/index';
 import { getAreAnyQuestionSelected, getDownloadUrl } from '../../../redux/selectors/selectors';
+import { ActionCreators } from '../../../redux/actions';
 
 const reportEvent = (_t: string) => {};
 
-class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToProps>> {
+class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps> {
   render() {
     return (
       <div className="cta-header">
@@ -57,7 +58,9 @@ class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToPro
   }
 
   onDownloadClick: React.MouseEventHandler<HTMLElement> = (_event) => {};
-  onOpenAddQuestionModalClick: React.MouseEventHandler<HTMLElement> = (_event) => {};
+  onOpenAddQuestionModalClick: React.MouseEventHandler<HTMLElement> = (_event) => {
+    this.props.uiOpenAddQuestionModal();
+  };
 }
 
 const mapStateToProps = (state: AppState) => {
@@ -67,5 +70,9 @@ const mapStateToProps = (state: AppState) => {
   };
 };
 
-const CtaHeader = connect(mapStateToProps)(CtaHeaderComponent);
+const mapDispatchToProps = {
+  uiOpenAddQuestionModal: ActionCreators.uiOpenAddQuestionModal,
+};
+
+const CtaHeader = connect(mapStateToProps, mapDispatchToProps)(CtaHeaderComponent);
 export default CtaHeader;

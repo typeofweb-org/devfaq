@@ -18,9 +18,13 @@ function getQueryStringFromObject(query: QsObject): string {
     .join('&');
 }
 
-async function makeRequest<T>(path: string, query: QsObject = {}): Promise<T> {
+async function makeRequest<T>(method: 'GET' | 'POST', path: string, query: QsObject = {}, body = {}): Promise<T> {
   const querystring = getQueryStringFromObject(query);
-  return fetch(`${env.API_URL}/${path}?${querystring}`).then(async (res) => {
+  const options: RequestInit = { method };
+  if (body && method !== 'GET') {
+    options.body = JSON.stringify(body);
+  }
+  return fetch(`${env.API_URL}/${path}?${querystring}`, options).then(async (res) => {
     if (!res.ok) {
       throw await res.json();
     }
@@ -28,8 +32,18 @@ async function makeRequest<T>(path: string, query: QsObject = {}): Promise<T> {
   });
 }
 
+export type CreateQuestionRequestBody = {
+  question: string;
+  category: TechnologyKey;
+  level: string;
+};
+
 export const Api = {
   async getQuestionsForCategoryAndLevels(category: TechnologyKey, levels: LevelKey[]) {
-    return makeRequest<Question[]>('questions', { category, level: levels });
+    return makeRequest<Question[]>('GET', 'questions', { category, level: levels });
+  },
+
+  async createQuestion(question: CreateQuestionRequestBody) {
+    return makeRequest<Question>('POST', 'questions', {}, question);
   },
 };
