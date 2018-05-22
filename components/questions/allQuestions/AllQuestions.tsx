@@ -38,7 +38,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
           selectedQuestionIds={this.props.selectedQuestionsIds}
           toggleQuestion={this.toggleQuestion}
         />
-        <AllQuestionsFooter onAddNewClick={() => {}} />
+        <AllQuestionsFooter onAddNewClick={this.props.uiOpenAddQuestionModal} />
       </section>
     );
   }
@@ -66,6 +66,7 @@ const mapStateToProps = (state: AppState) => {
 const mapDispatchToProps = {
   selectQuestion: ActionCreators.selectQuestion,
   deselectQuestion: ActionCreators.deselectQuestion,
+  uiOpenAddQuestionModal: ActionCreators.uiOpenAddQuestionModal,
 };
 
 const AllQuestions = connect(mapStateToProps, mapDispatchToProps)(AllQuestionsComponent);
