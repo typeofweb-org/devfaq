@@ -2,7 +2,7 @@ import { ActionsUnion, createAction } from './types';
 import { LevelKey } from '../constants/level';
 import { Question } from './reducers/questions';
 import { RouteDetails, AppStore } from '../utils/types';
-import { Api, CreateQuestionRequestBody } from '../services/Api';
+import { Api } from '../services/Api';
 import { getTechnology } from './selectors/selectors';
 
 export type AsyncAction<R = any> = (dispatch: AppStore['dispatch'], getState: AppStore['getState']) => R;

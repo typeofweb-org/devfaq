@@ -195,7 +195,7 @@ const AppRegulations = () => (
         Postanowienia końcowe
         <ol>
           <li>
-            Wszelkie informacje o naruszeniach niniejszego Regulaminu należy zgłaszać na adres
+            Wszelkie informacje o naruszeniach niniejszego Regulaminu należy zgłaszać na adres{' '}
             <a href="mailto:abuse@fefaq.pl">abuse@fefaq.pl</a>
           </li>
           <li>

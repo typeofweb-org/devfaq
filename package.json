@@ -48,6 +48,7 @@
     "autoprefixer": "8.5.0",
     "cross-env": "5.1.5",
     "fork-ts-checker-webpack-plugin": "0.4.1",
+    "husky": "1.0.0-rc.6",
     "nodemon": "1.17.4",
     "now": "11.1.12",
     "postcss-easy-import": "3.0.0",
@@ -67,5 +68,11 @@
   },
   "keywords": [],
   "author": "Michał Miszczyszyn <michal@mmiszy.pl> (https://typeofweb.com/)",
-  "license": "ISC"
+  "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "pre-push": "npm test",
+    }
+  }
 }
