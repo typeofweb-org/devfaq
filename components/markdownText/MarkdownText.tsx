@@ -57,7 +57,7 @@ export default class MarkdownText extends React.Component<MarkdownTextProps> {
     if (!this.markdownRef.current) {
       return;
     }
-    if (!window) {
+    if (typeof window === 'undefined') {
       return;
     }
 

@@ -1,19 +1,26 @@
 import * as React from 'react';
-import BaseModal from '../baseModal/BaseModal';
+import BaseModal, { CommonModalProps } from '../baseModal/BaseModal';
 import * as classNames from 'classnames';
 import { technologyIconItems, TechnologyKey } from '../../../constants/technology-icon-items';
 import { levelsWithLabels, LevelKey } from '../../../constants/level';
 import './addQuestionModal.scss';
 import QuestionEditor from '../../questionEditor/QuestionEditor';
+import { Api } from '../../../services/Api';
+import { connect } from 'react-redux';
+import { ActionCreators } from '../../../redux/actions';
 
 type AddQuestionModalState = {
   technology?: TechnologyKey;
   level?: LevelKey;
   questionText: string;
+  isLoading: boolean;
 };
 
-export default class AddQuestionModal extends React.Component<{}, AddQuestionModalState> {
-  state: AddQuestionModalState = { questionText: '' };
+class AddQuestionModalComponent extends React.Component<
+  CommonModalProps & ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps,
+  AddQuestionModalState
+> {
+  state: AddQuestionModalState = { questionText: '', isLoading: false };
 
   render() {
     return (
@@ -23,17 +30,20 @@ export default class AddQuestionModal extends React.Component<{}, AddQuestionMod
         closable={true}
         renderContent={this.renderContent}
         renderFooter={this.renderFooter}
+        onClose={this.props.onClose}
       />
     );
   }
 
-  close() {}
+  onCancelClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    this.props.onClose({ reason: 'cancel', event: e });
+  };
 
   renderContent = () => {
     return (
       <div>
         <h2 className="app-modal--title">Nowe pytanie</h2>
-        <form onSubmit={this.handleSubmit}>
+        <form>
           <div className="app-question-form">
             <div className="app-question-form--options-container">
               <select
@@ -85,20 +95,19 @@ export default class AddQuestionModal extends React.Component<{}, AddQuestionMod
     return (
       <div>
         <button
-          className={classNames('round-button', 'branding-button-inverse')}
-          disabled={!this.isValid()}
-          type="submit"
+          className={classNames('round-button', 'branding-button-inverse', { loading: this.state.isLoading })}
+          disabled={!this.isValid(this.state) || this.state.isLoading}
+          type="button"
+          onClick={this.handleSubmit}
         >
           Dodaj pytanie
         </button>
-        <button className="round-button branding-button" onClick={this.close}>
+        <button className="round-button branding-button" onClick={this.onCancelClick}>
           Anuluj
         </button>
       </div>
     );
   };
-
-  handleSubmit: React.FormEventHandler<HTMLFormElement> = () => {};
 
   handleChangeTechnology: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const value = e.currentTarget.value as TechnologyKey;
@@ -120,7 +129,35 @@ export default class AddQuestionModal extends React.Component<{}, AddQuestionMod
     });
   };
 
-  isValid = (): boolean => {
-    return Boolean(this.state.level && this.state.technology && this.state.questionText.trim());
+  isValid(state: AddQuestionModalState): state is Required<AddQuestionModalState> {
+    return Boolean(state.level && state.technology && state.questionText.trim());
+  }
+
+  handleSubmit: React.MouseEventHandler<HTMLButtonElement> = () => {
+    if (!this.isValid(this.state)) {
+      return;
+    }
+
+    this.setState({ isLoading: true });
+    Api.createQuestion({
+      question: this.state.questionText,
+      level: this.state.level,
+      category: this.state.technology,
+    })
+      .then(() => {
+        this.props.uiCloseAddQuestionModal();
+        this.props.uiOpenAddQuestionConfirmationModal();
+      })
+      .finally(() => this.setState({ isLoading: false }));
   };
 }
+
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = {
+  uiCloseAddQuestionModal: ActionCreators.uiCloseAddQuestionModal,
+  uiOpenAddQuestionConfirmationModal: ActionCreators.uiOpenAddQuestionConfirmationModal,
+};
+
+const AddQuestionModal = connect(mapStateToProps, mapDispatchToProps)(AddQuestionModalComponent);
+export default AddQuestionModal;

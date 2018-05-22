@@ -9,7 +9,7 @@ import { addRouterEventListener, removeRouterEventListener } from '../utils/rout
 import { withRouter, SingletonRouter } from 'next/router';
 import { ActionCreators } from '../redux/actions';
 import { RouteDetails, GetInitialPropsContext, AppStore } from '../utils/types';
-import AddQuestionModal from '../components/modals/addQuestionModal/AddQuestionModal';
+import AppModals from '../components/modals/appModals/AppModals';
 const AppComponent = App as React.ComponentClass<MyAppProps>;
 
 // hack because of incorrect d.ts file
@@ -82,9 +82,11 @@ class MyApp extends AppComponent {
     return (
       <Container>
         <Provider store={store}>
-          <Component {...pageProps} />
+          <React.Fragment>
+            <Component {...pageProps} />
+            <AppModals />
+          </React.Fragment>
         </Provider>
-        <AddQuestionModal />
       </Container>
     );
   }

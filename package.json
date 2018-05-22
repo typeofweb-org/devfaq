@@ -16,7 +16,7 @@
     "next": "6.0.3",
     "next-images": "0.10.2",
     "next-redux-wrapper": "2.0.0-beta.6",
-    "next-routes": "1.4.1",
+    "next-routes": "1.4.2",
     "node-sass": "4.9.0",
     "normalize-scss": "7.0.1",
     "polish-plurals": "1.1.0",
@@ -52,7 +52,7 @@
     "now": "11.1.12",
     "postcss-easy-import": "3.0.0",
     "postcss-loader": "2.1.5",
-    "webpack-bundle-analyzer": "2.12.0"
+    "webpack-bundle-analyzer": "2.13.0"
   },
   "scripts": {
     "dev": "nodemon server.js --watch server.js --watch routes.js",
