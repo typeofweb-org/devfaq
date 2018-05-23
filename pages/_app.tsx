@@ -1,4 +1,11 @@
 import * as React from 'react';
+if (process.env.NODE_ENV !== 'production') {
+  const { whyDidYouUpdate } = require('why-did-you-update');
+  whyDidYouUpdate(React, {
+    exclude: [/^withRouter/, /^Connect/, /^Provider$/, /^AppComponent$/, /^TransitionGroup$/, /^CSSTransition$/],
+  });
+}
+
 import * as withReduxType from 'next-redux-wrapper';
 import { NextReduxWrappedComponent } from 'next-redux-wrapper';
 import { makeStore } from '../redux/store';
@@ -11,6 +18,7 @@ import { ActionCreators } from '../redux/actions';
 import { RouteDetails, GetInitialPropsContext, AppStore } from '../utils/types';
 import AppModals from '../components/modals/appModals/AppModals';
 const AppComponent = App as React.ComponentClass<MyAppProps>;
+AppComponent.displayName = 'AppComponent';
 
 // hack because of incorrect d.ts file
 const withRedux = (withReduxType as any).default as typeof withReduxType;

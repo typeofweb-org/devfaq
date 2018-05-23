@@ -2,11 +2,13 @@ import './questionItem.scss';
 import * as React from 'react';
 import { Question } from '../../../../redux/reducers/questions';
 import * as classNames from 'classnames';
-import { pl } from 'date-fns/locale';
-import { formatWithOptions } from 'date-fns/fp';
+import * as pl from 'date-fns/locale/pl';
+import * as formatWithOptions from 'date-fns/fp/formatWithOptions';
 import { isQuestionSelected } from '../../questionsUtils';
 import MarkdownText from '../../../markdownText/MarkdownText';
 import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
+
+import { isEqual } from 'lodash';
 
 const longDate = formatWithOptions({ locale: pl }, 'LL');
 const shortDate = formatWithOptions({ locale: pl }, 'L');
@@ -36,7 +38,7 @@ type QuestionContentProps = {
   deleteQuestion(): any;
 };
 
-class QuestionContent extends React.Component<QuestionContentProps> {
+class QuestionContent extends React.PureComponent<QuestionContentProps> {
   render() {
     const { question, isSelected } = this.props;
 
@@ -117,6 +119,10 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
   state: QuestionItemState = {
     isQuestionBeingRemoved: false,
   };
+
+  shouldComponentUpdate(nextProps: Readonly<QuestionItemOwnProps>, nextState: Readonly<QuestionItemState>): boolean {
+    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState);
+  }
 
   componentWillUnmount() {
     if (this.state.isQuestionBeingRemoved) {

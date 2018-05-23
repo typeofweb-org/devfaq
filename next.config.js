@@ -3,11 +3,12 @@ require('dotenv').config({
 });
 
 const withTypescript = require('@zeit/next-typescript');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const withSass = require('@zeit/next-sass');
 const withImages = require('next-images');
 
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+
 const { ANALYZE } = process.env;
 
 const withPolyfills = (module.exports = (nextConfig = {}) => {
@@ -37,6 +38,7 @@ const withWebpackAnalyze = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
     webpack(config, options) {
       if (ANALYZE) {
+        console.log('ANALYZE=YES');
         const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
         config.plugins.push(
           new BundleAnalyzerPlugin({
@@ -45,6 +47,8 @@ const withWebpackAnalyze = (nextConfig = {}) => {
             openAnalyzer: true,
           })
         );
+      } else {
+        console.log('ANALYZE=NO');
       }
 
       if (typeof nextConfig.webpack === 'function') {
@@ -56,20 +60,23 @@ const withWebpackAnalyze = (nextConfig = {}) => {
   });
 };
 
-const config = withPolyfills(
-  withImages(
-    withTypescript(
-      withSass({
-        sassLoaderOptions: {
-          includePaths: ['styles/'],
-        },
-        webpack: (config, options) => {
-          if (options.isServer && process.env.NODE_ENV !== 'production') {
-            config.plugins.push(new ForkTsCheckerWebpackPlugin());
-          }
-          return config;
-        },
-      })
+const config = withWebpackAnalyze(
+  withPolyfills(
+    withImages(
+      withTypescript(
+        withSass({
+          sassLoaderOptions: {
+            includePaths: ['styles/'],
+          },
+          webpack: (config, options) => {
+            if (options.isServer && process.env.NODE_ENV !== 'production') {
+              config.plugins.push(new ForkTsCheckerWebpackPlugin());
+            }
+            config.plugins.push(new LodashModuleReplacementPlugin());
+            return config;
+          },
+        })
+      )
     )
   )
 );

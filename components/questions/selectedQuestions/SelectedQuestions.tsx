@@ -14,10 +14,14 @@ import { TechnologyKey, technologyIconItems } from '../../../constants/technolog
 import { ActionCreators } from '../../../redux/actions';
 import { TransitionGroup } from 'react-transition-group';
 import { AnimateHeight } from '../../animateProperty/AnimateProperty';
+import { isEqual } from 'lodash';
 
-class SelectedQuestionsComponent extends React.Component<
-  ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
-> {
+type SelectedQuestionsProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps> {
+  shouldComponentUpdate(nextProps: Readonly<SelectedQuestionsProps>): boolean {
+    return !isEqual(this.props, nextProps);
+  }
+
   render() {
     if (this.props.areAnyQuestionSelected) {
       return (
