@@ -6,7 +6,6 @@ const withTypescript = require('@zeit/next-typescript');
 const withSass = require('@zeit/next-sass');
 const withImages = require('next-images');
 
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const { ANALYZE } = process.env;
@@ -70,6 +69,7 @@ const config = withWebpackAnalyze(
           },
           webpack: (config, options) => {
             if (options.isServer && process.env.NODE_ENV !== 'production') {
+              const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
               config.plugins.push(new ForkTsCheckerWebpackPlugin());
             }
             config.plugins.push(new LodashModuleReplacementPlugin());
