@@ -62,7 +62,7 @@
     "build": "NODE_ENV=production next build && tsc --project tsconfig.server.json",
     "start": "NODE_ENV=production node production-server/server/server.js",
     "analyze": "cross-env ANALYZE=1 next build",
-    "test": "./node_modules/.bin/tsc -p tsconfig.json --noEmit",
+    "test": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.server.json --noEmit",
     "deploy": "now --public -e NODE_ENV=production --token $NOW_TOKEN --npm"
   },
   "engines": {
