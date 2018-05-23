@@ -36,6 +36,7 @@
   "devDependencies": {
     "@types/classnames": "2.2.3",
     "@types/commonmark": "0.27.0",
+    "@types/express": "4.11.1",
     "@types/next": "2.4.10",
     "@types/next-redux-wrapper": "1.4.1",
     "@types/prismjs": "1.9.0",
@@ -53,12 +54,13 @@
     "now": "11.1.12",
     "postcss-easy-import": "3.0.0",
     "postcss-loader": "2.1.5",
+    "ts-node": "6.0.3",
     "webpack-bundle-analyzer": "2.13.0"
   },
   "scripts": {
-    "dev": "nodemon server.js --watch server.js --watch routes.js",
-    "build": "NODE_ENV=production next build",
-    "start": "NODE_ENV=production node server.js",
+    "dev": "nodemon server/server.ts",
+    "build": "NODE_ENV=production next build && tsc --project tsconfig.server.json",
+    "start": "NODE_ENV=production node production-server/server/server.js",
     "analyze": "cross-env ANALYZE=1 next build",
     "test": "./node_modules/.bin/tsc -p tsconfig.json --noEmit",
     "deploy": "now --public -e NODE_ENV=production --token $NOW_TOKEN --npm"
@@ -72,7 +74,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "npm test",
-      "pre-push": "npm test",
+      "pre-push": "npm test"
     }
   }
 }
