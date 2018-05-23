@@ -13,7 +13,7 @@ const defaultProps = {
   selectedQuestionIds: [] as Question['id'][],
 };
 
-export default class QuestionsList extends React.Component<
+export default class QuestionsList extends React.PureComponent<
   typeof defaultProps & { toggleQuestion(questionId: Question['id']): any }
 > {
   static defaultProps = defaultProps;
@@ -27,7 +27,6 @@ export default class QuestionsList extends React.Component<
         {this.props.questions.data.map((question) => (
           <AnimateHeight enterTime={700} exitTime={700} key={question.id}>
             <QuestionItem
-              key={question.id}
               question={question}
               selectable={this.props.selectable}
               removable={this.props.removable}

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Transition } from 'react-transition-group';
 import { EndHandler, EnterHandler, ExitHandler } from 'react-transition-group/Transition';
 
-export class AnimateHeight extends React.Component<{
+export class AnimateHeight extends React.PureComponent<{
   in?: boolean;
   enterTime: number;
   exitTime: number;

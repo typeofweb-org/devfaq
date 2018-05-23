@@ -11,10 +11,7 @@ type NavigationHeaderState = {
 
 const reportEvent = (_t: string) => {};
 
-export default class NavigationHeader extends React.Component<
-  NavigationHeaderProps,
-  NavigationHeaderState
-> {
+export default class NavigationHeader extends React.PureComponent<NavigationHeaderProps, NavigationHeaderState> {
   state = { open: false };
   render() {
     const { open } = this.state;
@@ -43,11 +40,7 @@ export default class NavigationHeader extends React.Component<
                 </ActiveLink>
               </li>
               <li>
-                <a
-                  href="https://www.facebook.com/fefaqpl"
-                  target="_blank"
-                  onClick={() => reportEvent('Facebook')}
-                >
+                <a href="https://www.facebook.com/fefaqpl" target="_blank" onClick={() => reportEvent('Facebook')}>
                   Facebook
                 </a>
               </li>

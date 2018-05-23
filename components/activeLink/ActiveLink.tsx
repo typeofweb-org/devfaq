@@ -3,6 +3,7 @@ import { withRouter, SingletonRouter } from 'next/router';
 import { Link, LinkProps } from '../../routes';
 import * as classNames from 'classnames';
 import { addRouterEventListener, removeRouterEventListener } from '../../utils/routerEvents';
+import { isEqual } from 'lodash';
 
 type ActiveLinkOwnProps = {
   activeClassName?: string;
@@ -55,6 +56,13 @@ class ActiveLinkComponent extends React.Component<ActiveLinkComponentProps, Acti
   }
 
   state = initialState;
+
+  shouldComponentUpdate(
+    nextProps: Readonly<ActiveLinkComponentProps>,
+    nextState: Readonly<ActiveLinkComponentState>
+  ): boolean {
+    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState);
+  }
 
   componentDidMount() {
     addRouterEventListener('onRouteChangeComplete', this.onRouteChangeComplete);
