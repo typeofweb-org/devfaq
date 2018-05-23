@@ -9,6 +9,7 @@ type ActiveLinkOwnProps = {
   activeClassName?: string;
   exact?: boolean;
   disabledWhenActive?: boolean;
+  onClick?: React.MouseEventHandler<HTMLElement>;
 };
 
 type ActiveLinkRouterProps = {
@@ -94,18 +95,20 @@ class ActiveLinkComponent extends React.Component<ActiveLinkComponentProps, Acti
     }
 
     return (
-      <Link
-        prefetch={prefetch}
-        route={route}
-        shallow={shallow}
-        scroll={scroll}
-        replace={replace}
-        href={href}
-        as={as}
-        passHref={passHref}
-      >
-        {newChild}
-      </Link>
+      <span onClick={this.props.onClick}>
+        <Link
+          prefetch={prefetch}
+          route={route}
+          shallow={shallow}
+          scroll={scroll}
+          replace={replace}
+          href={href}
+          as={as}
+          passHref={passHref}
+        >
+          {newChild}
+        </Link>
+      </span>
     );
   }
 

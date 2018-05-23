@@ -6,9 +6,7 @@ import { connect } from 'react-redux';
 import { AppState } from '../../../../redux/reducers/index';
 import { ActionCreators } from '../../../../redux/actions';
 
-class LevelFilterComponent extends React.Component<
-  ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
-> {
+class LevelFilterComponent extends React.Component<ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps> {
   render() {
     return (
       <div>
@@ -39,6 +37,7 @@ class LevelFilterComponent extends React.Component<
     if (this.isSelected(level)) {
       this.props.deselectLevel(level.value);
     } else {
+      globalReportEvent('Wybierz poziom', 'Lista pytań', level.label);
       this.props.selectLevel(level.value);
     }
   };

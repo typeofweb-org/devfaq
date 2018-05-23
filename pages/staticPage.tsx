@@ -11,7 +11,7 @@ const pathToContent: Record<string, StaticPageContent> = {
   '/regulations': { component: AppRegulations, title: 'Regulations' },
 };
 
-export default class StaticPage extends React.Component<{ asPath: string }> {
+export default class StaticPage extends React.PureComponent<{ asPath: string }> {
   static async getInitialProps(ctx: { asPath: string }) {
     return {
       asPath: ctx.asPath,

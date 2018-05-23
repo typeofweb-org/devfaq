@@ -14,6 +14,8 @@ type BaseModalOwnProps = CommonModalProps & {
   renderContent?(): React.ReactNode;
   renderFooter?(): React.ReactNode;
   className: string;
+  'aria-labelledby'?: string;
+  'aria-describedby'?: string;
 };
 
 class FixBodyService {
@@ -87,18 +89,17 @@ export default class BaseModal extends React.Component<BaseModalOwnProps> {
     renderFooter: () => null,
   };
 
-  containerRef = React.createRef<HTMLDivElement>();
+  contentRef = React.createRef<HTMLDivElement>();
   fixBodyService = new FixBodyService();
   lastFocusedElement!: Element;
 
   componentDidMount() {
     this.fixBodyService.fixBody();
-
     this.lastFocusedElement = document.activeElement;
 
-    const firstChild = this.containerRef.current && this.containerRef.current.firstChild;
-    if (this.elementIsFocusable(firstChild)) {
-      firstChild.focus();
+    const firstFocusable = this.contentRef.current && this.findFirstFocusableChild(this.contentRef.current);
+    if (this.elementIsFocusable(firstFocusable)) {
+      firstFocusable.focus();
     }
   }
 
@@ -109,6 +110,10 @@ export default class BaseModal extends React.Component<BaseModalOwnProps> {
     }
   }
 
+  private findFirstFocusableChild(el: HTMLElement) {
+    return el.querySelector('input, select, textarea, button, [tabindex]');
+  }
+
   render() {
     const { closable, type, renderContent, renderFooter } = this.props;
     return (
@@ -116,7 +121,9 @@ export default class BaseModal extends React.Component<BaseModalOwnProps> {
         className={classNames('app-modal-container', this.props.className)}
         role="dialog"
         tabIndex={0}
-        ref={this.containerRef}
+        aria-modal={true}
+        aria-labelledby={this.props['aria-labelledby']}
+        aria-describedby={this.props['aria-describedby']}
       >
         <div className="app-modal">
           {closable && (
@@ -126,7 +133,7 @@ export default class BaseModal extends React.Component<BaseModalOwnProps> {
               </button>
             </header>
           )}
-          <div className="app-modal--content">
+          <div className="app-modal--content" ref={this.contentRef}>
             <div className="app-modal--body">
               <div className={classNames('action-icon', 'action-icon_' + type || '')} />
               {renderContent!()}

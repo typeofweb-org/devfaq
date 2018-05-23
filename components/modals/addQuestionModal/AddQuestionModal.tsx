@@ -14,13 +14,18 @@ type AddQuestionModalState = {
   level?: LevelKey;
   questionText: string;
   isLoading: boolean;
+  valid: boolean;
 };
 
-class AddQuestionModalComponent extends React.Component<
+class AddQuestionModalComponent extends React.PureComponent<
   CommonModalProps & ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps,
   AddQuestionModalState
 > {
-  state: AddQuestionModalState = { questionText: '', isLoading: false };
+  state: AddQuestionModalState = { questionText: '', isLoading: false, valid: false };
+
+  componentDidMount() {
+    this.reportEvent('Wyświetlenie');
+  }
 
   render() {
     return (
@@ -30,19 +35,33 @@ class AddQuestionModalComponent extends React.Component<
         closable={true}
         renderContent={this.renderContent}
         renderFooter={this.renderFooter}
-        onClose={this.props.onClose}
+        onClose={this.onClose}
+        aria-labelledby="add-question-modal-title"
       />
     );
   }
 
   onCancelClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    this.props.onClose({ reason: 'cancel', event: e });
+    this.onClose({ reason: 'cancel', event: e });
+  };
+
+  onClose: CommonModalProps['onClose'] = (args) => {
+    if (args.reason === 'cancel') {
+      this.reportEvent('Anuluj');
+    } else if (args.reason === 'submit') {
+      this.reportEvent('Dodaj pytanie');
+    } else {
+      this.reportEvent('Zamknij');
+    }
+    this.props.onClose(args);
   };
 
   renderContent = () => {
     return (
       <div>
-        <h2 className="app-modal--title">Nowe pytanie</h2>
+        <h2 className="app-modal--title" id="add-question-modal-title">
+          Nowe pytanie
+        </h2>
         <form>
           <div className="app-question-form">
             <div className="app-question-form--options-container">
@@ -96,7 +115,7 @@ class AddQuestionModalComponent extends React.Component<
       <div>
         <button
           className={classNames('round-button', 'branding-button-inverse', { loading: this.state.isLoading })}
-          disabled={!this.isValid(this.state) || this.state.isLoading}
+          disabled={!this.state.valid || this.state.isLoading}
           type="button"
           onClick={this.handleSubmit}
         >
@@ -111,22 +130,25 @@ class AddQuestionModalComponent extends React.Component<
 
   handleChangeTechnology: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const value = e.currentTarget.value as TechnologyKey;
-    this.setState({
+    this.setState((state) => ({
       technology: value,
-    });
+      valid: this.isValid(state),
+    }));
   };
 
   handleChangeLevel: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const value = e.currentTarget.value as LevelKey;
-    this.setState({
+    this.setState((state) => ({
       level: value,
-    });
+      valid: this.isValid(state),
+    }));
   };
 
   handleChangeQuestionText = (text: string) => {
-    this.setState({
+    this.setState((state) => ({
       questionText: text,
-    });
+      valid: this.isValid(state),
+    }));
   };
 
   isValid(state: AddQuestionModalState): state is Required<AddQuestionModalState> {
@@ -145,11 +167,15 @@ class AddQuestionModalComponent extends React.Component<
       category: this.state.technology,
     })
       .then(() => {
-        this.props.uiCloseAddQuestionModal();
+        this.onClose({ reason: 'submit' });
         this.props.uiOpenAddQuestionConfirmationModal();
       })
       .finally(() => this.setState({ isLoading: false }));
   };
+
+  reportEvent(action: string) {
+    globalReportEvent(action, 'Nowe pytanie warstwa');
+  }
 }
 
 const mapStateToProps = () => ({});

@@ -1,8 +1,6 @@
 import ActiveLink from '../../activeLink/ActiveLink';
 import './noQuestionsSelectedInfo.scss';
 
-const reportEvent = (_str: string) => {};
-
 const NoQuestionsSelectedInfo = () => {
   return (
     <div className="selected-questions--empty container">
@@ -10,7 +8,7 @@ const NoQuestionsSelectedInfo = () => {
       <ActiveLink route="/questions">
         <a
           className="round-button alternative-button"
-          onClick={() => reportEvent('Zaznacz pytania')}
+          onClick={() => globalReportEvent('Zaznacz pytania', 'Wybrane pytania')}
         >
           Zaznacz pytania
         </a>

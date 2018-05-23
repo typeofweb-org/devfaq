@@ -187,13 +187,19 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
     this.setState({ isQuestionBeingRemoved: true }, () => {
       this.startDeletionTimer();
     });
+    this.reportEventOnSelectedQuestions('Usuń pytanie', 'Klik', this.props.question.id);
   };
 
   undoDeleteQuestion = () => {
     this.setState({ isQuestionBeingRemoved: false }, () => {
       this.stopDeletionTimer();
     });
+    this.reportEventOnSelectedQuestions('Usuń pytanie', 'Anuluj usuwanie', this.props.question.id);
   };
+
+  reportEventOnSelectedQuestions(action: string, label?: string, questionId?: number) {
+    globalReportEvent(action, 'Wybrane pytania', label, questionId);
+  }
 
   startDeletionTimer = () => {
     const { question } = this.props;

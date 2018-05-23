@@ -7,8 +7,6 @@ import { AppState } from '../../../redux/reducers/index';
 import { getAreAnyQuestionSelected, getDownloadUrl } from '../../../redux/selectors/selectors';
 import { ActionCreators } from '../../../redux/actions';
 
-const reportEvent = (_t: string) => {};
-
 class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps> {
   render() {
     return (
@@ -16,7 +14,7 @@ class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToPro
         <header className="app-header--cta container">
           <nav className="app-tabs">
             <ActiveLink route="/questions">
-              <a className="app-tabs--tab" onClick={() => reportEvent('Lista pytań')}>
+              <a className="app-tabs--tab" onClick={() => this.reportEvent('Lista pytań')}>
                 Lista pytań
               </a>
             </ActiveLink>
@@ -26,7 +24,7 @@ class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToPro
                   'has-notification': this.props.areAnyQuestionSelected,
                 })}
                 onClick={() =>
-                  reportEvent(this.props.areAnyQuestionSelected ? 'Wybrane pytania' : 'Wybrane pytania (puste)')
+                  this.reportEvent(this.props.areAnyQuestionSelected ? 'Wybrane pytania' : 'Wybrane pytania (puste)')
                 }
               >
                 Wybrane pytania
@@ -57,10 +55,20 @@ class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToPro
     );
   }
 
-  onDownloadClick: React.MouseEventHandler<HTMLElement> = (_event) => {};
+  onDownloadClick: React.MouseEventHandler<HTMLElement> = (_event) => {
+    this.reportEvent('Pobierz plik PDF');
+    // @todo open DownloadSuccessModal
+    // @todo this.analyticsService.reportPdfDownload(this.selectedQuestionsService.getSelectedIds());
+  };
+
   onOpenAddQuestionModalClick: React.MouseEventHandler<HTMLElement> = (_event) => {
+    this.reportEvent('Dodaj pytanie');
     this.props.uiOpenAddQuestionModal();
   };
+
+  reportEvent(action: string) {
+    globalReportEvent(action, 'Menu');
+  }
 }
 
 const mapStateToProps = (state: AppState) => {

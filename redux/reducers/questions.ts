@@ -1,12 +1,13 @@
 import { Actions, ActionTypes } from '../actions';
 import { TechnologyKey } from '../../constants/technology-icon-items';
+import { LevelKey } from '../../constants/level';
 
 export type Question = {
   id: number;
   question: string;
   category: TechnologyKey;
   status: string;
-  level: string;
+  level: LevelKey;
   acceptedAt?: string;
 };
 

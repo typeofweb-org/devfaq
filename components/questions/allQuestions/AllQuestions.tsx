@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppState } from '../../../redux/reducers/index';
 import { connect } from 'react-redux';
-import { technologyIconItems } from '../../../constants/technology-icon-items';
+import { technologyIconItems, Technology } from '../../../constants/technology-icon-items';
 import './allQuestions.scss';
 import { AllQuestionsHeader } from './allQuestionsHeader/AllQuestionsHeader';
 import { AllQuestionsFooter } from './allQuestionsFooter/AllQuestionsFooter';
@@ -10,16 +10,13 @@ import { Question } from '../../../redux/reducers/questions';
 import { getSelectedQuestionsIds, getTechnology } from '../../../redux/selectors/selectors';
 import { ActionCreators } from '../../../redux/actions';
 import { isQuestionSelected } from '../questionsUtils';
+import { Level } from '../../../constants/level';
 
 type AllQuestionsComponentProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> {
   render() {
     const { technology } = this.props;
-
-    if (!this.props.questions.data || this.props.questions.data.length === 0) {
-      return null; // @todo handle errors and loading
-    }
 
     if (!technology) {
       return null;
@@ -28,30 +25,60 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
     const technologyIconItem = technologyIconItems.find((t) => t.name === technology);
     const category = (technologyIconItem && technologyIconItem.label) || '';
 
+    const length = this.props.questions.data ? this.props.questions.data.length : 0;
+
     return (
       <section className="app-questions">
-        <AllQuestionsHeader category={category} questionsLength={this.props.questions.data.length} />
-        <QuestionsList
-          selectable={true}
-          removable={false}
-          questions={this.props.questions}
-          selectedQuestionIds={this.props.selectedQuestionsIds}
-          toggleQuestion={this.toggleQuestion}
-        />
-        <AllQuestionsFooter onAddNewClick={this.props.uiOpenAddQuestionModal} />
+        <AllQuestionsHeader category={category} questionsLength={length} />
+        {this.renderList()}
+        <AllQuestionsFooter onAddNewClick={this.onAddNewClick} />
       </section>
     );
   }
 
+  renderList = () => {
+    if (!this.props.questions.data || this.props.questions.data.length === 0) {
+      return null; // @todo handle errors and loading
+    }
+
+    return (
+      <QuestionsList
+        selectable={true}
+        removable={false}
+        questions={this.props.questions}
+        selectedQuestionIds={this.props.selectedQuestionsIds}
+        toggleQuestion={this.toggleQuestion}
+      />
+    );
+  };
+
+  onAddNewClick = () => {
+    this.reportEvent('CTA Dodaj nowe pytanie');
+    this.props.uiOpenAddQuestionModal();
+  };
+
+  reportEvent(action: string, label?: string, questionId?: number) {
+    globalReportEvent(action, 'Lista pytań', label, questionId);
+  }
+
   toggleQuestion = (questionId: Question['id']) => {
-    if (isQuestionSelected(this.props.selectedQuestionsIds, questionId)) {
+    const isSelected = isQuestionSelected(this.props.selectedQuestionsIds, questionId);
+    const question = this.props.questions.data && this.props.questions.data.find((q) => q.id === questionId);
+
+    if (isSelected) {
       this.props.deselectQuestion(questionId);
     } else {
-      const question = this.props.questions.data && this.props.questions.data.find((q) => q.id === questionId);
       if (question) {
         this.props.selectQuestion(question);
       }
     }
+
+    if (!question) {
+      return;
+    }
+
+    const action = isSelected ? 'Checkbox - odznaczone pytanie' : 'Checkbox - zaznaczone pytanie';
+    this.reportEvent(action, `${Technology[question.category]}, ${Level[question.level]}`, question.id);
   };
 }
 

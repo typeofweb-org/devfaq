@@ -9,8 +9,6 @@ type NavigationHeaderState = {
   open: boolean;
 };
 
-const reportEvent = (_t: string) => {};
-
 export default class NavigationHeader extends React.PureComponent<NavigationHeaderProps, NavigationHeaderState> {
   state = { open: false };
   render() {
@@ -30,17 +28,17 @@ export default class NavigationHeader extends React.PureComponent<NavigationHead
           <nav className={classNames('main-nav', { open })}>
             <ul>
               <li>
-                <ActiveLink route="/about">
-                  <a onClick={this.onAboutClick}>Jak korzystać?</a>
+                <ActiveLink route="/about" onClick={this.onAboutClick}>
+                  <a>Jak korzystać?</a>
                 </ActiveLink>
               </li>
               <li>
-                <ActiveLink route="/authors">
-                  <a onClick={this.onAuthorsClick}>Autorzy</a>
+                <ActiveLink route="/authors" onClick={this.onAuthorsClick}>
+                  <a>Autorzy</a>
                 </ActiveLink>
               </li>
               <li>
-                <a href="https://www.facebook.com/fefaqpl" target="_blank" onClick={() => reportEvent('Facebook')}>
+                <a href="https://www.facebook.com/fefaqpl" target="_blank" onClick={() => this.reportEvent('Facebook')}>
                   Facebook
                 </a>
               </li>
@@ -73,11 +71,15 @@ export default class NavigationHeader extends React.PureComponent<NavigationHead
 
   onAboutClick = () => {
     this.closeMenu();
-    reportEvent('Jak korzystać');
+    this.reportEvent('Jak korzystać');
   };
 
   onAuthorsClick = () => {
     this.closeMenu();
-    reportEvent('Autorzy');
+    this.reportEvent('Autorzy');
   };
+
+  reportEvent(action: string) {
+    globalReportEvent(action, 'Menu');
+  }
 }
