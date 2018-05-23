@@ -2,7 +2,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
-    "outDir": "production-server/"
+    "outDir": "./"
   },
-  "include": ["server/**/*.ts"]
+  "include": ["*.ts"],
+  "exclude": []
 }

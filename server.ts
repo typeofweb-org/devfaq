@@ -1,10 +1,11 @@
 import 'isomorphic-fetch';
 import * as next from 'next';
 
-// import routes from '../routes';
+import routes from './routes';
+
 const isDev = process.env.NODE_ENV !== 'production';
 const app = next({ dev: isDev });
-// const handler = routes.getRequestHandler(app);
+const handler = routes.getRequestHandler(app);
 const port = process.env.PORT || '3000';
 import * as url from 'url';
 import { join } from 'path';
@@ -84,13 +85,8 @@ app.prepare().then(() => {
       const staticPath = getPathForStaticResource(pathname);
       if (staticPath) {
         return app.serveStatic(req, res, staticPath);
-      } else {
-        return res.send(`
-        pathname: ${pathname} ;
-        staticPath: ${staticPath} ;
-        `);
       }
-      // return handler(req, res);
+      return handler(req, res);
     })
     .listen(port, () => console.log('Server listening at localhost:3000'));
 });
