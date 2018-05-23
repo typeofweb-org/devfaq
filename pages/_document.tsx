@@ -1,13 +1,14 @@
-import Document, { Main, Head, NextScript } from 'next/document';
+import Document, { Main, Head, NextScript, Context } from 'next/document';
 import { unsafe_getEnvScriptForDocument } from '../utils/env';
 import * as analytics from '../utils/analytics';
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx: any) {
+  static async getInitialProps(ctx: Context) {
     const initialProps = await Document.getInitialProps(ctx);
+
     return {
       ...initialProps,
-      absoluteUrl: ctx.pathname,
+      absoluteUrl: `https://${ctx.req.headers.host}` || '',
     };
   }
 
