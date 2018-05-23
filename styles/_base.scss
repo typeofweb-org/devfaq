@@ -89,11 +89,6 @@ pre[class*=language-]::before {
   }
 }
 
-html,
-body {
-  background-color: $purple-branding;
-}
-
 html.ios-standalone {
   $size: 20px;
   padding-top: $size;

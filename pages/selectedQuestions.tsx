@@ -9,10 +9,10 @@ export default class SelectedQuestionsPage extends React.Component {
   render() {
     return (
       <Layout title="Wybrane pytania">
-        <MobileActionButtons justDownload={true} />
         <QuestionsListLayout>
           <SelectedQuestions />
         </QuestionsListLayout>
+        <MobileActionButtons justDownload={true} />
       </Layout>
     );
   }

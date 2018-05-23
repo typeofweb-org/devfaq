@@ -38,11 +38,11 @@ class QuestionsPageComponent extends React.Component<Props> {
     return (
       <Layout title={`Pytania ${label}`}>
         <QuestionsListLayout>
-          <MobileActionButtons justDownload={false} />
           <div className="questions-container">
             <QuestionsSidebar />
             <AllQuestions />
           </div>
+          <MobileActionButtons justDownload={false} />
         </QuestionsListLayout>
       </Layout>
     );
