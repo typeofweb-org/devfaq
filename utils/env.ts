@@ -4,6 +4,7 @@ const env: ProcessENV = 'undefined' !== typeof window ? (window['__ENV__'] as ob
 const defaultEnv: ProcessENV = {
   API_URL: 'https://api.localhost',
   VERSION: 'dev',
+  GA_TRACKING_ID: '',
 };
 
 // set default env
@@ -18,8 +19,8 @@ export default env;
 export type ProcessENV = { [K in keyof ReturnType<typeof getEnvObjForDocument>]: string };
 
 const getEnvObjForDocument = () => {
-  const { API_URL, VERSION } = process.env;
-  return { API_URL, VERSION };
+  const { API_URL, VERSION, GA_TRACKING_ID } = process.env;
+  return { API_URL, VERSION, GA_TRACKING_ID };
 };
 
 export const unsafe_getEnvScriptForDocument = () => {

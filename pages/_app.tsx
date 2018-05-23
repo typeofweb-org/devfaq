@@ -19,6 +19,7 @@ import { RouteDetails, GetInitialPropsContext, AppStore } from '../utils/types';
 import AppModals from '../components/modals/appModals/AppModals';
 const AppComponent = App as React.ComponentClass<MyAppProps>;
 AppComponent.displayName = 'AppComponent';
+import * as analytics from '../utils/analytics';
 
 // hack because of incorrect d.ts file
 const withRedux = (withReduxType as any).default as typeof withReduxType;
@@ -72,7 +73,8 @@ class MyApp extends AppComponent {
     removeRouterEventListener('onRouteChangeError', this.onRouteChangeError);
   }
 
-  onRouteChangeComplete = (_url: string) => {
+  onRouteChangeComplete = (url: string) => {
+    analytics.reportPageView(url);
     const newRouteDetails = getRouteDetails(this.props.router);
     this.props.store.dispatch(ActionCreators.updateRouteSuccess(newRouteDetails));
   };
@@ -105,3 +107,15 @@ const options = {
 };
 
 export default withRedux(makeStore, options as any)(withRouter(MyApp as React.ComponentType<MyAppProps>));
+
+if (typeof window !== 'undefined') {
+  //@ts-ignore
+  window.globalReportEvent = (action: string, category: string, label?: string, questionId?: number | string) => {
+    console.log('action', action, 'category', category, 'label', label, 'questionId', questionId);
+  };
+} else {
+  //@ts-ignore
+  global.globalReportEvent = (action: string, category: string, label?: string, questionId?: number | string) => {
+    console.log('action', action, 'category', category, 'label', label, 'questionId', questionId);
+  };
+}

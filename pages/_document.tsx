@@ -1,5 +1,6 @@
 import Document, { Main, Head, NextScript } from 'next/document';
 import { unsafe_getEnvScriptForDocument } from '../utils/env';
+import * as analytics from '../utils/analytics';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: any) {
@@ -56,6 +57,22 @@ export default class MyDocument extends Document {
               if (window.navigator.standalone) {
                 document.querySelector('html').classList.add('ios-standalone');
               }
+            `,
+            }}
+          />
+
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${analytics.GA_TRACKING_ID}`} />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+              window.dataLayer = window.dataLayer || [];
+              window.gtag = function gtag(){
+                dataLayer.push(arguments);
+              }
+              gtag('js', new Date());
+              gtag('config', ${JSON.stringify(analytics.GA_TRACKING_ID)}, {
+                custom_map: ${JSON.stringify(analytics.CUSTOM_MAP)},
+              });
             `,
             }}
           />
