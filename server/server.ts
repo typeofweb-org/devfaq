@@ -1,12 +1,13 @@
-require('isomorphic-fetch');
-const next = require('next');
-const routes = require('./routes');
+import 'isomorphic-fetch';
+import * as next from 'next';
+
+import routes from '../routes';
 const isDev = process.env.NODE_ENV !== 'production';
 const app = next({ dev: isDev });
 const handler = routes.getRequestHandler(app);
-const port = process.env.PORT || 3000;
-const url = require('url');
-const { join } = require('path');
+const port = process.env.PORT || '3000';
+import * as url from 'url';
+import { join } from 'path';
 
 const staticFiles = ['/img/fefaq-cover-facebook.png'];
 
@@ -23,12 +24,12 @@ const favicons = [
   '/android-chrome-192x192.png',
 ];
 
-function getPathname(req) {
+function getPathname(req: express.Request) {
   const { pathname } = url.parse(req.url);
-  return pathname;
+  return pathname || '';
 }
 
-function getPathForStaticResource(pathname) {
+function getPathForStaticResource(pathname: string) {
   if (favicons.includes(pathname)) {
     return join(__dirname, 'static', 'favicons', pathname);
   } else if (staticFiles.includes(pathname)) {
@@ -36,9 +37,10 @@ function getPathForStaticResource(pathname) {
   } else if (pathname === '/robots.txt') {
     return join(__dirname, 'static', isDev ? 'robots.dev.txt' : 'robots.prod.txt');
   }
+  return undefined;
 }
 
-function generateSitemap(req) {
+function generateSitemap(req: express.Request) {
   const sm = require('sitemap');
 
   const { hostname } = req;
@@ -68,10 +70,10 @@ function generateSitemap(req) {
 }
 
 // With express
-const express = require('express');
+import * as express from 'express';
 app.prepare().then(() => {
   express()
-    .use((req, res, next) => {
+    .use((req, res, _next) => {
       const pathname = getPathname(req);
 
       if (pathname === '/sitemap.xml') {
@@ -83,7 +85,7 @@ app.prepare().then(() => {
         return app.serveStatic(req, res, staticPath);
       }
       generateSitemap(req);
-      return handler(req, res, next);
+      return handler(req, res);
     })
     .listen(port, () => console.log('Server listening at localhost:3000'));
 });
