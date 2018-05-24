@@ -2,14 +2,13 @@
 
 @font-face {
   font-family: 'devicon';
-  src: url('/static/fonts/devicon.eot?djfjg0');
-  src: url('/static/fonts/devicon.eot?djfjg0#iefix') format('embedded-opentype'), url('/static/fonts/devicon.woff2?djfjg0') format('woff2'), url('/static/fonts/devicon.woff?djfjg0') format('woff'), url('/static/fonts/devicon.ttf?djfjg0') format('truetype'), url('/static/fonts/devicon.svg?djfjg0#devicon') format('svg');
+  src: url('/static/fonts/devicon.eot?9zg79o');
+  src: url('/static/fonts/devicon.eot?9zg79o#iefix') format('embedded-opentype'), url('/static/fonts/devicon.woff2?9zg79o') format('woff2'), url('/static/fonts/devicon.woff?9zg79o') format('woff'), url('/static/fonts/devicon.ttf?9zg79o') format('truetype'), url('/static/fonts/devicon.svg?9zg79o#devicon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
-[class^="devicon-"],
-[class*=" devicon-"] {
+[class^="devicon-"], [class*=" devicon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'devicon' !important;
   speak: none;
@@ -18,38 +17,57 @@
   font-variant: normal;
   text-transform: none;
   line-height: 1;
+
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+.devicon-bold:before {
+  content: "\f032";
+}
+.devicon-italic:before {
+  content: "\f033";
+}
+.devicon-eye:before {
+  content: "\f06e";
+}
+.devicon-list-ul:before {
+  content: "\f0ca";
+}
+.devicon-list-ol:before {
+  content: "\f0cb";
+}
+.devicon-code:before {
+  content: "\f121";
+}
+.devicon-header:before {
+  content: "\f1dc";
+}
 .devicon-devicon-plain:before {
   content: "\e93b";
 }
-
 .devicon-react-original:before {
   content: "\e601";
 }
-
 .devicon-angularjs-plain:before {
   content: "\e61d";
 }
-
 .devicon-css3-plain:before {
   content: "\e679";
 }
-
 .devicon-git-plain:before {
   content: "\e7a8";
 }
-
 .devicon-html5-plain:before {
   content: "\e7f7";
 }
-
 .devicon-javascript-plain:before {
   content: "\e845";
 }
+
+
+
 
 [class*="devicon-"] {
   font-size: 3rem;

@@ -135,8 +135,10 @@ $shadow-width: 2px;
       background-position: 2px 100%;
     }
     &:focus {
-      border-color: $purple-branding;
       outline: 0;
+    }
+    [data-whatinput="keyboard"] &:focus {
+      border-color: $purple-branding;
     }
   }
   &--text {
