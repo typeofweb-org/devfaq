@@ -1,53 +1,28 @@
-import { MarkdownRenderer } from '../markdownText/MarkdownText';
+// import { getHtmlFromMarkdown, highlightSyntax } from '../markdownText/MarkdownText';
 import * as React from 'react';
-
-import * as SimpleMDE from 'react-simplemde-editor';
+import './questionEditor.scss';
 
 type QuestionEditorProps = {
   id?: string;
   label?: string;
-  onChange?(text: string): any;
-  value?: string;
+  onChange(text: string): any;
+  value: string;
 };
 
-export default class QuestionEditor extends React.Component<QuestionEditorProps> {
+type QuestionEditorState = {};
+
+export default class QuestionEditor extends React.Component<QuestionEditorProps, QuestionEditorState> {
+  state = {};
+
+  handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+    this.props.onChange(e.currentTarget.value || '');
+  };
+
   render() {
     return (
-      <SimpleMDE
-        id={this.props.id}
-        label={this.props.label}
-        onChange={this.props.onChange}
-        value={this.props.value}
-        options={{
-          spellChecker: false,
-          status: false,
-          toolbar: ['bold', 'italic', 'heading', '|', 'code', 'unordered-list', 'ordered-list', '|', 'preview'],
-          shortcuts: {
-            toggleBlockquote: '',
-            toggleBold: '',
-            cleanBlock: '',
-            toggleHeadingSmaller: '',
-            toggleItalic: '',
-            drawLink: '',
-            toggleUnorderedList: '',
-            togglePreview: '',
-            toggleCodeBlock: '',
-            drawImage: '',
-            toggleOrderedList: '',
-            toggleHeadingBigger: '',
-            toggleSideBySide: '',
-            toggleFullScreen: '',
-          },
-          previewRender: (plainText, previewEl) => {
-            if (!previewEl || typeof window === 'undefined') {
-              return plainText;
-            }
-            const markdownPreview = MarkdownRenderer.getInstance().getHtmlFromMarkdown(plainText);
-            setTimeout(() => MarkdownRenderer.getInstance().highlightSyntax(previewEl), 0);
-            return markdownPreview;
-          },
-        }}
-      />
+      <div className="markdown-editor-container">
+        <textarea value={this.props.value} onChange={this.handleChange} />
+      </div>
     );
   }
 }

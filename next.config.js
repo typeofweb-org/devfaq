@@ -38,14 +38,17 @@ const withWebpackAnalyze = (nextConfig = {}) => {
     webpack(config, options) {
       if (ANALYZE) {
         console.log('ANALYZE=YES');
-        const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-        config.plugins.push(
-          new BundleAnalyzerPlugin({
-            analyzerMode: 'server',
-            analyzerPort: options.isServer ? 8888 : 8889,
-            openAnalyzer: true,
-          })
-        );
+        // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+        // config.plugins.push(
+        //   new BundleAnalyzerPlugin({
+        //     analyzerMode: 'server',
+        //     analyzerPort: options.isServer ? 8888 : 8889,
+        //     openAnalyzer: true,
+        //   })
+        // );
+
+        const Visualizer = require('webpack-visualizer-plugin');
+        config.plugins.push(new Visualizer());
       } else {
         console.log('ANALYZE=NO');
       }
@@ -68,6 +71,7 @@ const config = withWebpackAnalyze(
             includePaths: ['styles/'],
           },
           webpack: (config, options) => {
+            console.log(config.plugins);
             if (options.isServer && process.env.NODE_ENV !== 'production') {
               const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
               config.plugins.push(new ForkTsCheckerWebpackPlugin());
