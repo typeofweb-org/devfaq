@@ -10,6 +10,7 @@ type ActiveLinkOwnProps = {
   exact?: boolean;
   disabledWhenActive?: boolean;
   onClick?: React.MouseEventHandler<HTMLElement>;
+  className?: string;
 };
 
 type ActiveLinkRouterProps = {
@@ -18,21 +19,6 @@ type ActiveLinkRouterProps = {
 
 const defaultProps: Partial<ActiveLinkComponentProps> = {
   activeClassName: 'active',
-};
-
-const conditionallyAddClassToChild = (
-  shouldAddActiveClass: boolean,
-  activeClassName: string,
-  child: React.ReactElement<any>
-): React.ReactElement<any> => {
-  if (!shouldAddActiveClass) {
-    return child;
-  }
-  const modifiedChild = React.cloneElement(child, {
-    ...child.props,
-    className: classNames(child.props.className, { [activeClassName]: shouldAddActiveClass }),
-  });
-  return modifiedChild;
 };
 
 const initialState = {
@@ -85,17 +71,22 @@ class ActiveLinkComponent extends React.Component<ActiveLinkComponentProps, Acti
       href,
       as,
       passHref,
+      className,
     } = this.props;
-    const child = React.Children.only(children);
     const isMatch = this.isMatch();
-    const newChild = conditionallyAddClassToChild(isMatch, activeClassName, child);
+
+    const newClassName = classNames(className, { [activeClassName]: isMatch });
 
     if (isMatch && this.props.disabledWhenActive) {
-      return <div aria-disabled="true">{newChild}</div>;
+      return (
+        <div aria-disabled="true" className={newClassName}>
+          {children}
+        </div>
+      );
     }
 
     return (
-      <span onClick={this.props.onClick}>
+      <div onClick={this.props.onClick} className={newClassName}>
         <Link
           prefetch={prefetch}
           route={route}
@@ -106,9 +97,9 @@ class ActiveLinkComponent extends React.Component<ActiveLinkComponentProps, Acti
           as={as}
           passHref={passHref}
         >
-          {newChild}
+          {children}
         </Link>
-      </span>
+      </div>
     );
   }
 

@@ -13,16 +13,17 @@ class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToPro
       <div className="cta-header">
         <header className="app-header--cta container">
           <nav className="app-tabs">
-            <ActiveLink route="/questions">
-              <a className="app-tabs--tab" onClick={() => this.reportEvent('Lista pytań')}>
-                Lista pytań
-              </a>
+            <ActiveLink route="/questions" className="app-tabs--tab">
+              <a onClick={() => this.reportEvent('Lista pytań')}>Lista pytań</a>
             </ActiveLink>
-            <ActiveLink prefetch={true} route="/selected-questions">
+            <ActiveLink
+              prefetch={true}
+              route="/selected-questions"
+              className={classNames('app-tabs--tab', {
+                'has-notification': this.props.areAnyQuestionSelected,
+              })}
+            >
               <a
-                className={classNames('app-tabs--tab', {
-                  'has-notification': this.props.areAnyQuestionSelected,
-                })}
                 onClick={() =>
                   this.reportEvent(this.props.areAnyQuestionSelected ? 'Wybrane pytania' : 'Wybrane pytania (puste)')
                 }

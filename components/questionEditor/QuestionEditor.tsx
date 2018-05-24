@@ -1,6 +1,7 @@
-// import { getHtmlFromMarkdown, highlightSyntax } from '../markdownText/MarkdownText';
+import { getHtmlFromMarkdown, highlightSyntax } from '../markdownText/MarkdownText';
 import * as React from 'react';
 import './questionEditor.scss';
+import * as classNames from 'classnames';
 
 type QuestionEditorProps = {
   id?: string;
@@ -9,19 +10,169 @@ type QuestionEditorProps = {
   value: string;
 };
 
-type QuestionEditorState = {};
+type QuestionEditorState = {
+  isPreview: boolean;
+};
+
+type Actions = 'BOLD' | 'ITALIC' | 'HEADING' | 'CODEBLOCK' | 'UL' | 'OL';
+type Tokens = { open: string; close: string };
 
 export default class QuestionEditor extends React.Component<QuestionEditorProps, QuestionEditorState> {
-  state = {};
+  state = { isPreview: false };
+  textAreaRef = React.createRef<HTMLTextAreaElement>();
+  previewRef = React.createRef<HTMLDivElement>();
 
-  handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-    this.props.onChange(e.currentTarget.value || '');
+  actionToTokens: { [action in Actions]: Tokens } = {
+    BOLD: { open: '**', close: '**' },
+    ITALIC: { open: '_', close: '_' },
+    HEADING: { open: '# ', close: '' },
+    CODEBLOCK: { open: '```javascript\n', close: '\n```' },
+    UL: { open: '* ', close: '' },
+    OL: { open: '1. ', close: '' },
+  };
+
+  handleTextChange = () => {
+    if (!this.textAreaRef.current) {
+      return;
+    }
+    this.props.onChange(this.textAreaRef.current.value || '');
+    this.autoresize();
+  };
+
+  autoresize = () => {
+    const el = this.textAreaRef.current;
+    if (!el) {
+      return;
+    }
+
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 'px';
+    el.scrollTop = el.scrollHeight;
+    window.scrollTo(window.scrollX, el.scrollTop + el.scrollHeight);
+  };
+
+  autoFocus = () => {
+    const el = this.textAreaRef.current;
+    if (!el) {
+      return;
+    }
+
+    el.focus();
+  };
+
+  addTokensToTextarea = (el: HTMLTextAreaElement, tokens: Tokens): void => {
+    const { selectionStart, selectionEnd, value } = el;
+    const startTokenLenths = tokens.open.length;
+
+    let newValue = value;
+    newValue = newValue.substring(0, selectionEnd) + tokens.close + newValue.substr(selectionEnd);
+    newValue = newValue.substring(0, selectionStart) + tokens.open + newValue.substr(selectionStart);
+
+    this.props.onChange(newValue);
+    el.value = newValue;
+    this.autoFocus();
+    el.setSelectionRange(selectionStart + startTokenLenths, selectionEnd + startTokenLenths);
+  };
+
+  handleAction = (action: Actions): React.MouseEventHandler<HTMLButtonElement> => (e) => {
+    e.preventDefault();
+
+    const el = this.textAreaRef.current;
+    if (!el) {
+      return;
+    }
+
+    const tokens = this.actionToTokens[action];
+
+    this.addTokensToTextarea(el, tokens);
+    this.handleTextChange();
+  };
+
+  togglePreview: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    this.setState(
+      (state) => ({ isPreview: !state.isPreview }),
+      () => {
+        if (this.previewRef.current) {
+          highlightSyntax(this.previewRef.current);
+        } else {
+          this.autoresize();
+        }
+      }
+    );
   };
 
   render() {
+    const { isPreview } = this.state;
     return (
       <div className="markdown-editor-container">
-        <textarea value={this.props.value} onChange={this.handleChange} />
+        <div className="markdown-editor-toolbar">
+          <button
+            className="devicon-bold"
+            disabled={isPreview}
+            onClick={this.handleAction('BOLD')}
+            aria-label="wstaw pogrubienie"
+            title="wstaw pogrubienie"
+          />
+          <button
+            className="devicon-italic"
+            disabled={isPreview}
+            onClick={this.handleAction('ITALIC')}
+            aria-label="wstaw italik"
+            title="wstaw italik"
+          />
+          <button
+            className="devicon-header"
+            disabled={isPreview}
+            onClick={this.handleAction('HEADING')}
+            aria-label="wstaw nagłówek"
+            title="wstaw nagłówek"
+          />
+          <span className="separator">|</span>
+          <button
+            className="devicon-code"
+            disabled={isPreview}
+            onClick={this.handleAction('CODEBLOCK')}
+            aria-label="wstaw blok kodu"
+            title="wstaw blok kodu"
+          />
+          <button
+            className="devicon-list-ul"
+            disabled={isPreview}
+            onClick={this.handleAction('UL')}
+            aria-label="wstaw listę nieuporządkowaną"
+            title="wstaw listę nieuporządkowaną"
+          />
+          <button
+            className="devicon-list-ol"
+            disabled={isPreview}
+            onClick={this.handleAction('OL')}
+            aria-label="wstaw listę uporządkowaną"
+            title="wstaw listę uporządkowaną"
+          />
+          <span className="separator">|</span>
+          <button className="devicon-eye" onClick={this.togglePreview} aria-hidden={true} title="zobacz podgląd" />
+        </div>
+        <div
+          className={classNames('markdown-editor-content', { 'markdown-editor-content_preview': isPreview })}
+          onClick={this.autoFocus}
+        >
+          {!isPreview && (
+            <textarea
+              className="markdown-editor-field"
+              ref={this.textAreaRef}
+              value={this.props.value}
+              onChange={this.handleTextChange}
+            />
+          )}
+          {isPreview && (
+            <div
+              className="markdown-editor-preview"
+              ref={this.previewRef}
+              dangerouslySetInnerHTML={{ __html: getHtmlFromMarkdown(this.props.value) }}
+            />
+          )}
+        </div>
       </div>
     );
   }
