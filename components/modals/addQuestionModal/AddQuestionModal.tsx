@@ -62,7 +62,7 @@ class AddQuestionModalComponent extends React.PureComponent<
         <h2 className="app-modal--title" id="add-question-modal-title">
           Nowe pytanie
         </h2>
-        <form>
+        <form onSubmit={(e) => e.preventDefault()}>
           <div className="app-question-form">
             <div className="app-question-form--options-container">
               <select

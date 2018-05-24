@@ -2,16 +2,46 @@ import './questionItem.scss';
 import * as React from 'react';
 import { Question } from '../../../../redux/reducers/questions';
 import * as classNames from 'classnames';
-import * as pl from 'date-fns/locale/pl';
-import * as formatWithOptions from 'date-fns/fp/formatWithOptions';
 import { isQuestionSelected } from '../../questionsUtils';
 import MarkdownText from '../../../markdownText/MarkdownText';
 import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
 
 import { isEqual } from 'lodash';
 
-const longDate = formatWithOptions({ locale: pl }, 'LL');
-const shortDate = formatWithOptions({ locale: pl }, 'L');
+const longDate = (dateStr?: string) => {
+  if (!dateStr) {
+    return '';
+  }
+  const date = new Date(dateStr);
+  const months = [
+    'stycznia',
+    'lutego',
+    'marca',
+    'kwietnia',
+    'maja',
+    'czerwca',
+    'lipca',
+    'sierpnia',
+    'września',
+    'października',
+    'listopada',
+    'grudnia',
+  ];
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  return `${day} ${month} ${year}`;
+};
+const shortDate = (dateStr?: string) => {
+  if (!dateStr) {
+    return '';
+  }
+  const date = new Date(dateStr);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}.${month}.${year}`;
+};
 
 type QuestionItemOwnProps = {
   question: Question;

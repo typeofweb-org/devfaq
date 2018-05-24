@@ -46,7 +46,6 @@ export default class MyDocument extends Document {
           <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
           <meta name="theme-color" content="#ffffff" />
           <link rel="stylesheet" href="/_next/static/style.css" />
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css" />
           <link
             href="https://fonts.googleapis.com/css?family=Fira+Sans:200,400,700&amp;subset=latin-ext"
             rel="stylesheet"
