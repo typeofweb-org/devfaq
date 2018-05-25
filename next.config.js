@@ -14,14 +14,14 @@ const withPolyfills = (module.exports = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
     webpack(config, options) {
       const originalEntry = config.entry;
-      config.entry = async () => {
-        const entries = await originalEntry();
+      config.entry = function entry() {
+        return Promise.resolve(originalEntry()).then((entries) => {
+          if (entries['main.js']) {
+            entries['main.js'].unshift('./polyfills.js');
+          }
 
-        if (entries['main.js']) {
-          entries['main.js'].unshift('./polyfills.js');
-        }
-
-        return entries;
+          return entries;
+        });
       };
 
       if (typeof nextConfig.webpack === 'function') {
@@ -71,7 +71,6 @@ const config = withWebpackAnalyze(
             includePaths: ['styles/'],
           },
           webpack: (config, options) => {
-            console.log(config.plugins);
             if (options.isServer && process.env.NODE_ENV !== 'production') {
               const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
               config.plugins.push(new ForkTsCheckerWebpackPlugin());

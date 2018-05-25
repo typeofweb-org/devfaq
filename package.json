@@ -54,7 +54,6 @@
     "cross-env": "5.1.5",
     "husky": "1.0.0-rc.6",
     "nodemon": "1.17.4",
-    "now": "11.1.12",
     "postcss-easy-import": "3.0.0",
     "postcss-loader": "2.1.5",
     "ts-node": "6.0.3",
