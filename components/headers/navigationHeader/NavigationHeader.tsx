@@ -28,13 +28,13 @@ export default class NavigationHeader extends React.PureComponent<NavigationHead
           <nav className={classNames('main-nav', { open })}>
             <ul>
               <li>
-                <ActiveLink route="/about" onClick={this.onAboutClick}>
-                  <a>Jak korzystać?</a>
+                <ActiveLink route="/about">
+                  <a onClick={this.onAboutClick}>Jak korzystać?</a>
                 </ActiveLink>
               </li>
               <li>
-                <ActiveLink route="/authors" onClick={this.onAuthorsClick}>
-                  <a>Autorzy</a>
+                <ActiveLink route="/authors">
+                  <a onClick={this.onAuthorsClick}>Autorzy</a>
                 </ActiveLink>
               </li>
               <li>
