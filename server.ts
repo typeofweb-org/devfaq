@@ -73,20 +73,20 @@ function generateSitemap(req: express.Request) {
 // With express
 import * as express from 'express';
 app.prepare().then(() => {
-  express()
-    .use((req, res, _next) => {
-      const pathname = getPathname(req);
+  const server = express().use((req, res, _next) => {
+    const pathname = getPathname(req);
 
-      if (pathname === '/sitemap.xml') {
-        const sitemap = generateSitemap(req);
-        return res.header('Content-Type', 'application/xml').send(sitemap);
-      }
+    if (pathname === '/sitemap.xml') {
+      const sitemap = generateSitemap(req);
+      return res.header('Content-Type', 'application/xml').send(sitemap);
+    }
 
-      const staticPath = getPathForStaticResource(pathname);
-      if (staticPath) {
-        return app.serveStatic(req, res, staticPath);
-      }
-      return handler(req, res);
-    })
-    .listen(port, () => console.log('Server listening at localhost:3000'));
+    const staticPath = getPathForStaticResource(pathname);
+    if (staticPath) {
+      return app.serveStatic(req, res, staticPath);
+    }
+    return handler(req, res);
+  });
+  server.disable('x-powered-by');
+  server.listen(port, () => console.log('Server listening at localhost:3000'));
 });
