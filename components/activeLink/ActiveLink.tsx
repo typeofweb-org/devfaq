@@ -10,7 +10,6 @@ type ActiveLinkOwnProps = {
   exact?: boolean;
   disabledWhenActive?: boolean;
   onClick?: React.MouseEventHandler<HTMLElement>;
-  className?: string;
 };
 
 type ActiveLinkRouterProps = {
@@ -59,6 +58,21 @@ class ActiveLinkComponent extends React.Component<ActiveLinkComponentProps, Acti
     removeRouterEventListener('onRouteChangeComplete', this.onRouteChangeComplete);
   }
 
+  conditionallyAddClassToChild = (
+    shouldAddActiveClass: boolean,
+    activeClassName: string,
+    child: React.ReactElement<any>
+  ): React.ReactElement<any> => {
+    if (!shouldAddActiveClass) {
+      return child;
+    }
+    const modifiedChild = React.cloneElement(child, {
+      ...child.props,
+      className: classNames(child.props.className, { [activeClassName]: shouldAddActiveClass }),
+    });
+    return modifiedChild;
+  };
+
   render() {
     const {
       children,
@@ -71,35 +85,28 @@ class ActiveLinkComponent extends React.Component<ActiveLinkComponentProps, Acti
       href,
       as,
       passHref,
-      className,
     } = this.props;
+    const child = React.Children.only(children);
     const isMatch = this.isMatch();
-
-    const newClassName = classNames(className, { [activeClassName]: isMatch });
+    const newChild = this.conditionallyAddClassToChild(isMatch, activeClassName, child);
 
     if (isMatch && this.props.disabledWhenActive) {
-      return (
-        <div aria-disabled="true" className={newClassName}>
-          {children}
-        </div>
-      );
+      return <div aria-disabled="true">{newChild}</div>;
     }
 
     return (
-      <div onClick={this.props.onClick} className={newClassName}>
-        <Link
-          prefetch={prefetch}
-          route={route}
-          shallow={shallow}
-          scroll={scroll}
-          replace={replace}
-          href={href}
-          as={as}
-          passHref={passHref}
-        >
-          {children}
-        </Link>
-      </div>
+      <Link
+        prefetch={prefetch}
+        route={route}
+        shallow={shallow}
+        scroll={scroll}
+        replace={replace}
+        href={href}
+        as={as}
+        passHref={passHref}
+      >
+        {newChild}
+      </Link>
     );
   }
 
