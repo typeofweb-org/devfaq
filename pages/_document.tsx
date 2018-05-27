@@ -1,6 +1,7 @@
 import Document, { Main, Head, NextScript, Context } from 'next/document';
 import { unsafe_getEnvScriptForDocument } from '../utils/env';
 import * as analytics from '../utils/analytics';
+import env from '../utils/env';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: Context) {
@@ -8,7 +9,6 @@ export default class MyDocument extends Document {
 
     return {
       ...initialProps,
-      absoluteUrl: `https://${ctx.req.headers.host}` || '',
     };
   }
 
@@ -27,11 +27,11 @@ export default class MyDocument extends Document {
             content="width=device-width, user-scalable=yes, initial-scale=1.0, viewport-fit=cover"
           />
           <meta property="og:type" content="website" />
-          <meta property="og:url" itemProp="url" content={this.props.absoluteUrl} />
+          <meta property="og:url" itemProp="url" content={env.ABSOLUTE_URL} />
           <meta
             property="og:image"
             itemProp="logo image"
-            content={`${this.props.absoluteUrl}/img/fefaq-cover-facebook.png`}
+            content={`${env.ABSOLUTE_URL}/img/fefaq-cover-facebook.png`}
           />
           <meta property="og:site_name" content="Fefaq.pl" />
           <meta property="fb:app_id" content="2005583769700691" />

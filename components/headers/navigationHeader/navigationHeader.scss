@@ -12,9 +12,6 @@
     &:hover {
       color: darken($white-text, 10%);
     }
-    &.active {
-      border-bottom: 1px solid white;
-    }
   }
   h1 {
     margin: 0;
@@ -130,6 +127,9 @@
   }
   a {
     text-transform: uppercase;
+    &.active {
+      border-bottom: 1px solid white;
+    }
   }
   &.open {
     display: block;

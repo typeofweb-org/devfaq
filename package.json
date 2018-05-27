@@ -63,7 +63,7 @@
   },
   "scripts": {
     "dev": "nodemon server.ts",
-    "build": "NODE_ENV=production next build && NODE_ENV=production tsc --project tsconfig.server.json",
+    "build": "NODE_ENV=production tsc --project tsconfig.server.json && NODE_ENV=production next build && NODE_ENV=production next export -o public",
     "start": "NODE_ENV=production node app.js",
     "analyze": "cross-env ANALYZE=1 NODE_ENV=production next build",
     "test": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.server.json --noEmit"

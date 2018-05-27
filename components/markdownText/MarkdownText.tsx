@@ -57,8 +57,6 @@ export default class MarkdownText extends React.Component<MarkdownTextProps> {
       return;
     }
 
-    console.log('highlight');
-
     highlightSyntax(this.markdownRef.current);
   }
 
