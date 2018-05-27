@@ -21,10 +21,10 @@ export class TechnologyFilter extends React.Component {
           route={'/questions/' + technology.name}
           onClick={() => this.reportSelectTechnologyEvent(technology.label)}
         >
-          <button title={technology.label}>
+          <a title={technology.label}>
             <span className="app-filter--technology--label">{technology.label}</span>
             <span className={technology.icon} />
-          </button>
+          </a>
         </ActiveLink>
       </li>
     );
