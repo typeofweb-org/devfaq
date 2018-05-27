@@ -11,12 +11,14 @@ const reader = new commonmark.Parser();
 const writer = new commonmark.HtmlRenderer();
 
 export function getHtmlFromMarkdown(markdown: string): string {
-  const parsed = reader.parse(markdown);
-  return xss(writer.render(parsed), {
-    whiteList: {},
-    stripIgnoreTag: true,
-    stripIgnoreTagBody: ['script'],
-  });
+  const parsed = reader.parse(
+    xss(markdown, {
+      whiteList: {},
+      stripIgnoreTag: false,
+    })
+  );
+  const rendered = writer.render(parsed);
+  return rendered;
 }
 
 export function highlightSyntax(el: Element): void {
@@ -49,6 +51,8 @@ export default class MarkdownText extends React.Component<MarkdownTextProps> {
     if (typeof window === 'undefined') {
       return;
     }
+
+    console.log('highlight');
 
     highlightSyntax(this.markdownRef.current);
   }

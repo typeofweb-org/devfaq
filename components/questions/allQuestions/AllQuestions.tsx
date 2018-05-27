@@ -37,6 +37,15 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
   }
 
   renderList = () => {
+    if (this.props.questions.error) {
+      return (
+        <div>
+          <div>{this.props.questions.error.name}</div>
+          <div>{this.props.questions.error.message}</div>
+          <div>{this.props.questions.error.stack}</div>
+        </div>
+      );
+    }
     if (!this.props.questions.data || this.props.questions.data.length === 0) {
       return null; // @todo handle errors and loading
     }
