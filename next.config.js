@@ -84,6 +84,7 @@ const config = withWebpackAnalyze(
   )
 );
 config.useFileSystemPublicRoutes = false;
+config.poweredByHeader = false;
 
 config.exportPathMap = function() {
   return {
