@@ -1,5 +1,6 @@
+const isProduction = process.env.NODE_ENV === 'production';
 require('dotenv').config({
-  path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
+  path: isProduction ? '.env.production' : '.env',
 });
 
 const withTypescript = require('@zeit/next-typescript');
@@ -71,7 +72,7 @@ const config = withWebpackAnalyze(
             includePaths: ['styles/'],
           },
           webpack: (config, options) => {
-            if (options.isServer && process.env.NODE_ENV !== 'production') {
+            if (options.isServer && !isProduction) {
               const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
               config.plugins.push(new ForkTsCheckerWebpackPlugin());
             }
@@ -85,10 +86,14 @@ const config = withWebpackAnalyze(
 );
 config.useFileSystemPublicRoutes = false;
 config.poweredByHeader = false;
+// config.assetPrefix = isProduction ? '/public' : '';
 
 config.exportPathMap = function() {
   return {
     '/': { page: '/' },
+    '/about': { page: '/about' },
+    '/authors': { page: '/authors' },
+    '/regulations': { page: '/regulations' },
   };
 };
 
