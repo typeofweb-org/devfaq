@@ -24,7 +24,8 @@
     @include mediaquery('gt-sm') {
       margin: 0;
     }
-    button {
+    a {
+      color: $grey-text-primary;
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -55,7 +56,7 @@
       font-size: 1rem;
     }
     @include mediaquery('large-filters') {
-      button {
+      a {
         width: 85px;
         height: 85px;
       }
