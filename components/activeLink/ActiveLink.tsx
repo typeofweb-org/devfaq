@@ -90,9 +90,9 @@ class ActiveLinkComponent extends React.Component<ActiveLinkComponentProps, Acti
     const isMatch = this.isMatch();
     const newChild = this.conditionallyAddClassToChild(isMatch, activeClassName, child);
 
-    if (isMatch && this.props.disabledWhenActive) {
-      return <div aria-disabled="true">{newChild}</div>;
-    }
+    // if (isMatch && this.props.disabledWhenActive) {
+    //   return <div aria-disabled="true">{newChild}</div>;
+    // }
 
     return (
       <Link

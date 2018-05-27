@@ -86,14 +86,12 @@ const config = withWebpackAnalyze(
 );
 config.useFileSystemPublicRoutes = false;
 config.poweredByHeader = false;
-// config.assetPrefix = isProduction ? '/public' : '';
 
 config.exportPathMap = function() {
   return {
-    '/': { page: '/' },
-    '/about': { page: '/about' },
-    '/authors': { page: '/authors' },
-    '/regulations': { page: '/regulations' },
+    '/about': { name: '/about', page: '/staticPage' },
+    '/authors': { name: '/authors', page: '/staticPage' },
+    '/regulations': { name: '/regulations', page: '/staticPage' },
   };
 };
 

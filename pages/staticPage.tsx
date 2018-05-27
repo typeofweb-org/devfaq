@@ -3,6 +3,7 @@ import Layout from '../components/layout/Layout';
 import './index.scss';
 import './staticPages/staticPage.scss';
 import { AboutPage, AuthorsPage, AppRegulations } from './staticPages';
+import { GetInitialPropsContext } from '../utils/types';
 
 type StaticPageContent = { component: React.ComponentType; title: string };
 const pathToContent: Record<string, StaticPageContent> = {
@@ -12,17 +13,18 @@ const pathToContent: Record<string, StaticPageContent> = {
 };
 
 export default class StaticPage extends React.PureComponent<{ asPath: string }> {
-  static async getInitialProps(ctx: { asPath: string }) {
+  static async getInitialProps(ctx: GetInitialPropsContext) {
     return {
-      asPath: ctx.asPath,
+      asPath: ctx.asPath || '',
     };
   }
 
   render() {
-    const content = pathToContent[this.props.asPath];
+    const canonical = this.props.asPath.replace(/\/+$/, '');
+    const content = pathToContent[canonical];
     const Component = content.component;
     return (
-      <Layout title={content.title}>
+      <Layout>
         <div className="container">
           <Component />
         </div>
