@@ -11,14 +11,19 @@ const reader = new commonmark.Parser();
 const writer = new commonmark.HtmlRenderer();
 
 export function getHtmlFromMarkdown(markdown: string): string {
-  const parsed = reader.parse(
-    xss(markdown, {
-      whiteList: {},
-      stripIgnoreTag: false,
-    })
-  );
+  const parsed = reader.parse(markdown);
   const rendered = writer.render(parsed);
-  return rendered;
+  return xss(rendered, {
+    onIgnoreTagAttr(tag, name, value, _isWhiteAttr) {
+      if (tag !== 'code' && tag !== 'pre') {
+        return;
+      }
+      if (name !== 'class') {
+        return;
+      }
+      return `${name}="${xss.escapeAttrValue(value)}"`;
+    },
+  });
 }
 
 export function highlightSyntax(el: Element): void {
