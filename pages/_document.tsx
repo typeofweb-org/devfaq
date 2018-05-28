@@ -36,6 +36,7 @@ export default class MyDocument extends Document {
           <meta property="og:site_name" content="Fefaq.pl" />
           <meta property="fb:app_id" content="2005583769700691" />
           <meta property="og:locale" content="pl_PL" />
+          {/*  */}
           <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
           <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -45,7 +46,13 @@ export default class MyDocument extends Document {
           <meta name="msapplication-TileColor" content="#673ab7" />
           <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
           <meta name="theme-color" content="#ffffff" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+          <meta name="format-detection" content="telephone=no" />
+          <meta name="apple-mobile-web-app-title" content="Fefaq.pl" />
+          {/*  */}
           <link rel="stylesheet" href="/_next/static/style.css" />
+          {/*  */}
           <link
             href="https://fonts.googleapis.com/css?family=Fira+Sans:200,400,700&amp;subset=latin-ext"
             rel="stylesheet"
@@ -60,7 +67,6 @@ export default class MyDocument extends Document {
             `,
             }}
           />
-
           <script async src={`https://www.googletagmanager.com/gtag/js?id=${analytics.GA_TRACKING_ID}`} />
           <script
             dangerouslySetInnerHTML={{

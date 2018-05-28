@@ -32,11 +32,11 @@ function getPathname(req: express.Request) {
 
 function getPathForStaticResource(pathname: string) {
   if (favicons.includes(pathname)) {
-    return join(__dirname, '..', 'static', 'favicons', pathname);
+    return join(__dirname, 'static', 'favicons', pathname);
   } else if (staticFiles.includes(pathname)) {
-    return join(__dirname, '..', 'static', pathname);
+    return join(__dirname, 'static', pathname);
   } else if (pathname === '/robots.txt') {
-    return join(__dirname, '..', 'static', isDev ? 'robots.dev.txt' : 'robots.prod.txt');
+    return join(__dirname, 'static', isDev ? 'robots.dev.txt' : 'robots.prod.txt');
   }
   return undefined;
 }
