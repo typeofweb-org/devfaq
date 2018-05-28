@@ -31,7 +31,9 @@ function getPathname(req: express.Request) {
 }
 
 function getPathForStaticResource(pathname: string) {
-  if (favicons.includes(pathname)) {
+  if (pathname === '/service-worker.js') {
+    return join(__dirname, '.next', pathname);
+  } else if (favicons.includes(pathname)) {
     return join(__dirname, 'static', 'favicons', pathname);
   } else if (staticFiles.includes(pathname)) {
     return join(__dirname, 'static', pathname);
