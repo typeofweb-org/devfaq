@@ -6,6 +6,7 @@ require('dotenv').config({
 const withTypescript = require('@zeit/next-typescript');
 const withSass = require('@zeit/next-sass');
 const withImages = require('next-images');
+const withOffline = require('next-offline');
 
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
@@ -63,23 +64,25 @@ const withWebpackAnalyze = (nextConfig = {}) => {
   });
 };
 
-const config = withWebpackAnalyze(
-  withPolyfills(
-    withImages(
-      withTypescript(
-        withSass({
-          sassLoaderOptions: {
-            includePaths: ['styles/'],
-          },
-          webpack: (config, options) => {
-            if (options.isServer && !isProduction) {
-              const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-              config.plugins.push(new ForkTsCheckerWebpackPlugin());
-            }
-            config.plugins.push(new LodashModuleReplacementPlugin());
-            return config;
-          },
-        })
+const config = withOffline(
+  withWebpackAnalyze(
+    withPolyfills(
+      withImages(
+        withTypescript(
+          withSass({
+            sassLoaderOptions: {
+              includePaths: ['styles/'],
+            },
+            webpack: (config, options) => {
+              if (options.isServer && !isProduction) {
+                const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+                config.plugins.push(new ForkTsCheckerWebpackPlugin());
+              }
+              config.plugins.push(new LodashModuleReplacementPlugin());
+              return config;
+            },
+          })
+        )
       )
     )
   )
