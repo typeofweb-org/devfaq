@@ -51,9 +51,8 @@ const after = (server: Hapi.Server) => {
     isHttpOnly: true,
     clearInvalid: false,
     strictHeader: true,
-    isSameSite: false as false,
-    // isSameSite: 'Strict' as 'Strict'
-    domain: 'fefaq.localhost',
+    isSameSite: 'Lax' as 'Lax',
+    domain: process.env.COOKIE_DOMAIN,
     path: '/'
   };
 
