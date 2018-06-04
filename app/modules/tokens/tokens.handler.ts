@@ -4,12 +4,13 @@ import { Container } from 'typedi';
 import { UserService } from '../../entity/user/User.service';
 import {
   UserIncorrectPassword,
-  UserNotFound
+  UserNotFound,
 } from '../../exception/exceptions';
 import { encryptionService } from '../../services/encryptionService';
+import { AuthInfo } from '../../plugins/auth';
 import {
   CreateTokenRequestPayload,
-  CreateTokenResponse
+  CreateTokenResponse,
 } from '../../validation-schema-types/types';
 
 interface CreateTokenRequest extends Hapi.Request {
@@ -40,4 +41,19 @@ export const createTokenHandler: Hapi.RouteHandler = async (
         return response;
       })
   );
+};
+
+export const validateTokenHandler: Hapi.RouteHandler = async (
+  req: CreateTokenRequest,
+  reply
+) => {
+  if (!req.auth || !req.auth.isAuthenticated) {
+    return reply(Promise.reject(Boom.notFound('Not authenticated')));
+  }
+
+  const authAinfo = req.auth.credentials as AuthInfo;
+
+  const userService = Container.get(UserService);
+
+  return reply(userService.getUserById(authAinfo.id));
 };

@@ -1,6 +1,10 @@
 import { RouteConfiguration } from 'hapi';
-import { createTokenHandler } from './tokens.handler';
-import { CreateTokenRequestSchema, CreateTokenResponseSchema } from './tokens.schema';
+import { createTokenHandler, validateTokenHandler } from './tokens.handler';
+import {
+  CreateTokenRequestSchema,
+  CreateTokenResponseSchema,
+  ValidateTokenResponseSchema,
+} from './tokens.schema';
 
 const createTokenRoute: RouteConfiguration = {
   path: '/tokens',
@@ -18,6 +22,22 @@ const createTokenRoute: RouteConfiguration = {
   },
 };
 
+const validateTokenRoute: RouteConfiguration = {
+  path: '/tokens/me',
+  method: 'GET',
+  handler: validateTokenHandler,
+  config: {
+    auth: { mode: 'optional' },
+    tags: ['api', 'tokens'],
+    validate: {},
+    description: 'Validated token and returns user',
+    response: {
+      schema: ValidateTokenResponseSchema,
+    },
+  },
+};
+
 export const authRoutes: RouteConfiguration[] = [
   createTokenRoute,
+  validateTokenRoute,
 ];

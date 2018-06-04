@@ -2,13 +2,15 @@ import * as bcrypt from 'bcrypt';
 import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { OrmRepository } from 'typeorm-typedi-extensions';
-import { UserIncorrectPassword, UserNotFound } from '../../exception/exceptions';
+import {
+  UserIncorrectPassword,
+  UserNotFound,
+} from '../../exception/exceptions';
 import { UserEntity } from './User.model';
 
 @Service()
 export class UserService {
-  @OrmRepository(UserEntity)
-  private repository: Repository<UserEntity>;
+  @OrmRepository(UserEntity) private repository: Repository<UserEntity>;
 
   public addNew(user: Partial<UserEntity>) {
     const userEntity = this.repository.create(user);
@@ -27,7 +29,10 @@ export class UserService {
     return this.repository.find();
   }
 
-  public async verifyCredentials(emailAddress: string, password: string): Promise<UserEntity> {
+  public async verifyCredentials(
+    emailAddress: string,
+    password: string
+  ): Promise<UserEntity> {
     const user = await this.repository.findOne({ emailAddress });
     if (!user) {
       throw new UserNotFound();
@@ -36,6 +41,15 @@ export class UserService {
     if (!comparison) {
       throw new UserIncorrectPassword();
     }
+    return user;
+  }
+
+  public async getUserById(id: number): Promise<UserEntity> {
+    const user = await this.repository.findOneById(id);
+    if (!user) {
+      throw new UserNotFound();
+    }
+
     return user;
   }
 }

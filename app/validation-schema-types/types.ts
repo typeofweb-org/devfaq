@@ -79,5 +79,15 @@ export interface CreateTokenResponse {
   token: string;
 }
 
+export interface ValidateTokenResponse {
+  id?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  emailAddress?: string;
+  firstName?: string;
+  lastName?: string;
+  role?: string;
+}
+
 // Unknown type: number[] ([object Object])}
 export { QuestionCategories, QuestionCategory, QuestionLevel, QuestionLevels, QuestionStatus, QuestionStatuses };

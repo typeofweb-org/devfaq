@@ -6,8 +6,12 @@
   "typescript.tsdk": "node_modules/typescript/lib/",
   "genGetSet.spacedImportLine": true,
   "editor.tabSize": 2,
-  "editor.formatOnType": true,
-  "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
-  "tslint.autoFixOnSave": true
+  "editor.formatOnType": true,
+  "prettier.parser": "typescript",
+  "prettier.printWidth": 80,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5",
+  "prettier.arrowParens": "always",
+  "prettier.disableLanguages": ["json", "scss"]
 }
