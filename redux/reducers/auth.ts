@@ -1,6 +1,18 @@
 import { Actions, ActionTypes } from '../actions';
 
-export type AuthData = {};
+export type UserData = {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  emailAddress: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  role?: string | null;
+};
+
+export type AuthData = {
+  user: UserData;
+};
 
 const intialState: {
   error?: Error;

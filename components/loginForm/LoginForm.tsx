@@ -46,7 +46,7 @@ class LoginFormComponent extends React.Component<
 
   componentDidUpdate() {
     if (this.props.auth.data) {
-      this.props.router.push('/admin');
+      // this.props.router.push('/admin');
     }
   }
 

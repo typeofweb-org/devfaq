@@ -55,7 +55,7 @@ const SyncActionCreators = {
   fetchQuestionsSuccess: (questions: Question[]) => createAction(ActionTypes.FETCH_QUESTIONS, { data: questions }),
 
   loginStarted: () => createAction(ActionTypes.LOGIN_STARTED),
-  loginError: (error: Error) => createAction(ActionTypes.LOGIN_ERROR, error),
+  loginError: (error?: Error) => createAction(ActionTypes.LOGIN_ERROR, error),
   loginSuccess: (authData: AuthData) => createAction(ActionTypes.LOGIN_SUCCESS, authData),
 };
 
@@ -75,8 +75,20 @@ const AsyncActionCreators = {
   logIn: (email: string, password: string, ctx?: GetInitialPropsContext): AsyncAction => (dispatch, _getState) => {
     dispatch(SyncActionCreators.loginStarted());
     return Api.logIn(email, password, ctx)
-      .then((data) => dispatch(SyncActionCreators.loginSuccess(data)))
+      .then((_data) => dispatch(AsyncActionCreators.validateToken(ctx)))
       .catch((err) => dispatch(SyncActionCreators.loginError(err)));
+  },
+
+  validateToken: (ctx?: GetInitialPropsContext): AsyncAction => (dispatch, _getState) => {
+    dispatch(SyncActionCreators.loginStarted());
+    return Api.getLoggedInUser(ctx)
+      .then((data) => dispatch(SyncActionCreators.loginSuccess({ user: data })))
+      .catch((err) => {
+        if (err && err.statusCode === 404) {
+          return dispatch(SyncActionCreators.loginError(undefined));
+        }
+        return dispatch(SyncActionCreators.loginError(err));
+      });
   },
 };
 

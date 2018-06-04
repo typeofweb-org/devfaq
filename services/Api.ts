@@ -2,7 +2,7 @@ import { TechnologyKey } from '../constants/technology-icon-items';
 import env from '../utils/env';
 import { LevelKey } from '../constants/level';
 import { Question } from '../redux/reducers/questions';
-import { AuthData } from '../redux/reducers/auth';
+import { AuthData, UserData } from '../redux/reducers/auth';
 import { GetInitialPropsContext } from '../utils/types';
 
 type QsValues = string | number;
@@ -71,5 +71,9 @@ export const Api = {
 
   async logIn(email: string, password: string, ctx?: GetInitialPropsContext) {
     return makeRequest<AuthData>('POST', 'tokens', {}, { email, password }, {}, ctx);
+  },
+
+  async getLoggedInUser(ctx?: GetInitialPropsContext) {
+    return makeRequest<UserData>('GET', 'tokens/me', {}, {}, {}, ctx);
   },
 };
