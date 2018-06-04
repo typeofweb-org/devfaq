@@ -3,16 +3,21 @@ import * as classNames from 'classnames';
 import AppLogo from '../../appLogo/AppLogo';
 import './navigationHeader.scss';
 import ActiveLink from '../../activeLink/ActiveLink';
+import { connect } from 'react-redux';
+import { AppState } from '../../../redux/reducers/index';
 
-type NavigationHeaderProps = {};
+type NavigationHeaderProps = ReturnType<typeof mapStateToProps>;
 type NavigationHeaderState = {
   open: boolean;
 };
 
-export default class NavigationHeader extends React.PureComponent<NavigationHeaderProps, NavigationHeaderState> {
+class NavigationHeaderComponent extends React.PureComponent<NavigationHeaderProps, NavigationHeaderState> {
   state = { open: false };
   render() {
     const { open } = this.state;
+
+    const authData = this.props.authData;
+    const userId = authData && authData.user.id;
 
     return (
       <div className="navigation-header">
@@ -54,6 +59,7 @@ export default class NavigationHeader extends React.PureComponent<NavigationHead
               <span />
             </button>
           </nav>
+          <div className="">{userId}</div>
         </header>
       </div>
     );
@@ -83,3 +89,12 @@ export default class NavigationHeader extends React.PureComponent<NavigationHead
     globalReportEvent(action, 'Menu');
   }
 }
+
+const mapStateToProps = (state: AppState) => {
+  return {
+    authData: state.auth.data,
+  };
+};
+
+const NavigationHeader = connect(mapStateToProps)(NavigationHeaderComponent);
+export default NavigationHeader;

@@ -8,7 +8,8 @@ routes
   .add('about', '/about', 'staticPage')
   .add('authors', '/authors', 'staticPage')
   .add('regulations', '/regulations', 'staticPage')
-  .add('login', '/login', 'loginPage');
+  .add('login', '/login', 'loginPage')
+  .add('admin', '/admin', 'adminPage');
 
 export default routes;
 
