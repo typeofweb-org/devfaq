@@ -7,9 +7,8 @@ routes
   .add('selected-questions', '/selected-questions', 'selectedQuestions')
   .add('about', '/about', 'staticPage')
   .add('authors', '/authors', 'staticPage')
-  .add('regulations', '/regulations', 'staticPage');
-// .add('blog', '/blog/:slug')
-// .add('user', '/user/:id', 'profile');
+  .add('regulations', '/regulations', 'staticPage')
+  .add('login', '/login', 'loginPage');
 
 export default routes;
 

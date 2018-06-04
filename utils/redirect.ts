@@ -1,4 +1,4 @@
-import { Router } from '../routes';
+import { Router } from '../server/routes';
 import { GetInitialPropsContext } from './types';
 
 export function redirect(ctx: GetInitialPropsContext, path: string) {

@@ -20,7 +20,7 @@ class QuestionsPageComponent extends React.Component<Props> {
       return redirect(ctx, '/questions/js');
     }
 
-    await ctx.store.dispatch(ActionCreators.fetchQuestions());
+    await ctx.store.dispatch(ActionCreators.fetchQuestions(ctx));
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -58,5 +58,8 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = { fetchQuestions: ActionCreators.fetchQuestions };
 
-const QuestionsPage = connect(mapStateToProps, mapDispatchToProps)(QuestionsPageComponent);
+const QuestionsPage = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(QuestionsPageComponent);
 export default QuestionsPage;

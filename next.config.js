@@ -64,25 +64,23 @@ const withWebpackAnalyze = (nextConfig = {}) => {
   });
 };
 
-const config = withOffline(
-  withWebpackAnalyze(
-    withPolyfills(
-      withImages(
-        withTypescript(
-          withSass({
-            sassLoaderOptions: {
-              includePaths: ['styles/'],
-            },
-            webpack: (config, options) => {
-              if (options.isServer && !isProduction) {
-                const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-                config.plugins.push(new ForkTsCheckerWebpackPlugin());
-              }
-              config.plugins.push(new LodashModuleReplacementPlugin());
-              return config;
-            },
-          })
-        )
+const config = withWebpackAnalyze(
+  withPolyfills(
+    withImages(
+      withTypescript(
+        withSass({
+          sassLoaderOptions: {
+            includePaths: ['styles/'],
+          },
+          webpack: (config, options) => {
+            if (options.isServer && !isProduction) {
+              const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+              config.plugins.push(new ForkTsCheckerWebpackPlugin());
+            }
+            config.plugins.push(new LodashModuleReplacementPlugin());
+            return config;
+          },
+        })
       )
     )
   )
@@ -98,4 +96,4 @@ config.exportPathMap = function() {
   };
 };
 
-module.exports = config;
+module.exports = isProduction ? withOffline(config) : config;

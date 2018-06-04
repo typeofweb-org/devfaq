@@ -1,9 +1,10 @@
 import { ActionsUnion, createAction } from './types';
 import { LevelKey } from '../constants/level';
 import { Question } from './reducers/questions';
-import { RouteDetails, AppStore } from '../utils/types';
+import { RouteDetails, AppStore, GetInitialPropsContext } from '../utils/types';
 import { Api } from '../services/Api';
 import { getTechnology } from './selectors/selectors';
+import { AuthData } from './reducers/auth';
 
 export type AsyncAction<R = any> = (dispatch: AppStore['dispatch'], getState: AppStore['getState']) => R;
 
@@ -26,6 +27,10 @@ export enum ActionTypes {
   FETCH_QUESTIONS = 'FETCH_QUESTIONS',
 
   CREATE_QUESTION = 'CREATE_QUESTION',
+
+  LOGIN_STARTED = 'LOGIN_STARTED',
+  LOGIN_ERROR = 'LOGIN_ERROR',
+  LOGIN_SUCCESS = 'LOGIN_SUCCESS',
 }
 
 const SyncActionCreators = {
@@ -48,19 +53,30 @@ const SyncActionCreators = {
   fetchQuestionsStarted: () => createAction(ActionTypes.FETCH_QUESTIONS, {}),
   fetchQuestionsError: (error: Error) => createAction(ActionTypes.FETCH_QUESTIONS, { error }),
   fetchQuestionsSuccess: (questions: Question[]) => createAction(ActionTypes.FETCH_QUESTIONS, { data: questions }),
+
+  loginStarted: () => createAction(ActionTypes.LOGIN_STARTED),
+  loginError: (error: Error) => createAction(ActionTypes.LOGIN_ERROR, error),
+  loginSuccess: (authData: AuthData) => createAction(ActionTypes.LOGIN_SUCCESS, authData),
 };
 
 const AsyncActionCreators = {
-  fetchQuestions: (): AsyncAction => (dispatch, getState) => {
+  fetchQuestions: (ctx?: GetInitialPropsContext): AsyncAction => (dispatch, getState) => {
     dispatch(SyncActionCreators.fetchQuestionsStarted());
     const state = getState();
     const technology = getTechnology(state);
     if (!technology) {
       return dispatch(SyncActionCreators.fetchQuestionsError(new Error('Invalid category')));
     }
-    return Api.getQuestionsForCategoryAndLevels(technology, state.selectedLevels)
+    return Api.getQuestionsForCategoryAndLevels(technology, state.selectedLevels, ctx)
       .then((data) => dispatch(SyncActionCreators.fetchQuestionsSuccess(data)))
       .catch((err) => dispatch(SyncActionCreators.fetchQuestionsError(err)));
+  },
+
+  logIn: (email: string, password: string, ctx?: GetInitialPropsContext): AsyncAction => (dispatch, _getState) => {
+    dispatch(SyncActionCreators.loginStarted());
+    return Api.logIn(email, password, ctx)
+      .then((data) => dispatch(SyncActionCreators.loginSuccess(data)))
+      .catch((err) => dispatch(SyncActionCreators.loginError(err)));
   },
 };
 
