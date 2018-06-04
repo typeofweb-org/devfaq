@@ -2,15 +2,24 @@ import * as Boom from 'boom';
 import * as Hapi from 'hapi';
 import { Container } from 'typedi';
 import { UserService } from '../../entity/user/User.service';
-import { UserIncorrectPassword, UserNotFound } from '../../exception/exceptions';
+import {
+  UserIncorrectPassword,
+  UserNotFound
+} from '../../exception/exceptions';
 import { encryptionService } from '../../services/encryptionService';
-import { CreateTokenRequestPayload, CreateTokenResponse } from '../../validation-schema-types/types';
+import {
+  CreateTokenRequestPayload,
+  CreateTokenResponse
+} from '../../validation-schema-types/types';
 
 interface CreateTokenRequest extends Hapi.Request {
   payload: CreateTokenRequestPayload;
 }
 
-export const createTokenHandler: Hapi.RouteHandler = async (req: CreateTokenRequest, reply) => {
+export const createTokenHandler: Hapi.RouteHandler = async (
+  req: CreateTokenRequest,
+  reply
+) => {
   const userService = Container.get(UserService);
 
   return reply(
@@ -25,9 +34,9 @@ export const createTokenHandler: Hapi.RouteHandler = async (req: CreateTokenRequ
         throw err;
       })
       .then((user) => {
-        const response: CreateTokenResponse = {
-          token: encryptionService.createToken(user)
-        };
+        const token = encryptionService.createToken(user);
+        const response: CreateTokenResponse = { token };
+        reply.state('token', token);
         return response;
       })
   );

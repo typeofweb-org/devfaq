@@ -1,13 +1,13 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "search.exclude": {
-        "**/node_modules": true
-    },
-    "typescript.tsdk": "node_modules/typescript/lib/",
-    "genGetSet.spacedImportLine": true,
-    "editor.tabSize": 2,
-    "editor.formatOnType": true,
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": true,
-    "tslint.autoFixOnSave": true
+  "search.exclude": {
+    "**/node_modules": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib/",
+  "genGetSet.spacedImportLine": true,
+  "editor.tabSize": 2,
+  "editor.formatOnType": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "tslint.autoFixOnSave": true
 }

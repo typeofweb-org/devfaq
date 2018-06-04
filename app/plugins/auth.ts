@@ -1,10 +1,11 @@
 import * as Hapi from 'hapi';
+import { ServerStateCookieConfiguationObject } from 'hapi';
 import * as HapiAuthJwt from 'hapi-auth-jwt2';
 import { UserRoles } from '../entity/user/User.model';
 import { configService } from '../services/configService';
 
 // tslint:disable-next-line:no-empty-interface
-export interface AuthPluginOptions { }
+export interface AuthPluginOptions {}
 
 export interface AuthInfo {
   id: number;
@@ -12,9 +13,17 @@ export interface AuthInfo {
   scope: false | string | string[];
 }
 
-type AuthMethodNext = (err: Error | null, result: any, options?: AuthInfo) => void;
+type AuthMethodNext = (
+  err: Error | null,
+  result: any,
+  options?: AuthInfo
+) => void;
 
-const validate = (decoded: AuthInfo, _request: Hapi.Request, callback: AuthMethodNext) => {
+const validate = (
+  decoded: AuthInfo,
+  _request: Hapi.Request,
+  callback: AuthMethodNext
+) => {
   if (!decoded || !decoded.id) {
     return callback(null, false);
   } else {
@@ -29,24 +38,41 @@ const after = (server: Hapi.Server) => {
     tokenType: 'Bearer',
     urlKey: false,
     validateFunc: validate,
-    verifyOptions: { algorithms: ['HS256'] },
+    verifyOptions: { algorithms: ['HS256'] }
   });
 
   server.auth.default('jwt');
+
+  const cookieOptions: ServerStateCookieConfiguationObject = {
+    // tslint:disable-next-line:no-magic-numbers
+    ttl: 365 * 24 * 60 * 60 * 1000,
+    encoding: 'none' as 'none',
+    isSecure: false,
+    isHttpOnly: true,
+    clearInvalid: false,
+    strictHeader: true,
+    isSameSite: false as false,
+    // isSameSite: 'Strict' as 'Strict'
+    domain: 'fefaq.localhost',
+    path: '/'
+  };
+
+  server.state('token', cookieOptions);
 };
 
 export const auth: Hapi.PluginRegistrationObject<AuthPluginOptions> = {
   register(server, _options, next) {
-    server.register(HapiAuthJwt)
+    server
+      .register(HapiAuthJwt)
       .then(() => after(server))
       .then(() => {
         next();
       })
       .catch(next);
-  },
+  }
 };
 
 auth.register.attributes = {
   name: 'Fefaq Auth Plugin',
-  version: '1.0.0',
+  version: '1.0.0'
 };

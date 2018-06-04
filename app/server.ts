@@ -22,111 +22,123 @@ const swaggerOptions = {
 const server = new Hapi.Server();
 
 server.connection({
-  port: 3000,
+  port: 3002,
   host: '0.0.0.0',
   routes: {
-    cors: true,
+    cors: {
+      origin: ['*'],
+      credentials: true
+    },
     response: {
       modify: true,
       options: {
         allowUnknown: true,
         convert: true,
-        stripUnknown: { objects: true },
+        stripUnknown: { objects: true }
       }
     }
-  },
+  }
 });
 
 const serverPromise = new Promise<Hapi.Server>((resolve, reject) => {
-  server.register([
-    {
-      register: HapiRaven,
-      options: {
-        dsn: configService.getRavenUrl(),
-        release: version,
-        environment: process.env.NODE_ENV,
-        autoBreadcrumbs: true,
-        captureUnhandledRejections: true
+  server.register(
+    [
+      {
+        register: HapiRaven,
+        options: {
+          dsn: configService.getRavenUrl(),
+          release: version,
+          environment: process.env.NODE_ENV,
+          autoBreadcrumbs: true,
+          captureUnhandledRejections: true
+        }
+      },
+      Inert,
+      Vision,
+      {
+        options: swaggerOptions,
+        register: HapiSwagger
+      },
+      auth
+    ],
+    (err) => {
+      if (err) {
+        return reject(err);
       }
-    },
-    Inert,
-    Vision,
-    {
-      options: swaggerOptions,
-      register: HapiSwagger,
-    },
-    auth,
-  ], (err) => {
-    if (err) {
-      return reject(err);
-    }
 
-    process.on('unhandledRejection', (reason, promise: Promise<any> & any) => {
-      const error = new Error(`unhandledRejection: ${reason}`);
+      process.on(
+        'unhandledRejection',
+        (reason, promise: Promise<any> & any) => {
+          const error = new Error(`unhandledRejection: ${reason}`);
 
-      console.error(error);
-      try {
-        console.log(promise.toJSON().rejectionReason);
-        // tslint:disable-next-line:no-empty
-      } catch (e) { }
+          console.error(error);
+          try {
+            console.log(promise.toJSON().rejectionReason);
+            // tslint:disable-next-line:no-empty
+          } catch (e) {}
 
-      if (server.plugins['hapi-raven']) {
-        server.plugins['hapi-raven'].client.captureException(error, {
-          extra: {
-            promise
+          if (server.plugins['hapi-raven']) {
+            server.plugins['hapi-raven'].client.captureException(error, {
+              extra: {
+                promise
+              }
+            });
           }
-        });
-      }
-    });
+        }
+      );
 
-    server.ext('onPreResponse', (request, reply) => {
-      const INTERNAL_SERVER_ERROR_CODE = 500;
-      if (request.response && request.response.output && request.response.output.statusCode === INTERNAL_SERVER_ERROR_CODE) {
-        const e = request.response as Hapi.Response & { stack: string };
-        console.error(new Date(), e.name, e.message, e.stack);
+      server.ext('onPreResponse', (request, reply) => {
+        const INTERNAL_SERVER_ERROR_CODE = 500;
+        if (
+          request.response &&
+          request.response.output &&
+          request.response.output.statusCode === INTERNAL_SERVER_ERROR_CODE
+        ) {
+          const e = request.response as Hapi.Response & { stack: string };
+          console.error(new Date(), e.name, e.message, e.stack);
 
-        if (server.plugins['hapi-raven']) {
-          server.plugins['hapi-raven'].client.captureException(e, { request });
+          if (server.plugins['hapi-raven']) {
+            server.plugins['hapi-raven'].client.captureException(e, {
+              request
+            });
+          }
+
+          return reply(new Error('Internal server error'));
         }
 
-        return reply(new Error('Internal server error'));
-      }
+        return reply.continue();
+      });
 
-      return reply.continue();
-    });
-
-    server.route({
-      config: {
-        auth: false,
-        description: 'Test endpoint',
-        tags: ['api'],
-        handler(_request, reply) {
-          reply(`<h1>fefaq</h1><p>stay a while and listen</p>`);
+      server.route({
+        config: {
+          auth: false,
+          description: 'Test endpoint',
+          tags: ['api'],
+          handler(_request, reply) {
+            reply(`<h1>fefaq</h1><p>stay a while and listen</p>`);
+          }
         },
-      },
-      method: 'GET',
-      path: '/',
-    });
+        method: 'GET',
+        path: '/'
+      });
 
-    server.route({
-      config: {
-        description: 'Test endpoint',
-        tags: ['api'],
-        handler(_request, reply) {
-          reply(`Dziala`);
+      server.route({
+        config: {
+          description: 'Test endpoint',
+          tags: ['api'],
+          handler(_request, reply) {
+            reply(`Dziala`);
+          }
         },
-      },
-      method: 'GET',
-      path: '/no',
-    });
+        method: 'GET',
+        path: '/no'
+      });
 
-    server.route([
-      ...authRoutes,
-      ...questionsRoutes
-    ]);
+      server.route([...authRoutes, ...questionsRoutes]);
 
-    return resolve(server);
-  });
+      return resolve(server);
+    }
+  );
 });
 
 export { serverPromise };
