@@ -47,7 +47,7 @@ const after = (server: Hapi.Server) => {
     // tslint:disable-next-line:no-magic-numbers
     ttl: 365 * 24 * 60 * 60 * 1000,
     encoding: 'none' as 'none',
-    isSecure: false,
+    isSecure: process.env.NODE_ENV === 'production',
     isHttpOnly: true,
     clearInvalid: false,
     strictHeader: true,
