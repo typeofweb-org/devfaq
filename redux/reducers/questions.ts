@@ -6,7 +6,6 @@ export type Question = {
   id: number;
   question: string;
   category: TechnologyKey;
-  status: string;
   level: LevelKey;
   acceptedAt?: string;
 };

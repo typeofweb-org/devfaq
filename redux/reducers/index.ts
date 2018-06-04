@@ -4,6 +4,7 @@ import { selectedQuestions } from './selectedQuestions';
 import { ui } from './ui';
 import { selectedLevels } from './selectedLevels';
 import { routeDetails } from './routeDetails';
+import { auth } from './auth';
 
 const reducersObj = {
   questions,
@@ -11,6 +12,7 @@ const reducersObj = {
   ui,
   selectedLevels,
   routeDetails,
+  auth,
 };
 export const reducers = combineReducers(reducersObj as any);
 

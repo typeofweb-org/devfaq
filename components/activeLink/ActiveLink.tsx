@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { withRouter, SingletonRouter } from 'next/router';
-import { Link, LinkProps } from '../../routes';
+import { Link, LinkProps } from '../../server/routes';
 import * as classNames from 'classnames';
 import { addRouterEventListener, removeRouterEventListener } from '../../utils/routerEvents';
 import { isEqual } from 'lodash';

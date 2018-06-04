@@ -4,7 +4,7 @@ import * as analytics from '../utils/analytics';
 import env from '../utils/env';
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx: Context) {
+  static async getInitialProps(ctx: Context & { req: { cookies: Record<string, string> } }) {
     const initialProps = await Document.getInitialProps(ctx);
 
     return {

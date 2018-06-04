@@ -3,7 +3,5 @@ npm-debug.log
 /node_modules/
 /.next/
 /public/
-routes.js
-routes.js.map
-server.js
-server.js.map
+/server/*.js
+/server/*.map

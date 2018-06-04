@@ -32,13 +32,13 @@ function getPathname(req: express.Request) {
 
 function getPathForStaticResource(pathname: string) {
   if (pathname === '/service-worker.js') {
-    return join(__dirname, '.next', pathname);
+    return join(__dirname, '..', '.next', pathname);
   } else if (favicons.includes(pathname)) {
-    return join(__dirname, 'static', 'favicons', pathname);
+    return join(__dirname, '..', 'static', 'favicons', pathname);
   } else if (staticFiles.includes(pathname)) {
-    return join(__dirname, 'static', pathname);
+    return join(__dirname, '..', 'static', pathname);
   } else if (pathname === '/robots.txt') {
-    return join(__dirname, 'static', isDev ? 'robots.dev.txt' : 'robots.prod.txt');
+    return join(__dirname, '..', 'static', isDev ? 'robots.dev.txt' : 'robots.prod.txt');
   }
   return undefined;
 }
@@ -74,21 +74,25 @@ function generateSitemap(req: express.Request) {
 
 // With express
 import * as express from 'express';
+import * as cookieParser from 'cookie-parser';
+
 app.prepare().then(() => {
-  const server = express().use((req, res, _next) => {
-    const pathname = getPathname(req);
+  const server = express()
+    .use(cookieParser())
+    .use((req, res, _next) => {
+      const pathname = getPathname(req);
 
-    if (pathname === '/sitemap.xml') {
-      const sitemap = generateSitemap(req);
-      return res.header('Content-Type', 'application/xml').send(sitemap);
-    }
+      if (pathname === '/sitemap.xml') {
+        const sitemap = generateSitemap(req);
+        return res.header('Content-Type', 'application/xml').send(sitemap);
+      }
 
-    const staticPath = getPathForStaticResource(pathname);
-    if (staticPath) {
-      return app.serveStatic(req, res, staticPath);
-    }
-    return handler(req, res);
-  });
+      const staticPath = getPathForStaticResource(pathname);
+      if (staticPath) {
+        return app.serveStatic(req, res, staticPath);
+      }
+      return handler(req, res);
+    });
   server.disable('x-powered-by');
   server.listen(port, () => console.log('Server listening at localhost:3000'));
 });

@@ -1,0 +1,18 @@
+@import "common";
+
+.login-container {
+  width: 300px;
+  margin: 100px auto;
+  padding: 15px;
+  background: $white;
+  text-align: center;
+  border: 1px solid $grey-shadow;
+
+  input {
+    margin-bottom: 20px;
+  }
+  
+  button {
+    margin-top: 20px;
+  }
+}
