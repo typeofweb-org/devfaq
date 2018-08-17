@@ -46,7 +46,7 @@ class LoginFormComponent extends React.Component<
 
   componentDidUpdate() {
     if (this.props.auth.data) {
-      // this.props.router.push('/admin');
+      this.props.router.push('/admin');
     }
   }
 
@@ -55,7 +55,7 @@ class LoginFormComponent extends React.Component<
       <div className="login-container">
         <form className="form">
           <h2>FEFAQ</h2>
-          <pre>{this.props.auth.error && this.props.auth.error.message}</pre>
+          <p>{this.props.auth.error && this.props.auth.error.message}</p>
           <input
             name="email"
             required

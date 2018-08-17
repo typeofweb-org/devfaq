@@ -49,7 +49,9 @@ function getRouteDetails(routeDetails: RouteDetails) {
 
 class MyApp extends AppComponent {
   static async getInitialProps({ Component, ctx }: AppGetInitialPropsArg) {
-    await ctx.store.dispatch(ActionCreators.validateToken(ctx));
+    if (ctx.isServer) {
+      await ctx.store.dispatch(ActionCreators.validateToken(ctx));
+    }
 
     const newRouteDetails = getRouteDetails(ctx);
 
