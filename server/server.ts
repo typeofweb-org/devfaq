@@ -76,6 +76,7 @@ function generateSitemap(req: express.Request) {
 import * as express from 'express';
 import * as cookieParser from 'cookie-parser';
 
+// tslint:disable-next-line:no-floating-promises
 app.prepare().then(() => {
   const server = express()
     .use(cookieParser())

@@ -6,7 +6,11 @@ import { ActionCreators } from '../../../redux/actions';
 import { CSSTransition } from 'react-transition-group';
 import AddQuestionConfirmationModal from '../addQuestionConfirmationModal/AddQuestionConfirmationModal';
 
-class AppModalsComponent extends React.Component<ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps> {
+const timeout = 200;
+
+class AppModalsComponent extends React.Component<
+  ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
+> {
   render() {
     return (
       <React.Fragment>
@@ -15,7 +19,7 @@ class AppModalsComponent extends React.Component<ReturnType<typeof mapStateToPro
           unmountOnExit={true}
           mountOnEnter={true}
           classNames="fade"
-          timeout={200}
+          timeout={timeout}
         >
           <AddQuestionModal onClose={this.props.uiCloseAddQuestionModal} />
         </CSSTransition>
@@ -25,7 +29,7 @@ class AppModalsComponent extends React.Component<ReturnType<typeof mapStateToPro
           unmountOnExit={true}
           mountOnEnter={true}
           classNames="fade"
-          timeout={200}
+          timeout={timeout}
         >
           <AddQuestionConfirmationModal onClose={this.props.uiCloseAddQuestionConfirmationModal} />
         </CSSTransition>
@@ -45,5 +49,8 @@ const mapDispatchToProps = {
   uiCloseAddQuestionConfirmationModal: ActionCreators.uiCloseAddQuestionConfirmationModal,
 };
 
-const AppModals = connect(mapStateToProps, mapDispatchToProps)(AppModalsComponent);
+const AppModals = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppModalsComponent);
 export default AppModals;

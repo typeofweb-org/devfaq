@@ -46,7 +46,7 @@ async function makeRequest<T>(
   if (body && method !== 'GET') {
     options.body = JSON.stringify(body);
   }
-  return fetch(`${env.API_URL}/${path}?${querystring}`, options).then(async (res) => {
+  return fetch(`${env.API_URL}/${path}?${querystring}`, options).then(async res => {
     if (!res.ok) {
       throw await res.json();
     }
@@ -54,14 +54,18 @@ async function makeRequest<T>(
   });
 }
 
-export type CreateQuestionRequestBody = {
+export interface CreateQuestionRequestBody {
   question: string;
   category: TechnologyKey;
   level: string;
-};
+}
 
 export const Api = {
-  async getQuestionsForCategoryAndLevels(category: TechnologyKey, levels: LevelKey[], ctx?: GetInitialPropsContext) {
+  async getQuestionsForCategoryAndLevels(
+    category: TechnologyKey,
+    levels: LevelKey[],
+    ctx?: GetInitialPropsContext
+  ) {
     return makeRequest<Question[]>('GET', 'questions', { category, level: levels }, {}, {}, ctx);
   },
 

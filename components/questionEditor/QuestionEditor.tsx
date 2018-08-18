@@ -3,21 +3,27 @@ import * as React from 'react';
 import './questionEditor.scss';
 import * as classNames from 'classnames';
 
-type QuestionEditorProps = {
+interface QuestionEditorProps {
   id?: string;
   label?: string;
-  onChange(text: string): any;
   value: string;
-};
+  onChange(text: string): any;
+}
 
-type QuestionEditorState = {
+interface QuestionEditorState {
   isPreview: boolean;
-};
+}
 
 type Actions = 'BOLD' | 'ITALIC' | 'HEADING' | 'CODEBLOCK' | 'UL' | 'OL';
-type Tokens = { open: string; close: string };
+interface Tokens {
+  open: string;
+  close: string;
+}
 
-export default class QuestionEditor extends React.Component<QuestionEditorProps, QuestionEditorState> {
+export default class QuestionEditor extends React.Component<
+  QuestionEditorProps,
+  QuestionEditorState
+> {
   state = { isPreview: false };
   textAreaRef = React.createRef<HTMLTextAreaElement>();
   previewRef = React.createRef<HTMLDivElement>();
@@ -66,7 +72,8 @@ export default class QuestionEditor extends React.Component<QuestionEditorProps,
 
     let newValue = value;
     newValue = newValue.substring(0, selectionEnd) + tokens.close + newValue.substr(selectionEnd);
-    newValue = newValue.substring(0, selectionStart) + tokens.open + newValue.substr(selectionStart);
+    newValue =
+      newValue.substring(0, selectionStart) + tokens.open + newValue.substr(selectionStart);
 
     this.props.onChange(newValue);
     el.value = newValue;
@@ -74,7 +81,7 @@ export default class QuestionEditor extends React.Component<QuestionEditorProps,
     el.setSelectionRange(selectionStart + startTokenLenths, selectionEnd + startTokenLenths);
   };
 
-  handleAction = (action: Actions): React.MouseEventHandler<HTMLButtonElement> => (e) => {
+  handleAction = (action: Actions): React.MouseEventHandler<HTMLButtonElement> => e => {
     e.preventDefault();
 
     const el = this.textAreaRef.current;
@@ -88,10 +95,10 @@ export default class QuestionEditor extends React.Component<QuestionEditorProps,
     this.handleTextChange();
   };
 
-  togglePreview: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  togglePreview: React.MouseEventHandler<HTMLButtonElement> = e => {
     e.preventDefault();
     this.setState(
-      (state) => ({ isPreview: !state.isPreview }),
+      state => ({ isPreview: !state.isPreview }),
       () => {
         if (this.previewRef.current) {
           highlightSyntax(this.previewRef.current);
@@ -151,10 +158,17 @@ export default class QuestionEditor extends React.Component<QuestionEditorProps,
             title="wstaw listę uporządkowaną"
           />
           <span className="separator">|</span>
-          <button className="devicon-eye" onClick={this.togglePreview} aria-hidden={true} title="zobacz podgląd" />
+          <button
+            className="devicon-eye"
+            onClick={this.togglePreview}
+            aria-hidden={true}
+            title="zobacz podgląd"
+          />
         </div>
         <div
-          className={classNames('markdown-editor-content', { 'markdown-editor-content_preview': isPreview })}
+          className={classNames('markdown-editor-content', {
+            'markdown-editor-content_preview': isPreview,
+          })}
           onClick={this.autoFocus}
         >
           {!isPreview && (

@@ -1,5 +1,5 @@
 // @ts-ignore
-const env: ProcessENV = 'undefined' !== typeof window ? (window['__ENV__'] as object) : process.env;
+const env: ProcessENV = 'undefined' !== typeof window ? (window.__ENV__ as object) : process.env;
 
 const defaultEnv: ProcessENV = {
   API_URL: 'https://api.localhost',
@@ -9,7 +9,7 @@ const defaultEnv: ProcessENV = {
 };
 
 // set default env
-for (const key of Object.keys(defaultEnv) as (keyof ProcessENV)[]) {
+for (const key of Object.keys(defaultEnv) as Array<keyof ProcessENV>) {
   if (env[key] == null) {
     env[key] = defaultEnv[key];
   }
@@ -24,6 +24,7 @@ const getEnvObjForDocument = () => {
   return { API_URL, VERSION, GA_TRACKING_ID, ABSOLUTE_URL };
 };
 
+// tslint:disable-next-line:variable-name
 export const unsafe_getEnvScriptForDocument = () => {
   const env = getEnvObjForDocument();
   return { __html: '__ENV__ = ' + require('htmlescape')(env) };

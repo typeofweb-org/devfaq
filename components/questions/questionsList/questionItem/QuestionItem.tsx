@@ -43,22 +43,22 @@ const shortDate = (dateStr?: string) => {
   return `${day}.${month}.${year}`;
 };
 
-type QuestionItemOwnProps = {
+interface QuestionItemOwnProps {
   question: Question;
   selectable: boolean;
   removable: boolean;
   selectedQuestionIds: number[];
   toggleQuestion(questionId: Question['id']): any;
-};
+}
 
-type QuestionItemState = {
+interface QuestionItemState {
   questionRemovalTimer?: NodeJS.Timer;
   isQuestionBeingRemoved: boolean;
-};
+}
 
 const QUESTION_DELETION_DELAY = 5000;
 
-type QuestionContentProps = {
+interface QuestionContentProps {
   selectable: boolean;
   removable: boolean;
   isSelected: boolean;
@@ -66,7 +66,7 @@ type QuestionContentProps = {
   question: Question;
   toggleQuestion(): any;
   deleteQuestion(): any;
-};
+}
 
 class QuestionContent extends React.PureComponent<QuestionContentProps> {
   render() {
@@ -111,7 +111,12 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
 
     return (
       <div className="app-questions--question--meta">
-        <span className={classNames('app-questions--question--tag', `app-questions--question--tag_${question.level}`)}>
+        <span
+          className={classNames(
+            'app-questions--question--tag',
+            `app-questions--question--tag_${question.level}`
+          )}
+        >
           {question.level}
         </span>
         <meta itemProp="dateCreated" content={question.acceptedAt} />
@@ -139,18 +144,25 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
 
     return (
       <div className="app-questions--question--remove-container">
-        <button className="app-questions--question--remove--icon" onClick={this.props.deleteQuestion} />
+        <button
+          className="app-questions--question--remove--icon"
+          onClick={this.props.deleteQuestion}
+        />
       </div>
     );
   }
 }
 
+// tslint:disable-next-line:max-classes-per-file
 export default class QuestionItem extends React.Component<QuestionItemOwnProps, QuestionItemState> {
   state: QuestionItemState = {
     isQuestionBeingRemoved: false,
   };
 
-  shouldComponentUpdate(nextProps: Readonly<QuestionItemOwnProps>, nextState: Readonly<QuestionItemState>): boolean {
+  shouldComponentUpdate(
+    nextProps: Readonly<QuestionItemOwnProps>,
+    nextState: Readonly<QuestionItemState>
+  ): boolean {
     return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState);
   }
 
@@ -167,7 +179,12 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
     const isSelected = this.isCurrentQuestionSelected();
 
     return (
-      <article key={question.id} itemScope itemType="http://schema.org/Question" id={`question-${question.id}`}>
+      <article
+        key={question.id}
+        itemScope
+        itemType="http://schema.org/Question"
+        id={`question-${question.id}`}
+      >
         <div className="app-questions--question-container">
           {this.maybeRenderDeleteProgress()}
           <AnimateHeight enterTime={700} exitTime={700} in={!isQuestionBeingRemoved}>
@@ -204,7 +221,9 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
         <button className="round-button branding-button-inverse" onClick={this.undoDeleteQuestion}>
           Cofnij
         </button>
-        {this.state.questionRemovalTimer && <div className="app-questions--question_deleted--progress" />}
+        {this.state.questionRemovalTimer && (
+          <div className="app-questions--question_deleted--progress" />
+        )}
       </div>
     );
   }

@@ -4,23 +4,23 @@ import './baseModal.scss';
 
 export type ModalType = 'warning' | 'confirmation' | 'thumbs-up' | 'add';
 
-export type CommonModalProps = {
+export interface CommonModalProps {
   onClose(arg: { reason?: string; event?: React.SyntheticEvent<HTMLElement> }): any;
-};
+}
 
 type BaseModalOwnProps = CommonModalProps & {
   closable?: boolean;
   type?: ModalType;
-  renderContent?(): React.ReactNode;
-  renderFooter?(): React.ReactNode;
   className: string;
   'aria-labelledby'?: string;
   'aria-describedby'?: string;
+  renderContent?(): React.ReactNode;
+  renderFooter?(): React.ReactNode;
 };
 
 class FixBodyService {
   private windowOffsetY = 0;
-  //@ts-ignore
+  // @ts-ignore
   private scrollbarWidth = 0;
 
   constructor() {
@@ -29,6 +29,31 @@ class FixBodyService {
     }
 
     this.scrollbarWidth = this.getScrollbarWidth();
+  }
+
+  fixBody() {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    this.windowOffsetY = window.pageYOffset;
+    document.body.classList.add('not-scrollable');
+    document.body.style.top = `-${this.windowOffsetY}px`;
+    document.body.style.paddingRight = `${this.scrollbarWidth}px`;
+    // tslint:disable-next-line:no-magic-numbers
+    document.body.style.marginLeft = `-${this.scrollbarWidth / 2}px`;
+  }
+
+  unfixBody() {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    document.body.classList.remove('not-scrollable');
+    document.body.style.top = '';
+    document.body.style.paddingRight = '';
+    document.body.style.marginLeft = '';
+    requestAnimationFrame(() => window.scrollTo(0, this.windowOffsetY));
   }
 
   private getScrollbarWidth() {
@@ -55,32 +80,9 @@ class FixBodyService {
 
     return widthNoScroll - widthWithScroll;
   }
-
-  fixBody() {
-    if (typeof window === 'undefined') {
-      return;
-    }
-
-    this.windowOffsetY = window.pageYOffset;
-    document.body.classList.add('not-scrollable');
-    document.body.style.top = `-${this.windowOffsetY}px`;
-    document.body.style.paddingRight = `${this.scrollbarWidth}px`;
-    document.body.style.marginLeft = `-${this.scrollbarWidth / 2}px`;
-  }
-
-  unfixBody() {
-    if (typeof window === 'undefined') {
-      return;
-    }
-
-    document.body.classList.remove('not-scrollable');
-    document.body.style.top = '';
-    document.body.style.paddingRight = '';
-    document.body.style.marginLeft = '';
-    requestAnimationFrame(() => window.scrollTo(0, this.windowOffsetY));
-  }
 }
 
+// tslint:disable-next-line:max-classes-per-file
 export default class BaseModal extends React.Component<BaseModalOwnProps> {
   static defaultProps: Partial<BaseModalOwnProps> = {
     closable: false,
@@ -97,7 +99,8 @@ export default class BaseModal extends React.Component<BaseModalOwnProps> {
     this.fixBodyService.fixBody();
     this.lastFocusedElement = document.activeElement;
 
-    const firstFocusable = this.contentRef.current && this.findFirstFocusableChild(this.contentRef.current);
+    const firstFocusable =
+      this.contentRef.current && this.findFirstFocusableChild(this.contentRef.current);
     if (this.elementIsFocusable(firstFocusable)) {
       firstFocusable.focus();
     }
@@ -108,10 +111,6 @@ export default class BaseModal extends React.Component<BaseModalOwnProps> {
     if (this.elementIsFocusable(this.lastFocusedElement)) {
       this.lastFocusedElement.focus();
     }
-  }
-
-  private findFirstFocusableChild(el: HTMLElement) {
-    return el.querySelector('input, select, textarea, button, [tabindex]');
   }
 
   render() {
@@ -145,11 +144,15 @@ export default class BaseModal extends React.Component<BaseModalOwnProps> {
     );
   }
 
+  close: React.MouseEventHandler<HTMLButtonElement> = e => {
+    this.props.onClose({ event: e });
+  };
+
+  private findFirstFocusableChild(el: HTMLElement) {
+    return el.querySelector('input, select, textarea, button, [tabindex]');
+  }
+
   private elementIsFocusable(el: Node | null): el is HTMLElement {
     return el ? 'focus' in el : false;
   }
-
-  close: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    this.props.onClose({ event: e });
-  };
 }

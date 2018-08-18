@@ -1,8 +1,8 @@
-export type TechnologyIconItem = {
+export interface TechnologyIconItem {
   label: string;
   icon: string;
   name: TechnologyKey;
-};
+}
 
 export enum Technology {
   html = 'HTML',

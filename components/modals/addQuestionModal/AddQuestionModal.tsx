@@ -9,13 +9,13 @@ import { Api } from '../../../services/Api';
 import { connect } from 'react-redux';
 import { ActionCreators } from '../../../redux/actions';
 
-type AddQuestionModalState = {
+interface AddQuestionModalState {
   technology?: TechnologyKey;
   level?: LevelKey;
   questionText: string;
   isLoading: boolean;
   valid: boolean;
-};
+}
 
 class AddQuestionModalComponent extends React.PureComponent<
   CommonModalProps & ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps,
@@ -41,11 +41,11 @@ class AddQuestionModalComponent extends React.PureComponent<
     );
   }
 
-  onCancelClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  onCancelClick: React.MouseEventHandler<HTMLButtonElement> = e => {
     this.onClose({ reason: 'cancel', event: e });
   };
 
-  onClose: CommonModalProps['onClose'] = (args) => {
+  onClose: CommonModalProps['onClose'] = args => {
     if (args.reason === 'cancel') {
       this.reportEvent('Anuluj');
     } else if (args.reason === 'submit') {
@@ -62,7 +62,7 @@ class AddQuestionModalComponent extends React.PureComponent<
         <h2 className="app-modal--title" id="add-question-modal-title">
           Nowe pytanie
         </h2>
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form onSubmit={e => e.preventDefault()}>
           <div className="app-question-form">
             <div className="app-question-form--options-container">
               <select
@@ -75,7 +75,7 @@ class AddQuestionModalComponent extends React.PureComponent<
                 <option key="undefined" value="___default" disabled={true}>
                   Wybierz technologię
                 </option>
-                {technologyIconItems.map((technology) => (
+                {technologyIconItems.map(technology => (
                   <option key={technology.name} value={technology.name}>
                     {technology.label}
                   </option>
@@ -91,7 +91,7 @@ class AddQuestionModalComponent extends React.PureComponent<
                 <option key="undefined" value="___default" disabled={true}>
                   Wybierz poziom
                 </option>
-                {levelsWithLabels.map((level) => (
+                {levelsWithLabels.map(level => (
                   <option key={level.value} value={level.value}>
                     {level.label}
                   </option>
@@ -114,7 +114,9 @@ class AddQuestionModalComponent extends React.PureComponent<
     return (
       <div>
         <button
-          className={classNames('round-button', 'branding-button-inverse', { loading: this.state.isLoading })}
+          className={classNames('round-button', 'branding-button-inverse', {
+            loading: this.state.isLoading,
+          })}
           disabled={!this.state.valid || this.state.isLoading}
           type="button"
           onClick={this.handleSubmit}
@@ -128,24 +130,24 @@ class AddQuestionModalComponent extends React.PureComponent<
     );
   };
 
-  handleChangeTechnology: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
+  handleChangeTechnology: React.ChangeEventHandler<HTMLSelectElement> = e => {
     const value = e.currentTarget.value as TechnologyKey;
-    this.setState((state) => ({
+    this.setState(state => ({
       technology: value,
       valid: this.isValid(state),
     }));
   };
 
-  handleChangeLevel: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
+  handleChangeLevel: React.ChangeEventHandler<HTMLSelectElement> = e => {
     const value = e.currentTarget.value as LevelKey;
-    this.setState((state) => ({
+    this.setState(state => ({
       level: value,
       valid: this.isValid(state),
     }));
   };
 
   handleChangeQuestionText = (text: string) => {
-    this.setState((state) => ({
+    this.setState(state => ({
       questionText: text,
       valid: this.isValid(state),
     }));
@@ -161,7 +163,7 @@ class AddQuestionModalComponent extends React.PureComponent<
     }
 
     this.setState({ isLoading: true });
-    Api.createQuestion({
+    return Api.createQuestion({
       question: this.state.questionText,
       level: this.state.level,
       category: this.state.technology,
@@ -185,5 +187,8 @@ const mapDispatchToProps = {
   uiOpenAddQuestionConfirmationModal: ActionCreators.uiOpenAddQuestionConfirmationModal,
 };
 
-const AddQuestionModal = connect(mapStateToProps, mapDispatchToProps)(AddQuestionModalComponent);
+const AddQuestionModal = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddQuestionModalComponent);
 export default AddQuestionModal;

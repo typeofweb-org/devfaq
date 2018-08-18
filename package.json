@@ -10,10 +10,12 @@
     "babel-plugin-lodash": "3.3.4",
     "classnames": "2.2.6",
     "commonmark": "0.28.1",
+    "cookie-parser": "1.4.3",
     "dotenv": "6.0.0",
     "express": "4.16.3",
     "fork-ts-checker-webpack-plugin": "0.4.9",
     "htmlescape": "1.1.1",
+    "isomorphic-fetch": "2.2.1",
     "lodash": "4.17.10",
     "lodash-webpack-plugin": "0.11.5",
     "next": "6.1.1",
@@ -52,13 +54,16 @@
     "@types/react-redux": "6.0.6",
     "@types/react-transition-group": "2.0.13",
     "autoprefixer": "9.1.1",
-    "cookie-parser": "1.4.3",
     "cross-env": "5.2.0",
     "husky": "1.0.0-rc.13",
     "nodemon": "1.18.3",
     "postcss-easy-import": "3.0.0",
     "postcss-loader": "3.0.0",
+    "prettier": "1.14.2",
+    "pretty-quick": "1.6.0",
     "ts-node": "7.0.1",
+    "tslint": "5.11.0",
+    "tslint-config-prettier": "1.14.0",
     "webpack-bundle-analyzer": "2.13.1",
     "webpack-visualizer-plugin": "0.1.11",
     "why-did-you-update": "0.1.1"
@@ -68,7 +73,7 @@
     "build": "NODE_ENV=production tsc --project tsconfig.server.json && NODE_ENV=production next build && NODE_ENV=production next export -o public",
     "start": "NODE_ENV=production node app.js",
     "analyze": "cross-env ANALYZE=1 NODE_ENV=production next build",
-    "test": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.server.json --noEmit"
+    "test": "tslint -p tsconfig.json && tslint -p tsconfig.server.json"
   },
   "engines": {
     "node": "8.x.x"
@@ -78,7 +83,7 @@
   "license": "ISC",
   "husky": {
     "hooks": {
-      "pre-commit": "npm test",
+      "pre-commit": "tslint -p tsconfig.json --fix --force && tslint -p tsconfig.server.json --fix --force && pretty-quick --staged && npm test",
       "pre-push": "npm test"
     }
   }

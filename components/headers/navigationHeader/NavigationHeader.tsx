@@ -7,11 +7,14 @@ import { connect } from 'react-redux';
 import { AppState } from '../../../redux/reducers/index';
 
 type NavigationHeaderProps = ReturnType<typeof mapStateToProps>;
-type NavigationHeaderState = {
+interface NavigationHeaderState {
   open: boolean;
-};
+}
 
-class NavigationHeaderComponent extends React.PureComponent<NavigationHeaderProps, NavigationHeaderState> {
+class NavigationHeaderComponent extends React.PureComponent<
+  NavigationHeaderProps,
+  NavigationHeaderState
+> {
   state = { open: false };
   render() {
     const { open } = this.state;
@@ -43,7 +46,11 @@ class NavigationHeaderComponent extends React.PureComponent<NavigationHeaderProp
                 </ActiveLink>
               </li>
               <li>
-                <a href="https://www.facebook.com/fefaqpl" target="_blank" onClick={() => this.reportEvent('Facebook')}>
+                <a
+                  href="https://www.facebook.com/fefaqpl"
+                  target="_blank"
+                  onClick={() => this.reportEvent('Facebook')}
+                >
                   Facebook
                 </a>
               </li>
@@ -66,7 +73,7 @@ class NavigationHeaderComponent extends React.PureComponent<NavigationHeaderProp
   }
 
   toggleMenu = () => {
-    this.setState((state) => ({
+    this.setState(state => ({
       open: !state.open,
     }));
   };

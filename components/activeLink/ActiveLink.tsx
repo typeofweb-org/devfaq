@@ -3,18 +3,20 @@ import { Link, LinkProps } from '../../server/routes';
 import * as classNames from 'classnames';
 import { AppState } from '../../redux/reducers/index';
 import { connect } from 'react-redux';
-import { RouteDetails } from 'utils/types';
+import { RouteDetails } from '../../utils/types';
 
-type ActiveLinkOwnProps = {
+interface ActiveLinkOwnProps {
   activeClassName?: string;
   exact?: boolean;
   disabledWhenActive?: boolean;
   onClick?: React.MouseEventHandler<HTMLElement>;
-};
+}
 
 type ActiveLinkComponentProps = LinkProps & ActiveLinkOwnProps;
 
-class ActiveLinkComponent extends React.Component<ActiveLinkComponentProps & ReturnType<typeof mapStateToProps>> {
+class ActiveLinkComponent extends React.Component<
+  ActiveLinkComponentProps & ReturnType<typeof mapStateToProps>
+> {
   conditionallyAddClassToChild = (
     shouldAddActiveClass: boolean,
     activeClassName: string,

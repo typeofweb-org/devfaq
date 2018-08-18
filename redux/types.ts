@@ -1,8 +1,8 @@
 import { ActionCreatorsMapObject } from 'redux';
 
-type Action<T> = {
+interface Action<T> {
   type: T;
-};
+}
 
 export type ActionsUnion<A extends ActionCreatorsMapObject> = ReturnType<A[keyof A]>;
 

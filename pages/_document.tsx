@@ -1,7 +1,6 @@
 import Document, { Main, Head, NextScript, NextDocumentContext } from 'next/document';
-import { unsafe_getEnvScriptForDocument } from '../utils/env';
+import env, { unsafe_getEnvScriptForDocument } from '../utils/env';
 import * as analytics from '../utils/analytics';
-import env from '../utils/env';
 import { GetInitialPropsContext } from '../utils/types';
 
 export default class MyDocument extends Document {
@@ -70,7 +69,10 @@ export default class MyDocument extends Document {
             `,
             }}
           />
-          <script async src={`https://www.googletagmanager.com/gtag/js?id=${analytics.GA_TRACKING_ID}`} />
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${analytics.GA_TRACKING_ID}`}
+          />
           <script
             dangerouslySetInnerHTML={{
               __html: `
