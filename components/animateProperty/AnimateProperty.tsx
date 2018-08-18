@@ -17,6 +17,7 @@ export class AnimateHeight extends React.PureComponent<{
 
   onExit: ExitHandler = el => {
     // console.log('onExit');
+    // @ts-ignore
     el.style.willChange = 'height, opacity';
     el.style.height = el.scrollHeight + 'px';
     el.style.opacity = '1';
@@ -41,6 +42,7 @@ export class AnimateHeight extends React.PureComponent<{
 
   onEnter: EnterHandler = el => {
     // console.log('onEnter');
+    // @ts-ignore
     el.style.willChange = 'height, opacity';
     el.style.height = '0';
     el.style.opacity = '0';
