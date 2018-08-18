@@ -1,11 +1,13 @@
-import Document, { Main, Head, NextScript, Context } from 'next/document';
+import Document, { Main, Head, NextScript, NextDocumentContext } from 'next/document';
 import { unsafe_getEnvScriptForDocument } from '../utils/env';
 import * as analytics from '../utils/analytics';
 import env from '../utils/env';
 import { GetInitialPropsContext } from '../utils/types';
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx: Context & GetInitialPropsContext & { req: { cookies: Record<string, string> } }) {
+  static async getInitialProps(
+    ctx: NextDocumentContext & GetInitialPropsContext & { req: { cookies: Record<string, string> } }
+  ) {
     const initialProps = await Document.getInitialProps(ctx);
 
     return {

@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { withRouter, SingletonRouter } from 'next/router';
 import { Link, LinkProps } from '../../server/routes';
 import * as classNames from 'classnames';
-import { addRouterEventListener, removeRouterEventListener } from '../../utils/routerEvents';
-import { isEqual } from 'lodash';
+import { AppState } from '../../redux/reducers/index';
+import { connect } from 'react-redux';
+import { RouteDetails } from 'utils/types';
 
 type ActiveLinkOwnProps = {
   activeClassName?: string;
@@ -12,52 +12,9 @@ type ActiveLinkOwnProps = {
   onClick?: React.MouseEventHandler<HTMLElement>;
 };
 
-type ActiveLinkRouterProps = {
-  router: SingletonRouter;
-};
+type ActiveLinkComponentProps = LinkProps & ActiveLinkOwnProps;
 
-const defaultProps: Partial<ActiveLinkComponentProps> = {
-  activeClassName: 'active',
-};
-
-const initialState = {
-  asPath: '' as SingletonRouter['asPath'],
-  pathname: '' as SingletonRouter['pathname'],
-  query: {} as SingletonRouter['query'],
-  route: '' as SingletonRouter['route'],
-};
-
-type ActiveLinkComponentProps = LinkProps & ActiveLinkOwnProps & ActiveLinkRouterProps;
-type ActiveLinkComponentState = typeof initialState;
-
-class ActiveLinkComponent extends React.Component<ActiveLinkComponentProps, ActiveLinkComponentState> {
-  static defaultProps = defaultProps;
-
-  static getDerivedStateFromProps(
-    nextProps: ActiveLinkComponentProps,
-    _prevState: ActiveLinkComponentState
-  ): Partial<ActiveLinkComponentState> {
-    const { asPath, pathname, query, route } = nextProps.router;
-    return { asPath, pathname, query, route };
-  }
-
-  state = initialState;
-
-  shouldComponentUpdate(
-    nextProps: Readonly<ActiveLinkComponentProps>,
-    nextState: Readonly<ActiveLinkComponentState>
-  ): boolean {
-    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState);
-  }
-
-  componentDidMount() {
-    addRouterEventListener('onRouteChangeComplete', this.onRouteChangeComplete);
-  }
-
-  componentWillUnmount() {
-    removeRouterEventListener('onRouteChangeComplete', this.onRouteChangeComplete);
-  }
-
+class ActiveLinkComponent extends React.Component<ActiveLinkComponentProps & ReturnType<typeof mapStateToProps>> {
   conditionallyAddClassToChild = (
     shouldAddActiveClass: boolean,
     activeClassName: string,
@@ -77,7 +34,7 @@ class ActiveLinkComponent extends React.Component<ActiveLinkComponentProps, Acti
     const {
       children,
       route,
-      activeClassName = '',
+      activeClassName = 'active',
       prefetch,
       shallow,
       scroll,
@@ -85,9 +42,9 @@ class ActiveLinkComponent extends React.Component<ActiveLinkComponentProps, Acti
       href,
       as,
       passHref,
+      isMatch,
     } = this.props;
     const child = React.Children.only(children);
-    const isMatch = this.isMatch();
     const newChild = this.conditionallyAddClassToChild(isMatch, activeClassName, child);
 
     // if (isMatch && this.props.disabledWhenActive) {
@@ -109,22 +66,33 @@ class ActiveLinkComponent extends React.Component<ActiveLinkComponentProps, Acti
       </Link>
     );
   }
-
-  private onRouteChangeComplete = () => {
-    const nextState = ActiveLinkComponent.getDerivedStateFromProps(this.props, this.state);
-    this.setState(nextState as Required<ActiveLinkComponentState>);
-  };
-
-  private isMatch = (): boolean => {
-    if (this.state.asPath === this.props.route) {
-      return true;
-    }
-    if (this.state.asPath && !this.props.exact) {
-      return this.state.asPath.startsWith(this.props.route);
-    }
-    return false;
-  };
 }
 
-const ActiveLink = withRouter(ActiveLinkComponent);
+const checkForMatch = (
+  routeDetails: RouteDetails,
+  {
+    route,
+    exact,
+  }: {
+    route: LinkProps['route'];
+    exact?: boolean;
+  }
+): boolean => {
+  if (routeDetails.asPath === route) {
+    return true;
+  }
+  if (routeDetails.asPath && !exact) {
+    return routeDetails.asPath.startsWith(route);
+  }
+  return false;
+};
+
+const mapStateToProps = (state: AppState, ownProps: ActiveLinkComponentProps) => {
+  const isMatch = checkForMatch(state.routeDetails.current, ownProps);
+  return {
+    isMatch,
+  };
+};
+
+const ActiveLink = connect(mapStateToProps)(ActiveLinkComponent);
 export default ActiveLink;
