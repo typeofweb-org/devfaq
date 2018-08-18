@@ -1,12 +1,12 @@
 import { Actions, ActionTypes } from '../actions';
 import { RouteDetails } from '../../utils/types';
 
-type InitialState = {
+interface InitialState {
   previous?: RouteDetails;
   current: RouteDetails;
   isTransitioning: boolean;
   error?: Error;
-};
+}
 
 const initialState: InitialState = {
   previous: undefined,

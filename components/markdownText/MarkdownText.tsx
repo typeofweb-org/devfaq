@@ -5,7 +5,10 @@ import * as Prism from 'prismjs';
 import './markdownText.scss';
 import * as xss from 'xss';
 
-type MarkdownTextProps = { className?: string; value: string };
+interface MarkdownTextProps {
+  className?: string;
+  value: string;
+}
 
 const reader = new commonmark.Parser();
 const writer = new commonmark.HtmlRenderer();

@@ -30,9 +30,9 @@ export type GetInitialProps = <T>(ctx: GetInitialPropsContext) => Promise<T>;
 //   getInitialProps: GetInitialProps;
 // };
 
-export type RouteDetails = {
+export interface RouteDetails {
   pathname: SingletonRouter['pathname'];
   query?: SingletonRouter['query'];
   asPath?: SingletonRouter['asPath'];
   route: SingletonRouter['route'];
-};
+}

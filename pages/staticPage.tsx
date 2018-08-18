@@ -5,7 +5,10 @@ import './staticPages/staticPage.scss';
 import { AboutPage, AuthorsPage, AppRegulations } from './staticPages';
 import { GetInitialPropsContext } from '../utils/types';
 
-type StaticPageContent = { component: React.ComponentType; title: string };
+interface StaticPageContent {
+  component: React.ComponentType;
+  title: string;
+}
 const pathToContent: Record<string, StaticPageContent> = {
   '/about': { component: AboutPage, title: 'Jak korzystać? FAQ' },
   '/authors': { component: AuthorsPage, title: 'Autorzy' },

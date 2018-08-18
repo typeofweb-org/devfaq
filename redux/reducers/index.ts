@@ -14,6 +14,6 @@ const reducersObj = {
   routeDetails,
   auth,
 };
-export const reducers = combineReducers(reducersObj as any);
+export const reducers = combineReducers(reducersObj);
 
 export type AppState = { [K in keyof typeof reducersObj]: ReturnType<typeof reducersObj[K]> };

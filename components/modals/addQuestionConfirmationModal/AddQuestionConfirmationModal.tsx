@@ -1,7 +1,6 @@
-import { CommonModalProps } from '../baseModal/BaseModal';
+import BaseModal, { CommonModalProps } from '../baseModal/BaseModal';
 import './addQuestionConfirmationModal.scss';
 import * as React from 'react';
-import BaseModal from '../baseModal/BaseModal';
 
 export default class AddQuestionConfirmationModal extends React.PureComponent<CommonModalProps> {
   componentDidMount() {
@@ -21,7 +20,7 @@ export default class AddQuestionConfirmationModal extends React.PureComponent<Co
     );
   }
 
-  onClose: CommonModalProps['onClose'] = (arg) => {
+  onClose: CommonModalProps['onClose'] = arg => {
     if (arg.reason === 'ok') {
       this.reportEvent('OK');
     } else {
@@ -35,8 +34,8 @@ export default class AddQuestionConfirmationModal extends React.PureComponent<Co
     return (
       <div className="add-question-confirmation-modal">
         <p id="add-question-confirmation-modal-description">
-          Jeszcze momencik… a Twoje pytanie pojawi się na liście dostępnych pytań. Najpierw musimy rzucić na nie okiem i
-          zatwierdzić.
+          Jeszcze momencik… a Twoje pytanie pojawi się na liście dostępnych pytań. Najpierw musimy
+          rzucić na nie okiem i zatwierdzić.
           <br /> W międzyczasie zajrzyj na nasze blogi ❤️
         </p>
         <div className="logos">
@@ -69,7 +68,7 @@ export default class AddQuestionConfirmationModal extends React.PureComponent<Co
     globalReportEvent(action, 'Przesłane nowe pytanie warstwa');
   }
 
-  close: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  close: React.MouseEventHandler<HTMLButtonElement> = e => {
     this.onClose({ event: e, reason: 'ok' });
   };
 }

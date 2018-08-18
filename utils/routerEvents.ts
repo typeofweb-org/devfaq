@@ -1,11 +1,11 @@
 import Router from 'next/router';
 
-type RouterEventListeners = {
+interface RouterEventListeners {
   onRouteChangeStart(...args: any[]): void;
   onBeforeHistoryChange(...args: any[]): void;
   onRouteChangeComplete(...args: any[]): void;
   onRouteChangeError(...args: any[]): void;
-};
+}
 
 type RouterEvents = keyof RouterEventListeners;
 
@@ -16,7 +16,9 @@ const listeners: { [K in RouterEvents]: Array<RouterEventListeners[K]> } = {
   onRouteChangeError: [],
 };
 
-const handleEvent = <T extends RouterEvents = RouterEvents>(event: T): RouterEventListeners[T] => (...args: any[]) => {
+const handleEvent = <T extends RouterEvents = RouterEvents>(event: T): RouterEventListeners[T] => (
+  ...args: any[]
+) => {
   for (const listener of listeners[event]) {
     listener(...args);
   }
@@ -39,7 +41,7 @@ export const removeRouterEventListener = (event: RouterEvents, fn: typeof Router
     throw new Error('Please provide a callback function');
   }
   const lengthBefore = listeners[event].length;
-  listeners[event] = listeners[event].filter((callback) => callback !== fn);
+  listeners[event] = listeners[event].filter(callback => callback !== fn);
   const lengthAfter = listeners[event].length;
 
   if (lengthBefore === lengthAfter) {

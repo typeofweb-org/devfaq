@@ -6,9 +6,9 @@ import * as classNames from 'classnames';
 import { ActionCreators } from '../../../redux/actions';
 import { getAreAnyQuestionSelected, getDownloadUrl } from '../../../redux/selectors/selectors';
 
-type MobileActionButtonsProps = {
+interface MobileActionButtonsProps {
   justDownload: boolean;
-};
+}
 
 class MobileActionButtonsComponent extends React.Component<
   MobileActionButtonsProps & ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
@@ -61,7 +61,9 @@ class MobileActionButtonsComponent extends React.Component<
       </div>
     );
   }
-  onDownloadClick = () => {};
+  onDownloadClick = () => {
+    // @todo
+  };
 }
 
 const mapStateToProps = (state: AppState) => {
@@ -76,7 +78,8 @@ const mapDispatchToProps = {
   uiOpenAddQuestionModal: ActionCreators.uiOpenAddQuestionModal,
 };
 
-const MobileActionButtons = connect(mapStateToProps, mapDispatchToProps)(
-  MobileActionButtonsComponent
-);
+const MobileActionButtons = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MobileActionButtonsComponent);
 export default MobileActionButtons;

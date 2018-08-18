@@ -6,10 +6,10 @@ import CtaHeader from '../headers/ctaHeader/CtaHeader';
 import AppFooter from '../footer/AppFooter';
 import AppSpinner from './AppSpinner';
 
-type LayoutProps = {
+interface LayoutProps {
   title?: string;
   description?: string;
-};
+}
 
 export default class Layout extends React.Component<LayoutProps> {
   static defaultProps = {

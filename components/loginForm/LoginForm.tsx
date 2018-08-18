@@ -24,17 +24,17 @@ class LoginFormComponent extends React.Component<
     this.props.logIn(this.state.email, this.state.password);
   };
 
-  onEmailChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  onEmailChange: React.ChangeEventHandler<HTMLInputElement> = e => {
     const email = e.currentTarget.value;
-    this.setState((state) => ({
+    this.setState(state => ({
       email,
       valid: this.isValid(state),
     }));
   };
 
-  onPasswordChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  onPasswordChange: React.ChangeEventHandler<HTMLInputElement> = e => {
     const password = e.currentTarget.value;
-    this.setState((state) => ({
+    this.setState(state => ({
       password,
       valid: this.isValid(state),
     }));
@@ -46,6 +46,7 @@ class LoginFormComponent extends React.Component<
 
   componentDidUpdate() {
     if (this.props.auth.data) {
+      // tslint:disable-next-line:no-floating-promises
       this.props.router.push('/admin');
     }
   }
@@ -73,7 +74,9 @@ class LoginFormComponent extends React.Component<
             type="password"
           />
           <button
-            className={classNames('round-button', 'branding-button-inverse', { loading: this.props.auth.isLoading })}
+            className={classNames('round-button', 'branding-button-inverse', {
+              loading: this.props.auth.isLoading,
+            })}
             onClick={this.onSubmit}
             disabled={!this.state.valid || this.props.auth.isLoading}
           >
