@@ -6,8 +6,7 @@ import * as React from 'react';
 //   });
 // }
 
-import * as withReduxType from 'next-redux-wrapper';
-import { NextReduxWrappedComponent } from 'next-redux-wrapper';
+import nextReduxWrapper from 'next-redux-wrapper';
 import { makeStore } from '../redux/store';
 import { Provider } from 'react-redux';
 //@ts-ignore
@@ -21,11 +20,8 @@ const AppComponent = App as React.ComponentClass<MyAppProps>;
 AppComponent.displayName = 'AppComponent';
 import * as analytics from '../utils/analytics';
 
-// hack because of incorrect d.ts file
-const withRedux = (withReduxType as any).default as typeof withReduxType;
-
 type AppGetInitialPropsArg = {
-  Component: NextReduxWrappedComponent<any>;
+  Component: nextReduxWrapper.NextReduxWrappedComponent<any>;
   ctx: GetInitialPropsContext;
 };
 
@@ -110,7 +106,7 @@ const options = {
   debug: false,
 };
 
-export default withRedux(makeStore, options as any)(withRouter(MyApp as React.ComponentType<MyAppProps>));
+export default nextReduxWrapper(makeStore, options)(withRouter(MyApp as React.ComponentType<MyAppProps>));
 
 if (typeof window !== 'undefined') {
   //@ts-ignore

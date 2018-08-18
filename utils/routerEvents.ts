@@ -16,9 +16,7 @@ const listeners: { [K in RouterEvents]: Array<RouterEventListeners[K]> } = {
   onRouteChangeError: [],
 };
 
-const handleEvent = <T extends RouterEvents = RouterEvents>(event: T): RouterEventListeners[T] => (
-  ...args: any[]
-) => {
+const handleEvent = <T extends RouterEvents = RouterEvents>(event: T): RouterEventListeners[T] => (...args: any[]) => {
   for (const listener of listeners[event]) {
     listener(...args);
   }
