@@ -27,7 +27,7 @@ const validateTokenRoute: RouteConfiguration = {
   method: 'GET',
   handler: validateTokenHandler,
   config: {
-    auth: { mode: 'optional' },
+    auth: { mode: 'try' },
     tags: ['api', 'tokens'],
     validate: {},
     description: 'Validated token and returns user',

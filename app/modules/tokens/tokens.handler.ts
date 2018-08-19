@@ -48,7 +48,8 @@ export const validateTokenHandler: Hapi.RouteHandler = async (
   reply
 ) => {
   if (!req.auth || !req.auth.isAuthenticated) {
-    return reply(Promise.reject(Boom.notFound('Not authenticated')));
+    reply.unstate('token');
+    return reply(Boom.notFound('Not authenticated'));
   }
 
   const authAinfo = req.auth.credentials as AuthInfo;

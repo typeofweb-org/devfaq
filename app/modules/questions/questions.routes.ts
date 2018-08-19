@@ -1,21 +1,25 @@
 import { RouteConfiguration } from 'hapi';
 import {
   createQuestionHandler,
-  getQuestionsHandler
+  getQuestionsHandler,
 } from './questions.handler';
-import { deleteQuestionHandler, generatePdfHandler, partiallyUpdateQuestionHandler } from './questions.handler';
+import {
+  deleteQuestionHandler,
+  generatePdfHandler,
+  partiallyUpdateQuestionHandler,
+} from './questions.handler';
 import { GeneratePdfRequestSchema } from './questions.schema';
 import {
   DeleteQuestionRequestSchema,
   DeleteQuestionResponseSchema,
   PartiallyUpdateQuestionRequestSchema,
-  PartiallyUpdateQuestionResponseSchema
+  PartiallyUpdateQuestionResponseSchema,
 } from './questions.schema';
 import {
   CreateQuestionRequestSchema,
   CreateQuestionResponseSchema,
   GetQuestionsRequestSchema,
-  GetQuestionsResponseSchema
+  GetQuestionsResponseSchema,
 } from './questions.schema';
 
 const getQuestionsRoute: RouteConfiguration = {
@@ -23,7 +27,7 @@ const getQuestionsRoute: RouteConfiguration = {
   method: 'GET',
   handler: getQuestionsHandler,
   config: {
-    auth: { mode: 'optional' },
+    auth: { mode: 'try' },
     tags: ['api', 'questions'],
     validate: GetQuestionsRequestSchema,
     description: 'Returns questions',
@@ -38,7 +42,7 @@ const createQuestionRoute: RouteConfiguration = {
   method: 'POST',
   handler: createQuestionHandler,
   config: {
-    auth: { mode: 'optional' },
+    auth: { mode: 'try' },
     tags: ['api', 'questions'],
     validate: CreateQuestionRequestSchema,
     description: 'Creates a question',
@@ -56,15 +60,15 @@ const partiallyUpdateQuestion: RouteConfiguration = {
   config: {
     auth: {
       access: {
-        scope: ['admin']
-      }
+        scope: ['admin'],
+      },
     },
     tags: ['api', 'questions'],
     validate: PartiallyUpdateQuestionRequestSchema,
     description: 'Updates status of a question',
     notes: `When user is not an admin, it won't have any effect.`,
     response: {
-      schema: PartiallyUpdateQuestionResponseSchema
+      schema: PartiallyUpdateQuestionResponseSchema,
     },
   },
 };
@@ -76,8 +80,8 @@ const deleteQuestion: RouteConfiguration = {
   config: {
     auth: {
       access: {
-        scope: ['admin']
-      }
+        scope: ['admin'],
+      },
     },
     tags: ['api', 'questions'],
     validate: DeleteQuestionRequestSchema,
@@ -85,8 +89,8 @@ const deleteQuestion: RouteConfiguration = {
     notes: `When user is not an admin, it won't delete the question`,
     response: {
       status: {
-        204: DeleteQuestionResponseSchema
-      }
+        204: DeleteQuestionResponseSchema,
+      },
     },
   },
 };
@@ -97,8 +101,8 @@ const generatePdf: RouteConfiguration = {
   handler: generatePdfHandler,
   config: {
     validate: GeneratePdfRequestSchema,
-    auth: { mode: 'optional' },
-    tags: ['api', 'questions']
+    auth: { mode: 'try' },
+    tags: ['api', 'questions'],
   },
 };
 
@@ -107,5 +111,5 @@ export const questionsRoutes: RouteConfiguration[] = [
   createQuestionRoute,
   partiallyUpdateQuestion,
   deleteQuestion,
-  generatePdf
+  generatePdf,
 ];

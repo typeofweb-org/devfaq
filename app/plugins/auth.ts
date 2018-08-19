@@ -38,7 +38,7 @@ const after = (server: Hapi.Server) => {
     tokenType: 'Bearer',
     urlKey: false,
     validateFunc: validate,
-    verifyOptions: { algorithms: ['HS256'] }
+    verifyOptions: { algorithms: ['HS256'] },
   });
 
   server.auth.default('jwt');
@@ -49,11 +49,11 @@ const after = (server: Hapi.Server) => {
     encoding: 'none' as 'none',
     isSecure: process.env.NODE_ENV === 'production',
     isHttpOnly: true,
-    clearInvalid: false,
+    clearInvalid: true,
     strictHeader: true,
     isSameSite: 'Lax' as 'Lax',
     domain: process.env.COOKIE_DOMAIN,
-    path: '/'
+    path: '/',
   };
 
   server.state('token', cookieOptions);
@@ -68,10 +68,10 @@ export const auth: Hapi.PluginRegistrationObject<AuthPluginOptions> = {
         next();
       })
       .catch(next);
-  }
+  },
 };
 
 auth.register.attributes = {
   name: 'Fefaq Auth Plugin',
-  version: '1.0.0'
+  version: '1.0.0',
 };
