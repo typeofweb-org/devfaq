@@ -8,13 +8,17 @@ import { AppState } from '../../../redux/reducers/index';
 
 const defaultProps = {
   selectable: true,
-  removable: false,
+  unselectable: false,
+  editable: false,
   questions: {} as AppState['questions'],
   selectedQuestionIds: [] as Array<Question['id']>,
 };
 
 export default class QuestionsList extends React.PureComponent<
-  typeof defaultProps & { deletionDelay?: number; toggleQuestion(questionId: Question['id']): any }
+  typeof defaultProps & {
+    toggleQuestion(questionId: Question['id']): any;
+    editQuestion?(questionId: Question['id']): any;
+  }
 > {
   static defaultProps = defaultProps;
 
@@ -30,10 +34,11 @@ export default class QuestionsList extends React.PureComponent<
             <QuestionItem
               question={question}
               selectable={this.props.selectable}
-              removable={this.props.removable}
+              editable={true}
+              unselectable={this.props.unselectable}
               selectedQuestionIds={this.props.selectedQuestionIds}
               toggleQuestion={this.props.toggleQuestion}
-              deletionDelay={this.props.deletionDelay}
+              editQuestion={this.props.editQuestion}
             />
           </AnimateHeight>
         ))}

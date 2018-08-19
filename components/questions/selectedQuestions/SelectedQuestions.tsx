@@ -25,7 +25,12 @@ class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps>
   render() {
     if (this.props.areAnyQuestionSelected) {
       return (
-        <TransitionGroup appear={false} enter={false} className="selected-questions-container" component="div">
+        <TransitionGroup
+          appear={false}
+          enter={false}
+          className="selected-questions-container"
+          component="div"
+        >
           {this.renderSelectedQuestionsList()}
         </TransitionGroup>
       );
@@ -41,7 +46,7 @@ class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps>
   }
 
   renderSelectedQuestionsCategory(category: TechnologyKey, questions: Question[]) {
-    const icon = technologyIconItems.find((i) => i.name === category)!;
+    const icon = technologyIconItems.find(i => i.name === category)!;
 
     return (
       <AnimateHeight enterTime={700} exitTime={700} key={category}>
@@ -55,7 +60,7 @@ class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps>
               selectedQuestionIds={this.props.selectedQuestionIds}
               questions={{ isLoading: false, data: questions }}
               selectable={false}
-              removable={true}
+              unselectable={true}
               toggleQuestion={this.toggleQuestion}
             />
           </div>
@@ -79,5 +84,8 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = { deselectQuestion: ActionCreators.deselectQuestion };
 
-const SelectedQuestions = connect(mapStateToProps, mapDispatchToProps)(SelectedQuestionsComponent);
+const SelectedQuestions = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SelectedQuestionsComponent);
 export default SelectedQuestions;

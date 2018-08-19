@@ -46,10 +46,11 @@ const shortDate = (dateStr?: string) => {
 interface QuestionItemOwnProps {
   question: Question;
   selectable: boolean;
-  removable: boolean;
+  editable: boolean;
+  unselectable: boolean;
   selectedQuestionIds: number[];
-  deletionDelay?: number;
   toggleQuestion(questionId: Question['id']): any;
+  editQuestion?(questionId: Question['id']): any;
 }
 
 interface QuestionItemState {
@@ -61,12 +62,14 @@ const QUESTION_DELETION_DELAY = 5000;
 
 interface QuestionContentProps {
   selectable: boolean;
-  removable: boolean;
+  unselectable: boolean;
+  editable: boolean;
   isSelected: boolean;
   isQuestionBeingRemoved: boolean;
   question: Question;
   toggleQuestion(): any;
   deleteQuestion(): any;
+  editQuestion(): any;
 }
 
 class QuestionContent extends React.PureComponent<QuestionContentProps> {
@@ -80,6 +83,7 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
         })}
       >
         {this.maybeRenderCheckbox()}
+        {this.maybeRenderAdminButtons()}
 
         <div className="app-questions--question--text" itemProp="text">
           <MarkdownText value={question.question} />
@@ -138,8 +142,26 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
     );
   }
 
+  maybeRenderAdminButtons() {
+    if (!this.props.editable) {
+      return null;
+    }
+
+    return (
+      <div>
+        <button onClick={this.props.editQuestion} className="edit-btn">
+          <img src="/static/images/action-icons/edit.svg" />
+        </button>
+        <button
+          onClick={this.props.deleteQuestion}
+          className="app-questions--question--remove--icon"
+        />
+      </div>
+    );
+  }
+
   maybeRenderDeleteButton() {
-    if (!this.props.removable) {
+    if (!this.props.unselectable) {
       return null;
     }
 
@@ -175,7 +197,7 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
   }
 
   render() {
-    const { question, selectable, removable } = this.props;
+    const { question, selectable, unselectable, editable } = this.props;
     const { isQuestionBeingRemoved } = this.state;
     const isSelected = this.isCurrentQuestionSelected();
 
@@ -191,12 +213,14 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
           <AnimateHeight enterTime={700} exitTime={700} in={!isQuestionBeingRemoved}>
             <QuestionContent
               selectable={selectable}
-              removable={removable}
+              unselectable={unselectable}
               isSelected={isSelected}
+              editable={editable}
               isQuestionBeingRemoved={isQuestionBeingRemoved}
               question={question}
               toggleQuestion={this.toggleQuestion}
               deleteQuestion={this.deleteQuestion}
+              editQuestion={this.editQuestion}
             />
           </AnimateHeight>
         </div>
@@ -205,7 +229,7 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
   }
 
   maybeRenderDeleteProgress() {
-    if (!this.props.removable) {
+    if (!this.props.unselectable) {
       return null;
     }
 
@@ -234,13 +258,21 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
   };
 
   deleteQuestion = () => {
-    if (this.props.deletionDelay === 0) {
-      this.props.toggleQuestion(this.props.question.id);
+    if (this.props.editable) {
+      if (window.confirm('Czy na pewno chcesz usunąć to pytanie?')) {
+        this.props.toggleQuestion(this.props.question.id);
+      }
     } else {
       this.setState({ isQuestionBeingRemoved: true }, () => {
         this.startDeletionTimer();
       });
       this.reportEventOnSelectedQuestions('Usuń pytanie', 'Klik', this.props.question.id);
+    }
+  };
+
+  editQuestion = () => {
+    if (this.props.editable && this.props.editQuestion) {
+      this.props.editQuestion(this.props.question.id);
     }
   };
 

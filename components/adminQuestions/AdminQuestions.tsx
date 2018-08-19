@@ -44,8 +44,11 @@ class AdminQuestions extends React.Component<AdminQuestionsProps, AdminQuestions
   }
 
   toggleQuestion = (questionId: Question['id']) => {
-    console.log('deleting', questionId);
     this.props.deleteQuestionForAdmin(questionId);
+  };
+
+  editQuestion = (questionId: Question['id']) => {
+    console.log(questionId);
   };
 
   render() {
@@ -54,11 +57,12 @@ class AdminQuestions extends React.Component<AdminQuestionsProps, AdminQuestions
         <QuestionsSidebar />
         <QuestionsList
           selectable={false}
-          removable={true}
+          unselectable={false}
+          editable={true}
           questions={this.props.questions}
           selectedQuestionIds={[]}
           toggleQuestion={this.toggleQuestion}
-          deletionDelay={0}
+          editQuestion={this.editQuestion}
         />
       </React.Fragment>
     );
