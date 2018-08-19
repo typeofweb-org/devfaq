@@ -49,7 +49,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
     return (
       <QuestionsList
         selectable={true}
-        removable={false}
+        unselectable={false}
         questions={this.props.questions}
         selectedQuestionIds={this.props.selectedQuestionsIds}
         toggleQuestion={this.toggleQuestion}
