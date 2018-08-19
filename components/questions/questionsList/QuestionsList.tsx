@@ -14,7 +14,7 @@ const defaultProps = {
 };
 
 export default class QuestionsList extends React.PureComponent<
-  typeof defaultProps & { toggleQuestion(questionId: Question['id']): any }
+  typeof defaultProps & { deletionDelay?: number; toggleQuestion(questionId: Question['id']): any }
 > {
   static defaultProps = defaultProps;
 
@@ -33,6 +33,7 @@ export default class QuestionsList extends React.PureComponent<
               removable={this.props.removable}
               selectedQuestionIds={this.props.selectedQuestionIds}
               toggleQuestion={this.props.toggleQuestion}
+              deletionDelay={this.props.deletionDelay}
             />
           </AnimateHeight>
         ))}

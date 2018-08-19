@@ -4,10 +4,16 @@ import './ctaHeader.scss';
 import ActiveLink from '../../activeLink/ActiveLink';
 import { connect } from 'react-redux';
 import { AppState } from '../../../redux/reducers/index';
-import { getAreAnyQuestionSelected, getDownloadUrl } from '../../../redux/selectors/selectors';
+import {
+  getAreAnyQuestionSelected,
+  getDownloadUrl,
+  getIsAdmin,
+} from '../../../redux/selectors/selectors';
 import { ActionCreators } from '../../../redux/actions';
 
-class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps> {
+class CtaHeaderComponent extends React.Component<
+  ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
+> {
   render() {
     return (
       <div className="cta-header">
@@ -21,7 +27,11 @@ class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToPro
             <ActiveLink prefetch={true} route="/selected-questions">
               <a
                 onClick={() =>
-                  this.reportEvent(this.props.areAnyQuestionSelected ? 'Wybrane pytania' : 'Wybrane pytania (puste)')
+                  this.reportEvent(
+                    this.props.areAnyQuestionSelected
+                      ? 'Wybrane pytania'
+                      : 'Wybrane pytania (puste)'
+                  )
                 }
                 className={classNames('app-tabs--tab', {
                   'has-notification': this.props.areAnyQuestionSelected,
@@ -30,6 +40,12 @@ class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToPro
                 Wybrane pytania
               </a>
             </ActiveLink>
+
+            {this.props.isAdmin && (
+              <ActiveLink route="/admin">
+                <a className="app-tabs--tab">Admin</a>
+              </ActiveLink>
+            )}
           </nav>
 
           <div className="call-to-action-buttons">
@@ -46,7 +62,10 @@ class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToPro
                 Pobierz plik PDF
               </a>
             </ActiveLink>
-            <button className="round-button branding-button-inverse" onClick={this.onOpenAddQuestionModalClick}>
+            <button
+              className="round-button branding-button-inverse"
+              onClick={this.onOpenAddQuestionModalClick}
+            >
               Dodaj pytanie
             </button>
           </div>
@@ -55,13 +74,13 @@ class CtaHeaderComponent extends React.Component<ReturnType<typeof mapStateToPro
     );
   }
 
-  onDownloadClick: React.MouseEventHandler<HTMLElement> = (_event) => {
+  onDownloadClick: React.MouseEventHandler<HTMLElement> = _event => {
     this.reportEvent('Pobierz plik PDF');
     // @todo open DownloadSuccessModal
     // @todo this.analyticsService.reportPdfDownload(this.selectedQuestionsService.getSelectedIds());
   };
 
-  onOpenAddQuestionModalClick: React.MouseEventHandler<HTMLElement> = (_event) => {
+  onOpenAddQuestionModalClick: React.MouseEventHandler<HTMLElement> = _event => {
     this.reportEvent('Dodaj pytanie');
     this.props.uiOpenAddQuestionModal();
   };
@@ -75,6 +94,7 @@ const mapStateToProps = (state: AppState) => {
   return {
     areAnyQuestionSelected: getAreAnyQuestionSelected(state),
     downloadUrl: getDownloadUrl(state),
+    isAdmin: getIsAdmin(state),
   };
 };
 
@@ -82,5 +102,8 @@ const mapDispatchToProps = {
   uiOpenAddQuestionModal: ActionCreators.uiOpenAddQuestionModal,
 };
 
-const CtaHeader = connect(mapStateToProps, mapDispatchToProps)(CtaHeaderComponent);
+const CtaHeader = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CtaHeaderComponent);
 export default CtaHeader;

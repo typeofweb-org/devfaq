@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { AppState } from '../../redux/reducers/index';
 import { ActionCreators } from '../../redux/actions';
 import * as classNames from 'classnames';
+import { isString } from 'lodash';
 
 const defaultState = {
   email: '',
@@ -45,9 +46,15 @@ class LoginFormComponent extends React.Component<
   };
 
   componentDidUpdate() {
-    if (this.props.auth.data) {
-      // tslint:disable-next-line:no-floating-promises
-      this.props.router.push('/admin');
+    const { auth, router } = this.props;
+    if (auth.data) {
+      if (router.query && isString(router.query.previousPath)) {
+        // tslint:disable-next-line:no-floating-promises
+        this.props.router.push(router.query.previousPath);
+      } else {
+        // tslint:disable-next-line:no-floating-promises
+        this.props.router.push('/admin');
+      }
     }
   }
 
