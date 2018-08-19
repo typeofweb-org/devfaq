@@ -18,18 +18,14 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
   render() {
     const { technology } = this.props;
 
-    if (!technology) {
-      return null;
-    }
-
-    const technologyIconItem = technologyIconItems.find((t) => t.name === technology);
+    const technologyIconItem = technologyIconItems.find(t => t.name === technology);
     const category = (technologyIconItem && technologyIconItem.label) || '';
 
     const length = this.props.questions.data ? this.props.questions.data.length : 0;
 
     return (
       <section className="app-questions">
-        <AllQuestionsHeader category={category} questionsLength={length} />
+        {technology && <AllQuestionsHeader category={category} questionsLength={length} />}
         {this.renderList()}
         <AllQuestionsFooter onAddNewClick={this.onAddNewClick} />
       </section>
@@ -72,7 +68,8 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
 
   toggleQuestion = (questionId: Question['id']) => {
     const isSelected = isQuestionSelected(this.props.selectedQuestionsIds, questionId);
-    const question = this.props.questions.data && this.props.questions.data.find((q) => q.id === questionId);
+    const question =
+      this.props.questions.data && this.props.questions.data.find(q => q.id === questionId);
 
     if (isSelected) {
       this.props.deselectQuestion(questionId);
@@ -87,7 +84,11 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
     }
 
     const action = isSelected ? 'Checkbox - odznaczone pytanie' : 'Checkbox - zaznaczone pytanie';
-    this.reportEvent(action, `${Technology[question.category]}, ${Level[question.level]}`, question.id);
+    this.reportEvent(
+      action,
+      `${Technology[question.category]}, ${Level[question.level]}`,
+      question.id
+    );
   };
 }
 
@@ -105,5 +106,8 @@ const mapDispatchToProps = {
   uiOpenAddQuestionModal: ActionCreators.uiOpenAddQuestionModal,
 };
 
-const AllQuestions = connect(mapStateToProps, mapDispatchToProps)(AllQuestionsComponent);
+const AllQuestions = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AllQuestionsComponent);
 export default AllQuestions;

@@ -4,6 +4,9 @@ import { LevelKey } from '../constants/level';
 import { Question } from '../redux/reducers/questions';
 import { AuthData, UserData } from '../redux/reducers/auth';
 import { GetInitialPropsContext } from '../utils/types';
+import { pickBy, isUndefined } from 'lodash';
+
+const omitUndefined = <T extends object>(obj: T) => pickBy(obj, v => !isUndefined(v));
 
 type QsValues = string | number;
 type QsObject = Record<string, QsValues | QsValues[]>;
@@ -20,8 +23,19 @@ function getQueryStringFromObject(query: QsObject): string {
     .join('&');
 }
 
+async function getJSON(res: Response) {
+  const contentType = res.headers.get('Content-Type');
+  const emptyCodes = [204, 205];
+
+  if (!emptyCodes.includes(res.status) && contentType && contentType.includes('json')) {
+    return res.json();
+  } else {
+    return Promise.resolve();
+  }
+}
+
 async function makeRequest<T>(
-  method: 'GET' | 'POST',
+  method: 'GET' | 'POST' | 'DELETE',
   path: string,
   query: QsObject = {},
   body: object,
@@ -43,14 +57,14 @@ async function makeRequest<T>(
       cookie: String(ctx.req.headers.cookie),
     };
   }
-  if (body && method !== 'GET') {
+  if (body && method !== 'GET' && method !== 'DELETE') {
     options.body = JSON.stringify(body);
   }
   return fetch(`${env.API_URL}/${path}?${querystring}`, options).then(async res => {
     if (!res.ok) {
-      throw await res.json();
+      throw await getJSON(res);
     }
-    return res.json();
+    return getJSON(res);
   });
 }
 
@@ -61,16 +75,36 @@ export interface CreateQuestionRequestBody {
 }
 
 export const Api = {
+  async getQuestionsForCategoryAndLevelsAndStatus(
+    category: TechnologyKey | undefined,
+    levels: LevelKey[],
+    status?: 'pending' | 'accepted',
+    ctx?: GetInitialPropsContext
+  ) {
+    return makeRequest<Question[]>(
+      'GET',
+      'questions',
+      omitUndefined({ category, level: levels, status }) as {},
+      {},
+      {},
+      ctx
+    );
+  },
+
   async getQuestionsForCategoryAndLevels(
     category: TechnologyKey,
     levels: LevelKey[],
     ctx?: GetInitialPropsContext
   ) {
-    return makeRequest<Question[]>('GET', 'questions', { category, level: levels }, {}, {}, ctx);
+    return Api.getQuestionsForCategoryAndLevelsAndStatus(category, levels, undefined, ctx);
   },
 
   async createQuestion(question: CreateQuestionRequestBody, ctx?: GetInitialPropsContext) {
     return makeRequest<Question>('POST', 'questions', {}, question, {}, ctx);
+  },
+
+  async deleteQuestion(questionId: Question['id'], ctx?: GetInitialPropsContext) {
+    return makeRequest<{}>('DELETE', `questions/${questionId}`, {}, {}, {}, ctx);
   },
 
   async logIn(email: string, password: string, ctx?: GetInitialPropsContext) {

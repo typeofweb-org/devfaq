@@ -7,6 +7,7 @@ import { TechnologyKey } from '../../constants/technology-icon-items';
 // const questionsSelector = (state: AppState) => state.questions;
 const selectedQuestionsSelector = (state: AppState) => state.selectedQuestions;
 const routeDetailsSelector = (state: AppState) => state.routeDetails;
+const authDataSelector = (state: AppState) => state.auth.data;
 
 export const getTechnology = createSelector(
   routeDetailsSelector,
@@ -57,4 +58,9 @@ export const getSelectedQuestionsWithCategories = createSelector(
       ([_, questions]) => questions.length > 0
     ) as Array<[TechnologyKey, Question[]]>;
   }
+);
+
+export const getIsAdmin = createSelector(
+  authDataSelector,
+  authData => authData && authData.user && authData.user.role === 'admin'
 );

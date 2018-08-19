@@ -48,6 +48,7 @@ interface QuestionItemOwnProps {
   selectable: boolean;
   removable: boolean;
   selectedQuestionIds: number[];
+  deletionDelay?: number;
   toggleQuestion(questionId: Question['id']): any;
 }
 
@@ -233,10 +234,14 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
   };
 
   deleteQuestion = () => {
-    this.setState({ isQuestionBeingRemoved: true }, () => {
-      this.startDeletionTimer();
-    });
-    this.reportEventOnSelectedQuestions('Usuń pytanie', 'Klik', this.props.question.id);
+    if (this.props.deletionDelay === 0) {
+      this.props.toggleQuestion(this.props.question.id);
+    } else {
+      this.setState({ isQuestionBeingRemoved: true }, () => {
+        this.startDeletionTimer();
+      });
+      this.reportEventOnSelectedQuestions('Usuń pytanie', 'Klik', this.props.question.id);
+    }
   };
 
   undoDeleteQuestion = () => {

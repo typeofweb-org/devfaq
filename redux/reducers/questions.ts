@@ -1,6 +1,7 @@
 import { Actions, ActionTypes } from '../actions';
 import { TechnologyKey } from '../../constants/technology-icon-items';
 import { LevelKey } from '../../constants/level';
+import { isUndefined } from 'lodash';
 
 export interface Question {
   id: number;
@@ -23,6 +24,13 @@ export const questions = (questions = intialState, action: Actions): typeof inti
         ...questions,
         ...action.payload,
         isLoading: !('error' in action.payload) && !('data' in action.payload),
+      };
+    case ActionTypes.DELETE_QUESTION:
+      const id = 'id' in action.payload ? action.payload.id : undefined;
+      return {
+        data: isUndefined(id) ? questions.data : (questions.data || []).filter(q => q.id !== id),
+        error: 'error' in action.payload ? action.payload.error : undefined,
+        isLoading: questions.isLoading,
       };
     case ActionTypes.UPDATE_ROUTE_STARTED:
       return {
