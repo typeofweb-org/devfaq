@@ -30,7 +30,7 @@ export function getHtmlFromMarkdown(markdown: string): string {
 }
 
 export function highlightSyntax(el: Element): void {
-  Prism.highlightAllUnder(el);
+  setTimeout(() => Prism.highlightAllUnder(el));
 }
 
 export default class MarkdownText extends React.Component<MarkdownTextProps> {
