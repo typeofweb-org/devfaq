@@ -34,7 +34,7 @@ export default class QuestionsList extends React.PureComponent<
             <QuestionItem
               question={question}
               selectable={this.props.selectable}
-              editable={true}
+              editable={this.props.editable}
               unselectable={this.props.unselectable}
               selectedQuestionIds={this.props.selectedQuestionIds}
               toggleQuestion={this.props.toggleQuestion}
