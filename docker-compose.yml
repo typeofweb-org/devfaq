@@ -1,24 +1,8 @@
-version: '2'
-services:
-  web:
-    build: .
-    command: npm start
-    volumes:
-      - .:/usr/fefaq/
-      - /usr/fefaq/node_modules
-    ports:
-      - "3000:3000"
-    depends_on:
-      - postgres
-    environment:
-      DATABASE_TYPE: postgres
-      DATABASE_HOST: postgres
-      DATABASE_USER: fefaq
-      DATABASE_DB: fefaq
-      DATABASE_PASSWORD: fefaq
-  postgres:
-    image: postgres:10-alpine
-    environment:
-      POSTGRES_USER: fefaq
-      POSTGRES_DB: fefaq
-      POSTGRES_PASSWORD: fefaq
+db:
+  image: postgres:10-alpine
+  ports:
+    - '5432:5432'
+  environment:
+    POSTGRES_USER: 'fefaq'
+    POSTGRES_DB: 'fefaq'
+    POSTGRES_PASSWORD: 'fefaq'
