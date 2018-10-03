@@ -13,10 +13,15 @@ export const reportPageView = (url: string) => {
 
 export const reportPdfDownload = (ids: Array<number | string>) => {
   console.log('pdfDownload', ids);
-  ids.forEach((id) => gtag('event', 'download_question_pdf', { question_id: String(id) }));
+  ids.forEach(id => gtag('event', 'download_question_pdf', { question_id: String(id) }));
 };
 
-export const globalReportEvent = (action: string, category: string, label?: string, questionId?: number | string) => {
+export const reportEvent = (
+  action: string,
+  category: string,
+  label?: string,
+  questionId?: number | string
+) => {
   console.log({ action, category, label, questionId });
 
   const params: GtagEventParams = { event_category: category };

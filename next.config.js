@@ -1,6 +1,6 @@
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging';
 require('dotenv').config({
-  path: isProduction ? '.env.production' : '.env',
+  path: isProduction ? `.env.${process.env.NODE_ENV}` : '.env',
 });
 
 const withTypescript = require('@zeit/next-typescript');
@@ -17,7 +17,7 @@ const withPolyfills = (module.exports = (nextConfig = {}) => {
     webpack(config, options) {
       const originalEntry = config.entry;
       config.entry = function entry() {
-        return Promise.resolve(originalEntry()).then((entries) => {
+        return Promise.resolve(originalEntry()).then(entries => {
           if (entries['main.js']) {
             entries['main.js'].unshift('./polyfills.js');
           }
