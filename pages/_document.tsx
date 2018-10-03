@@ -32,7 +32,6 @@ export default class MyDocument extends Document {
             content="width=device-width, user-scalable=yes, initial-scale=1.0, viewport-fit=cover"
           />
           <meta property="og:type" content="website" />
-          <meta property="og:url" itemProp="url" content={env.ABSOLUTE_URL} />
           <meta
             property="og:image"
             itemProp="logo image"

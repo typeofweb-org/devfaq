@@ -5,13 +5,15 @@ import './layout.scss';
 import CtaHeader from '../headers/ctaHeader/CtaHeader';
 import AppFooter from '../footer/AppFooter';
 import AppSpinner from './AppSpinner';
+import env from '../../utils/env';
+import { withRouter, WithRouterProps } from 'next/router';
 
 interface LayoutProps {
   title?: string;
   description?: string;
 }
 
-export default class Layout extends React.Component<LayoutProps> {
+class Layout extends React.Component<LayoutProps & WithRouterProps> {
   static defaultProps = {
     title: 'Front-end Frequently Asked Questions',
     description:
@@ -27,6 +29,11 @@ export default class Layout extends React.Component<LayoutProps> {
           <meta key="description" name="description" content={description} />
           <meta property="og:title" itemProp="title name" content={`Fefaq.pl • ${title}`} />
           <meta property="og:description" itemProp="description" content={description} />
+          <meta
+            property="og:url"
+            itemProp="url"
+            content={`${env.ABSOLUTE_URL}${this.props.router.asPath}`}
+          />
         </Head>
         <div className="app-root">
           <AppSpinner />
@@ -39,3 +46,5 @@ export default class Layout extends React.Component<LayoutProps> {
     );
   }
 }
+
+export default withRouter<LayoutProps>(Layout);
