@@ -93,7 +93,7 @@ export default class BaseModal extends React.Component<BaseModalOwnProps> {
 
   contentRef = React.createRef<HTMLDivElement>();
   fixBodyService = new FixBodyService();
-  lastFocusedElement!: Element;
+  lastFocusedElement: Element | null = null;
 
   componentDidMount() {
     this.fixBodyService.fixBody();

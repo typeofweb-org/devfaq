@@ -9,14 +9,13 @@ import * as React from 'react';
 import nextReduxWrapper from 'next-redux-wrapper';
 import { makeStore } from '../redux/store';
 import { Provider } from 'react-redux';
-// @ts-ignore
 import App, { Container } from 'next/app';
 import { addRouterEventListener, removeRouterEventListener } from '../utils/routerEvents';
 import { withRouter, SingletonRouter } from 'next/router';
 import { ActionCreators } from '../redux/actions';
 import { RouteDetails, GetInitialPropsContext, AppStore } from '../utils/types';
 import AppModals from '../components/modals/appModals/AppModals';
-const AppComponent = App as React.ComponentClass<MyAppProps>;
+const AppComponent = (App as any) as React.ComponentClass<MyAppProps>;
 AppComponent.displayName = 'AppComponent';
 import * as analytics from '../utils/analytics';
 import * as Sentry from '@sentry/browser';
