@@ -15,5 +15,6 @@
     "**/bower_components": true,
     ".next": true
   },
-  "tsimporter.preferRelative": true
+  "tsimporter.preferRelative": true,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

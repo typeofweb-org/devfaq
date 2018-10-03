@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './loginForm.scss';
-import { SingletonRouter, withRouter } from 'next/router';
+import { withRouter, WithRouterProps } from 'next/router';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/reducers/index';
 import { ActionCreators } from '../../redux/actions';
@@ -14,9 +14,10 @@ const defaultState = {
 };
 
 type LoginFormState = typeof defaultState;
+type LoginnFormReduxProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 class LoginFormComponent extends React.Component<
-  ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps & { router: SingletonRouter },
+  LoginnFormReduxProps & WithRouterProps,
   LoginFormState
 > {
   state: LoginFormState = defaultState;
@@ -108,5 +109,5 @@ const mapDispatchToProps = {
 const LoginForm = connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(LoginFormComponent));
+)(withRouter<LoginnFormReduxProps>(LoginFormComponent));
 export default LoginForm;

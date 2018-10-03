@@ -6,6 +6,7 @@ import { Api } from '../services/Api';
 import { getTechnology } from './selectors/selectors';
 import { AuthData } from './reducers/auth';
 import { TechnologyKey } from '../constants/technology-icon-items';
+import { CommonModalProps } from '../components/modals/baseModal/BaseModal';
 
 export type AsyncAction<R = any> = (
   dispatch: AppStore['dispatch'],
@@ -17,6 +18,8 @@ export enum ActionTypes {
   UI_CLOSE_SIDEBAR = 'UI_CLOSE_SIDEBAR',
   UI_OPEN_ADD_QUESTION_MODAL = 'UI_OPEN_ADD_QUESTION_MODAL',
   UI_CLOSE_ADD_QUESTION_MODAL = 'UI_CLOSE_ADD_QUESTION_MODAL',
+  UI_OPEN_EDIT_QUESTION_MODAL = 'UI_OPEN_EDIT_QUESTION_MODAL',
+  UI_CLOSE_EDIT_QUESTION_MODAL = 'UI_CLOSE_EDIT_QUESTION_MODAL',
   UI_OPEN_ADD_QUESTION_CONFIRMATION_MODAL = 'UI_OPEN_ADD_QUESTION_CONFIRMATION_MODAL',
   UI_CLOSE_ADD_QUESTION_CONFIRMATION_MODAL = 'UI_CLOSE_ADD_QUESTION_CONFIRMATION_MODAL',
   SELECT_LEVEL = 'SELECT_LEVEL',
@@ -44,6 +47,9 @@ const SyncActionCreators = {
   uiCloseSidebar: () => createAction(ActionTypes.UI_CLOSE_SIDEBAR),
   uiOpenAddQuestionModal: () => createAction(ActionTypes.UI_OPEN_ADD_QUESTION_MODAL),
   uiCloseAddQuestionModal: () => createAction(ActionTypes.UI_CLOSE_ADD_QUESTION_MODAL),
+  uiOpenEditQuestionModal: (question: Question, onClose?: CommonModalProps['onClose']) =>
+    createAction(ActionTypes.UI_OPEN_EDIT_QUESTION_MODAL, { question, onClose }),
+  uiCloseEditQuestionModal: () => createAction(ActionTypes.UI_CLOSE_EDIT_QUESTION_MODAL),
   uiOpenAddQuestionConfirmationModal: () =>
     createAction(ActionTypes.UI_OPEN_ADD_QUESTION_CONFIRMATION_MODAL),
   uiCloseAddQuestionConfirmationModal: () =>
