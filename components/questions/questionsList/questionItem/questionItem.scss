@@ -1,4 +1,4 @@
-@import "common";
+@import 'common';
 $transition-time: 300ms;
 $shadow-width: 2px;
 .app-questions--question-container {
@@ -124,20 +124,21 @@ $shadow-width: 2px;
     flex: 0 0 25px;
     border: none;
     box-sizing: content-box;
-    background-position: 2px 0;
+    background-position: -2px 2px;
     background-repeat: no-repeat;
     background-image: url(/static/images/checkbox.svg);
-    background-size: 25px 54px;
+    background-size: 26px 52px;
     background-color: transparent;
     border: 2px solid transparent;
+
     padding-left: 2px;
     &:checked {
-      background-position: 2px 100%;
+      background-position: -2px 100%;
     }
     &:focus {
       outline: 0;
     }
-    [data-whatinput="keyboard"] &:focus {
+    [data-whatinput='keyboard'] &:focus {
       border-color: $purple-branding;
     }
   }

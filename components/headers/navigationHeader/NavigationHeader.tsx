@@ -19,8 +19,8 @@ class NavigationHeaderComponent extends React.PureComponent<
   render() {
     const { open } = this.state;
 
-    const authData = this.props.authData;
-    const userId = authData && authData.user.id;
+    // const authData = this.props.authData;
+    // const userId = authData && authData.user.id;
 
     return (
       <div className="navigation-header">
@@ -66,7 +66,6 @@ class NavigationHeaderComponent extends React.PureComponent<
               <span />
             </button>
           </nav>
-          <div className="">{userId}</div>
         </header>
       </div>
     );
