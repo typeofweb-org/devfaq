@@ -1,9 +1,12 @@
 import 'isomorphic-fetch';
 import * as next from 'next';
+import * as Sentry from '@sentry/node';
 
 import routes from './routes';
 
-const isDev = process.env.NODE_ENV !== 'production';
+const isDev = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'staging';
+Sentry.init({ dsn: process.env.SENTRY_DSN, debug: isDev });
+
 const app = next({ dev: isDev });
 const handler = routes.getRequestHandler(app);
 const port = process.env.PORT || '3000';
@@ -77,23 +80,30 @@ import * as express from 'express';
 import * as cookieParser from 'cookie-parser';
 
 // tslint:disable-next-line:no-floating-promises
-app.prepare().then(() => {
-  const server = express()
-    .use(cookieParser())
-    .use((req, res, _next) => {
-      const pathname = getPathname(req);
+app
+  .prepare()
+  .then(() => {
+    const server = express()
+      .use(Sentry.Handlers.requestHandler())
+      .use(Sentry.Handlers.errorHandler())
+      .use(cookieParser())
+      .use((req, res, _next) => {
+        const pathname = getPathname(req);
 
-      if (pathname === '/sitemap.xml') {
-        const sitemap = generateSitemap(req);
-        return res.header('Content-Type', 'application/xml').send(sitemap);
-      }
+        if (pathname === '/sitemap.xml') {
+          const sitemap = generateSitemap(req);
+          return res.header('Content-Type', 'application/xml').send(sitemap);
+        }
 
-      const staticPath = getPathForStaticResource(pathname);
-      if (staticPath) {
-        return app.serveStatic(req, res, staticPath);
-      }
-      return handler(req, res);
-    });
-  server.disable('x-powered-by');
-  server.listen(port, () => console.log('Server listening at localhost:3000'));
-});
+        const staticPath = getPathForStaticResource(pathname);
+        if (staticPath) {
+          return app.serveStatic(req, res, staticPath);
+        }
+        return handler(req, res);
+      });
+    server.disable('x-powered-by');
+    server.listen(port, () => console.log('Server listening at localhost:3000'));
+  })
+  .catch(err => {
+    console.error(err);
+  });

@@ -22,7 +22,8 @@ class LoginFormComponent extends React.Component<
 > {
   state: LoginFormState = defaultState;
 
-  onSubmit = () => {
+  onSubmit: React.FormEventHandler = e => {
+    e.preventDefault();
     this.props.logIn(this.state.email, this.state.password);
   };
 
@@ -62,7 +63,7 @@ class LoginFormComponent extends React.Component<
   render() {
     return (
       <div className="login-container">
-        <form className="form">
+        <form className="form" onSubmit={this.onSubmit}>
           <h2>FEFAQ</h2>
           <p>{this.props.auth.error && this.props.auth.error.message}</p>
           <input
@@ -85,7 +86,7 @@ class LoginFormComponent extends React.Component<
             className={classNames('round-button', 'branding-button-inverse', {
               loading: this.props.auth.isLoading,
             })}
-            onClick={this.onSubmit}
+            type="submit"
             disabled={!this.state.valid || this.props.auth.isLoading}
           >
             Zaloguj
