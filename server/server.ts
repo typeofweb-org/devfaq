@@ -1,17 +1,25 @@
 import 'isomorphic-fetch';
+const isProduction = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging';
+// tslint:disable-next-line:no-var-requires
+require('dotenv').config({
+  path: isProduction ? `.env.${process.env.NODE_ENV}` : '.env',
+});
+
 import * as next from 'next';
 import * as Sentry from '@sentry/node';
 
 import routes from './routes';
 
-const isDev = process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'staging';
-Sentry.init({ dsn: process.env.SENTRY_DSN, debug: isDev });
+Sentry.init({ dsn: process.env.SENTRY_DSN, debug: !isProduction });
 
-const app = next({ dev: isDev });
+const app = next({ dev: !isProduction });
 const handler = routes.getRequestHandler(app);
 const port = process.env.PORT || '3000';
 import * as url from 'url';
 import { join } from 'path';
+import * as fs from 'fs';
+
+process.env.VERSION = fs.readFileSync(__dirname + '/../.version', 'utf-8');
 
 const staticFiles = ['/img/fefaq-cover-facebook.png'];
 
@@ -41,7 +49,7 @@ function getPathForStaticResource(pathname: string) {
   } else if (staticFiles.includes(pathname)) {
     return join(__dirname, '..', 'static', pathname);
   } else if (pathname === '/robots.txt') {
-    return join(__dirname, '..', 'static', isDev ? 'robots.dev.txt' : 'robots.prod.txt');
+    return join(__dirname, '..', 'static', !isProduction ? 'robots.dev.txt' : 'robots.prod.txt');
   }
   return undefined;
 }
