@@ -1,5 +1,5 @@
 import * as React from 'react';
-// if (process.env.NODE_ENV !== 'production') {
+// if (env.NODE_ENV !== 'production') {
 //   const { whyDidYouUpdate } = require('why-did-you-update');
 //   whyDidYouUpdate(React, {
 //     exclude: [/^withRouter/, /^Connect/, /^Provider$/, /^AppComponent$/, /^TransitionGroup$/, /^CSSTransition$/],
@@ -19,6 +19,8 @@ import AppModals from '../components/modals/appModals/AppModals';
 const AppComponent = App as React.ComponentClass<MyAppProps>;
 AppComponent.displayName = 'AppComponent';
 import * as analytics from '../utils/analytics';
+import * as Sentry from '@sentry/browser';
+import env from '../utils/env';
 
 interface AppGetInitialPropsArg {
   Component: nextReduxWrapper.NextReduxWrappedComponent<any>;
@@ -61,6 +63,14 @@ class MyApp extends AppComponent {
     const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
 
     return { pageProps };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo & Record<string, any>) {
+    console.log('CUSTOM ERROR HANDLING', error);
+    // This is needed to render errors correctly in development / production
+    if (super.componentDidCatch) {
+      super.componentDidCatch(error, errorInfo);
+    }
   }
 
   componentDidMount() {
@@ -114,7 +124,9 @@ export default nextReduxWrapper(makeStore, options)(
 
 if (typeof window !== 'undefined') {
   // @ts-ignore
-  window.globalReportEvent = analytics.reportEvent(action, category, label, questionId);
+  window.globalReportEvent = analytics.reportEvent;
+  const isDev = env.NODE_ENV !== 'production' && env.NODE_ENV !== 'staging';
+  Sentry.init({ dsn: env.SENTRY_DSN, debug: isDev });
 } else {
   // @ts-ignore
   global.globalReportEvent = (

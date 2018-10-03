@@ -5,6 +5,8 @@
   "main": "app.js",
   "private": true,
   "dependencies": {
+    "@sentry/browser": "4.0.6",
+    "@sentry/node": "4.0.6",
     "@zeit/next-sass": "0.2.0",
     "@zeit/next-typescript": "1.1.0",
     "babel-plugin-lodash": "3.3.4",
