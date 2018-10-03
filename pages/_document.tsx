@@ -1,13 +1,16 @@
-import Document, { Main, Head, NextScript, NextDocumentContext } from 'next/document';
+import Document, {
+  Main,
+  Head,
+  NextScript,
+  NextDocumentContext,
+  DefaultDocumentIProps,
+} from 'next/document';
 import env, { unsafe_getEnvScriptForDocument } from '../utils/env';
 import * as analytics from '../utils/analytics';
-import { GetInitialPropsContext } from '../utils/types';
 
 export default class MyDocument extends Document {
-  static async getInitialProps(
-    ctx: NextDocumentContext & GetInitialPropsContext & { req: { cookies: Record<string, string> } }
-  ) {
-    const initialProps = await Document.getInitialProps(ctx);
+  static getInitialProps(ctx: NextDocumentContext): DefaultDocumentIProps {
+    const initialProps = Document.getInitialProps(ctx);
 
     return {
       ...initialProps,
@@ -52,9 +55,6 @@ export default class MyDocument extends Document {
           <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
           <meta name="format-detection" content="telephone=no" />
           <meta name="apple-mobile-web-app-title" content="Fefaq.pl" />
-          {/*  */}
-          <link rel="stylesheet" href="/_next/static/style.css" />
-          {/*  */}
           <link
             href="https://fonts.googleapis.com/css?family=Fira+Sans:200,400,700&amp;subset=latin-ext"
             rel="stylesheet"
