@@ -13,7 +13,6 @@ class AppModalsComponent extends React.Component<
   ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 > {
   closeQuestionModal: CommonModalProps['onClose'] = args => {
-    console.log(this.props.addQuestionModalState);
     if (this.props.addQuestionModalState.onClose) {
       this.props.addQuestionModalState.onClose(args);
     }

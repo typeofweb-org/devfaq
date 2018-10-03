@@ -183,9 +183,7 @@ class AddQuestionModalComponent extends React.PureComponent<
   };
 
   isValid(state: AddQuestionModalState): state is Required<AddQuestionModalState> {
-    const r = Boolean(state.level && state.technology && state.questionText.trim());
-    console.log(r);
-    return r;
+    return Boolean(state.level && state.technology && state.questionText.trim());
   }
 
   handleSubmit: React.MouseEventHandler<HTMLButtonElement> = () => {

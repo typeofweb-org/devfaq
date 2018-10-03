@@ -114,22 +114,15 @@ export default nextReduxWrapper(makeStore, options)(
 
 if (typeof window !== 'undefined') {
   // @ts-ignore
-  window.globalReportEvent = (
-    action: string,
-    category: string,
-    label?: string,
-    questionId?: number | string
-  ) => {
-    console.log('action', action, 'category', category, 'label', label, 'questionId', questionId);
-  };
+  window.globalReportEvent = analytics.reportEvent(action, category, label, questionId);
 } else {
   // @ts-ignore
   global.globalReportEvent = (
-    action: string,
-    category: string,
-    label?: string,
-    questionId?: number | string
+    _action: string,
+    _category: string,
+    _label?: string,
+    _questionId?: number | string
   ) => {
-    console.log('action', action, 'category', category, 'label', label, 'questionId', questionId);
+    // console.log('action', action, 'category', category, 'label', label, 'questionId', questionId);
   };
 }
