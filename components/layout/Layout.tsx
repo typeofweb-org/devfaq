@@ -23,9 +23,9 @@ export default class Layout extends React.Component<LayoutProps> {
     return (
       <React.Fragment>
         <Head>
-          <title key="title">Fefaq.pl &bull; {title}</title>
+          <title key="title">Fefaq.pl • {title}</title>
           <meta key="description" name="description" content={description} />
-          <meta property="og:title" itemProp="title name" content={`Fefaq.pl &bull; ${title}`} />
+          <meta property="og:title" itemProp="title name" content={`Fefaq.pl • ${title}`} />
           <meta property="og:description" itemProp="description" content={description} />
         </Head>
         <div className="app-root">
