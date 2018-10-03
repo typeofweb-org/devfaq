@@ -5,23 +5,39 @@ import { AppState } from '../../../redux/reducers/index';
 import { ActionCreators } from '../../../redux/actions';
 import { CSSTransition } from 'react-transition-group';
 import AddQuestionConfirmationModal from '../addQuestionConfirmationModal/AddQuestionConfirmationModal';
+import { CommonModalProps } from '../baseModal/BaseModal';
 
 const timeout = 200;
 
 class AppModalsComponent extends React.Component<
   ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 > {
+  closeQuestionModal: CommonModalProps['onClose'] = args => {
+    console.log(this.props.addQuestionModalState);
+    if (this.props.addQuestionModalState.onClose) {
+      this.props.addQuestionModalState.onClose(args);
+    }
+    if (this.props.addQuestionModalState.data) {
+      this.props.uiCloseEditQuestionModal();
+    } else {
+      this.props.uiCloseAddQuestionModal();
+    }
+  };
+
   render() {
     return (
       <React.Fragment>
         <CSSTransition
-          in={this.props.isAddQuestionModalOpen}
+          in={this.props.addQuestionModalState.open}
           unmountOnExit={true}
           mountOnEnter={true}
           classNames="fade"
           timeout={timeout}
         >
-          <AddQuestionModal onClose={this.props.uiCloseAddQuestionModal} />
+          <AddQuestionModal
+            originalQuestion={this.props.addQuestionModalState.data}
+            onClose={this.closeQuestionModal}
+          />
         </CSSTransition>
 
         <CSSTransition
@@ -40,12 +56,14 @@ class AppModalsComponent extends React.Component<
 
 const mapStateToProps = (state: AppState) => {
   return {
-    isAddQuestionModalOpen: state.ui.isAddQuestionModalOpen,
+    addQuestionModalState: state.ui.addQuestionModal,
     isAddQuestionConfirmationModalOpen: state.ui.isAddQuestionConfirmationModalOpen,
   };
 };
+
 const mapDispatchToProps = {
   uiCloseAddQuestionModal: ActionCreators.uiCloseAddQuestionModal,
+  uiCloseEditQuestionModal: ActionCreators.uiCloseEditQuestionModal,
   uiCloseAddQuestionConfirmationModal: ActionCreators.uiCloseAddQuestionConfirmationModal,
 };
 

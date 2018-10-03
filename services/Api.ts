@@ -35,7 +35,7 @@ async function getJSON(res: Response) {
 }
 
 async function makeRequest<T>(
-  method: 'GET' | 'POST' | 'DELETE',
+  method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
   path: string,
   query: QsObject = {},
   body: object,
@@ -101,6 +101,14 @@ export const Api = {
 
   async createQuestion(question: CreateQuestionRequestBody, ctx?: GetInitialPropsContext) {
     return makeRequest<Question>('POST', 'questions', {}, question, {}, ctx);
+  },
+
+  async updateQuestion(
+    questionId: Question['id'],
+    question: CreateQuestionRequestBody & { status?: 'accepted' | 'pending' },
+    ctx?: GetInitialPropsContext
+  ) {
+    return makeRequest<Question>('PATCH', `questions/${questionId}`, {}, question, {}, ctx);
   },
 
   async deleteQuestion(questionId: Question['id'], ctx?: GetInitialPropsContext) {

@@ -8,6 +8,8 @@ import QuestionEditor from '../../questionEditor/QuestionEditor';
 import { Api } from '../../../services/Api';
 import { connect } from 'react-redux';
 import { ActionCreators } from '../../../redux/actions';
+import { Question } from '../../../redux/reducers/questions';
+import { isEqual } from 'lodash';
 
 interface AddQuestionModalState {
   technology?: TechnologyKey;
@@ -15,16 +17,45 @@ interface AddQuestionModalState {
   questionText: string;
   isLoading: boolean;
   valid: boolean;
+  originalQuestion?: Question;
 }
 
+interface AddQuestionModalOwnProps {
+  originalQuestion?: Question;
+}
+
+type AddQuestionModalProps = AddQuestionModalOwnProps &
+  CommonModalProps &
+  ReturnType<typeof mapStateToProps> &
+  typeof mapDispatchToProps;
+
 class AddQuestionModalComponent extends React.PureComponent<
-  CommonModalProps & ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps,
+  AddQuestionModalProps,
   AddQuestionModalState
 > {
+  static getDerivedStateFromProps: React.GetDerivedStateFromProps<
+    AddQuestionModalProps,
+    AddQuestionModalState
+  > = (props, state) => {
+    if (!props.originalQuestion || isEqual(props.originalQuestion, state.originalQuestion)) {
+      return null;
+    }
+
+    const { originalQuestion } = props;
+
+    return {
+      originalQuestion,
+      level: originalQuestion.level,
+      technology: originalQuestion.category,
+      questionText: originalQuestion.question,
+    };
+  };
+
   state: AddQuestionModalState = { questionText: '', isLoading: false, valid: false };
 
   componentDidMount() {
     this.reportEvent('Wyświetlenie');
+    this.setState(state => ({ valid: this.isValid(state) }));
   }
 
   render() {
@@ -60,7 +91,7 @@ class AddQuestionModalComponent extends React.PureComponent<
     return (
       <div>
         <h2 className="app-modal--title" id="add-question-modal-title">
-          Nowe pytanie
+          {this.state.originalQuestion ? 'Edytuj pytanie' : 'Nowe pytanie'}
         </h2>
         <form onSubmit={e => e.preventDefault()}>
           <div className="app-question-form">
@@ -68,8 +99,7 @@ class AddQuestionModalComponent extends React.PureComponent<
               <select
                 required
                 className="app-select app-question-form--technology"
-                defaultValue="___default"
-                value={this.state.technology}
+                value={this.state.technology || ''}
                 onChange={this.handleChangeTechnology}
               >
                 <option key="undefined" value="___default" disabled={true}>
@@ -84,8 +114,7 @@ class AddQuestionModalComponent extends React.PureComponent<
               <select
                 required
                 className="app-select app-question-form--level"
-                defaultValue="___default"
-                value={this.state.level}
+                value={this.state.level || ''}
                 onChange={this.handleChangeLevel}
               >
                 <option key="undefined" value="___default" disabled={true}>
@@ -121,7 +150,7 @@ class AddQuestionModalComponent extends React.PureComponent<
           type="button"
           onClick={this.handleSubmit}
         >
-          Dodaj pytanie
+          {this.state.originalQuestion ? 'Akceptuj' : 'Dodaj pytanie'}
         </button>
         <button className="round-button branding-button" onClick={this.onCancelClick}>
           Anuluj
@@ -154,7 +183,9 @@ class AddQuestionModalComponent extends React.PureComponent<
   };
 
   isValid(state: AddQuestionModalState): state is Required<AddQuestionModalState> {
-    return Boolean(state.level && state.technology && state.questionText.trim());
+    const r = Boolean(state.level && state.technology && state.questionText.trim());
+    console.log(r);
+    return r;
   }
 
   handleSubmit: React.MouseEventHandler<HTMLButtonElement> = () => {
@@ -163,16 +194,30 @@ class AddQuestionModalComponent extends React.PureComponent<
     }
 
     this.setState({ isLoading: true });
-    return Api.createQuestion({
+
+    const body = {
       question: this.state.questionText,
       level: this.state.level,
       category: this.state.technology,
-    })
-      .then(() => {
-        this.onClose({ reason: 'submit' });
-        this.props.uiOpenAddQuestionConfirmationModal();
+    };
+
+    if (this.state.originalQuestion) {
+      return Api.updateQuestion(this.state.originalQuestion.id, {
+        ...body,
+        status: 'accepted',
       })
-      .finally(() => this.setState({ isLoading: false }));
+        .then(() => {
+          this.onClose({ reason: 'submit' });
+        })
+        .finally(() => this.setState({ isLoading: false }));
+    } else {
+      return Api.createQuestion(body)
+        .then(() => {
+          this.onClose({ reason: 'submit' });
+          this.props.uiOpenAddQuestionConfirmationModal();
+        })
+        .finally(() => this.setState({ isLoading: false }));
+    }
   };
 
   reportEvent(action: string) {
@@ -180,10 +225,9 @@ class AddQuestionModalComponent extends React.PureComponent<
   }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (_state: any, _ownProps: AddQuestionModalOwnProps) => ({});
 
 const mapDispatchToProps = {
-  uiCloseAddQuestionModal: ActionCreators.uiCloseAddQuestionModal,
   uiOpenAddQuestionConfirmationModal: ActionCreators.uiOpenAddQuestionConfirmationModal,
 };
 
