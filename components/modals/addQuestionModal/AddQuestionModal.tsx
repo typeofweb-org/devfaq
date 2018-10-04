@@ -102,7 +102,7 @@ class AddQuestionModalComponent extends React.PureComponent<
                 value={this.state.technology || ''}
                 onChange={this.handleChangeTechnology}
               >
-                <option key="undefined" value="___default" disabled={true}>
+                <option key="undefined" value="" disabled={true}>
                   Wybierz technologię
                 </option>
                 {technologyIconItems.map(technology => (
@@ -117,7 +117,7 @@ class AddQuestionModalComponent extends React.PureComponent<
                 value={this.state.level || ''}
                 onChange={this.handleChangeLevel}
               >
-                <option key="undefined" value="___default" disabled={true}>
+                <option key="undefined" value="" disabled={true}>
                   Wybierz poziom
                 </option>
                 {levelsWithLabels.map(level => (
@@ -161,23 +161,35 @@ class AddQuestionModalComponent extends React.PureComponent<
 
   handleChangeTechnology: React.ChangeEventHandler<HTMLSelectElement> = e => {
     const value = e.currentTarget.value as TechnologyKey;
-    this.setState(state => ({
-      technology: value,
-      valid: this.isValid(state),
-    }));
+    this.setState(
+      {
+        technology: value,
+      },
+      this.validate
+    );
   };
 
   handleChangeLevel: React.ChangeEventHandler<HTMLSelectElement> = e => {
     const value = e.currentTarget.value as LevelKey;
-    this.setState(state => ({
-      level: value,
-      valid: this.isValid(state),
-    }));
+    this.setState(
+      {
+        level: value,
+      },
+      this.validate
+    );
   };
 
   handleChangeQuestionText = (text: string) => {
+    this.setState(
+      {
+        questionText: text,
+      },
+      this.validate
+    );
+  };
+
+  validate = () => {
     this.setState(state => ({
-      questionText: text,
       valid: this.isValid(state),
     }));
   };
