@@ -9,8 +9,8 @@ import env, { unsafe_getEnvScriptForDocument } from '../utils/env';
 import * as analytics from '../utils/analytics';
 
 export default class MyDocument extends Document {
-  static getInitialProps(ctx: NextDocumentContext): DefaultDocumentIProps {
-    const initialProps = Document.getInitialProps(ctx);
+  static async getInitialProps(ctx: NextDocumentContext): Promise<DefaultDocumentIProps> {
+    const initialProps = await Document.getInitialProps(ctx);
 
     return {
       ...initialProps,

@@ -14,10 +14,10 @@ const defaultState = {
 };
 
 type LoginFormState = typeof defaultState;
-type LoginnFormReduxProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+type LoginFormReduxProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 class LoginFormComponent extends React.Component<
-  LoginnFormReduxProps & WithRouterProps,
+  LoginFormReduxProps & WithRouterProps,
   LoginFormState
 > {
   state: LoginFormState = defaultState;
@@ -49,13 +49,13 @@ class LoginFormComponent extends React.Component<
 
   componentDidUpdate() {
     const { auth, router } = this.props;
-    if (auth.data) {
+    if (auth.data && router) {
       if (router.query && isString(router.query.previousPath)) {
         // tslint:disable-next-line:no-floating-promises
-        this.props.router.push(router.query.previousPath);
+        this.props.router!.push(router.query.previousPath);
       } else {
         // tslint:disable-next-line:no-floating-promises
-        this.props.router.push('/admin');
+        this.props.router!.push('/admin');
       }
     }
   }
@@ -110,5 +110,5 @@ const mapDispatchToProps = {
 const LoginForm = connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter<LoginnFormReduxProps>(LoginFormComponent));
+)(withRouter<LoginFormReduxProps>(LoginFormComponent));
 export default LoginForm;

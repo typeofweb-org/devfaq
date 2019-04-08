@@ -32,7 +32,7 @@ class Layout extends React.Component<LayoutProps & WithRouterProps> {
           <meta
             property="og:url"
             itemProp="url"
-            content={`${env.ABSOLUTE_URL}${this.props.router.asPath}`}
+            content={`${env.ABSOLUTE_URL}${this.props.router!.asPath}`}
           />
         </Head>
         <div className="app-root">
