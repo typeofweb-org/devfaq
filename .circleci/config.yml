@@ -6,7 +6,19 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.4
+      # specify the version you desire here
+      - image: circleci/node:10
+        environment:
+          NODE_ENV: test
+          DB_USERNAME: database_test
+          DB_PASSWORD: database_test
+          DB_NAME: database_test
+          DB_HOSTNAME: 127.0.0.1
+      - image: circleci/postgres:10-alpine-ram
+        environment:
+          POSTGRES_DB: database_test
+          POSTGRES_PASSWORD: database_test
+          POSTGRES_USER: database_test
 
     working_directory: ~/repo
 
@@ -16,14 +28,23 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
+            - v2-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v2-dependencies-
 
       - run: npm install
 
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: v2-dependencies-{{ checksum "package.json" }}
 
-      - run: npm test
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      # run tests!
+      - run:
+          command: |
+            echo Running test
+            npm run danger
+            npm run test:ci
+          when: always
