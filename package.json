@@ -23,15 +23,13 @@
     "test:prepare:integration": "npm run build && npm run db:test:drop && npm run db:test:create && npm run prepare-db",
     "test:_integration": "npm run test:prepare:integration && npm run mocha -- src/**/*.integration.test.ts",
     "test:ci": "cross-env NODE_ENV=test ENV=test npm run mocha:ci",
-    "mocha:ci": "npm run test:prepare:integration && cross-env MOCHA_FILE=junit/mocha.xml mocha --reporter mocha-multi-reporters --reporter-options configFile=test/reporters.json 'src/**/*.test.ts'",
+    "mocha:ci": "npm run test:prepare:integration && cross-env mocha 'src/**/*.test.ts'",
     "clean": "rm -rf dist",
     "build": "npm run clean && tsc && rsync -av --exclude='*.ts' src/** dist/src/",
-    "prepare-db": "npm run migrate:copy && npm run seed:copy && npm run db-clean && npm run seed:db && npm run migrate:db",
-    "db-clean": "rm dist/src/migrations/*.ts && rm dist/src/migrations/*.js.map && rm dist/src/seeders/*.ts && rm dist/src/seeders/*.js.map",
+    "prepare-db": "npm run migrate:copy && npm run db-clean && npm run migrate:db",
+    "db-clean": "rm dist/src/migrations/*.ts && rm dist/src/migrations/*.js.map",
     "migrate:db": "sequelize db:migrate --config='dist/src/config/database.js' --migrations-path='dist/src/migrations'",
-    "seed:db": "sequelize db:seed:all --config='dist/src/config/database.js' --seeders-path='dist/src/seeders'",
     "migrate:copy": "cp -R src/migrations/* dist/src/migrations",
-    "seed:copy": "cp -R src/seeders/* dist/src/seeders",
     "danger": "danger ci"
   },
   "dependencies": {
