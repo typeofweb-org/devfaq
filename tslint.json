@@ -1,42 +1,47 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended"
+  "defaultSeverity": "error",
+  "extends": ["tslint:latest", "tslint-config-prettier", "tslint-immutable"],
+  "rules": {
+    "no-console": false,
+    "object-literal-sort-keys": false,
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-leading-underscore",
+      "allow-pascal-case"
     ],
-    "jsRules": {},
-    "rules": {
-        "quotemark": [
-            true,
-            "single",
-            "avoid-escape"
-        ],
-        "no-console": false,
-        "trailing-comma": false,
-        "max-line-length": [
-            true,
-            150
-        ],
-        "variable-name": [
-            true,
-            "ban-keywords",
-            "check-format",
-            "allow-leading-underscore",
-            "allow-pascal-case"
-        ],
-        "no-floating-promises": true,
-        "return-undefined": true,
-        "no-unnecessary-type-assertion": true,
-        "no-unnecessary-callback-wrapper": true,
-        "only-arrow-functions": true,
-        "arrow-parens": true,
-        "arrow-return-shorthand": true,
-        "no-magic-numbers": true,
-        "interface-name": [
-            true,
-            "never-prefix"
-        ],
-        "object-literal-sort-keys": false
-    },
-    "rulesDirectory": [],
-    "autoFixOnSave": true
+    "no-floating-promises": true,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": {
+          "objects": "always",
+          "arrays": "always",
+          "functions": "ignore",
+          "typeLiterals": "always"
+        },
+        "singleline": "never",
+        "esSpecCompliant": true
+      }
+    ],
+    "return-undefined": true,
+    "no-unnecessary-type-assertion": true,
+    "no-unnecessary-callback-wrapper": true,
+    "no-magic-numbers": true,
+    "interface-name": [true, "never-prefix"],
+    "member-access": [true, "no-public"],
+    "no-inferred-empty-object-type": true,
+    "ordered-imports": false,
+    "no-any": true,
+    "no-object-literal-type-assertion": false,
+    "no-var-keyword": true,
+    "no-let": [true, { "ignore-prefix": "mutable" }],
+    "no-delete": true
+  },
+  "rulesDirectory": [],
+  "autoFixOnSave": true,
+  "linterOptions": {
+    "exclude": ["**/*.test.ts"]
+  }
 }

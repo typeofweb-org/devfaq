@@ -1,8 +1,6 @@
 {
-  "ignore": [
-    "./app/validation-schema-types"
-  ],
-  "events": {
-    "restart": "npm run prestart"
-  }
+  "watch": ["dist/src"],
+  "ext": "js",
+  "ignore": [".git", "node_modules", "dist/src/**/*.test.*"],
+  "exec": "node ./dist/src/index.js"
 }
