@@ -3,8 +3,7 @@ import { GetInitialPropsContext } from '../utils/types';
 import { redirect } from '../utils/redirect';
 import Layout from '../components/layout/Layout';
 import QuestionsListLayout from '../components/questions/questionsListLayout/QuestionsListLayout';
-
-const AdminQuestions = React.lazy(() => import('../components/adminQuestions/AdminQuestions'));
+import { AsyncComponent } from '../components/asyncComponent/AsyncComponent';
 
 export default class AdminPage extends React.Component {
   static async getInitialProps(ctx: GetInitialPropsContext) {
@@ -19,9 +18,15 @@ export default class AdminPage extends React.Component {
       <Layout title="Admin">
         <QuestionsListLayout>
           <div className="questions-container">
-            <React.Suspense fallback={null}>
-              <AdminQuestions />
-            </React.Suspense>
+            <AsyncComponent
+              componentProps={{}}
+              componentProvider={() => {
+                const component = import('../components/adminQuestions/AdminQuestions').then(
+                  module => module.default
+                );
+                return component;
+              }}
+            />
           </div>
         </QuestionsListLayout>
       </Layout>
