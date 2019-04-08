@@ -19,7 +19,9 @@ export default class AdminPage extends React.Component {
       <Layout title="Admin">
         <QuestionsListLayout>
           <div className="questions-container">
-            <AdminQuestions />
+            <React.Suspense fallback={null}>
+              <AdminQuestions />
+            </React.Suspense>
           </div>
         </QuestionsListLayout>
       </Layout>
