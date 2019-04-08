@@ -1,201 +1,199 @@
-import { QueryInterface, SequelizeStatic } from "sequelize";
+import { QueryInterface, SequelizeStatic } from 'sequelize';
 
 module.exports = {
   async up(queryInterface: QueryInterface, Sequelize: SequelizeStatic) {
     return queryInterface.sequelize.transaction(async _t => {
-      await queryInterface.createTable("QuestionCategory", {
+      await queryInterface.createTable('QuestionCategory', {
         id: {
           type: Sequelize.TEXT,
           primaryKey: true,
           allowNull: false,
-          unique: true
+          unique: true,
         },
         createdAt: {
           type: Sequelize.DATE,
-          allowNull: false
+          allowNull: false,
         },
         updatedAt: {
           type: Sequelize.DATE,
-          allowNull: false
+          allowNull: false,
         },
         version: {
           type: Sequelize.INTEGER,
-          defaultValue: 0
-        }
+          defaultValue: 0,
+        },
       });
 
-      await queryInterface.createTable("QuestionLevel", {
+      await queryInterface.createTable('QuestionLevel', {
         id: {
           type: Sequelize.TEXT,
           primaryKey: true,
           allowNull: false,
-          unique: true
+          unique: true,
         },
         createdAt: {
           type: Sequelize.DATE,
-          allowNull: false
+          allowNull: false,
         },
         updatedAt: {
           type: Sequelize.DATE,
-          allowNull: false
+          allowNull: false,
         },
         version: {
           type: Sequelize.INTEGER,
-          defaultValue: 0
-        }
+          defaultValue: 0,
+        },
       });
 
-      await queryInterface.createTable("QuestionStatus", {
+      await queryInterface.createTable('QuestionStatus', {
         id: {
           type: Sequelize.TEXT,
           primaryKey: true,
           allowNull: false,
-          unique: true
+          unique: true,
         },
         createdAt: {
           type: Sequelize.DATE,
-          allowNull: false
+          allowNull: false,
         },
         updatedAt: {
           type: Sequelize.DATE,
-          allowNull: false
+          allowNull: false,
         },
         version: {
           type: Sequelize.INTEGER,
-          defaultValue: 0
-        }
+          defaultValue: 0,
+        },
       });
 
-      await queryInterface.createTable("UserRole", {
+      await queryInterface.createTable('UserRole', {
         id: {
           type: Sequelize.TEXT,
           primaryKey: true,
           allowNull: false,
-          unique: true
+          unique: true,
         },
         createdAt: {
           type: Sequelize.DATE,
-          allowNull: false
+          allowNull: false,
         },
         updatedAt: {
           type: Sequelize.DATE,
-          allowNull: false
+          allowNull: false,
         },
         version: {
           type: Sequelize.INTEGER,
-          defaultValue: 0
-        }
+          defaultValue: 0,
+        },
       });
 
-      await queryInterface.createTable("User", {
+      await queryInterface.createTable('User', {
         id: {
           type: Sequelize.INTEGER,
           primaryKey: true,
-          allowNull: false
+          allowNull: false,
         },
         email: {
           type: Sequelize.TEXT,
           allowNull: false,
-          unique: true
+          unique: true,
         },
         firstName: {
           type: Sequelize.TEXT,
-          allowNull: true
+          allowNull: true,
         },
         lastName: {
           type: Sequelize.TEXT,
-          allowNull: true
+          allowNull: true,
         },
         roleId: {
           type: Sequelize.TEXT,
           allowNull: false,
-          defaultValue: "user",
+          defaultValue: 'user',
           references: {
-            model: "UserRole",
-            key: "id"
+            model: 'UserRole',
+            key: 'id',
           },
-          onDelete: "CASCADE",
-          onUpdate: "CASCADE"
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE',
         },
         createdAt: {
           type: Sequelize.DATE,
-          allowNull: false
+          allowNull: false,
         },
         updatedAt: {
           type: Sequelize.DATE,
-          allowNull: false
+          allowNull: false,
         },
         version: {
           type: Sequelize.INTEGER,
-          defaultValue: 0
-        }
+          defaultValue: 0,
+        },
       });
 
-      await queryInterface.createTable("Question", {
+      await queryInterface.createTable('Question', {
         id: {
           type: Sequelize.INTEGER,
           primaryKey: true,
-          allowNull: false
+          allowNull: false,
         },
         question: {
           type: Sequelize.TEXT,
           allowNull: false,
-          unique: true
+          unique: true,
         },
         acceptedAt: {
           type: Sequelize.DATE,
-          allowNull: false
+          allowNull: false,
         },
         _categoryId: {
           type: Sequelize.TEXT,
           allowNull: false,
           references: {
-            model: "QuestionCategory",
-            key: "id"
+            model: 'QuestionCategory',
+            key: 'id',
           },
-          onDelete: "CASCADE",
-          onUpdate: "CASCADE"
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE',
         },
         _levelId: {
           type: Sequelize.TEXT,
           allowNull: false,
           references: {
-            model: "QuestionLevel",
-            key: "id"
+            model: 'QuestionLevel',
+            key: 'id',
           },
-          onDelete: "CASCADE",
-          onUpdate: "CASCADE"
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE',
         },
         _statusId: {
           type: Sequelize.TEXT,
           allowNull: false,
-          defaultValue: "pending",
+          defaultValue: 'pending',
           references: {
-            model: "QuestionStatus",
-            key: "id"
+            model: 'QuestionStatus',
+            key: 'id',
           },
-          onDelete: "CASCADE",
-          onUpdate: "CASCADE"
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE',
         },
         createdAt: {
           type: Sequelize.DATE,
-          allowNull: false
+          allowNull: false,
         },
         updatedAt: {
           type: Sequelize.DATE,
-          allowNull: false
+          allowNull: false,
         },
         version: {
           type: Sequelize.INTEGER,
-          defaultValue: 0
-        }
+          defaultValue: 0,
+        },
       });
     });
   },
 
   async down(queryInterface: QueryInterface, _Sequelize: SequelizeStatic) {
     await queryInterface.dropAllTables();
-    await queryInterface.dropAllEnums();
-    await queryInterface.dropAllSchemas();
-  }
+  },
 };

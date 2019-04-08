@@ -7,14 +7,14 @@ import {
   DefaultScope,
   ForeignKey,
   AllowNull,
-  Default
-} from "sequelize-typescript";
-import { UserRole } from "./UserRole";
-import { USER_ROLE } from "../models-consts";
+  Default,
+} from 'sequelize-typescript';
+import { UserRole } from './UserRole';
+import { USER_ROLE } from '../models-consts';
 
 @DefaultScope({
-  attributes: ["email", "firstName", "lastName", "_roleId"],
-  include: [() => UserRole]
+  attributes: ['email', 'firstName', 'lastName', '_roleId'],
+  include: [() => UserRole],
 })
 @Table({ version: true, timestamps: true })
 export class User extends Model<User> {
