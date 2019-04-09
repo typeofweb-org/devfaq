@@ -10,7 +10,7 @@ export function getConfig(name: string): string {
     case 'ENV':
       return val || 'development';
     case 'PORT':
-      return val || '3000';
+      return val || '3002';
     case 'AWS_ACCESS_KEY_ID':
     case 'AWS_SECRET_ACCESS_KEY':
     case 'SENTRY_DSN':

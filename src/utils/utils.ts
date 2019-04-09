@@ -1,7 +1,8 @@
 import moment from 'moment';
-import { isUndefined, omitBy } from 'lodash';
+import { isUndefined, omitBy, isString } from 'lodash';
 import { getConfig } from '../config';
 import { withScope, Severity, captureException } from '@sentry/node';
+import Joi from 'typesafe-joi';
 
 type Nil<T> = T | undefined | null;
 export function defaultToAny<T>(v1: T): T;
@@ -52,3 +53,8 @@ export function getNewSessionValidUntil(keepMeSignedIn: boolean): Date {
   // tslint:disable-next-line:no-magic-numbers
   return keepMeSignedIn ? now.add(7, 'days').toDate() : now.add(2, 'hours').toDate();
 }
+export const CustomJoi = Joi.extend({
+  base: Joi.array(),
+  name: 'stringArray',
+  coerce: (value, _state, _options) => (isString(value) ? value.split(',') : value),
+}) as (typeof Joi) & { stringArray: typeof Joi.array };

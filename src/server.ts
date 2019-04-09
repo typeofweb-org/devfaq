@@ -27,6 +27,7 @@ const getServer = () =>
     routes: {
       cors: {
         origin: ['*'],
+        credentials: true,
       },
       response: {
         modify: true,

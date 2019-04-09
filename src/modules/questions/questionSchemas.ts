@@ -1,5 +1,6 @@
 import Joi from 'typesafe-joi';
 import { questionCategories, questionStatuses, questionLevels } from '../../models-consts';
+import { CustomJoi } from '../../utils/utils';
 
 export const QuestionCategorySchema = Joi.string().valid(questionCategories);
 
@@ -16,13 +17,13 @@ export const QuestionSchema = Joi.object({
   _levelId: QuestionLevelSchema.required(),
   _statusId: QuestionStatusSchema.required(),
   acceptedAt: Joi.date().allow(null),
-}).required();
+});
 
 export const GetQuestionsRequestSchema = {
   query: Joi.object({
     category: QuestionCategorySchema,
-    status: Joi.array().items(questionStatuses),
-    level: Joi.array().items(questionLevels),
+    status: CustomJoi.stringArray().items(questionStatuses),
+    level: CustomJoi.stringArray().items(questionLevels),
   }).required(),
 };
 
