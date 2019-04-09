@@ -25,9 +25,13 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
 
     return (
       <section className="app-questions">
-        {technology && <AllQuestionsHeader category={category} questionsLength={length} />}
+        {!this.props.questions.isLoading && technology && (
+          <AllQuestionsHeader category={category} questionsLength={length} />
+        )}
         {this.renderList()}
-        <AllQuestionsFooter onAddNewClick={this.onAddNewClick} />
+        {!this.props.questions.isLoading && technology && (
+          <AllQuestionsFooter onAddNewClick={this.onAddNewClick} />
+        )}
       </section>
     );
   }
@@ -86,7 +90,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
     const action = isSelected ? 'Checkbox - odznaczone pytanie' : 'Checkbox - zaznaczone pytanie';
     this.reportEvent(
       action,
-      `${Technology[question.category]}, ${Level[question.level]}`,
+      `${Technology[question._categoryId]}, ${Level[question._levelId]}`,
       question.id
     );
   };
