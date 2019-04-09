@@ -1,5 +1,10 @@
 import { Server } from 'typesafe-hapi';
-import { GetQuestionsRequestSchema, GetQuestionsResponseSchema } from './questionSchemas';
+import {
+  GetQuestionsRequestSchema,
+  GetQuestionsResponseSchema,
+  CreateQuestionRequestSchema,
+  CreateQuestionResponseSchema,
+} from './questionSchemas';
 import { Question } from '../../models/Question';
 import { QUESTION_STATUS } from '../../models-consts';
 
@@ -38,6 +43,39 @@ export const questionsRoutes = {
             acceptedAt: q.acceptedAt,
           };
         });
+      },
+    });
+
+    await server.route({
+      method: 'POST',
+      path: '/questions',
+      options: {
+        tags: ['api', 'questions'],
+        validate: CreateQuestionRequestSchema,
+        description: 'Creates a question',
+        notes: `When user is not an admin, it won't publish the question`,
+        response: {
+          schema: CreateQuestionResponseSchema,
+        },
+      },
+      async handler(request) {
+        const { question, level, category } = request.payload;
+
+        const newQuestion = await Question.create({
+          question,
+          _levelId: level,
+          _categoryId: category,
+          _statusId: QUESTION_STATUS.PENDING,
+        });
+
+        return {
+          id: newQuestion.id,
+          question: newQuestion.question,
+          _categoryId: newQuestion._categoryId,
+          _levelId: newQuestion._levelId,
+          _statusId: newQuestion._statusId,
+          acceptedAt: newQuestion.acceptedAt,
+        };
       },
     });
   },
