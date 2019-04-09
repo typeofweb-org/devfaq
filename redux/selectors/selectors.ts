@@ -19,8 +19,9 @@ export const getAreAnyQuestionSelected = createSelector(
   selectedQuestions => selectedQuestions.length > 0
 );
 
-export const getSelectedQuestionsIds = createSelector(selectedQuestionsSelector, questions =>
-  questions.map(q => q.id)
+export const getSelectedQuestionsIds = createSelector(
+  selectedQuestionsSelector,
+  questions => questions.map(q => q.id)
 );
 
 export const getDownloadUrl = createSelector(
@@ -35,7 +36,7 @@ export const getSelectedQuestionsByCategory = createSelector(
   (selectedQuestions): SelectedQuestionsByTechnology => {
     return selectedQuestions.reduce<SelectedQuestionsByTechnology>(
       (acc, selectedQuestion) => {
-        acc[selectedQuestion.category].push(selectedQuestion);
+        acc[selectedQuestion._categoryId].push(selectedQuestion);
         return acc;
       },
       {

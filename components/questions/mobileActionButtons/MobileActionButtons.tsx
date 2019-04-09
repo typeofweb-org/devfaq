@@ -47,17 +47,16 @@ class MobileActionButtonsComponent extends React.Component<
             aria-disabled={!this.props.areAnyQuestionSelected}
           />
         )}
-        {justDownload &&
-          this.props.areAnyQuestionSelected && (
-            <a
-              className="round-button alert-button"
-              href={this.props.downloadUrl}
-              onClick={this.onDownloadClick}
-              target="_blank"
-            >
-              Pobierz plik PDF
-            </a>
-          )}
+        {justDownload && this.props.areAnyQuestionSelected && (
+          <a
+            className="round-button alert-button"
+            href={this.props.downloadUrl}
+            onClick={this.onDownloadClick}
+            target="_blank"
+          >
+            Pobierz plik PDF
+          </a>
+        )}
       </div>
     );
   }

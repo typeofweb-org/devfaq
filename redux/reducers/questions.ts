@@ -6,8 +6,8 @@ import { isUndefined } from 'lodash';
 export interface Question {
   id: number;
   question: string;
-  category: TechnologyKey;
-  level: LevelKey;
+  _categoryId: TechnologyKey;
+  _levelId: LevelKey;
   acceptedAt?: string;
 }
 

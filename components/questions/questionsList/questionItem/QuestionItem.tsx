@@ -112,17 +112,17 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
 
   renderMeta() {
     const { question } = this.props;
-    const keywords = [question.level, question.category].join(', ');
+    const keywords = [question._levelId, question._categoryId].join(', ');
 
     return (
       <div className="app-questions--question--meta">
         <span
           className={classNames(
             'app-questions--question--tag',
-            `app-questions--question--tag_${question.level}`
+            `app-questions--question--tag_${question._levelId}`
           )}
         >
-          {question.level}
+          {question._levelId}
         </span>
         <meta itemProp="dateCreated" content={question.acceptedAt} />
         <meta itemProp="keywords" content={keywords} />
