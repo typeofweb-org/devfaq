@@ -79,6 +79,7 @@ export const Api = {
     category: TechnologyKey | undefined,
     levels: LevelKey[],
     status?: 'pending' | 'accepted',
+    abortController?: AbortController,
     ctx?: GetInitialPropsContext
   ) {
     return makeRequest<Question[]>(
@@ -86,7 +87,7 @@ export const Api = {
       'questions',
       omitUndefined({ category, level: levels, status }) as {},
       {},
-      {},
+      { ...(abortController && { signal: abortController.signal }) },
       ctx
     );
   },
@@ -94,9 +95,16 @@ export const Api = {
   async getQuestionsForCategoryAndLevels(
     category: TechnologyKey,
     levels: LevelKey[],
+    abortController?: AbortController,
     ctx?: GetInitialPropsContext
   ) {
-    return Api.getQuestionsForCategoryAndLevelsAndStatus(category, levels, undefined, ctx);
+    return Api.getQuestionsForCategoryAndLevelsAndStatus(
+      category,
+      levels,
+      undefined,
+      abortController,
+      ctx
+    );
   },
 
   async createQuestion(question: CreateQuestionRequestBody, ctx?: GetInitialPropsContext) {

@@ -64,7 +64,8 @@ const SyncActionCreators = {
   updateRouteSuccess: (route: RouteDetails, inProgress = false) =>
     createAction(ActionTypes.UPDATE_ROUTE_SUCCESS, { route, inProgress }),
 
-  fetchQuestionsStarted: () => createAction(ActionTypes.FETCH_QUESTIONS, {}),
+  fetchQuestionsStarted: (abortController?: AbortController) =>
+    createAction(ActionTypes.FETCH_QUESTIONS, { abortController }),
   fetchQuestionsError: (error: Error) => createAction(ActionTypes.FETCH_QUESTIONS, { error }),
   fetchQuestionsSuccess: (questions: Question[]) =>
     createAction(ActionTypes.FETCH_QUESTIONS, { data: questions }),
@@ -80,13 +81,30 @@ const SyncActionCreators = {
 
 const AsyncActionCreators = {
   fetchQuestions: (ctx?: GetInitialPropsContext): AsyncAction => (dispatch, getState) => {
-    dispatch(SyncActionCreators.fetchQuestionsStarted());
     const state = getState();
+
+    let abortController: AbortController | undefined;
+    if (typeof AbortController !== 'undefined') {
+      abortController = new AbortController();
+      console.log(state.questions.abortController);
+      if (state.questions.abortController) {
+        state.questions.abortController.abort();
+      }
+    }
+
+    dispatch(SyncActionCreators.fetchQuestionsStarted(abortController));
+
     const technology = getTechnology(state);
     if (!technology) {
       return dispatch(SyncActionCreators.fetchQuestionsError(new Error('Invalid category')));
     }
-    return Api.getQuestionsForCategoryAndLevels(technology, state.selectedLevels, ctx)
+
+    return Api.getQuestionsForCategoryAndLevels(
+      technology,
+      state.selectedLevels,
+      abortController,
+      ctx
+    )
       .then(data => dispatch(SyncActionCreators.fetchQuestionsSuccess(data)))
       .catch(err => dispatch(SyncActionCreators.fetchQuestionsError(err)));
   },
@@ -101,7 +119,13 @@ const AsyncActionCreators = {
   ): AsyncAction => dispatch => {
     dispatch(SyncActionCreators.fetchQuestionsStarted());
     const { technology, selectedLevels, status } = options;
-    return Api.getQuestionsForCategoryAndLevelsAndStatus(technology, selectedLevels, status, ctx)
+    return Api.getQuestionsForCategoryAndLevelsAndStatus(
+      technology,
+      selectedLevels,
+      status,
+      undefined,
+      ctx
+    )
       .then(data => dispatch(SyncActionCreators.fetchQuestionsSuccess(data)))
       .catch(err => dispatch(SyncActionCreators.fetchQuestionsError(err)));
   },
