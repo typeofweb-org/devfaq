@@ -50,7 +50,7 @@
     "reflect-metadata": "0.1.13",
     "sequelize": "4.43.0",
     "sequelize-typescript": "0.6.9",
-    "typesafe-hapi": "0.0.0-2",
+    "typesafe-hapi": "1.0.0",
     "typesafe-joi": "1.0.0-beta5",
     "uuid": "3.3.2",
     "vision": "5.4.4"

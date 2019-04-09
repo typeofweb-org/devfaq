@@ -6,7 +6,6 @@ export const healthCheckRoute = {
       method: 'GET',
       path: '/health-check',
       options: {
-        auth: false as false,
         description: 'Health check endpoint',
         tags: ['api'],
       },

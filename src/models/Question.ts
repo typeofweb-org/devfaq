@@ -8,26 +8,19 @@ import {
   AllowNull,
   Default,
   BeforeUpdate,
-  BeforeCreate
-} from "sequelize-typescript";
-import { QuestionStatus } from "./QuestionStatus";
-import {
-  QUESTION_STATUS,
-  QUESTION_CATEGORY,
-  QUESTION_LEVEL
-} from "../models-consts";
-import { QuestionCategory } from "./QuestionCategory";
-import { QuestionLevel } from "./QuestionLevel";
+  BeforeCreate,
+} from 'sequelize-typescript';
+import { QuestionStatus } from './QuestionStatus';
+import { QUESTION_STATUS, QUESTION_CATEGORY, QUESTION_LEVEL } from '../models-consts';
+import { QuestionCategory } from './QuestionCategory';
+import { QuestionLevel } from './QuestionLevel';
 
 @Table({ version: true, timestamps: true })
 export class Question extends Model<Question> {
   @BeforeUpdate
   @BeforeCreate
   static setAcceptedAt(instance: Question) {
-    if (
-      !instance.acceptedAt &&
-      instance._statusId === QUESTION_STATUS.ACCEPTED
-    ) {
+    if (!instance.acceptedAt && instance._statusId === QUESTION_STATUS.ACCEPTED) {
       instance.acceptedAt = new Date();
     }
     if (instance.acceptedAt && instance._statusId === QUESTION_STATUS.PENDING) {

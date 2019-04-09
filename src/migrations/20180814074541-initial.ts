@@ -91,6 +91,7 @@ module.exports = {
         id: {
           type: Sequelize.INTEGER,
           primaryKey: true,
+          autoIncrement: true,
           allowNull: false,
         },
         email: {
@@ -135,6 +136,7 @@ module.exports = {
         id: {
           type: Sequelize.INTEGER,
           primaryKey: true,
+          autoIncrement: true,
           allowNull: false,
         },
         question: {
@@ -144,7 +146,7 @@ module.exports = {
         },
         acceptedAt: {
           type: Sequelize.DATE,
-          allowNull: false,
+          allowNull: true,
         },
         _categoryId: {
           type: Sequelize.TEXT,

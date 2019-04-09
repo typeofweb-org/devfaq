@@ -30,7 +30,6 @@ export const sequelize = new Sequelize({
 export const initDb = async () => {
   await sequelize.addModels([__dirname + '/models']);
   await sequelize.authenticate();
-  await sequelize.sync({ force: false });
 
   console.log('Connection to the database has been established successfully.');
 

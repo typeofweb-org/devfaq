@@ -10,6 +10,7 @@ import * as Sentry from '@sentry/node';
 import { handleException } from './utils/utils';
 import { helloWorldRoute } from './modules/hello-world/helloWorldRoute';
 import { healthCheckRoute } from './modules/health-check/healthCheckRoutes';
+import { questionsRoutes } from './modules/questions/questionRoutes';
 
 declare module 'typesafe-hapi' {
   interface PluginSpecificConfiguration {
@@ -112,8 +113,9 @@ export async function getServerWithPlugins() {
     },
   ] as Array<Hapi.ServerRegisterPluginObject<unknown>>);
 
-  helloWorldRoute.init(server);
-  healthCheckRoute.init(server);
+  await helloWorldRoute.init(server);
+  await healthCheckRoute.init(server);
+  await questionsRoutes.init(server);
 
   return server;
 }

@@ -6,7 +6,6 @@ export const helloWorldRoute = {
       method: 'GET',
       path: '/helloWorld',
       options: {
-        // auth: false,
         description: 'Test endpoint',
         tags: ['api'],
       },
