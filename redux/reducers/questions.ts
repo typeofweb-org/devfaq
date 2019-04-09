@@ -15,11 +15,17 @@ const intialState: {
   error?: Error;
   data?: Question[];
   isLoading: boolean;
+  abortController?: AbortController;
 } = { isLoading: false, data: [], error: undefined };
 
 export const questions = (questions = intialState, action: Actions): typeof intialState => {
   switch (action.type) {
     case ActionTypes.FETCH_QUESTIONS:
+      const wasAborted = 'error' in action.payload && action.payload.error.name === 'AbortError';
+      if (wasAborted) {
+        return questions;
+      }
+
       return {
         ...questions,
         ...action.payload,
@@ -31,11 +37,13 @@ export const questions = (questions = intialState, action: Actions): typeof inti
         data: isUndefined(id) ? questions.data : (questions.data || []).filter(q => q.id !== id),
         error: 'error' in action.payload ? action.payload.error : undefined,
         isLoading: questions.isLoading,
+        abortController: questions.abortController,
       };
     case ActionTypes.UPDATE_ROUTE_STARTED:
       return {
         data: [],
         isLoading: false,
+        abortController: questions.abortController,
       };
     default:
       return questions;
