@@ -1,16 +1,17 @@
 import Boom from 'boom';
-import Hapi from 'hapi';
-import Joi from 'joi';
+import Hapi from 'typesafe-hapi';
+import Joi from 'typesafe-joi';
 import HapiSwagger from 'hapi-swagger';
 import Inert from 'inert';
 import Vision from 'vision';
 import pkg from '../package.json';
-import { routes } from './routes';
 import { getConfig, isProd } from './config';
 import * as Sentry from '@sentry/node';
 import { handleException } from './utils/utils';
+import { helloWorldRoute } from './modules/hello-world/helloWorldRoute';
+import { healthCheckRoute } from './modules/health-check/healthCheckRoutes';
 
-declare module 'hapi' {
+declare module 'typesafe-hapi' {
   interface PluginSpecificConfiguration {
     'hapi-swagger'?: {
       payloadType?: 'form' | 'json';
@@ -109,8 +110,10 @@ export async function getServerWithPlugins() {
       plugin: HapiSwagger,
       options: swaggerOptions,
     },
-  ]);
+  ] as Array<Hapi.ServerRegisterPluginObject<unknown>>);
 
-  await server.route(routes);
+  helloWorldRoute.init(server);
+  healthCheckRoute.init(server);
+
   return server;
 }

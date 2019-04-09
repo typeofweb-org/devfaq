@@ -1,5 +1,5 @@
 // import { expect } from 'chai';
-// import { Server } from 'hapi';
+// import { Server } from 'typesafe-hapi';
 // import { getServerWithPlugins } from '../../server';
 // import { Session } from '../../models/Session';
 // import { seedTestUser } from '../../tests/integrationTestsUtils';

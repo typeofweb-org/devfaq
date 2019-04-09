@@ -1,16 +1,18 @@
-import Hapi from 'hapi';
+import { Server } from 'typesafe-hapi';
 
-export const healthCheckRoutes: Hapi.ServerRoute[] = [
-  {
-    method: 'GET',
-    path: '/health-check',
-    options: {
-      auth: false,
-      description: 'Health check endpoint',
-      tags: ['api'],
-    },
-    handler() {
-      return null;
-    },
+export const healthCheckRoute = {
+  init(server: Server) {
+    return server.route({
+      method: 'GET',
+      path: '/health-check',
+      options: {
+        auth: false as false,
+        description: 'Health check endpoint',
+        tags: ['api'],
+      },
+      handler() {
+        return null;
+      },
+    });
   },
-];
+};

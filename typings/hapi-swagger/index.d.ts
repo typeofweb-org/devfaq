@@ -1,5 +1,5 @@
 declare module 'hapi-swagger' {
-  import { Plugin } from 'hapi';
+  import { Plugin } from 'typesafe-hapi';
 
   namespace hapiSwagger {
     export interface Options {
