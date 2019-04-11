@@ -5,10 +5,12 @@ import Boom from 'boom';
 import GitHubAuthPlugin, { GitHubAuthPluginConfig } from './github';
 import { User } from '../../models/User';
 import { Op } from 'sequelize';
+import { Session } from '../../models/Session';
+import { isString } from 'util';
 
 declare module 'hapi' {
   interface AuthCredentials {
-    userModel: User;
+    session: Session;
   }
 }
 
@@ -21,12 +23,16 @@ interface RequiredOptions {
 type ProviderOptions = GitHubAuthPluginConfig | {};
 type AuthPluginOptions = RequiredOptions & ProviderOptions;
 
+interface AuthUserData {
+  serviceName: Bell.Provider;
+  externalServiceId: number | string;
+  email: string;
+  firstName?: string;
+  lastName?: string;
+}
+
 type AuthProviderNext = (
-  data: {
-    serviceName: Bell.Provider;
-    externalServiceId: number | string;
-    email: string;
-  },
+  data: AuthUserData,
   // tslint:disable-next-line:no-any
   request: Hapi.Request<any, any>,
   h: Hapi.ResponseToolkit
@@ -66,26 +72,38 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
           return { valid: false };
         }
 
-        const user = await User.findByPk(session.id);
+        const sessionModel = await Session.findOne({
+          where: {
+            id: session.id,
+            validUntil: {
+              [Op.gte]: new Date(),
+            },
+          },
+          include: [User],
+        });
 
-        if (!user) {
+        if (!sessionModel) {
           return { valid: false };
         }
 
-        return { valid: true, credentials: { userModel: user } };
+        const roleId = sessionModel._user && sessionModel._user._roleId;
+        const userId = sessionModel._user && sessionModel._user.id;
+        const scope = ['user', `user-${userId}`, roleId].filter(isString);
+
+        return { valid: true, credentials: { session: sessionModel, scope } };
       },
     };
     await server.auth.strategy('session', 'cookie', cookieOptions);
     await server.auth.default('session');
 
-    const next: AuthProviderNext = async (
-      { serviceName, externalServiceId, email },
-      request,
-      _h
-    ) => {
-      console.log({ serviceName, externalServiceId, email });
-
-      const userWithGitHubId = await User.findOne({
+    const findOrCreateAccountFor = async ({
+      serviceName,
+      externalServiceId,
+      email,
+      firstName,
+      lastName,
+    }: AuthUserData): Promise<User> => {
+      const userWithSocialLogin = await User.findOne({
         where: {
           socialLogin: {
             [serviceName]: {
@@ -95,9 +113,8 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
         },
       });
 
-      if (userWithGitHubId) {
-        request.cookieAuth.set({ id: userWithGitHubId.id });
-        return userWithGitHubId;
+      if (userWithSocialLogin) {
+        return userWithSocialLogin;
       } else {
         const userWithEmail = await User.findOne({
           where: {
@@ -111,11 +128,30 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
           const user = await User.create({
             email,
             socialLogin: { [serviceName]: externalServiceId },
+            firstName,
+            lastName,
           });
 
           return user;
         }
       }
+    };
+
+    const next: AuthProviderNext = async (authData, request, _h) => {
+      const user = await findOrCreateAccountFor(authData);
+
+      const validUntil = new Date();
+      // tslint:disable-next-line:no-magic-numbers
+      validUntil.setHours(validUntil.getHours() + 2);
+
+      const session = await Session.create({
+        _userId: user.id,
+        validUntil,
+      });
+
+      request.cookieAuth.set({ id: session.id });
+
+      return session;
     };
 
     if ('githubClientId' in options && options.githubClientId && options.githubClientSecret) {

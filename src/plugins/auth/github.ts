@@ -22,6 +22,18 @@ interface GitHubCredentials {
   };
 }
 
+const getNames = (credentials: GitHubCredentials): { firstName: string; lastName: string } => {
+  if (!credentials.profile || !credentials.profile.displayName) {
+    return { firstName: '', lastName: '' };
+  }
+
+  const [firstName, ...rest] = credentials.profile.displayName.split(' ');
+  return {
+    firstName,
+    lastName: rest.join(' '),
+  };
+};
+
 const GitHubAuthPlugin: Hapi.Plugin<GitHubAuthPluginConfig & AuthProviderOptions> = {
   multiple: false,
   name: 'DEVFAQ-API GitHub Auth Plugin',
@@ -77,11 +89,15 @@ const GitHubAuthPlugin: Hapi.Plugin<GitHubAuthPluginConfig & AuthProviderOptions
           throw Boom.unauthorized('Your primary email is not verified!');
         }
 
+        const { firstName, lastName } = getNames(gitHubCredentials);
+
         return options.next(
           {
             serviceName: 'github',
             externalServiceId: gitHubCredentials.profile.id,
             email: primaryEmail.email,
+            firstName,
+            lastName,
           },
           request,
           h
