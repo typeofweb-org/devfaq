@@ -77,14 +77,42 @@ async function openAndWaitForClose(url: string) {
     window.clearInterval(intervalTimerId);
   };
 
+  const propsToQuery = (props: Record<string, string | number>) => {
+    return Object.entries(props)
+      .map(([key, val]) => `${key}=${val}`)
+      .join(', ');
+  };
+
   return new Promise<any>((resolve, reject) => {
-    const w = window.open(url, 'GitHubLogin', 'resizable,width=420,height=230');
-    if (!w) {
+    const width = 925;
+    const height = 680;
+    const top = (window.top.outerHeight / 2 + window.top.screenY - height / 2) * 0.5;
+    const left = window.top.outerWidth / 2 + window.top.screenX - width / 2;
+
+    const popupHandle = window.open(
+      url,
+      'GitHubLogin',
+      propsToQuery({
+        toolbar: 'no',
+        location: 'no',
+        directories: 'no',
+        status: 'no',
+        menubar: 'no',
+        scrollbars: 'no',
+        resizable: 'no',
+        copyhistory: 'no',
+        width,
+        height,
+        top,
+        left,
+      })
+    );
+    if (!popupHandle) {
       return reject(new Error('Window not created!'));
     }
 
     intervalTimerId = window.setInterval(() => {
-      if (w.closed) {
+      if (popupHandle.closed) {
         cancel();
         return resolve();
       }
@@ -93,7 +121,7 @@ async function openAndWaitForClose(url: string) {
     timeoutTimerId = window.setTimeout(() => {
       cancel();
       return reject(new Error('Timeout'));
-    }, 10000);
+    }, 60000);
   });
 }
 
