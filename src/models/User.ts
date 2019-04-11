@@ -9,15 +9,31 @@ import {
   AllowNull,
   Default,
   BelongsTo,
+  IFindOptions,
+  Scopes,
 } from 'sequelize-typescript';
 import { UserRole } from './UserRole';
 import { USER_ROLE } from '../models-consts';
 
+function withSensitiveData(): IFindOptions<User> {
+  return {
+    attributes: ['createdAt', 'updatedAt', 'version'],
+  };
+}
+
 @DefaultScope({
   attributes: ['id', 'email', 'firstName', 'lastName', '_roleId'],
 })
+@Scopes({
+  withSensitiveData,
+})
 @Table({ version: true, timestamps: true })
 export class User extends Model<User> {
+  readonly id!: number;
+  readonly createdAt!: Date;
+  readonly updatedAt!: Date;
+  readonly version!: number;
+
   @Unique
   @AllowNull(false)
   @Column(DataType.TEXT)

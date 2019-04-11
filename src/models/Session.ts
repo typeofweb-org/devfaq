@@ -14,6 +14,15 @@ import nanoid from 'nanoid';
 
 @Table({ version: true, timestamps: true })
 export class Session extends Model<Session> {
+  @Column
+  readonly createdAt!: Date;
+
+  @Column
+  readonly updatedAt!: Date;
+
+  @Column
+  readonly version!: number;
+
   // tslint:disable-next-line:no-magic-numbers
   @PrimaryKey
   @AllowNull(false)
