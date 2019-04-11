@@ -2,7 +2,7 @@ import { TechnologyKey } from '../constants/technology-icon-items';
 import env from '../utils/env';
 import { LevelKey } from '../constants/level';
 import { Question } from '../redux/reducers/questions';
-import { AuthData, UserData } from '../redux/reducers/auth';
+import { AuthData, SessionData } from '../redux/reducers/auth';
 import { GetInitialPropsContext } from '../utils/types';
 import { pickBy, isUndefined } from 'lodash';
 
@@ -68,6 +68,35 @@ async function makeRequest<T>(
   });
 }
 
+async function openAndWaitForClose(url: string) {
+  let intervalTimerId: number;
+  let timeoutTimerId: number;
+
+  const cancel = () => {
+    window.clearTimeout(timeoutTimerId);
+    window.clearInterval(intervalTimerId);
+  };
+
+  return new Promise<any>((resolve, reject) => {
+    const w = window.open(url, 'GitHubLogin', 'resizable,width=420,height=230');
+    if (!w) {
+      return reject(new Error('Window not created!'));
+    }
+
+    intervalTimerId = window.setInterval(() => {
+      if (w.closed) {
+        cancel();
+        return resolve();
+      }
+    }, 100);
+
+    timeoutTimerId = window.setTimeout(() => {
+      cancel();
+      return reject(new Error('Timeout'));
+    }, 10000);
+  });
+}
+
 export interface CreateQuestionRequestBody {
   question: string;
   category: TechnologyKey;
@@ -128,6 +157,11 @@ export const Api = {
   },
 
   async getLoggedInUser(ctx?: GetInitialPropsContext) {
-    return makeRequest<UserData>('GET', 'tokens/me', {}, {}, {}, ctx);
+    return makeRequest<SessionData>('GET', 'oauth/me', {}, {}, {}, ctx);
+  },
+
+  async logInWithGitHub() {
+    const url = `${env.API_URL}/oauth/github`;
+    return openAndWaitForClose(url);
   },
 };

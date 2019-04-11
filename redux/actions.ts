@@ -86,7 +86,6 @@ const AsyncActionCreators = {
     let abortController: AbortController | undefined;
     if (typeof AbortController !== 'undefined') {
       abortController = new AbortController();
-      console.log(state.questions.abortController);
       if (state.questions.abortController) {
         state.questions.abortController.abort();
       }
@@ -150,10 +149,17 @@ const AsyncActionCreators = {
       .catch(err => dispatch(SyncActionCreators.loginError(err)));
   },
 
+  logInWithGitHub: (): AsyncAction => (dispatch, _getState) => {
+    dispatch(SyncActionCreators.loginStarted());
+    Api.logInWithGitHub()
+      .then(() => dispatch(AsyncActionCreators.validateToken()))
+      .catch(err => dispatch(SyncActionCreators.loginError(err)));
+  },
+
   validateToken: (ctx?: GetInitialPropsContext): AsyncAction => (dispatch, _getState) => {
     dispatch(SyncActionCreators.loginStarted());
     return Api.getLoggedInUser(ctx)
-      .then(data => dispatch(SyncActionCreators.loginSuccess({ user: data })))
+      .then(data => dispatch(SyncActionCreators.loginSuccess({ session: data })))
       .catch(err => {
         if (err && err.statusCode === 404) {
           return dispatch(SyncActionCreators.loginError(undefined));
