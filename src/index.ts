@@ -22,8 +22,8 @@ if (getConfig('NODE_ENV') !== 'production') {
 // tslint:disable-next-line:no-floating-promises
 (async () => {
   try {
-    const devfaqServer = await getServerWithPlugins();
     await initDb();
+    const devfaqServer = await getServerWithPlugins();
     await devfaqServer.start();
 
     console.info('Server running at:', devfaqServer.info.uri);

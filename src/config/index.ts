@@ -10,12 +10,14 @@ export function getConfig(name: string): string {
     case 'ENV':
       return val || 'development';
     case 'PORT':
-      return val || '3002';
+      return val || '3009';
     case 'AWS_ACCESS_KEY_ID':
     case 'AWS_SECRET_ACCESS_KEY':
     case 'SENTRY_DSN':
     case 'HARVEST_API_AUTH_TOKEN':
     case 'HARVEST_API_USER_AGENT':
+    case 'GITHUB_CLIENT_ID':
+    case 'GITHUB_CLIENT_SECRET':
       return val || '';
   }
 

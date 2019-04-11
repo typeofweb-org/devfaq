@@ -1,4 +1,4 @@
-import Joi from 'typesafe-joi';
+import Joi from 'joi';
 import { questionCategories, questionStatuses, questionLevels } from '../../models-consts';
 import { CustomJoi } from '../../utils/utils';
 

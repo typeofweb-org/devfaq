@@ -107,7 +107,7 @@ module.exports = {
           type: Sequelize.TEXT,
           allowNull: true,
         },
-        roleId: {
+        _roleId: {
           type: Sequelize.TEXT,
           allowNull: false,
           defaultValue: 'user',

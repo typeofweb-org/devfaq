@@ -1,4 +1,4 @@
-import { Server } from 'typesafe-hapi';
+import { Server } from 'hapi';
 import {
   GetQuestionsRequestSchema,
   GetQuestionsResponseSchema,

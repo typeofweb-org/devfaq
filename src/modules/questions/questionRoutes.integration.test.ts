@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import Joi from 'typesafe-joi';
-import { Server } from 'typesafe-hapi';
+import Joi from 'joi';
+import { Server } from 'hapi';
 import { getServerWithPlugins } from '../../server';
 import { GetQuestionsResponseSchema, CreateQuestionRequestPayloadSchema } from './questionSchemas';
 import { uniqBy } from 'lodash';

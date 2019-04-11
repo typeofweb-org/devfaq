@@ -2,7 +2,7 @@ import moment from 'moment';
 import { isUndefined, omitBy, isString } from 'lodash';
 import { getConfig } from '../config';
 import { withScope, Severity, captureException } from '@sentry/node';
-import Joi from 'typesafe-joi';
+import Joi from 'joi';
 
 type Nil<T> = T | undefined | null;
 export function defaultToAny<T>(v1: T): T;

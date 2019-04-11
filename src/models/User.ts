@@ -8,13 +8,13 @@ import {
   ForeignKey,
   AllowNull,
   Default,
+  BelongsTo,
 } from 'sequelize-typescript';
 import { UserRole } from './UserRole';
 import { USER_ROLE } from '../models-consts';
 
 @DefaultScope({
-  attributes: ['email', 'firstName', 'lastName', '_roleId'],
-  include: [() => UserRole],
+  attributes: ['id', 'email', 'firstName', 'lastName', '_roleId'],
 })
 @Table({ version: true, timestamps: true })
 export class User extends Model<User> {
@@ -31,9 +31,17 @@ export class User extends Model<User> {
   @Column(DataType.TEXT)
   lastName?: string | null;
 
+  @AllowNull(false)
+  @Default({})
+  @Column(DataType.JSONB)
+  socialLogin!: {};
+
   @ForeignKey(() => UserRole)
   @Default(USER_ROLE.USER)
   @AllowNull(false)
   @Column(DataType.STRING)
   _roleId!: USER_ROLE;
+
+  @BelongsTo(() => UserRole, '_roleId')
+  _role?: UserRole;
 }

@@ -35,6 +35,7 @@
     "ordered-imports": false,
     "no-any": true,
     "no-object-literal-type-assertion": false,
+    "no-implicit-dependencies": [true, ["hapi", "joi"]],
     "no-var-keyword": true,
     "no-let": [true, { "ignore-prefix": "mutable" }],
     "no-delete": true

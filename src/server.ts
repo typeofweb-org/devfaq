@@ -1,6 +1,6 @@
 import Boom from 'boom';
-import Hapi from 'typesafe-hapi';
-import Joi from 'typesafe-joi';
+import Hapi from 'hapi';
+import Joi from 'joi';
 import HapiSwagger from 'hapi-swagger';
 import Inert from 'inert';
 import Vision from 'vision';
@@ -11,8 +11,9 @@ import { handleException } from './utils/utils';
 import { helloWorldRoute } from './modules/hello-world/helloWorldRoute';
 import { healthCheckRoute } from './modules/health-check/healthCheckRoutes';
 import { questionsRoutes } from './modules/questions/questionRoutes';
+import AuthPlugin from './plugins/auth';
 
-declare module 'typesafe-hapi' {
+declare module 'hapi' {
   interface PluginSpecificConfiguration {
     'hapi-swagger'?: {
       payloadType?: 'form' | 'json';
@@ -20,8 +21,8 @@ declare module 'typesafe-hapi' {
   }
 }
 
-const getServer = () =>
-  new Hapi.Server({
+const getServer = () => {
+  return new Hapi.Server({
     host: '0.0.0.0',
     port: getConfig('PORT'),
     routes: {
@@ -57,6 +58,7 @@ const getServer = () =>
       },
     },
   });
+};
 
 export async function getServerWithPlugins() {
   const server = getServer();
@@ -117,6 +119,43 @@ export async function getServerWithPlugins() {
   await helloWorldRoute.init(server);
   await healthCheckRoute.init(server);
   await questionsRoutes.init(server);
+
+  await server.register(
+    {
+      plugin: AuthPlugin,
+      options: {
+        cookieDomain: getConfig('COOKIE_DOMAIN'),
+        isProduction: isProd(),
+        cookiePassword: 'blablablablablablablablablablablabla',
+        githubClientId: getConfig('GITHUB_CLIENT_ID'),
+        githubClientSecret: getConfig('GITHUB_CLIENT_SECRET'),
+        githubPassword: 'bell-secret|bell-secret|bell-secret',
+      },
+    },
+    {
+      routes: {
+        prefix: '/oauth',
+      },
+    }
+  );
+
+  await server.route({
+    method: 'GET',
+    path: '/public',
+    options: {
+      auth: {
+        mode: 'try',
+        strategy: 'session',
+      },
+    },
+    handler(request) {
+      if (request.auth.isAuthenticated) {
+        return request.auth.credentials;
+      }
+
+      return 'Not logged in!';
+    },
+  });
 
   return server;
 }
