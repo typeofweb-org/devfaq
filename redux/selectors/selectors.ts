@@ -61,7 +61,12 @@ export const getSelectedQuestionsWithCategories = createSelector(
   }
 );
 
-export const getIsAdmin = createSelector(
+export const getLoggedInUser = createSelector(
   authDataSelector,
-  authData => authData && authData.user && authData.user.role === 'admin'
+  authData => authData && authData.session && authData.session._user
+);
+
+export const getIsAdmin = createSelector(
+  getLoggedInUser,
+  user => user && user._roleId === 'admin'
 );
