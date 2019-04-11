@@ -8,7 +8,7 @@ import { Op } from 'sequelize';
 
 declare module 'hapi' {
   interface AuthCredentials {
-    id: User['id'];
+    userModel: User;
   }
 }
 
@@ -72,10 +72,11 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
           return { valid: false };
         }
 
-        return { valid: true, credentials: { id: user.id } };
+        return { valid: true, credentials: { userModel: user } };
       },
     };
     await server.auth.strategy('session', 'cookie', cookieOptions);
+    await server.auth.default('session');
 
     const next: AuthProviderNext = async (
       { serviceName, externalServiceId, email },
@@ -115,8 +116,6 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
           return user;
         }
       }
-
-      return null;
     };
 
     if ('githubClientId' in options && options.githubClientId && options.githubClientSecret) {

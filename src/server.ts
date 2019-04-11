@@ -116,20 +116,16 @@ export async function getServerWithPlugins() {
     },
   ] as Array<Hapi.ServerRegisterPluginObject<unknown>>);
 
-  await helloWorldRoute.init(server);
-  await healthCheckRoute.init(server);
-  await questionsRoutes.init(server);
-
   await server.register(
     {
       plugin: AuthPlugin,
       options: {
         cookieDomain: getConfig('COOKIE_DOMAIN'),
         isProduction: isProd(),
-        cookiePassword: 'blablablablablablablablablablablabla',
+        cookiePassword: getConfig('COOKIE_PASSWORD'),
         githubClientId: getConfig('GITHUB_CLIENT_ID'),
         githubClientSecret: getConfig('GITHUB_CLIENT_SECRET'),
-        githubPassword: 'bell-secret|bell-secret|bell-secret',
+        githubPassword: getConfig('GITHUB_PASSWORD'),
       },
     },
     {
@@ -138,6 +134,10 @@ export async function getServerWithPlugins() {
       },
     }
   );
+
+  await helloWorldRoute.init(server);
+  await healthCheckRoute.init(server);
+  await questionsRoutes.init(server);
 
   await server.route({
     method: 'GET',

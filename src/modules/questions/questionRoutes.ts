@@ -14,6 +14,7 @@ export const questionsRoutes = {
       method: 'GET',
       path: '/questions',
       options: {
+        auth: { mode: 'try' },
         tags: ['api', 'questions'],
         validate: GetQuestionsRequestSchema,
         description: 'Returns questions',
