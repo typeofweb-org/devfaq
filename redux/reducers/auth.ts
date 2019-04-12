@@ -8,6 +8,9 @@ export interface UserData {
   _roleId: string;
   firstName?: string | null;
   lastName?: string | null;
+  socialLogin?: {
+    github?: number;
+  } | null;
 }
 
 export type SessionData = {

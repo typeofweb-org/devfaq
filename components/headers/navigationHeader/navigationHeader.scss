@@ -1,4 +1,4 @@
-@import "common";
+@import 'common';
 
 .navigation-header {
   background-color: $purple-branding;
@@ -128,6 +128,10 @@
   }
   a {
     text-transform: uppercase;
+    height: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     &.active {
       border-bottom: 1px solid white;
     }
