@@ -17,7 +17,7 @@ import { USER_ROLE } from '../models-consts';
 
 function withSensitiveData(): IFindOptions<User> {
   return {
-    attributes: ['createdAt', 'updatedAt', 'version'],
+    attributes: ['createdAt', 'updatedAt', 'version', 'socialLogin'],
   };
 }
 
@@ -51,6 +51,10 @@ export class User extends Model<User> {
   @Default({})
   @Column(DataType.JSONB)
   socialLogin!: {};
+
+  @AllowNull(true)
+  @Column(DataType.TEXT)
+  avatarUrl?: string | null;
 
   @ForeignKey(() => UserRole)
   @Default(USER_ROLE.USER)

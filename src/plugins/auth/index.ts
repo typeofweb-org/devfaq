@@ -228,6 +228,9 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
               _roleId: Joi.string().required(),
               firstName: Joi.string().allow(null),
               lastName: Joi.string().allow(null),
+              socialLogin: Joi.object({
+                github: Joi.alternatives(Joi.string(), Joi.number().integer()),
+              }).allow(null),
             }),
           }).allow(null),
         },
