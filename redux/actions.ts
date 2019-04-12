@@ -3,7 +3,7 @@ import { LevelKey } from '../constants/level';
 import { Question } from './reducers/questions';
 import { RouteDetails, AppStore, GetInitialPropsContext } from '../utils/types';
 import { Api } from '../services/Api';
-import { getTechnology } from './selectors/selectors';
+import { getTechnology, getQuestionId } from './selectors/selectors';
 import { AuthData } from './reducers/auth';
 import { TechnologyKey } from '../constants/technology-icon-items';
 import { CommonModalProps } from '../components/modals/baseModal/BaseModal';
@@ -32,6 +32,8 @@ export enum ActionTypes {
   UPDATE_ROUTE_SUCCESS = 'UPDATE_ROUTE_SUCCESS',
 
   FETCH_QUESTIONS = 'FETCH_QUESTIONS',
+
+  FETCH_ONE_QUESTION = 'FETCH_ONE_QUESTION',
 
   DELETE_QUESTION = 'DELETE_QUESTION',
 
@@ -70,6 +72,11 @@ const SyncActionCreators = {
   fetchQuestionsSuccess: (questions: Question[]) =>
     createAction(ActionTypes.FETCH_QUESTIONS, { data: questions }),
 
+  fetchOneQuestionStarted: () => createAction(ActionTypes.FETCH_ONE_QUESTION, {}),
+  fetchOneQuestionError: (error: Error) => createAction(ActionTypes.FETCH_ONE_QUESTION, { error }),
+  fetchOneQuestionSuccess: (question: Question) =>
+    createAction(ActionTypes.FETCH_ONE_QUESTION, { data: question }),
+
   deleteQuestionStarted: () => createAction(ActionTypes.DELETE_QUESTION, {}),
   deleteQuestionError: (error: Error) => createAction(ActionTypes.DELETE_QUESTION, { error }),
   deleteQuestionSuccess: (id: Question['id']) => createAction(ActionTypes.DELETE_QUESTION, { id }),
@@ -106,6 +113,21 @@ const AsyncActionCreators = {
     )
       .then(data => dispatch(SyncActionCreators.fetchQuestionsSuccess(data)))
       .catch(err => dispatch(SyncActionCreators.fetchQuestionsError(err)));
+  },
+
+  fetchOneQuestion: (ctx?: GetInitialPropsContext): AsyncAction => (dispatch, getState) => {
+    const state = getState();
+
+    dispatch(SyncActionCreators.fetchOneQuestionStarted());
+
+    const id = getQuestionId(state);
+    if (!id) {
+      return dispatch(SyncActionCreators.fetchOneQuestionError(new Error('Invalid id')));
+    }
+
+    return Api.getOneQuestion(id, ctx)
+      .then(data => dispatch(SyncActionCreators.fetchOneQuestionSuccess(data)))
+      .catch(err => dispatch(SyncActionCreators.fetchOneQuestionError(err)));
   },
 
   fetchQuestionsForAdmin: (

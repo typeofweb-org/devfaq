@@ -7,6 +7,7 @@ import MarkdownText from '../../../markdownText/MarkdownText';
 import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
 
 import { isEqual } from 'lodash';
+import ActiveLink from '../../../activeLink/ActiveLink';
 
 const longDate = (dateStr?: string) => {
   if (!dateStr) {
@@ -130,7 +131,9 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
           dateTime={question.acceptedAt}
           className="app-questions--question--date app-questions--question--date_long"
         >
-          {longDate(question.acceptedAt)}
+          <ActiveLink route={`/questions/${question.id}`}>
+            <a>{longDate(question.acceptedAt)}</a>
+          </ActiveLink>
         </time>
         <time
           dateTime={question.acceptedAt}

@@ -164,6 +164,10 @@ export const Api = {
     );
   },
 
+  async getOneQuestion(id: string, ctx?: GetInitialPropsContext) {
+    return makeRequest<Question>('GET', `questions/${id}`, {}, {}, {}, ctx);
+  },
+
   async createQuestion(question: CreateQuestionRequestBody, ctx?: GetInitialPropsContext) {
     return makeRequest<Question>('POST', 'questions', {}, question, {}, ctx);
   },
