@@ -58,7 +58,7 @@ class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps>
             </div>
             <QuestionsList
               selectedQuestionIds={this.props.selectedQuestionIds}
-              questions={{ isLoading: false, data: questions }}
+              questions={{ isLoading: false, data: { data: questions } }}
               selectable={false}
               unselectable={true}
               toggleQuestion={this.toggleQuestion}

@@ -1,6 +1,7 @@
 import { Actions, ActionTypes } from '../actions';
 import { TechnologyKey } from '../../constants/technology-icon-items';
 import { LevelKey } from '../../constants/level';
+import { ApiResponse } from '../../services/Api';
 
 export interface Question {
   id: number;
@@ -12,7 +13,7 @@ export interface Question {
 
 const intialState: {
   error?: Error;
-  data?: Question;
+  data?: ApiResponse<Question>;
   isLoading: boolean;
 } = { isLoading: false, data: undefined, error: undefined };
 

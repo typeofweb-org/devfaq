@@ -83,6 +83,7 @@ const checkForMatch = (
   if (routeDetails.asPath === route) {
     return true;
   }
+
   if (routeDetails.asPath && !exact) {
     return routeDetails.asPath.startsWith(route);
   }

@@ -26,7 +26,9 @@ class OneQuestionPageComponent extends React.Component<Props> {
   render() {
     const { question } = this.props;
     const questionData = question && !question.error && !question.isLoading ? question.data : null;
-    const title = questionData ? `Pytanie ${questionData.id}: ${questionData.question}` : '';
+    const title = questionData
+      ? `Pytanie ${questionData.data.id}: ${questionData.data.question}`
+      : '';
 
     return (
       <Layout title={title}>
@@ -37,7 +39,7 @@ class OneQuestionPageComponent extends React.Component<Props> {
               <div className="app-questions--list">
                 {questionData && (
                   <QuestionItem
-                    question={questionData}
+                    question={questionData.data}
                     selectable={false}
                     editable={false}
                     unselectable={false}

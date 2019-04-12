@@ -20,7 +20,9 @@ class QuestionsPageComponent extends React.Component<Props> {
       return redirect(ctx, '/questions/js');
     }
 
-    await ctx.store.dispatch(ActionCreators.fetchQuestions(ctx));
+    const page = Number(ctx.query.page) || 1;
+
+    await ctx.store.dispatch(ActionCreators.fetchQuestions(page, ctx));
   }
 
   componentDidUpdate(prevProps: Props) {
