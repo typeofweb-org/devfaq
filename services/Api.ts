@@ -138,7 +138,7 @@ export interface CreateQuestionRequestBody {
   level: string;
 }
 
-export const PAGE_SIZE = 10;
+export const PAGE_SIZE = 25;
 
 export const Api = {
   async getQuestionsForCategoryAndLevelsAndStatus(

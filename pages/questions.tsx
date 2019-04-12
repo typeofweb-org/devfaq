@@ -17,10 +17,14 @@ type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 class QuestionsPageComponent extends React.Component<Props> {
   static async getInitialProps(ctx: GetInitialPropsContext) {
     if (!ctx.query || !ctx.query.technology) {
-      return redirect(ctx, '/questions/js');
+      return redirect(ctx, '/questions/js?page=1');
     }
 
-    const page = Number(ctx.query.page) || 1;
+    const page = Number(ctx.query.page);
+
+    if (!page) {
+      return redirect(ctx, '/questions/js?page=1');
+    }
 
     await ctx.store.dispatch(ActionCreators.fetchQuestions(page, ctx));
   }
