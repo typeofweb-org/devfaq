@@ -1,9 +1,12 @@
 import { Server } from 'hapi';
+import Boom from 'boom';
 import {
   GetQuestionsRequestSchema,
   GetQuestionsResponseSchema,
   CreateQuestionRequestSchema,
   CreateQuestionResponseSchema,
+  GetOneQuestionRequestSchema,
+  GetOneQuestionResponseSchema,
 } from './questionSchemas';
 import { Question } from '../../models/Question';
 import { QUESTION_STATUS } from '../../models-consts';
@@ -76,6 +79,43 @@ export const questionsRoutes = {
           _levelId: newQuestion._levelId,
           _statusId: newQuestion._statusId,
           acceptedAt: newQuestion.acceptedAt,
+        };
+      },
+    });
+
+    await server.route({
+      method: 'GET',
+      path: '/questions/{id}',
+      options: {
+        auth: { mode: 'try' },
+        tags: ['api', 'questions'],
+        validate: GetOneQuestionRequestSchema,
+        description: 'Returns one question',
+        response: {
+          schema: GetOneQuestionResponseSchema,
+        },
+      },
+      async handler(request) {
+        const { id } = request.params;
+
+        const question = await Question.findOne({
+          where: {
+            id,
+            _statusId: QUESTION_STATUS.ACCEPTED,
+          },
+        });
+
+        if (!question) {
+          throw Boom.notFound();
+        }
+
+        return {
+          id: question.id,
+          question: question.question,
+          _categoryId: question._categoryId,
+          _levelId: question._levelId,
+          _statusId: question._statusId,
+          acceptedAt: question.acceptedAt,
         };
       },
     });

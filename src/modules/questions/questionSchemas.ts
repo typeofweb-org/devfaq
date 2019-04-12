@@ -31,6 +31,16 @@ export const GetQuestionsResponseSchema = Joi.array()
   .items(QuestionSchema)
   .required();
 
+export const GetOneQuestionRequestSchema = {
+  params: Joi.object({
+    id: Joi.number()
+      .integer()
+      .required(),
+  }).required(),
+};
+
+export const GetOneQuestionResponseSchema = QuestionSchema.required();
+
 export const CreateQuestionRequestPayloadSchema = Joi.object({
   question: Joi.string().required(),
   level: QuestionLevelSchema.required(),
