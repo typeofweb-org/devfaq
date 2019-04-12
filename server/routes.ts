@@ -3,6 +3,7 @@ const routes = ((nextRoutes as any) as () => Routes)();
 
 routes
   .add('index', '/')
+  .add('one-question', '/questions/:id(\\d+)', 'oneQuestion')
   .add('questions', '/questions/:technology?')
   .add('selected-questions', '/selected-questions', 'selectedQuestions')
   .add('about', '/about', 'staticPage')

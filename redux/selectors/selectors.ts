@@ -14,6 +14,11 @@ export const getTechnology = createSelector(
   ({ current }) => current.query && (current.query.technology as TechnologyKey)
 );
 
+export const getQuestionId = createSelector(
+  routeDetailsSelector,
+  ({ current }) => current.query && (current.query.id as string)
+);
+
 export const getAreAnyQuestionSelected = createSelector(
   selectedQuestionsSelector,
   selectedQuestions => selectedQuestions.length > 0
