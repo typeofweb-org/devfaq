@@ -28,19 +28,26 @@ export const questionsRoutes = {
       async handler(request) {
         const { category, level, limit, offset } = request.query;
 
+        const where = {
+          ...(category && { _categoryId: category }),
+          ...(level && { _levelId: level }),
+          // ...(status && { _statusId: status }),
+          _statusId: QUESTION_STATUS.ACCEPTED,
+        };
+
+        const total = await Question.count({
+          where,
+        });
+
         const questions = await Question.findAll({
-          where: {
-            ...(category && { _categoryId: category }),
-            ...(level && { _levelId: level }),
-            // ...(status && { _statusId: status }),
-            _statusId: QUESTION_STATUS.ACCEPTED,
-          },
+          where,
           limit,
           offset,
           subQuery: false,
+          raw: true,
         });
 
-        return questions.map(q => {
+        const data = questions.map(q => {
           return {
             id: q.id,
             question: q.question,
@@ -50,6 +57,8 @@ export const questionsRoutes = {
             acceptedAt: q.acceptedAt,
           };
         });
+
+        return { data, meta: { total } };
       },
     });
 
@@ -75,7 +84,7 @@ export const questionsRoutes = {
           _statusId: QUESTION_STATUS.PENDING,
         });
 
-        return {
+        const data = {
           id: newQuestion.id,
           question: newQuestion.question,
           _categoryId: newQuestion._categoryId,
@@ -83,6 +92,8 @@ export const questionsRoutes = {
           _statusId: newQuestion._statusId,
           acceptedAt: newQuestion.acceptedAt,
         };
+
+        return { data };
       },
     });
 
@@ -112,7 +123,7 @@ export const questionsRoutes = {
           throw Boom.notFound();
         }
 
-        return {
+        const data = {
           id: question.id,
           question: question.question,
           _categoryId: question._categoryId,
@@ -120,6 +131,8 @@ export const questionsRoutes = {
           _statusId: question._statusId,
           acceptedAt: question.acceptedAt,
         };
+
+        return { data };
       },
     });
   },

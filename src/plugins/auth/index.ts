@@ -214,30 +214,32 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
         },
         response: {
           schema: Joi.object({
-            keepMeSignedIn: Joi.boolean().required(),
-            validUntil: Joi.date().required(),
-            createdAt: Joi.date().required(),
-            updatedAt: Joi.date().required(),
-            version: Joi.number().required(),
-            _userId: Joi.number().required(),
-            _user: Joi.object({
-              id: Joi.number().required(),
-              email: Joi.string().required(),
+            data: Joi.object({
+              keepMeSignedIn: Joi.boolean().required(),
+              validUntil: Joi.date().required(),
               createdAt: Joi.date().required(),
               updatedAt: Joi.date().required(),
-              _roleId: Joi.string().required(),
-              firstName: Joi.string().allow(null),
-              lastName: Joi.string().allow(null),
-              socialLogin: Joi.object({
-                github: Joi.alternatives(Joi.string(), Joi.number().integer()),
-              }).allow(null),
-            }),
-          }).allow(null),
+              version: Joi.number().required(),
+              _userId: Joi.number().required(),
+              _user: Joi.object({
+                id: Joi.number().required(),
+                email: Joi.string().required(),
+                createdAt: Joi.date().required(),
+                updatedAt: Joi.date().required(),
+                _roleId: Joi.string().required(),
+                firstName: Joi.string().allow(null),
+                lastName: Joi.string().allow(null),
+                socialLogin: Joi.object({
+                  github: Joi.alternatives(Joi.string(), Joi.number().integer()),
+                }).allow(null),
+              }),
+            }).allow(null),
+          }).required(),
         },
       },
       async handler(request) {
         if (request.auth.credentials && request.auth.credentials.session) {
-          return request.auth.credentials.session.toJSON();
+          return { data: request.auth.credentials.session.toJSON() };
         }
 
         return null;

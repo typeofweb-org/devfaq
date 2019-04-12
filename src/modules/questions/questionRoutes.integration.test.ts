@@ -66,8 +66,8 @@ describe('helloWorldRoute', async () => {
       const result = res.result as Joi.SchemaValue<typeof GetQuestionsResponseSchema>;
       expect(result).to.be.an('array');
 
-      assertAreAllAccepted(result);
-      assertAreAllUnique(result);
+      assertAreAllAccepted(result!.data);
+      assertAreAllUnique(result!.data);
     });
 
     it('should return questions matching the query', async () => {
@@ -83,10 +83,10 @@ describe('helloWorldRoute', async () => {
         });
         const result = res.result as Joi.SchemaValue<typeof GetQuestionsResponseSchema>;
 
-        assertAllHaveValidCategory(category, result);
-        assertAllHaveValidLevel(level, result);
-        assertAreAllAccepted(result);
-        assertAreAllUnique(result);
+        assertAllHaveValidCategory(category, result!.data);
+        assertAllHaveValidLevel(level, result!.data);
+        assertAreAllAccepted(result!.data);
+        assertAreAllUnique(result!.data);
       }
     });
   });

@@ -33,9 +33,14 @@ export const GetQuestionsRequestSchema = {
   }).required(),
 };
 
-export const GetQuestionsResponseSchema = Joi.array()
-  .items(QuestionSchema)
-  .required();
+export const GetQuestionsResponseSchema = Joi.object({
+  data: Joi.array()
+    .items(QuestionSchema)
+    .required(),
+  meta: Joi.object({
+    total: Joi.number().required(),
+  }).optional(),
+});
 
 export const GetOneQuestionRequestSchema = {
   params: Joi.object({
@@ -45,7 +50,9 @@ export const GetOneQuestionRequestSchema = {
   }).required(),
 };
 
-export const GetOneQuestionResponseSchema = QuestionSchema.required();
+export const GetOneQuestionResponseSchema = Joi.object({
+  data: QuestionSchema.required(),
+}).required();
 
 export const CreateQuestionRequestPayloadSchema = Joi.object({
   question: Joi.string().required(),
@@ -57,4 +64,6 @@ export const CreateQuestionRequestSchema = {
   payload: CreateQuestionRequestPayloadSchema.required(),
 };
 
-export const CreateQuestionResponseSchema = QuestionSchema.required();
+export const CreateQuestionResponseSchema = Joi.object({
+  data: QuestionSchema.required(),
+}).required();
