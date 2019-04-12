@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getLoggedInUser } from '../../../../redux/selectors/selectors';
 import { AppState } from '../../../../redux/reducers';
 import ActiveLink from '../../../activeLink/ActiveLink';
+import UserAvatar from '../../../userAvatar/UserAvatar';
 
 type LoginStatusLinkProps = ReturnType<typeof mapStateToProps>;
 
@@ -11,7 +12,7 @@ const LoginStatusLinkComponent: React.FC<LoginStatusLinkProps & { onLoginClick?:
   onLoginClick,
 }) => {
   if (user) {
-    return null;
+    return <UserAvatar user={user} />;
   }
 
   return (
