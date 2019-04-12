@@ -34,6 +34,13 @@ async function getJSON(res: Response) {
   }
 }
 
+export type ApiResponse<T> = {
+  data: T;
+  meta?: {
+    total: number;
+  };
+};
+
 async function makeRequest<T>(
   method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
   path: string,
@@ -41,7 +48,7 @@ async function makeRequest<T>(
   body: object,
   otherOptions: RequestInit,
   ctx?: GetInitialPropsContext
-): Promise<T> {
+): Promise<ApiResponse<T>> {
   const querystring = getQueryStringFromObject(query);
   const options: RequestInit = {
     ...otherOptions,
@@ -131,18 +138,24 @@ export interface CreateQuestionRequestBody {
   level: string;
 }
 
+export const PAGE_SIZE = 10;
+
 export const Api = {
   async getQuestionsForCategoryAndLevelsAndStatus(
+    page: number | null,
     category: TechnologyKey | undefined,
-    levels: LevelKey[],
+    level: LevelKey[],
     status?: 'pending' | 'accepted',
     abortController?: AbortController,
     ctx?: GetInitialPropsContext
   ) {
+    const limit = PAGE_SIZE;
+    const offset = PAGE_SIZE * ((page || 0) - 1);
+
     return makeRequest<Question[]>(
       'GET',
       'questions',
-      omitUndefined({ category, level: levels, status }) as {},
+      omitUndefined({ category, level, status, ...(page !== null && { limit, offset }) }) as {},
       {},
       { ...(abortController && { signal: abortController.signal }) },
       ctx
@@ -150,12 +163,14 @@ export const Api = {
   },
 
   async getQuestionsForCategoryAndLevels(
+    page: number,
     category: TechnologyKey,
     levels: LevelKey[],
     abortController?: AbortController,
     ctx?: GetInitialPropsContext
   ) {
     return Api.getQuestionsForCategoryAndLevelsAndStatus(
+      page,
       category,
       levels,
       undefined,
@@ -164,7 +179,7 @@ export const Api = {
     );
   },
 
-  async getOneQuestion(id: string, ctx?: GetInitialPropsContext) {
+  async getOneQuestion(id: Question['id'], ctx?: GetInitialPropsContext) {
     return makeRequest<Question>('GET', `questions/${id}`, {}, {}, {}, ctx);
   },
 
