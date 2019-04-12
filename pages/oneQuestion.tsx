@@ -17,7 +17,7 @@ class OneQuestionPageComponent extends React.Component<Props> {
     const id = ctx.query && ctx.query.id;
 
     if (!id) {
-      return redirect(ctx, '/questions/js');
+      return redirect(ctx, '/questions/js?page=1');
     }
 
     await ctx.store.dispatch(ActionCreators.fetchOneQuestion(ctx));
