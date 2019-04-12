@@ -24,6 +24,12 @@ export const GetQuestionsRequestSchema = {
     category: QuestionCategorySchema,
     status: CustomJoi.stringArray().items(questionStatuses),
     level: CustomJoi.stringArray().items(questionLevels),
+    limit: Joi.number()
+      .integer()
+      .optional(),
+    offset: Joi.number()
+      .integer()
+      .optional(),
   }).required(),
 };
 

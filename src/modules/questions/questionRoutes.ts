@@ -26,7 +26,7 @@ export const questionsRoutes = {
         },
       },
       async handler(request) {
-        const { category, level } = request.query;
+        const { category, level, limit, offset } = request.query;
 
         const questions = await Question.findAll({
           where: {
@@ -35,6 +35,9 @@ export const questionsRoutes = {
             // ...(status && { _statusId: status }),
             _statusId: QUESTION_STATUS.ACCEPTED,
           },
+          limit,
+          offset,
+          subQuery: false,
         });
 
         return questions.map(q => {
