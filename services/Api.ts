@@ -1,4 +1,4 @@
-import { TechnologyKey } from '../constants/technology-icon-items';
+import { TechnologyKey, SortBy } from '../constants/technology-icon-items';
 import env from '../utils/env';
 import { LevelKey } from '../constants/level';
 import { Question } from '../redux/reducers/questions';
@@ -143,6 +143,7 @@ export const PAGE_SIZE = 25;
 export const Api = {
   async getQuestionsForCategoryAndLevelsAndStatus(
     page: number | null,
+    sortBy: SortBy | undefined,
     category: TechnologyKey | undefined,
     level: LevelKey[],
     status?: 'pending' | 'accepted',
@@ -155,7 +156,13 @@ export const Api = {
     return makeRequest<Question[]>(
       'GET',
       'questions',
-      omitUndefined({ category, level, status, ...(page !== null && { limit, offset }) }) as {},
+      omitUndefined({
+        category,
+        level,
+        status,
+        ...(page !== null && { limit, offset }),
+        ...(sortBy && { orderBy: sortBy[0], order: sortBy[1] }),
+      }) as {},
       {},
       { ...(abortController && { signal: abortController.signal }) },
       ctx
@@ -164,6 +171,7 @@ export const Api = {
 
   async getQuestionsForCategoryAndLevels(
     page: number,
+    sortBy: SortBy | undefined,
     category: TechnologyKey,
     levels: LevelKey[],
     abortController?: AbortController,
@@ -171,6 +179,7 @@ export const Api = {
   ) {
     return Api.getQuestionsForCategoryAndLevelsAndStatus(
       page,
+      sortBy,
       category,
       levels,
       undefined,

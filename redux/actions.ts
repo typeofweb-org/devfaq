@@ -5,7 +5,7 @@ import { RouteDetails, AppStore, GetInitialPropsContext } from '../utils/types';
 import { Api, ApiResponse } from '../services/Api';
 import { getTechnology, getQuestionId } from './selectors/selectors';
 import { AuthData } from './reducers/auth';
-import { TechnologyKey } from '../constants/technology-icon-items';
+import { TechnologyKey, SortBy } from '../constants/technology-icon-items';
 import { CommonModalProps } from '../components/modals/baseModal/BaseModal';
 
 export type AsyncAction<R = any> = (
@@ -87,7 +87,11 @@ const SyncActionCreators = {
 };
 
 const AsyncActionCreators = {
-  fetchQuestions: (page = 1, ctx?: GetInitialPropsContext): AsyncAction => (dispatch, getState) => {
+  fetchQuestions: (
+    page = 1,
+    sortBy = undefined as SortBy | undefined,
+    ctx?: GetInitialPropsContext
+  ): AsyncAction => (dispatch, getState) => {
     const state = getState();
 
     let abortController: AbortController | undefined;
@@ -107,6 +111,7 @@ const AsyncActionCreators = {
 
     return Api.getQuestionsForCategoryAndLevels(
       page,
+      sortBy,
       technology,
       state.selectedLevels,
       abortController,
@@ -143,6 +148,7 @@ const AsyncActionCreators = {
     const { technology, selectedLevels, status } = options;
     return Api.getQuestionsForCategoryAndLevelsAndStatus(
       null,
+      undefined,
       technology,
       selectedLevels,
       status,

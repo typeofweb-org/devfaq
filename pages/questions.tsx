@@ -11,7 +11,8 @@ import { ActionCreators } from '../redux/actions';
 import { connect } from 'react-redux';
 import { AppState } from '../redux/reducers/index';
 import { getTechnology } from '../redux/selectors/selectors';
-import { Technology } from '../constants/technology-icon-items';
+import { Technology, SortBy } from '../constants/technology-icon-items';
+import { isString } from 'lodash';
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 class QuestionsPageComponent extends React.Component<Props> {
@@ -26,7 +27,11 @@ class QuestionsPageComponent extends React.Component<Props> {
       return redirect(ctx, '/questions/js?page=1');
     }
 
-    await ctx.store.dispatch(ActionCreators.fetchQuestions(page, ctx));
+    const sortBy: SortBy = isString(ctx.query.sortBy)
+      ? (ctx.query.sortBy.split('*') as SortBy)
+      : ['acceptedAt', 'desc'];
+
+    await ctx.store.dispatch(ActionCreators.fetchQuestions(page, sortBy, ctx));
   }
 
   componentDidUpdate(prevProps: Props) {

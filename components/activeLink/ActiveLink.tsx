@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, LinkProps } from '../../server/routes';
+import routes, { Link, LinkProps } from '../../server/routes';
 import * as classNames from 'classnames';
 import { AppState } from '../../redux/reducers/index';
 import { connect } from 'react-redux';
@@ -33,19 +33,7 @@ class ActiveLinkComponent extends React.Component<
   };
 
   render() {
-    const {
-      children,
-      route,
-      activeClassName = 'active',
-      prefetch,
-      shallow,
-      scroll,
-      replace,
-      href,
-      as,
-      passHref,
-      isMatch,
-    } = this.props;
+    const { children, isMatch, activeClassName = 'active', ...restProps } = this.props;
     const child = React.Children.only(children);
     const newChild = this.conditionallyAddClassToChild(isMatch, activeClassName, child);
 
@@ -53,20 +41,7 @@ class ActiveLinkComponent extends React.Component<
     //   return <div aria-disabled="true">{newChild}</div>;
     // }
 
-    return (
-      <Link
-        prefetch={prefetch}
-        route={route}
-        shallow={shallow}
-        scroll={scroll}
-        replace={replace}
-        href={href}
-        as={as}
-        passHref={passHref}
-      >
-        {newChild}
-      </Link>
-    );
+    return <Link {...restProps}>{newChild}</Link>;
   }
 }
 
@@ -75,18 +50,25 @@ const checkForMatch = (
   {
     route,
     exact,
+    params,
   }: {
     route: LinkProps['route'];
+    params?: LinkProps['params'];
     exact?: boolean;
   }
 ): boolean => {
+  if (exact) {
+    return routes.findAndGetUrls(route, params).urls.as === routeDetails.asPath;
+  }
+
   if (routeDetails.asPath === route) {
     return true;
   }
 
-  if (routeDetails.asPath && !exact) {
+  if (routeDetails.asPath) {
     return routeDetails.asPath.startsWith(route);
   }
+
   return false;
 };
 
