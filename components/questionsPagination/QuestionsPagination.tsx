@@ -8,10 +8,7 @@ import './questionsPagination.scss';
 
 type QuestionsPaginationProps = ReturnType<typeof mapStateToProps>;
 
-const QuestionsPaginationComponent: React.FC<QuestionsPaginationProps> = ({
-  technology,
-  total,
-}) => {
+const QuestionsPaginationComponent: React.FC<QuestionsPaginationProps> = ({ total, route }) => {
   if (!total) {
     return null;
   }
@@ -22,9 +19,14 @@ const QuestionsPaginationComponent: React.FC<QuestionsPaginationProps> = ({
     <footer className="questions-pagination">
       <ul>
         {Array.from({ length: pages }).map((_, i) => {
+          const query = {
+            ...route.query,
+            page: i + 1,
+          };
+
           return (
             <li key={i}>
-              <ActiveLink exact={true} route={`/questions/${technology}?page=${i + 1}`}>
+              <ActiveLink exact={true} route="questions" params={query}>
                 <a>{i + 1}</a>
               </ActiveLink>
             </li>
@@ -42,6 +44,7 @@ const mapStateToProps = (state: AppState) => {
   return {
     technology,
     total: questions.data && questions.data.meta && questions.data.meta.total,
+    route: state.routeDetails.current,
   };
 };
 

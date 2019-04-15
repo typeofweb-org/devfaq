@@ -7,17 +7,22 @@ import { AllQuestionsHeader } from './allQuestionsHeader/AllQuestionsHeader';
 import { AllQuestionsFooter } from './allQuestionsFooter/AllQuestionsFooter';
 import QuestionsList from '../questionsList/QuestionsList';
 import { Question } from '../../../redux/reducers/questions';
-import { getSelectedQuestionsIds, getTechnology } from '../../../redux/selectors/selectors';
+import {
+  getSelectedQuestionsIds,
+  getTechnology,
+  getSortBy,
+} from '../../../redux/selectors/selectors';
 import { ActionCreators } from '../../../redux/actions';
 import { isQuestionSelected } from '../questionsUtils';
 import { Level } from '../../../constants/level';
 import QuestionsPagination from '../../questionsPagination/QuestionsPagination';
+import { Router } from '../../../server/routes';
 
 type AllQuestionsComponentProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> {
   render() {
-    const { technology } = this.props;
+    const { technology, sortBy } = this.props;
 
     const technologyIconItem = technologyIconItems.find(t => t.name === technology);
     const category = (technologyIconItem && technologyIconItem.label) || '';
@@ -30,7 +35,12 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
     return (
       <section className="app-questions">
         {!this.props.questions.isLoading && technology && length && (
-          <AllQuestionsHeader category={category} questionsLength={length} />
+          <AllQuestionsHeader
+            category={category}
+            questionsLength={length}
+            onSortByChange={this.changeSortBy}
+            sortBy={sortBy || 'acceptedAt*desc'}
+          />
         )}
         {this.renderList()}
         {!this.props.questions.isLoading && technology && (
@@ -40,6 +50,14 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
       </section>
     );
   }
+
+  changeSortBy: React.ChangeEventHandler<HTMLSelectElement> = e => {
+    const query = {
+      ...this.props.route.query,
+      sortBy: e.currentTarget.value,
+    };
+    void Router.pushRoute('questions', query);
+  };
 
   renderList = () => {
     if (this.props.questions.error) {
@@ -106,6 +124,8 @@ const mapStateToProps = (state: AppState) => {
     technology: getTechnology(state),
     questions: state.questions,
     selectedQuestionsIds: getSelectedQuestionsIds(state),
+    sortBy: getSortBy(state),
+    route: state.routeDetails.current,
   };
 };
 
