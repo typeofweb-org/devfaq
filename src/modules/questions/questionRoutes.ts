@@ -1,5 +1,6 @@
 import { Server } from 'hapi';
 import Boom from 'boom';
+import Joi from 'joi';
 import {
   GetQuestionsRequestSchema,
   GetQuestionsResponseSchema,
@@ -10,6 +11,31 @@ import {
 } from './questionSchemas';
 import { Question } from '../../models/Question';
 import { QUESTION_STATUS } from '../../models-consts';
+import { IFindOptions } from 'sequelize-typescript';
+
+type GetQuestionsRequest = Joi.SchemaValue<typeof GetQuestionsRequestSchema>;
+
+type GetQuestionsRequestQuery = NonNullable<GetQuestionsRequest>['query'];
+
+function columnNameFromQuery(orderBy: NonNullable<GetQuestionsRequestQuery['orderBy']>) {
+  switch (orderBy) {
+    case 'level':
+      return '_levelId';
+    default:
+      return orderBy;
+  }
+}
+
+function getOrderFromQuery(
+  request: NonNullable<GetQuestionsRequest>
+): IFindOptions<Question>['order'] {
+  const { order, orderBy } = request.query;
+  if (!order || !orderBy) {
+    return undefined;
+  }
+
+  return [[columnNameFromQuery(orderBy), order], ['id']];
+}
 
 export const questionsRoutes = {
   async init(server: Server) {
@@ -39,10 +65,13 @@ export const questionsRoutes = {
           where,
         });
 
+        const order = getOrderFromQuery(request);
+
         const questions = await Question.findAll({
           where,
           limit,
           offset,
+          ...(order && { order }),
           subQuery: false,
           raw: true,
         });

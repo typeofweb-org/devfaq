@@ -30,6 +30,8 @@ export const GetQuestionsRequestSchema = {
     offset: Joi.number()
       .integer()
       .optional(),
+    orderBy: Joi.string().only('acceptedAt', 'level'),
+    order: Joi.string().only('asc', 'desc'),
   }).required(),
 };
 
