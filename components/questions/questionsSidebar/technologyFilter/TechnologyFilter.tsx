@@ -1,4 +1,7 @@
-import { technologyIconItems, TechnologyIconItem } from '../../../../constants/technology-icon-items';
+import {
+  technologyIconItems,
+  TechnologyIconItem,
+} from '../../../../constants/technology-icon-items';
 import * as React from 'react';
 import ActiveLink from '../../../activeLink/ActiveLink';
 import './technologyFilter.scss';
@@ -8,7 +11,9 @@ export class TechnologyFilter extends React.Component {
     return (
       <div>
         <h2 className="app-filter--title">Wybierz technologię</h2>
-        <ul className="app-filter--technologies">{technologyIconItems.map(this.renderTechnologyItem)}</ul>
+        <ul className="app-filter--technologies">
+          {technologyIconItems.map(this.renderTechnologyItem)}
+        </ul>
       </div>
     );
   }
@@ -18,7 +23,8 @@ export class TechnologyFilter extends React.Component {
       <li className="app-filter--technology" key={technology.name}>
         <ActiveLink
           disabledWhenActive={true}
-          route={'/questions/' + technology.name}
+          route={'questions'}
+          params={{ technology: technology.name }}
           onClick={() => this.reportSelectTechnologyEvent(technology.label)}
         >
           <a title={technology.label}>

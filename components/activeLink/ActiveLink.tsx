@@ -33,7 +33,20 @@ class ActiveLinkComponent extends React.Component<
   };
 
   render() {
-    const { children, isMatch, activeClassName = 'active', ...restProps } = this.props;
+    const {
+      children,
+      isMatch,
+      activeClassName = 'active',
+      route,
+      params,
+      prefetch,
+      shallow,
+      scroll,
+      replace,
+      href,
+      as,
+      passHref,
+    } = this.props;
     const child = React.Children.only(children);
     const newChild = this.conditionallyAddClassToChild(isMatch, activeClassName, child);
 
@@ -41,7 +54,21 @@ class ActiveLinkComponent extends React.Component<
     //   return <div aria-disabled="true">{newChild}</div>;
     // }
 
-    return <Link {...restProps}>{newChild}</Link>;
+    return (
+      <Link
+        route={route}
+        params={params}
+        prefetch={prefetch}
+        shallow={shallow}
+        scroll={scroll}
+        replace={replace}
+        href={href}
+        as={as}
+        passHref={passHref}
+      >
+        {newChild}
+      </Link>
+    );
   }
 }
 
@@ -57,16 +84,21 @@ const checkForMatch = (
     exact?: boolean;
   }
 ): boolean => {
-  if (exact) {
-    return routes.findAndGetUrls(route, params).urls.as === routeDetails.asPath;
-  }
-
   if (routeDetails.asPath === route) {
     return true;
   }
 
-  if (routeDetails.asPath) {
-    return routeDetails.asPath.startsWith(route);
+  const foundUrls = routes.findAndGetUrls(route, params);
+  const isExactMatch = foundUrls.urls.as === routeDetails.asPath;
+
+  if (isExactMatch || exact) {
+    return isExactMatch;
+  }
+
+  if (foundUrls.urls.as && routeDetails.asPath) {
+    const [foundPathname] = foundUrls.urls.as.split('?');
+    const [routePathname] = routeDetails.asPath.split('?');
+    return routePathname.startsWith(foundPathname);
   }
 
   return false;

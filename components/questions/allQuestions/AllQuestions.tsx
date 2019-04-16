@@ -34,7 +34,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
 
     return (
       <section className="app-questions">
-        {!this.props.questions.isLoading && technology && length && (
+        {!this.props.questions.isLoading && technology && (
           <AllQuestionsHeader
             category={category}
             questionsLength={length}
