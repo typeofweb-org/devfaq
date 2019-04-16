@@ -24,7 +24,7 @@ class QuestionsPageComponent extends React.Component<Props> {
     const page = Number(ctx.query.page);
 
     if (!page) {
-      return redirect(ctx, '/questions/js?page=1');
+      return redirect(ctx, `/questions/${ctx.query.technology}?page=1`);
     }
 
     const sortBy: SortBy = isString(ctx.query.sortBy)

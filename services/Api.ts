@@ -177,12 +177,13 @@ export const Api = {
     abortController?: AbortController,
     ctx?: GetInitialPropsContext
   ) {
+    const status = 'accepted';
     return Api.getQuestionsForCategoryAndLevelsAndStatus(
       page,
       sortBy,
       category,
       levels,
-      undefined,
+      status,
       abortController,
       ctx
     );
