@@ -22,7 +22,7 @@ export const QuestionSchema = Joi.object({
 export const GetQuestionsRequestSchema = {
   query: Joi.object({
     category: QuestionCategorySchema,
-    status: CustomJoi.stringArray().items(questionStatuses),
+    status: QuestionStatusSchema,
     level: CustomJoi.stringArray().items(questionLevels),
     limit: Joi.number()
       .integer()
@@ -69,3 +69,16 @@ export const CreateQuestionRequestSchema = {
 export const CreateQuestionResponseSchema = Joi.object({
   data: QuestionSchema.required(),
 }).required();
+
+export const UpdateQuestionRequestSchema = {
+  params: Joi.object({
+    id: Joi.number()
+      .integer()
+      .required(),
+  }).required(),
+  payload: CreateQuestionRequestPayloadSchema.keys({
+    status: QuestionStatusSchema.required(),
+  }).required(),
+};
+
+export const UpdateQuestionResponseSchema = CreateQuestionResponseSchema;

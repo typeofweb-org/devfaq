@@ -8,10 +8,13 @@ import {
   CreateQuestionResponseSchema,
   GetOneQuestionRequestSchema,
   GetOneQuestionResponseSchema,
+  UpdateQuestionRequestSchema,
+  UpdateQuestionResponseSchema,
 } from './questionSchemas';
 import { Question } from '../../models/Question';
 import { QUESTION_STATUS } from '../../models-consts';
 import { IFindOptions } from 'sequelize-typescript';
+import { isAdmin } from '../../utils/utils';
 
 type GetQuestionsRequest = Joi.SchemaValue<typeof GetQuestionsRequestSchema>;
 
@@ -52,13 +55,12 @@ export const questionsRoutes = {
         },
       },
       async handler(request) {
-        const { category, level, limit, offset } = request.query;
+        const { category, level, status, limit, offset } = request.query;
 
         const where = {
           ...(category && { _categoryId: category }),
           ...(level && { _levelId: level }),
-          // ...(status && { _statusId: status }),
-          _statusId: QUESTION_STATUS.ACCEPTED,
+          ...(status && isAdmin(request) && { _statusId: status }),
         };
 
         const total = await Question.count({
@@ -95,6 +97,7 @@ export const questionsRoutes = {
       method: 'POST',
       path: '/questions',
       options: {
+        auth: { mode: 'try' },
         tags: ['api', 'questions'],
         validate: CreateQuestionRequestSchema,
         description: 'Creates a question',
@@ -120,6 +123,49 @@ export const questionsRoutes = {
           _levelId: newQuestion._levelId,
           _statusId: newQuestion._statusId,
           acceptedAt: newQuestion.acceptedAt,
+        };
+
+        return { data };
+      },
+    });
+
+    await server.route({
+      method: 'PATCH',
+      path: '/questions/{id}',
+      options: {
+        auth: { mode: 'required', scope: ['admin'] },
+        tags: ['api', 'questions'],
+        validate: UpdateQuestionRequestSchema,
+        description: 'Updates a question',
+        response: {
+          schema: UpdateQuestionResponseSchema,
+        },
+      },
+      async handler(request) {
+        const { id } = request.params;
+
+        const q = await Question.findByPk(id);
+
+        if (!q) {
+          throw Boom.notFound();
+        }
+
+        const { question, level, category, status } = request.payload;
+
+        q.question = question;
+        q._levelId = level;
+        q._categoryId = category;
+        q._statusId = status;
+
+        await q.save();
+
+        const data = {
+          id: q.id,
+          question: q.question,
+          _categoryId: q._categoryId,
+          _levelId: q._levelId,
+          _statusId: q._statusId,
+          acceptedAt: q.acceptedAt,
         };
 
         return { data };

@@ -3,6 +3,8 @@ import { isUndefined, omitBy, isString } from 'lodash';
 import { getConfig } from '../config';
 import { withScope, Severity, captureException } from '@sentry/node';
 import Joi from 'joi';
+import Hapi from 'hapi';
+import { USER_ROLE } from '../models-consts';
 
 type Nil<T> = T | undefined | null;
 export function defaultToAny<T>(v1: T): T;
@@ -58,3 +60,15 @@ export const CustomJoi = Joi.extend({
   name: 'stringArray',
   coerce: (value, _state, _options) => (isString(value) ? value.split(',') : value),
 }) as (typeof Joi) & { stringArray: typeof Joi.array };
+
+// tslint:disable-next-line:no-any
+export const isAdmin = (request: Hapi.Request<any, any>): boolean => {
+  return Boolean(
+    request &&
+      request.auth &&
+      request.auth.credentials &&
+      request.auth.credentials.session &&
+      request.auth.credentials.session._user &&
+      request.auth.credentials.session._user._roleId === USER_ROLE.ADMIN
+  );
+};
