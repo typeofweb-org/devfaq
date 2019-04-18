@@ -35,16 +35,16 @@ export const GetQuestionsRequestSchema = {
   }).required(),
 };
 
+export const QuestionResponseSchema = QuestionSchema.keys({
+  votesCount: Joi.number()
+    .integer()
+    .required(),
+  currentUserVotedOn: Joi.bool(),
+});
+
 export const GetQuestionsResponseSchema = Joi.object({
   data: Joi.array()
-    .items(
-      QuestionSchema.keys({
-        votesCount: Joi.number()
-          .integer()
-          .required(),
-        currentUserVotedOn: Joi.bool(),
-      })
-    )
+    .items(QuestionResponseSchema)
     .required(),
   meta: Joi.object({
     total: Joi.number().required(),
@@ -60,7 +60,7 @@ export const GetOneQuestionRequestSchema = {
 };
 
 export const GetOneQuestionResponseSchema = Joi.object({
-  data: QuestionSchema.required(),
+  data: QuestionResponseSchema.required(),
 }).required();
 
 export const CreateQuestionRequestPayloadSchema = Joi.object({
@@ -74,7 +74,7 @@ export const CreateQuestionRequestSchema = {
 };
 
 export const CreateQuestionResponseSchema = Joi.object({
-  data: QuestionSchema.required(),
+  data: QuestionResponseSchema.required(),
 }).required();
 
 export const UpdateQuestionRequestSchema = {

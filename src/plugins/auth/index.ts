@@ -137,7 +137,7 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
         domain: options.cookieDomain,
         path: '/',
       },
-      async validateFunc(_request, session: { id?: string | number } | undefined) {
+      async validateFunc(request, session: { id?: string | number } | undefined) {
         if (!session || !session.id) {
           return { valid: false };
         }
@@ -153,6 +153,7 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
         });
 
         if (!sessionModel) {
+          request.cookieAuth.clear();
           return { valid: false };
         }
 

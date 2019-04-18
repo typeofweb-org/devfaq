@@ -15,7 +15,6 @@ import { Question } from '../../models/Question';
 import { QUESTION_STATUS } from '../../models-consts';
 import { IFindOptions } from 'sequelize-typescript';
 import { isAdmin, getCurrentUser } from '../../utils/utils';
-import { User } from '../../models/User';
 
 type GetQuestionsRequest = Joi.SchemaValue<typeof GetQuestionsRequestSchema>;
 
@@ -71,28 +70,16 @@ export const questionsRoutes = {
 
         const order = getOrderFromQuery(request);
 
-        const questions = await Question.findAll({
+        const questions = await Question.scope('withVotes').findAll({
           where,
           limit,
           offset,
           ...(order && { order }),
           subQuery: false,
-          // raw: true,
-          include: [
-            {
-              model: User,
-              as: '_votes',
-              attributes: ['id'],
-            },
-          ],
         });
 
         const data = questions.map(q => {
-          const votesCount = (q._votes && q._votes.length) || 0;
-          const currentUserVotedOn =
-            q._votes &&
-            currentUser &&
-            q._votes.some(v => v.QuestionVote._userId === currentUser.id);
+          const currentUserVotedOn = q.didUserVoteOn(currentUser);
 
           return {
             id: q.id,
@@ -101,7 +88,7 @@ export const questionsRoutes = {
             _levelId: q._levelId,
             _statusId: q._statusId,
             acceptedAt: q.acceptedAt,
-            votesCount,
+            votesCount: q.votesCount,
             currentUserVotedOn,
           };
         });
@@ -126,7 +113,7 @@ export const questionsRoutes = {
       async handler(request) {
         const { question, level, category } = request.payload;
 
-        const newQuestion = await Question.create({
+        const newQuestion = await Question.scope('withVotes').create({
           question,
           _levelId: level,
           _categoryId: category,
@@ -140,6 +127,8 @@ export const questionsRoutes = {
           _levelId: newQuestion._levelId,
           _statusId: newQuestion._statusId,
           acceptedAt: newQuestion.acceptedAt,
+          currentUserVotedOn: false,
+          votesCount: 0,
         };
 
         return { data };
@@ -161,13 +150,15 @@ export const questionsRoutes = {
       async handler(request) {
         const { id } = request.params;
 
-        const q = await Question.findByPk(id);
+        const q = await Question.scope('withVotes').findByPk(id);
 
         if (!q) {
           throw Boom.notFound();
         }
 
         const { question, level, category, status } = request.payload;
+
+        const currentUser = getCurrentUser(request);
 
         q.question = question;
         q._levelId = level;
@@ -183,6 +174,8 @@ export const questionsRoutes = {
           _levelId: q._levelId,
           _statusId: q._statusId,
           acceptedAt: q.acceptedAt,
+          currentUserVotedOn: q.didUserVoteOn(currentUser),
+          votesCount: q.votesCount,
         };
 
         return { data };
@@ -204,7 +197,7 @@ export const questionsRoutes = {
       async handler(request) {
         const { id } = request.params;
 
-        const question = await Question.findOne({
+        const question = await Question.scope('withVotes').findOne({
           where: {
             id,
             _statusId: QUESTION_STATUS.ACCEPTED,
@@ -215,6 +208,8 @@ export const questionsRoutes = {
           throw Boom.notFound();
         }
 
+        const currentUser = getCurrentUser(request);
+
         const data = {
           id: question.id,
           question: question.question,
@@ -222,6 +217,8 @@ export const questionsRoutes = {
           _levelId: question._levelId,
           _statusId: question._statusId,
           acceptedAt: question.acceptedAt,
+          currentUserVotedOn: question.didUserVoteOn(currentUser),
+          votesCount: question.votesCount,
         };
 
         return { data };
