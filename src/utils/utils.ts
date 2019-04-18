@@ -5,6 +5,7 @@ import { withScope, Severity, captureException } from '@sentry/node';
 import Joi from 'joi';
 import Hapi from 'hapi';
 import { USER_ROLE } from '../models-consts';
+import { User } from '../models/User';
 
 type Nil<T> = T | undefined | null;
 export function defaultToAny<T>(v1: T): T;
@@ -62,13 +63,18 @@ export const CustomJoi = Joi.extend({
 }) as (typeof Joi) & { stringArray: typeof Joi.array };
 
 // tslint:disable-next-line:no-any
-export const isAdmin = (request: Hapi.Request<any, any>): boolean => {
-  return Boolean(
+export const getCurrentUser = (request: Hapi.Request<any, any>): User | undefined => {
+  return (
     request &&
-      request.auth &&
-      request.auth.credentials &&
-      request.auth.credentials.session &&
-      request.auth.credentials.session._user &&
-      request.auth.credentials.session._user._roleId === USER_ROLE.ADMIN
+    request.auth &&
+    request.auth.credentials &&
+    request.auth.credentials.session &&
+    request.auth.credentials.session._user
   );
+};
+
+// tslint:disable-next-line:no-any
+export const isAdmin = (request: Hapi.Request<any, any>): boolean => {
+  const user = getCurrentUser(request);
+  return Boolean(user && user._roleId === USER_ROLE.ADMIN);
 };

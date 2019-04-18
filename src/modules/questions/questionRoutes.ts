@@ -14,7 +14,8 @@ import {
 import { Question } from '../../models/Question';
 import { QUESTION_STATUS } from '../../models-consts';
 import { IFindOptions } from 'sequelize-typescript';
-import { isAdmin } from '../../utils/utils';
+import { isAdmin, getCurrentUser } from '../../utils/utils';
+import { User } from '../../models/User';
 
 type GetQuestionsRequest = Joi.SchemaValue<typeof GetQuestionsRequestSchema>;
 
@@ -56,6 +57,7 @@ export const questionsRoutes = {
       },
       async handler(request) {
         const { category, level, status, limit, offset } = request.query;
+        const currentUser = getCurrentUser(request);
 
         const where = {
           ...(category && { _categoryId: category }),
@@ -75,10 +77,23 @@ export const questionsRoutes = {
           offset,
           ...(order && { order }),
           subQuery: false,
-          raw: true,
+          // raw: true,
+          include: [
+            {
+              model: User,
+              as: '_votes',
+              attributes: ['id'],
+            },
+          ],
         });
 
         const data = questions.map(q => {
+          const votesCount = (q._votes && q._votes.length) || 0;
+          const currentUserVotedOn =
+            q._votes &&
+            currentUser &&
+            q._votes.some(v => v.QuestionVote._userId === currentUser.id);
+
           return {
             id: q.id,
             question: q.question,
@@ -86,6 +101,8 @@ export const questionsRoutes = {
             _levelId: q._levelId,
             _statusId: q._statusId,
             acceptedAt: q.acceptedAt,
+            votesCount,
+            currentUserVotedOn,
           };
         });
 

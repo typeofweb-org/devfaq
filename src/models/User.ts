@@ -11,9 +11,12 @@ import {
   BelongsTo,
   IFindOptions,
   Scopes,
+  BelongsToMany,
 } from 'sequelize-typescript';
 import { UserRole } from './UserRole';
 import { USER_ROLE } from '../models-consts';
+import { Question } from './Question';
+import { QuestionVote } from './QuestionVote';
 
 function withSensitiveData(): IFindOptions<User> {
   return {
@@ -64,4 +67,12 @@ export class User extends Model<User> {
 
   @BelongsTo(() => UserRole, '_roleId')
   _role?: UserRole;
+
+  @BelongsToMany(() => Question, {
+    through: () => QuestionVote,
+    foreignKey: '_userId',
+    otherKey: '_questionId',
+    as: '_votedOn',
+  })
+  _votedOn?: Array<Question & { QuestionVote: QuestionVote }>;
 }

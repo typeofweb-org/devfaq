@@ -9,11 +9,14 @@ import {
   Default,
   BeforeUpdate,
   BeforeCreate,
+  BelongsToMany,
 } from 'sequelize-typescript';
 import { QuestionStatus } from './QuestionStatus';
 import { QUESTION_STATUS, QUESTION_CATEGORY, QUESTION_LEVEL } from '../models-consts';
 import { QuestionCategory } from './QuestionCategory';
 import { QuestionLevel } from './QuestionLevel';
+import { QuestionVote } from './QuestionVote';
+import { User } from './User';
 
 @Table({ version: true, timestamps: true })
 export class Question extends Model<Question> {
@@ -53,4 +56,12 @@ export class Question extends Model<Question> {
   @AllowNull(false)
   @Column(DataType.STRING)
   _statusId!: QUESTION_STATUS;
+
+  @BelongsToMany(() => User, {
+    through: () => QuestionVote,
+    foreignKey: '_questionId',
+    otherKey: '_userId',
+    as: '_votes',
+  })
+  _votes?: Array<User & { QuestionVote: QuestionVote }>;
 }

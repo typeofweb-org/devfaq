@@ -37,7 +37,14 @@ export const GetQuestionsRequestSchema = {
 
 export const GetQuestionsResponseSchema = Joi.object({
   data: Joi.array()
-    .items(QuestionSchema)
+    .items(
+      QuestionSchema.keys({
+        votesCount: Joi.number()
+          .integer()
+          .required(),
+        currentUserVotedOn: Joi.bool(),
+      })
+    )
     .required(),
   meta: Joi.object({
     total: Joi.number().required(),
