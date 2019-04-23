@@ -1,6 +1,5 @@
 import Boom from 'boom';
 import Hapi from 'hapi';
-import Joi from 'joi';
 import HapiSwagger from 'hapi-swagger';
 import Inert from 'inert';
 import Vision from 'vision';
@@ -12,6 +11,7 @@ import { helloWorldRoute } from './modules/hello-world/helloWorldRoute';
 import { healthCheckRoute } from './modules/health-check/healthCheckRoutes';
 import { questionsRoutes } from './modules/questions/questionRoutes';
 import AuthPlugin from './plugins/auth';
+import { questionVotesRoutes } from './modules/question-votes/questionVotesSchemas.js';
 
 declare module 'hapi' {
   interface PluginSpecificConfiguration {
@@ -39,11 +39,6 @@ const getServer = () => {
         },
       },
       validate: {
-        headers: Joi.object({
-          Authorization: Joi.string()
-            .default('Bearer {uuid}')
-            .optional(),
-        }).unknown(),
         async failAction(_request, _h, err) {
           if (isProd()) {
             // In prod, log a limited error message and throw the default Bad Request error.
@@ -138,6 +133,7 @@ export async function getServerWithPlugins() {
   await helloWorldRoute.init(server);
   await healthCheckRoute.init(server);
   await questionsRoutes.init(server);
+  await questionVotesRoutes.init(server);
 
   await server.route({
     method: 'GET',

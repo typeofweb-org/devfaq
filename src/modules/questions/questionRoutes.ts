@@ -139,7 +139,10 @@ export const questionsRoutes = {
       method: 'PATCH',
       path: '/questions/{id}',
       options: {
-        auth: { mode: 'required', scope: ['admin'] },
+        auth: {
+          mode: 'required',
+          scope: ['admin'],
+        },
         tags: ['api', 'questions'],
         validate: UpdateQuestionRequestSchema,
         description: 'Updates a question',
