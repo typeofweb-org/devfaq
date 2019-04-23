@@ -13,8 +13,9 @@ import { AppState } from '../redux/reducers/index';
 import { getTechnology } from '../redux/selectors/selectors';
 import { Technology, SortBy } from '../constants/technology-icon-items';
 import { isString } from 'lodash';
+import { Dispatch } from 'redux';
 
-type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 class QuestionsPageComponent extends React.Component<Props> {
   static async getInitialProps(ctx: GetInitialPropsContext) {
     if (!ctx.query || !ctx.query.technology) {
@@ -39,7 +40,7 @@ class QuestionsPageComponent extends React.Component<Props> {
       return;
     }
 
-    this.props.fetchQuestions();
+    this.props.reFetchQuestions();
   }
 
   render() {
@@ -67,7 +68,19 @@ const mapStateToProps = (state: AppState) => {
   };
 };
 
-const mapDispatchToProps = { fetchQuestions: ActionCreators.fetchQuestions };
+const mapDispatchToProps = (
+  dispatch: Dispatch<any>,
+  ownProps: ReturnType<typeof mapStateToProps>
+) => {
+  return {
+    reFetchQuestions: () => {
+      console.log({ ownProps });
+      const page = 1;
+      const sortBy = undefined;
+      dispatch(ActionCreators.fetchQuestions(page, sortBy));
+    },
+  };
+};
 
 const QuestionsPage = connect(
   mapStateToProps,
