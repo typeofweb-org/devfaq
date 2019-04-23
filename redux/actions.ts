@@ -13,6 +13,13 @@ export type AsyncAction<R = any> = (
   getState: AppStore['getState']
 ) => R;
 
+declare module 'redux' {
+  export interface Dispatch<A extends Action = AnyAction> {
+    <T extends A>(action: T): T;
+    (asyncAction: AsyncAction): any;
+  }
+}
+
 export enum ActionTypes {
   UI_OPEN_SIDEBAR = 'UI_OPEN_SIDEBAR',
   UI_CLOSE_SIDEBAR = 'UI_CLOSE_SIDEBAR',

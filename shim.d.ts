@@ -1,4 +1,9 @@
-declare function globalReportEvent(action: string, category: string, label?: string, questionId?: number | string);
+declare function globalReportEvent(
+  action: string,
+  category: string,
+  label?: string,
+  questionId?: number | string
+);
 
 interface GtagEventParams {
   event_category?: string;
