@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import { AppState } from '../reducers';
 import env from '../../utils/env';
 import { Question } from '../reducers/questions';
-import { TechnologyKey } from '../../constants/technology-icon-items';
+import { TechnologyKey, SortBy } from '../../constants/technology-icon-items';
 
 // const questionsSelector = (state: AppState) => state.questions;
 const selectedQuestionsSelector = (state: AppState) => state.selectedQuestions;
@@ -17,6 +17,11 @@ export const getTechnology = createSelector(
 export const getSortBy = createSelector(
   routeDetailsSelector,
   ({ current }) => current.query && (current.query.sortBy as string)
+);
+
+export const getSortByArray = createSelector(
+  getSortBy,
+  sortBy => (sortBy ? sortBy.split('*') : ['acceptedAt', 'desc']) as SortBy
 );
 
 export const getQuestionId = createSelector(
@@ -79,4 +84,9 @@ export const getLoggedInUser = createSelector(
 export const getIsAdmin = createSelector(
   getLoggedInUser,
   user => user && user._roleId === 'admin'
+);
+
+export const getPage = createSelector(
+  routeDetailsSelector,
+  ({ current }) => current.query && Number(current.query.page)
 );

@@ -7,12 +7,11 @@ import { GetInitialPropsContext } from '../utils/types';
 import QuestionsSidebar from '../components/questions/questionsSidebar/QuestionsSidebar';
 import MobileActionButtons from '../components/questions/mobileActionButtons/MobileActionButtons';
 import AllQuestions from '../components/questions/allQuestions/AllQuestions';
-import { ActionCreators } from '../redux/actions';
+import { ActionCreators, AsyncAction } from '../redux/actions';
 import { connect } from 'react-redux';
 import { AppState } from '../redux/reducers/index';
-import { getTechnology } from '../redux/selectors/selectors';
-import { Technology, SortBy } from '../constants/technology-icon-items';
-import { isString } from 'lodash';
+import { getTechnology, getSortByArray, getPage } from '../redux/selectors/selectors';
+import { Technology } from '../constants/technology-icon-items';
 import { Dispatch } from 'redux';
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
@@ -22,15 +21,15 @@ class QuestionsPageComponent extends React.Component<Props> {
       return redirect(ctx, '/questions/js?page=1');
     }
 
-    const page = Number(ctx.query.page);
+    const state = ctx.store.getState();
+
+    const page = getPage(state);
 
     if (!page) {
       return redirect(ctx, `/questions/${ctx.query.technology}?page=1`);
     }
 
-    const sortBy: SortBy = isString(ctx.query.sortBy)
-      ? (ctx.query.sortBy.split('*') as SortBy)
-      : ['acceptedAt', 'desc'];
+    const sortBy = getSortByArray(state);
 
     await ctx.store.dispatch(ActionCreators.fetchQuestions(page, sortBy, ctx));
   }
@@ -70,15 +69,16 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (
   dispatch: Dispatch<any>,
-  ownProps: ReturnType<typeof mapStateToProps>
+  _ownProps: ReturnType<typeof mapStateToProps>
 ) => {
   return {
-    reFetchQuestions: () => {
-      console.log({ ownProps });
-      const page = 1;
-      const sortBy = undefined;
-      dispatch(ActionCreators.fetchQuestions(page, sortBy));
-    },
+    reFetchQuestions: (ctx?: GetInitialPropsContext): AsyncAction =>
+      dispatch((dispatch, getState) => {
+        const state = getState();
+        const page = 1;
+        const sortBy = getSortByArray(state);
+        dispatch(ActionCreators.fetchQuestions(page, sortBy, ctx));
+      }),
   };
 };
 

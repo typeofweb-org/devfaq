@@ -5,8 +5,12 @@ import './levelFilter.scss';
 import { connect } from 'react-redux';
 import { AppState } from '../../../../redux/reducers/index';
 import { ActionCreators } from '../../../../redux/actions';
+import { getPage } from '../../../../redux/selectors/selectors';
+import { Router } from '../../../../server/routes';
 
-class LevelFilterComponent extends React.Component<ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps> {
+class LevelFilterComponent extends React.Component<
+  ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
+> {
   render() {
     return (
       <div>
@@ -40,12 +44,22 @@ class LevelFilterComponent extends React.Component<ReturnType<typeof mapStateToP
       globalReportEvent('Wybierz poziom', 'Lista pytań', level.label);
       this.props.selectLevel(level.value);
     }
+    if (this.props.page !== 1) {
+      const query = {
+        ...this.props.route.query,
+        page: 1,
+      };
+
+      void Router.replaceRoute('questions', query);
+    }
   };
 }
 
 const mapStateToProps = (state: AppState) => {
   return {
     selectedLevels: state.selectedLevels,
+    page: getPage(state),
+    route: state.routeDetails.current,
   };
 };
 
@@ -54,6 +68,9 @@ const mapDispatchToProps = {
   deselectLevel: ActionCreators.deselectLevel,
 };
 
-const LevelFilter = connect(mapStateToProps, mapDispatchToProps)(LevelFilterComponent);
+const LevelFilter = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LevelFilterComponent);
 
 export default LevelFilter;
