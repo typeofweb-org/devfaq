@@ -9,6 +9,8 @@ export interface Question {
   _categoryId: TechnologyKey;
   _levelId: LevelKey;
   acceptedAt?: string;
+  currentUserVotedOn: boolean;
+  votesCount: number;
 }
 
 const intialState: {
@@ -31,7 +33,7 @@ export const questions = (response = intialState, action: Actions): typeof intia
         ...action.payload,
         isLoading: !('error' in action.payload) && !('data' in action.payload),
       };
-    case ActionTypes.DELETE_QUESTION:
+    case ActionTypes.DELETE_QUESTION: {
       const id = 'id' in action.payload ? action.payload.id : undefined;
 
       const newResponse: undefined | ApiResponse<Question[]> = response.data
@@ -51,6 +53,51 @@ export const questions = (response = intialState, action: Actions): typeof intia
         isLoading: response.isLoading,
         abortController: response.abortController,
       };
+    }
+    case ActionTypes.QUESTION_UPVOTED: {
+      const id = action.payload.id;
+      return {
+        ...response,
+        ...(response.data && {
+          data: {
+            ...response.data,
+            data: response.data.data.map(q => {
+              if (q.id !== id) {
+                return q;
+              }
+              return {
+                ...q,
+                votesCount: q.votesCount + 1,
+                currentUserVotedOn: true,
+              };
+            }),
+          },
+        }),
+      };
+    }
+
+    case ActionTypes.QUESTION_DOWNVOTED: {
+      const id = action.payload.id;
+      return {
+        ...response,
+        ...(response.data && {
+          data: {
+            ...response.data,
+            data: response.data.data.map(q => {
+              if (q.id !== id) {
+                return q;
+              }
+              return {
+                ...q,
+                votesCount: q.votesCount - 1,
+                currentUserVotedOn: false,
+              };
+            }),
+          },
+        }),
+      };
+    }
+
     case ActionTypes.UPDATE_ROUTE_STARTED:
       return {
         data: { data: [] },

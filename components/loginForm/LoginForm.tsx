@@ -16,9 +16,9 @@ class LoginFormComponent extends React.Component<LoginFormReduxProps & WithRoute
     const { user, router } = this.props;
     if (user && router) {
       if (router.query && isString(router.query.previousPath)) {
-        void router.push(router.query.previousPath);
+        void router.replace(router.query.previousPath);
       } else {
-        void router.push('/');
+        void router.replace('/');
       }
     }
   }

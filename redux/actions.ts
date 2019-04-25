@@ -3,7 +3,7 @@ import { LevelKey } from '../constants/level';
 import { Question } from './reducers/questions';
 import { RouteDetails, AppStore, GetInitialPropsContext } from '../utils/types';
 import { Api, ApiResponse } from '../services/Api';
-import { getTechnology, getQuestionId } from './selectors/selectors';
+import { getTechnology, getQuestionId, getLoggedInUser } from './selectors/selectors';
 import { AuthData } from './reducers/auth';
 import { TechnologyKey, SortBy } from '../constants/technology-icon-items';
 import { CommonModalProps } from '../components/modals/baseModal/BaseModal';
@@ -49,6 +49,9 @@ export enum ActionTypes {
   LOGIN_STARTED = 'LOGIN_STARTED',
   LOGIN_ERROR = 'LOGIN_ERROR',
   LOGIN_SUCCESS = 'LOGIN_SUCCESS',
+
+  QUESTION_UPVOTED = 'QUESTION_UPVOTED',
+  QUESTION_DOWNVOTED = 'QUESTION_DOWNVOTED',
 }
 
 const SyncActionCreators = {
@@ -91,6 +94,9 @@ const SyncActionCreators = {
   loginStarted: () => createAction(ActionTypes.LOGIN_STARTED),
   loginError: (error?: Error) => createAction(ActionTypes.LOGIN_ERROR, error),
   loginSuccess: (authData: AuthData) => createAction(ActionTypes.LOGIN_SUCCESS, authData),
+
+  questionUpvoted: (id: Question['id']) => createAction(ActionTypes.QUESTION_UPVOTED, { id }),
+  questionDownvoted: (id: Question['id']) => createAction(ActionTypes.QUESTION_DOWNVOTED, { id }),
 };
 
 const AsyncActionCreators = {
@@ -203,6 +209,32 @@ const AsyncActionCreators = {
         }
         return dispatch(SyncActionCreators.loginError(err));
       });
+  },
+
+  upvoteQuestion: (questionId: Question['id'], ctx?: GetInitialPropsContext): AsyncAction => (
+    dispatch,
+    getState
+  ) => {
+    dispatch(SyncActionCreators.questionUpvoted(questionId));
+    const state = getState();
+    const user = getLoggedInUser(state);
+    return Api.upvoteQuestion({ questionId, userId: user!.id }, ctx).catch(err => {
+      dispatch(SyncActionCreators.questionDownvoted(questionId));
+      throw err;
+    });
+  },
+
+  downvoteQuestion: (questionId: Question['id'], ctx?: GetInitialPropsContext): AsyncAction => (
+    dispatch,
+    getState
+  ) => {
+    dispatch(SyncActionCreators.questionDownvoted(questionId));
+    const state = getState();
+    const user = getLoggedInUser(state);
+    return Api.downvoteQuestion({ questionId, userId: user!.id }, ctx).catch(err => {
+      dispatch(SyncActionCreators.questionUpvoted(questionId));
+      throw err;
+    });
   },
 };
 

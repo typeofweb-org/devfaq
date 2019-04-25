@@ -2,7 +2,7 @@ import { TechnologyKey, SortBy } from '../constants/technology-icon-items';
 import env from '../utils/env';
 import { LevelKey } from '../constants/level';
 import { Question } from '../redux/reducers/questions';
-import { AuthData, SessionData } from '../redux/reducers/auth';
+import { AuthData, SessionData, UserData } from '../redux/reducers/auth';
 import { GetInitialPropsContext } from '../utils/types';
 import { pickBy, isUndefined } from 'lodash';
 
@@ -215,6 +215,40 @@ export const Api = {
 
   async getLoggedInUser(ctx?: GetInitialPropsContext) {
     return makeRequest<SessionData>('GET', 'oauth/me', {}, {}, {}, ctx);
+  },
+
+  async upvoteQuestion(
+    { questionId, userId }: { questionId: Question['id']; userId: UserData['id'] },
+    ctx?: GetInitialPropsContext
+  ) {
+    return makeRequest<{}>(
+      'POST',
+      'question-votes',
+      {
+        _questionId: questionId,
+        _userId: userId,
+      },
+      {},
+      {},
+      ctx
+    );
+  },
+
+  async downvoteQuestion(
+    { questionId, userId }: { questionId: Question['id']; userId: UserData['id'] },
+    ctx?: GetInitialPropsContext
+  ) {
+    return makeRequest<{}>(
+      'DELETE',
+      'question-votes',
+      {
+        _questionId: questionId,
+        _userId: userId,
+      },
+      {},
+      {},
+      ctx
+    );
   },
 
   async logInWithGitHub() {

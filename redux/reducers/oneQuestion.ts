@@ -1,15 +1,6 @@
 import { Actions, ActionTypes } from '../actions';
-import { TechnologyKey } from '../../constants/technology-icon-items';
-import { LevelKey } from '../../constants/level';
 import { ApiResponse } from '../../services/Api';
-
-export interface Question {
-  id: number;
-  question: string;
-  _categoryId: TechnologyKey;
-  _levelId: LevelKey;
-  acceptedAt?: string;
-}
+import { Question } from './questions';
 
 const intialState: {
   error?: Error;
