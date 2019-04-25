@@ -233,8 +233,10 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
                 socialLogin: Joi.object({
                   github: Joi.alternatives(Joi.string(), Joi.number().integer()),
                 }).allow(null),
-              }),
-            }).allow(null),
+              }).required(),
+            })
+              .required()
+              .allow(null),
           }).required(),
         },
       },
@@ -243,7 +245,7 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
           return { data: request.auth.credentials.session.toJSON() };
         }
 
-        return null;
+        return { data: null };
       },
     });
   },

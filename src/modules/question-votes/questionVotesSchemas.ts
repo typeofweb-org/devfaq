@@ -16,7 +16,9 @@ export const questionVotesRoutes = {
       options: {
         auth: {
           mode: 'required',
-          scope: ['admin', 'user-{payload._userId}'],
+          access: {
+            scope: ['admin', 'user-{query._userId}'],
+          },
         },
         tags: ['api', 'questions', 'votes'],
         validate: CreateQuestionVoteRequestSchema,
@@ -26,7 +28,7 @@ export const questionVotesRoutes = {
         },
       },
       async handler(request) {
-        const { _userId, _questionId } = request.payload;
+        const { _userId, _questionId } = request.query;
 
         const question = await Question.findByPk(_questionId, { attributes: ['id'] });
         if (!question) {
@@ -56,6 +58,37 @@ export const questionVotesRoutes = {
             _questionId: questionVote._questionId,
           },
         };
+      },
+    });
+
+    await server.route({
+      method: 'DELETE',
+      path: '/question-votes',
+      options: {
+        auth: {
+          mode: 'required',
+          access: {
+            scope: ['admin', 'user-{query._userId}'],
+          },
+        },
+        tags: ['api', 'questions', 'votes'],
+        validate: CreateQuestionVoteRequestSchema,
+        description: 'Votes on a question',
+        response: {
+          emptyStatusCode: 204,
+        },
+      },
+      async handler(request) {
+        const { _userId, _questionId } = request.query;
+
+        await QuestionVote.destroy({
+          where: {
+            _userId,
+            _questionId,
+          },
+        });
+
+        return null;
       },
     });
   },
