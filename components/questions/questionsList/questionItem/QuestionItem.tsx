@@ -8,6 +8,7 @@ import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
 
 import { isEqual } from 'lodash';
 import ActiveLink from '../../../activeLink/ActiveLink';
+import QuestionVoting from './QuestionVoting';
 
 const longDate = (dateStr?: string) => {
   if (!dateStr) {
@@ -83,15 +84,18 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
           active: isSelected,
         })}
       >
-        {this.maybeRenderCheckbox()}
-        {this.maybeRenderAdminButtons()}
+        <div className="app-questions--content-container">
+          {this.maybeRenderCheckbox()}
+          {this.maybeRenderAdminButtons()}
 
-        <div className="app-questions--question--text" itemProp="text">
-          <MarkdownText value={question.question} />
+          <div className="app-questions--question--text" itemProp="text">
+            <MarkdownText value={question.question} />
+          </div>
+
+          {this.renderMeta()}
+          {this.maybeRenderDeleteButton()}
         </div>
-
-        {this.renderMeta()}
-        {this.maybeRenderDeleteButton()}
+        {this.maybeRenderVoting()}
       </div>
     );
   }
@@ -143,6 +147,14 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
         </time>
       </div>
     );
+  }
+
+  maybeRenderVoting() {
+    if (this.props.editable) {
+      return null;
+    }
+
+    return <QuestionVoting question={this.props.question} />;
   }
 
   maybeRenderAdminButtons() {
