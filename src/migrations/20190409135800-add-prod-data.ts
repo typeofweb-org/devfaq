@@ -9,9 +9,10 @@ const data = require('./out.json').map(
       acceptedAt: item.acceptedAt,
       createdAt: item.createdAt,
       updatedAt: item.updatedAt,
-      _categoryId: item.category,
-      _levelId: item.level,
-      _statusId: 'accepted',
+      _categoryId: item._categoryId,
+      _levelId: item._levelId,
+      _statusId: item._statusId,
+      version: item.version,
     };
   }
 );
