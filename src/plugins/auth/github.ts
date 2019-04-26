@@ -3,6 +3,7 @@ import Bell from 'bell';
 import Boom from 'boom';
 import fetch from 'node-fetch';
 import { AuthProviderOptions } from '.';
+import { isProd } from '../../config';
 
 export interface GitHubAuthPluginConfig {
   githubClientId: string;
@@ -45,6 +46,7 @@ const GitHubAuthPlugin: Hapi.Plugin<GitHubAuthPluginConfig & AuthProviderOptions
       clientId: options.githubClientId,
       clientSecret: options.githubClientSecret,
       isSecure: options.isProduction,
+      forceHttps: isProd(),
     };
     await server.auth.strategy('github', 'bell', bellOptions);
 
