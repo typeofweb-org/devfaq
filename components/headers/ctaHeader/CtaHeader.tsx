@@ -49,7 +49,7 @@ class CtaHeaderComponent extends React.Component<
           </nav>
 
           <div className="call-to-action-buttons">
-            <ActiveLink route={this.props.downloadUrl}>
+            {/* <ActiveLink route={this.props.downloadUrl}>
               <a
                 onClick={this.onDownloadClick}
                 target="_blank"
@@ -61,7 +61,7 @@ class CtaHeaderComponent extends React.Component<
               >
                 Pobierz plik PDF
               </a>
-            </ActiveLink>
+            </ActiveLink> */}
             <button
               className="round-button branding-button-inverse"
               onClick={this.onOpenAddQuestionModalClick}
