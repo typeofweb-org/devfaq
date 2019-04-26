@@ -17,6 +17,8 @@ if (!getConfig('SENTRY_DSN')) {
 
 if (getConfig('NODE_ENV') !== 'production') {
   dotenv.config({ path: '.env.dev' });
+} else {
+  dotenv.config();
 }
 
 // tslint:disable-next-line:no-floating-promises
