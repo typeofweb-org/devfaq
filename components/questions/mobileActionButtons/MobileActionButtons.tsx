@@ -2,7 +2,7 @@ import './mobileActionButtons.scss';
 import * as React from 'react';
 import { AppState } from '../../../redux/reducers';
 import { connect } from 'react-redux';
-import * as classNames from 'classnames';
+// import * as classNames from 'classnames';
 import { ActionCreators } from '../../../redux/actions';
 import { getAreAnyQuestionSelected, getDownloadUrl } from '../../../redux/selectors/selectors';
 
@@ -33,7 +33,7 @@ class MobileActionButtonsComponent extends React.Component<
             onClick={this.props.uiOpenAddQuestionModal}
           />
         )}
-        {!justDownload && (
+        {/* {!justDownload && (
           <a
             className={classNames('download', 'circle-button', {
               disabled: !this.props.areAnyQuestionSelected,
@@ -56,7 +56,7 @@ class MobileActionButtonsComponent extends React.Component<
           >
             Pobierz plik PDF
           </a>
-        )}
+        )} */}
       </div>
     );
   }
