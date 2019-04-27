@@ -8,7 +8,7 @@ import { User } from '../../models/User';
 import { Op } from 'sequelize';
 import { Session } from '../../models/Session';
 import { isString } from 'util';
-import { createNewSession, getNewSessionValidUntil } from './session';
+import { createNewSession } from './session';
 
 declare module 'hapi' {
   interface AuthCredentials {
@@ -44,19 +44,19 @@ export interface AuthProviderOptions {
   next: AuthProviderNext;
 }
 
-async function maybeUpdateSessionValidity(session: Session) {
-  const validUntil = session.validUntil;
-  const newValidUntil = getNewSessionValidUntil(session.keepMeSignedIn);
+// async function maybeUpdateSessionValidity(session: Session) {
+//   const validUntil = session.validUntil;
+//   const newValidUntil = getNewSessionValidUntil(session.keepMeSignedIn);
 
-  // tslint:disable-next-line:no-magic-numbers
-  const ONE_MINUTE = 1000 * 60;
-  if (newValidUntil.getTime() - validUntil.getTime() <= ONE_MINUTE) {
-    return; // update at most after 1 minute
-  }
+//   // tslint:disable-next-line:no-magic-numbers
+//   const ONE_MINUTE = 1000 * 60;
+//   if (newValidUntil.getTime() - validUntil.getTime() <= ONE_MINUTE) {
+//     return; // update at most after 1 minute
+//   }
 
-  session.validUntil = newValidUntil;
-  await session.save();
-}
+//   session.validUntil = newValidUntil;
+//   await session.save();
+// }
 
 const findOrCreateAccountFor = async ({
   serviceName,
@@ -138,6 +138,7 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
         path: '/',
       },
       async validateFunc(request, session: { id?: string | number } | undefined) {
+        console.log(session);
         if (!session || !session.id) {
           return { valid: false };
         }
