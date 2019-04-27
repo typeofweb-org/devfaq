@@ -23,6 +23,15 @@ class LoginFormComponent extends React.Component<LoginFormReduxProps & WithRoute
     }
   }
 
+  reportEvent = (action: string) => {
+    globalReportEvent(action, 'Logowanie');
+  };
+
+  logInWithGithub = () => {
+    this.reportEvent('Zaloguj się przez GitHuba');
+    this.props.logInWithGitHub();
+  };
+
   render() {
     return (
       <div className="login-overlay">
@@ -30,11 +39,11 @@ class LoginFormComponent extends React.Component<LoginFormReduxProps & WithRoute
           <AppLogo />
           {this.props.auth.error && <p>{this.props.auth.error.message}</p>}
           <p>Stwórz konto już dzisiaj i korzystaj z dodatkowych funkcji serwisu Fefaq!</p>
-          <button onClick={this.props.logInWithGitHub} className="login-with-github">
+          <button onClick={this.logInWithGithub} className="login-with-github">
             Zaloguj się przez GitHuba
           </button>
           <footer>
-            <ActiveLink route="/">
+            <ActiveLink route="/" onClick={() => this.reportEvent('Powrót do strony głównej')}>
               <a>Powrót do strony głównej</a>
             </ActiveLink>
           </footer>
