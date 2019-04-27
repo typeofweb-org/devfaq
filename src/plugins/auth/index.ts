@@ -144,7 +144,7 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
 
         const sessionModel = await Session.findOne({
           where: {
-            // id: session.id,
+            id: session.id,
             validUntil: {
               [Op.gte]: new Date(),
             },
