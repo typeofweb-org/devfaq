@@ -46,6 +46,9 @@ $shadow-width: 2px;
     opacity: 0;
     transition: opacity $transition-time, z-index 0ms;
     transition-delay: 0ms, $transition-time;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     &.being-removed {
       z-index: 1;
       opacity: 1;

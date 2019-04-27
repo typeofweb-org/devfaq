@@ -24,12 +24,19 @@ const QuestionVotingComponent: React.FC<QuestionVotingProps> = ({
 }) => {
   const { votesCount, currentUserVotedOn } = question;
 
+  const reportEvent = React.useCallback((action: string) => {
+    globalReportEvent(action, 'Głosowanie');
+  }, []);
+
   const onVote = React.useCallback(() => {
     if (!isLoggedIn) {
+      reportEvent('logowanie');
       void Router.pushRoute('login', { previousPath: route.asPath || '' });
     } else if (currentUserVotedOn) {
+      reportEvent('downvote');
       void downvoteQuestion(question.id);
     } else {
+      reportEvent('upvote');
       void upvoteQuestion(question.id);
     }
   }, [isLoggedIn, currentUserVotedOn, route, question]);
