@@ -157,7 +157,7 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
           return { valid: false };
         }
 
-        await maybeUpdateSessionValidity(sessionModel);
+        // await maybeUpdateSessionValidity(sessionModel);
 
         const roleId = sessionModel._user && sessionModel._user._roleId;
         const userId = sessionModel._user && sessionModel._user.id;
