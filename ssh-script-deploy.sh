@@ -26,16 +26,3 @@ devil www restart api.fefaq.pl
 curl -I api.fefaq.pl
 
 echo "👉 Done! 😱 👍"
-
-# function kill_ssh_agent {
-#   kill -9 $SSH_AGENT_PID 2> /dev/null; SSH_AGENT_PID=""
-# }
-
-# echo "Trying to kill existing connections…"
-# kill_ssh_agent
-
-# eval $(ssh-agent -s) && ssh-add ~/.ssh/github_rsa
-
-# kill_ssh_agent
-
-
