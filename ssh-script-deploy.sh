@@ -17,6 +17,8 @@ echo "👉 Installing deps…"
 npm i
 echo "👉 Bulding…"
 NODE_ENV=production ENV=production npm run build
+echo "👉 Running migrations…"
+NODE_ENV=production ENV=production npm run prepare-db
 echo `git rev-parse HEAD` > .version
 echo "👉 Pruning…"
 npm prune
