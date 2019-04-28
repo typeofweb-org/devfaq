@@ -34,7 +34,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
 
     return (
       <section className="app-questions">
-        {!this.props.questions.isLoading && technology && (
+        {this.props.questions.data && technology && (
           <AllQuestionsHeader
             category={category}
             questionsLength={length}
@@ -43,7 +43,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
           />
         )}
         {this.renderList()}
-        {!this.props.questions.isLoading && technology && (
+        {this.props.questions.data && technology && (
           <AllQuestionsFooter onAddNewClick={this.onAddNewClick} />
         )}
         <QuestionsPagination />
