@@ -252,6 +252,7 @@ $shadow-width: 2px;
       height: 18px;
       display: inline-flex;
       justify-content: space-between;
+      background: none;
       cursor: pointer;
       [data-whatinput='mouse'] &:focus {
         outline: none;
