@@ -71,7 +71,7 @@
     "why-did-you-update": "1.0.6"
   },
   "scripts": {
-    "dev": "rm -f server/*.js && nodemon server/server.ts",
+    "dev": "rm -rf ./.next ./public ./server/*.js ./server/*.map && nodemon server/server.ts",
     "build": "echo $NODE_ENV && rm -rf ./.next ./public ./server/*.js ./server/*.map && next build && next export -o public && tsc --project tsconfig.server.json",
     "start": "node app.js",
     "analyze": "cross-env ANALYZE=1 NODE_ENV=production next build",

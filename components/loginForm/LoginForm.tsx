@@ -1,24 +1,24 @@
 import * as React from 'react';
 import './loginForm.scss';
-import { withRouter, WithRouterProps } from 'next/router';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/reducers/index';
 import { ActionCreators } from '../../redux/actions';
 import { isString } from 'lodash';
-import { getLoggedInUser } from '../../redux/selectors/selectors';
+import { getLoggedInUser, getPreviousPath } from '../../redux/selectors/selectors';
 import AppLogo from '../appLogo/AppLogo';
 import ActiveLink from '../activeLink/ActiveLink';
+import { Router } from '../../server/routes';
 
 type LoginFormReduxProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-class LoginFormComponent extends React.Component<LoginFormReduxProps & WithRouterProps> {
+class LoginFormComponent extends React.Component<LoginFormReduxProps> {
   componentDidUpdate() {
-    const { user, router } = this.props;
-    if (user && router) {
-      if (router.query && isString(router.query.previousPath)) {
-        void router.replace(router.query.previousPath);
+    const { user, previousPath, isTransitioning } = this.props;
+    if (user && !isTransitioning) {
+      if (isString(previousPath)) {
+        void Router.replaceRoute(previousPath);
       } else {
-        void router.replace('/');
+        void Router.replaceRoute('/');
       }
     }
   }
@@ -33,6 +33,8 @@ class LoginFormComponent extends React.Component<LoginFormReduxProps & WithRoute
   };
 
   render() {
+    const { previousPath } = this.props;
+    const route = isString(previousPath) ? previousPath : '/';
     return (
       <div className="login-overlay">
         <div className="login-container">
@@ -43,7 +45,7 @@ class LoginFormComponent extends React.Component<LoginFormReduxProps & WithRoute
             Zaloguj się przez GitHuba
           </button>
           <footer>
-            <ActiveLink route="/" onClick={() => this.reportEvent('Powrót do strony głównej')}>
+            <ActiveLink route={route} onClick={() => this.reportEvent('Powrót do strony głównej')}>
               <a>Powrót do strony głównej</a>
             </ActiveLink>
           </footer>
@@ -57,6 +59,8 @@ const mapStateToProps = (state: AppState) => {
   return {
     auth: state.auth,
     user: getLoggedInUser(state),
+    previousPath: getPreviousPath(state),
+    isTransitioning: state.routeDetails.isTransitioning,
   };
 };
 
@@ -67,5 +71,5 @@ const mapDispatchToProps = {
 const LoginForm = connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter<LoginFormReduxProps>(LoginFormComponent));
+)(LoginFormComponent);
 export default LoginForm;
