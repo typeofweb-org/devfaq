@@ -29,6 +29,11 @@ export const getQuestionId = createSelector(
   ({ current }) => current.query && (current.query.id as string)
 );
 
+export const getPreviousPath = createSelector(
+  routeDetailsSelector,
+  ({ current }) => current.query && (current.query.previousPath as string | undefined)
+);
+
 export const getAreAnyQuestionSelected = createSelector(
   selectedQuestionsSelector,
   selectedQuestions => selectedQuestions.length > 0

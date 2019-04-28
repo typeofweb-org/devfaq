@@ -10,13 +10,16 @@ type LoginStatusLinkProps = ReturnType<typeof mapStateToProps>;
 const LoginStatusLinkComponent: React.FC<LoginStatusLinkProps & { onLoginClick?: () => any }> = ({
   user,
   onLoginClick,
+  route,
 }) => {
   if (user) {
     return <UserAvatar user={user} />;
   }
 
+  const previousPath = route.asPath;
+
   return (
-    <ActiveLink route="/login">
+    <ActiveLink route="login" params={previousPath ? { previousPath } : {}}>
       <a onClick={onLoginClick}>Zaloguj</a>
     </ActiveLink>
   );
@@ -24,6 +27,7 @@ const LoginStatusLinkComponent: React.FC<LoginStatusLinkProps & { onLoginClick?:
 
 const mapStateToProps = (state: AppState) => {
   return {
+    route: state.routeDetails.current,
     user: getLoggedInUser(state),
   };
 };
