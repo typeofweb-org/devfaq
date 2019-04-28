@@ -100,7 +100,7 @@ export const questions = (response = intialState, action: Actions): typeof intia
 
     case ActionTypes.UPDATE_ROUTE_STARTED:
       return {
-        data: { data: [] },
+        data: undefined,
         isLoading: false,
         abortController: response.abortController,
       };
