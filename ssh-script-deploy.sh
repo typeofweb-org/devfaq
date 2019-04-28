@@ -1,5 +1,5 @@
 #!/bin/bash
-
+source ~/.bash_profile
 set -e
 
 cd ~/domains/api.fefaq.pl/public_nodejs
