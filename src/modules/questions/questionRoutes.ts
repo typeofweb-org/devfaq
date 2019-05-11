@@ -70,17 +70,19 @@ export const questionsRoutes = {
 
         const order = getOrderFromQuery(request);
 
-        const questions = await Question.findAllWithVotes({
-          where,
-          limit,
-          offset,
-          ...(order && { order }),
-          subQuery: false,
-        });
+        const questions = await Question.findAllWithVotes(
+          {
+            where,
+            limit,
+            offset,
+            ...(order && { order }),
+            subQuery: false,
+          },
+          currentUser && currentUser.id
+        );
 
         const data = questions.map(q => {
-          const currentUserVotedOn = q.didUserVoteOn(currentUser);
-
+          console.log(q.didUserVoteOn);
           return {
             id: q.id,
             question: q.question,
@@ -89,7 +91,7 @@ export const questionsRoutes = {
             _statusId: q._statusId,
             acceptedAt: q.acceptedAt,
             votesCount: q.votesCount,
-            currentUserVotedOn,
+            currentUserVotedOn: q.didUserVoteOn,
           };
         });
 
@@ -177,7 +179,7 @@ export const questionsRoutes = {
           _levelId: q._levelId,
           _statusId: q._statusId,
           acceptedAt: q.acceptedAt,
-          currentUserVotedOn: q.didUserVoteOn(currentUser),
+          currentUserVotedOn: currentUser ? await Question.didUserVoteOn(currentUser, q) : false,
           votesCount: q.votesCount,
         };
 
@@ -220,7 +222,9 @@ export const questionsRoutes = {
           _levelId: question._levelId,
           _statusId: question._statusId,
           acceptedAt: question.acceptedAt,
-          currentUserVotedOn: question.didUserVoteOn(currentUser),
+          currentUserVotedOn: currentUser
+            ? await Question.didUserVoteOn(currentUser, question)
+            : false,
           votesCount: question.votesCount,
         };
 

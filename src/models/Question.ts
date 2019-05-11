@@ -65,16 +65,23 @@ export class Question extends Model<Question> {
     }
   }
 
-  static async findAllWithVotes({
-    limit,
-    offset,
-    order,
-  }: IFindOptions<Question>): Promise<Question[]> {
+  static async findAllWithVotes(
+    { limit, offset, order }: IFindOptions<Question>,
+    userId?: User['id']
+  ): Promise<Question[]> {
     // tslint:disable-next-line:no-any
     const orders = order as any;
+
+    console.log({ userId });
+
+    const didUserVoteOnQuery = userId
+      ? `COALESCE( (SELECT true FROM "QuestionVote" WHERE "_questionId" = "Question"."id" AND "_userId" = :userId), false)`
+      : `false`;
+
     return sequelize.query(
       `
     SELECT
+      ${didUserVoteOnQuery} as "didUserVoteOn",
       "Question"."id",
       "Question"."question",
       "Question"."_categoryId",
@@ -95,11 +102,22 @@ export class Question extends Model<Question> {
       {
         type: Sequelize.QueryTypes.SELECT,
         nest: true,
-        replacements: { limit, offset },
+        replacements: { limit, offset, userId },
         // tslint:disable-next-line:no-any
         model: Question as any,
       }
     );
+  }
+
+  static async didUserVoteOn(user: User, question: Question): Promise<boolean> {
+    const vote = await QuestionVote.findOne({
+      where: {
+        _userId: user.id,
+        _questionId: question.id,
+      },
+    });
+
+    return Boolean(vote);
   }
 
   @Unique
@@ -137,7 +155,15 @@ export class Question extends Model<Question> {
   _votes?: Array<User & { QuestionVote: QuestionVote }>;
 
   @Column({
-    type: new DataType.VIRTUAL(DataType.INTEGER, ['_votes']),
+    type: new DataType.VIRTUAL(DataType.BOOLEAN),
+    get() {
+      return this.getDataValue('didUserVoteOn') || false;
+    },
+  })
+  didUserVoteOn?: boolean;
+
+  @Column({
+    type: new DataType.VIRTUAL(DataType.INTEGER),
     get() {
       if (this.getDataValue('votesCount')) {
         return this.getDataValue('votesCount');
@@ -151,10 +177,4 @@ export class Question extends Model<Question> {
     },
   })
   votesCount!: number;
-
-  didUserVoteOn(user: User | undefined): boolean {
-    return Boolean(
-      this._votes && user && this._votes.some(v => v.QuestionVote._userId === user.id)
-    );
-  }
 }
