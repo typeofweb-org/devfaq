@@ -12,6 +12,7 @@ import { healthCheckRoute } from './modules/health-check/healthCheckRoutes';
 import { questionsRoutes } from './modules/questions/questionRoutes';
 import AuthPlugin from './plugins/auth';
 import { questionVotesRoutes } from './modules/question-votes/questionVotesSchemas.js';
+import * as fs from 'fs';
 
 declare module 'hapi' {
   interface PluginSpecificConfiguration {
@@ -96,7 +97,7 @@ export async function getServerWithPlugins() {
   const swaggerOptions: HapiSwagger.Options = {
     info: {
       title: `${pkg.name} Documentation`,
-      version: getConfig('ENV') + '-' + pkg.version,
+      version: getConfig('ENV') + '-' + pkg.version + '-' + fs.readFileSync('.version', 'utf-8'),
     },
     jsonEditor: true,
     auth: false,
