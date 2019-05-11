@@ -70,7 +70,7 @@ export const questionsRoutes = {
 
         const order = getOrderFromQuery(request);
 
-        const questions = await Question.scope('withVotes').findAll({
+        const questions = await Question.findAllWithVotes({
           where,
           limit,
           offset,
@@ -113,7 +113,7 @@ export const questionsRoutes = {
       async handler(request) {
         const { question, level, category } = request.payload;
 
-        const newQuestion = await Question.scope('withVotes').create({
+        const newQuestion = await Question.create({
           question,
           _levelId: level,
           _categoryId: category,
