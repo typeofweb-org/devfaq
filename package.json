@@ -25,7 +25,7 @@
     "test:ci": "cross-env NODE_ENV=test ENV=test npm run mocha:ci",
     "mocha:ci": "npm run test:prepare:integration && cross-env mocha 'src/**/*.test.ts'",
     "clean": "rm -rf dist",
-    "build": "npm run clean && tsc && rsync -av --exclude='*.ts' src/** dist/src/",
+    "build": "npm run clean && npm run tsc && rsync -av --exclude='*.ts' src/** dist/src/",
     "prepare-db": "npm run migrate:copy && npm run db-clean && npm run migrate:db",
     "db-clean": "rm dist/src/migrations/*.ts && rm dist/src/migrations/*.js.map",
     "migrate:db": "sequelize db:migrate --config='dist/src/config/database.js' --migrations-path='dist/src/migrations'",
