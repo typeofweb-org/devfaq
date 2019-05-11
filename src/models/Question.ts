@@ -21,6 +21,7 @@ import { QuestionLevel } from './QuestionLevel';
 import { QuestionVote } from './QuestionVote';
 import { User } from './User';
 import { sequelize } from '../db';
+import { isArray } from 'util';
 
 function getQuestionsOrderQuery(orders: Array<[string, 'DESC' | 'ASC'] | [string]>): string {
   if (!orders || !orders.length) {
@@ -29,6 +30,9 @@ function getQuestionsOrderQuery(orders: Array<[string, 'DESC' | 'ASC'] | [string
 
   return orders
     .filter(o => o.length > 0)
+    .filter(([colName]) => {
+      return colName in Question.rawAttributes;
+    })
     .map(o => {
       const [colName, order = ''] = o;
       if (colName === 'votesCount') {
@@ -39,6 +43,20 @@ function getQuestionsOrderQuery(orders: Array<[string, 'DESC' | 'ASC'] | [string
     })
     .join(',\n');
 }
+
+function getQuestionsWhereQuery(
+  where: { [P in keyof Question]?: number | string | boolean | number[] | string[] | boolean[] }
+): string {
+  return Object.entries(where)
+    .map(([key, val]) => {
+      if (isArray(val)) {
+        return `"Question"."${key}" IN (:${key})`;
+      }
+      return `"Question"."${key}" = :${key}`;
+    })
+    .join(' AND ');
+}
+
 @Scopes({
   withVotes() {
     return {
@@ -66,13 +84,13 @@ export class Question extends Model<Question> {
   }
 
   static async findAllWithVotes(
-    { limit, offset, order }: IFindOptions<Question>,
+    { limit, offset, order, where }: IFindOptions<Question>,
     userId?: User['id']
   ): Promise<Question[]> {
     // tslint:disable-next-line:no-any
     const orders = order as any;
-
-    console.log({ userId });
+    // tslint:disable-next-line:no-any
+    const whereQuery = getQuestionsWhereQuery(where as any);
 
     const didUserVoteOnQuery = userId
       ? `COALESCE( (SELECT true FROM "QuestionVote" WHERE "_questionId" = "Question"."id" AND "_userId" = :userId), false)`
@@ -93,6 +111,9 @@ export class Question extends Model<Question> {
     LEFT OUTER JOIN (
       "QuestionVote" INNER JOIN "User" AS "_votes" ON "_votes"."id" = "QuestionVote"."_userId"
     ) ON "Question"."id" = "QuestionVote"."_questionId"
+
+    ${whereQuery ? `WHERE ${whereQuery}` : ''}
+    
     GROUP BY "Question".id
     ORDER BY  ${getQuestionsOrderQuery(orders)}
     ${limit ? 'LIMIT :limit' : ''}
@@ -102,7 +123,7 @@ export class Question extends Model<Question> {
       {
         type: Sequelize.QueryTypes.SELECT,
         nest: true,
-        replacements: { limit, offset, userId },
+        replacements: { limit, offset, userId, ...where },
         // tslint:disable-next-line:no-any
         model: Question as any,
       }

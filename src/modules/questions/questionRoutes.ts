@@ -82,7 +82,6 @@ export const questionsRoutes = {
         );
 
         const data = questions.map(q => {
-          console.log(q.didUserVoteOn);
           return {
             id: q.id,
             question: q.question,
