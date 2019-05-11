@@ -22,6 +22,8 @@ export const AllQuestionsHeader: React.SFC<{
           <option value="acceptedAt*asc">od najstarszych</option>
           <option value="level*asc">od najprostszych</option>
           <option value="level*desc">od najtrudniejszych</option>
+          <option value="votesCount*asc">od najmniej popularnych</option>
+          <option value="votesCount*desc">od najpopularniejszych</option>
         </select>
       </label>
     </header>
