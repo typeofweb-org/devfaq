@@ -57,7 +57,9 @@ export function getNewSessionValidUntil(keepMeSignedIn: boolean): Date {
   return keepMeSignedIn ? now.add(7, 'days').toDate() : now.add(2, 'hours').toDate();
 }
 export const CustomJoi = Joi.extend({
-  base: Joi.array(),
+  // @todo
+  // tslint:disable-next-line:no-any
+  base: Joi.array() as any,
   name: 'stringArray',
   coerce: (value, _state, _options) => (isString(value) ? value.split(',') : value),
 }) as (typeof Joi) & { stringArray: typeof Joi.array };

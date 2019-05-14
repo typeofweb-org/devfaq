@@ -22,7 +22,7 @@ describe('helloWorldRoute', async () => {
       url: '/questions',
     });
 
-    expect(res.result).to.eql([]);
+    expect(res.result).to.eql({ data: [], meta: { total: 0 } });
   });
 
   const assertAreAllAccepted = <T extends Array<any>>(result: T) => {
@@ -64,7 +64,7 @@ describe('helloWorldRoute', async () => {
       });
 
       const result = res.result as Joi.SchemaValue<typeof GetQuestionsResponseSchema>;
-      expect(result).to.be.an('array');
+      expect(result).to.be.an('object');
 
       assertAreAllAccepted(result!.data);
       assertAreAllUnique(result!.data);

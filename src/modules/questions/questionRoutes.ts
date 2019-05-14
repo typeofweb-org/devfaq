@@ -61,7 +61,9 @@ export const questionsRoutes = {
         const where = {
           ...(category && { _categoryId: category }),
           ...(level && { _levelId: level }),
-          ...(status && isAdmin(request) && { _statusId: status }),
+          ...(status && isAdmin(request)
+            ? { _statusId: status }
+            : { _statusId: QUESTION_STATUS.ACCEPTED }),
         };
 
         const total = await Question.count({

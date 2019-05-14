@@ -11,7 +11,7 @@ import { helloWorldRoute } from './modules/hello-world/helloWorldRoute';
 import { healthCheckRoute } from './modules/health-check/healthCheckRoutes';
 import { questionsRoutes } from './modules/questions/questionRoutes';
 import AuthPlugin from './plugins/auth';
-import { questionVotesRoutes } from './modules/question-votes/questionVotesSchemas.js';
+import { questionVotesRoutes } from './modules/question-votes/questionVotesSchemas';
 import * as fs from 'fs';
 
 declare module 'hapi' {
