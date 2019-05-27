@@ -65,7 +65,7 @@ export const CustomJoi = Joi.extend({
 }) as (typeof Joi) & { stringArray: typeof Joi.array };
 
 // tslint:disable-next-line:no-any
-export const getCurrentUser = (request: Hapi.Request<any, any>): User | undefined => {
+export const getCurrentUser = (request: Hapi.Request<any, any, any>): User | undefined => {
   return (
     request &&
     request.auth &&
@@ -76,7 +76,7 @@ export const getCurrentUser = (request: Hapi.Request<any, any>): User | undefine
 };
 
 // tslint:disable-next-line:no-any
-export const isAdmin = (request: Hapi.Request<any, any>): boolean => {
+export const isAdmin = (request: Hapi.Request<any, any, any>): boolean => {
   const user = getCurrentUser(request);
   return Boolean(user && user._roleId === USER_ROLE.ADMIN);
 };

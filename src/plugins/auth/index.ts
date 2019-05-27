@@ -36,7 +36,7 @@ interface AuthUserData {
 type AuthProviderNext = (
   data: AuthUserData,
   // tslint:disable-next-line:no-any
-  request: Hapi.Request<any, any>,
+  request: Hapi.Request<any, any, any>,
   h: Hapi.ResponseToolkit
 ) => Hapi.Lifecycle.ReturnValue;
 
