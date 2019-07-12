@@ -23,7 +23,7 @@ NODE_ENV=$ENVIRONMENT npm run build
 echo "👉 Cleaning"
 ssh typeofweb@s18.mydevil.net SUBDOMAIN=$SUBDOMAIN 'bash -s' < $DIR/ssh-script-clean.sh
 echo "👉 Uploading…"
-rsync -avP -e ssh --exclude=node_modules --exclude=".git" --include="**/.*" ./ typeofweb@s18.mydevil.net:/home/sinpai/domains/$SUBDOMAIN.devfaq.pl/public_nodejs/
+rsync -avP -e ssh --exclude=node_modules --exclude=".git" --include="**/.*" ./ typeofweb@s18.mydevil.net:/home/typeofweb/domains/$SUBDOMAIN.devfaq.pl/public_nodejs/
 echo "👉 Installing…"
 ssh typeofweb@s18.mydevil.net SUBDOMAIN=$SUBDOMAIN 'bash -s' < $DIR/ssh-script-deploy.sh
 echo "👉 Done! 😎"
