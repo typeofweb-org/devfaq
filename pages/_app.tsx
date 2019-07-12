@@ -36,26 +36,20 @@ function getRouteDetails(routeDetails: RouteDetails) {
   return newRouteDetails;
 }
 
-Router.events.on('onRouteChangeComplete', (...args) => console.log('onRouteChangeComplete', args));
-Router.events.on('onRouteChangeStart', (...args) => console.log('onRouteChangeStart', args));
-Router.events.on('onRouteChangeError', (...args) => console.log('onRouteChangeError', args));
-
 class MyApp extends AppComponent<{ store: AppStore }> {
-  static async getInitialProps({ Component, ctx }: AppContext) {
-    console.log('getInitialProps');
+  static async getInitialProps({ Component, ctx, router }: AppContext) {
     if (ctx.req) {
       await ctx.store.dispatch(ActionCreators.validateToken(ctx));
     }
 
-    // const newRouteDetails = getRouteDetails(ctx);
-    console.log(Router.router);
+    const newRouteDetails = getRouteDetails(router);
 
-    // // when changing routes on the client side
-    // // it's actually still in progress at this point
-    // const routeChangeInProgress = !ctx.req;
-    // await ctx.store.dispatch(
-    //   ActionCreators.updateRouteSuccess(newRouteDetails, routeChangeInProgress)
-    // );
+    // when changing routes on the client side
+    // it's actually still in progress at this point
+    const routeChangeInProgress = !ctx.req;
+    await ctx.store.dispatch(
+      ActionCreators.updateRouteSuccess(newRouteDetails, routeChangeInProgress)
+    );
 
     const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
 
@@ -71,28 +65,15 @@ class MyApp extends AppComponent<{ store: AppStore }> {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
-    Router.router.events.on('onRouteChangeComplete', (...args) =>
-      console.log('onRouteChangeComplete', args)
-    );
-    Router.router.events.on('onRouteChangeStart', (...args) =>
-      console.log('onRouteChangeStart', args)
-    );
-
-    Router.events.on('onRouteChangeComplete', (...args) =>
-      console.log('onRouteChangeComplete', args)
-    );
-    Router.events.on('onRouteChangeStart', (...args) => console.log('onRouteChangeStart', args));
-    Router.events.on('onRouteChangeError', (...args) => console.log('onRouteChangeError', args));
-    Router.events.on('onRouteChangeComplete', this.onRouteChangeComplete);
-    Router.events.on('onRouteChangeStart', this.onRouteChangeStart);
-    Router.events.on('onRouteChangeError', this.onRouteChangeError);
+    Router.events.on('routeChangeComplete', this.onRouteChangeComplete);
+    Router.events.on('routeChangeStart', this.onRouteChangeStart);
+    Router.events.on('routeChangeError', this.onRouteChangeError);
   }
 
   componentWillUnmount() {
-    // Router.events.off('onRouteChangeComplete', this.onRouteChangeComplete);
-    // Router.events.off('onRouteChangeStart', this.onRouteChangeStart);
-    // Router.events.off('onRouteChangeError', this.onRouteChangeError);
+    Router.events.off('routeChangeComplete', this.onRouteChangeComplete);
+    Router.events.off('routeChangeStart', this.onRouteChangeStart);
+    Router.events.off('routeChangeError', this.onRouteChangeError);
   }
 
   onRouteChangeComplete = (url: string) => {

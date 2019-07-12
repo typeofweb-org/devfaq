@@ -152,7 +152,7 @@ export const Api = {
     ctx?: GetInitialPropsContext
   ) {
     const limit = PAGE_SIZE;
-    const offset = PAGE_SIZE * ((page || 0) - 1);
+    const offset = PAGE_SIZE * ((page || 1) - 1);
 
     return makeRequest<Question[]>(
       'GET',
