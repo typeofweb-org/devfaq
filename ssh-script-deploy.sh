@@ -25,6 +25,6 @@ npm prune
 
 echo "👉 Restarting the server…"
 devil www restart api.devfaq.pl
-curl -I api.devfaq.pl
+curl -I https://api.devfaq.pl
 
 echo "👉 Done! 😱 👍"
