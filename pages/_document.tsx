@@ -37,7 +37,7 @@ export default class MyDocument extends Document {
             itemProp="logo image"
             content={`${env.ABSOLUTE_URL}/img/fefaq-cover-facebook.png`}
           />
-          <meta property="og:site_name" content="Fefaq.pl" />
+          <meta property="og:site_name" content="DevFAQ.pl" />
           <meta property="fb:app_id" content="2005583769700691" />
           <meta property="og:locale" content="pl_PL" />
           {/*  */}
@@ -53,7 +53,7 @@ export default class MyDocument extends Document {
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
           <meta name="format-detection" content="telephone=no" />
-          <meta name="apple-mobile-web-app-title" content="Fefaq.pl" />
+          <meta name="apple-mobile-web-app-title" content="DevFAQ.pl" />
           <link
             href="https://fonts.googleapis.com/css?family=Fira+Sans:200,400,700&amp;subset=latin-ext"
             rel="stylesheet"
