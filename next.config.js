@@ -3,7 +3,6 @@ require('dotenv').config({
   path: isProduction ? `.env.${process.env.NODE_ENV}` : '.env',
 });
 
-const withTypescript = require('@zeit/next-typescript');
 const withSass = require('@zeit/next-sass');
 const withImages = require('next-images');
 const withOffline = require('next-offline');
@@ -67,33 +66,26 @@ const withWebpackAnalyze = (nextConfig = {}) => {
 const config = withWebpackAnalyze(
   withPolyfills(
     withImages(
-      withTypescript(
-        withSass({
-          sassLoaderOptions: {
-            includePaths: ['styles/'],
-          },
-          webpack: (config, options) => {
-            if (options.isServer && !isProduction) {
-              const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-              config.plugins.push(new ForkTsCheckerWebpackPlugin());
-            }
-            config.plugins.push(new LodashModuleReplacementPlugin());
-            return config;
-          },
-        })
-      )
+      withSass({
+        sassLoaderOptions: {
+          includePaths: ['styles/'],
+        },
+        webpack: (config, options) => {
+          config.plugins.push(new LodashModuleReplacementPlugin());
+          return config;
+        },
+      })
     )
   )
 );
-config.useFileSystemPublicRoutes = false;
 config.poweredByHeader = false;
 
-config.exportPathMap = function() {
-  return {
-    '/about': { name: '/about', page: '/staticPage' },
-    '/authors': { name: '/authors', page: '/staticPage' },
-    '/regulations': { name: '/regulations', page: '/staticPage' },
-  };
-};
+// config.exportPathMap = function() {
+//   return {
+//     '/about': { name: '/about', page: '/staticPage' },
+//     '/authors': { name: '/authors', page: '/staticPage' },
+//     '/regulations': { name: '/regulations', page: '/staticPage' },
+//   };
+// };
 
 module.exports = isProduction ? withOffline(config) : config;

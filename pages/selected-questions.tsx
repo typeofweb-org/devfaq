@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import QuestionsListLayout from '../components/questions/questionsListLayout/QuestionsListLayout';
 import Layout from '../components/layout/Layout';
 import './index.scss';

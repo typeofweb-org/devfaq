@@ -1,5 +1,5 @@
-import * as classNames from 'classnames';
-import * as React from 'react';
+import classNames from 'classnames';
+import React from 'react';
 import './ctaHeader.scss';
 import ActiveLink from '../../activeLink/ActiveLink';
 import { connect } from 'react-redux';
@@ -19,12 +19,12 @@ class CtaHeaderComponent extends React.Component<
       <div className="cta-header">
         <header className="app-header--cta container">
           <nav className="app-tabs">
-            <ActiveLink route="questions">
+            <ActiveLink href="questions">
               <a onClick={() => this.reportEvent('Lista pytań')} className="app-tabs--tab">
                 Lista pytań
               </a>
             </ActiveLink>
-            <ActiveLink prefetch={true} route="selected-questions">
+            <ActiveLink href="selected-questions">
               <a
                 onClick={() =>
                   this.reportEvent(
@@ -42,7 +42,7 @@ class CtaHeaderComponent extends React.Component<
             </ActiveLink>
 
             {this.props.isAdmin && (
-              <ActiveLink route="admin">
+              <ActiveLink href="admin">
                 <a className="app-tabs--tab">Admin</a>
               </ActiveLink>
             )}

@@ -18,3 +18,9 @@ interface Gtag {
   (event: 'js', date: Date): any;
 }
 declare var gtag: Gtag;
+
+declare namespace NodeJS {
+  interface ProcessEnv {
+    readonly NODE_ENV: 'development' | 'production' | 'test' | 'staging';
+  }
+}

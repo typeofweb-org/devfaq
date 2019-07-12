@@ -2,7 +2,7 @@ import {
   technologyIconItems,
   TechnologyIconItem,
 } from '../../../../constants/technology-icon-items';
-import * as React from 'react';
+import React from 'react';
 import ActiveLink from '../../../activeLink/ActiveLink';
 import './technologyFilter.scss';
 
@@ -23,8 +23,8 @@ export class TechnologyFilter extends React.Component {
       <li className="app-filter--technology" key={technology.name}>
         <ActiveLink
           disabledWhenActive={true}
-          route={'questions'}
-          params={{ technology: technology.name }}
+          href="/questions/[technology]"
+          as={`/questions/${technology.name}`}
           onClick={() => this.reportSelectTechnologyEvent(technology.label)}
         >
           <a title={technology.label}>

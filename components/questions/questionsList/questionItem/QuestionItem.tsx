@@ -1,7 +1,7 @@
 import './questionItem.scss';
-import * as React from 'react';
+import React from 'react';
 import { Question } from '../../../../redux/reducers/questions';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 import { isQuestionSelected } from '../../questionsUtils';
 import MarkdownText from '../../../markdownText/MarkdownText';
 import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
@@ -135,9 +135,10 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
           dateTime={question.acceptedAt}
           className="app-questions--question--date app-questions--question--date_long"
         >
-          <ActiveLink route={`/questions/${question.id}`}>
+          {/* @todo */}
+          {/* <ActiveLink route={`/questions/${question.id}`}>
             <a>{longDate(question.acceptedAt)}</a>
-          </ActiveLink>
+          </ActiveLink> */}
         </time>
         <time
           dateTime={question.acceptedAt}

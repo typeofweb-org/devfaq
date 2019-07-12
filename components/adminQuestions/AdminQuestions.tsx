@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import QuestionsList from '../questions/questionsList/QuestionsList';
 import { ActionCreators } from '../../redux/actions';
 import { AppState } from '../../redux/reducers/index';

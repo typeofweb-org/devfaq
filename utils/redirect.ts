@@ -1,13 +1,17 @@
-import { Router } from '../server/routes';
-import { GetInitialPropsContext } from './types';
+import { NextPageContext } from 'next';
+import Router from 'next/router';
 
-export function redirect(ctx: GetInitialPropsContext, path: string, previousPath?: string) {
-  if (ctx.isServer) {
+export function redirect(ctx: NextPageContext, path: string, previousPath?: string) {
+  if (ctx.res) {
     ctx.res.writeHead(302, {
       Location: previousPath ? path + `?previousPath=${previousPath}` : path,
     });
     return ctx.res.end();
   } else {
-    return Router.replaceRoute(path, previousPath ? { previousPath } : {});
+    const url = new URL(path, location.href);
+    if (previousPath) {
+      url.searchParams.append('previousPath', previousPath);
+    }
+    return Router.replace(url);
   }
 }

@@ -1,6 +1,6 @@
 import BaseModal, { CommonModalProps } from '../baseModal/BaseModal';
 import './addQuestionConfirmationModal.scss';
-import * as React from 'react';
+import React from 'react';
 
 export default class AddQuestionConfirmationModal extends React.PureComponent<CommonModalProps> {
   componentDidMount() {

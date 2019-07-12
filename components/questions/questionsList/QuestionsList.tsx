@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Question } from '../../../redux/reducers/questions';
 import './questionsList.scss';
 import QuestionItem from './questionItem/QuestionItem';

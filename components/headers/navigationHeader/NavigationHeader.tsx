@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as classNames from 'classnames';
+import React from 'react';
+import classNames from 'classnames';
 import AppLogo from '../../appLogo/AppLogo';
 import './navigationHeader.scss';
 import ActiveLink from '../../activeLink/ActiveLink';
@@ -26,7 +26,7 @@ class NavigationHeaderComponent extends React.PureComponent<
     return (
       <div className="navigation-header">
         <header className={classNames('app-header--main', 'container', { open })}>
-          <ActiveLink route="/questions">
+          <ActiveLink href="/questions">
             <a>
               <h1>
                 <span className="visuallyhidden">DevFAQ.pl</span>
@@ -37,12 +37,12 @@ class NavigationHeaderComponent extends React.PureComponent<
           <nav className={classNames('main-nav', { open })}>
             <ul>
               <li>
-                <ActiveLink route="/about">
+                <ActiveLink href="/about">
                   <a onClick={this.onAboutClick}>Jak korzystać?</a>
                 </ActiveLink>
               </li>
               <li>
-                <ActiveLink route="/authors">
+                <ActiveLink href="/authors">
                   <a onClick={this.onAuthorsClick}>Autorzy</a>
                 </ActiveLink>
               </li>

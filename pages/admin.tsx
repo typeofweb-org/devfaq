@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { GetInitialPropsContext } from '../utils/types';
+import React from 'react';
 import { redirect } from '../utils/redirect';
 import Layout from '../components/layout/Layout';
 import QuestionsListLayout from '../components/questions/questionsListLayout/QuestionsListLayout';
 import { AsyncComponent } from '../components/asyncComponent/AsyncComponent';
 import { getLoggedInUser } from '../redux/selectors/selectors';
+import { NextPageContext } from 'next';
 
 export default class AdminPage extends React.Component {
-  static async getInitialProps(ctx: GetInitialPropsContext) {
+  static async getInitialProps(ctx: NextPageContext) {
     const state = ctx.store.getState();
     if (!getLoggedInUser(state)) {
       return redirect(ctx, '/login', '/admin');

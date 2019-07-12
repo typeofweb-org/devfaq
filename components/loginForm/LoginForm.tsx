@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import './loginForm.scss';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/reducers/index';
@@ -7,7 +7,6 @@ import { isString } from 'lodash';
 import { getLoggedInUser, getPreviousPath } from '../../redux/selectors/selectors';
 import AppLogo from '../appLogo/AppLogo';
 import ActiveLink from '../activeLink/ActiveLink';
-import { Router } from '../../server/routes';
 
 type LoginFormReduxProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -16,9 +15,11 @@ class LoginFormComponent extends React.Component<LoginFormReduxProps> {
     const { user, previousPath, isTransitioning } = this.props;
     if (user && !isTransitioning) {
       if (isString(previousPath)) {
-        void Router.replaceRoute(previousPath);
+        // @todo
+        // void Router.replaceRoute(previousPath);
       } else {
-        void Router.replaceRoute('/');
+        // @todo
+        // void Router.replaceRoute('/');
       }
     }
   }
@@ -45,7 +46,7 @@ class LoginFormComponent extends React.Component<LoginFormReduxProps> {
             Zaloguj się przez GitHuba
           </button>
           <footer>
-            <ActiveLink route={route} onClick={() => this.reportEvent('Powrót do strony głównej')}>
+            <ActiveLink href={route} onClick={() => this.reportEvent('Powrót do strony głównej')}>
               <a>Powrót do strony głównej</a>
             </ActiveLink>
           </footer>

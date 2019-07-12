@@ -1,12 +1,11 @@
 import { levelsWithLabels, LevelWithLabel } from '../../../../constants/level';
-import * as React from 'react';
-import * as classNames from 'classnames';
+import React from 'react';
+import classNames from 'classnames';
 import './levelFilter.scss';
 import { connect } from 'react-redux';
 import { AppState } from '../../../../redux/reducers/index';
 import { ActionCreators } from '../../../../redux/actions';
 import { getPage } from '../../../../redux/selectors/selectors';
-import { Router } from '../../../../server/routes';
 
 class LevelFilterComponent extends React.Component<
   ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
@@ -50,7 +49,8 @@ class LevelFilterComponent extends React.Component<
         page: 1,
       };
 
-      void Router.replaceRoute('questions', query);
+      // @todo
+      // void Router.replaceRoute('questions', query);
     }
   };
 }

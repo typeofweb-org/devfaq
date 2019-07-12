@@ -4,27 +4,19 @@ import { AppState } from '../redux/reducers/index';
 import { AsyncAction } from '../redux/actions';
 
 import * as express from 'express';
+import { NextPageContext } from 'next';
+
+declare module 'next' {
+  export interface NextPageContext {
+    store: AppStore;
+  }
+}
 
 export type AppStore = Store<AppState> & {
   dispatch<R>(asyncAction: AsyncAction<R>): R;
 };
 
-type CommonContext = RouteDetails & {
-  store: AppStore;
-};
-
-type ServerContext = CommonContext & {
-  isServer: true;
-  res: express.Response;
-  req: express.Request;
-  err: Error;
-};
-
-type BrowserContext = CommonContext & {
-  isServer: false;
-};
-
-export type GetInitialPropsContext = ServerContext | BrowserContext;
+export type GetInitialPropsContext = NextPageContext;
 export type GetInitialProps = <T>(ctx: GetInitialPropsContext) => Promise<T>;
 // export type HasGetInitialProps<T extends React.Component> = React.Component & {
 //   getInitialProps: GetInitialProps;

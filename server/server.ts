@@ -1,25 +1,24 @@
 import 'isomorphic-fetch';
-const isProduction = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging';
+const isProduction =
+  process.env.NODE_ENV === 'production' ||
+  ((process.env.NODE_ENV as unknown) as string) === 'staging';
 // tslint:disable-next-line:no-var-requires
 require('dotenv').config({
   path: isProduction ? `.env.${process.env.NODE_ENV}` : '.env',
 });
 
-import * as next from 'next';
+import next from 'next';
 import * as Sentry from '@sentry/node';
-
-import routes from './routes';
 
 Sentry.init({ dsn: process.env.SENTRY_DSN, debug: !isProduction });
 
 const app = next({ dev: !isProduction });
-const handler = routes.getRequestHandler(app);
 const port = process.env.PORT || '3000';
-import * as url from 'url';
+import { parse } from 'url';
 import { join } from 'path';
-import * as fs from 'fs';
+import { readFileSync } from 'fs';
 
-process.env.VERSION = fs.readFileSync(__dirname + '/../.version', 'utf-8');
+process.env.VERSION = readFileSync(__dirname + '/../.version', 'utf-8');
 
 const staticFiles = ['/img/fefaq-cover-facebook.png'];
 
@@ -37,7 +36,7 @@ const favicons = [
 ];
 
 function getPathname(req: express.Request) {
-  const { pathname } = url.parse(req.url);
+  const { pathname } = parse(req.url);
   return pathname || '';
 }
 
@@ -84,8 +83,8 @@ function generateSitemap(req: express.Request) {
 }
 
 // With express
-import * as express from 'express';
-import * as cookieParser from 'cookie-parser';
+import express from 'express';
+import cookieParser from 'cookie-parser';
 
 // tslint:disable-next-line:no-floating-promises
 app
@@ -95,7 +94,7 @@ app
       .use(Sentry.Handlers.requestHandler())
       .use(Sentry.Handlers.errorHandler())
       .use(cookieParser())
-      .use((req, res, _next) => {
+      .use((req, res, next) => {
         const pathname = getPathname(req);
 
         if (pathname === '/sitemap.xml') {
@@ -107,9 +106,8 @@ app
         if (staticPath) {
           return app.serveStatic(req, res, staticPath);
         }
-        return handler(req, res);
+        return next();
       });
-    server.disable('x-powered-by');
     server.listen(port, () => console.log('Server listening at localhost:3000'));
   })
   .catch(err => {

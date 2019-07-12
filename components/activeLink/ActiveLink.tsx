@@ -1,15 +1,16 @@
-import * as React from 'react';
-import routes, { Link, LinkProps } from '../../server/routes';
-import * as classNames from 'classnames';
+import React from 'react';
+import classNames from 'classnames';
 import { AppState } from '../../redux/reducers/index';
 import { connect } from 'react-redux';
 import { RouteDetails } from '../../utils/types';
+import Link, { LinkProps } from 'next/link';
 
 interface ActiveLinkOwnProps {
   activeClassName?: string;
   exact?: boolean;
   disabledWhenActive?: boolean;
-  onClick?: React.MouseEventHandler<HTMLElement>;
+  onClick?: React.MouseEventHandler<any>;
+  children: React.ReactElement<any>;
 }
 
 type ActiveLinkComponentProps = LinkProps & ActiveLinkOwnProps;
@@ -34,18 +35,18 @@ class ActiveLinkComponent extends React.Component<
 
   render() {
     const {
-      children,
       isMatch,
       activeClassName = 'active',
-      route,
-      params,
-      prefetch,
-      shallow,
-      scroll,
-      replace,
+      disabledWhenActive,
+      children,
+
       href,
       as,
+      replace,
+      scroll,
+      shallow,
       passHref,
+      prefetch,
     } = this.props;
     const child = React.Children.only(children);
     const newChild = this.conditionallyAddClassToChild(isMatch, activeClassName, child);
@@ -56,15 +57,13 @@ class ActiveLinkComponent extends React.Component<
 
     return (
       <Link
-        route={route}
-        params={params}
-        prefetch={prefetch}
-        shallow={shallow}
-        scroll={scroll}
-        replace={replace}
         href={href}
         as={as}
+        replace={replace}
+        scroll={scroll}
+        shallow={shallow}
         passHref={passHref}
+        prefetch={prefetch}
       >
         {newChild}
       </Link>
@@ -75,31 +74,31 @@ class ActiveLinkComponent extends React.Component<
 const checkForMatch = (
   routeDetails: RouteDetails,
   {
-    route,
+    // route,
     exact,
-    params,
-  }: {
-    route: LinkProps['route'];
-    params?: LinkProps['params'];
+  }: // params,
+  {
+    // route: LinkProps['route'];
+    // params?: LinkProps['params'];
     exact?: boolean;
   }
 ): boolean => {
-  if (routeDetails.asPath === route) {
-    return true;
-  }
+  // if (routeDetails.asPath === route) {
+  //   return true;
+  // }
 
-  const foundUrls = routes.findAndGetUrls(route, params);
-  const isExactMatch = foundUrls.urls.as === routeDetails.asPath;
+  // const foundUrls = routes.findAndGetUrls(route, params);
+  // const isExactMatch = foundUrls.urls.as === routeDetails.asPath;
 
-  if (isExactMatch || exact) {
-    return isExactMatch;
-  }
+  // if (isExactMatch || exact) {
+  //   return isExactMatch;
+  // }
 
-  if (foundUrls.urls.as && routeDetails.asPath) {
-    const [foundPathname] = foundUrls.urls.as.split('?');
-    const [routePathname] = routeDetails.asPath.split('?');
-    return routePathname.startsWith(foundPathname);
-  }
+  // if (foundUrls.urls.as && routeDetails.asPath) {
+  //   const [foundPathname] = foundUrls.urls.as.split('?');
+  //   const [routePathname] = routeDetails.asPath.split('?');
+  //   return routePathname.startsWith(foundPathname);
+  // }
 
   return false;
 };

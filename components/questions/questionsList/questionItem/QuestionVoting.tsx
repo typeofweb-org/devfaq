@@ -2,10 +2,9 @@ import { connect } from 'react-redux';
 import { Question } from '../../../../redux/reducers/questions';
 import { AppState } from '../../../../redux/reducers';
 import { getLoggedInUser } from '../../../../redux/selectors/selectors';
-import * as React from 'react';
-import { Router } from '../../../../server/routes';
+import React from 'react';
 import { ActionCreators } from '../../../../redux/actions';
-import * as classnames from 'classnames';
+import classnames from 'classnames';
 
 type QuestionVotingOwnProps = {
   question: Question;
@@ -31,7 +30,8 @@ const QuestionVotingComponent: React.FC<QuestionVotingProps> = ({
   const onVote = React.useCallback(() => {
     if (!isLoggedIn) {
       reportEvent('logowanie');
-      void Router.pushRoute('login', { previousPath: route.asPath || '' });
+      // @todo
+      // void Router.pushRoute('login', { previousPath: route.asPath || '' });
     } else if (currentUserVotedOn) {
       reportEvent('downvote');
       void downvoteQuestion(question.id);

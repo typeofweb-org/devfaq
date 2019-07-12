@@ -5,6 +5,7 @@ import { Question } from '../redux/reducers/questions';
 import { AuthData, SessionData, UserData } from '../redux/reducers/auth';
 import { GetInitialPropsContext } from '../utils/types';
 import { pickBy, isUndefined } from 'lodash';
+import 'isomorphic-fetch';
 
 const omitUndefined = <T extends object>(obj: T) => pickBy(obj, v => !isUndefined(v));
 
@@ -58,7 +59,7 @@ async function makeRequest<T>(
   };
 
   // proxy cookie from the request to the API
-  if (ctx && ctx.isServer && ctx.req.headers && ctx.req.headers.cookie) {
+  if (ctx && ctx.req && ctx.req.headers && ctx.req.headers.cookie) {
     options.headers = {
       ...options.headers,
       cookie: String(ctx.req.headers.cookie),

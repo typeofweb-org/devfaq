@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 const AuthorsPage = () => (
   <React.Fragment>
@@ -6,21 +6,30 @@ const AuthorsPage = () => (
       <h2>Autorzy</h2>
       <div className="app-authors">
         <div className="app-author">
-          <img src="/static/images/tomasz_nastaly.jpg" alt="Tomasz Nastały" className="app-author__image" />
+          <img
+            src="/static/images/tomasz_nastaly.jpg"
+            alt="Tomasz Nastały"
+            className="app-author__image"
+          />
           <p className="app-author__name">Tomasz Nastały</p>
           <p>
             JavaScript Developer, entuzjasta frameworka Angular. Prowadzi bloga{' '}
-            <a href="http://www.angular.love">angular.love</a>. Na co dzień lubi dzielić się wiedzą poprzez prowadzenie
-            zajęć w jednym z trójmieskich bootcampów i nagrywaniem kursów z Angulara.
+            <a href="http://www.angular.love">angular.love</a>. Na co dzień lubi dzielić się wiedzą
+            poprzez prowadzenie zajęć w jednym z trójmieskich bootcampów i nagrywaniem kursów z
+            Angulara.
           </p>
         </div>
         <div className="app-author">
-          <img src="/static/images/michal_miszczyszyn.jpg" alt="Michał Miszczyszyn" className="app-author__image" />
+          <img
+            src="/static/images/michal_miszczyszyn.jpg"
+            alt="Michał Miszczyszyn"
+            className="app-author__image"
+          />
           <p className="app-author__name">Michał Miszczyszyn</p>
           <p>
-            Michał jest programistą JavaScript z wieloma latami profesjonalnego doświadczenia. Organizator meet.js
-            Summit i meet.js Gdańsk. Bloger na <a href="https://typeofweb.com">typeofweb.com</a>, a okazyjnie także
-            prelegent.
+            Michał jest programistą JavaScript z wieloma latami profesjonalnego doświadczenia.
+            Organizator meet.js Summit i meet.js Gdańsk. Bloger na{' '}
+            <a href="https://typeofweb.com">typeofweb.com</a>, a okazyjnie także prelegent.
           </p>
         </div>
       </div>
@@ -29,11 +38,19 @@ const AuthorsPage = () => (
       <h3>Specjalne podziękowania</h3>
       <ul>
         <li>
-          <a href="https://www.linkedin.com/in/ewelina-sygut-a8687883/" target="_blank" rel="noopener">
+          <a
+            href="https://www.linkedin.com/in/ewelina-sygut-a8687883/"
+            target="_blank"
+            rel="noopener"
+          >
             <strong>Ewelina Sygut</strong>
           </a>{' '}
           i{' '}
-          <a href="https://www.linkedin.com/in/paweł-pawłowski-89917114/" target="_blank" rel="noopener">
+          <a
+            href="https://www.linkedin.com/in/paweł-pawłowski-89917114/"
+            target="_blank"
+            rel="noopener"
+          >
             <strong>Paweł Pawłowski</strong>
           </a>{' '}
           - za projekt graficzny ❤️
