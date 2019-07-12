@@ -19,12 +19,12 @@ class CtaHeaderComponent extends React.Component<
       <div className="cta-header">
         <header className="app-header--cta container">
           <nav className="app-tabs">
-            <ActiveLink route="/questions">
+            <ActiveLink route="questions">
               <a onClick={() => this.reportEvent('Lista pytań')} className="app-tabs--tab">
                 Lista pytań
               </a>
             </ActiveLink>
-            <ActiveLink prefetch={true} route="/selected-questions">
+            <ActiveLink prefetch={true} route="selected-questions">
               <a
                 onClick={() =>
                   this.reportEvent(
@@ -42,14 +42,14 @@ class CtaHeaderComponent extends React.Component<
             </ActiveLink>
 
             {this.props.isAdmin && (
-              <ActiveLink route="/admin">
+              <ActiveLink route="admin">
                 <a className="app-tabs--tab">Admin</a>
               </ActiveLink>
             )}
           </nav>
 
           <div className="call-to-action-buttons">
-            <ActiveLink route={this.props.downloadUrl}>
+            {/* <ActiveLink route={this.props.downloadUrl}>
               <a
                 onClick={this.onDownloadClick}
                 target="_blank"
@@ -61,7 +61,7 @@ class CtaHeaderComponent extends React.Component<
               >
                 Pobierz plik PDF
               </a>
-            </ActiveLink>
+            </ActiveLink> */}
             <button
               className="round-button branding-button-inverse"
               onClick={this.onOpenAddQuestionModalClick}

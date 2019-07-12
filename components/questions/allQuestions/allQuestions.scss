@@ -1,4 +1,4 @@
-@import "common";
+@import 'common';
 .app-questions {
   box-sizing: border-box;
   padding: 15px 0 0 0;
@@ -10,7 +10,6 @@
   &--sorting-container {
     height: 18px;
     line-height: 18px;
-    display: none; // @todo
   }
   &--sorting-label {
     margin-right: 1em;
@@ -21,10 +20,15 @@
     color: $grey-text-darker;
     border: none;
     cursor: pointer;
-    padding: 4px 30px 4px 4px;
-    background-image: url(/assets/images/select.svg);
+    padding: 4px 25px 4px 4px;
+    background-color: white;
+    background-image: url(/static/images/select.svg);
     background-size: 12px 6px;
     background-repeat: no-repeat;
-    background-position: 100% 50%;
+    background-position: calc(100% - 5px) 50%;
+
+    [data-whatinput='mouse'] &:focus {
+      outline: none;
+    }
   }
 }

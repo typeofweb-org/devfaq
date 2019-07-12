@@ -1,97 +1,55 @@
 import * as React from 'react';
 import './loginForm.scss';
-import { withRouter, WithRouterProps } from 'next/router';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/reducers/index';
 import { ActionCreators } from '../../redux/actions';
-import * as classNames from 'classnames';
 import { isString } from 'lodash';
+import { getLoggedInUser, getPreviousPath } from '../../redux/selectors/selectors';
+import AppLogo from '../appLogo/AppLogo';
+import ActiveLink from '../activeLink/ActiveLink';
+import { Router } from '../../server/routes';
 
-const defaultState = {
-  email: '',
-  password: '',
-  valid: false,
-};
+type LoginFormReduxProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-type LoginFormState = typeof defaultState;
-type LoginnFormReduxProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
-
-class LoginFormComponent extends React.Component<
-  LoginnFormReduxProps & WithRouterProps,
-  LoginFormState
-> {
-  state: LoginFormState = defaultState;
-
-  onSubmit: React.FormEventHandler = e => {
-    e.preventDefault();
-    this.props.logIn(this.state.email, this.state.password);
-  };
-
-  onEmailChange: React.ChangeEventHandler<HTMLInputElement> = e => {
-    const email = e.currentTarget.value;
-    this.setState(state => ({
-      email,
-      valid: this.isValid(state),
-    }));
-  };
-
-  onPasswordChange: React.ChangeEventHandler<HTMLInputElement> = e => {
-    const password = e.currentTarget.value;
-    this.setState(state => ({
-      password,
-      valid: this.isValid(state),
-    }));
-  };
-
-  isValid = (state: LoginFormState) => {
-    return Boolean(state.email.trim() && state.password.trim());
-  };
-
+class LoginFormComponent extends React.Component<LoginFormReduxProps> {
   componentDidUpdate() {
-    const { auth, router } = this.props;
-    if (auth.data) {
-      if (router.query && isString(router.query.previousPath)) {
-        // tslint:disable-next-line:no-floating-promises
-        this.props.router.push(router.query.previousPath);
+    const { user, previousPath, isTransitioning } = this.props;
+    if (user && !isTransitioning) {
+      if (isString(previousPath)) {
+        void Router.replaceRoute(previousPath);
       } else {
-        // tslint:disable-next-line:no-floating-promises
-        this.props.router.push('/admin');
+        void Router.replaceRoute('/');
       }
     }
   }
 
+  reportEvent = (action: string) => {
+    globalReportEvent(action, 'Logowanie');
+  };
+
+  logInWithGithub = () => {
+    this.reportEvent('Zaloguj się przez GitHuba');
+    this.props.logInWithGitHub();
+  };
+
   render() {
+    const { previousPath } = this.props;
+    const route = isString(previousPath) ? previousPath : '/';
     return (
-      <div className="login-container">
-        <form className="form" onSubmit={this.onSubmit}>
-          <h2>FEFAQ</h2>
-          <p>{this.props.auth.error && this.props.auth.error.message}</p>
-          <input
-            name="email"
-            required
-            onChange={this.onEmailChange}
-            value={this.state.email}
-            placeholder="Email"
-            type="text"
-          />
-          <input
-            name="password"
-            required
-            onChange={this.onPasswordChange}
-            value={this.state.password}
-            placeholder="Password"
-            type="password"
-          />
-          <button
-            className={classNames('round-button', 'branding-button-inverse', {
-              loading: this.props.auth.isLoading,
-            })}
-            type="submit"
-            disabled={!this.state.valid || this.props.auth.isLoading}
-          >
-            Zaloguj
+      <div className="login-overlay">
+        <div className="login-container">
+          <AppLogo />
+          {this.props.auth.error && <p>{this.props.auth.error.message}</p>}
+          <p>Stwórz konto już dzisiaj i korzystaj z dodatkowych funkcji serwisu DevFAQ!</p>
+          <button onClick={this.logInWithGithub} className="login-with-github">
+            Zaloguj się przez GitHuba
           </button>
-        </form>
+          <footer>
+            <ActiveLink route={route} onClick={() => this.reportEvent('Powrót do strony głównej')}>
+              <a>Powrót do strony głównej</a>
+            </ActiveLink>
+          </footer>
+        </div>
       </div>
     );
   }
@@ -100,15 +58,18 @@ class LoginFormComponent extends React.Component<
 const mapStateToProps = (state: AppState) => {
   return {
     auth: state.auth,
+    user: getLoggedInUser(state),
+    previousPath: getPreviousPath(state),
+    isTransitioning: state.routeDetails.isTransitioning,
   };
 };
 
 const mapDispatchToProps = {
-  logIn: ActionCreators.logIn,
+  logInWithGitHub: ActionCreators.logInWithGitHub,
 };
 
 const LoginForm = connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter<LoginnFormReduxProps>(LoginFormComponent));
+)(LoginFormComponent);
 export default LoginForm;

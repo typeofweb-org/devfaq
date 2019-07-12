@@ -28,7 +28,7 @@ export default class QuestionsList extends React.PureComponent<
     }
     return (
       <TransitionGroup appear={false} enter={false} className="app-questions--list" component="div">
-        {this.props.questions.data.map(question => (
+        {this.props.questions.data.data.map(question => (
           // tslint:disable-next-line:no-magic-numbers
           <AnimateHeight enterTime={700} exitTime={700} key={question.id}>
             <QuestionItem

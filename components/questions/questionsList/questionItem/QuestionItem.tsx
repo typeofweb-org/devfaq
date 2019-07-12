@@ -7,6 +7,8 @@ import MarkdownText from '../../../markdownText/MarkdownText';
 import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
 
 import { isEqual } from 'lodash';
+import ActiveLink from '../../../activeLink/ActiveLink';
+import QuestionVoting from './QuestionVoting';
 
 const longDate = (dateStr?: string) => {
   if (!dateStr) {
@@ -82,15 +84,18 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
           active: isSelected,
         })}
       >
-        {this.maybeRenderCheckbox()}
-        {this.maybeRenderAdminButtons()}
+        <div className="app-questions--content-container">
+          {this.maybeRenderCheckbox()}
+          {this.maybeRenderAdminButtons()}
 
-        <div className="app-questions--question--text" itemProp="text">
-          <MarkdownText value={question.question} />
+          <div className="app-questions--question--text" itemProp="text">
+            <MarkdownText value={question.question} />
+          </div>
+
+          {this.renderMeta()}
+          {this.maybeRenderDeleteButton()}
         </div>
-
-        {this.renderMeta()}
-        {this.maybeRenderDeleteButton()}
+        {this.maybeRenderVoting()}
       </div>
     );
   }
@@ -112,17 +117,17 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
 
   renderMeta() {
     const { question } = this.props;
-    const keywords = [question.level, question.category].join(', ');
+    const keywords = [question._levelId, question._categoryId].join(', ');
 
     return (
       <div className="app-questions--question--meta">
         <span
           className={classNames(
             'app-questions--question--tag',
-            `app-questions--question--tag_${question.level}`
+            `app-questions--question--tag_${question._levelId}`
           )}
         >
-          {question.level}
+          {question._levelId}
         </span>
         <meta itemProp="dateCreated" content={question.acceptedAt} />
         <meta itemProp="keywords" content={keywords} />
@@ -130,7 +135,9 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
           dateTime={question.acceptedAt}
           className="app-questions--question--date app-questions--question--date_long"
         >
-          {longDate(question.acceptedAt)}
+          <ActiveLink route={`/questions/${question.id}`}>
+            <a>{longDate(question.acceptedAt)}</a>
+          </ActiveLink>
         </time>
         <time
           dateTime={question.acceptedAt}
@@ -140,6 +147,14 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
         </time>
       </div>
     );
+  }
+
+  maybeRenderVoting() {
+    if (this.props.editable) {
+      return null;
+    }
+
+    return <QuestionVoting question={this.props.question} />;
   }
 
   maybeRenderAdminButtons() {

@@ -7,30 +7,57 @@ import { AllQuestionsHeader } from './allQuestionsHeader/AllQuestionsHeader';
 import { AllQuestionsFooter } from './allQuestionsFooter/AllQuestionsFooter';
 import QuestionsList from '../questionsList/QuestionsList';
 import { Question } from '../../../redux/reducers/questions';
-import { getSelectedQuestionsIds, getTechnology } from '../../../redux/selectors/selectors';
+import {
+  getSelectedQuestionsIds,
+  getTechnology,
+  getSortBy,
+} from '../../../redux/selectors/selectors';
 import { ActionCreators } from '../../../redux/actions';
 import { isQuestionSelected } from '../questionsUtils';
 import { Level } from '../../../constants/level';
+import QuestionsPagination from '../../questionsPagination/QuestionsPagination';
+import { Router } from '../../../server/routes';
 
 type AllQuestionsComponentProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> {
   render() {
-    const { technology } = this.props;
+    const { technology, sortBy } = this.props;
 
     const technologyIconItem = technologyIconItems.find(t => t.name === technology);
     const category = (technologyIconItem && technologyIconItem.label) || '';
 
-    const length = this.props.questions.data ? this.props.questions.data.length : 0;
+    const length =
+      this.props.questions.data &&
+      this.props.questions.data.meta &&
+      this.props.questions.data.meta.total;
 
     return (
       <section className="app-questions">
-        {technology && <AllQuestionsHeader category={category} questionsLength={length} />}
+        {this.props.questions.data && technology && (
+          <AllQuestionsHeader
+            category={category}
+            questionsLength={length}
+            onSortByChange={this.changeSortBy}
+            sortBy={sortBy || 'acceptedAt*desc'}
+          />
+        )}
         {this.renderList()}
-        <AllQuestionsFooter onAddNewClick={this.onAddNewClick} />
+        {this.props.questions.data && technology && (
+          <AllQuestionsFooter onAddNewClick={this.onAddNewClick} />
+        )}
+        <QuestionsPagination />
       </section>
     );
   }
+
+  changeSortBy: React.ChangeEventHandler<HTMLSelectElement> = e => {
+    const query = {
+      ...this.props.route.query,
+      sortBy: e.currentTarget.value,
+    };
+    void Router.pushRoute('questions', query);
+  };
 
   renderList = () => {
     if (this.props.questions.error) {
@@ -42,7 +69,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
         </div>
       );
     }
-    if (!this.props.questions.data || this.props.questions.data.length === 0) {
+    if (!this.props.questions.data || this.props.questions.data.data.length === 0) {
       return null; // @todo handle errors and loading
     }
 
@@ -69,7 +96,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
   toggleQuestion = (questionId: Question['id']) => {
     const isSelected = isQuestionSelected(this.props.selectedQuestionsIds, questionId);
     const question =
-      this.props.questions.data && this.props.questions.data.find(q => q.id === questionId);
+      this.props.questions.data && this.props.questions.data.data.find(q => q.id === questionId);
 
     if (isSelected) {
       this.props.deselectQuestion(questionId);
@@ -86,7 +113,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
     const action = isSelected ? 'Checkbox - odznaczone pytanie' : 'Checkbox - zaznaczone pytanie';
     this.reportEvent(
       action,
-      `${Technology[question.category]}, ${Level[question.level]}`,
+      `${Technology[question._categoryId]}, ${Level[question._levelId]}`,
       question.id
     );
   };
@@ -97,6 +124,8 @@ const mapStateToProps = (state: AppState) => {
     technology: getTechnology(state),
     questions: state.questions,
     selectedQuestionsIds: getSelectedQuestionsIds(state),
+    sortBy: getSortBy(state),
+    route: state.routeDetails.current,
   };
 };
 

@@ -15,7 +15,7 @@ const writer = new commonmark.HtmlRenderer();
 export function getHtmlFromMarkdown(markdown: string): string {
   const parsed = reader.parse(markdown);
   const rendered = writer.render(parsed);
-  return xss(rendered, {
+  return xss.filterXSS(rendered, {
     onIgnoreTagAttr(tag, name, value, _isWhiteAttr) {
       if (tag !== 'code' && tag !== 'pre') {
         return;

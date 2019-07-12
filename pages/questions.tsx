@@ -7,20 +7,31 @@ import { GetInitialPropsContext } from '../utils/types';
 import QuestionsSidebar from '../components/questions/questionsSidebar/QuestionsSidebar';
 import MobileActionButtons from '../components/questions/mobileActionButtons/MobileActionButtons';
 import AllQuestions from '../components/questions/allQuestions/AllQuestions';
-import { ActionCreators } from '../redux/actions';
+import { ActionCreators, AsyncAction } from '../redux/actions';
 import { connect } from 'react-redux';
 import { AppState } from '../redux/reducers/index';
-import { getTechnology } from '../redux/selectors/selectors';
+import { getTechnology, getSortByArray, getPage } from '../redux/selectors/selectors';
 import { Technology } from '../constants/technology-icon-items';
+import { Dispatch } from 'redux';
 
-type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 class QuestionsPageComponent extends React.Component<Props> {
   static async getInitialProps(ctx: GetInitialPropsContext) {
     if (!ctx.query || !ctx.query.technology) {
-      return redirect(ctx, '/questions/js');
+      return redirect(ctx, '/questions/js?page=1');
     }
 
-    await ctx.store.dispatch(ActionCreators.fetchQuestions(ctx));
+    const state = ctx.store.getState();
+
+    const page = getPage(state);
+
+    if (!page) {
+      return redirect(ctx, `/questions/${ctx.query.technology}?page=1`);
+    }
+
+    const sortBy = getSortByArray(state);
+
+    await ctx.store.dispatch(ActionCreators.fetchQuestions(page, sortBy, ctx));
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -28,7 +39,7 @@ class QuestionsPageComponent extends React.Component<Props> {
       return;
     }
 
-    this.props.fetchQuestions();
+    this.props.reFetchQuestions();
   }
 
   render() {
@@ -56,7 +67,20 @@ const mapStateToProps = (state: AppState) => {
   };
 };
 
-const mapDispatchToProps = { fetchQuestions: ActionCreators.fetchQuestions };
+const mapDispatchToProps = (
+  dispatch: Dispatch<any>,
+  _ownProps: ReturnType<typeof mapStateToProps>
+) => {
+  return {
+    reFetchQuestions: (ctx?: GetInitialPropsContext): AsyncAction =>
+      dispatch((dispatch, getState) => {
+        const state = getState();
+        const page = 1;
+        const sortBy = getSortByArray(state);
+        dispatch(ActionCreators.fetchQuestions(page, sortBy, ctx));
+      }),
+  };
+};
 
 const QuestionsPage = connect(
   mapStateToProps,

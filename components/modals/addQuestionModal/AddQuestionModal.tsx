@@ -45,8 +45,8 @@ class AddQuestionModalComponent extends React.PureComponent<
 
     return {
       originalQuestion,
-      level: originalQuestion.level,
-      technology: originalQuestion.category,
+      level: originalQuestion._levelId,
+      technology: originalQuestion._categoryId,
       questionText: originalQuestion.question,
     };
   };

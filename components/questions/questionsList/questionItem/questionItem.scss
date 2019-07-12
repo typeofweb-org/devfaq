@@ -8,15 +8,19 @@ $shadow-width: 2px;
     margin: 15px 0;
   }
 }
+.app-questions--content-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
 .app-questions--question {
   box-shadow: 0 0 0 rgba(0, 0, 0, 0.19), 0 $shadow-width 4px rgba(0, 0, 0, 0.23);
   background-color: $white-text;
   box-sizing: border-box;
   padding: 15px 5px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: column;
   border: 1px solid $white-text;
   overflow: hidden;
   opacity: 1;
@@ -42,6 +46,9 @@ $shadow-width: 2px;
     opacity: 0;
     transition: opacity $transition-time, z-index 0ms;
     transition-delay: 0ms, $transition-time;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     &.being-removed {
       z-index: 1;
       opacity: 1;
@@ -174,6 +181,9 @@ $shadow-width: 2px;
     text-align: center;
   }
   &--date {
+    a {
+      color: currentColor;
+    }
     &_long {
       display: none;
     }
@@ -218,6 +228,51 @@ $shadow-width: 2px;
     &_senior {
       background-color: $senior-main-color;
       color: $white-text;
+    }
+  }
+  &--voting {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 20px;
+    color: $grey-dark;
+    transition: color 0.2s;
+
+    .vote-button {
+      $width: 7px;
+      appearance: none;
+      padding: 0;
+      margin: 0;
+      margin-top: 3px;
+      border: 0;
+      width: auto;
+      font-size: 1.5rem;
+      color: currentColor;
+      width: 30px;
+      height: 18px;
+      display: inline-flex;
+      justify-content: space-between;
+      background: none;
+      cursor: pointer;
+      [data-whatinput='mouse'] &:focus {
+        outline: none;
+      }
+
+      svg {
+        max-width: 100%;
+        max-height: 100%;
+        transform: translateY(1px) rotate(0deg);
+        transition: transform 0.2s;
+      }
+    }
+
+    &_voted {
+      color: $purple;
+      .vote-button {
+        svg {
+          transform: translateY(2px) rotate(180deg) scale(0.8);
+        }
+      }
     }
   }
 }

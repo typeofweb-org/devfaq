@@ -5,6 +5,7 @@ import './navigationHeader.scss';
 import ActiveLink from '../../activeLink/ActiveLink';
 import { connect } from 'react-redux';
 import { AppState } from '../../../redux/reducers/index';
+import LoginStatusLink from './loginStatusLink/LoginStatusLink';
 
 type NavigationHeaderProps = ReturnType<typeof mapStateToProps>;
 interface NavigationHeaderState {
@@ -28,7 +29,7 @@ class NavigationHeaderComponent extends React.PureComponent<
           <ActiveLink route="/questions">
             <a>
               <h1>
-                <span className="visuallyhidden">Fefaq.pl</span>
+                <span className="visuallyhidden">DevFAQ.pl</span>
                 <AppLogo />
               </h1>
             </a>
@@ -53,6 +54,9 @@ class NavigationHeaderComponent extends React.PureComponent<
                 >
                   Facebook
                 </a>
+              </li>
+              <li>
+                <LoginStatusLink onLoginClick={this.onLoginClick} />
               </li>
             </ul>
             <button
@@ -89,6 +93,11 @@ class NavigationHeaderComponent extends React.PureComponent<
   onAuthorsClick = () => {
     this.closeMenu();
     this.reportEvent('Autorzy');
+  };
+
+  onLoginClick = () => {
+    this.closeMenu();
+    this.reportEvent('Zaloguj');
   };
 
   reportEvent(action: string) {

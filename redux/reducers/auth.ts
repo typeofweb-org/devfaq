@@ -2,16 +2,29 @@ import { Actions, ActionTypes } from '../actions';
 
 export interface UserData {
   id: number;
-  createdAt: Date;
-  updatedAt: Date;
-  emailAddress: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+  _roleId: string;
   firstName?: string | null;
   lastName?: string | null;
-  role?: string | null;
+  socialLogin?: {
+    github?: number;
+  } | null;
 }
 
+export type SessionData = {
+  keepMeSignedIn: boolean;
+  validUntil: string;
+  createdAt: string;
+  updatedAt: string;
+  version: number;
+  _userId: number;
+  _user: UserData;
+};
+
 export interface AuthData {
-  user: UserData;
+  session: SessionData;
 }
 
 const intialState: {
