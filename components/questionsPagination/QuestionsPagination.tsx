@@ -26,7 +26,11 @@ const QuestionsPaginationComponent: React.FC<QuestionsPaginationProps> = ({ tota
 
           return (
             <li key={i}>
-              <ActiveLink exact={true} href={{ path: 'questions', query }}>
+              <ActiveLink
+                exact={true}
+                href={{ path: '/questions/[technology]' }}
+                as={`/questions/${route.query.technology}?page=${i + 1}`}
+              >
                 <a>{i + 1}</a>
               </ActiveLink>
             </li>
