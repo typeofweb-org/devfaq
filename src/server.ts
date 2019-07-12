@@ -94,12 +94,11 @@ export async function getServerWithPlugins() {
     });
   });
 
-  const swaggerOptions: HapiSwagger.Options = {
+  const swaggerOptions: HapiSwagger.RegisterOptions = {
     info: {
       title: `${pkg.name} Documentation`,
       version: getConfig('ENV') + '-' + pkg.version + '-' + fs.readFileSync('.version', 'utf-8'),
     },
-    jsonEditor: true,
     auth: false,
   };
 

@@ -123,7 +123,8 @@ export class Question extends Model<Question> {
       {
         type: Sequelize.QueryTypes.SELECT,
         nest: true,
-        replacements: { limit, offset, userId, ...where },
+        // tslint:disable-next-line:no-any
+        replacements: { limit, offset, userId, ...(where as any) },
         // tslint:disable-next-line:no-any
         model: Question as any,
       }

@@ -44,6 +44,28 @@ export interface AuthProviderOptions {
   next: AuthProviderNext;
 }
 
+const meAuthSchema = Joi.object({
+  keepMeSignedIn: Joi.boolean().required(),
+  validUntil: Joi.date().required(),
+  createdAt: Joi.date().required(),
+  updatedAt: Joi.date().required(),
+  version: Joi.number().required(),
+  _userId: Joi.number().required(),
+  _user: Joi.object({
+    id: Joi.number().required(),
+    email: Joi.string().required(),
+    createdAt: Joi.date().required(),
+    updatedAt: Joi.date().required(),
+    _roleId: Joi.string().required(),
+    firstName: Joi.string().allow('', null),
+    lastName: Joi.string().allow('', null),
+    // socialLogin: Joi.object({
+    //   github: Joi.alternatives(Joi.string(), Joi.number().integer()),
+    // }).allow(null),
+    socialLogin: Joi.any(),
+  }).required(),
+});
+
 async function maybeUpdateSessionValidity(session: Session) {
   const validUntil = session.validUntil;
   const newValidUntil = getNewSessionValidUntil(session.keepMeSignedIn);
@@ -215,28 +237,7 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
         },
         response: {
           schema: Joi.object({
-            data: Joi.object({
-              keepMeSignedIn: Joi.boolean().required(),
-              validUntil: Joi.date().required(),
-              createdAt: Joi.date().required(),
-              updatedAt: Joi.date().required(),
-              version: Joi.number().required(),
-              _userId: Joi.number().required(),
-              _user: Joi.object({
-                id: Joi.number().required(),
-                email: Joi.string().required(),
-                createdAt: Joi.date().required(),
-                updatedAt: Joi.date().required(),
-                _roleId: Joi.string().required(),
-                firstName: Joi.string().allow('', null),
-                lastName: Joi.string().allow('', null),
-                socialLogin: Joi.object({
-                  github: Joi.alternatives(Joi.string(), Joi.number().integer()),
-                }).allow(null),
-              }).required(),
-            })
-              .required()
-              .allow(null),
+            data: meAuthSchema.required().allow(null),
           }).required(),
         },
       },
