@@ -25,3 +25,7 @@ export const technologyIconItems: TechnologyIconItem[] = [
   { name: 'git', label: 'Git', icon: 'devicon-git-plain' },
   { name: 'other', label: 'Inne', icon: 'devicon-devicon-plain' },
 ];
+
+type OrderBy = 'acceptedAt' | 'level';
+type Order = 'asc' | 'desc';
+export type SortBy = [OrderBy, Order];

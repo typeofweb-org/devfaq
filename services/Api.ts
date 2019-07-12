@@ -1,8 +1,8 @@
-import { TechnologyKey } from '../constants/technology-icon-items';
+import { TechnologyKey, SortBy } from '../constants/technology-icon-items';
 import env from '../utils/env';
 import { LevelKey } from '../constants/level';
 import { Question } from '../redux/reducers/questions';
-import { AuthData, UserData } from '../redux/reducers/auth';
+import { AuthData, SessionData, UserData } from '../redux/reducers/auth';
 import { GetInitialPropsContext } from '../utils/types';
 import { pickBy, isUndefined } from 'lodash';
 
@@ -34,6 +34,13 @@ async function getJSON(res: Response) {
   }
 }
 
+export type ApiResponse<T> = {
+  data: T;
+  meta?: {
+    total: number;
+  };
+};
+
 async function makeRequest<T>(
   method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
   path: string,
@@ -41,7 +48,7 @@ async function makeRequest<T>(
   body: object,
   otherOptions: RequestInit,
   ctx?: GetInitialPropsContext
-): Promise<T> {
+): Promise<ApiResponse<T>> {
   const querystring = getQueryStringFromObject(query);
   const options: RequestInit = {
     ...otherOptions,
@@ -68,35 +75,122 @@ async function makeRequest<T>(
   });
 }
 
+async function openAndWaitForClose(url: string) {
+  let intervalTimerId: number;
+  let timeoutTimerId: number;
+
+  const cancel = () => {
+    window.clearTimeout(timeoutTimerId);
+    window.clearInterval(intervalTimerId);
+  };
+
+  const propsToQuery = (props: Record<string, string | number>) => {
+    return Object.entries(props)
+      .map(([key, val]) => `${key}=${val}`)
+      .join(', ');
+  };
+
+  return new Promise<any>((resolve, reject) => {
+    const width = 925;
+    const height = 680;
+    const top = (window.top.outerHeight / 2 + window.top.screenY - height / 2) * 0.5;
+    const left = window.top.outerWidth / 2 + window.top.screenX - width / 2;
+
+    const popupHandle = window.open(
+      url,
+      'GitHubLogin',
+      propsToQuery({
+        toolbar: 'no',
+        location: 'no',
+        directories: 'no',
+        status: 'no',
+        menubar: 'no',
+        scrollbars: 'no',
+        resizable: 'no',
+        copyhistory: 'no',
+        width,
+        height,
+        top,
+        left,
+      })
+    );
+    if (!popupHandle) {
+      return reject(new Error('Window not created!'));
+    }
+
+    intervalTimerId = window.setInterval(() => {
+      if (popupHandle.closed) {
+        cancel();
+        return resolve();
+      }
+    }, 100);
+
+    timeoutTimerId = window.setTimeout(() => {
+      cancel();
+      return reject(new Error('Timeout'));
+    }, 60000);
+  });
+}
+
 export interface CreateQuestionRequestBody {
   question: string;
   category: TechnologyKey;
   level: string;
 }
 
+export const PAGE_SIZE = 25;
+
 export const Api = {
   async getQuestionsForCategoryAndLevelsAndStatus(
+    page: number | null,
+    sortBy: SortBy | undefined,
     category: TechnologyKey | undefined,
-    levels: LevelKey[],
+    level: LevelKey[],
     status?: 'pending' | 'accepted',
+    abortController?: AbortController,
     ctx?: GetInitialPropsContext
   ) {
+    const limit = PAGE_SIZE;
+    const offset = PAGE_SIZE * ((page || 0) - 1);
+
     return makeRequest<Question[]>(
       'GET',
       'questions',
-      omitUndefined({ category, level: levels, status }) as {},
+      omitUndefined({
+        category,
+        level,
+        status,
+        ...(page !== null && { limit, offset }),
+        ...(sortBy && { orderBy: sortBy[0], order: sortBy[1] }),
+      }) as {},
       {},
-      {},
+      { ...(abortController && { signal: abortController.signal }) },
       ctx
     );
   },
 
   async getQuestionsForCategoryAndLevels(
+    page: number,
+    sortBy: SortBy | undefined,
     category: TechnologyKey,
     levels: LevelKey[],
+    abortController?: AbortController,
     ctx?: GetInitialPropsContext
   ) {
-    return Api.getQuestionsForCategoryAndLevelsAndStatus(category, levels, undefined, ctx);
+    const status = 'accepted';
+    return Api.getQuestionsForCategoryAndLevelsAndStatus(
+      page,
+      sortBy,
+      category,
+      levels,
+      status,
+      abortController,
+      ctx
+    );
+  },
+
+  async getOneQuestion(id: Question['id'], ctx?: GetInitialPropsContext) {
+    return makeRequest<Question>('GET', `questions/${id}`, {}, {}, {}, ctx);
   },
 
   async createQuestion(question: CreateQuestionRequestBody, ctx?: GetInitialPropsContext) {
@@ -120,6 +214,45 @@ export const Api = {
   },
 
   async getLoggedInUser(ctx?: GetInitialPropsContext) {
-    return makeRequest<UserData>('GET', 'tokens/me', {}, {}, {}, ctx);
+    return makeRequest<SessionData>('GET', 'oauth/me', {}, {}, {}, ctx);
+  },
+
+  async upvoteQuestion(
+    { questionId, userId }: { questionId: Question['id']; userId: UserData['id'] },
+    ctx?: GetInitialPropsContext
+  ) {
+    return makeRequest<{}>(
+      'POST',
+      'question-votes',
+      {
+        _questionId: questionId,
+        _userId: userId,
+      },
+      {},
+      {},
+      ctx
+    );
+  },
+
+  async downvoteQuestion(
+    { questionId, userId }: { questionId: Question['id']; userId: UserData['id'] },
+    ctx?: GetInitialPropsContext
+  ) {
+    return makeRequest<{}>(
+      'DELETE',
+      'question-votes',
+      {
+        _questionId: questionId,
+        _userId: userId,
+      },
+      {},
+      {},
+      ctx
+    );
+  },
+
+  async logInWithGitHub() {
+    const url = `${env.API_URL}/oauth/github`;
+    return openAndWaitForClose(url);
   },
 };

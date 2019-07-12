@@ -8,6 +8,7 @@ const defaultEnv: ProcessENV = {
   ABSOLUTE_URL: '',
   SENTRY_DSN: '',
   NODE_ENV: 'development',
+  ENV: '',
 };
 
 // set default env
@@ -22,8 +23,8 @@ export default env;
 export type ProcessENV = { [K in keyof ReturnType<typeof getEnvObjForDocument>]: string };
 
 const getEnvObjForDocument = () => {
-  const { API_URL, VERSION, GA_TRACKING_ID, ABSOLUTE_URL, SENTRY_DSN, NODE_ENV } = process.env;
-  return { API_URL, VERSION, GA_TRACKING_ID, ABSOLUTE_URL, SENTRY_DSN, NODE_ENV };
+  const { API_URL, VERSION, GA_TRACKING_ID, ABSOLUTE_URL, SENTRY_DSN, NODE_ENV, ENV } = process.env;
+  return { API_URL, VERSION, GA_TRACKING_ID, ABSOLUTE_URL, SENTRY_DSN, NODE_ENV, ENV };
 };
 
 // tslint:disable-next-line:variable-name

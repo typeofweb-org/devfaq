@@ -17,7 +17,7 @@ class Layout extends React.Component<LayoutProps & WithRouterProps> {
   static defaultProps = {
     title: 'Front-end Frequently Asked Questions',
     description:
-      'Fefaq.pl — największa baza pytań z front-endu tworzona przez społeczność. Fefaq.pl jest serwisem internetowym służącym do udostępniania i wymiany pytań rekrutacyjnych na stanowiska front-end developerów.',
+      'DevFAQ.pl — największa baza pytań z front-endu tworzona przez społeczność. DevFAQ.pl jest serwisem internetowym służącym do udostępniania i wymiany pytań rekrutacyjnych na stanowiska front-end developerów.',
   };
 
   render() {
@@ -25,14 +25,14 @@ class Layout extends React.Component<LayoutProps & WithRouterProps> {
     return (
       <React.Fragment>
         <Head>
-          <title key="title">Fefaq.pl • {title}</title>
+          <title key="title">DevFAQ.pl • {title}</title>
           <meta key="description" name="description" content={description} />
-          <meta property="og:title" itemProp="title name" content={`Fefaq.pl • ${title}`} />
+          <meta property="og:title" itemProp="title name" content={`DevFAQ.pl • ${title}`} />
           <meta property="og:description" itemProp="description" content={description} />
           <meta
             property="og:url"
             itemProp="url"
-            content={`${env.ABSOLUTE_URL}${this.props.router.asPath}`}
+            content={`${env.ABSOLUTE_URL}${this.props.router!.asPath}`}
           />
         </Head>
         <div className="app-root">

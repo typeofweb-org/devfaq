@@ -48,7 +48,7 @@ class AdminQuestions extends React.Component<AdminQuestionsProps, AdminQuestions
       return;
     }
 
-    const question = this.props.questions.data.find(q => q.id === questionId);
+    const question = this.props.questions.data.data.find(q => q.id === questionId);
     if (!question) {
       return;
     }
@@ -63,7 +63,7 @@ class AdminQuestions extends React.Component<AdminQuestionsProps, AdminQuestions
   };
 
   maybeRenderEmptyMessage = () => {
-    if (!this.props.questions.data || this.props.questions.data.length > 0) {
+    if (!this.props.questions.data || this.props.questions.data.data.length > 0) {
       return null;
     }
     return (

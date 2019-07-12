@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import { AppState } from '../reducers';
 import env from '../../utils/env';
 import { Question } from '../reducers/questions';
-import { TechnologyKey } from '../../constants/technology-icon-items';
+import { TechnologyKey, SortBy } from '../../constants/technology-icon-items';
 
 // const questionsSelector = (state: AppState) => state.questions;
 const selectedQuestionsSelector = (state: AppState) => state.selectedQuestions;
@@ -14,13 +14,34 @@ export const getTechnology = createSelector(
   ({ current }) => current.query && (current.query.technology as TechnologyKey)
 );
 
+export const getSortBy = createSelector(
+  routeDetailsSelector,
+  ({ current }) => current.query && (current.query.sortBy as string)
+);
+
+export const getSortByArray = createSelector(
+  getSortBy,
+  sortBy => (sortBy ? sortBy.split('*') : ['acceptedAt', 'desc']) as SortBy
+);
+
+export const getQuestionId = createSelector(
+  routeDetailsSelector,
+  ({ current }) => current.query && (current.query.id as string)
+);
+
+export const getPreviousPath = createSelector(
+  routeDetailsSelector,
+  ({ current }) => current.query && (current.query.previousPath as string | undefined)
+);
+
 export const getAreAnyQuestionSelected = createSelector(
   selectedQuestionsSelector,
   selectedQuestions => selectedQuestions.length > 0
 );
 
-export const getSelectedQuestionsIds = createSelector(selectedQuestionsSelector, questions =>
-  questions.map(q => q.id)
+export const getSelectedQuestionsIds = createSelector(
+  selectedQuestionsSelector,
+  questions => questions.map(q => q.id)
 );
 
 export const getDownloadUrl = createSelector(
@@ -35,7 +56,7 @@ export const getSelectedQuestionsByCategory = createSelector(
   (selectedQuestions): SelectedQuestionsByTechnology => {
     return selectedQuestions.reduce<SelectedQuestionsByTechnology>(
       (acc, selectedQuestion) => {
-        acc[selectedQuestion.category].push(selectedQuestion);
+        acc[selectedQuestion._categoryId].push(selectedQuestion);
         return acc;
       },
       {
@@ -60,7 +81,17 @@ export const getSelectedQuestionsWithCategories = createSelector(
   }
 );
 
-export const getIsAdmin = createSelector(
+export const getLoggedInUser = createSelector(
   authDataSelector,
-  authData => authData && authData.user && authData.user.role === 'admin'
+  authData => authData && authData.session && authData.session._user
+);
+
+export const getIsAdmin = createSelector(
+  getLoggedInUser,
+  user => user && user._roleId === 'admin'
+);
+
+export const getPage = createSelector(
+  routeDetailsSelector,
+  ({ current }) => current.query && Number(current.query.page)
 );

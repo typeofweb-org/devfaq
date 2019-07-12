@@ -5,9 +5,11 @@ import { ui } from './ui';
 import { selectedLevels } from './selectedLevels';
 import { routeDetails } from './routeDetails';
 import { auth } from './auth';
+import { oneQuestion } from './oneQuestion';
 
 const reducersObj = {
   questions,
+  oneQuestion,
   selectedQuestions,
   ui,
   selectedLevels,
