@@ -2,7 +2,7 @@
 source ~/.bash_profile
 set -e
 
-cd ~/domains/api.fefaq.pl/public_nodejs
+cd ~/domains/api.devfaq.pl/public_nodejs
 echo "👉 Pulling from the server…"
 git fetch origin
 
@@ -24,7 +24,7 @@ echo "👉 Pruning…"
 npm prune
 
 echo "👉 Restarting the server…"
-devil www restart api.fefaq.pl
-curl -I api.fefaq.pl
+devil www restart api.devfaq.pl
+curl -I api.devfaq.pl
 
 echo "👉 Done! 😱 👍"

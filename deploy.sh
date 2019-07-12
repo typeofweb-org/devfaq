@@ -2,4 +2,4 @@
 set -e
 
 DIR=`dirname $0`
-ssh sinpai@s18.mydevil.net 'bash -s' < $DIR/ssh-script-deploy.sh
+ssh typeofweb@s18.mydevil.net 'bash -s' < $DIR/ssh-script-deploy.sh
