@@ -40,7 +40,7 @@ class LoginFormComponent extends React.Component<LoginFormReduxProps> {
         <div className="login-container">
           <AppLogo />
           {this.props.auth.error && <p>{this.props.auth.error.message}</p>}
-          <p>Stwórz konto już dzisiaj i korzystaj z dodatkowych funkcji serwisu Fefaq!</p>
+          <p>Stwórz konto już dzisiaj i korzystaj z dodatkowych funkcji serwisu DevFAQ!</p>
           <button onClick={this.logInWithGithub} className="login-with-github">
             Zaloguj się przez GitHuba
           </button>

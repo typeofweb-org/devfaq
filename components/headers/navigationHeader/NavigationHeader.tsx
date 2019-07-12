@@ -29,7 +29,7 @@ class NavigationHeaderComponent extends React.PureComponent<
           <ActiveLink route="/questions">
             <a>
               <h1>
-                <span className="visuallyhidden">Fefaq.pl</span>
+                <span className="visuallyhidden">DevFAQ.pl</span>
                 <AppLogo />
               </h1>
             </a>
