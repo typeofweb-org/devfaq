@@ -1,7 +1,7 @@
 import fc from 'fast-check';
 import { pipe, identity, entries } from 'lodash/fp';
 
-type EntriesOf<T extends object> = T extends Record<string, infer R> ? [string, R] : never;
+type EntriesOf<T extends object> = T extends Record<string, infer R> ? Array<[string, R]> : never;
 
 type GetArbitraryType<T> = T extends fc.Arbitrary<infer R> ? R : never;
 type SegmentsDict = GetArbitraryType<ReturnType<typeof segmentsRecordWithReplacements>>;
@@ -35,7 +35,7 @@ const segmentsRecordWithReplacements = (excessReplacements = false) => {
   );
 };
 
-const segmentsDictEntriesToRoutes = (entries: EntriesOf<SegmentsDict>[]) =>
+const segmentsDictEntriesToRoutes = (entries: EntriesOf<SegmentsDict>) =>
   entries.map(([segment, { replacement, isExcess }]) => {
     const query = replacement === false ? segment : replacement;
 

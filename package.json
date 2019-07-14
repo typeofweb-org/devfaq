@@ -79,7 +79,7 @@
     "build": "echo $NODE_ENV && rm -rf ./.next ./public ./server/*.js ./server/*.map && next build && next export -o public && tsc --project tsconfig.server.json",
     "start": "node app.js",
     "analyze": "cross-env ANALYZE=1 NODE_ENV=production next build",
-    "test": "npm test:tsc && npm run jest",
+    "test": "npm run test:tsc && npm run jest",
     "test:tsc": "tsc --project tsconfig.json --noEmit && tsc --project tsconfig.server.json --noEmit && tslint -p tsconfig.json && tslint -p tsconfig.server.json",
     "jest": "jest"
   },
