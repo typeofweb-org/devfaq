@@ -59,6 +59,8 @@ class ActiveLinkComponent extends React.Component<
     //   return <div aria-disabled="true">{newChild}</div>;
     // }
 
+    console.log(href);
+
     return (
       <Link
         href={href}

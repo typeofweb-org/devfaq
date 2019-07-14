@@ -13,7 +13,7 @@ export function redirect(
     ctx.res.writeHead(302, { Location: result.as });
     return ctx.res.end();
   } else {
-    return Router.replace(result.as);
+    return Router.push(result.href, result.as);
   }
 }
 
