@@ -3,14 +3,7 @@ import { Store } from 'redux';
 import { AppState } from '../redux/reducers/index';
 import { AsyncAction } from '../redux/actions';
 
-import * as express from 'express';
 import { NextPageContext } from 'next';
-
-declare module 'next' {
-  export interface NextPageContext {
-    store: AppStore;
-  }
-}
 
 export type AppStore = Store<AppState> & {
   dispatch<R>(asyncAction: AsyncAction<R>): R;
@@ -27,4 +20,10 @@ export interface RouteDetails {
   query?: SingletonRouter['query'];
   asPath?: SingletonRouter['asPath'];
   route: SingletonRouter['route'];
+}
+
+declare module 'next' {
+  interface NextPageContext extends RouteDetails {
+    store: AppStore;
+  }
 }

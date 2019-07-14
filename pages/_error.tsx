@@ -8,7 +8,7 @@ export default class Error extends React.Component<ErrorProps> {
     const { err, pathname, asPath, res } = ctx;
     const statusCode = res ? res.statusCode : err ? err.statusCode : null;
 
-    if (statusCode === 404 && asPath.endsWith('/')) {
+    if (statusCode === 404 && asPath && asPath.endsWith('/')) {
       const newAsPath = asPath.slice(0, asPath.length - 1);
       if (newAsPath !== asPath) {
         return redirect(ctx, asPath.slice(0, asPath.length - 1));

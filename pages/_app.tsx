@@ -36,13 +36,13 @@ function getRouteDetails(routeDetails: RouteDetails) {
   return newRouteDetails;
 }
 
-class MyApp extends AppComponent<{ store: AppStore }> {
-  static async getInitialProps({ Component, ctx, router }: AppContext) {
+class MyApp extends AppComponent<{ store: AppStore; ctx: RouteDetails }> {
+  static async getInitialProps({ Component, ctx }: AppContext) {
     if (ctx.req) {
       await ctx.store.dispatch(ActionCreators.validateToken(ctx));
     }
 
-    const newRouteDetails = getRouteDetails(router);
+    const newRouteDetails = getRouteDetails(ctx);
 
     // when changing routes on the client side
     // it's actually still in progress at this point

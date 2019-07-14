@@ -19,9 +19,9 @@ const QuestionsPaginationComponent: React.FC<QuestionsPaginationProps> = ({ tota
     <footer className="questions-pagination">
       <ul>
         {Array.from({ length: pages }).map((_, i) => {
-          const query = {
+          const query: QuestionsPaginationProps['route']['query'] = {
             ...route.query,
-            page: i + 1,
+            page: String(i + 1),
           };
 
           return (
@@ -29,7 +29,7 @@ const QuestionsPaginationComponent: React.FC<QuestionsPaginationProps> = ({ tota
               <ActiveLink
                 exact={true}
                 href={{ path: '/questions/[technology]' }}
-                as={`/questions/${route.query.technology}?page=${i + 1}`}
+                as={`/questions/${query.technology}?page=${i + 1}`}
               >
                 <a>{i + 1}</a>
               </ActiveLink>
