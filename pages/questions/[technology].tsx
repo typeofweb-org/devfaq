@@ -17,8 +17,8 @@ import { Dispatch } from 'redux';
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 class QuestionsPageComponent extends React.Component<Props> {
   static async getInitialProps(ctx: GetInitialPropsContext) {
-    if (!ctx.query || !ctx.query.technology) {
-      return redirect(ctx, '/questions/js?page=1');
+    if (!ctx.query || !ctx.query.technology || Array.isArray(ctx.query.technology)) {
+      return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx);
     }
 
     const state = ctx.store.getState();
@@ -26,7 +26,11 @@ class QuestionsPageComponent extends React.Component<Props> {
     const page = getPage(state);
 
     if (!page) {
-      return redirect(ctx, `/questions/${ctx.query.technology}?page=1`);
+      return redirect(
+        '/questions/[technology]',
+        { technology: ctx.query.technology, page: '1' },
+        ctx
+      );
     }
 
     const sortBy = getSortByArray(state);

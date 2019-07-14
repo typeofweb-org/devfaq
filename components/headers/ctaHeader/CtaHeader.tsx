@@ -19,12 +19,12 @@ class CtaHeaderComponent extends React.Component<
       <div className="cta-header">
         <header className="app-header--cta container">
           <nav className="app-tabs">
-            <ActiveLink href="questions">
+            <ActiveLink href="/questions">
               <a onClick={() => this.reportEvent('Lista pytań')} className="app-tabs--tab">
                 Lista pytań
               </a>
             </ActiveLink>
-            <ActiveLink href="selected-questions">
+            <ActiveLink href="/selected-questions">
               <a
                 onClick={() =>
                   this.reportEvent(
@@ -42,7 +42,7 @@ class CtaHeaderComponent extends React.Component<
             </ActiveLink>
 
             {this.props.isAdmin && (
-              <ActiveLink href="admin">
+              <ActiveLink href="/admin">
                 <a className="app-tabs--tab">Admin</a>
               </ActiveLink>
             )}

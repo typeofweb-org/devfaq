@@ -16,8 +16,8 @@ class OneQuestionPageComponent extends React.Component<Props> {
   static async getInitialProps(ctx: GetInitialPropsContext) {
     const id = ctx.query && ctx.query.id;
 
-    if (!id) {
-      // return redirect(ctx, '/questions/js?page=1');
+    if (!id || Array.isArray(id)) {
+      return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx);
     }
 
     await ctx.store.dispatch(ActionCreators.fetchOneQuestion(ctx));

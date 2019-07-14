@@ -4,7 +4,7 @@ import { redirect } from '../utils/redirect';
 
 export default class Index extends React.Component {
   static async getInitialProps(ctx: GetInitialPropsContext) {
-    return redirect(ctx, '/questions/js?page=1');
+    return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx);
   }
 
   render() {

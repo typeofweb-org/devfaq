@@ -4,7 +4,7 @@ import { GetInitialPropsContext } from '../../utils/types';
 
 export default class QuestionsPage extends React.PureComponent {
   static async getInitialProps(ctx: GetInitialPropsContext) {
-    return redirect(ctx, '/questions/js?page=1');
+    return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx);
   }
 
   render() {

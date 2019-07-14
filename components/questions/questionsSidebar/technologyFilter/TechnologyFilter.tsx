@@ -24,7 +24,7 @@ export class TechnologyFilter extends React.Component {
         <ActiveLink
           disabledWhenActive={true}
           href="/questions/[technology]"
-          as={`/questions/${technology.name}`}
+          query={{ technology: technology.name }}
           onClick={() => this.reportSelectTechnologyEvent(technology.label)}
         >
           <a title={technology.label}>

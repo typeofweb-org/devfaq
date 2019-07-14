@@ -10,7 +10,7 @@ export default class AdminPage extends React.Component {
   static async getInitialProps(ctx: NextPageContext) {
     const state = ctx.store.getState();
     if (!getLoggedInUser(state)) {
-      return redirect(ctx, '/login', '/admin');
+      return redirect('/login', { previousPath: '/admin' }, ctx);
     }
   }
 

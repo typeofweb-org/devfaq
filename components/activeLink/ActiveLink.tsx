@@ -4,6 +4,7 @@ import { AppState } from '../../redux/reducers/index';
 import { connect } from 'react-redux';
 import { RouteDetails } from '../../utils/types';
 import Link, { LinkProps } from 'next/link';
+import { hrefQueryToAsPath } from '../../utils/redirect';
 
 interface ActiveLinkOwnProps {
   activeClassName?: string;
@@ -11,9 +12,10 @@ interface ActiveLinkOwnProps {
   disabledWhenActive?: boolean;
   onClick?: React.MouseEventHandler<any>;
   children: React.ReactElement<any>;
+  query?: Record<string, string[] | string>;
 }
 
-type ActiveLinkComponentProps = LinkProps & ActiveLinkOwnProps;
+type ActiveLinkComponentProps = Omit<LinkProps, 'as'> & ActiveLinkOwnProps;
 
 class ActiveLinkComponent extends React.Component<
   ActiveLinkComponentProps & ReturnType<typeof mapStateToProps>
@@ -38,16 +40,19 @@ class ActiveLinkComponent extends React.Component<
       isMatch,
       activeClassName = 'active',
       disabledWhenActive,
+      query,
       children,
 
       href,
-      as,
       replace,
       scroll,
       shallow,
       passHref,
       prefetch,
     } = this.props;
+
+    const as = hrefQueryToAsPath(href, query);
+
     const child = React.Children.only(children);
     const newChild = this.conditionallyAddClassToChild(isMatch, activeClassName, child);
 

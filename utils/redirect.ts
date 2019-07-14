@@ -1,18 +1,20 @@
 import { NextPageContext } from 'next';
 import Router from 'next/router';
+import { LinkProps } from 'next/link';
 
-export function redirect(ctx: NextPageContext, path: string, previousPath?: string) {
+export function redirect(
+  href: string,
+  query: { previousPath?: string } & Record<string, string>,
+  ctx: NextPageContext
+) {
+  const asPath = hrefQueryToAsPath(href, query);
+  console.log({ href, query, asPath });
+
   if (ctx.res) {
-    ctx.res.writeHead(302, {
-      Location: previousPath ? path + `?previousPath=${previousPath}` : path,
-    });
+    ctx.res.writeHead(302, { Location: asPath });
     return ctx.res.end();
   } else {
-    const url = new URL(path, location.href);
-    if (previousPath) {
-      url.searchParams.append('previousPath', previousPath);
-    }
-    return Router.replace(url);
+    return Router.replace(asPath);
   }
 }
 
@@ -29,7 +31,12 @@ const allMatches = (str: string, regex: RegExp): RegExpExecArray[] => {
   return result;
 };
 
-export function hrefQueryToAsPath(href: string, query: Record<string, string> = {}) {
+export function hrefQueryToAsPath(
+  url: LinkProps['href'],
+  query: Record<string, string[] | string> = {}
+) {
+  const href = String(url);
+
   // matches anything like [bla-bla]
   const replacementsPattern = /\[([^\[\]\s]+)\]/gi;
 
@@ -41,11 +48,7 @@ export function hrefQueryToAsPath(href: string, query: Record<string, string> = 
   const queryString = excessQueryProperties.map(prop => `${prop}=${query[prop]}`).join('&');
 
   return (
-    href.replace(replacementsPattern, (_, replacement: string) => query[replacement]) +
+    href.replace(replacementsPattern, (_, replacement: string) => String(query[replacement])) +
     (queryString ? '?' + queryString : '')
   );
-}
-
-export function redirect2(href: string, query: object = {}, ctx: NextPageContext) {
-  //
 }
