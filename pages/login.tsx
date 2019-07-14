@@ -10,7 +10,10 @@ export default class LoginPage extends React.Component {
   static async getInitialProps(ctx: GetInitialPropsContext) {
     const state = ctx.store.getState();
     if (getLoggedInUser(state)) {
-      return redirect('/', {}, ctx);
+      const query = state.routeDetails.current.query;
+      const path = (query && String(query.previousPath)) || '/';
+
+      return redirect(path, {}, ctx);
     }
   }
 

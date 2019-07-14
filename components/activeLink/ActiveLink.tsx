@@ -59,8 +59,6 @@ class ActiveLinkComponent extends React.Component<
     //   return <div aria-disabled="true">{newChild}</div>;
     // }
 
-    console.log(href);
-
     return (
       <Link
         href={href}
@@ -102,15 +100,9 @@ const checkForMatch = (
     return true;
   }
 
-  if (routeDetails.asPath && routeDetails.asPath.startsWith(asNoQuery.as + '?')) {
+  if (routeDetails.asPath && routeDetails.asPath.startsWith(asNoQuery.as)) {
     return true;
   }
-
-  // if (foundUrls.urls.as && routeDetails.asPath) {
-  //   const [foundPathname] = foundUrls.urls.as.split('?');
-  //   const [routePathname] = routeDetails.asPath.split('?');
-  //   return routePathname.startsWith(foundPathname);
-  // }
 
   return false;
 };

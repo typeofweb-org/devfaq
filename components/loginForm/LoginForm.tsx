@@ -7,19 +7,19 @@ import { isString } from 'lodash';
 import { getLoggedInUser, getPreviousPath } from '../../redux/selectors/selectors';
 import AppLogo from '../appLogo/AppLogo';
 import ActiveLink from '../activeLink/ActiveLink';
+import { redirect } from '../../utils/redirect';
 
 type LoginFormReduxProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 class LoginFormComponent extends React.Component<LoginFormReduxProps> {
   componentDidUpdate() {
     const { user, previousPath, isTransitioning } = this.props;
+    console.log({ user, previousPath, isTransitioning });
     if (user && !isTransitioning) {
       if (isString(previousPath)) {
-        // @todo
-        // void Router.replaceRoute(previousPath);
+        redirect(previousPath);
       } else {
-        // @todo
-        // void Router.replaceRoute('/');
+        redirect('/');
       }
     }
   }

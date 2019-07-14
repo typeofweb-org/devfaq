@@ -43,8 +43,6 @@ class MyApp extends AppComponent<{ store: AppStore; ctx: RouteDetails }> {
     }
 
     const newRouteDetails = getRouteDetails(ctx);
-    console.log('ctx', ctx);
-    console.log('newRouteDetails', newRouteDetails.query);
 
     // when changing routes on the client side
     // it's actually still in progress at this point

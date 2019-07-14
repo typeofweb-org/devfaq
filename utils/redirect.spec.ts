@@ -13,9 +13,9 @@ describe('hrefQueryToAsPath', () => {
     });
 
     it(`replaces segments in href`, () => {
-      expect(hrefQueryToAsPath('/questions/[id]', { id: '123' })).toEqual({
-        href: '/questions/[id]',
-        as: '/questions/123',
+      expect(hrefQueryToAsPath('/questions/p/[id]', { id: '123' })).toEqual({
+        href: '/questions/p/[id]',
+        as: '/questions/p/123',
       });
     });
 

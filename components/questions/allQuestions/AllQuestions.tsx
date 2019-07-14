@@ -16,6 +16,7 @@ import { ActionCreators } from '../../../redux/actions';
 import { isQuestionSelected } from '../questionsUtils';
 import { Level } from '../../../constants/level';
 import QuestionsPagination from '../../questionsPagination/QuestionsPagination';
+import { redirect } from '../../../utils/redirect';
 
 type AllQuestionsComponentProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -55,8 +56,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
       ...this.props.route.query,
       sortBy: e.currentTarget.value,
     };
-    // @todo
-    // void Router.pushRoute('questions', query);
+    redirect('/questions/[technology]', query);
   };
 
   renderList = () => {

@@ -135,10 +135,9 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
           dateTime={question.acceptedAt}
           className="app-questions--question--date app-questions--question--date_long"
         >
-          {/* @todo */}
-          {/* <ActiveLink route={`/questions/${question.id}`}>
+          <ActiveLink href="/questions/p/[id]" query={{ id: String(question.id) }}>
             <a>{longDate(question.acceptedAt)}</a>
-          </ActiveLink> */}
+          </ActiveLink>
         </time>
         <time
           dateTime={question.acceptedAt}

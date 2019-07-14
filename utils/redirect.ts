@@ -4,7 +4,7 @@ import { LinkProps } from 'next/link';
 
 export function redirect(
   href: string,
-  query: { previousPath?: string } & Record<string, string>,
+  query: { previousPath?: string } & Record<string, string> = {},
   ctx?: NextPageContext
 ) {
   const result = hrefQueryToAsPath(href, query);
