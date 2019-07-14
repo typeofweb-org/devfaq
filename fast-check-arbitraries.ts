@@ -70,8 +70,13 @@ const routeToResult = (mergedRoute: MergedRoute) => {
     .join('&');
 
   return {
-    href: mergedRoute.href,
-    asPath: mergedRoute.asPath + (queryString ? '?' + queryString : ''),
-    query: { ...mergedRoute.replacements, ...mergedRoute.query },
+    data: {
+      href: mergedRoute.href,
+      query: { ...mergedRoute.replacements, ...mergedRoute.query },
+    },
+    expected: {
+      href: mergedRoute.href + (queryString ? '?' + queryString : ''),
+      as: mergedRoute.asPath + (queryString ? '?' + queryString : ''),
+    },
   };
 };

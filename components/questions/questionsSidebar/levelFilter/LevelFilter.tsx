@@ -7,6 +7,7 @@ import { AppState } from '../../../../redux/reducers/index';
 import { ActionCreators } from '../../../../redux/actions';
 import { getPage } from '../../../../redux/selectors/selectors';
 import Router from 'next/router';
+import { redirect } from '../../../../utils/redirect';
 
 class LevelFilterComponent extends React.Component<
   ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
@@ -45,10 +46,7 @@ class LevelFilterComponent extends React.Component<
       this.props.selectLevel(level.value);
     }
     if (this.props.page !== 1) {
-      const url = new URL('/questions', location.href);
-      url.searchParams.append('page', '1');
-
-      void Router.replace(url);
+      redirect('/questions', { page: '1' });
     }
   };
 }

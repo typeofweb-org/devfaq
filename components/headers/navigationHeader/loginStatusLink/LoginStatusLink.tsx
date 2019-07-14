@@ -20,10 +20,8 @@ const LoginStatusLinkComponent: React.FC<LoginStatusLinkProps & { onLoginClick?:
 
   const previousPath = router.asPath;
 
-  const href = '/login' + (previousPath ? `?previousPath=${previousPath}` : '');
-
   return (
-    <ActiveLink href={href}>
+    <ActiveLink href="/login" query={{ previousPath }}>
       <a onClick={onLoginClick}>Zaloguj</a>
     </ActiveLink>
   );

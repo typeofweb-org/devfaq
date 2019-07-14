@@ -41,6 +41,7 @@ class ActiveLinkComponent extends React.Component<
       activeClassName = 'active',
       disabledWhenActive,
       query,
+      as,
       children,
 
       href,
@@ -50,8 +51,6 @@ class ActiveLinkComponent extends React.Component<
       passHref,
       prefetch,
     } = this.props;
-
-    const as = hrefQueryToAsPath(href, query);
 
     const child = React.Children.only(children);
     const newChild = this.conditionallyAddClassToChild(isMatch, activeClassName, child);
@@ -79,25 +78,31 @@ class ActiveLinkComponent extends React.Component<
 const checkForMatch = (
   routeDetails: RouteDetails,
   {
-    // route,
+    href,
+    query,
+    as,
     exact,
-  }: // params,
-  {
-    // route: LinkProps['route'];
-    // params?: LinkProps['params'];
+  }: {
+    href: ActiveLinkComponentProps['href'];
+    query: ActiveLinkComponentProps['query'];
+    as: string;
     exact?: boolean;
   }
 ): boolean => {
-  // if (routeDetails.asPath === route) {
-  //   return true;
-  // }
+  const isExactMatch = as === routeDetails.asPath;
 
-  // const foundUrls = routes.findAndGetUrls(route, params);
-  // const isExactMatch = foundUrls.urls.as === routeDetails.asPath;
+  if (isExactMatch || exact) {
+    return isExactMatch;
+  }
 
-  // if (isExactMatch || exact) {
-  //   return isExactMatch;
-  // }
+  const asNoQuery = hrefQueryToAsPath(href, query, true);
+  if (asNoQuery.as === routeDetails.asPath) {
+    return true;
+  }
+
+  if (routeDetails.asPath && routeDetails.asPath.startsWith(asNoQuery.as + '?')) {
+    return true;
+  }
 
   // if (foundUrls.urls.as && routeDetails.asPath) {
   //   const [foundPathname] = foundUrls.urls.as.split('?');
@@ -109,9 +114,19 @@ const checkForMatch = (
 };
 
 const mapStateToProps = (state: AppState, ownProps: ActiveLinkComponentProps) => {
-  const isMatch = checkForMatch(state.routeDetails.current, ownProps);
+  const { as, href } = hrefQueryToAsPath(ownProps.href, ownProps.query);
+
+  const isMatch = checkForMatch(state.routeDetails.current, {
+    as,
+    href: ownProps.href,
+    query: ownProps.query,
+    exact: ownProps.exact,
+  });
+
   return {
     isMatch,
+    as,
+    href,
   };
 };
 

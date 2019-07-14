@@ -6,11 +6,17 @@ import * as Arbitraries from '../fast-check-arbitraries';
 describe('hrefQueryToAsPath', () => {
   describe('unit test', () => {
     it(`returns the same url when there are no replacements`, () => {
-      expect(hrefQueryToAsPath('/questions/javascript')).toBe('/questions/javascript');
+      expect(hrefQueryToAsPath('/questions/javascript')).toEqual({
+        href: '/questions/javascript',
+        as: '/questions/javascript',
+      });
     });
 
     it(`replaces segments in href`, () => {
-      expect(hrefQueryToAsPath('/questions/[id]', { id: '123' })).toBe('/questions/123');
+      expect(hrefQueryToAsPath('/questions/[id]', { id: '123' })).toEqual({
+        href: '/questions/[id]',
+        as: '/questions/123',
+      });
     });
 
     it(`adds additional query params as a query`, () => {
@@ -20,30 +26,38 @@ describe('hrefQueryToAsPath', () => {
           page: '1',
           orderBy: 'common',
         })
-      ).toBe('/questions/css?page=1&orderBy=common');
+      ).toEqual({
+        href: '/questions/[technology]?page=1&orderBy=common',
+        as: '/questions/css?page=1&orderBy=common',
+      });
     });
   });
 
   describe('property tests', () => {
     it(`returns the same url when there are no replacements`, () => {
-      fc.assert(fc.property(Arbitraries.path(), path => hrefQueryToAsPath(path) === path));
+      fc.assert(
+        fc.property(Arbitraries.path(), path => {
+          const result = hrefQueryToAsPath(path);
+          return result.as === result.href && result.as === path;
+        })
+      );
     });
 
     it(`replaces segments in href`, () => {
       fc.assert(
-        fc.property(
-          Arbitraries.routeWithReplacements(),
-          ({ href, asPath, query }) => hrefQueryToAsPath(href, query) === asPath
-        )
+        fc.property(Arbitraries.routeWithReplacements(), ({ data, expected }) => {
+          const result = hrefQueryToAsPath(data.href, data.query);
+          return result.as === expected.as && result.href === expected.href;
+        })
       );
     });
 
     it(`adds additional query params as a query`, () => {
       fc.assert(
-        fc.property(
-          Arbitraries.routeWithReplacements(true),
-          ({ href, asPath, query }) => hrefQueryToAsPath(href, query) === asPath
-        )
+        fc.property(Arbitraries.routeWithReplacements(true), ({ data, expected }) => {
+          const result = hrefQueryToAsPath(data.href, data.query);
+          return result.as === expected.as && result.href === expected.href;
+        })
       );
     });
   });

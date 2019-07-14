@@ -5,16 +5,15 @@ import { LinkProps } from 'next/link';
 export function redirect(
   href: string,
   query: { previousPath?: string } & Record<string, string>,
-  ctx: NextPageContext
+  ctx?: NextPageContext
 ) {
-  const asPath = hrefQueryToAsPath(href, query);
-  console.log({ href, query, asPath });
+  const result = hrefQueryToAsPath(href, query);
 
-  if (ctx.res) {
-    ctx.res.writeHead(302, { Location: asPath });
+  if (ctx && ctx.res) {
+    ctx.res.writeHead(302, { Location: result.as });
     return ctx.res.end();
   } else {
-    return Router.replace(asPath);
+    return Router.replace(result.as);
   }
 }
 
@@ -33,7 +32,8 @@ const allMatches = (str: string, regex: RegExp): RegExpExecArray[] => {
 
 export function hrefQueryToAsPath(
   url: LinkProps['href'],
-  query: Record<string, string[] | string> = {}
+  query: Record<string, string[] | string> = {},
+  skipExcessQueryProps = false
 ) {
   const href = String(url);
 
@@ -45,10 +45,15 @@ export function hrefQueryToAsPath(
     key => !matches.find(([, replacement]) => key === replacement)
   );
 
-  const queryString = excessQueryProperties.map(prop => `${prop}=${query[prop]}`).join('&');
+  const maybeQueryString = skipExcessQueryProps
+    ? ''
+    : excessQueryProperties.map(prop => `${prop}=${query[prop]}`).join('&');
+  const queryString = maybeQueryString ? '?' + maybeQueryString : '';
 
-  return (
-    href.replace(replacementsPattern, (_, replacement: string) => String(query[replacement])) +
-    (queryString ? '?' + queryString : '')
-  );
+  return {
+    as:
+      href.replace(replacementsPattern, (_, replacement: string) => String(query[replacement])) +
+      queryString,
+    href: href + queryString,
+  };
 }
