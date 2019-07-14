@@ -16,6 +16,9 @@ export function redirect(ctx: NextPageContext, path: string, previousPath?: stri
   }
 }
 
+/**
+ * .matchAll polyfill for poor ;)
+ */
 const allMatches = (str: string, regex: RegExp): RegExpExecArray[] => {
   let x: RegExpExecArray | null;
   const result: RegExpExecArray[] = [];
