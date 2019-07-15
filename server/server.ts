@@ -7,18 +7,22 @@ require('dotenv').config({
   path: isProduction ? `.env.${process.env.NODE_ENV}` : '.env',
 });
 
+import http from 'http';
+import express from 'express';
+import cookieParser from 'cookie-parser';
 import next from 'next';
 import * as Sentry from '@sentry/node';
-
-Sentry.init({ dsn: process.env.SENTRY_DSN, debug: !isProduction });
-
-const app = next({ dev: !isProduction });
-const port = process.env.PORT || '3000';
 import { parse } from 'url';
 import { join } from 'path';
 import { readFileSync } from 'fs';
 
 process.env.VERSION = readFileSync(__dirname + '/../.version', 'utf-8');
+
+const port = process.env.PORT || '3000';
+
+Sentry.init({ dsn: process.env.SENTRY_DSN, debug: !isProduction });
+
+const app = next({ dev: !isProduction });
 
 const staticFiles = ['/img/fefaq-cover-facebook.png'];
 
@@ -34,11 +38,6 @@ const favicons = [
   '/android-chrome-512x512.png',
   '/android-chrome-192x192.png',
 ];
-
-function getPathname(req: express.Request) {
-  const { pathname } = parse(req.url);
-  return pathname || '';
-}
 
 function getPathForStaticResource(pathname: string) {
   if (pathname === '/service-worker.js') {
@@ -82,11 +81,8 @@ function generateSitemap(req: express.Request) {
   return sitemap.toString();
 }
 
-// With express
-import express from 'express';
-import cookieParser from 'cookie-parser';
+const handle = app.getRequestHandler();
 
-// tslint:disable-next-line:no-floating-promises
 app
   .prepare()
   .then(() => {
@@ -95,7 +91,8 @@ app
       .use(Sentry.Handlers.errorHandler())
       .use(cookieParser())
       .use((req, res, next) => {
-        const pathname = getPathname(req);
+        const parsedUrl = parse(req.url, true);
+        const { pathname = '', query } = parsedUrl;
 
         if (pathname === '/sitemap.xml') {
           const sitemap = generateSitemap(req);
@@ -106,10 +103,11 @@ app
         if (staticPath) {
           return app.serveStatic(req, res, staticPath);
         }
-        return next();
+        return handle(req, res);
       });
-    server.listen(port, () => console.log('Server listening at localhost:3000'));
+    server.listen(port, () => console.log(`Server listening at localhost:${port}`));
   })
   .catch(err => {
     console.error(err);
+    process.exit(1);
   });

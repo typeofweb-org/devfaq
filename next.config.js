@@ -79,12 +79,12 @@ const config = withWebpackAnalyze(
   )
 );
 
-// config.exportPathMap = function() {
-//   return {
-//     '/about': { page: '/about' },
-//     '/authors': { page: '/authors' },
-//     '/regulations': { page: '/regulations' },
-//   };
-// };
+config.exportPathMap = function() {
+  return {
+    '/about': { page: '/about' },
+    '/authors': { page: '/authors' },
+    '/regulations': { page: '/regulations' },
+  };
+};
 
 module.exports = isProduction ? withOffline(config) : config;
