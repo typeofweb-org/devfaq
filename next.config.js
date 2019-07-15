@@ -78,13 +78,12 @@ const config = withWebpackAnalyze(
     )
   )
 );
-config.poweredByHeader = false;
 
 // config.exportPathMap = function() {
 //   return {
-//     '/about': { name: '/about', page: '/staticPage' },
-//     '/authors': { name: '/authors', page: '/staticPage' },
-//     '/regulations': { name: '/regulations', page: '/staticPage' },
+//     '/about': { page: '/about' },
+//     '/authors': { page: '/authors' },
+//     '/regulations': { page: '/regulations' },
 //   };
 // };
 
