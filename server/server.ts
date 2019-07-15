@@ -89,22 +89,29 @@ app
     const server = express()
       .use(Sentry.Handlers.requestHandler())
       .use(Sentry.Handlers.errorHandler())
-      .use(cookieParser())
-      .use((req, res, next) => {
-        const parsedUrl = parse(req.url, true);
-        const { pathname = '', query } = parsedUrl;
+      .use(cookieParser());
 
-        if (pathname === '/sitemap.xml') {
-          const sitemap = generateSitemap(req);
-          return res.header('Content-Type', 'application/xml').send(sitemap);
-        }
+    server.use((req, res, next) => {
+      const parsedUrl = parse(req.url, true);
+      const { pathname = '', query } = parsedUrl;
 
-        const staticPath = getPathForStaticResource(pathname);
-        if (staticPath) {
-          return app.serveStatic(req, res, staticPath);
-        }
-        return handle(req, res);
-      });
+      const staticPath = getPathForStaticResource(pathname);
+      if (staticPath) {
+        return app.serveStatic(req, res, staticPath);
+      }
+
+      return next();
+    });
+
+    server.get('/sitemap.xml', (req, res) => {
+      const sitemap = generateSitemap(req);
+      return res.header('Content-Type', 'application/xml').send(sitemap);
+    });
+
+    server.get('*', (req, res) => {
+      return handle(req, res);
+    });
+
     server.listen(port, () => console.log(`Server listening at localhost:${port}`));
   })
   .catch(err => {

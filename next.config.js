@@ -39,14 +39,14 @@ const withWebpackAnalyze = (nextConfig = {}) => {
     webpack(config, options) {
       if (ANALYZE) {
         console.log('ANALYZE=YES');
-        // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-        // config.plugins.push(
-        //   new BundleAnalyzerPlugin({
-        //     analyzerMode: 'server',
-        //     analyzerPort: options.isServer ? 8888 : 8889,
-        //     openAnalyzer: true,
-        //   })
-        // );
+        const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+        config.plugins.push(
+          new BundleAnalyzerPlugin({
+            analyzerMode: 'server',
+            analyzerPort: options.isServer ? 8888 : 8889,
+            openAnalyzer: true,
+          })
+        );
 
         const Visualizer = require('webpack-visualizer-plugin');
         config.plugins.push(new Visualizer());
