@@ -68,10 +68,6 @@ class MyApp extends AppComponent<{ store: AppStore; ctx: RouteDetails }> {
     Router.events.on('routeChangeComplete', this.onRouteChangeComplete);
     Router.events.on('routeChangeStart', this.onRouteChangeStart);
     Router.events.on('routeChangeError', this.onRouteChangeError);
-
-    Router.events.on('routeChangeComplete', (...args) => console.log('routeChangeComplete', args));
-    Router.events.on('routeChangeStart', (...args) => console.log('routeChangeStart', args));
-    Router.events.on('routeChangeError', (...args) => console.log('routeChangeError', args));
   }
 
   componentWillUnmount() {
