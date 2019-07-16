@@ -14,7 +14,6 @@ type LoginFormReduxProps = ReturnType<typeof mapStateToProps> & typeof mapDispat
 class LoginFormComponent extends React.Component<LoginFormReduxProps> {
   componentDidUpdate() {
     const { user, previousPath, isTransitioning } = this.props;
-    console.log({ user, previousPath, isTransitioning });
     if (user && !isTransitioning) {
       if (isString(previousPath)) {
         redirect(previousPath);
