@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import ActiveLink from '../activeLink/ActiveLink';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/reducers';
@@ -19,14 +19,14 @@ const QuestionsPaginationComponent: React.FC<QuestionsPaginationProps> = ({ tota
     <footer className="questions-pagination">
       <ul>
         {Array.from({ length: pages }).map((_, i) => {
-          const query = {
+          const query: QuestionsPaginationProps['route']['query'] = {
             ...route.query,
-            page: i + 1,
+            page: String(i + 1),
           };
 
           return (
             <li key={i}>
-              <ActiveLink exact={true} route="questions" params={query}>
+              <ActiveLink exact={true} href="/questions/[technology]" query={query}>
                 <a>{i + 1}</a>
               </ActiveLink>
             </li>

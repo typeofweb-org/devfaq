@@ -3,7 +3,6 @@ require('dotenv').config({
   path: isProduction ? `.env.${process.env.NODE_ENV}` : '.env',
 });
 
-const withTypescript = require('@zeit/next-typescript');
 const withSass = require('@zeit/next-sass');
 const withImages = require('next-images');
 const withOffline = require('next-offline');
@@ -40,14 +39,14 @@ const withWebpackAnalyze = (nextConfig = {}) => {
     webpack(config, options) {
       if (ANALYZE) {
         console.log('ANALYZE=YES');
-        // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-        // config.plugins.push(
-        //   new BundleAnalyzerPlugin({
-        //     analyzerMode: 'server',
-        //     analyzerPort: options.isServer ? 8888 : 8889,
-        //     openAnalyzer: true,
-        //   })
-        // );
+        const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+        config.plugins.push(
+          new BundleAnalyzerPlugin({
+            analyzerMode: 'server',
+            analyzerPort: options.isServer ? 8888 : 8889,
+            openAnalyzer: true,
+          })
+        );
 
         const Visualizer = require('webpack-visualizer-plugin');
         config.plugins.push(new Visualizer());
@@ -67,32 +66,24 @@ const withWebpackAnalyze = (nextConfig = {}) => {
 const config = withWebpackAnalyze(
   withPolyfills(
     withImages(
-      withTypescript(
-        withSass({
-          sassLoaderOptions: {
-            includePaths: ['styles/'],
-          },
-          webpack: (config, options) => {
-            if (options.isServer && !isProduction) {
-              const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-              config.plugins.push(new ForkTsCheckerWebpackPlugin());
-            }
-            config.plugins.push(new LodashModuleReplacementPlugin());
-            return config;
-          },
-        })
-      )
+      withSass({
+        sassLoaderOptions: {
+          includePaths: ['styles/'],
+        },
+        webpack: (config, options) => {
+          config.plugins.push(new LodashModuleReplacementPlugin());
+          return config;
+        },
+      })
     )
   )
 );
-config.useFileSystemPublicRoutes = false;
-config.poweredByHeader = false;
 
 config.exportPathMap = function() {
   return {
-    '/about': { name: '/about', page: '/staticPage' },
-    '/authors': { name: '/authors', page: '/staticPage' },
-    '/regulations': { name: '/regulations', page: '/staticPage' },
+    '/about': { page: '/about' },
+    '/authors': { page: '/authors' },
+    '/regulations': { page: '/regulations' },
   };
 };
 

@@ -11,17 +11,17 @@ const AppFooter = () => {
         <nav className="footer-navigation">
           <ul className="footer-navigation--links">
             <li className="footer-navigation--links--item mobile-hide">
-              <ActiveLink route="/about">
+              <ActiveLink href="/about">
                 <a>Jak korzystać?</a>
               </ActiveLink>
             </li>
             <li className="footer-navigation--links--item">
-              <ActiveLink route="/regulations">
+              <ActiveLink href="/regulations">
                 <a>Regulamin</a>
               </ActiveLink>
             </li>
             <li className="footer-navigation--links--item mobile-hide">
-              <ActiveLink route="/authors">
+              <ActiveLink href="/authors">
                 <a>Autorzy</a>
               </ActiveLink>
             </li>

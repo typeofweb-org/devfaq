@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 
-import * as commonmark from 'commonmark';
+import commonmark from 'commonmark';
 import './markdownText.scss';
-import * as xss from 'xss';
+import xss from 'xss';
 
 interface MarkdownTextProps {
   className?: string;

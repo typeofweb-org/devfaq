@@ -1,14 +1,16 @@
 import './questionItem.scss';
-import * as React from 'react';
-import { Question } from '../../../../redux/reducers/questions';
-import * as classNames from 'classnames';
-import { isQuestionSelected } from '../../questionsUtils';
-import MarkdownText from '../../../markdownText/MarkdownText';
-import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
+import React from 'react';
+import classNames from 'classnames';
+import dynamic from 'next/dynamic';
 
+import { Question } from '../../../../redux/reducers/questions';
+import { isQuestionSelected } from '../../questionsUtils';
+import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
 import { isEqual } from 'lodash';
 import ActiveLink from '../../../activeLink/ActiveLink';
 import QuestionVoting from './QuestionVoting';
+
+const MarkdownText = dynamic(() => import('../../../markdownText/MarkdownText'));
 
 const longDate = (dateStr?: string) => {
   if (!dateStr) {
@@ -135,7 +137,7 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
           dateTime={question.acceptedAt}
           className="app-questions--question--date app-questions--question--date_long"
         >
-          <ActiveLink route={`/questions/${question.id}`}>
+          <ActiveLink href="/questions/p/[id]" query={{ id: String(question.id) }}>
             <a>{longDate(question.acceptedAt)}</a>
           </ActiveLink>
         </time>

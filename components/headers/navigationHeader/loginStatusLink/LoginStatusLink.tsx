@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { getLoggedInUser } from '../../../../redux/selectors/selectors';
 import { AppState } from '../../../../redux/reducers';
 import ActiveLink from '../../../activeLink/ActiveLink';
 import UserAvatar from '../../../userAvatar/UserAvatar';
+import { useRouter } from 'next/router';
 
 type LoginStatusLinkProps = ReturnType<typeof mapStateToProps>;
 
@@ -12,14 +13,15 @@ const LoginStatusLinkComponent: React.FC<LoginStatusLinkProps & { onLoginClick?:
   onLoginClick,
   route,
 }) => {
+  const router = useRouter();
   if (user) {
     return <UserAvatar user={user} />;
   }
 
-  const previousPath = route.asPath;
+  const previousPath = router.asPath;
 
   return (
-    <ActiveLink route="login" params={previousPath ? { previousPath } : {}}>
+    <ActiveLink href="/login" query={{ previousPath }}>
       <a onClick={onLoginClick}>Zaloguj</a>
     </ActiveLink>
   );

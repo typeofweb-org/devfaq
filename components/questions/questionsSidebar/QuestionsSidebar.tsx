@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import './questionsSidebar.scss';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 import { AppState } from '../../../redux/reducers/index';
 import { ActionCreators } from '../../../redux/actions';
 import { connect } from 'react-redux';
@@ -50,6 +50,9 @@ const mapDispatchToProps = {
   uiCloseSidebar: ActionCreators.uiCloseSidebar,
 };
 
-const QuestionsSidebar = connect(mapStateToProps, mapDispatchToProps)(QuestionsSidebarComponent);
+const QuestionsSidebar = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(QuestionsSidebarComponent);
 
 export default QuestionsSidebar;

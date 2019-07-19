@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import BaseModal, { CommonModalProps } from '../baseModal/BaseModal';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 import { technologyIconItems, TechnologyKey } from '../../../constants/technology-icon-items';
 import { levelsWithLabels, LevelKey } from '../../../constants/level';
 import './addQuestionModal.scss';

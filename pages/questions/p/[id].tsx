@@ -1,22 +1,22 @@
 import React from 'react';
-import './index.scss';
-import Layout from '../components/layout/Layout';
-import QuestionsListLayout from '../components/questions/questionsListLayout/QuestionsListLayout';
-import { redirect } from '../utils/redirect';
-import { GetInitialPropsContext } from '../utils/types';
-import QuestionsSidebar from '../components/questions/questionsSidebar/QuestionsSidebar';
-import MobileActionButtons from '../components/questions/mobileActionButtons/MobileActionButtons';
-import { ActionCreators } from '../redux/actions';
+import '../../index.scss';
+import Layout from '../../../components/layout/Layout';
+import QuestionsListLayout from '../../../components/questions/questionsListLayout/QuestionsListLayout';
+import { redirect } from '../../../utils/redirect';
+import { GetInitialPropsContext } from '../../../utils/types';
+import QuestionsSidebar from '../../../components/questions/questionsSidebar/QuestionsSidebar';
+import MobileActionButtons from '../../../components/questions/mobileActionButtons/MobileActionButtons';
+import { ActionCreators } from '../../../redux/actions';
 import { connect } from 'react-redux';
-import { AppState } from '../redux/reducers/index';
-import QuestionItem from '../components/questions/questionsList/questionItem/QuestionItem';
+import { AppState } from '../../../redux/reducers/index';
+import QuestionItem from '../../../components/questions/questionsList/questionItem/QuestionItem';
 
 type Props = ReturnType<typeof mapStateToProps>;
 class OneQuestionPageComponent extends React.Component<Props> {
   static async getInitialProps(ctx: GetInitialPropsContext) {
     const id = ctx.query && ctx.query.id;
 
-    if (!id) {
+    if (!id || Array.isArray(id)) {
       return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx);
     }
 

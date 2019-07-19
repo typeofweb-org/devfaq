@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 // if (env.NODE_ENV !== 'production') {
 //   const { whyDidYouUpdate } = require('why-did-you-update');
 //   whyDidYouUpdate(React, {
@@ -9,22 +9,14 @@ import * as React from 'react';
 import nextReduxWrapper from 'next-redux-wrapper';
 import { makeStore } from '../redux/store';
 import { Provider } from 'react-redux';
-import App, { Container } from 'next/app';
-import { addRouterEventListener, removeRouterEventListener } from '../utils/routerEvents';
-import { withRouter, SingletonRouter } from 'next/router';
+import AppComponent, { Container, AppContext } from 'next/app';
+import { withRouter, SingletonRouter, default as Router } from 'next/router';
 import { ActionCreators } from '../redux/actions';
 import { RouteDetails, GetInitialPropsContext, AppStore } from '../utils/types';
 import AppModals from '../components/modals/appModals/AppModals';
-const AppComponent = (App as any) as React.ComponentClass<MyAppProps>;
-AppComponent.displayName = 'AppComponent';
 import * as analytics from '../utils/analytics';
 import * as Sentry from '@sentry/browser';
 import env from '../utils/env';
-
-interface AppGetInitialPropsArg {
-  Component: nextReduxWrapper.NextReduxWrappedComponent<any>;
-  ctx: GetInitialPropsContext;
-}
 
 interface MyAppProps {
   Component: React.ComponentType;
@@ -44,9 +36,9 @@ function getRouteDetails(routeDetails: RouteDetails) {
   return newRouteDetails;
 }
 
-class MyApp extends AppComponent {
-  static async getInitialProps({ Component, ctx }: AppGetInitialPropsArg) {
-    if (ctx.isServer) {
+class MyApp extends AppComponent<{ store: AppStore; ctx: RouteDetails }> {
+  static async getInitialProps({ Component, ctx }: AppContext) {
+    if (ctx.req) {
       await ctx.store.dispatch(ActionCreators.validateToken(ctx));
     }
 
@@ -54,7 +46,7 @@ class MyApp extends AppComponent {
 
     // when changing routes on the client side
     // it's actually still in progress at this point
-    const routeChangeInProgress = !ctx.isServer;
+    const routeChangeInProgress = !ctx.req;
     await ctx.store.dispatch(
       ActionCreators.updateRouteSuccess(newRouteDetails, routeChangeInProgress)
     );
@@ -73,15 +65,15 @@ class MyApp extends AppComponent {
   }
 
   componentDidMount() {
-    addRouterEventListener('onRouteChangeComplete', this.onRouteChangeComplete);
-    addRouterEventListener('onRouteChangeStart', this.onRouteChangeStart);
-    addRouterEventListener('onRouteChangeError', this.onRouteChangeError);
+    Router.events.on('routeChangeComplete', this.onRouteChangeComplete);
+    Router.events.on('routeChangeStart', this.onRouteChangeStart);
+    Router.events.on('routeChangeError', this.onRouteChangeError);
   }
 
   componentWillUnmount() {
-    removeRouterEventListener('onRouteChangeComplete', this.onRouteChangeComplete);
-    removeRouterEventListener('onRouteChangeStart', this.onRouteChangeStart);
-    removeRouterEventListener('onRouteChangeError', this.onRouteChangeError);
+    Router.events.off('routeChangeComplete', this.onRouteChangeComplete);
+    Router.events.off('routeChangeStart', this.onRouteChangeStart);
+    Router.events.off('routeChangeError', this.onRouteChangeError);
   }
 
   onRouteChangeComplete = (url: string) => {
@@ -117,9 +109,7 @@ const options = {
   debug: false,
 };
 
-export default nextReduxWrapper(makeStore, options)(
-  withRouter(MyApp as React.ComponentType<MyAppProps>)
-);
+export default nextReduxWrapper(makeStore, options)(MyApp);
 
 if (typeof window !== 'undefined') {
   // @ts-ignore

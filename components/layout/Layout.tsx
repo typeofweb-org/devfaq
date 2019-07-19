@@ -1,19 +1,20 @@
 import Head from 'next/head';
-import * as React from 'react';
+import React from 'react';
 import NavigationHeader from '../headers/navigationHeader/NavigationHeader';
 import './layout.scss';
 import CtaHeader from '../headers/ctaHeader/CtaHeader';
 import AppFooter from '../footer/AppFooter';
 import AppSpinner from './AppSpinner';
 import env from '../../utils/env';
-import { withRouter, WithRouterProps } from 'next/router';
+import { withRouter, NextRouter } from 'next/router';
 
 interface LayoutProps {
   title?: string;
   description?: string;
+  router: NextRouter;
 }
 
-class Layout extends React.Component<LayoutProps & WithRouterProps> {
+class Layout extends React.Component<LayoutProps> {
   static defaultProps = {
     title: 'Front-end Frequently Asked Questions',
     description:

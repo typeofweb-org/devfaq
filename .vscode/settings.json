@@ -16,5 +16,6 @@
     ".next": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.preferences.importModuleSpecifier": "relative"
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "tslint.exclude": ["*.test.*", "*.spec.*"]
 }
