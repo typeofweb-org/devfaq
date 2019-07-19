@@ -232,5 +232,33 @@ export const questionsRoutes = {
         return { data };
       },
     });
+
+    await server.route({
+      method: 'DELETE',
+      path: '/questions/{id}',
+      options: {
+        auth: {
+          mode: 'required',
+          access: {
+            scope: ['admin'],
+          },
+        },
+        tags: ['api', 'questions'],
+        validate: GetOneQuestionRequestSchema,
+        description: 'Deletes one question',
+        response: {
+          emptyStatusCode: 204,
+        },
+      },
+      async handler(request) {
+        const { id } = request.params;
+
+        await Question.destroy({
+          where: { id },
+        });
+
+        return null;
+      },
+    });
   },
 };
