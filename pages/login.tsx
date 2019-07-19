@@ -4,16 +4,20 @@ import Layout from '../components/layout/Layout';
 import LoginForm from '../components/loginForm/LoginForm';
 import './index.scss';
 import { getLoggedInUser } from '../redux/selectors/selectors';
-import { redirect } from '../utils/redirect';
+import { redirect, getHrefQueryFromPreviousPath } from '../utils/redirect';
 
 export default class LoginPage extends React.Component {
   static async getInitialProps(ctx: GetInitialPropsContext) {
     const state = ctx.store.getState();
     if (getLoggedInUser(state)) {
       const query = state.routeDetails.current.query;
-      const path = (query && String(query.previousPath)) || '/';
 
-      return redirect(path, {}, ctx);
+      const route = getHrefQueryFromPreviousPath(query && query.previousPath);
+      if (!route) {
+        return redirect('/', {}, ctx);
+      } else {
+        return redirect(route.href, route.query, ctx);
+      }
     }
   }
 

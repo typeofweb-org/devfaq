@@ -1,5 +1,5 @@
 import React from 'react';
-import { redirect } from '../utils/redirect';
+import { redirect, getPreviousPathFromHrefQuery } from '../utils/redirect';
 import Layout from '../components/layout/Layout';
 import QuestionsListLayout from '../components/questions/questionsListLayout/QuestionsListLayout';
 import { AsyncComponent } from '../components/asyncComponent/AsyncComponent';
@@ -10,7 +10,7 @@ export default class AdminPage extends React.Component {
   static async getInitialProps(ctx: NextPageContext) {
     const state = ctx.store.getState();
     if (!getLoggedInUser(state)) {
-      return redirect('/login', { previousPath: '/admin' }, ctx);
+      return redirect('/login', { previousPath: getPreviousPathFromHrefQuery('/admin') }, ctx);
     }
   }
 

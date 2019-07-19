@@ -5,7 +5,7 @@ import { getLoggedInUser } from '../../../../redux/selectors/selectors';
 import React from 'react';
 import { ActionCreators } from '../../../../redux/actions';
 import classnames from 'classnames';
-import { redirect } from '../../../../utils/redirect';
+import { redirect, getPreviousPathFromHrefQuery } from '../../../../utils/redirect';
 
 type QuestionVotingOwnProps = {
   question: Question;
@@ -31,7 +31,9 @@ const QuestionVotingComponent: React.FC<QuestionVotingProps> = ({
   const onVote = React.useCallback(() => {
     if (!isLoggedIn) {
       reportEvent('logowanie');
-      redirect('/login', { previousPath: route.asPath || '' });
+      redirect('/login', {
+        previousPath: getPreviousPathFromHrefQuery(route.pathname, route.query),
+      });
     } else if (currentUserVotedOn) {
       reportEvent('downvote');
       void downvoteQuestion(question.id);

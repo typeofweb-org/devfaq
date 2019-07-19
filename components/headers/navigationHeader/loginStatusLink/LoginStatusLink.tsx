@@ -5,6 +5,7 @@ import { AppState } from '../../../../redux/reducers';
 import ActiveLink from '../../../activeLink/ActiveLink';
 import UserAvatar from '../../../userAvatar/UserAvatar';
 import { useRouter } from 'next/router';
+import { getPreviousPathFromHrefQuery } from '../../../../utils/redirect';
 
 type LoginStatusLinkProps = ReturnType<typeof mapStateToProps>;
 
@@ -13,12 +14,11 @@ const LoginStatusLinkComponent: React.FC<LoginStatusLinkProps & { onLoginClick?:
   onLoginClick,
   route,
 }) => {
-  const router = useRouter();
   if (user) {
     return <UserAvatar user={user} />;
   }
 
-  const previousPath = router.asPath;
+  const previousPath = getPreviousPathFromHrefQuery(route.pathname, route.query);
 
   return (
     <ActiveLink href="/login" query={{ previousPath }}>
