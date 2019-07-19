@@ -1,8 +1,8 @@
 import './mobileActionButtons.scss';
-import * as React from 'react';
+import React from 'react';
 import { AppState } from '../../../redux/reducers';
 import { connect } from 'react-redux';
-// import * as classNames from 'classnames';
+// import classNames from 'classnames';
 import { ActionCreators } from '../../../redux/actions';
 import { getAreAnyQuestionSelected, getDownloadUrl } from '../../../redux/selectors/selectors';
 

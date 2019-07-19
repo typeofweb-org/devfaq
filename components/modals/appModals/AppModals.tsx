@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import * as React from 'react';
+import React from 'react';
 import AddQuestionModal from '../addQuestionModal/AddQuestionModal';
 import { AppState } from '../../../redux/reducers/index';
 import { ActionCreators } from '../../../redux/actions';

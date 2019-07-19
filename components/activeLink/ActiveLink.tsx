@@ -1,18 +1,21 @@
-import * as React from 'react';
-import routes, { Link, LinkProps } from '../../server/routes';
-import * as classNames from 'classnames';
+import React from 'react';
+import classNames from 'classnames';
 import { AppState } from '../../redux/reducers/index';
 import { connect } from 'react-redux';
 import { RouteDetails } from '../../utils/types';
+import Link, { LinkProps } from 'next/link';
+import { hrefQueryToAsPath } from '../../utils/redirect';
 
 interface ActiveLinkOwnProps {
   activeClassName?: string;
   exact?: boolean;
   disabledWhenActive?: boolean;
-  onClick?: React.MouseEventHandler<HTMLElement>;
+  onClick?: React.MouseEventHandler<any>;
+  children: React.ReactElement<any>;
+  query?: Record<string, string[] | string>;
 }
 
-type ActiveLinkComponentProps = LinkProps & ActiveLinkOwnProps;
+type ActiveLinkComponentProps = Omit<LinkProps, 'as'> & ActiveLinkOwnProps;
 
 class ActiveLinkComponent extends React.Component<
   ActiveLinkComponentProps & ReturnType<typeof mapStateToProps>
@@ -34,19 +37,21 @@ class ActiveLinkComponent extends React.Component<
 
   render() {
     const {
-      children,
       isMatch,
       activeClassName = 'active',
-      route,
-      params,
-      prefetch,
-      shallow,
-      scroll,
-      replace,
-      href,
+      disabledWhenActive,
+      query,
       as,
+      children,
+
+      href,
+      replace,
+      scroll,
+      shallow,
       passHref,
+      prefetch,
     } = this.props;
+
     const child = React.Children.only(children);
     const newChild = this.conditionallyAddClassToChild(isMatch, activeClassName, child);
 
@@ -56,15 +61,13 @@ class ActiveLinkComponent extends React.Component<
 
     return (
       <Link
-        route={route}
-        params={params}
-        prefetch={prefetch}
-        shallow={shallow}
-        scroll={scroll}
-        replace={replace}
         href={href}
         as={as}
+        replace={replace}
+        scroll={scroll}
+        shallow={shallow}
         passHref={passHref}
+        prefetch={prefetch}
       >
         {newChild}
       </Link>
@@ -75,39 +78,49 @@ class ActiveLinkComponent extends React.Component<
 const checkForMatch = (
   routeDetails: RouteDetails,
   {
-    route,
+    href,
+    query,
+    as,
     exact,
-    params,
   }: {
-    route: LinkProps['route'];
-    params?: LinkProps['params'];
+    href: ActiveLinkComponentProps['href'];
+    query: ActiveLinkComponentProps['query'];
+    as: string;
     exact?: boolean;
   }
 ): boolean => {
-  if (routeDetails.asPath === route) {
-    return true;
-  }
-
-  const foundUrls = routes.findAndGetUrls(route, params);
-  const isExactMatch = foundUrls.urls.as === routeDetails.asPath;
+  const isExactMatch = as === routeDetails.asPath;
 
   if (isExactMatch || exact) {
     return isExactMatch;
   }
 
-  if (foundUrls.urls.as && routeDetails.asPath) {
-    const [foundPathname] = foundUrls.urls.as.split('?');
-    const [routePathname] = routeDetails.asPath.split('?');
-    return routePathname.startsWith(foundPathname);
+  const asNoQuery = hrefQueryToAsPath(href, query, true);
+  if (asNoQuery.as === routeDetails.asPath) {
+    return true;
+  }
+
+  if (routeDetails.asPath && routeDetails.asPath.startsWith(asNoQuery.as)) {
+    return true;
   }
 
   return false;
 };
 
 const mapStateToProps = (state: AppState, ownProps: ActiveLinkComponentProps) => {
-  const isMatch = checkForMatch(state.routeDetails.current, ownProps);
+  const { as, href } = hrefQueryToAsPath(ownProps.href, ownProps.query);
+
+  const isMatch = checkForMatch(state.routeDetails.current, {
+    as,
+    href: ownProps.href,
+    query: ownProps.query,
+    exact: ownProps.exact,
+  });
+
   return {
     isMatch,
+    as,
+    href,
   };
 };
 

@@ -28,5 +28,8 @@
     "interface-over-type-literal": false
   },
   "rulesDirectory": [],
-  "autoFixOnSave": true
+  "autoFixOnSave": true,
+  "linterOptions": {
+    "exclude": ["*.test.*", "*.spec.*", "fast-check-arbitraries.ts"]
+  }
 }

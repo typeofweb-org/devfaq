@@ -1,5 +1,5 @@
 import { configureScope, captureException, showReportDialog } from '@sentry/browser';
-import * as React from 'react';
+import React from 'react';
 
 export class ErrorBoundary extends React.Component {
   state = { error: null };

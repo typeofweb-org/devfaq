@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import './appSpinner.scss';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/reducers';

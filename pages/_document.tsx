@@ -2,14 +2,14 @@ import Document, {
   Main,
   Head,
   NextScript,
-  NextDocumentContext,
-  DefaultDocumentIProps,
+  DocumentContext,
+  DocumentInitialProps,
 } from 'next/document';
 import env, { unsafe_getEnvScriptForDocument } from '../utils/env';
 import * as analytics from '../utils/analytics';
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx: NextDocumentContext): Promise<DefaultDocumentIProps> {
+  static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
     const initialProps = await Document.getInitialProps(ctx);
 
     return {

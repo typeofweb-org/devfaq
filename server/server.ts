@@ -1,25 +1,27 @@
-import 'isomorphic-fetch';
-const isProduction = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging';
+const isProduction =
+  process.env.NODE_ENV === 'production' ||
+  ((process.env.NODE_ENV as unknown) as string) === 'staging';
 // tslint:disable-next-line:no-var-requires
 require('dotenv').config({
   path: isProduction ? `.env.${process.env.NODE_ENV}` : '.env',
 });
 
-import * as next from 'next';
+import http from 'http';
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import next from 'next';
 import * as Sentry from '@sentry/node';
+import { parse } from 'url';
+import { join } from 'path';
+import { readFileSync } from 'fs';
 
-import routes from './routes';
+process.env.VERSION = readFileSync(__dirname + '/../.version', 'utf-8');
+
+const port = process.env.PORT || '3000';
 
 Sentry.init({ dsn: process.env.SENTRY_DSN, debug: !isProduction });
 
 const app = next({ dev: !isProduction });
-const handler = routes.getRequestHandler(app);
-const port = process.env.PORT || '3000';
-import * as url from 'url';
-import { join } from 'path';
-import * as fs from 'fs';
-
-process.env.VERSION = fs.readFileSync(__dirname + '/../.version', 'utf-8');
 
 const staticFiles = ['/img/fefaq-cover-facebook.png'];
 
@@ -35,11 +37,6 @@ const favicons = [
   '/android-chrome-512x512.png',
   '/android-chrome-192x192.png',
 ];
-
-function getPathname(req: express.Request) {
-  const { pathname } = url.parse(req.url);
-  return pathname || '';
-}
 
 function getPathForStaticResource(pathname: string) {
   if (pathname === '/service-worker.js') {
@@ -83,35 +80,40 @@ function generateSitemap(req: express.Request) {
   return sitemap.toString();
 }
 
-// With express
-import * as express from 'express';
-import * as cookieParser from 'cookie-parser';
+const handle = app.getRequestHandler();
 
-// tslint:disable-next-line:no-floating-promises
 app
   .prepare()
   .then(() => {
     const server = express()
       .use(Sentry.Handlers.requestHandler())
       .use(Sentry.Handlers.errorHandler())
-      .use(cookieParser())
-      .use((req, res, _next) => {
-        const pathname = getPathname(req);
+      .use(cookieParser());
 
-        if (pathname === '/sitemap.xml') {
-          const sitemap = generateSitemap(req);
-          return res.header('Content-Type', 'application/xml').send(sitemap);
-        }
+    server.use((req, res, next) => {
+      const parsedUrl = parse(req.url, true);
+      const { pathname = '', query } = parsedUrl;
 
-        const staticPath = getPathForStaticResource(pathname);
-        if (staticPath) {
-          return app.serveStatic(req, res, staticPath);
-        }
-        return handler(req, res);
-      });
-    server.disable('x-powered-by');
-    server.listen(port, () => console.log('Server listening at localhost:3000'));
+      const staticPath = getPathForStaticResource(pathname);
+      if (staticPath) {
+        return app.serveStatic(req, res, staticPath);
+      }
+
+      return next();
+    });
+
+    server.get('/sitemap.xml', (req, res) => {
+      const sitemap = generateSitemap(req);
+      return res.header('Content-Type', 'application/xml').send(sitemap);
+    });
+
+    server.get('*', (req, res) => {
+      return handle(req, res);
+    });
+
+    server.listen(port, () => console.log(`Server listening at localhost:${port}`));
   })
   .catch(err => {
     console.error(err);
+    process.exit(1);
   });

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { polishPlurals } from 'polish-plurals';
 import './allQuestionsHeader.scss';
 

@@ -6,6 +6,15 @@ import { AuthData, SessionData, UserData } from '../redux/reducers/auth';
 import { GetInitialPropsContext } from '../utils/types';
 import { pickBy, isUndefined } from 'lodash';
 
+if (typeof window === 'undefined') {
+  (global as any).fetch =
+    (global as any).fetch ||
+    // tslint:disable-next-line:only-arrow-functions
+    function(url: string, opts: any) {
+      return require('node-fetch')(url.replace(/^\/\//g, 'https://'), opts);
+    };
+}
+
 const omitUndefined = <T extends object>(obj: T) => pickBy(obj, v => !isUndefined(v));
 
 type QsValues = string | number;
@@ -58,7 +67,7 @@ async function makeRequest<T>(
   };
 
   // proxy cookie from the request to the API
-  if (ctx && ctx.isServer && ctx.req.headers && ctx.req.headers.cookie) {
+  if (ctx && ctx.req && ctx.req.headers && ctx.req.headers.cookie) {
     options.headers = {
       ...options.headers,
       cookie: String(ctx.req.headers.cookie),
@@ -151,7 +160,7 @@ export const Api = {
     ctx?: GetInitialPropsContext
   ) {
     const limit = PAGE_SIZE;
-    const offset = PAGE_SIZE * ((page || 0) - 1);
+    const offset = PAGE_SIZE * ((page || 1) - 1);
 
     return makeRequest<Question[]>(
       'GET',

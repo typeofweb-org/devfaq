@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import * as React from 'react';
+import React from 'react';
 import { AppState } from '../../../redux/reducers/index';
 import {
   getAreAnyQuestionSelected,
@@ -9,7 +9,7 @@ import {
 import QuestionsList from '../questionsList/QuestionsList';
 import NoQuestionsSelectedInfo from './NoQuestionsSelectedInfo';
 import './selectedQuestions.scss';
-import { Question } from 'redux/reducers/questions';
+import { Question } from '../../../redux/reducers/questions';
 import { TechnologyKey, technologyIconItems } from '../../../constants/technology-icon-items';
 import { ActionCreators } from '../../../redux/actions';
 import { TransitionGroup } from 'react-transition-group';
