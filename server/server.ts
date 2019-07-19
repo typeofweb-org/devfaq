@@ -1,4 +1,3 @@
-import 'isomorphic-fetch';
 const isProduction =
   process.env.NODE_ENV === 'production' ||
   ((process.env.NODE_ENV as unknown) as string) === 'staging';

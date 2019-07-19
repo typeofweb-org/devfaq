@@ -1,14 +1,16 @@
 import './questionItem.scss';
 import React from 'react';
-import { Question } from '../../../../redux/reducers/questions';
 import classNames from 'classnames';
-import { isQuestionSelected } from '../../questionsUtils';
-import MarkdownText from '../../../markdownText/MarkdownText';
-import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
+import dynamic from 'next/dynamic';
 
+import { Question } from '../../../../redux/reducers/questions';
+import { isQuestionSelected } from '../../questionsUtils';
+import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
 import { isEqual } from 'lodash';
 import ActiveLink from '../../../activeLink/ActiveLink';
 import QuestionVoting from './QuestionVoting';
+
+const MarkdownText = dynamic(() => import('../../../markdownText/MarkdownText'));
 
 const longDate = (dateStr?: string) => {
   if (!dateStr) {

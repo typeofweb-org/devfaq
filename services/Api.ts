@@ -5,7 +5,15 @@ import { Question } from '../redux/reducers/questions';
 import { AuthData, SessionData, UserData } from '../redux/reducers/auth';
 import { GetInitialPropsContext } from '../utils/types';
 import { pickBy, isUndefined } from 'lodash';
-import 'isomorphic-fetch';
+
+if (typeof window === 'undefined') {
+  (global as any).fetch =
+    (global as any).fetch ||
+    // tslint:disable-next-line:only-arrow-functions
+    function(url: string, opts: any) {
+      return require('node-fetch')(url.replace(/^\/\//g, 'https://'), opts);
+    };
+}
 
 const omitUndefined = <T extends object>(obj: T) => pickBy(obj, v => !isUndefined(v));
 
