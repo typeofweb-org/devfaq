@@ -7,7 +7,7 @@ import { isString } from 'lodash';
 import { getLoggedInUser, getPreviousPath } from '../../redux/selectors/selectors';
 import AppLogo from '../appLogo/AppLogo';
 import ActiveLink from '../activeLink/ActiveLink';
-import { redirect } from '../../utils/redirect';
+import { redirect, getHrefQueryFromPreviousPath } from '../../utils/redirect';
 
 type LoginFormReduxProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -15,8 +15,8 @@ class LoginFormComponent extends React.Component<LoginFormReduxProps> {
   componentDidUpdate() {
     const { user, previousPath, isTransitioning } = this.props;
     if (user && !isTransitioning) {
-      if (isString(previousPath)) {
-        redirect(previousPath);
+      if (previousPath) {
+        redirect(previousPath.href, previousPath.query);
       } else {
         redirect('/');
       }
@@ -34,7 +34,7 @@ class LoginFormComponent extends React.Component<LoginFormReduxProps> {
 
   render() {
     const { previousPath } = this.props;
-    const route = isString(previousPath) ? previousPath : '/';
+    const route = previousPath || { href: '/', query: {} };
     return (
       <div className="login-overlay">
         <div className="login-container">
@@ -45,7 +45,11 @@ class LoginFormComponent extends React.Component<LoginFormReduxProps> {
             Zaloguj się przez GitHuba
           </button>
           <footer>
-            <ActiveLink href={route} onClick={() => this.reportEvent('Powrót do strony głównej')}>
+            <ActiveLink
+              href={route.href}
+              query={route.query}
+              onClick={() => this.reportEvent('Powrót do strony głównej')}
+            >
               <a>Powrót do strony głównej</a>
             </ActiveLink>
           </footer>
@@ -59,7 +63,7 @@ const mapStateToProps = (state: AppState) => {
   return {
     auth: state.auth,
     user: getLoggedInUser(state),
-    previousPath: getPreviousPath(state),
+    previousPath: getHrefQueryFromPreviousPath(getPreviousPath(state)),
     isTransitioning: state.routeDetails.isTransitioning,
   };
 };

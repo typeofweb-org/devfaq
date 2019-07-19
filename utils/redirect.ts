@@ -1,12 +1,36 @@
 import { NextPageContext } from 'next';
 import Router from 'next/router';
 import { LinkProps } from 'next/link';
+import { RouteDetails } from './types';
 
-export function redirect(
-  href: string,
-  query: { previousPath?: string } & Record<string, string> = {},
-  ctx?: NextPageContext
-) {
+export type Query = RouteDetails['query'] & { previousPath?: string };
+
+export function getPreviousPathFromHrefQuery(href: string, query: Query = {}) {
+  return JSON.stringify({ href, query });
+}
+
+export function getHrefQueryFromPreviousPath(
+  previousPath?: string | string[]
+): null | { href: string; query: Query } {
+  if (!previousPath) {
+    return null;
+  }
+
+  if (Array.isArray(previousPath)) {
+    return null;
+  }
+  try {
+    const result: unknown = JSON.parse(previousPath);
+    if (typeof result === 'object' && result && 'href' in result && 'query' in result) {
+      return result as any;
+    }
+  } catch (err) {
+    // console.error(err);
+  }
+  return null;
+}
+
+export function redirect(href: string, query: Query = {}, ctx?: NextPageContext) {
   const result = hrefQueryToAsPath(href, query);
 
   if (ctx && ctx.res) {
