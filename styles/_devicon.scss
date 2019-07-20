@@ -1,14 +1,20 @@
-@import "common";
+@import 'common';
 
 @font-face {
   font-family: 'devicon';
   src: url('/static/fonts/devicon.eot?9zg79o');
-  src: url('/static/fonts/devicon.eot?9zg79o#iefix') format('embedded-opentype'), url('/static/fonts/devicon.woff2?9zg79o') format('woff2'), url('/static/fonts/devicon.woff?9zg79o') format('woff'), url('/static/fonts/devicon.ttf?9zg79o') format('truetype'), url('/static/fonts/devicon.svg?9zg79o#devicon') format('svg');
+  src: url('/static/fonts/devicon.eot?9zg79o#iefix') format('embedded-opentype'),
+    url('/static/fonts/devicon.woff2?9zg79o') format('woff2'),
+    url('/static/fonts/devicon.woff?9zg79o') format('woff'),
+    url('/static/fonts/devicon.ttf?9zg79o') format('truetype'),
+    url('/static/fonts/devicon.svg?9zg79o#devicon') format('svg');
   font-weight: normal;
   font-style: normal;
+  font-display: optional;
 }
 
-[class^="devicon-"], [class*=" devicon-"] {
+[class^='devicon-'],
+[class*=' devicon-'] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'devicon' !important;
   speak: none;
@@ -24,52 +30,49 @@
 }
 
 .devicon-bold:before {
-  content: "\f032";
+  content: '\f032';
 }
 .devicon-italic:before {
-  content: "\f033";
+  content: '\f033';
 }
 .devicon-eye:before {
-  content: "\f06e";
+  content: '\f06e';
 }
 .devicon-list-ul:before {
-  content: "\f0ca";
+  content: '\f0ca';
 }
 .devicon-list-ol:before {
-  content: "\f0cb";
+  content: '\f0cb';
 }
 .devicon-code:before {
-  content: "\f121";
+  content: '\f121';
 }
 .devicon-header:before {
-  content: "\f1dc";
+  content: '\f1dc';
 }
 .devicon-devicon-plain:before {
-  content: "\e93b";
+  content: '\e93b';
 }
 .devicon-react-original:before {
-  content: "\e601";
+  content: '\e601';
 }
 .devicon-angularjs-plain:before {
-  content: "\e61d";
+  content: '\e61d';
 }
 .devicon-css3-plain:before {
-  content: "\e679";
+  content: '\e679';
 }
 .devicon-git-plain:before {
-  content: "\e7a8";
+  content: '\e7a8';
 }
 .devicon-html5-plain:before {
-  content: "\e7f7";
+  content: '\e7f7';
 }
 .devicon-javascript-plain:before {
-  content: "\e845";
+  content: '\e845';
 }
 
-
-
-
-[class*="devicon-"] {
+[class*='devicon-'] {
   font-size: 3rem;
 }
 
