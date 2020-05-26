@@ -29,3 +29,8 @@ jobs:
         run: |
           npm ci
           npm test
+
+      - name: Run build for dependabot
+        if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+        run: |
+          npm run build
