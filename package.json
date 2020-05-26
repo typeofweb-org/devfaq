@@ -88,8 +88,7 @@
   "license": "ISC",
   "husky": {
     "hooks": {
-      "pre-commit": "tslint -p tsconfig.json --fix --force && tslint -p tsconfig.server.json --fix --force && pretty-quick --staged && npm test",
-      "pre-push": "npm test"
+      "pre-commit": "tslint -p tsconfig.json --fix --force && tslint -p tsconfig.server.json --fix --force && pretty-quick --staged && npm test"
     }
   }
 }
