@@ -6,7 +6,7 @@ name: Build
 # events but only for the master branch
 on:
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -17,25 +17,24 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
 
-    # Runs a single command using the runners shell
-    - name: Setup PostgreSQL
-      uses: Harmon758/postgresql-action@v1.0.0
-      with:
-        postgresql version: 12-alpine
-        postgresql db: database_development
-        postgresql user: postgres
-        postgresql password: -api2018
-        
-    - name: Setup Node
-      uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
+      # Runs a single command using the runners shell
+      - name: Setup PostgreSQL
+        uses: Harmon758/postgresql-action@v1.0.0
+        with:
+          postgresql version: 12-alpine
+          postgresql db: database_development
+          postgresql user: postgres
+          postgresql password: -api2018
 
-    - name: Run tests
-      run: |
-        npm ci
-        npm test
-        
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+
+      - name: Run tests
+        run: |
+          npm ci
+          npm test
