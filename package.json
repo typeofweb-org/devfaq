@@ -84,11 +84,7 @@
   "bundle-analyzer": {
     "files": [
       {
-        "test": ".next/server/**/*.*",
-        "maxSize": "10mb"
-      },
-      {
-        "test": ".next/static/**/*.*",
+        "test": "static/**/*.*",
         "maxSize": "10mb"
       }
     ]
