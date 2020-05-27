@@ -6,16 +6,15 @@ require('dotenv').config({
   path: isProduction ? `.env.${process.env.NODE_ENV}` : '.env',
 });
 
-import http from 'http';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import next from 'next';
 import * as Sentry from '@sentry/node';
 import { parse } from 'url';
-import { join } from 'path';
 import { readFileSync } from 'fs';
+import * as Path from 'path';
 
-process.env.VERSION = readFileSync(__dirname + '/../.version', 'utf-8');
+process.env.VERSION = readFileSync(Path.join(__dirname, '..', '.version'), 'utf-8');
 
 const port = process.env.PORT || '3000';
 
@@ -40,13 +39,18 @@ const favicons = [
 
 function getPathForStaticResource(pathname: string) {
   if (pathname === '/service-worker.js') {
-    return join(__dirname, '..', '.next', pathname);
+    return Path.join(__dirname, '..', '.next', pathname);
   } else if (favicons.includes(pathname)) {
-    return join(__dirname, '..', 'static', 'favicons', pathname);
+    return Path.join(__dirname, '..', 'static', 'favicons', pathname);
   } else if (staticFiles.includes(pathname)) {
-    return join(__dirname, '..', 'static', pathname);
+    return Path.join(__dirname, '..', 'static', pathname);
   } else if (pathname === '/robots.txt') {
-    return join(__dirname, '..', 'static', !isProduction ? 'robots.dev.txt' : 'robots.prod.txt');
+    return Path.join(
+      __dirname,
+      '..',
+      'static',
+      !isProduction ? 'robots.dev.txt' : 'robots.prod.txt'
+    );
   }
   return undefined;
 }
