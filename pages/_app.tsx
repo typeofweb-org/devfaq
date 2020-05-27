@@ -41,6 +41,7 @@ class MyApp extends AppComponent<{ store: AppStore; ctx: RouteDetails }> {
     if (ctx.req) {
       await ctx.store.dispatch(ActionCreators.validateToken(ctx));
     }
+    console.log('Test');
 
     const newRouteDetails = getRouteDetails(ctx);
 
