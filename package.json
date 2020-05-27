@@ -81,7 +81,22 @@
     "test": "npm run test:tsc && npm run jest",
     "test:tsc": "tsc --project tsconfig.json --noEmit && tsc --project tsconfig.server.json --noEmit && tslint -p tsconfig.json && tslint -p tsconfig.server.json",
     "jest": "jest",
-    "bundlewatch": "bundlewatch '.next/server/**/*.*' '.next/static/**/*.*'"
+    "bundlewatch": "bundlewatch"
+  },
+  "bundlewatch": {
+    "files": [
+      {
+        "path": ".next/server/**/*.*"
+      },
+      {
+        "path": ".next/static/**/*.*"
+      }
+    ],
+    "ci": {
+      "trackBranches": [
+        "develop"
+      ]
+    }
   },
   "engines": {
     "node": "10.x.x"
