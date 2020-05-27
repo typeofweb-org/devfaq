@@ -45,5 +45,5 @@ jobs:
       - name: Run build
         uses: jackyef/bundlewatch-gh-action@master
         with:
-          build-script: NODE_ENV=production npm run build
+          build-script: npm run build
           bundlewatch-github-token: ${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}
