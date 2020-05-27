@@ -81,20 +81,17 @@
     "jest": "jest",
     "bundlewatch": "bundlewatch"
   },
-  "bundlewatch": {
+  "bundle-analyzer": {
     "files": [
       {
-        "path": ".next/server/**/*.*"
+        "test": ".next/server/**/*.*",
+        "maxSize": "10mb"
       },
       {
-        "path": ".next/static/**/*.*"
+        "test": ".next/static/**/*.*",
+        "maxSize": "10mb"
       }
-    ],
-    "ci": {
-      "trackBranches": [
-        "develop"
-      ]
-    }
+    ]
   },
   "engines": {
     "node": "10.x.x"
