@@ -87,7 +87,6 @@ config.env = {
   GA_TRACKING_ID: process.env.GA_TRACKING_ID,
   ABSOLUTE_URL: process.env.ABSOLUTE_URL || process.env.VERCEL_URL,
   SENTRY_DSN: process.env.SENTRY_DSN,
-  NODE_ENV: process.env.NODE_ENV,
   ENV: process.env.ENV,
 };
 
