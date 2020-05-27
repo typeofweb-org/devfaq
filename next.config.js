@@ -79,4 +79,10 @@ config.experimental = {
   publicDirectory: true,
 };
 
+console.log(process.env.ABSOLUTE_URL, process.env.VERCEL_URL, process.env);
+
+config.env = {
+  ABSOLUTE_URL: process.env.ABSOLUTE_URL || process.env.VERCEL_URL,
+};
+
 module.exports = isProduction ? withOffline(config) : config;

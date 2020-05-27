@@ -6,7 +6,6 @@ const defaultEnv: ProcessENV = {
   VERSION: 'dev',
   GA_TRACKING_ID: '',
   ABSOLUTE_URL: '',
-  VERCEL_URL: '',
   SENTRY_DSN: '',
   NODE_ENV: 'development',
   ENV: '',
@@ -24,25 +23,14 @@ export default env;
 export type ProcessENV = { [K in keyof ReturnType<typeof getEnvObjForDocument>]: string };
 
 const getEnvObjForDocument = () => {
-  const {
-    API_URL,
-    VERSION,
-    GA_TRACKING_ID,
-    ABSOLUTE_URL,
-    SENTRY_DSN,
-    NODE_ENV,
-    ENV,
-    VERCEL_URL,
-  } = process.env;
   return {
-    API_URL,
-    VERSION,
-    GA_TRACKING_ID,
-    ABSOLUTE_URL: ABSOLUTE_URL || VERCEL_URL,
-    SENTRY_DSN,
-    NODE_ENV,
-    ENV,
-    VERCEL_URL,
+    API_URL: process.env.API_URL,
+    VERSION: process.env.VERSION,
+    GA_TRACKING_ID: process.env.GA_TRACKING_ID,
+    ABSOLUTE_URL: process.env.ABSOLUTE_URL,
+    SENTRY_DSN: process.env.SENTRY_DSN,
+    NODE_ENV: process.env.NODE_ENV,
+    ENV: process.env.ENV,
   };
 };
 
