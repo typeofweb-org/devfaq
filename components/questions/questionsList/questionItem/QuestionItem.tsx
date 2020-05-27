@@ -167,7 +167,7 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
     return (
       <div>
         <button onClick={this.props.editQuestion} className="edit-btn">
-          <img src="/static/images/action-icons/edit.svg" />
+          <img src="/images/action-icons/edit.svg" />
         </button>
         <button
           onClick={this.props.deleteQuestion}

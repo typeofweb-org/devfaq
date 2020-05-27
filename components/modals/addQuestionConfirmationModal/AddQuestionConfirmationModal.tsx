@@ -45,7 +45,7 @@ export default class AddQuestionConfirmationModal extends React.PureComponent<Co
             title="Angular.love"
             onClick={() => this.reportEvent('Angular.love - klik')}
           >
-            <img src="/static/images/angular_love_logo.png" alt="Angular.love" />
+            <img src="/images/angular_love_logo.png" alt="Angular.love" />
           </a>
 
           <a
@@ -54,7 +54,7 @@ export default class AddQuestionConfirmationModal extends React.PureComponent<Co
             title="Type of Web"
             onClick={() => this.reportEvent('Type of Web - klik')}
           >
-            <img src="/static/images/type_of_web_logo.png" alt="Type of Web" />
+            <img src="/images/type_of_web_logo.png" alt="Type of Web" />
           </a>
         </div>
         <button className="round-button alternative-button" onClick={this.close}>

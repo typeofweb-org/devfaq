@@ -61,7 +61,6 @@
     "fast-check": "1.16.0",
     "husky": "3.0.0",
     "jest": "24.8.0",
-    "nodemon": "1.19.1",
     "postcss-easy-import": "3.0.0",
     "postcss-loader": "3.0.0",
     "prettier": "1.18.2",
@@ -72,15 +71,14 @@
     "why-did-you-update": "1.0.6"
   },
   "scripts": {
-    "dev": "rm -rf ./.next ./out ./server/*.js ./server/*.map && nodemon server/server.ts",
-    "build": "echo $NODE_ENV && rm -rf ./.next ./out ./server/*.js ./server/*.map && next build && next export && tsc --project tsconfig.server.json",
+    "dev": "next dev",
+    "build": "next build",
     "build:vercel": "next build",
     "start": "node app.js",
     "analyze": "cross-env ANALYZE=1 NODE_ENV=production next build",
     "test": "npm run test:tsc && npm run jest",
-    "test:tsc": "tsc --project tsconfig.json --noEmit && tsc --project tsconfig.server.json --noEmit && tslint -p tsconfig.json && tslint -p tsconfig.server.json",
-    "jest": "jest",
-    "bundlewatch": "bundlewatch"
+    "test:tsc": "tsc --project tsconfig.json --noEmit && tslint -p tsconfig.json",
+    "jest": "jest"
   },
   "bundle-analyzer": {
     "files": [
