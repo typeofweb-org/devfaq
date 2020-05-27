@@ -5,7 +5,8 @@ const defaultEnv: ProcessENV = {
   API_URL: 'https://api.localhost',
   VERSION: 'dev',
   GA_TRACKING_ID: '',
-  ABSOLUTE_URL: process.env.VERCEL_URL || '',
+  ABSOLUTE_URL: '',
+  VERCEL_URL: '',
   SENTRY_DSN: '',
   NODE_ENV: 'development',
   ENV: '',
@@ -23,8 +24,26 @@ export default env;
 export type ProcessENV = { [K in keyof ReturnType<typeof getEnvObjForDocument>]: string };
 
 const getEnvObjForDocument = () => {
-  const { API_URL, VERSION, GA_TRACKING_ID, ABSOLUTE_URL, SENTRY_DSN, NODE_ENV, ENV } = process.env;
-  return { API_URL, VERSION, GA_TRACKING_ID, ABSOLUTE_URL, SENTRY_DSN, NODE_ENV, ENV };
+  const {
+    API_URL,
+    VERSION,
+    GA_TRACKING_ID,
+    ABSOLUTE_URL,
+    SENTRY_DSN,
+    NODE_ENV,
+    ENV,
+    VERCEL_URL,
+  } = process.env;
+  return {
+    API_URL,
+    VERSION,
+    GA_TRACKING_ID,
+    ABSOLUTE_URL: ABSOLUTE_URL || VERCEL_URL,
+    SENTRY_DSN,
+    NODE_ENV,
+    ENV,
+    VERCEL_URL,
+  };
 };
 
 // tslint:disable-next-line:variable-name
