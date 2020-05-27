@@ -1,4 +1,4 @@
-@import "common";
+@import 'common';
 
 .mobile-action-buttons {
   display: none;
@@ -21,17 +21,17 @@
       margin: 0 7px;
     }
     .open-sidebar {
-      background-image: url(/static/images/action-icons/filter.svg);
+      background-image: url(/images/action-icons/filter.svg);
     }
     .add-question {
-      background-image: url(/static/images/action-icons/add2.svg);
+      background-image: url(/images/action-icons/add2.svg);
     }
     .download {
-      background-image: url(/static/images/action-icons/download.svg);
+      background-image: url(/images/action-icons/download.svg);
       background-size: 18px;
       background-color: $red-branding;
       &.disabled {
-        background-color: #C5C5C5;
+        background-color: #c5c5c5;
         pointer-events: none;
       }
     }

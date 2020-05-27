@@ -1,4 +1,4 @@
-@import "common";
+@import 'common';
 
 .app-select {
   width: 240px;
@@ -11,7 +11,7 @@
   border: none;
   cursor: pointer;
   padding: 9px 25px 9px 4px;
-  background-image: url(/static/images/select-purple.svg);
+  background-image: url(/images/select-purple.svg);
   background-size: 25px;
   background-repeat: no-repeat;
   background-position: 100% 50%;

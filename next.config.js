@@ -75,4 +75,8 @@ config.exportPathMap = function() {
   };
 };
 
+config.experimental = {
+  publicDirectory: true,
+};
+
 module.exports = isProduction ? withOffline(config) : config;

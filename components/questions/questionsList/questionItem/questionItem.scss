@@ -120,7 +120,7 @@ $shadow-width: 2px;
     border: none;
     background-position: 50% 50%;
     background-repeat: no-repeat;
-    background-image: url(/static/images/delete_forever_icon.svg);
+    background-image: url(/images/delete_forever_icon.svg);
     background-size: 20px;
   }
   &--checkbox {
@@ -133,7 +133,7 @@ $shadow-width: 2px;
     box-sizing: content-box;
     background-position: -2px -1px;
     background-repeat: no-repeat;
-    background-image: url(/static/images/checkbox.svg);
+    background-image: url(/images/checkbox.svg);
     background-size: 26px 52px;
     background-color: transparent;
     border: 2px solid transparent;

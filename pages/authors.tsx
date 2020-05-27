@@ -13,7 +13,7 @@ export default () => {
             <div className="app-authors">
               <div className="app-author">
                 <img
-                  src="/static/images/tomasz_nastaly.jpg"
+                  src="/images/tomasz_nastaly.jpg"
                   alt="Tomasz Nastały"
                   className="app-author__image"
                 />
@@ -27,7 +27,7 @@ export default () => {
               </div>
               <div className="app-author">
                 <img
-                  src="/static/images/michal_miszczyszyn.jpg"
+                  src="/images/michal_miszczyszyn.jpg"
                   alt="Michał Miszczyszyn"
                   className="app-author__image"
                 />

@@ -1,4 +1,4 @@
-@import "common";
+@import 'common';
 .action-icon {
   $icons: 'thumbs-up' 'confirmation' 'warning' 'add';
   $size: 72px;
@@ -18,7 +18,7 @@
   background-size: 44px;
   @each $icon in $icons {
     &.action-icon_#{$icon} {
-      background-image: url(/static/images/action-icons/#{$icon}.svg)
+      background-image: url(/images/action-icons/#{$icon}.svg);
     }
   }
   &::before {
