@@ -35,7 +35,8 @@ const withPolyfills = (module.exports = (nextConfig = {}) => {
 const withWebpackAnalyze = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
     webpack(config, options) {
-      if (process.env.ANALYZE) {
+      if (process.env.ANALYZE && !options.isServer) {
+        // only submit analysis for the frontend
         console.log('ANALYZE=YES');
         const BundleAnalyzerPlugin = require('@bundle-analyzer/webpack-plugin');
         config.plugins.push(new BundleAnalyzerPlugin());
