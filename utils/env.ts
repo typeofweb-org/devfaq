@@ -5,7 +5,7 @@ const defaultEnv: ProcessENV = {
   API_URL: 'https://api.localhost',
   VERSION: 'dev',
   GA_TRACKING_ID: '',
-  ABSOLUTE_URL: '',
+  ABSOLUTE_URL: process.env.VERCEL_URL || '',
   SENTRY_DSN: '',
   NODE_ENV: 'development',
   ENV: '',
