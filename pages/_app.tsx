@@ -114,7 +114,7 @@ export default nextReduxWrapper(makeStore, options)(MyApp);
 if (typeof window !== 'undefined') {
   // @ts-ignore
   window.globalReportEvent = analytics.reportEvent;
-  const isDev = env.NODE_ENV !== 'production' && env.NODE_ENV !== 'staging';
+  const isDev = env.NODE_ENV !== 'production';
   Sentry.init({ dsn: env.SENTRY_DSN, debug: isDev });
 } else {
   // @ts-ignore

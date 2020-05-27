@@ -19,7 +19,7 @@ echo $ENVIRONMENT:`git rev-parse --abbrev-ref HEAD`:`git rev-parse HEAD` > .vers
 echo "🥁 VERSION: " `cat .version`
 
 echo "👉 Building…"
-NODE_ENV=$ENVIRONMENT npm run build
+NODE_ENV=production ENV=$environment npm run build
 echo "👉 Cleaning"
 ssh typeofweb@s18.mydevil.net SUBDOMAIN=$SUBDOMAIN 'bash -s' < $DIR/ssh-script-clean.sh
 echo "👉 Uploading…"

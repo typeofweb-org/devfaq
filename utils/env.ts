@@ -8,7 +8,7 @@ const defaultEnv: ProcessENV = {
   ABSOLUTE_URL: '',
   SENTRY_DSN: '',
   NODE_ENV: 'development',
-  ENV: '',
+  ENV: 'development',
 };
 
 // set default env

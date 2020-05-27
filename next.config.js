@@ -1,6 +1,6 @@
-const isProduction = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging';
+const isProduction = process.env.NODE_ENV === 'production';
 require('dotenv').config({
-  path: isProduction ? `.env.${process.env.NODE_ENV}` : '.env',
+  path: isProduction ? `.env.${process.env.ENV}` : '.env',
 });
 
 const withSass = require('@zeit/next-sass');
@@ -82,7 +82,13 @@ config.experimental = {
 console.log(process.env.ABSOLUTE_URL, process.env.VERCEL_URL, process.env);
 
 config.env = {
+  API_URL: process.env.API_URL,
+  VERSION: process.env.VERSION,
+  GA_TRACKING_ID: process.env.GA_TRACKING_ID,
   ABSOLUTE_URL: process.env.ABSOLUTE_URL || process.env.VERCEL_URL,
+  SENTRY_DSN: process.env.SENTRY_DSN,
+  NODE_ENV: process.env.NODE_ENV,
+  ENV: process.env.ENV,
 };
 
 module.exports = isProduction ? withOffline(config) : config;
