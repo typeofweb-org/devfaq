@@ -54,7 +54,7 @@ jobs:
       - name: Danger JS
         run: npm run danger
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TYPEOFWEB_BOT_GITHUB_TOKEN }}
           DANGER_GITHUB_API_BASE_URL: 'https://api.github.com'
 
       - name: Run build for dependabot
