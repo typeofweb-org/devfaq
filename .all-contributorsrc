@@ -40,6 +40,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "pavveu",
+      "name": "Pawel Pawlowski",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/108490?v=4",
+      "profile": "https://github.com/pavveu",
+      "contributions": [
+        "design"
+      ]
     }
   ],
   "contributorsPerLine": 7
