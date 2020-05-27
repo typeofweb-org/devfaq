@@ -85,7 +85,7 @@ config.env = {
   API_URL: process.env.API_URL,
   VERSION: process.env.VERSION,
   GA_TRACKING_ID: process.env.GA_TRACKING_ID,
-  ABSOLUTE_URL: process.env.ABSOLUTE_URL || process.env.VERCEL_URL,
+  ABSOLUTE_URL: process.env.ABSOLUTE_URL || 'https://' + process.env.VERCEL_URL,
   SENTRY_DSN: process.env.SENTRY_DSN,
   ENV: process.env.ENV,
 };
