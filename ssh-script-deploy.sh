@@ -1,30 +1,42 @@
 #!/bin/bash
-source ~/.bash_profile
 set -e
+source ~/.bash_profile
 
-cd ~/domains/api.devfaq.pl/public_nodejs
+if [[ "$1" == "production" ]]; then
+  SUBDOMAIN="api"
+  BRANCH="master"
+elif [[ "$1" == "staging" ]]; then
+  SUBDOMAIN="staging-api"
+  BRANCH="develop"
+else
+  echo 'Incorrect environment. "production" or "staging" allowed.'
+  exit 1
+fi
+
+node -v
+npm -v
+
+cd ~/domains/$SUBDOMAIN.devfaq.pl/public_nodejs
 echo "👉 Pulling from the server…"
-git fetch origin
+git fetch origin --tags
 
-if git diff --quiet remotes/origin/master; then
+if git diff --quiet remotes/origin/$BRANCH; then
   echo "👉 Up to date; nothing to do!"
   exit
 fi
 
-git pull origin master
+git pull origin $BRANCH
 
 echo "👉 Installing deps…"
-npm i --dev
+npm ci
 echo "👉 Bulding…"
-NODE_ENV=production ENV=production npm run build
+NODE_ENV=production ENV=$1 npm run build
 echo "👉 Running migrations…"
-NODE_ENV=production ENV=production npm run prepare-db
+NODE_ENV=production ENV=$1 npm run prepare-db
 echo `git rev-parse HEAD` > .version
-echo "👉 Pruning…"
-npm prune
 
 echo "👉 Restarting the server…"
-devil www restart api.devfaq.pl
-curl -I https://api.devfaq.pl
+devil www restart $SUBDOMAIN.devfaq.pl
+curl -I https://$SUBDOMAIN.devfaq.pl
 
 echo "👉 Done! 😱 👍"
