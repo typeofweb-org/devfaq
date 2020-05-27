@@ -14,7 +14,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://typeofweb.com"><img src="https://avatars0.githubusercontent.com/u/1338731?v=4" width="100px;" alt=""/><br /><sub><b>Michał Miszczyszyn</b></sub></a><br /><a href="https://github.com/typeofweb/devfaq-api/commits?author=mmiszy" title="Code">💻</a> <a href="#maintenance-mmiszy" title="Maintenance">🚧</a> <a href="#platform-mmiszy" title="Packaging/porting to new platform">📦</a> <a href="#ideas-mmiszy" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://github.com/tomasznastaly"><img src="https://avatars2.githubusercontent.com/u/16205492?v=4" width="100px;" alt=""/><br /><sub><b>Tomasz Nastały</b></sub></a><br /><a href="https://github.com/typeofweb/devfaq-api/commits?author=tomasznastaly" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/tomasznastaly"><img src="https://avatars2.githubusercontent.com/u/16205492?v=4" width="100px;" alt=""/><br /><sub><b>Tomasz Nastały</b></sub></a><br /><a href="https://github.com/typeofweb/devfaq-api/commits?author=tomasznastaly" title="Code">💻</a> <a href="#ideas-tomasznastaly" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
