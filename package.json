@@ -79,6 +79,7 @@
     "@types/sinon-chai": "3.2.2",
     "@types/uuid": "3.4.5",
     "@types/vision": "5.3.6",
+    "all-contributors-cli": "6.15.0",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
     "chai-datetime": "1.5.0",
