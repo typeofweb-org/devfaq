@@ -41,6 +41,7 @@
     "xss": "1.0.6"
   },
   "devDependencies": {
+    "@bundle-analyzer/webpack-plugin": "0.5.1",
     "@types/classnames": "2.2.9",
     "@types/commonmark": "0.27.4",
     "@types/cookie-parser": "1.4.2",
@@ -56,7 +57,6 @@
     "all-contributors-cli": "6.15.0",
     "autoprefixer": "9.6.1",
     "babel-jest": "24.8.0",
-    "bundlewatch": "0.2.7",
     "cross-env": "5.2.0",
     "fast-check": "1.16.0",
     "husky": "3.0.0",
@@ -69,8 +69,6 @@
     "ts-node": "8.3.0",
     "tslint": "5.18.0",
     "tslint-config-prettier": "1.18.0",
-    "webpack-bundle-analyzer": "3.3.2",
-    "webpack-visualizer-plugin": "0.1.11",
     "why-did-you-update": "1.0.6"
   },
   "scripts": {
@@ -83,20 +81,13 @@
     "jest": "jest",
     "bundlewatch": "bundlewatch"
   },
-  "bundlewatch": {
+  "bundle-analyzer": {
     "files": [
       {
-        "path": ".next/server/**/*.*"
-      },
-      {
-        "path": ".next/static/**/*.*"
+        "test": "static/**/*.*",
+        "maxSize": "10mb"
       }
-    ],
-    "ci": {
-      "trackBranches": [
-        "develop"
-      ]
-    }
+    ]
   },
   "engines": {
     "node": "10.x.x"

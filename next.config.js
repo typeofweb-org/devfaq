@@ -9,8 +9,6 @@ const withOffline = require('next-offline');
 
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
-const { ANALYZE } = process.env;
-
 const withPolyfills = (module.exports = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
     webpack(config, options) {
@@ -37,21 +35,11 @@ const withPolyfills = (module.exports = (nextConfig = {}) => {
 const withWebpackAnalyze = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
     webpack(config, options) {
-      if (ANALYZE) {
+      if (process.env.ANALYZE && !options.isServer) {
+        // only submit analysis for the frontend
         console.log('ANALYZE=YES');
-        const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-        config.plugins.push(
-          new BundleAnalyzerPlugin({
-            analyzerMode: 'server',
-            analyzerPort: options.isServer ? 8888 : 8889,
-            openAnalyzer: true,
-          })
-        );
-
-        const Visualizer = require('webpack-visualizer-plugin');
-        config.plugins.push(new Visualizer());
-      } else {
-        console.log('ANALYZE=NO');
+        const BundleAnalyzerPlugin = require('@bundle-analyzer/webpack-plugin');
+        config.plugins.push(new BundleAnalyzerPlugin());
       }
 
       if (typeof nextConfig.webpack === 'function') {
