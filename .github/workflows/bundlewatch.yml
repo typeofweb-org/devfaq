@@ -32,6 +32,8 @@ jobs:
         run: npm ci
 
       - name: Run build
+        env:
+          CI_BRANCH: develop
         uses: jackyef/bundlewatch-gh-action@master
         with:
           build-script: npm run build
