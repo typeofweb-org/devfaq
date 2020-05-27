@@ -1,12 +1,8 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Deploy
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
-    branches: [develop, master]
+    branches: [develop]
 
 jobs:
   deploy:
@@ -15,37 +11,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # - name: Setup PostgreSQL
-      #   uses: Harmon758/postgresql-action@v1.0.0
-      #   with:
-      #     postgresql version: 12-alpine
-      #     postgresql db: database_development
-      #     postgresql user: postgres
-      #     postgresql password: -api2018
-
-      # - name: Read .nvmrc
-      #   run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
-      #   id: nvm
-      # - name: Use Node.js
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     node-version: '${{ steps.nvm.outputs.NVMRC }}'
-
-      # - name: Cache Node.js modules
-      #   uses: actions/cache@v1
-      #   with:
-      #     path: ~/.npm
-      #     key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.OS }}-node-
-      #       ${{ runner.OS }}-
-
-      # - name: Install dependencies
-      #   run: npm ci
-
-      # - name: Run tests
-      #   run: npm test
-
-      - name: Deploy
+      - name: Setup SSH Keys and known_hosts
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
-          echo ${GITHUB_REF##*/}
+          mkdir -p ~/.ssh
+          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+          ssh-keyscan -H s18.mydevil.net >> ~/.ssh/known_hosts
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+          if [[ "${GITHUB_REF##*/}" == 'develop' ]]; then ENV="staging"; fi
+          if [[ "${GITHUB_REF##*/}" == 'master' ]]; then ENV="production"; fi
+          ssh typeofweb@s18.mydevil.net 'source ~/.bashrc && ssh-add ~/.ssh/github && bash -s' < ./ssh-script-deploy.sh $ENV
