@@ -79,8 +79,6 @@ config.experimental = {
   publicDirectory: true,
 };
 
-console.log(process.env.ABSOLUTE_URL, process.env.VERCEL_URL, process.env);
-
 config.env = {
   API_URL: process.env.API_URL,
   VERSION: process.env.VERSION,
