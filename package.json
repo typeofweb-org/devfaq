@@ -56,6 +56,7 @@
     "all-contributors-cli": "6.15.0",
     "autoprefixer": "9.6.1",
     "babel-jest": "24.8.0",
+    "bundlewatch": "0.2.7",
     "cross-env": "5.2.0",
     "fast-check": "1.16.0",
     "husky": "3.0.0",
@@ -79,7 +80,8 @@
     "analyze": "cross-env ANALYZE=1 NODE_ENV=production next build",
     "test": "npm run test:tsc && npm run jest",
     "test:tsc": "tsc --project tsconfig.json --noEmit && tsc --project tsconfig.server.json --noEmit && tslint -p tsconfig.json && tslint -p tsconfig.server.json",
-    "jest": "jest"
+    "jest": "jest",
+    "bundlewatch": "bundlewatch '.next/server/**/*.*' '.next/static/**/*.*'"
   },
   "engines": {
     "node": "10.x.x"

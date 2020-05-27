@@ -42,7 +42,8 @@ jobs:
           npm ci
           npm test
 
-      - name: Run build for dependabot
-        if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
-        run: |
-          npm run build
+      - name: Run build
+        uses: jackyef/bundlewatch-gh-action@master
+        with:
+          build-script: NODE_ENV=production npm run build
+          bundlewatch-github-token: ${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}
