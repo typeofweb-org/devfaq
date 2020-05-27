@@ -31,6 +31,15 @@
         "code",
         "ideas"
       ]
+    },
+    {
+      "login": "cytrowski",
+      "name": "Bartosz Cytrowski",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2965690?v=4",
+      "profile": "https://github.com/cytrowski",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "contributorsPerLine": 7
