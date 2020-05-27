@@ -29,7 +29,9 @@ const sitemapXml = (items: ReadonlyArray<Item>) => {
   </urlset>`;
 };
 
-const Sitemap = () => {};
+const Sitemap = () => {
+  // nothing
+};
 
 Sitemap.getInitialProps = async ({ res }: NextPageContext) => {
   if (!res) {
