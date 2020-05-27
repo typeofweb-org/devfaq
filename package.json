@@ -74,6 +74,7 @@
   "scripts": {
     "dev": "rm -rf ./.next ./out ./server/*.js ./server/*.map && nodemon server/server.ts",
     "build": "echo $NODE_ENV && rm -rf ./.next ./out ./server/*.js ./server/*.map && next build && next export && tsc --project tsconfig.server.json",
+    "build:vercel": "next build",
     "start": "node app.js",
     "analyze": "cross-env ANALYZE=1 NODE_ENV=production next build",
     "test": "npm run test:tsc && npm run jest",
