@@ -33,7 +33,7 @@ jobs:
 
       - name: Run build
         env:
-          CI_BRANCH: develop
+          CI_BRANCH_BASE: develop
         uses: jackyef/bundlewatch-gh-action@master
         with:
           build-script: npm run build
