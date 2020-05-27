@@ -1,1 +1,0 @@
--r test/setup-env.js -r source-map-support/register -r tsconfig-paths/register --timeout 600000 --bail --exit

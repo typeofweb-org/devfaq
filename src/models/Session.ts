@@ -10,7 +10,7 @@ import {
   BelongsTo,
 } from 'sequelize-typescript';
 import { User } from './User';
-import nanoid from 'nanoid';
+import { nanoid } from 'nanoid';
 
 @Table({ version: true, timestamps: true })
 export class Session extends Model<Session> {

@@ -1,19 +1,11 @@
-version: "2"
+version: '2'
 
 services:
   devfaq_db:
-    image: postgres:10-alpine
+    image: postgres:12-alpine
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_DB: "database_development"
-      POSTGRES_PASSWORD: "-api2018"
-  # db-test:
-  #   image: postgres:10-alpine
-  #   ports:
-  #     - '5433:5432'
-  #   environment:
-  #     POSTGRES_USER: 'test'
-  #     POSTGRES_DB: 'test'
-  #     POSTGRES_PASSWORD: 'test'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_DB: 'database_development'
+      POSTGRES_PASSWORD: '-api2018'

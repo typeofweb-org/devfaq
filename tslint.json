@@ -11,6 +11,7 @@
       "allow-leading-underscore",
       "allow-pascal-case"
     ],
+    "array-type": false,
     "no-floating-promises": true,
     "trailing-comma": [
       true,

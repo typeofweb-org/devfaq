@@ -37,8 +37,7 @@ if (getConfig('NODE_ENV') !== 'production') {
       client
         // tslint:disable-next-line:no-magic-numbers
         .close(2000)
-        .then(() => process.exit(1))
-        .catch(() => process.exit(1));
+        .then(() => process.exit(1));
     } else {
       process.exit(1);
     }
