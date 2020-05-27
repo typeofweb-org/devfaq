@@ -17,7 +17,6 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
@@ -29,12 +28,35 @@ jobs:
           postgresql user: postgres
           postgresql password: -api2018
 
-      - name: Setup Node
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+      - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Run tests
-        run: |
-          npm ci
-          npm test
+        run: npm test
+
+      - name: Danger JS
+        run: npm run danger
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DANGER_GITHUB_API_BASE_URL: 'https://api.github.com'
+
+      - name: Run build for dependabot
+        if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+        run: npm run build
