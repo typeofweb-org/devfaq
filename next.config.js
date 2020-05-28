@@ -3,7 +3,6 @@ require('dotenv').config({
   path: isProduction ? `.env.${process.env.ENV}` : '.env',
 });
 
-const withSass = require('@zeit/next-sass');
 const withImages = require('next-images');
 const withOffline = require('next-offline');
 
@@ -53,17 +52,15 @@ const withWebpackAnalyze = (nextConfig = {}) => {
 
 const config = withWebpackAnalyze(
   withPolyfills(
-    withImages(
-      withSass({
-        sassLoaderOptions: {
-          includePaths: ['styles/'],
-        },
-        webpack: (config, options) => {
-          config.plugins.push(new LodashModuleReplacementPlugin());
-          return config;
-        },
-      })
-    )
+    withImages({
+      sassLoaderOptions: {
+        includePaths: ['styles/'],
+      },
+      webpack: (config, options) => {
+        config.plugins.push(new LodashModuleReplacementPlugin());
+        return config;
+      },
+    })
   )
 );
 
