@@ -33,7 +33,7 @@
     "danger": "danger ci"
   },
   "dependencies": {
-    "@hapi/hapi": "18.3.2",
+    "@hapi/hapi": "18.4.1",
     "@hapi/joi": "15.1.1",
     "@sentry/node": "5.15.5",
     "bell": "10.0.0",
