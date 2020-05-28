@@ -1,29 +1,19 @@
-export enum USER_ROLE {
-  USER = 'user',
-  ADMIN = 'admin',
-}
-export const userRoles: USER_ROLE[] = Object.values(USER_ROLE);
+export const userRoles = ['user', 'admin'] as const;
+export type UserRoleUnion = typeof userRoles[number];
 
-export enum QUESTION_CATEGORY {
-  HTML = 'html',
-  CSS = 'css',
-  JS = 'js',
-  ANGULAR = 'angular',
-  REACT = 'react',
-  GIT = 'git',
-  OTHER = 'other',
-}
-export const questionCategories: QUESTION_CATEGORY[] = Object.values(QUESTION_CATEGORY);
+export const questionCategories = [
+  'html',
+  'css',
+  'js',
+  'angular',
+  'react',
+  'git',
+  'other',
+] as const;
+export type QuestionCategoryUnion = typeof questionCategories[number];
 
-export enum QUESTION_LEVEL {
-  JUNIOR = 'junior',
-  MID = 'mid',
-  SENIOR = 'senior',
-}
-export const questionLevels: QUESTION_LEVEL[] = Object.values(QUESTION_LEVEL);
+export const questionLevels = ['junior', 'mid', 'senior'] as const;
+export type QuestionLevelUnion = typeof questionLevels[number];
 
-export enum QUESTION_STATUS {
-  ACCEPTED = 'accepted',
-  PENDING = 'pending',
-}
-export const questionStatuses: QUESTION_STATUS[] = Object.values(QUESTION_STATUS);
+export const questionStatuses = ['accepted', 'pending'] as const;
+export type QuestionStatusUnion = typeof questionStatuses[number];

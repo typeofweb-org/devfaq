@@ -14,9 +14,9 @@ import {
   BelongsToMany,
 } from 'sequelize-typescript';
 import { UserRole } from './UserRole';
-import { USER_ROLE } from '../models-consts';
 import { Question } from './Question';
 import { QuestionVote } from './QuestionVote';
+import { UserRoleUnion } from '../models-consts';
 
 function withSensitiveData(): IFindOptions<User> {
   return {
@@ -60,10 +60,10 @@ export class User extends Model<User> {
   avatarUrl?: string | null;
 
   @ForeignKey(() => UserRole)
-  @Default(USER_ROLE.USER)
+  @Default('user')
   @AllowNull(false)
   @Column(DataType.STRING)
-  _roleId!: USER_ROLE;
+  _roleId!: UserRoleUnion;
 
   @BelongsTo(() => UserRole, '_roleId')
   _role?: UserRole;

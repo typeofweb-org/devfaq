@@ -1,7 +1,7 @@
 import { initDb, sequelize, getAllModels } from '../db';
 import { Question } from '../models/Question';
 import faker from 'faker';
-import { QUESTION_CATEGORY, QUESTION_LEVEL, QUESTION_STATUS } from '../models-consts';
+import { questionCategories, questionLevels, questionStatuses } from '../models-consts';
 
 before(async () => {
   await initDb();
@@ -24,9 +24,9 @@ async function clearDB() {
     'UserRole',
   ];
 
-  const keys = Object.keys(getAllModels()).filter(key => !TRUNCATE_BLACKLIST.includes(key));
+  const keys = Object.keys(getAllModels()).filter((key) => !TRUNCATE_BLACKLIST.includes(key));
   return Promise.all(
-    keys.map(async key => {
+    keys.map(async (key) => {
       await sequelize.query(`TRUNCATE TABLE "${key}" RESTART IDENTITY CASCADE;`, {
         raw: true,
       });
@@ -36,10 +36,10 @@ async function clearDB() {
 
 export async function generateQuestions(num: number): Promise<Question[]> {
   return Promise.all(
-    Array.from({ length: num }).map(async _i => {
-      const _categoryId = faker.random.objectElement(QUESTION_CATEGORY);
-      const _levelId = faker.random.objectElement(QUESTION_LEVEL);
-      const _statusId = faker.random.objectElement(QUESTION_STATUS);
+    Array.from({ length: num }).map(async (_i) => {
+      const _categoryId = faker.random.arrayElement(questionCategories);
+      const _levelId = faker.random.arrayElement(questionLevels);
+      const _statusId = faker.random.arrayElement(questionStatuses);
 
       return Question.create({
         question: faker.lorem.sentence(),

@@ -1,6 +1,5 @@
-import { Server } from 'hapi';
-import Boom from 'boom';
-import Joi from 'joi';
+import Hapi from '@hapi/hapi';
+import Boom from '@hapi/boom';
 import {
   GetQuestionsRequestSchema,
   GetQuestionsResponseSchema,
@@ -12,15 +11,13 @@ import {
   UpdateQuestionResponseSchema,
 } from './questionSchemas';
 import { Question } from '../../models/Question';
-import { QUESTION_STATUS } from '../../models-consts';
 import { IFindOptions } from 'sequelize-typescript';
 import { isAdmin, getCurrentUser } from '../../utils/utils';
+import { definitions } from '../../../apiTypes';
 
-type GetQuestionsRequest = Joi.SchemaValue<typeof GetQuestionsRequestSchema>;
-
-type GetQuestionsRequestQuery = NonNullable<GetQuestionsRequest>['query'];
-
-function columnNameFromQuery(orderBy: NonNullable<GetQuestionsRequestQuery['orderBy']>) {
+function columnNameFromQuery(
+  orderBy: NonNullable<definitions['getQuestionsRequestQuery']['orderBy']>
+): string {
   switch (orderBy) {
     case 'level':
       return '_levelId';
@@ -29,10 +26,8 @@ function columnNameFromQuery(orderBy: NonNullable<GetQuestionsRequestQuery['orde
   }
 }
 
-function getOrderFromQuery(
-  request: NonNullable<GetQuestionsRequest>
-): IFindOptions<Question>['order'] {
-  const { order, orderBy } = request.query;
+function getOrderFromQuery(request: Hapi.Request): IFindOptions<Question>['order'] {
+  const { order, orderBy } = request.query as definitions['getQuestionsRequestQuery'];
   if (!order || !orderBy) {
     return undefined;
   }
@@ -41,7 +36,7 @@ function getOrderFromQuery(
 }
 
 export const questionsRoutes = {
-  async init(server: Server) {
+  async init(server: Hapi.Server) {
     await server.route({
       method: 'GET',
       path: '/questions',
@@ -54,16 +49,20 @@ export const questionsRoutes = {
           schema: GetQuestionsResponseSchema,
         },
       },
-      async handler(request) {
-        const { category, level, status, limit, offset } = request.query;
+      async handler(request): Promise<definitions['getQuestions200Response']> {
+        const {
+          category,
+          level,
+          status,
+          limit,
+          offset,
+        } = request.query as definitions['getQuestionsRequestQuery'];
         const currentUser = getCurrentUser(request);
 
         const where = {
           ...(category && { _categoryId: category }),
           ...(level && { _levelId: level }),
-          ...(status && isAdmin(request)
-            ? { _statusId: status }
-            : { _statusId: QUESTION_STATUS.ACCEPTED }),
+          ...(status && isAdmin(request) ? { _statusId: status } : { _statusId: 'accepted' }),
         };
 
         const total = await Question.count({
@@ -83,14 +82,14 @@ export const questionsRoutes = {
           currentUser && currentUser.id
         );
 
-        const data = questions.map(q => {
+        const data = questions.map((q) => {
           return {
             id: q.id,
             question: q.question,
             _categoryId: q._categoryId,
             _levelId: q._levelId,
             _statusId: q._statusId,
-            acceptedAt: q.acceptedAt,
+            acceptedAt: q.acceptedAt?.toISOString(),
             votesCount: q.votesCount,
             currentUserVotedOn: q.didUserVoteOn,
           };
@@ -113,14 +112,18 @@ export const questionsRoutes = {
           schema: CreateQuestionResponseSchema,
         },
       },
-      async handler(request) {
-        const { question, level, category } = request.payload;
+      async handler(request): Promise<definitions['postQuestions200Response']> {
+        const {
+          question,
+          level,
+          category,
+        } = request.payload as definitions['postQuestionsRequestBody'];
 
         const newQuestion = await Question.create({
           question,
           _levelId: level,
           _categoryId: category,
-          _statusId: QUESTION_STATUS.PENDING,
+          _statusId: 'pending',
         });
 
         const data = {
@@ -129,7 +132,7 @@ export const questionsRoutes = {
           _categoryId: newQuestion._categoryId,
           _levelId: newQuestion._levelId,
           _statusId: newQuestion._statusId,
-          acceptedAt: newQuestion.acceptedAt,
+          acceptedAt: newQuestion.acceptedAt?.toISOString(),
           currentUserVotedOn: false,
           votesCount: 0,
         };
@@ -153,8 +156,10 @@ export const questionsRoutes = {
           schema: UpdateQuestionResponseSchema,
         },
       },
-      async handler(request) {
-        const { id } = request.params;
+      async handler(request): Promise<definitions['patchQuestionsId200Response']> {
+        const {
+          id,
+        } = (request.params as unknown) as definitions['patchQuestionsIdRequestPathParams'];
 
         const q = await Question.scope('withVotes').findByPk(id);
 
@@ -162,7 +167,12 @@ export const questionsRoutes = {
           throw Boom.notFound();
         }
 
-        const { question, level, category, status } = request.payload;
+        const {
+          question,
+          level,
+          category,
+          status,
+        } = request.payload as definitions['patchQuestionsIdRequestBody'];
 
         const currentUser = getCurrentUser(request);
 
@@ -179,7 +189,7 @@ export const questionsRoutes = {
           _categoryId: q._categoryId,
           _levelId: q._levelId,
           _statusId: q._statusId,
-          acceptedAt: q.acceptedAt,
+          acceptedAt: q.acceptedAt?.toISOString(),
           currentUserVotedOn: currentUser ? await Question.didUserVoteOn(currentUser, q) : false,
           votesCount: q.votesCount,
         };
@@ -200,13 +210,15 @@ export const questionsRoutes = {
           schema: GetOneQuestionResponseSchema,
         },
       },
-      async handler(request) {
-        const { id } = request.params;
+      async handler(request): Promise<definitions['getQuestionsId200Response']> {
+        const {
+          id,
+        } = (request.params as unknown) as definitions['getQuestionsIdRequestPathParams'];
 
         const question = await Question.scope('withVotes').findOne({
           where: {
             id,
-            _statusId: QUESTION_STATUS.ACCEPTED,
+            _statusId: 'accepted',
           },
         });
 
@@ -222,7 +234,7 @@ export const questionsRoutes = {
           _categoryId: question._categoryId,
           _levelId: question._levelId,
           _statusId: question._statusId,
-          acceptedAt: question.acceptedAt,
+          acceptedAt: question.acceptedAt?.toISOString(),
           currentUserVotedOn: currentUser
             ? await Question.didUserVoteOn(currentUser, question)
             : false,

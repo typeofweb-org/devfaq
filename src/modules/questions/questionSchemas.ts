@@ -1,17 +1,15 @@
-import Joi from 'joi';
+import Joi from '@hapi/joi';
+
 import { questionCategories, questionStatuses, questionLevels } from '../../models-consts';
-import { CustomJoi } from '../../utils/utils';
 
-export const QuestionCategorySchema = Joi.string().valid(questionCategories);
+export const QuestionCategorySchema = Joi.string().valid(...questionCategories);
 
-export const QuestionStatusSchema = Joi.string().valid(questionStatuses);
+export const QuestionStatusSchema = Joi.string().valid(...questionStatuses);
 
-export const QuestionLevelSchema = Joi.string().valid(questionLevels);
+export const QuestionLevelSchema = Joi.string().valid(...questionLevels);
 
 export const QuestionSchema = Joi.object({
-  id: Joi.number()
-    .integer()
-    .required(),
+  id: Joi.number().integer().required(),
   question: Joi.string().required(),
   _categoryId: QuestionCategorySchema.required(),
   _levelId: QuestionLevelSchema.required(),
@@ -23,29 +21,24 @@ export const GetQuestionsRequestSchema = {
   query: Joi.object({
     category: QuestionCategorySchema,
     status: QuestionStatusSchema,
-    level: CustomJoi.stringArray().items(questionLevels),
-    limit: Joi.number()
-      .integer()
+    level: Joi.array()
+      .items(...questionLevels)
+      .single()
       .optional(),
-    offset: Joi.number()
-      .integer()
-      .optional(),
-    orderBy: Joi.string().only('acceptedAt', 'level', 'votesCount'),
-    order: Joi.string().only('asc', 'desc'),
+    limit: Joi.number().integer().optional(),
+    offset: Joi.number().integer().optional(),
+    orderBy: Joi.string().valid('acceptedAt', 'level', 'votesCount'),
+    order: Joi.string().valid('asc', 'desc'),
   }).required(),
 };
 
 export const QuestionResponseSchema = QuestionSchema.keys({
-  votesCount: Joi.number()
-    .integer()
-    .required(),
+  votesCount: Joi.number().integer().required(),
   currentUserVotedOn: Joi.bool(),
 });
 
 export const GetQuestionsResponseSchema = Joi.object({
-  data: Joi.array()
-    .items(QuestionResponseSchema)
-    .required(),
+  data: Joi.array().items(QuestionResponseSchema).required(),
   meta: Joi.object({
     total: Joi.number().required(),
   }).optional(),
@@ -53,9 +46,7 @@ export const GetQuestionsResponseSchema = Joi.object({
 
 export const GetOneQuestionRequestSchema = {
   params: Joi.object({
-    id: Joi.number()
-      .integer()
-      .required(),
+    id: Joi.number().integer().required(),
   }).required(),
 };
 
@@ -79,9 +70,7 @@ export const CreateQuestionResponseSchema = Joi.object({
 
 export const UpdateQuestionRequestSchema = {
   params: Joi.object({
-    id: Joi.number()
-      .integer()
-      .required(),
+    id: Joi.number().integer().required(),
   }).required(),
   payload: CreateQuestionRequestPayloadSchema.keys({
     status: QuestionStatusSchema.required(),

@@ -18,11 +18,7 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "typeRoots": ["./node_modules/@types", "./typings"],
-    "baseUrl": ".",
-    "paths": {
-      "hapi": ["node_modules/typesafe-hapi"],
-      "joi": ["node_modules/typesafe-joi"]
-    }
+    "baseUrl": "."
   },
   "exclude": ["dist"]
 }

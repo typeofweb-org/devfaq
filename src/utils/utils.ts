@@ -1,11 +1,10 @@
 import moment from 'moment';
-import { isUndefined, omitBy, isString } from 'lodash';
+import { isUndefined, omitBy, upperFirst, camelCase } from 'lodash';
 import { getConfig } from '../config';
 import { withScope, Severity, captureException } from '@sentry/node';
-import Joi from 'joi';
-import Hapi from 'hapi';
-import { USER_ROLE } from '../models-consts';
+import Hapi, { RequestRoute } from '@hapi/hapi';
 import { User } from '../models/User';
+import { Model } from 'sequelize-typescript';
 
 type Nil<T> = T | undefined | null;
 export function defaultToAny<T>(v1: T): T;
@@ -29,7 +28,7 @@ export function handleException(err: any, level?: Severity) {
   }
 
   if (level) {
-    withScope(scope => {
+    withScope((scope) => {
       scope.setLevel(level);
       captureException(err);
     });
@@ -56,16 +55,8 @@ export function getNewSessionValidUntil(keepMeSignedIn: boolean): Date {
   // tslint:disable-next-line:no-magic-numbers
   return keepMeSignedIn ? now.add(7, 'days').toDate() : now.add(2, 'hours').toDate();
 }
-export const CustomJoi = Joi.extend({
-  // @todo
-  // tslint:disable-next-line:no-any
-  base: Joi.array() as any,
-  name: 'stringArray',
-  coerce: (value, _state, _options) => (isString(value) ? value.split(',') : value),
-}) as (typeof Joi) & { stringArray: typeof Joi.array };
 
-// tslint:disable-next-line:no-any
-export const getCurrentUser = (request: Hapi.Request<any, any, any>): User | undefined => {
+export const getCurrentUser = (request: Hapi.Request): User | undefined => {
   return (
     request &&
     request.auth &&
@@ -75,8 +66,18 @@ export const getCurrentUser = (request: Hapi.Request<any, any, any>): User | und
   );
 };
 
-// tslint:disable-next-line:no-any
-export const isAdmin = (request: Hapi.Request<any, any, any>): boolean => {
+export const isAdmin = (request: Hapi.Request): boolean => {
   const user = getCurrentUser(request);
-  return Boolean(user && user._roleId === USER_ROLE.ADMIN);
+  return Boolean(user && user._roleId === 'admin');
+};
+
+// tslint:disable-next-line:no-any
+export const arrayToJSON = <T extends Model<any>>(entities: Array<Model<T>>) => {
+  return entities.map((entity) => entity.toJSON());
+};
+
+export const routeToLabel = ({ method, path }: RequestRoute): string => {
+  const prefix = method.toLowerCase();
+  const label = upperFirst(camelCase(path));
+  return prefix + label;
 };

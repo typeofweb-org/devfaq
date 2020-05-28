@@ -1,26 +1,19 @@
-import Boom from 'boom';
-import Hapi from 'hapi';
+import Boom from '@hapi/boom';
+import Hapi from '@hapi/hapi';
 import HapiSwagger from 'hapi-swagger';
-import Inert from 'inert';
-import Vision from 'vision';
+import Inert from '@hapi/inert';
+import Vision from '@hapi/vision';
 import pkg from '../package.json';
 import { getConfig, isProd } from './config';
 import * as Sentry from '@sentry/node';
-import { handleException } from './utils/utils';
+import { handleException, routeToLabel } from './utils/utils';
 import { helloWorldRoute } from './modules/hello-world/helloWorldRoute';
 import { healthCheckRoute } from './modules/health-check/healthCheckRoutes';
 import { questionsRoutes } from './modules/questions/questionRoutes';
 import AuthPlugin from './plugins/auth';
-import { questionVotesRoutes } from './modules/question-votes/questionVotesSchemas';
+import { questionVotesRoutes } from './modules/question-votes/questionVotesRoutes';
 import * as fs from 'fs';
-
-declare module 'hapi' {
-  interface PluginSpecificConfiguration {
-    'hapi-swagger'?: {
-      payloadType?: 'form' | 'json';
-    };
-  }
-}
+import Joi from '@hapi/joi';
 
 const getServer = () => {
   return new Hapi.Server({
@@ -58,10 +51,58 @@ const getServer = () => {
 
 export async function getServerWithPlugins() {
   const server = getServer();
+
+  if (process.env.ENV !== 'test') {
+    /**
+     * @description Automatically generate labels for all endpoints with validation for the purpose of automatic types generation on the front-end
+     */
+    const allLabels = new Map<string, boolean>();
+    server.events.on('route', (route) => {
+      if (route.path.startsWith('/swaggerui') || route.path.startsWith('/documentation')) {
+        return; // skip
+      }
+
+      if (!route.settings.response?.schema) {
+        if (!isProd() && getConfig('ENV') !== 'test') {
+          console.warn(`Route without a response schema: ${route.method} ${route.path}`);
+        }
+        return;
+      }
+
+      if (!Joi.isSchema(route.settings.response?.schema)) {
+        if (!isProd() && getConfig('ENV') !== 'test') {
+          console.warn(`Route response schema is not a Joi schema: ${route.method} ${route.path}`);
+        }
+        return;
+      }
+
+      // tslint:disable-next-line: no-any
+      const maybeALabel = (route.settings.response.schema as any)._flags?.label;
+      if (maybeALabel) {
+        if (!isProd() && getConfig('ENV') !== 'test') {
+          console.log(
+            `Skipping route ${route.method} ${route.path} because it already has a response schema label: ${maybeALabel}`
+          );
+        }
+        allLabels.set(maybeALabel, true);
+        return;
+      }
+
+      const label = routeToLabel(route) + 'Response';
+
+      if (allLabels.has(label)) {
+        throw new Error(`Duplicate label: ${label} for ${route.method} ${route.path}`);
+      }
+      allLabels.set(label, true);
+
+      // route.settings.response.schema = (route.settings.response.schema as Joi.Schema).label(label);
+    });
+  }
+
   server.events.on({ name: 'request', channels: 'error' }, (request, event, _tags) => {
     const baseUrl = `${server.info.protocol}://${request.info.host}`;
 
-    Sentry.withScope(scope => {
+    Sentry.withScope((scope) => {
       scope.setExtra('timestamp', request.info.received);
       scope.setExtra('remoteAddress', request.info.remoteAddress);
 
@@ -109,7 +150,7 @@ export async function getServerWithPlugins() {
       plugin: HapiSwagger,
       options: swaggerOptions,
     },
-  ] as Array<Hapi.ServerRegisterPluginObject<unknown>>);
+  ]);
 
   await server.register(
     {

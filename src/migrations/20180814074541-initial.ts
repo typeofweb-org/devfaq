@@ -2,7 +2,7 @@ import { QueryInterface, SequelizeStatic } from 'sequelize';
 
 module.exports = {
   async up(queryInterface: QueryInterface, Sequelize: SequelizeStatic) {
-    return queryInterface.sequelize.transaction(async _t => {
+    return queryInterface.sequelize.transaction(async (_t) => {
       await queryInterface.createTable('QuestionCategory', {
         id: {
           type: Sequelize.TEXT,
@@ -66,7 +66,7 @@ module.exports = {
         },
       });
 
-      await queryInterface.createTable('UserRole', {
+      await queryInterface.createTable('UserRoleType', {
         id: {
           type: Sequelize.TEXT,
           primaryKey: true,
@@ -112,7 +112,7 @@ module.exports = {
           allowNull: false,
           defaultValue: 'user',
           references: {
-            model: 'UserRole',
+            model: 'UserRoleType',
             key: 'id',
           },
           onDelete: 'CASCADE',

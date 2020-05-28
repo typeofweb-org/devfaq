@@ -6,9 +6,9 @@ import {
   Unique,
   AllowNull,
   HasMany,
-  PrimaryKey
-} from "sequelize-typescript";
-import { User } from "./User";
+  PrimaryKey,
+} from 'sequelize-typescript';
+import { User } from './User';
 
 @Table({ version: true, timestamps: true })
 export class UserRole extends Model<UserRole> {
@@ -18,6 +18,6 @@ export class UserRole extends Model<UserRole> {
   @Column(DataType.TEXT)
   readonly id!: string;
 
-  @HasMany(() => User, "_roleId")
+  @HasMany(() => User, '_roleId')
   _users?: User[];
 }

@@ -44,6 +44,6 @@
   "rulesDirectory": [],
   "autoFixOnSave": true,
   "linterOptions": {
-    "exclude": ["**/*.test.ts"]
+    "exclude": ["**/*.test.ts", "apiTypes.ts"]
   }
 }

@@ -28,7 +28,7 @@ enum QUESTION_STATUS {
 
 // tslint:disable-next-line:no-any
 function toEntities(enumerable: any): Array<{ id: string }> {
-  return Object.values<string>(enumerable).map(t => ({
+  return Object.values<string>(enumerable).map((t) => ({
     id: t,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -43,7 +43,7 @@ module.exports = {
     const questionStatuses = toEntities(QUESTION_STATUS);
 
     return Promise.all([
-      queryInterface.bulkInsert('UserRole', userRoles),
+      queryInterface.bulkInsert('UserRoleType', userRoles),
       queryInterface.bulkInsert('QuestionCategory', questionCategories),
       queryInterface.bulkInsert('QuestionLevel', questionLevels),
       queryInterface.bulkInsert('QuestionStatus', questionStatuses),
@@ -57,7 +57,7 @@ module.exports = {
     const questionStatuses = toEntities(QUESTION_STATUS);
 
     return Promise.all([
-      queryInterface.bulkDelete('UserRole', userRoles),
+      queryInterface.bulkDelete('UserRoleType', userRoles),
       queryInterface.bulkDelete('QuestionCategory', questionCategories),
       queryInterface.bulkDelete('QuestionLevel', questionLevels),
       queryInterface.bulkDelete('QuestionStatus', questionStatuses),

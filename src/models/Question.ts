@@ -15,13 +15,13 @@ import {
   Sequelize,
 } from 'sequelize-typescript';
 import { QuestionStatus } from './QuestionStatus';
-import { QUESTION_STATUS, QUESTION_CATEGORY, QUESTION_LEVEL } from '../models-consts';
 import { QuestionCategory } from './QuestionCategory';
 import { QuestionLevel } from './QuestionLevel';
 import { QuestionVote } from './QuestionVote';
 import { User } from './User';
 import { sequelize } from '../db';
 import { isArray } from 'util';
+import { QuestionLevelUnion, QuestionCategoryUnion, QuestionStatusUnion } from '../models-consts';
 
 function getQuestionsOrderQuery(orders: Array<[string, 'DESC' | 'ASC'] | [string]>): string {
   if (!orders || !orders.length) {
@@ -29,11 +29,11 @@ function getQuestionsOrderQuery(orders: Array<[string, 'DESC' | 'ASC'] | [string
   }
 
   return orders
-    .filter(o => o.length > 0)
+    .filter((o) => o.length > 0)
     .filter(([colName]) => {
       return colName in Question.rawAttributes;
     })
-    .map(o => {
+    .map((o) => {
       const [colName, order = ''] = o;
       if (colName === 'votesCount') {
         return `"votesCount" ${order}`.trim();
@@ -75,10 +75,10 @@ export class Question extends Model<Question> {
   @BeforeUpdate
   @BeforeCreate
   static setAcceptedAt(instance: Question) {
-    if (!instance.acceptedAt && instance._statusId === QUESTION_STATUS.ACCEPTED) {
+    if (!instance.acceptedAt && instance._statusId === 'accepted') {
       instance.acceptedAt = new Date();
     }
-    if (instance.acceptedAt && instance._statusId === QUESTION_STATUS.PENDING) {
+    if (instance.acceptedAt && instance._statusId === 'pending') {
       instance.acceptedAt = null;
     }
   }
@@ -155,18 +155,18 @@ export class Question extends Model<Question> {
   @ForeignKey(() => QuestionCategory)
   @AllowNull(false)
   @Column(DataType.STRING)
-  _categoryId!: QUESTION_CATEGORY;
+  _categoryId!: QuestionCategoryUnion;
 
   @ForeignKey(() => QuestionLevel)
   @AllowNull(false)
   @Column(DataType.STRING)
-  _levelId!: QUESTION_LEVEL;
+  _levelId!: QuestionLevelUnion;
 
   @ForeignKey(() => QuestionStatus)
-  @Default(QUESTION_STATUS.PENDING)
+  @Default('pending')
   @AllowNull(false)
   @Column(DataType.STRING)
-  _statusId!: QUESTION_STATUS;
+  _statusId!: QuestionStatusUnion;
 
   @BelongsToMany(() => User, {
     through: () => QuestionVote,

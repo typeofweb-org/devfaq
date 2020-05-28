@@ -1,4 +1,4 @@
-import { Server } from 'hapi';
+import { Server } from '@hapi/hapi';
 
 export const healthCheckRoute = {
   init(server: Server) {
@@ -8,6 +8,7 @@ export const healthCheckRoute = {
       options: {
         description: 'Health check endpoint',
         tags: ['api'],
+        auth: false,
       },
       handler() {
         return null;

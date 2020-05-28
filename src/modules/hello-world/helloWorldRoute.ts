@@ -1,4 +1,4 @@
-import { Server } from 'hapi';
+import { Server } from '@hapi/hapi';
 
 export const helloWorldRoute = {
   init(server: Server) {

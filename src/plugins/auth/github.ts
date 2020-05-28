@@ -1,6 +1,6 @@
-import Hapi from 'hapi';
-import Bell from 'bell';
-import Boom from 'boom';
+import Hapi from '@hapi/hapi';
+import Bell from '@hapi/bell';
+import Boom from '@hapi/boom';
 import fetch from 'node-fetch';
 import { AuthProviderOptions } from '.';
 
@@ -84,7 +84,7 @@ const GitHubAuthPlugin: Hapi.Plugin<GitHubAuthPluginConfig & AuthProviderOptions
           verified: boolean;
           visibility: unknown;
         }>;
-        const primaryEmail = emails.find(e => e.primary && e.verified);
+        const primaryEmail = emails.find((e) => e.primary && e.verified);
 
         if (!primaryEmail) {
           throw Boom.unauthorized('Your primary email is not verified!');

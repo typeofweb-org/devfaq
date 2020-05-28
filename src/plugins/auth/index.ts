@@ -1,8 +1,8 @@
-import Hapi from 'hapi';
-import HapiAuthCookie from 'hapi-auth-cookie';
-import Bell from 'bell';
-import Boom from 'boom';
-import Joi from 'joi';
+import Hapi from '@hapi/hapi';
+import HapiAuthCookie from '@hapi/cookie';
+import Bell from '@hapi/bell';
+import Boom from '@hapi/boom';
+import Joi from '@hapi/joi';
 import GitHubAuthPlugin, { GitHubAuthPluginConfig } from './github';
 import { User } from '../../models/User';
 import { Op } from 'sequelize';
@@ -10,7 +10,7 @@ import { Session } from '../../models/Session';
 import { isString } from 'util';
 import { createNewSession, getNewSessionValidUntil } from './session';
 
-declare module 'hapi' {
+declare module '@hapi/hapi' {
   interface AuthCredentials {
     session: Session;
   }
@@ -36,7 +36,7 @@ interface AuthUserData {
 type AuthProviderNext = (
   data: AuthUserData,
   // tslint:disable-next-line:no-any
-  request: Hapi.Request<any, any, any>,
+  request: Hapi.Request,
   h: Hapi.ResponseToolkit
 ) => Hapi.Lifecycle.ReturnValue;
 
@@ -140,9 +140,8 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
   name: 'DEVFAQ-API Auth Plugin',
   version: '1.0.0',
   async register(server, options) {
-    await server.register([{ plugin: Bell }, { plugin: HapiAuthCookie }] as Array<
-      Hapi.ServerRegisterPluginObject<unknown>
-    >);
+    await server.register(Bell);
+    await server.register(HapiAuthCookie);
 
     const cookieOptions: HapiAuthCookie.Options = {
       cookie: {
@@ -175,7 +174,7 @@ const AuthPlugin: Hapi.Plugin<AuthPluginOptions> = {
         });
 
         if (!sessionModel) {
-          request.cookieAuth.clear();
+          request?.cookieAuth.clear();
           return { valid: false };
         }
 
