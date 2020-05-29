@@ -14,7 +14,7 @@ const withPolyfills = (module.exports = (nextConfig = {}) => {
     webpack(config, options) {
       const originalEntry = config.entry;
       config.entry = function entry() {
-        return Promise.resolve(originalEntry()).then(entries => {
+        return Promise.resolve(originalEntry()).then((entries) => {
           if (entries['main.js']) {
             entries['main.js'].unshift('./polyfills.js');
           }
@@ -67,7 +67,7 @@ const config = withWebpackAnalyze(
   )
 );
 
-config.exportPathMap = function() {
+config.exportPathMap = function () {
   return {
     '/about': { page: '/about' },
     '/authors': { page: '/authors' },
@@ -77,6 +77,10 @@ config.exportPathMap = function() {
 
 config.experimental = {
   publicDirectory: true,
+};
+
+config.typescript = {
+  ignoreBuildErrors: true,
 };
 
 config.env = {
