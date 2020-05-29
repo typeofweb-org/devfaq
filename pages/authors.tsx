@@ -13,29 +13,27 @@ export default () => {
             <div className="app-authors">
               <div className="app-author">
                 <img
-                  src="/images/tomasz_nastaly.jpg"
-                  alt="Tomasz Nastały"
-                  className="app-author__image"
-                />
-                <p className="app-author__name">Tomasz Nastały</p>
-                <p>
-                  JavaScript Developer, entuzjasta frameworka Angular. Prowadzi bloga{' '}
-                  <a href="http://www.angular.love">angular.love</a>. Na co dzień lubi dzielić się
-                  wiedzą poprzez prowadzenie zajęć w jednym z trójmieskich bootcampów i nagrywaniem
-                  kursów z Angulara.
-                </p>
-              </div>
-              <div className="app-author">
-                <img
                   src="/images/michal_miszczyszyn.jpg"
                   alt="Michał Miszczyszyn"
                   className="app-author__image"
                 />
                 <p className="app-author__name">Michał Miszczyszyn</p>
                 <p>
-                  Michał jest programistą JavaScript z wieloma latami profesjonalnego doświadczenia.
-                  Organizator meet.js Summit i meet.js Gdańsk. Bloger na{' '}
-                  <a href="https://typeofweb.com">typeofweb.com</a>, a okazyjnie także prelegent.
+                  Zmotywowany full-stack, który nie boi się żadnej technologii. Doświadczony
+                  programista i leader zespołów. Przedsiębiorca, aktywista, bloger na{' '}
+                  <a href="https://typeofweb.com">typeofweb.com</a>, prelegent i nauczyciel.
+                </p>
+                <p>
+                  Współpraca:{' '}
+                  <a href="https://typeofweb.com/wspolpraca/">
+                    Współpraca z Michałem Miszczyszynem
+                  </a>
+                </p>
+                <p>
+                  LinkedIn:{' '}
+                  <a href="https://www.linkedin.com/in/mmiszczyszyn/">
+                    Michał Miszczyszyn na LinkedIn
+                  </a>
                 </p>
               </div>
             </div>
@@ -43,6 +41,12 @@ export default () => {
           <article className="app-static-page">
             <h3>Specjalne podziękowania</h3>
             <ul>
+              <li>
+                <a href="http://www.angular.love" target="_blank" rel="noopener">
+                  <strong>Tomasz Nastały</strong>
+                </a>{' '}
+                - za pierwszy frontend aplikacji
+              </li>
               <li>
                 <a
                   href="https://www.linkedin.com/in/ewelina-sygut-a8687883/"

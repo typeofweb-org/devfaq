@@ -48,7 +48,7 @@ class NavigationHeaderComponent extends React.PureComponent<
               </li>
               <li>
                 <a
-                  href="https://www.facebook.com/fefaqpl"
+                  href="https://www.facebook.com/DevFAQ"
                   target="_blank"
                   onClick={() => this.reportEvent('Facebook')}
                 >
@@ -76,7 +76,7 @@ class NavigationHeaderComponent extends React.PureComponent<
   }
 
   toggleMenu = () => {
-    this.setState(state => ({
+    this.setState((state) => ({
       open: !state.open,
     }));
   };
