@@ -29,7 +29,7 @@
 .fade-enter,
 .fade-exit,
 .fade-enter-done {
-  display: block;
+  display: block !important;
 }
 
 .app-modal-container {
