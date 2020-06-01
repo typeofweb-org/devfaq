@@ -1,7 +1,7 @@
-import './questionsListLayout.scss';
+import styles from './questionsListLayout.module.scss';
 
 const QuestionsListLayout: React.SFC = ({ children }) => (
-  <div className="app-main-container">
+  <div className={styles.appMainContainer}>
     <main className="container">{children}</main>
   </div>
 );

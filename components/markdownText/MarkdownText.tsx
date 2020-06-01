@@ -1,7 +1,5 @@
 import React from 'react';
-
 import commonmark from 'commonmark';
-import './markdownText.scss';
 import xss from 'xss';
 
 interface MarkdownTextProps {

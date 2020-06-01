@@ -1,8 +1,8 @@
-import './mobileActionButtons.scss';
+import styles from './mobileActionButtons.module.scss';
 import React from 'react';
 import { AppState } from '../../../redux/reducers';
 import { connect } from 'react-redux';
-// import classNames from 'classnames';
+import classNames from 'classnames';
 import { ActionCreators } from '../../../redux/actions';
 import { getAreAnyQuestionSelected, getDownloadUrl } from '../../../redux/selectors/selectors';
 
@@ -16,10 +16,10 @@ class MobileActionButtonsComponent extends React.Component<
   render() {
     const { justDownload } = this.props;
     return (
-      <div className="mobile-action-buttons">
+      <div className={styles.mobileActionButtons}>
         {!justDownload && (
           <button
-            className="open-sidebar circle-button"
+            className={classNames(styles.openSidebar, 'circle-button')}
             title="Filtruj wyniki"
             aria-label="Filtruj wyniki"
             onClick={this.props.uiOpenSidebar}
@@ -27,7 +27,7 @@ class MobileActionButtonsComponent extends React.Component<
         )}
         {!justDownload && (
           <button
-            className="add-question circle-button"
+            className={classNames(styles.addQuestion, 'circle-button')}
             title="Dodaj pytanie"
             aria-label="Dodaj pytanie"
             onClick={this.props.uiOpenAddQuestionModal}

@@ -3,7 +3,7 @@ import BaseModal, { CommonModalProps } from '../baseModal/BaseModal';
 import classNames from 'classnames';
 import { technologyIconItems, TechnologyKey } from '../../../constants/technology-icon-items';
 import { levelsWithLabels, LevelKey } from '../../../constants/level';
-import './addQuestionModal.scss';
+import styles from './addQuestionModal.module.scss';
 import QuestionEditor from '../../questionEditor/QuestionEditor';
 import { Api } from '../../../services/Api';
 import { connect } from 'react-redux';
@@ -62,12 +62,12 @@ class AddQuestionModalComponent extends React.PureComponent<
     return (
       <BaseModal
         type="add"
-        className="add-question-modal"
+        className={styles.addQuestionModal}
         closable={true}
         renderContent={this.renderContent}
         renderFooter={this.renderFooter}
         onClose={this.onClose}
-        aria-labelledby="add-question-modal-title"
+        aria-labelledby="addQuestionModalTitle"
       />
     );
   }
@@ -90,15 +90,15 @@ class AddQuestionModalComponent extends React.PureComponent<
   renderContent = () => {
     return (
       <div>
-        <h2 className="app-modal--title" id="add-question-modal-title">
+        <h2 className={styles.appModalTitle} id="add-question-modal-title">
           {this.state.originalQuestion ? 'Edytuj pytanie' : 'Nowe pytanie'}
         </h2>
         <form onSubmit={e => e.preventDefault()}>
-          <div className="app-question-form">
-            <div className="app-question-form--options-container">
+          <div className={styles.appQuestionForm}>
+            <div className={styles.appQuestionFormOptionsContainer}>
               <select
                 required
-                className="app-select app-question-form--technology"
+                className={classNames('app-select', styles.appQuestionFormTechnology)}
                 value={this.state.technology || ''}
                 onChange={this.handleChangeTechnology}
               >
@@ -113,7 +113,7 @@ class AddQuestionModalComponent extends React.PureComponent<
               </select>
               <select
                 required
-                className="app-select app-question-form--level"
+                className={classNames('app-select', styles.appQuestionFormLevel)}
                 value={this.state.level || ''}
                 onChange={this.handleChangeLevel}
               >
@@ -143,7 +143,7 @@ class AddQuestionModalComponent extends React.PureComponent<
     return (
       <div>
         <button
-          className={classNames('round-button', 'branding-button-inverse', {
+          className={classNames('round-button', styles.brandingButtonInverse, {
             loading: this.state.isLoading,
           })}
           disabled={!this.state.valid || this.state.isLoading}

@@ -1,41 +1,42 @@
-import './appFooter.scss';
+import styles from './appFooter.module.scss';
 import ActiveLink from '../activeLink/ActiveLink';
 import env from '../../utils/env';
+import classNames from 'classnames';
 
 const AppFooter = () => {
   const version = env.VERSION;
   return (
-    <div className="footer-container">
+    <div className={styles.footerContainer}>
       <footer className="app-footer container">
         <small style={{ color: 'transparent', position: 'absolute', left: 0 }}>{version}</small>
-        <nav className="footer-navigation">
-          <ul className="footer-navigation--links">
-            <li className="footer-navigation--links--item mobile-hide">
+        <nav className={styles.footerNavigation}>
+          <ul className={styles.footerNavigationLinks}>
+            <li className={classNames(styles.footerNavigationLinksItem, 'mobile-hide')}>
               <ActiveLink href="/about">
                 <a>Jak korzystać?</a>
               </ActiveLink>
             </li>
-            <li className="footer-navigation--links--item">
+            <li className={styles.footerNavigationLinksItem}>
               <ActiveLink href="/regulations">
                 <a>Regulamin</a>
               </ActiveLink>
             </li>
-            <li className="footer-navigation--links--item mobile-hide">
+            <li className={classNames(styles.footerNavigationLinksItem, 'mobile-hide')}>
               <ActiveLink href="/authors">
                 <a>Autorzy</a>
               </ActiveLink>
             </li>
-            <li className="footer-navigation--links--item mobile-hide">
+            <li className={classNames(styles.footerNavigationLinksItem, 'mobile-hide')}>
               <a href="https://www.facebook.com/fefaqpl" target="_blank">
                 Facebook
               </a>
             </li>
-            <li className="footer-navigation--links--item">
+            <li className={styles.footerNavigationLinksItem}>
               <a href="http://angular.love" target="_blank">
                 Angular.love
               </a>
             </li>
-            <li className="footer-navigation--links--item">
+            <li className={styles.footerNavigationLinksItem}>
               <a href="https://typeofweb.com/" target="_blank">
                 Type of Web
               </a>

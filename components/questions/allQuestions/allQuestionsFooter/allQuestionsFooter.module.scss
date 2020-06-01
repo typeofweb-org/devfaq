@@ -1,4 +1,4 @@
-@import "common";
+@import 'common';
 .app-questions--footer {
   display: none;
   @include mediaquery('gt-sm') {

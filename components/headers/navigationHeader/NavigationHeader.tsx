@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import AppLogo from '../../appLogo/AppLogo';
-import './navigationHeader.scss';
+import styles from './navigationHeader.module.scss';
 import ActiveLink from '../../activeLink/ActiveLink';
 import { connect } from 'react-redux';
 import { AppState } from '../../../redux/reducers/index';
@@ -24,8 +24,8 @@ class NavigationHeaderComponent extends React.PureComponent<
     // const userId = authData && authData.user.id;
 
     return (
-      <div className="navigation-header">
-        <header className={classNames('app-header--main', 'container', { open })}>
+      <div className={styles.navigationHeader}>
+        <header className={classNames(styles.appHeaderMain, 'container', { open })}>
           <ActiveLink href="/questions">
             <a>
               <h1>
@@ -34,7 +34,7 @@ class NavigationHeaderComponent extends React.PureComponent<
               </h1>
             </a>
           </ActiveLink>
-          <nav className={classNames('main-nav', { open })}>
+          <nav className={classNames(styles.mainNav, { open })}>
             <ul>
               <li>
                 <ActiveLink href="/about">
@@ -60,7 +60,7 @@ class NavigationHeaderComponent extends React.PureComponent<
               </li>
             </ul>
             <button
-              className={classNames('menu-button', { open })}
+              className={classNames(styles.menuButton, { open })}
               title={open ? 'Zamknij menu' : 'Otwórz menu'}
               onClick={this.toggleMenu}
             >

@@ -15,6 +15,7 @@ import { ActionCreators } from '../../../redux/actions';
 import { TransitionGroup } from 'react-transition-group';
 import { AnimateHeight } from '../../animateProperty/AnimateProperty';
 import { isEqual } from 'lodash';
+import styles from './selectedQuestions.module.scss';
 
 type SelectedQuestionsProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps> {
@@ -28,7 +29,7 @@ class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps>
         <TransitionGroup
           appear={false}
           enter={false}
-          className="selected-questions-container"
+          className={styles.selectedQuestionContainer}
           component="div"
         >
           {this.renderSelectedQuestionsList()}
@@ -50,10 +51,10 @@ class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps>
 
     return (
       <AnimateHeight enterTime={700} exitTime={700} key={category}>
-        <section className="selected-questions--category">
-          <div className="selected-questions--list-container">
-            <div className="technology-icon-container">
-              <span className="technology-icon-label">{icon.label}</span>
+        <section className={styles.selectedQuestionsCategory}>
+          <div className={styles.selectedQuestionsListContainer}>
+            <div className={styles.technologyIconContainer}>
+              <span className={styles.technologyIconLabel}>{icon.label}</span>
               <span className={icon.icon} />
             </div>
             <QuestionsList

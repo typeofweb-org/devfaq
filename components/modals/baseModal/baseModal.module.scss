@@ -1,4 +1,4 @@
-@import "common";
+@import 'common';
 .app-modal-container {
   @include hardwareAcceleration();
   position: fixed;
@@ -10,7 +10,9 @@
   z-index: $z-index-modal-container;
   display: none;
 
-  &.fade-enter, &.fade-exit, &.fade-enter-done {
+  &.fade-enter,
+  &.fade-exit,
+  &.fade-enter-done {
     display: block;
   }
 }
@@ -98,11 +100,11 @@
     .branding-button-inverse {
       box-shadow: $grey-text-secondary 0 2px 4px;
     }
-    >* {
+    > * {
       display: flex;
       flex-direction: column;
       align-items: center;
-      >button {
+      > button {
         margin-bottom: 10px;
         width: 85%;
       }
@@ -110,7 +112,7 @@
         flex-direction: row-reverse;
         justify-content: flex-start;
         align-items: center;
-        >button {
+        > button {
           margin-bottom: 0;
           width: auto;
           &:first-child {

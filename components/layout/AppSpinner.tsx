@@ -1,5 +1,5 @@
 import React from 'react';
-import './appSpinner.scss';
+import styles from './appSpinner.module.scss';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/reducers';
 
@@ -46,7 +46,7 @@ class AppSpinnerComponent extends React.Component<
   }
 
   render() {
-    return this.state.show && <div className="spinner" />;
+    return this.state.show && <div className={styles.spinner} />;
   }
 }
 

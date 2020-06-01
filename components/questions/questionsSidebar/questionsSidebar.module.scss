@@ -1,4 +1,4 @@
-@import "common";
+@import 'common';
 .questions-sidebar {
   box-sizing: border-box;
   @include mediaquery('gt-sm') {
@@ -6,11 +6,11 @@
     top: $sticky-header-height;
     height: calc(100vh - #{$sticky-header-height+$footer-height});
     width: $sidebar-width;
-    padding: 30px #{$container-large-padding+$shadow-width} 0 0;
+    padding: 30px #{$container-large-padding + $shadow-width} 0 0;
     position: sticky;
     z-index: 1;
     &::after {
-      content: "";
+      content: '';
       height: calc(100% + #{$footer-height});
       position: absolute;
       width: 1px;
@@ -28,7 +28,7 @@
     .app-sidebar {
       @include hardwareAcceleration();
       position: fixed;
-      background: #F8F8F8;
+      background: #f8f8f8;
       left: 0;
       top: 0;
       transform: translate3d(-100%, 0, 0);

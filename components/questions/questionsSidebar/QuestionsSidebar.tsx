@@ -1,5 +1,5 @@
 import React from 'react';
-import './questionsSidebar.scss';
+import styles from './questionsSidebar.module.scss';
 import classNames from 'classnames';
 import { AppState } from '../../../redux/reducers/index';
 import { ActionCreators } from '../../../redux/actions';
@@ -12,8 +12,8 @@ class QuestionsSidebarComponent extends React.Component<
 > {
   render() {
     return (
-      <div className="questions-sidebar">
-        <aside className={classNames('app-sidebar', { open: this.props.isSidebarOpen })}>
+      <div className={styles.questionsSidebar}>
+        <aside className={classNames(styles.appSidebar, { open: this.props.isSidebarOpen })}>
           <section className="app-sidebar--section">
             <TechnologyFilter />
           </section>
@@ -21,13 +21,13 @@ class QuestionsSidebarComponent extends React.Component<
             <LevelFilter />
           </section>
           <button
-            className="app-sidebar--accept round-button branding-button-inverse"
+            className={classNames(styles.appSidebarAccept, 'round-button branding-button-inverse')}
             onClick={this.props.uiCloseSidebar}
           >
             Pokaż wyniki
           </button>
           <button
-            className="app-sidebar--close"
+            className={styles.appSidebarClose}
             title="Zamknij"
             onClick={this.props.uiCloseSidebar}
           >

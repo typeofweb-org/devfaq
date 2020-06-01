@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
-import './ctaHeader.scss';
+import styles from './ctaHeader.module.scss';
 import ActiveLink from '../../activeLink/ActiveLink';
 import { connect } from 'react-redux';
 import { AppState } from '../../../redux/reducers/index';
@@ -16,11 +16,11 @@ class CtaHeaderComponent extends React.Component<
 > {
   render() {
     return (
-      <div className="cta-header">
-        <header className="app-header--cta container">
-          <nav className="app-tabs">
+      <div className={styles.ctaHeader}>
+        <header className={classNames(styles.appHeaderCta, 'container')}>
+          <nav className={styles.appTabs}>
             <ActiveLink href="/questions">
-              <a onClick={() => this.reportEvent('Lista pytań')} className="app-tabs--tab">
+              <a onClick={() => this.reportEvent('Lista pytań')} className={styles.appTabsTab}>
                 Lista pytań
               </a>
             </ActiveLink>
@@ -33,7 +33,7 @@ class CtaHeaderComponent extends React.Component<
                       : 'Wybrane pytania (puste)'
                   )
                 }
-                className={classNames('app-tabs--tab', {
+                className={classNames(styles.appTabsTab, {
                   'has-notification': this.props.areAnyQuestionSelected,
                 })}
               >
@@ -43,12 +43,12 @@ class CtaHeaderComponent extends React.Component<
 
             {this.props.isAdmin && (
               <ActiveLink href="/admin">
-                <a className="app-tabs--tab">Admin</a>
+                <a className={styles.appTabsTab}>Admin</a>
               </ActiveLink>
             )}
           </nav>
 
-          <div className="call-to-action-buttons">
+          <div className={styles.callToActionButtons}>
             {/* <ActiveLink route={this.props.downloadUrl}>
               <a
                 onClick={this.onDownloadClick}
@@ -63,7 +63,7 @@ class CtaHeaderComponent extends React.Component<
               </a>
             </ActiveLink> */}
             <button
-              className="round-button branding-button-inverse"
+              className={classNames(styles.roundButton, 'branding-button-inverse')}
               onClick={this.onOpenAddQuestionModalClick}
             >
               Dodaj pytanie

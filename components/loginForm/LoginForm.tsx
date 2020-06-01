@@ -1,5 +1,5 @@
 import React from 'react';
-import './loginForm.scss';
+import styles from './loginForm.module.scss';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/reducers/index';
 import { ActionCreators } from '../../redux/actions';
@@ -36,12 +36,12 @@ class LoginFormComponent extends React.Component<LoginFormReduxProps> {
     const { previousPath } = this.props;
     const route = previousPath || { href: '/', query: {} };
     return (
-      <div className="login-overlay">
-        <div className="login-container">
+      <div className={styles.loginOverlay}>
+        <div className={styles.loginContainer}>
           <AppLogo />
           {this.props.auth.error && <p>{this.props.auth.error.message}</p>}
           <p>Stwórz konto już dzisiaj i korzystaj z dodatkowych funkcji serwisu DevFAQ!</p>
-          <button onClick={this.logInWithGithub} className="login-with-github">
+          <button onClick={this.logInWithGithub} className={styles.logInWithGitHub}>
             Zaloguj się przez GitHuba
           </button>
           <footer>

@@ -2,7 +2,7 @@ import React from 'react';
 import { AppState } from '../../../redux/reducers/index';
 import { connect } from 'react-redux';
 import { technologyIconItems, Technology } from '../../../constants/technology-icon-items';
-import './allQuestions.scss';
+import styles from './allQuestions.module.scss';
 import { AllQuestionsHeader } from './allQuestionsHeader/AllQuestionsHeader';
 import { AllQuestionsFooter } from './allQuestionsFooter/AllQuestionsFooter';
 import QuestionsList from '../questionsList/QuestionsList';
@@ -33,7 +33,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
       this.props.questions.data.meta.total;
 
     return (
-      <section className="app-questions">
+      <section className={styles.appQuestions}>
         {this.props.questions.data && technology && (
           <AllQuestionsHeader
             category={category}
