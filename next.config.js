@@ -57,34 +57,13 @@ const withPolyfills = (module.exports = (nextConfig = {}) => {
   });
 });
 
-const withWebpackAnalyze = (nextConfig = {}) => {
-  return Object.assign({}, nextConfig, {
-    webpack(config, options) {
-      if (process.env.ANALYZE && !options.isServer) {
-        // only submit analysis for the frontend
-        console.log('ANALYZE=YES');
-        const BundleAnalyzerPlugin = require('@bundle-analyzer/webpack-plugin');
-        config.plugins.push(new BundleAnalyzerPlugin());
-      }
-
-      if (typeof nextConfig.webpack === 'function') {
-        return nextConfig.webpack(config, options);
-      }
-
+const config = withPolyfills(
+  withImages({
+    webpack: (config, options) => {
+      config.plugins.push(new LodashModuleReplacementPlugin());
       return config;
     },
-  });
-};
-
-const config = withWebpackAnalyze(
-  withPolyfills(
-    withImages({
-      webpack: (config, options) => {
-        config.plugins.push(new LodashModuleReplacementPlugin());
-        return config;
-      },
-    })
-  )
+  })
 );
 
 config.exportPathMap = function () {
