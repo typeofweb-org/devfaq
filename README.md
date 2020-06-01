@@ -1,7 +1,7 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftypeofweb%2Fdevfaq-www.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftypeofweb%2Fdevfaq-www?ref=badge_shield)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftypeofweb%2Fdevfaq-www.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftypeofweb%2Fdevfaq-www?ref=badge_shield)
 
 ## Contributors ✨
 
