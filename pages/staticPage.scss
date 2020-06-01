@@ -3,12 +3,14 @@
   .app-authors {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
   }
   .app-author {
     padding: 30px;
     box-sizing: border-box;
     flex: 1;
     text-align: center;
+    max-width: 450px;
   }
   .app-author__image {
     width: 200px;

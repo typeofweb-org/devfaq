@@ -24,7 +24,7 @@ const withPolyfills = (module.exports = (nextConfig = {}) => {
     webpack(config, options) {
       const originalEntry = config.entry;
       config.entry = function entry() {
-        return Promise.resolve(originalEntry()).then(entries => {
+        return Promise.resolve(originalEntry()).then((entries) => {
           if (entries['main.js']) {
             entries['main.js'].unshift('./polyfills.js');
           }
@@ -33,10 +33,10 @@ const withPolyfills = (module.exports = (nextConfig = {}) => {
         });
       };
 
-      const oneOf = config.module.rules.find(rule => typeof rule.oneOf === 'object');
+      const oneOf = config.module.rules.find((rule) => typeof rule.oneOf === 'object');
 
       if (oneOf) {
-        const moduleSassRule = oneOf.oneOf.find(rule =>
+        const moduleSassRule = oneOf.oneOf.find((rule) =>
           regexEqual(rule.test, /\.module\.(scss|sass)$/)
         );
 
@@ -90,7 +90,7 @@ const config = withWebpackAnalyze(
   )
 );
 
-config.exportPathMap = function() {
+config.exportPathMap = function () {
   return {
     '/about': { page: '/about' },
     '/authors': { page: '/authors' },
@@ -100,6 +100,10 @@ config.exportPathMap = function() {
 
 config.experimental = {
   publicDirectory: true,
+};
+
+config.typescript = {
+  ignoreBuildErrors: true,
 };
 
 config.env = {

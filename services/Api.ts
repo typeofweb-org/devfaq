@@ -10,12 +10,12 @@ if (typeof window === 'undefined') {
   (global as any).fetch =
     (global as any).fetch ||
     // tslint:disable-next-line:only-arrow-functions
-    function(url: string, opts: any) {
+    function (url: string, opts: any) {
       return require('node-fetch')(url.replace(/^\/\//g, 'https://'), opts);
     };
 }
 
-const omitUndefined = <T extends object>(obj: T) => pickBy(obj, v => !isUndefined(v));
+const omitUndefined = <T extends object>(obj: T) => pickBy(obj, (v) => !isUndefined(v));
 
 type QsValues = string | number;
 type QsObject = Record<string, QsValues | QsValues[]>;
@@ -28,7 +28,13 @@ function getQueryStringFromObject(query: QsObject): string {
   const enc = encodeURIComponent;
   return Object.entries(query)
     .filter(([key, val]) => !shouldSkipVal(key) && !shouldSkipVal(val))
-    .map(([key, val]) => `${enc(key)}=${enc(String(val))}`)
+    .map(([key, val]) => {
+      if (Array.isArray(val)) {
+        return val.map((item) => `${enc(key)}=${enc(String(item))}`).join('&');
+      } else {
+        return `${enc(key)}=${enc(String(val))}`;
+      }
+    })
     .join('&');
 }
 
@@ -76,7 +82,7 @@ async function makeRequest<T>(
   if (body && method !== 'GET' && method !== 'DELETE') {
     options.body = JSON.stringify(body);
   }
-  return fetch(`${env.API_URL}/${path}?${querystring}`, options).then(async res => {
+  return fetch(`${env.API_URL}/${path}?${querystring}`, options).then(async (res) => {
     if (!res.ok) {
       throw await getJSON(res);
     }

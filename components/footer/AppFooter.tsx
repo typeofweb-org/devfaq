@@ -27,13 +27,8 @@ const AppFooter = () => {
               </ActiveLink>
             </li>
             <li className={classNames(styles.footerNavigationLinksItem, 'mobile-hide')}>
-              <a href="https://www.facebook.com/fefaqpl" target="_blank">
+              <a href="https://www.facebook.com/DevFAQ" target="_blank">
                 Facebook
-              </a>
-            </li>
-            <li className={styles.footerNavigationLinksItem}>
-              <a href="http://angular.love" target="_blank">
-                Angular.love
               </a>
             </li>
             <li className={styles.footerNavigationLinksItem}>

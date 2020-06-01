@@ -1,9 +1,16 @@
 #!/bin/bash
 set -e
+source ~/.bash_profile
 
-cd /home/typeofweb/domains/$SUBDOMAIN.devfaq.pl/public_nodejs
-mv out public
-npm i -f
+SUBDOMAIN=$1
+
+cd ~/domains/$SUBDOMAIN.devfaq.pl/public_nodejs
+
+node -v
+npm -v
+
+echo "👉 Installing deps…"
+npm ci
 echo "👉 Restarting…"
 devil www restart $SUBDOMAIN.devfaq.pl
 echo "👉 Fetching…"
