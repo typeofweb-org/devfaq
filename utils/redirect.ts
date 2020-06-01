@@ -56,7 +56,7 @@ const allMatches = (str: string, regex: RegExp): RegExpExecArray[] => {
 
 export function hrefQueryToAsPath(
   url: LinkProps['href'],
-  query: Record<string, string[] | string> = {},
+  query: Record<string, string[] | string | undefined> = {},
   skipExcessQueryProps = false
 ) {
   const href = String(url);
@@ -66,12 +66,12 @@ export function hrefQueryToAsPath(
 
   const matches = allMatches(href, replacementsPattern);
   const excessQueryProperties = Object.keys(query).filter(
-    key => !matches.find(([, replacement]) => key === replacement)
+    (key) => !matches.find(([, replacement]) => key === replacement)
   );
 
   const maybeQueryString = skipExcessQueryProps
     ? ''
-    : excessQueryProperties.map(prop => `${prop}=${query[prop]}`).join('&');
+    : excessQueryProperties.map((prop) => `${prop}=${query[prop]}`).join('&');
   const queryString = maybeQueryString ? '?' + maybeQueryString : '';
 
   return {

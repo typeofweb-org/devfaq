@@ -12,7 +12,7 @@ interface ActiveLinkOwnProps {
   disabledWhenActive?: boolean;
   onClick?: React.MouseEventHandler<any>;
   children: React.ReactElement<any>;
-  query?: Record<string, string[] | string>;
+  query?: Record<string, string[] | string | undefined>;
 }
 
 type ActiveLinkComponentProps = Omit<LinkProps, 'as'> & ActiveLinkOwnProps;

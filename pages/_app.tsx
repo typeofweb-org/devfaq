@@ -61,9 +61,7 @@ class MyApp extends AppComponent<{ store: AppStore; ctx: RouteDetails }> {
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo & Record<string, any>) {
     console.log('CUSTOM ERROR HANDLING', error);
     // This is needed to render errors correctly in development / production
-    if (super.componentDidCatch) {
-      super.componentDidCatch(error, errorInfo);
-    }
+    super.componentDidCatch(error, errorInfo);
   }
 
   componentDidMount() {

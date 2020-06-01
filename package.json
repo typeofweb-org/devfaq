@@ -4,6 +4,16 @@
   "description": "",
   "main": "app.js",
   "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:vercel": "next build",
+    "start": "node app.js",
+    "analyze": "cross-env ANALYZE=1 NODE_ENV=production next build",
+    "test": "npm run test:tsc && npm run jest",
+    "test:tsc": "tsc --project tsconfig.json --noEmit && tslint -p tsconfig.json",
+    "jest": "jest"
+  },
   "dependencies": {
     "@sentry/browser": "5.5.0",
     "@sentry/node": "5.5.0",
@@ -35,7 +45,6 @@
     "redux": "4.0.4",
     "reselect": "4.0.0",
     "sitemap": "3.2.2",
-    "typescript": "3.5.3",
     "what-input": "5.2.3",
     "xss": "1.0.6"
   },
@@ -49,10 +58,10 @@
     "@types/lodash": "4.14.136",
     "@types/next-redux-wrapper": "2.0.2",
     "@types/prismjs": "1.16.1",
+    "@types/react": "16.8.23",
     "@types/react-dom": "16.8.4",
     "@types/react-redux": "7.1.1",
     "@types/react-transition-group": "2.9.2",
-    "@types/react": "16.8.23",
     "all-contributors-cli": "6.15.0",
     "autoprefixer": "9.6.1",
     "babel-jest": "24.8.0",
@@ -64,21 +73,12 @@
     "postcss-loader": "3.0.0",
     "prettier": "2.0.5",
     "pretty-quick": "2.0.1",
-    "ts-node": "8.3.0",
-    "tslint-config-prettier": "1.18.0",
+    "ts-node": "8.10.2",
     "tslint": "5.18.0",
+    "tslint-config-prettier": "1.18.0",
+    "typescript": "3.9.3",
     "typescript-plugin-css-modules": "2.3.0",
     "why-did-you-update": "1.0.6"
-  },
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "build:vercel": "next build",
-    "start": "node app.js",
-    "analyze": "cross-env ANALYZE=1 NODE_ENV=production next build",
-    "test": "npm run test:tsc && npm run jest",
-    "test:tsc": "tsc --project tsconfig.json --noEmit && tslint -p tsconfig.json",
-    "jest": "jest"
   },
   "bundle-analyzer": {
     "files": [

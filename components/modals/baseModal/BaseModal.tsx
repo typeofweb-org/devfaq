@@ -60,7 +60,7 @@ class FixBodyService {
     const outer = document.createElement('div');
     outer.style.visibility = 'hidden';
     outer.style.width = '100px';
-    outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+    // outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
 
     document.body.appendChild(outer);
 
@@ -144,7 +144,7 @@ export default class BaseModal extends React.Component<BaseModalOwnProps> {
     );
   }
 
-  close: React.MouseEventHandler<HTMLButtonElement> = e => {
+  close: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     this.props.onClose({ event: e });
   };
 
