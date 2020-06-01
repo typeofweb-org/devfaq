@@ -5,7 +5,7 @@ on:
     branches: [develop, master]
 
 jobs:
-  build:
+  lighthouse:
     runs-on: ubuntu-latest
 
     steps:
