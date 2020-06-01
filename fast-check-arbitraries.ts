@@ -23,7 +23,7 @@ const segmentsRecordWithReplacements = (excessReplacements = false) => {
     fc.webSegment().filter(identity),
     fc.record({
       replacement: excessReplacements
-        ? fc.oneof<false | string>(fc.constant(false as const), fc.webSegment().filter(identity))
+        ? fc.oneof(fc.constant(false as const), fc.webSegment().filter(identity))
         : fc.constant(false as const),
       isExcess: fc.boolean(),
     })

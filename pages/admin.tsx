@@ -2,10 +2,12 @@ import React from 'react';
 import { redirect, getPreviousPathFromHrefQuery } from '../utils/redirect';
 import Layout from '../components/layout/Layout';
 import QuestionsListLayout from '../components/questions/questionsListLayout/QuestionsListLayout';
-import { AsyncComponent } from '../components/asyncComponent/AsyncComponent';
+import dynamic from 'next/dynamic';
 import { getLoggedInUser } from '../redux/selectors/selectors';
 import { NextPageContext } from 'next';
 import styles from './pages.module.scss';
+
+const AdminQuestions = dynamic(() => import('../components/adminQuestions/AdminQuestions'));
 
 export default class AdminPage extends React.Component {
   static async getInitialProps(ctx: NextPageContext) {
@@ -20,15 +22,7 @@ export default class AdminPage extends React.Component {
       <Layout title="Admin">
         <QuestionsListLayout>
           <div className={styles.questionsContainer}>
-            <AsyncComponent
-              componentProps={{}}
-              componentProvider={() => {
-                const component = import('../components/adminQuestions/AdminQuestions').then(
-                  (module) => module.default
-                );
-                return component;
-              }}
-            />
+            <AdminQuestions />
           </div>
         </QuestionsListLayout>
       </Layout>
