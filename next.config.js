@@ -8,6 +8,17 @@ const withOffline = require('next-offline');
 
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
+const regexEqual = (x, y) => {
+  return (
+    x instanceof RegExp &&
+    y instanceof RegExp &&
+    x.source === y.source &&
+    x.global === y.global &&
+    x.ignoreCase === y.ignoreCase &&
+    x.multiline === y.multiline
+  );
+};
+
 const withPolyfills = (module.exports = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
     webpack(config, options) {
@@ -21,6 +32,21 @@ const withPolyfills = (module.exports = (nextConfig = {}) => {
           return entries;
         });
       };
+
+      const oneOf = config.module.rules.find(rule => typeof rule.oneOf === 'object');
+
+      if (oneOf) {
+        const moduleSassRule = oneOf.oneOf.find(rule =>
+          regexEqual(rule.test, /\.module\.(scss|sass)$/)
+        );
+
+        if (moduleSassRule) {
+          const cssLoader = moduleSassRule.use.find(({ loader }) => loader.includes('css-loader'));
+          if (cssLoader) {
+            cssLoader.options.localsConvention = 'camelCase';
+          }
+        }
+      }
 
       if (typeof nextConfig.webpack === 'function') {
         return nextConfig.webpack(config, options);
@@ -83,6 +109,11 @@ config.env = {
   ABSOLUTE_URL: process.env.ABSOLUTE_URL || 'https://' + process.env.VERCEL_URL,
   SENTRY_DSN: process.env.SENTRY_DSN,
   ENV: process.env.ENV,
+};
+
+const path = require('path');
+config.sassOptions = {
+  includePaths: [path.join(__dirname, 'styles')],
 };
 
 module.exports = isProduction ? withOffline(config) : config;

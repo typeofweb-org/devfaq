@@ -17,6 +17,8 @@ import AppModals from '../components/modals/appModals/AppModals';
 import * as analytics from '../utils/analytics';
 import * as Sentry from '@sentry/browser';
 import env from '../utils/env';
+import 'prismjs/themes/prism-coy.css';
+import './index.scss';
 
 interface MyAppProps {
   Component: React.ComponentType;
