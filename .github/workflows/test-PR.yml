@@ -58,16 +58,10 @@ jobs:
         if: steps.cache-to-skip.outputs.cache-hit != 'true'
         run: ./node_modules/.bin/size-limit > size-limit.json
 
-      - name: Upload Sizelimit artifact
-        if: steps.cache-to-skip.outputs.cache-hit != 'true'
-        uses: actions/upload-artifact@v1
-        with:
-          name: size-limit
-          path: size-limit.json
-
       - name: Sizelimit
         if: steps.cache-to-skip.outputs.cache-hit != 'true'
-        uses: andresz1/size-limit-action@v1.3.1
+        uses: typeofweb/size-limit-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           skip_step: build
+          artifact-name: size-limit.md
