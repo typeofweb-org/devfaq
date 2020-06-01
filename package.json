@@ -60,7 +60,7 @@
     "babel-jest": "24.8.0",
     "cross-env": "5.2.0",
     "fast-check": "1.16.0",
-    "husky": "3.0.0",
+    "husky": "4.2.5",
     "jest": "24.8.0",
     "postcss-easy-import": "3.0.0",
     "postcss-loader": "3.0.0",
