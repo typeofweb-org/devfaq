@@ -130,8 +130,8 @@ const AsyncActionCreators = {
       abortController,
       ctx
     )
-      .then(data => dispatch(SyncActionCreators.fetchQuestionsSuccess(data)))
-      .catch(err => dispatch(SyncActionCreators.fetchQuestionsError(err)));
+      .then((data) => dispatch(SyncActionCreators.fetchQuestionsSuccess(data)))
+      .catch((err) => dispatch(SyncActionCreators.fetchQuestionsError(err)));
   },
 
   fetchOneQuestion: (ctx?: GetInitialPropsContext): AsyncAction => (dispatch, getState) => {
@@ -145,8 +145,8 @@ const AsyncActionCreators = {
     }
 
     return Api.getOneQuestion(id, ctx)
-      .then(data => dispatch(SyncActionCreators.fetchOneQuestionSuccess(data)))
-      .catch(err => dispatch(SyncActionCreators.fetchOneQuestionError(err)));
+      .then((data) => dispatch(SyncActionCreators.fetchOneQuestionSuccess(data)))
+      .catch((err) => dispatch(SyncActionCreators.fetchOneQuestionError(err)));
   },
 
   fetchQuestionsForAdmin: (
@@ -156,7 +156,7 @@ const AsyncActionCreators = {
       status: 'pending' | 'accepted';
     },
     ctx?: GetInitialPropsContext
-  ): AsyncAction => dispatch => {
+  ): AsyncAction => (dispatch) => {
     dispatch(SyncActionCreators.fetchQuestionsStarted());
     const { technology, selectedLevels, status } = options;
     return Api.getQuestionsForCategoryAndLevelsAndStatus(
@@ -168,18 +168,17 @@ const AsyncActionCreators = {
       undefined,
       ctx
     )
-      .then(data => dispatch(SyncActionCreators.fetchQuestionsSuccess(data)))
-      .catch(err => dispatch(SyncActionCreators.fetchQuestionsError(err)));
+      .then((data) => dispatch(SyncActionCreators.fetchQuestionsSuccess(data)))
+      .catch((err) => dispatch(SyncActionCreators.fetchQuestionsError(err)));
   },
 
-  deleteQuestionForAdmin: (
-    id: Question['id'],
-    ctx?: GetInitialPropsContext
-  ): AsyncAction => dispatch => {
+  deleteQuestionForAdmin: (id: Question['id'], ctx?: GetInitialPropsContext): AsyncAction => (
+    dispatch
+  ) => {
     dispatch(SyncActionCreators.deleteQuestionStarted());
     return Api.deleteQuestion(id, ctx)
-      .then(_data => dispatch(SyncActionCreators.deleteQuestionSuccess(id)))
-      .catch(err => dispatch(SyncActionCreators.deleteQuestionError(err)));
+      .then((_data) => dispatch(SyncActionCreators.deleteQuestionSuccess(id)))
+      .catch((err) => dispatch(SyncActionCreators.deleteQuestionError(err)));
   },
 
   logIn: (email: string, password: string, ctx?: GetInitialPropsContext): AsyncAction => (
@@ -188,22 +187,22 @@ const AsyncActionCreators = {
   ) => {
     dispatch(SyncActionCreators.loginStarted());
     return Api.logIn(email, password, ctx)
-      .then(_data => dispatch(AsyncActionCreators.validateToken(ctx)))
-      .catch(err => dispatch(SyncActionCreators.loginError(err)));
+      .then((_data) => dispatch(AsyncActionCreators.validateToken(ctx)))
+      .catch((err) => dispatch(SyncActionCreators.loginError(err)));
   },
 
   logInWithGitHub: (): AsyncAction => (dispatch, _getState) => {
     dispatch(SyncActionCreators.loginStarted());
     Api.logInWithGitHub()
       .then(() => dispatch(AsyncActionCreators.validateToken()))
-      .catch(err => dispatch(SyncActionCreators.loginError(err)));
+      .catch((err) => dispatch(SyncActionCreators.loginError(err)));
   },
 
   validateToken: (ctx?: GetInitialPropsContext): AsyncAction => (dispatch, _getState) => {
     dispatch(SyncActionCreators.loginStarted());
     return Api.getLoggedInUser(ctx)
-      .then(data => dispatch(SyncActionCreators.loginSuccess({ session: data.data })))
-      .catch(err => {
+      .then((data) => dispatch(SyncActionCreators.loginSuccess({ session: data.data })))
+      .catch((err) => {
         if (err && err.statusCode === 404) {
           return dispatch(SyncActionCreators.loginError(undefined));
         }
@@ -218,7 +217,7 @@ const AsyncActionCreators = {
     dispatch(SyncActionCreators.questionUpvoted(questionId));
     const state = getState();
     const user = getLoggedInUser(state);
-    return Api.upvoteQuestion({ questionId, userId: user!.id }, ctx).catch(err => {
+    return Api.upvoteQuestion({ questionId, userId: user!.id }, ctx).catch((err) => {
       dispatch(SyncActionCreators.questionDownvoted(questionId));
       throw err;
     });
@@ -231,7 +230,7 @@ const AsyncActionCreators = {
     dispatch(SyncActionCreators.questionDownvoted(questionId));
     const state = getState();
     const user = getLoggedInUser(state);
-    return Api.downvoteQuestion({ questionId, userId: user!.id }, ctx).catch(err => {
+    return Api.downvoteQuestion({ questionId, userId: user!.id }, ctx).catch((err) => {
       dispatch(SyncActionCreators.questionUpvoted(questionId));
       throw err;
     });

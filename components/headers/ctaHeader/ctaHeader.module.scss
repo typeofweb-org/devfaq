@@ -1,4 +1,4 @@
-@import "common";
+@import 'common';
 .cta-header {
   background-color: $purple-branding;
   position: sticky;
@@ -61,7 +61,7 @@
       border-color: currentColor;
     }
     &::after {
-      content: "";
+      content: '';
       display: inline-block;
       border-radius: 50%;
       width: 6px;

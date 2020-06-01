@@ -1,7 +1,6 @@
 import React from 'react';
 import QuestionsListLayout from '../components/questions/questionsListLayout/QuestionsListLayout';
 import Layout from '../components/layout/Layout';
-import './index.scss';
 import MobileActionButtons from '../components/questions/mobileActionButtons/MobileActionButtons';
 import SelectedQuestions from '../components/questions/selectedQuestions/SelectedQuestions';
 

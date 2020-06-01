@@ -21,7 +21,7 @@ export const getSortBy = createSelector(
 
 export const getSortByArray = createSelector(
   getSortBy,
-  sortBy => (sortBy ? sortBy.split('*') : ['acceptedAt', 'desc']) as SortBy
+  (sortBy) => (sortBy ? sortBy.split('*') : ['acceptedAt', 'desc']) as SortBy
 );
 
 export const getQuestionId = createSelector(
@@ -36,17 +36,16 @@ export const getPreviousPath = createSelector(
 
 export const getAreAnyQuestionSelected = createSelector(
   selectedQuestionsSelector,
-  selectedQuestions => selectedQuestions.length > 0
+  (selectedQuestions) => selectedQuestions.length > 0
 );
 
-export const getSelectedQuestionsIds = createSelector(
-  selectedQuestionsSelector,
-  questions => questions.map(q => q.id)
+export const getSelectedQuestionsIds = createSelector(selectedQuestionsSelector, (questions) =>
+  questions.map((q) => q.id)
 );
 
 export const getDownloadUrl = createSelector(
   getSelectedQuestionsIds,
-  selectedIds => `${env.API_URL}/pdf-questions?question=${selectedIds.join(',')}`
+  (selectedIds) => `${env.API_URL}/pdf-questions?question=${selectedIds.join(',')}`
 );
 
 type SelectedQuestionsByTechnology = { [key in TechnologyKey]: Question[] };
@@ -74,7 +73,7 @@ export const getSelectedQuestionsByCategory = createSelector(
 
 export const getSelectedQuestionsWithCategories = createSelector(
   getSelectedQuestionsByCategory,
-  selectedQuestionsByCategory => {
+  (selectedQuestionsByCategory) => {
     return Object.entries(selectedQuestionsByCategory).filter(
       ([_, questions]) => questions.length > 0
     ) as Array<[TechnologyKey, Question[]]>;
@@ -83,12 +82,12 @@ export const getSelectedQuestionsWithCategories = createSelector(
 
 export const getLoggedInUser = createSelector(
   authDataSelector,
-  authData => authData && authData.session && authData.session._user
+  (authData) => authData && authData.session && authData.session._user
 );
 
 export const getIsAdmin = createSelector(
   getLoggedInUser,
-  user => user && user._roleId === 'admin'
+  (user) => user && user._roleId === 'admin'
 );
 
 export const getPage = createSelector(

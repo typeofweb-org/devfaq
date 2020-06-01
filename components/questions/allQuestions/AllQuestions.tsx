@@ -2,7 +2,7 @@ import React from 'react';
 import { AppState } from '../../../redux/reducers/index';
 import { connect } from 'react-redux';
 import { technologyIconItems, Technology } from '../../../constants/technology-icon-items';
-import './allQuestions.scss';
+import styles from './allQuestions.module.scss';
 import { AllQuestionsHeader } from './allQuestionsHeader/AllQuestionsHeader';
 import { AllQuestionsFooter } from './allQuestionsFooter/AllQuestionsFooter';
 import QuestionsList from '../questionsList/QuestionsList';
@@ -24,7 +24,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
   render() {
     const { technology, sortBy } = this.props;
 
-    const technologyIconItem = technologyIconItems.find(t => t.name === technology);
+    const technologyIconItem = technologyIconItems.find((t) => t.name === technology);
     const category = (technologyIconItem && technologyIconItem.label) || '';
 
     const length =
@@ -33,7 +33,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
       this.props.questions.data.meta.total;
 
     return (
-      <section className="app-questions">
+      <section className={styles.appQuestions}>
         {this.props.questions.data && technology && (
           <AllQuestionsHeader
             category={category}
@@ -51,7 +51,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
     );
   }
 
-  changeSortBy: React.ChangeEventHandler<HTMLSelectElement> = e => {
+  changeSortBy: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const query = {
       ...this.props.route.query,
       sortBy: e.currentTarget.value,
@@ -96,7 +96,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
   toggleQuestion = (questionId: Question['id']) => {
     const isSelected = isQuestionSelected(this.props.selectedQuestionsIds, questionId);
     const question =
-      this.props.questions.data && this.props.questions.data.data.find(q => q.id === questionId);
+      this.props.questions.data && this.props.questions.data.data.find((q) => q.id === questionId);
 
     if (isSelected) {
       this.props.deselectQuestion(questionId);
@@ -135,8 +135,5 @@ const mapDispatchToProps = {
   uiOpenAddQuestionModal: ActionCreators.uiOpenAddQuestionModal,
 };
 
-const AllQuestions = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AllQuestionsComponent);
+const AllQuestions = connect(mapStateToProps, mapDispatchToProps)(AllQuestionsComponent);
 export default AllQuestions;

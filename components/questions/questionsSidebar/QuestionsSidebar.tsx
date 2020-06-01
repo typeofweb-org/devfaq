@@ -1,5 +1,5 @@
 import React from 'react';
-import './questionsSidebar.scss';
+import styles from './questionsSidebar.module.scss';
 import classNames from 'classnames';
 import { AppState } from '../../../redux/reducers/index';
 import { ActionCreators } from '../../../redux/actions';
@@ -12,22 +12,26 @@ class QuestionsSidebarComponent extends React.Component<
 > {
   render() {
     return (
-      <div className="questions-sidebar">
-        <aside className={classNames('app-sidebar', { open: this.props.isSidebarOpen })}>
-          <section className="app-sidebar--section">
+      <div className={styles.questionsSidebar}>
+        <aside
+          className={classNames('app-sidebar', styles.appSidebar, {
+            [styles.open]: this.props.isSidebarOpen,
+          })}
+        >
+          <section>
             <TechnologyFilter />
           </section>
-          <section className="app-sidebar--section">
+          <section>
             <LevelFilter />
           </section>
           <button
-            className="app-sidebar--accept round-button branding-button-inverse"
+            className={classNames(styles.appSidebarAccept, 'round-button branding-button-inverse')}
             onClick={this.props.uiCloseSidebar}
           >
             Pokaż wyniki
           </button>
           <button
-            className="app-sidebar--close"
+            className={styles.appSidebarClose}
             title="Zamknij"
             onClick={this.props.uiCloseSidebar}
           >
@@ -50,9 +54,6 @@ const mapDispatchToProps = {
   uiCloseSidebar: ActionCreators.uiCloseSidebar,
 };
 
-const QuestionsSidebar = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(QuestionsSidebarComponent);
+const QuestionsSidebar = connect(mapStateToProps, mapDispatchToProps)(QuestionsSidebarComponent);
 
 export default QuestionsSidebar;

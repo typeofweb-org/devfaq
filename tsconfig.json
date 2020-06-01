@@ -23,11 +23,16 @@
       {
         "name": "typescript-plugin-css-modules",
         "options": {
-          "classnameTransform": "camelCase"
+          "classnameTransform": "camelCase",
+          "rendererOptions": {
+            "sass": {
+              "includePaths": ["styles"]
+            }
+          }
         }
       }
     ]
   },
   "exclude": ["node_modules", "**/*.spec.ts", "**/*.spec.tsx", "**/*.test.ts", "**/*.test.tsx"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": ["**/*.ts", "**/*.tsx"]
 }

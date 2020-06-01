@@ -4,14 +4,15 @@ import {
 } from '../../../../constants/technology-icon-items';
 import React from 'react';
 import ActiveLink from '../../../activeLink/ActiveLink';
-import './technologyFilter.scss';
+import styles from './technologyFilter.module.scss';
+import levelStyles from '../levelFilter/levelFilter.module.scss';
 
 export class TechnologyFilter extends React.Component {
   render() {
     return (
       <div>
-        <h2 className="app-filter--title">Wybierz technologię</h2>
-        <ul className="app-filter--technologies">
+        <h2 className={levelStyles.appFilterTitle}>Wybierz technologię</h2>
+        <ul className={styles.appFilterTechnologies}>
           {technologyIconItems.map(this.renderTechnologyItem)}
         </ul>
       </div>
@@ -20,15 +21,16 @@ export class TechnologyFilter extends React.Component {
 
   renderTechnologyItem = (technology: TechnologyIconItem) => {
     return (
-      <li className="app-filter--technology" key={technology.name}>
+      <li className={styles.appFilterTechnology} key={technology.name}>
         <ActiveLink
           disabledWhenActive={true}
           href="/questions/[technology]"
           query={{ technology: technology.name }}
           onClick={() => this.reportSelectTechnologyEvent(technology.label)}
+          activeClassName={styles.active}
         >
           <a title={technology.label}>
-            <span className="app-filter--technology--label">{technology.label}</span>
+            <span className={styles.appFilterTechnologyLabel}>{technology.label}</span>
             <span className={technology.icon} />
           </a>
         </ActiveLink>

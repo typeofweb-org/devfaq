@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../index.scss';
 import Layout from '../../../components/layout/Layout';
 import QuestionsListLayout from '../../../components/questions/questionsListLayout/QuestionsListLayout';
 import { redirect } from '../../../utils/redirect';
@@ -10,6 +9,9 @@ import { ActionCreators } from '../../../redux/actions';
 import { connect } from 'react-redux';
 import { AppState } from '../../../redux/reducers/index';
 import QuestionItem from '../../../components/questions/questionsList/questionItem/QuestionItem';
+import pageStyles from '../../pages.module.scss';
+import questionStyles from '../../../components/questions/allQuestions/allQuestions.module.scss';
+import questionListStyles from '../../../components/questions/selectedQuestions/selectedQuestions.module.scss';
 
 type Props = ReturnType<typeof mapStateToProps>;
 class OneQuestionPageComponent extends React.Component<Props> {
@@ -33,10 +35,10 @@ class OneQuestionPageComponent extends React.Component<Props> {
     return (
       <Layout title={title}>
         <QuestionsListLayout>
-          <div className="questions-container">
+          <div className={pageStyles.questionsContainer}>
             <QuestionsSidebar />
-            <section className="app-questions">
-              <div className="app-questions--list">
+            <section className={questionStyles.appQuestions}>
+              <div className={questionListStyles.appQuestionsList}>
                 {questionData && (
                   <QuestionItem
                     question={questionData.data}

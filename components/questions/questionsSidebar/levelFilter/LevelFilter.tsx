@@ -1,7 +1,7 @@
 import { levelsWithLabels, LevelWithLabel } from '../../../../constants/level';
 import React from 'react';
 import classNames from 'classnames';
-import './levelFilter.scss';
+import styles from './levelFilter.module.scss';
 import { connect } from 'react-redux';
 import { AppState } from '../../../../redux/reducers/index';
 import { ActionCreators } from '../../../../redux/actions';
@@ -15,18 +15,22 @@ class LevelFilterComponent extends React.Component<
   render() {
     return (
       <div>
-        <h2 className="app-filter--title">Wybierz poziom</h2>
-        <ul className="app-filter--levels">{levelsWithLabels.map(this.renderLevel)}</ul>
+        <h2 className={styles['app-filter--title']}>Wybierz poziom</h2>
+        <ul className={styles.appFilterLevels}>{levelsWithLabels.map(this.renderLevel)}</ul>
       </div>
     );
   }
 
   renderLevel = (level: LevelWithLabel) => {
+    const className = ('app-filter--level_' + level.value) as
+      | 'app-filter--level_junior'
+      | 'app-filter--level_mid'
+      | 'app-filter--level_senior';
     return (
       <li
         key={level.value}
-        className={classNames('app-filter--level', `app-filter--level_${level.value}`, {
-          active: this.isSelected(level),
+        className={classNames(styles.appFilterLevel, styles[className], {
+          [styles.active]: this.isSelected(level),
         })}
       >
         <button onClick={() => this.toggleSelectedLevel(level)}>{level.label}</button>
@@ -64,9 +68,6 @@ const mapDispatchToProps = {
   deselectLevel: ActionCreators.deselectLevel,
 };
 
-const LevelFilter = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LevelFilterComponent);
+const LevelFilter = connect(mapStateToProps, mapDispatchToProps)(LevelFilterComponent);
 
 export default LevelFilter;

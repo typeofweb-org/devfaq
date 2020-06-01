@@ -13,7 +13,7 @@ export const reportPageView = (url: string) => {
 
 export const reportPdfDownload = (ids: Array<number | string>) => {
   console.log('pdfDownload', ids);
-  ids.forEach(id => gtag('event', 'download_question_pdf', { question_id: String(id) }));
+  ids.forEach((id) => gtag('event', 'download_question_pdf', { question_id: String(id) }));
 };
 
 export const reportEvent = (

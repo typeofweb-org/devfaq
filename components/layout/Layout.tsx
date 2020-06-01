@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 import NavigationHeader from '../headers/navigationHeader/NavigationHeader';
-import './layout.scss';
+import styles from './layout.module.scss';
 import CtaHeader from '../headers/ctaHeader/CtaHeader';
 import AppFooter from '../footer/AppFooter';
 import AppSpinner from './AppSpinner';
@@ -36,11 +36,11 @@ class Layout extends React.Component<LayoutProps> {
             content={`${env.ABSOLUTE_URL}${this.props.router!.asPath}`}
           />
         </Head>
-        <div className="app-root">
+        <div className={styles.appRoot}>
           <AppSpinner />
           <NavigationHeader />
           <CtaHeader />
-          <div className="app-content">{children}</div>
+          <div className={styles.appContent}>{children}</div>
           <AppFooter />
         </div>
       </React.Fragment>

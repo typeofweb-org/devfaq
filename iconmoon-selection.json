@@ -10,9 +10,7 @@
         "attrs": [],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "tags": [
-          "bold"
-        ],
+        "tags": ["bold"],
         "defaultCode": 61490,
         "grid": 14
       },
@@ -37,9 +35,7 @@
         "attrs": [],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "tags": [
-          "italic"
-        ],
+        "tags": ["italic"],
         "defaultCode": 61491,
         "grid": 14
       },
@@ -64,9 +60,7 @@
         "attrs": [],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "tags": [
-          "eye"
-        ],
+        "tags": ["eye"],
         "defaultCode": 61550,
         "grid": 14
       },
@@ -91,9 +85,7 @@
         "attrs": [],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "tags": [
-          "list-ul"
-        ],
+        "tags": ["list-ul"],
         "defaultCode": 61642,
         "grid": 14
       },
@@ -118,9 +110,7 @@
         "attrs": [],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "tags": [
-          "list-ol"
-        ],
+        "tags": ["list-ol"],
         "defaultCode": 61643,
         "grid": 14
       },
@@ -145,9 +135,7 @@
         "attrs": [],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "tags": [
-          "code"
-        ],
+        "tags": ["code"],
         "defaultCode": 61729,
         "grid": 14
       },
@@ -172,9 +160,7 @@
         "attrs": [],
         "isMulticolor": false,
         "isMulticolor2": false,
-        "tags": [
-          "header"
-        ],
+        "tags": ["header"],
         "defaultCode": 61916,
         "grid": 14
       },
@@ -203,9 +189,7 @@
           "12091642612552201181": [],
           "2552552551441421871": []
         },
-        "tags": [
-          "devicon-plain"
-        ],
+        "tags": ["devicon-plain"],
         "grid": 0
       },
       "attrs": [],
@@ -238,9 +222,7 @@
           "12091642612552201181": [],
           "2552552551441421871": []
         },
-        "tags": [
-          "react-original"
-        ],
+        "tags": ["react-original"],
         "defaultCode": 58881,
         "grid": 0
       },
@@ -273,9 +255,7 @@
           "12091642612552201181": [],
           "2552552551441421871": []
         },
-        "tags": [
-          "angularjs-plain"
-        ],
+        "tags": ["angularjs-plain"],
         "defaultCode": 58909,
         "grid": 0
       },
@@ -308,9 +288,7 @@
           "12091642612552201181": [],
           "2552552551441421871": []
         },
-        "tags": [
-          "css3-plain"
-        ],
+        "tags": ["css3-plain"],
         "defaultCode": 59001,
         "grid": 0
       },
@@ -343,9 +321,7 @@
           "12091642612552201181": [],
           "2552552551441421871": []
         },
-        "tags": [
-          "git-plain"
-        ],
+        "tags": ["git-plain"],
         "defaultCode": 59304,
         "grid": 0
       },
@@ -378,9 +354,7 @@
           "12091642612552201181": [],
           "2552552551441421871": []
         },
-        "tags": [
-          "html5-plain"
-        ],
+        "tags": ["html5-plain"],
         "defaultCode": 59383,
         "grid": 0
       },
@@ -413,9 +387,7 @@
           "12091642612552201181": [],
           "2552552551441421871": []
         },
-        "tags": [
-          "javascript-plain"
-        ],
+        "tags": ["javascript-plain"],
         "defaultCode": 59461,
         "grid": 0
       },

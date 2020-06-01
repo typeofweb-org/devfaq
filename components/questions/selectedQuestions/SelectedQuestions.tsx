@@ -8,13 +8,13 @@ import {
 } from '../../../redux/selectors/selectors';
 import QuestionsList from '../questionsList/QuestionsList';
 import NoQuestionsSelectedInfo from './NoQuestionsSelectedInfo';
-import './selectedQuestions.scss';
 import { Question } from '../../../redux/reducers/questions';
 import { TechnologyKey, technologyIconItems } from '../../../constants/technology-icon-items';
 import { ActionCreators } from '../../../redux/actions';
 import { TransitionGroup } from 'react-transition-group';
 import { AnimateHeight } from '../../animateProperty/AnimateProperty';
 import { isEqual } from 'lodash';
+import styles from './selectedQuestions.module.scss';
 
 type SelectedQuestionsProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps> {
@@ -28,7 +28,7 @@ class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps>
         <TransitionGroup
           appear={false}
           enter={false}
-          className="selected-questions-container"
+          className={styles.selectedQuestionsContainer}
           component="div"
         >
           {this.renderSelectedQuestionsList()}
@@ -46,14 +46,14 @@ class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps>
   }
 
   renderSelectedQuestionsCategory(category: TechnologyKey, questions: Question[]) {
-    const icon = technologyIconItems.find(i => i.name === category)!;
+    const icon = technologyIconItems.find((i) => i.name === category)!;
 
     return (
       <AnimateHeight enterTime={700} exitTime={700} key={category}>
-        <section className="selected-questions--category">
-          <div className="selected-questions--list-container">
-            <div className="technology-icon-container">
-              <span className="technology-icon-label">{icon.label}</span>
+        <section className={styles.selectedQuestionsCategory}>
+          <div className={styles.selectedQuestionsListContainer}>
+            <div className={styles.technologyIconContainer}>
+              <span className={styles.technologyIconLabel}>{icon.label}</span>
               <span className={icon.icon} />
             </div>
             <QuestionsList
@@ -84,8 +84,5 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = { deselectQuestion: ActionCreators.deselectQuestion };
 
-const SelectedQuestions = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SelectedQuestionsComponent);
+const SelectedQuestions = connect(mapStateToProps, mapDispatchToProps)(SelectedQuestionsComponent);
 export default SelectedQuestions;

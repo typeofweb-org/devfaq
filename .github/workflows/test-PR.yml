@@ -61,6 +61,10 @@ jobs:
 
       - name: Run build
         if: steps.cache-to-skip.outputs.cache-hit != 'true'
-        env:
-          BUNDLE_ANALYZER_TOKEN: ${{ secrets.BUNDLE_ANALYZER_TOKEN }}
-        run: ANALYZE=true npm run build
+        run: npm run build
+
+      - name: Sizelimit
+        uses: andresz1/size-limit-action@v1.3.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          skip_step: build

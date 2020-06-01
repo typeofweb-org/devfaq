@@ -1,4 +1,4 @@
-@import "common";
+@import 'common';
 .round-button {
   display: inline-block;
   text-align: center;
@@ -18,7 +18,7 @@
   @include mediaquery('gt-sm') {
     padding: 0 2.5em;
   }
-  &.loading{
+  &.loading {
     text-indent: -9999em;
     position: relative;
     &::after {
@@ -36,7 +36,7 @@
       left: 50%;
       top: 50%;
       transform: translate3d(-50%, -50%, 0.00001px);
-      z-index: $z-index-spinner; 
+      z-index: $z-index-spinner;
     }
   }
   &:hover {
@@ -100,7 +100,7 @@
 }
 
 .circle-button {
-  display: block;  
+  display: block;
   font-size: 30px;
   appearance: none;
   border: 0;

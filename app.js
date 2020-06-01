@@ -24,7 +24,7 @@ app
     const port = process.env.PORT || '3000';
     server.listen(port, () => console.log(`Server listening at localhost:${port}`));
   })
-  .catch(err => {
+  .catch((err) => {
     console.error(err);
     process.exit(1);
   });

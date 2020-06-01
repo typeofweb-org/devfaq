@@ -1,6 +1,6 @@
 import React from 'react';
 import { Question } from '../../../redux/reducers/questions';
-import './questionsList.scss';
+import styles from './questionsList.module.scss';
 import QuestionItem from './questionItem/QuestionItem';
 import { TransitionGroup } from 'react-transition-group';
 import { AnimateHeight } from '../../animateProperty/AnimateProperty';
@@ -27,8 +27,13 @@ export default class QuestionsList extends React.PureComponent<
       return null;
     }
     return (
-      <TransitionGroup appear={false} enter={false} className="app-questions--list" component="div">
-        {this.props.questions.data.data.map(question => (
+      <TransitionGroup
+        appear={false}
+        enter={false}
+        className={styles.appQuestionsList}
+        component="div"
+      >
+        {this.props.questions.data.data.map((question) => (
           // tslint:disable-next-line:no-magic-numbers
           <AnimateHeight enterTime={700} exitTime={700} key={question.id}>
             <QuestionItem

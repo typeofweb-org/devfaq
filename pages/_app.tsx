@@ -1,10 +1,4 @@
 import React from 'react';
-// if (env.NODE_ENV !== 'production') {
-//   const { whyDidYouUpdate } = require('why-did-you-update');
-//   whyDidYouUpdate(React, {
-//     exclude: [/^withRouter/, /^Connect/, /^Provider$/, /^AppComponent$/, /^TransitionGroup$/, /^CSSTransition$/],
-//   });
-// }
 
 import nextReduxWrapper from 'next-redux-wrapper';
 import { makeStore } from '../redux/store';
@@ -17,6 +11,8 @@ import AppModals from '../components/modals/appModals/AppModals';
 import * as analytics from '../utils/analytics';
 import * as Sentry from '@sentry/browser';
 import env from '../utils/env';
+import 'prismjs/themes/prism-coy.css';
+import './index.scss';
 
 interface MyAppProps {
   Component: React.ComponentType;
@@ -59,9 +55,7 @@ class MyApp extends AppComponent<{ store: AppStore; ctx: RouteDetails }> {
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo & Record<string, any>) {
     console.log('CUSTOM ERROR HANDLING', error);
     // This is needed to render errors correctly in development / production
-    if (super.componentDidCatch) {
-      super.componentDidCatch(error, errorInfo);
-    }
+    super.componentDidCatch(error, errorInfo);
   }
 
   componentDidMount() {
@@ -93,14 +87,12 @@ class MyApp extends AppComponent<{ store: AppStore; ctx: RouteDetails }> {
   render() {
     const { Component, pageProps, store } = this.props;
     return (
-      <Container>
-        <Provider store={store}>
-          <React.Fragment>
-            <Component {...pageProps} />
-            <AppModals />
-          </React.Fragment>
-        </Provider>
-      </Container>
+      <Provider store={store}>
+        <React.Fragment>
+          <Component {...pageProps} />
+          <AppModals />
+        </React.Fragment>
+      </Provider>
     );
   }
 }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { AppState } from '../../redux/reducers';
 import { getTechnology } from '../../redux/selectors/selectors';
 import { PAGE_SIZE } from '../../services/Api';
-import './questionsPagination.scss';
+import styles from './questionsPagination.module.scss';
 
 type QuestionsPaginationProps = ReturnType<typeof mapStateToProps>;
 
@@ -16,7 +16,7 @@ const QuestionsPaginationComponent: React.FC<QuestionsPaginationProps> = ({ tota
   const pages = Math.ceil(total / PAGE_SIZE);
 
   return (
-    <footer className="questions-pagination">
+    <footer className={styles.questionsPagination}>
       <ul>
         {Array.from({ length: pages }).map((_, i) => {
           const query: QuestionsPaginationProps['route']['query'] = {
@@ -26,7 +26,12 @@ const QuestionsPaginationComponent: React.FC<QuestionsPaginationProps> = ({ tota
 
           return (
             <li key={i}>
-              <ActiveLink exact={true} href="/questions/[technology]" query={query}>
+              <ActiveLink
+                exact={true}
+                href="/questions/[technology]"
+                query={query}
+                activeClassName={styles.active}
+              >
                 <a>{i + 1}</a>
               </ActiveLink>
             </li>

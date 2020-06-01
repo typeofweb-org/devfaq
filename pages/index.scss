@@ -1,12 +1,8 @@
-@import "common";
-@import "node_modules/normalize-scss/sass/normalize.scss";
+@import 'common';
+@import 'node_modules/normalize-scss/sass/normalize.scss';
+@import 'global';
 @include normalize();
-@import "base";
+
 body {
   overflow-y: scroll;
-}
-.questions-container {
-  display: flex;
-  min-height: 100%;
-  flex: 1;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import './baseModal.scss';
+import styles from './baseModal.module.scss';
 
 export type ModalType = 'warning' | 'confirmation' | 'thumbs-up' | 'add';
 
@@ -60,7 +60,7 @@ class FixBodyService {
     const outer = document.createElement('div');
     outer.style.visibility = 'hidden';
     outer.style.width = '100px';
-    outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+    // outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
 
     document.body.appendChild(outer);
 
@@ -117,34 +117,38 @@ export default class BaseModal extends React.Component<BaseModalOwnProps> {
     const { closable, type, renderContent, renderFooter } = this.props;
     return (
       <div
-        className={classNames('app-modal-container', this.props.className)}
+        className={classNames(
+          'app-modal-container',
+          styles.appModalContainer,
+          this.props.className
+        )}
         role="dialog"
         tabIndex={0}
         aria-modal={true}
         aria-labelledby={this.props['aria-labelledby']}
         aria-describedby={this.props['aria-describedby']}
       >
-        <div className="app-modal">
+        <div className={classNames('app-modal', styles.appModal)}>
           {closable && (
-            <header className="app-modal--header">
-              <button className="app-modal--close" title="Zamknij" onClick={this.close}>
+            <header className={styles.appModalHeader}>
+              <button className={styles.appModalClose} title="Zamknij" onClick={this.close}>
                 &times;
               </button>
             </header>
           )}
-          <div className="app-modal--content" ref={this.contentRef}>
-            <div className="app-modal--body">
-              <div className={classNames('action-icon', 'action-icon_' + type || '')} />
+          <div className={styles.appModalContent} ref={this.contentRef}>
+            <div className={styles.appModalBody}>
+              <div className={classNames(styles.actionIcon, 'action-icon_' + type || '')} />
               {renderContent!()}
             </div>
-            <footer className="app-modal--footer">{renderFooter!()}</footer>
+            <footer className={styles.appModalFooter}>{renderFooter!()}</footer>
           </div>
         </div>
       </div>
     );
   }
 
-  close: React.MouseEventHandler<HTMLButtonElement> = e => {
+  close: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     this.props.onClose({ event: e });
   };
 

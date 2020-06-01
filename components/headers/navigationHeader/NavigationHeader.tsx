@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import AppLogo from '../../appLogo/AppLogo';
-import './navigationHeader.scss';
+import styles from './navigationHeader.module.scss';
 import ActiveLink from '../../activeLink/ActiveLink';
 import { connect } from 'react-redux';
 import { AppState } from '../../../redux/reducers/index';
@@ -24,9 +24,9 @@ class NavigationHeaderComponent extends React.PureComponent<
     // const userId = authData && authData.user.id;
 
     return (
-      <div className="navigation-header">
-        <header className={classNames('app-header--main', 'container', { open })}>
-          <ActiveLink href="/questions">
+      <div className={classNames('app-navigation-header', styles.navigationHeader)}>
+        <header className={classNames(styles.appHeaderMain, 'container', { open })}>
+          <ActiveLink href="/questions" activeClassName={styles.active}>
             <a>
               <h1>
                 <span className="visuallyhidden">DevFAQ.pl</span>
@@ -34,15 +34,15 @@ class NavigationHeaderComponent extends React.PureComponent<
               </h1>
             </a>
           </ActiveLink>
-          <nav className={classNames('main-nav', { open })}>
+          <nav className={classNames('main-nav', styles.mainNav, { [styles.open]: open })}>
             <ul>
               <li>
-                <ActiveLink href="/about">
+                <ActiveLink href="/about" activeClassName={styles.active}>
                   <a onClick={this.onAboutClick}>Jak korzystać?</a>
                 </ActiveLink>
               </li>
               <li>
-                <ActiveLink href="/authors">
+                <ActiveLink href="/authors" activeClassName={styles.active}>
                   <a onClick={this.onAuthorsClick}>Autorzy</a>
                 </ActiveLink>
               </li>
@@ -60,7 +60,7 @@ class NavigationHeaderComponent extends React.PureComponent<
               </li>
             </ul>
             <button
-              className={classNames('menu-button', { open })}
+              className={classNames('menu-button', styles.menuButton, { open })}
               title={open ? 'Zamknij menu' : 'Otwórz menu'}
               onClick={this.toggleMenu}
             >

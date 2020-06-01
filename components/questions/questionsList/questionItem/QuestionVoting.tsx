@@ -6,6 +6,7 @@ import React from 'react';
 import { ActionCreators } from '../../../../redux/actions';
 import classnames from 'classnames';
 import { redirect, getPreviousPathFromHrefQuery } from '../../../../utils/redirect';
+import styles from './questionItem.module.scss';
 
 type QuestionVotingOwnProps = {
   question: Question;
@@ -46,13 +47,13 @@ const QuestionVotingComponent: React.FC<QuestionVotingProps> = ({
   return (
     <footer
       className={classnames([
-        'app-questions--question--voting',
+        styles.appQuestionsQuestionVoting,
         {
-          'app-questions--question--voting_voted': currentUserVotedOn,
+          [styles.appQuestionsQuestionVotingVoted]: currentUserVotedOn,
         },
       ])}
     >
-      <button className="vote-button" type="button" onClick={onVote}>
+      <button className={styles.voteButton} type="button" onClick={onVote}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
@@ -81,9 +82,6 @@ const mapDispatchToProps = {
   downvoteQuestion: ActionCreators.downvoteQuestion,
 };
 
-const QuestionVoting = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(QuestionVotingComponent);
+const QuestionVoting = connect(mapStateToProps, mapDispatchToProps)(QuestionVotingComponent);
 
 export default QuestionVoting;
