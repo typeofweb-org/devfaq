@@ -40,7 +40,7 @@ export default class MarkdownText extends React.Component<MarkdownTextProps> {
   markdownRef = React.createRef<HTMLDivElement>();
 
   getHtmlFromMarkdown(markdown: string): string {
-    return getHtmlFromMarkdown(markdown);
+    return getHtmlFromMarkdown(markdown.replace(/\r\n\n/gi, '\n'));
   }
 
   shouldComponentUpdate(nextProps: MarkdownTextProps): boolean {
