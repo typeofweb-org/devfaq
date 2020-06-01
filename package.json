@@ -28,7 +28,7 @@
     "polish-plurals": "1.1.0",
     "prismjs": "1.16.0",
     "react": "16.8.6",
-    "react-dom": "16.8.6",
+    "react-dom": "16.13.0",
     "react-redux": "7.1.0",
     "react-transition-group": "4.2.1",
     "redux": "4.0.4",
