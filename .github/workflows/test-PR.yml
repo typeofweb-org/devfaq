@@ -54,10 +54,6 @@ jobs:
         if: steps.cache-to-skip.outputs.cache-hit != 'true'
         run: npm run build
 
-      - name: Save Sizelimit artifact
-        if: steps.cache-to-skip.outputs.cache-hit != 'true'
-        run: ./node_modules/.bin/size-limit > size-limit.json
-
       - name: Sizelimit
         if: steps.cache-to-skip.outputs.cache-hit != 'true'
         uses: typeofweb/size-limit-action@master
