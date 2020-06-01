@@ -102,10 +102,6 @@ config.experimental = {
   publicDirectory: true,
 };
 
-config.typescript = {
-  ignoreBuildErrors: true,
-};
-
 config.env = {
   API_URL: process.env.API_URL,
   VERSION: process.env.VERSION,

@@ -1,12 +1,12 @@
 import React from 'react';
 import Layout from '../components/layout/Layout';
-import './staticPage.scss';
+import styles from './staticPage.module.scss';
 
 export default () => {
   return (
     <Layout title="Jak korzystać? FAQ">
       <div className="container">
-        <article className="app-static-page">
+        <article className={styles.appStaticPage}>
           <h2>Jak korzystać? FAQ</h2>
           <h3>Co to jest DevFAQ.pl?</h3>
           <p>

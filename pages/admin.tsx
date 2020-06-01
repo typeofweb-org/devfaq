@@ -5,6 +5,7 @@ import QuestionsListLayout from '../components/questions/questionsListLayout/Que
 import { AsyncComponent } from '../components/asyncComponent/AsyncComponent';
 import { getLoggedInUser } from '../redux/selectors/selectors';
 import { NextPageContext } from 'next';
+import styles from './pages.module.scss';
 
 export default class AdminPage extends React.Component {
   static async getInitialProps(ctx: NextPageContext) {
@@ -18,12 +19,12 @@ export default class AdminPage extends React.Component {
     return (
       <Layout title="Admin">
         <QuestionsListLayout>
-          <div className="questions-container">
+          <div className={styles.questionsContainer}>
             <AsyncComponent
               componentProps={{}}
               componentProvider={() => {
                 const component = import('../components/adminQuestions/AdminQuestions').then(
-                  module => module.default
+                  (module) => module.default
                 );
                 return component;
               }}

@@ -7,7 +7,7 @@ const AppFooter = () => {
   const version = env.VERSION;
   return (
     <div className={styles.footerContainer}>
-      <footer className="app-footer container">
+      <footer className="container">
         <small style={{ color: 'transparent', position: 'absolute', left: 0 }}>{version}</small>
         <nav className={styles.footerNavigation}>
           <ul className={styles.footerNavigationLinks}>

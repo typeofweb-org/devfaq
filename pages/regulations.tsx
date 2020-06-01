@@ -1,12 +1,12 @@
 import React from 'react';
 import Layout from '../components/layout/Layout';
-import './staticPage.scss';
+import styles from './staticPage.module.scss';
 
 export default () => {
   return (
     <Layout title="Regulations">
       <div className="container">
-        <article className="app-static-page">
+        <article className={styles.appStaticPage}>
           <h2>Regulamin</h2>
           <h3>Regulamin Świadczenia Usług Drogą Elektroniczną Portalu devfaq.pl</h3>
 

@@ -1,22 +1,22 @@
 import React from 'react';
 import Layout from '../components/layout/Layout';
-import './staticPage.scss';
+import styles from './staticPage.module.scss';
 
 export default () => {
   return (
     <Layout title="Autorzy">
       <div className="container">
         <React.Fragment>
-          <article className="app-static-page">
+          <article className={styles.appStaticPage}>
             <h2>Autorzy</h2>
-            <div className="app-authors">
-              <div className="app-author">
+            <div className={styles.appAuthors}>
+              <div className={styles.appAuthor}>
                 <img
                   src="/images/michal_miszczyszyn.jpg"
                   alt="Michał Miszczyszyn"
-                  className="app-author__image"
+                  className={styles.appAuthorImage}
                 />
-                <p className="app-author__name">Michał Miszczyszyn</p>
+                <p className={styles.appAuthorName}>Michał Miszczyszyn</p>
                 <p>
                   Zmotywowany full-stack, który nie boi się żadnej technologii. Doświadczony
                   programista i leader zespołów. Przedsiębiorca, aktywista, bloger na{' '}
@@ -37,7 +37,7 @@ export default () => {
               </div>
             </div>
           </article>
-          <article className="app-static-page">
+          <article className={styles.appStaticPage}>
             <h3>Specjalne podziękowania</h3>
             <ul>
               <li>

@@ -1,6 +1,5 @@
 import ActiveLink from '../../activeLink/ActiveLink';
 import styles from './noQuestionsSelectedInfo.module.scss';
-import './noQuestionsSelectedInfo.scss';
 import classNames from 'classnames';
 
 const NoQuestionsSelectedInfo = () => {

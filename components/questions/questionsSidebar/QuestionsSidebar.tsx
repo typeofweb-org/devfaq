@@ -13,11 +13,13 @@ class QuestionsSidebarComponent extends React.Component<
   render() {
     return (
       <div className={styles.questionsSidebar}>
-        <aside className={classNames(styles.appSidebar, { open: this.props.isSidebarOpen })}>
-          <section className="app-sidebar--section">
+        <aside
+          className={classNames(styles.appSidebar, { [styles.open]: this.props.isSidebarOpen })}
+        >
+          <section>
             <TechnologyFilter />
           </section>
-          <section className="app-sidebar--section">
+          <section>
             <LevelFilter />
           </section>
           <button
@@ -50,9 +52,6 @@ const mapDispatchToProps = {
   uiCloseSidebar: ActionCreators.uiCloseSidebar,
 };
 
-const QuestionsSidebar = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(QuestionsSidebarComponent);
+const QuestionsSidebar = connect(mapStateToProps, mapDispatchToProps)(QuestionsSidebarComponent);
 
 export default QuestionsSidebar;

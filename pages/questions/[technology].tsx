@@ -12,6 +12,7 @@ import { AppState } from '../../redux/reducers/index';
 import { getTechnology, getSortByArray, getPage } from '../../redux/selectors/selectors';
 import { Technology } from '../../constants/technology-icon-items';
 import { Dispatch } from 'redux';
+import styles from '../pages.module.scss';
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 class QuestionsPageComponent extends React.Component<Props> {
@@ -52,7 +53,7 @@ class QuestionsPageComponent extends React.Component<Props> {
     return (
       <Layout title={`Pytania ${label}`}>
         <QuestionsListLayout>
-          <div className="questions-container">
+          <div className={styles.questionsContainer}>
             <QuestionsSidebar />
             <AllQuestions />
           </div>
@@ -85,8 +86,5 @@ const mapDispatchToProps = (
   };
 };
 
-const QuestionsPage = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(QuestionsPageComponent);
+const QuestionsPage = connect(mapStateToProps, mapDispatchToProps)(QuestionsPageComponent);
 export default QuestionsPage;
