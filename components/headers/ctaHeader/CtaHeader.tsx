@@ -63,7 +63,7 @@ class CtaHeaderComponent extends React.Component<
               </a>
             </ActiveLink> */}
             <button
-              className={classNames(styles.roundButton, 'branding-button-inverse')}
+              className={classNames(styles.roundButton, 'round-button', 'branding-button-inverse')}
               onClick={this.onOpenAddQuestionModalClick}
             >
               Dodaj pytanie

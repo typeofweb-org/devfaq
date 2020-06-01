@@ -13,7 +13,7 @@ export const AllQuestionsHeader: React.SFC<{
 }> = ({ category, questionsLength, onSortByChange, sortBy }) => {
   return (
     <header className={headerStyles.appQuestionsHeader}>
-      <output className={styles.appQuestionsCategoryCount}>
+      <output>
         <strong>{category}:</strong> {questionsLength} {getQuestionsLabel(questionsLength || 0)}
       </output>
       <label className={styles.appQuestionsSortingContainer}>

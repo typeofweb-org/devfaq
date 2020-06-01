@@ -79,9 +79,6 @@ const withWebpackAnalyze = (nextConfig = {}) => {
 const config = withWebpackAnalyze(
   withPolyfills(
     withImages({
-      sassLoaderOptions: {
-        includePaths: ['styles/'],
-      },
       webpack: (config, options) => {
         config.plugins.push(new LodashModuleReplacementPlugin());
         return config;

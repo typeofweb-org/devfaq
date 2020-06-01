@@ -1,10 +1,4 @@
 import React from 'react';
-// if (env.NODE_ENV !== 'production') {
-//   const { whyDidYouUpdate } = require('why-did-you-update');
-//   whyDidYouUpdate(React, {
-//     exclude: [/^withRouter/, /^Connect/, /^Provider$/, /^AppComponent$/, /^TransitionGroup$/, /^CSSTransition$/],
-//   });
-// }
 
 import nextReduxWrapper from 'next-redux-wrapper';
 import { makeStore } from '../redux/store';
@@ -93,14 +87,12 @@ class MyApp extends AppComponent<{ store: AppStore; ctx: RouteDetails }> {
   render() {
     const { Component, pageProps, store } = this.props;
     return (
-      <Container>
-        <Provider store={store}>
-          <React.Fragment>
-            <Component {...pageProps} />
-            <AppModals />
-          </React.Fragment>
-        </Provider>
-      </Container>
+      <Provider store={store}>
+        <React.Fragment>
+          <Component {...pageProps} />
+          <AppModals />
+        </React.Fragment>
+      </Provider>
     );
   }
 }

@@ -62,7 +62,7 @@ export default () => {
           return 'Hello World';
         }
         `}
-            ```
+            {/* prettier-ignore */ '```'}
           </pre>
 
           <p>

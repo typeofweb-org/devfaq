@@ -24,9 +24,6 @@
         "name": "typescript-plugin-css-modules",
         "options": {
           "classnameTransform": "camelCase",
-          "postCssOptions": {
-            "useConfig": true
-          },
           "rendererOptions": {
             "sass": {
               "includePaths": ["styles"]

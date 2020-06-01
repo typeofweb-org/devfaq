@@ -41,15 +41,6 @@ export default class AddQuestionConfirmationModal extends React.PureComponent<Co
         </p>
         <div className={styles.logos}>
           <a
-            href="http://angular.love/"
-            target="_blank"
-            title="Angular.love"
-            onClick={() => this.reportEvent('Angular.love - klik')}
-          >
-            <img src="/images/angular_love_logo.png" alt="Angular.love" />
-          </a>
-
-          <a
             href="https://typeofweb.com/"
             target="_blank"
             title="Type of Web"
