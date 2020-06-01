@@ -24,7 +24,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
   render() {
     const { technology, sortBy } = this.props;
 
-    const technologyIconItem = technologyIconItems.find(t => t.name === technology);
+    const technologyIconItem = technologyIconItems.find((t) => t.name === technology);
     const category = (technologyIconItem && technologyIconItem.label) || '';
 
     const length =
@@ -51,7 +51,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
     );
   }
 
-  changeSortBy: React.ChangeEventHandler<HTMLSelectElement> = e => {
+  changeSortBy: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const query = {
       ...this.props.route.query,
       sortBy: e.currentTarget.value,
@@ -96,7 +96,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
   toggleQuestion = (questionId: Question['id']) => {
     const isSelected = isQuestionSelected(this.props.selectedQuestionsIds, questionId);
     const question =
-      this.props.questions.data && this.props.questions.data.data.find(q => q.id === questionId);
+      this.props.questions.data && this.props.questions.data.data.find((q) => q.id === questionId);
 
     if (isSelected) {
       this.props.deselectQuestion(questionId);
@@ -135,8 +135,5 @@ const mapDispatchToProps = {
   uiOpenAddQuestionModal: ActionCreators.uiOpenAddQuestionModal,
 };
 
-const AllQuestions = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AllQuestionsComponent);
+const AllQuestions = connect(mapStateToProps, mapDispatchToProps)(AllQuestionsComponent);
 export default AllQuestions;

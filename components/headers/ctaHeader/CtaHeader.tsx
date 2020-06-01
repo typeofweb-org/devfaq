@@ -74,13 +74,13 @@ class CtaHeaderComponent extends React.Component<
     );
   }
 
-  onDownloadClick: React.MouseEventHandler<HTMLElement> = _event => {
+  onDownloadClick: React.MouseEventHandler<HTMLElement> = (_event) => {
     this.reportEvent('Pobierz plik PDF');
     // @todo open DownloadSuccessModal
     // @todo this.analyticsService.reportPdfDownload(this.selectedQuestionsService.getSelectedIds());
   };
 
-  onOpenAddQuestionModalClick: React.MouseEventHandler<HTMLElement> = _event => {
+  onOpenAddQuestionModalClick: React.MouseEventHandler<HTMLElement> = (_event) => {
     this.reportEvent('Dodaj pytanie');
     this.props.uiOpenAddQuestionModal();
   };
@@ -102,8 +102,5 @@ const mapDispatchToProps = {
   uiOpenAddQuestionModal: ActionCreators.uiOpenAddQuestionModal,
 };
 
-const CtaHeader = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CtaHeaderComponent);
+const CtaHeader = connect(mapStateToProps, mapDispatchToProps)(CtaHeaderComponent);
 export default CtaHeader;

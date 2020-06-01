@@ -9,17 +9,12 @@ type Routes = ReturnType<typeof segmentsDictEntriesToRoutes>;
 type MergedRoute = ReturnType<typeof routesToMergedRoute>;
 
 export const path = () => {
-  return fc.array(fc.webSegment()).map(arr => '/' + arr.join('/'));
+  return fc.array(fc.webSegment()).map((arr) => '/' + arr.join('/'));
 };
 
 export const routeWithReplacements = (excessReplacements = false) => {
   return segmentsRecordWithReplacements(excessReplacements).map(
-    pipe(
-      entries,
-      segmentsDictEntriesToRoutes,
-      routesToMergedRoute,
-      routeToResult
-    )
+    pipe(entries, segmentsDictEntriesToRoutes, routesToMergedRoute, routeToResult)
   );
 };
 

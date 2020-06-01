@@ -55,7 +55,7 @@ class AddQuestionModalComponent extends React.PureComponent<
 
   componentDidMount() {
     this.reportEvent('Wyświetlenie');
-    this.setState(state => ({ valid: this.isValid(state) }));
+    this.setState((state) => ({ valid: this.isValid(state) }));
   }
 
   render() {
@@ -72,11 +72,11 @@ class AddQuestionModalComponent extends React.PureComponent<
     );
   }
 
-  onCancelClick: React.MouseEventHandler<HTMLButtonElement> = e => {
+  onCancelClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     this.onClose({ reason: 'cancel', event: e });
   };
 
-  onClose: CommonModalProps['onClose'] = args => {
+  onClose: CommonModalProps['onClose'] = (args) => {
     if (args.reason === 'cancel') {
       this.reportEvent('Anuluj');
     } else if (args.reason === 'submit') {
@@ -93,7 +93,7 @@ class AddQuestionModalComponent extends React.PureComponent<
         <h2 className={styles.appModalTitle} id="add-question-modal-title">
           {this.state.originalQuestion ? 'Edytuj pytanie' : 'Nowe pytanie'}
         </h2>
-        <form onSubmit={e => e.preventDefault()}>
+        <form onSubmit={(e) => e.preventDefault()}>
           <div className={styles.appQuestionForm}>
             <div className={styles.appQuestionFormOptionsContainer}>
               <select
@@ -105,7 +105,7 @@ class AddQuestionModalComponent extends React.PureComponent<
                 <option key="undefined" value="" disabled={true}>
                   Wybierz technologię
                 </option>
-                {technologyIconItems.map(technology => (
+                {technologyIconItems.map((technology) => (
                   <option key={technology.name} value={technology.name}>
                     {technology.label}
                   </option>
@@ -120,7 +120,7 @@ class AddQuestionModalComponent extends React.PureComponent<
                 <option key="undefined" value="" disabled={true}>
                   Wybierz poziom
                 </option>
-                {levelsWithLabels.map(level => (
+                {levelsWithLabels.map((level) => (
                   <option key={level.value} value={level.value}>
                     {level.label}
                   </option>
@@ -159,7 +159,7 @@ class AddQuestionModalComponent extends React.PureComponent<
     );
   };
 
-  handleChangeTechnology: React.ChangeEventHandler<HTMLSelectElement> = e => {
+  handleChangeTechnology: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const value = e.currentTarget.value as TechnologyKey;
     this.setState(
       {
@@ -169,7 +169,7 @@ class AddQuestionModalComponent extends React.PureComponent<
     );
   };
 
-  handleChangeLevel: React.ChangeEventHandler<HTMLSelectElement> = e => {
+  handleChangeLevel: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const value = e.currentTarget.value as LevelKey;
     this.setState(
       {
@@ -189,7 +189,7 @@ class AddQuestionModalComponent extends React.PureComponent<
   };
 
   validate = () => {
-    this.setState(state => ({
+    this.setState((state) => ({
       valid: this.isValid(state),
     }));
   };
@@ -241,8 +241,5 @@ const mapDispatchToProps = {
   uiOpenAddQuestionConfirmationModal: ActionCreators.uiOpenAddQuestionConfirmationModal,
 };
 
-const AddQuestionModal = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AddQuestionModalComponent);
+const AddQuestionModal = connect(mapStateToProps, mapDispatchToProps)(AddQuestionModalComponent);
 export default AddQuestionModal;

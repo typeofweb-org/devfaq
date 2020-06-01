@@ -81,7 +81,7 @@ export default class QuestionEditor extends React.Component<
     el.setSelectionRange(selectionStart + startTokenLenths, selectionEnd + startTokenLenths);
   };
 
-  handleAction = (action: Actions): React.MouseEventHandler<HTMLButtonElement> => e => {
+  handleAction = (action: Actions): React.MouseEventHandler<HTMLButtonElement> => (e) => {
     e.preventDefault();
 
     const el = this.textAreaRef.current;
@@ -95,10 +95,10 @@ export default class QuestionEditor extends React.Component<
     this.handleTextChange();
   };
 
-  togglePreview: React.MouseEventHandler<HTMLButtonElement> = e => {
+  togglePreview: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     this.setState(
-      state => ({ isPreview: !state.isPreview }),
+      (state) => ({ isPreview: !state.isPreview }),
       () => {
         if (this.previewRef.current) {
           highlightSyntax(this.previewRef.current);

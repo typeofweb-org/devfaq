@@ -82,9 +82,6 @@ const mapDispatchToProps = {
   downvoteQuestion: ActionCreators.downvoteQuestion,
 };
 
-const QuestionVoting = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(QuestionVotingComponent);
+const QuestionVoting = connect(mapStateToProps, mapDispatchToProps)(QuestionVotingComponent);
 
 export default QuestionVoting;

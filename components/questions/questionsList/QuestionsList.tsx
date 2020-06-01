@@ -33,7 +33,7 @@ export default class QuestionsList extends React.PureComponent<
         className={styles.appQuestionsList}
         component="div"
       >
-        {this.props.questions.data.data.map(question => (
+        {this.props.questions.data.data.map((question) => (
           // tslint:disable-next-line:no-magic-numbers
           <AnimateHeight enterTime={700} exitTime={700} key={question.id}>
             <QuestionItem

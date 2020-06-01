@@ -40,7 +40,7 @@ describe('hrefQueryToAsPath', () => {
   describe('property tests', () => {
     it(`returns the same url when there are no replacements`, () => {
       fc.assert(
-        fc.property(Arbitraries.path(), path => {
+        fc.property(Arbitraries.path(), (path) => {
           const result = hrefQueryToAsPath(path);
           return result.as === result.href && result.as === path;
         })

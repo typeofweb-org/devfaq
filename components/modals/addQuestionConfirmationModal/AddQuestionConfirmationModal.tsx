@@ -21,7 +21,7 @@ export default class AddQuestionConfirmationModal extends React.PureComponent<Co
     );
   }
 
-  onClose: CommonModalProps['onClose'] = arg => {
+  onClose: CommonModalProps['onClose'] = (arg) => {
     if (arg.reason === 'ok') {
       this.reportEvent('OK');
     } else {
@@ -72,7 +72,7 @@ export default class AddQuestionConfirmationModal extends React.PureComponent<Co
     globalReportEvent(action, 'Przesłane nowe pytanie warstwa');
   }
 
-  close: React.MouseEventHandler<HTMLButtonElement> = e => {
+  close: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     this.onClose({ event: e, reason: 'ok' });
   };
 }

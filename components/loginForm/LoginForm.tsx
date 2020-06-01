@@ -72,8 +72,5 @@ const mapDispatchToProps = {
   logInWithGitHub: ActionCreators.logInWithGitHub,
 };
 
-const LoginForm = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginFormComponent);
+const LoginForm = connect(mapStateToProps, mapDispatchToProps)(LoginFormComponent);
 export default LoginForm;

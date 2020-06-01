@@ -64,9 +64,6 @@ const mapDispatchToProps = {
   deselectLevel: ActionCreators.deselectLevel,
 };
 
-const LevelFilter = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LevelFilterComponent);
+const LevelFilter = connect(mapStateToProps, mapDispatchToProps)(LevelFilterComponent);
 
 export default LevelFilter;

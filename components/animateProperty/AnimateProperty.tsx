@@ -15,7 +15,7 @@ export class AnimateHeight extends React.PureComponent<{
     return `${this.props.exitTime}ms`;
   }
 
-  onExit: ExitHandler = el => {
+  onExit: ExitHandler = (el) => {
     // console.log('onExit');
     // @ts-ignore
     el.style.willChange = 'height, opacity';
@@ -24,7 +24,7 @@ export class AnimateHeight extends React.PureComponent<{
     this.reflow(el);
   };
 
-  onExiting: ExitHandler = el => {
+  onExiting: ExitHandler = (el) => {
     // console.log('onExiting');
     el.style.height = '0';
     el.style.opacity = '0';
@@ -32,7 +32,7 @@ export class AnimateHeight extends React.PureComponent<{
     el.style.transition = `height ${this.exitDuration}, opacity ${this.exitDuration}`;
   };
 
-  onExited: ExitHandler = el => {
+  onExited: ExitHandler = (el) => {
     // console.log('onExited');
     el.style.height = '';
     el.style.opacity = '';
@@ -40,7 +40,7 @@ export class AnimateHeight extends React.PureComponent<{
     el.style.minHeight = '';
   };
 
-  onEnter: EnterHandler = el => {
+  onEnter: EnterHandler = (el) => {
     // console.log('onEnter');
     // @ts-ignore
     el.style.willChange = 'height, opacity';
@@ -50,14 +50,14 @@ export class AnimateHeight extends React.PureComponent<{
     this.reflow(el);
   };
 
-  onEntering: EnterHandler = el => {
+  onEntering: EnterHandler = (el) => {
     // console.log('onEntering');
     el.style.height = el.scrollHeight + 'px';
     el.style.opacity = '1';
     el.style.transition = `height ${this.enterDuration}, opacity ${this.enterDuration}`;
   };
 
-  onEntered: EnterHandler = el => {
+  onEntered: EnterHandler = (el) => {
     // console.log('onEntered');
     el.style.height = '';
     el.style.opacity = '';

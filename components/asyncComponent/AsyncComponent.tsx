@@ -23,7 +23,7 @@ export class AsyncComponent<T extends object> extends React.Component<
   }
 
   loadComponent = () => {
-    return this.props.componentProvider().then(Component => {
+    return this.props.componentProvider().then((Component) => {
       this.setState({ Component, isLoading: false });
     });
   };

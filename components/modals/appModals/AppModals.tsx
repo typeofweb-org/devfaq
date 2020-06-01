@@ -12,7 +12,7 @@ const timeout = 200;
 class AppModalsComponent extends React.Component<
   ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 > {
-  closeQuestionModal: CommonModalProps['onClose'] = args => {
+  closeQuestionModal: CommonModalProps['onClose'] = (args) => {
     if (this.props.addQuestionModalState.onClose) {
       this.props.addQuestionModalState.onClose(args);
     }
@@ -66,8 +66,5 @@ const mapDispatchToProps = {
   uiCloseAddQuestionConfirmationModal: ActionCreators.uiCloseAddQuestionConfirmationModal,
 };
 
-const AppModals = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppModalsComponent);
+const AppModals = connect(mapStateToProps, mapDispatchToProps)(AppModalsComponent);
 export default AppModals;
