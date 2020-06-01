@@ -41,7 +41,7 @@ class LoginFormComponent extends React.Component<LoginFormReduxProps> {
           <AppLogo />
           {this.props.auth.error && <p>{this.props.auth.error.message}</p>}
           <p>Stwórz konto już dzisiaj i korzystaj z dodatkowych funkcji serwisu DevFAQ!</p>
-          <button onClick={this.logInWithGithub} className={styles.logInWithGitHub}>
+          <button onClick={this.logInWithGithub} className={styles.loginWithGithub}>
             Zaloguj się przez GitHuba
           </button>
           <footer>
@@ -49,6 +49,7 @@ class LoginFormComponent extends React.Component<LoginFormReduxProps> {
               href={route.href}
               query={route.query}
               onClick={() => this.reportEvent('Powrót do strony głównej')}
+              activeClassName=""
             >
               <a>Powrót do strony głównej</a>
             </ActiveLink>

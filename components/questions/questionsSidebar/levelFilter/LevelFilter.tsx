@@ -22,11 +22,15 @@ class LevelFilterComponent extends React.Component<
   }
 
   renderLevel = (level: LevelWithLabel) => {
+    const className = ('app-filter--level_' + level.value) as
+      | 'app-filter--level_junior'
+      | 'app-filter--level_mid'
+      | 'app-filter--level_senior';
     return (
       <li
         key={level.value}
-        className={classNames(styles.appFilterLevel, styles[`app-filter--level_${level.value}`], {
-          active: this.isSelected(level),
+        className={classNames(styles.appFilterLevel, styles[className], {
+          [styles.active]: this.isSelected(level),
         })}
       >
         <button onClick={() => this.toggleSelectedLevel(level)}>{level.label}</button>

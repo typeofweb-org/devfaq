@@ -14,7 +14,9 @@ class QuestionsSidebarComponent extends React.Component<
     return (
       <div className={styles.questionsSidebar}>
         <aside
-          className={classNames(styles.appSidebar, { [styles.open]: this.props.isSidebarOpen })}
+          className={classNames('app-sidebar', styles.appSidebar, {
+            [styles.open]: this.props.isSidebarOpen,
+          })}
         >
           <section>
             <TechnologyFilter />

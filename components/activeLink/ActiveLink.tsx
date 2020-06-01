@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import { RouteDetails } from '../../utils/types';
 import Link, { LinkProps } from 'next/link';
 import { hrefQueryToAsPath } from '../../utils/redirect';
+import invariant from 'invariant';
 
 interface ActiveLinkOwnProps {
-  activeClassName?: string;
+  activeClassName: string;
   exact?: boolean;
   disabledWhenActive?: boolean;
   onClick?: React.MouseEventHandler<any>;
@@ -38,7 +39,7 @@ class ActiveLinkComponent extends React.Component<
   render() {
     const {
       isMatch,
-      activeClassName = 'active',
+      activeClassName,
       disabledWhenActive,
       query,
       as,
@@ -51,6 +52,8 @@ class ActiveLinkComponent extends React.Component<
       passHref,
       prefetch,
     } = this.props;
+
+    invariant(activeClassName != null, 'activeClassName is required!');
 
     const child = React.Children.only(children);
     const newChild = this.conditionallyAddClassToChild(isMatch, activeClassName, child);

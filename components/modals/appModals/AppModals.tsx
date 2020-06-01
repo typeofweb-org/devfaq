@@ -6,6 +6,7 @@ import { ActionCreators } from '../../../redux/actions';
 import { CSSTransition } from 'react-transition-group';
 import AddQuestionConfirmationModal from '../addQuestionConfirmationModal/AddQuestionConfirmationModal';
 import { CommonModalProps } from '../baseModal/BaseModal';
+import styles from '../baseModal/baseModal.module.scss';
 
 const timeout = 200;
 
@@ -30,7 +31,13 @@ class AppModalsComponent extends React.Component<
           in={this.props.addQuestionModalState.open}
           unmountOnExit={true}
           mountOnEnter={true}
-          classNames="fade"
+          classNames={{
+            enter: styles.fadeEnter,
+            enterActive: styles.fadeEnterActive,
+            enterDone: styles.fadeEnterDone,
+            exit: styles.fadeExit,
+            exitActive: styles.fadeExitActive,
+          }}
           timeout={timeout}
         >
           <AddQuestionModal
@@ -43,7 +50,13 @@ class AppModalsComponent extends React.Component<
           in={this.props.isAddQuestionConfirmationModalOpen}
           unmountOnExit={true}
           mountOnEnter={true}
-          classNames="fade"
+          classNames={{
+            enter: styles.fadeEnter,
+            enterActive: styles.fadeEnterActive,
+            enterDone: styles.fadeEnterDone,
+            exit: styles.fadeExit,
+            exitActive: styles.fadeExitActive,
+          }}
           timeout={timeout}
         >
           <AddQuestionConfirmationModal onClose={this.props.uiCloseAddQuestionConfirmationModal} />

@@ -16,15 +16,15 @@ class CtaHeaderComponent extends React.Component<
 > {
   render() {
     return (
-      <div className={styles.ctaHeader}>
+      <div className={classNames('app-cta-header', styles.ctaHeader)}>
         <header className={classNames(styles.appHeaderCta, 'container')}>
           <nav className={styles.appTabs}>
-            <ActiveLink href="/questions">
+            <ActiveLink href="/questions" activeClassName={styles.active}>
               <a onClick={() => this.reportEvent('Lista pytań')} className={styles.appTabsTab}>
                 Lista pytań
               </a>
             </ActiveLink>
-            <ActiveLink href="/selected-questions">
+            <ActiveLink href="/selected-questions" activeClassName={styles.active}>
               <a
                 onClick={() =>
                   this.reportEvent(
@@ -42,7 +42,7 @@ class CtaHeaderComponent extends React.Component<
             </ActiveLink>
 
             {this.props.isAdmin && (
-              <ActiveLink href="/admin">
+              <ActiveLink href="/admin" activeClassName={styles.active}>
                 <a className={styles.appTabsTab}>Admin</a>
               </ActiveLink>
             )}

@@ -6,6 +6,7 @@ import ActiveLink from '../../../activeLink/ActiveLink';
 import UserAvatar from '../../../userAvatar/UserAvatar';
 import { useRouter } from 'next/router';
 import { getPreviousPathFromHrefQuery } from '../../../../utils/redirect';
+import navigationHeaderStyles from '../navigationHeader.module.scss';
 
 type LoginStatusLinkProps = ReturnType<typeof mapStateToProps>;
 
@@ -21,7 +22,11 @@ const LoginStatusLinkComponent: React.FC<LoginStatusLinkProps & { onLoginClick?:
   const previousPath = getPreviousPathFromHrefQuery(route.pathname, route.query);
 
   return (
-    <ActiveLink href="/login" query={{ previousPath }}>
+    <ActiveLink
+      href="/login"
+      query={{ previousPath }}
+      activeClassName={navigationHeaderStyles.active}
+    >
       <a onClick={onLoginClick}>Zaloguj</a>
     </ActiveLink>
   );

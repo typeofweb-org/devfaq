@@ -5,12 +5,13 @@ import {
 import React from 'react';
 import ActiveLink from '../../../activeLink/ActiveLink';
 import styles from './technologyFilter.module.scss';
+import levelStyles from '../levelFilter/levelFilter.module.scss';
 
 export class TechnologyFilter extends React.Component {
   render() {
     return (
       <div>
-        <h2 className={styles.appFilterTitle}>Wybierz technologię</h2>
+        <h2 className={levelStyles.appFilterTitle}>Wybierz technologię</h2>
         <ul className={styles.appFilterTechnologies}>
           {technologyIconItems.map(this.renderTechnologyItem)}
         </ul>
@@ -26,6 +27,7 @@ export class TechnologyFilter extends React.Component {
           href="/questions/[technology]"
           query={{ technology: technology.name }}
           onClick={() => this.reportSelectTechnologyEvent(technology.label)}
+          activeClassName={styles.active}
         >
           <a title={technology.label}>
             <span className={styles.appFilterTechnologyLabel}>{technology.label}</span>

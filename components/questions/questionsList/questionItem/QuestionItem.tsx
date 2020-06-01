@@ -120,17 +120,11 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
   renderMeta() {
     const { question } = this.props;
     const keywords = [question._levelId, question._categoryId].join(', ');
+    const className = `tag_${question._levelId}` as 'tag_junior' | 'tag_mid' | 'tag_senior';
 
     return (
       <div className={styles.appQuestionsQuestionMeta}>
-        <span
-          className={classNames(
-            styles.appQuestionsQuestionTag,
-            styles[`app-questions--question--tag_${question._levelId}`]
-          )}
-        >
-          {question._levelId}
-        </span>
+        <span className={classNames(styles.tag, styles[className])}>{question._levelId}</span>
         <meta itemProp="dateCreated" content={question.acceptedAt} />
         <meta itemProp="keywords" content={keywords} />
         <time
@@ -140,7 +134,11 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
             styles.appQuestionsQuestionDateLong
           )}
         >
-          <ActiveLink href="/questions/p/[id]" query={{ id: String(question.id) }}>
+          <ActiveLink
+            href="/questions/p/[id]"
+            query={{ id: String(question.id) }}
+            activeClassName=""
+          >
             <a>{longDate(question.acceptedAt)}</a>
           </ActiveLink>
         </time>

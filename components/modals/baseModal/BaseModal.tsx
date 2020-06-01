@@ -117,14 +117,18 @@ export default class BaseModal extends React.Component<BaseModalOwnProps> {
     const { closable, type, renderContent, renderFooter } = this.props;
     return (
       <div
-        className={classNames(styles.appModalContainer, this.props.className)}
+        className={classNames(
+          'app-modal-container',
+          styles.appModalContainer,
+          this.props.className
+        )}
         role="dialog"
         tabIndex={0}
         aria-modal={true}
         aria-labelledby={this.props['aria-labelledby']}
         aria-describedby={this.props['aria-describedby']}
       >
-        <div className={styles.appModal}>
+        <div className={classNames('app-modal', styles.appModal)}>
           {closable && (
             <header className={styles.appModalHeader}>
               <button className={styles.appModalClose} title="Zamknij" onClick={this.close}>

@@ -12,17 +12,17 @@ const AppFooter = () => {
         <nav className={styles.footerNavigation}>
           <ul className={styles.footerNavigationLinks}>
             <li className={classNames(styles.footerNavigationLinksItem, 'mobile-hide')}>
-              <ActiveLink href="/about">
+              <ActiveLink href="/about" activeClassName="">
                 <a>Jak korzystać?</a>
               </ActiveLink>
             </li>
             <li className={styles.footerNavigationLinksItem}>
-              <ActiveLink href="/regulations">
+              <ActiveLink href="/regulations" activeClassName="">
                 <a>Regulamin</a>
               </ActiveLink>
             </li>
             <li className={classNames(styles.footerNavigationLinksItem, 'mobile-hide')}>
-              <ActiveLink href="/authors">
+              <ActiveLink href="/authors" activeClassName="">
                 <a>Autorzy</a>
               </ActiveLink>
             </li>
