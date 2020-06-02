@@ -43,7 +43,7 @@ jobs:
       - run: echo 'export DEPLOYMENT_URL=$(cat .deployment-url)' >> $BASH_ENV
       - lighthouse-check/audit:
           urls: ${DEPLOYMENT_URL}
-          prCommentAccessToken: ${GITHUB_ACCESS_TOKEN}
+          prCommentAccessToken: ${DANGER_GITHUB_API_TOKEN}
           prCommentEnabled: true
           prCommentUrl: https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/pulls/${CIRCLE_PR_NUMBER}/reviews
 
