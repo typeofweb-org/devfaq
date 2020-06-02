@@ -41,6 +41,7 @@ jobs:
       - run: ./node_modules/.bin/ts-node-script scripts/waitForVercel.ts
       - run: cat .deployment-url
       - run: echo 'export DEPLOYMENT_URL=$(cat .deployment-url)' >> $BASH_ENV
+      - run: echo https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/pulls/${CIRCLE_PR_NUMBER}/reviews
       - lighthouse-check/audit:
           urls: ${DEPLOYMENT_URL}
           prCommentAccessToken: ${DANGER_GITHUB_API_TOKEN}
