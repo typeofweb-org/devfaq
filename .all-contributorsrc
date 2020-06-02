@@ -58,6 +58,24 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "mczeplowski",
+      "name": "mczeplowski",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/43904845?v=4",
+      "profile": "https://github.com/mczeplowski",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "drillprop",
+      "name": "Bartosz Dryl",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/51168865?v=4",
+      "profile": "https://github.com/drillprop",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
