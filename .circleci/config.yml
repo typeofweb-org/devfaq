@@ -4,13 +4,12 @@ orbs:
 
 jobs:
   compare-sizes:
-    executor:
-      name: node/default
+    executor: node/default
     steps:
       - checkout
       - node/with-cache:
-        steps:
-          - run: npm ci
+          steps:
+            - run: npm ci
 
       - run: npm run build > analyze.next
 
@@ -24,7 +23,7 @@ jobs:
       - run: npm run danger
 
       - store_artifacts:
-        path: ./current-size-snapshot.json
+          path: ./current-size-snapshot.json
 
 workflows:
   compare-sizes:
