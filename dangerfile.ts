@@ -5,10 +5,36 @@ import { danger, markdown, fail } from 'danger';
 import { exec } from 'child_process';
 import prettyBytes from 'pretty-bytes';
 import { lighthouseCheck } from '@foo-software/lighthouse-check';
-import lighthouseAuditTitles from '@foo-software/lighthouse-check/src/lighthouseAuditTitles';
-import getLighthouseScoreColor from '@foo-software/lighthouse-check/src/helpers/getLighthouseScoreColor.js';
 import Path from 'path';
 import { waitForVercel } from './scripts/waitForVercel';
+
+const lighthouseAuditTitles = {
+  accessibility: 'Accessibility',
+  bestPractices: 'Best Practices',
+  performance: 'Performance',
+  progressiveWebApp: 'Progressive Web App',
+  seo: 'SEO',
+};
+
+const getLighthouseScoreColor = ({ isHex, score }) => {
+  if (typeof score !== 'number') {
+    return !isHex ? 'lightgrey' : '#e0e0e0';
+  }
+
+  let scoreColor = !isHex ? 'green' : '#0cce6b';
+
+  // medium range
+  if (score < 90) {
+    scoreColor = !isHex ? 'orange' : '#ffa400';
+  }
+
+  // bad
+  if (score < 50) {
+    scoreColor = !isHex ? 'red' : '#f74531';
+  }
+
+  return scoreColor;
+};
 
 const getBadge = ({ title, score }: { title: string; score: number }) =>
   `![](https://img.shields.io/badge/${title}-${score}-${getLighthouseScoreColor({
