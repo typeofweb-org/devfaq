@@ -45,6 +45,6 @@ workflows:
   compare-sizes:
     jobs:
       - compare-sizes
-  lighthous:
+  lighthouse:
     jobs:
       - lighthouse
