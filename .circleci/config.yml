@@ -4,14 +4,14 @@ orbs:
 
 jobs:
   compare-sizes:
-    environment:
-      BASE_BRANCH: git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//'
     executor: node/default
     steps:
       - checkout
       - node/with-cache:
           steps:
             - run: npm ci
+
+      - run: export BASE_BRANCH=$(git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//')
 
       - run: npm run build > analyze.next
       - run: npm run create-size && mv size-snapshot.json current-size-snapshot.json
