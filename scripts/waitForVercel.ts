@@ -57,7 +57,7 @@ async function run() {
       }
       return status.target_url;
     } catch (err) {
-      if (i < 3) {
+      if (i < 10) {
         console.warn(err);
         await wait(30000); // 30s
         continue;
