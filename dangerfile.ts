@@ -1,9 +1,37 @@
 // @ts-nocheck
 // Based on https://github.com/mui-org/material-ui/blob/3eb02f5498857bd01bb7924eed9b946f33e39052/dangerfile.js
 // tslint:disable: no-implicit-dependencies
-import { danger, markdown } from 'danger';
+import { danger, markdown, fail } from 'danger';
 import { exec } from 'child_process';
 import prettyBytes from 'pretty-bytes';
+import { lighthouseCheck } from '@foo-software/lighthouse-check';
+import lighthouseAuditTitles from '@foo-software/lighthouse-check/src/lighthouseAuditTitles';
+import getLighthouseScoreColor from '@foo-software/lighthouse-check/src/helpers/getLighthouseScoreColor.js';
+import Path from 'path';
+import { waitForVercel } from './scripts/waitForVercel';
+
+const getBadge = ({ title, score }: { title: string; score: number }) =>
+  `![](https://img.shields.io/badge/${title}-${score}-${getLighthouseScoreColor({
+    isHex: false,
+    score,
+  })}?style=flat-square) `;
+
+type LighthouseResult = {
+  code: 'SUCCESS';
+  data: Array<{
+    name: string;
+    report: string;
+    url: string;
+    tag: string;
+    scores: {
+      accessibility: number;
+      bestPractices: number;
+      performance: number;
+      progressiveWebApp: number;
+      seo: number;
+    };
+  }>;
+};
 
 type Sizes = {
   parsed: {
@@ -83,9 +111,6 @@ async function loadComparison() {
   ) as Record<typeof bundleKeys[number], Sizes>;
 }
 
-/**
- * executes a git subcommand
- */
 function git(args: string): Promise<string> {
   return new Promise((resolve, reject) => {
     exec(`git ${args}`, (err, stdout) => {
@@ -98,9 +123,6 @@ function git(args: string): Promise<string> {
   });
 }
 
-/**
- * Generates a user-readable string from a percentage change
- */
 function addPercent(change: number, goodEmoji = '', badEmoji = ':small_red_triangle:') {
   const formatted = (change * 100).toFixed(2);
   if (/^-|^0(?:\.0+)$/.test(formatted)) {
@@ -123,9 +145,6 @@ function formatDiff(absoluteChange: number, relativeChange: number) {
   )})`;
 }
 
-/**
- * Generates a Markdown table
- */
 function generateMDTable(
   headers: Array<{ label: string; align: 'left' | 'center' | 'right' }>,
   body: string[][]
@@ -144,9 +163,6 @@ function generateMDTable(
   return [headerRow, alignmentRow, ...body].map((row) => row.join(' | ')).join('\n');
 }
 
-/**
- *
- */
 function createComparisonTable(
   entries: ComparisonBundleEntry[],
   options: { computeBundleLabel(x: string): string }
@@ -192,7 +208,72 @@ function createComparisonTable(
   );
 }
 
-async function run() {
+async function commentLightHouseReport() {
+  const {
+    DANGER_GITHUB_API_TOKEN,
+    CIRCLE_PROJECT_USERNAME,
+    CIRCLE_PROJECT_REPONAME,
+    CIRCLE_PR_NUMBER,
+    CIRCLE_BUILD_NUM,
+  } = process.env;
+  if (!DANGER_GITHUB_API_TOKEN) {
+    throw new Error(`Missing DANGER_GITHUB_API_TOKEN!`);
+  }
+  if (!CIRCLE_PROJECT_USERNAME) {
+    throw new Error(`Missing CIRCLE_PROJECT_USERNAME!`);
+  }
+  if (!CIRCLE_PROJECT_REPONAME) {
+    throw new Error(`Missing CIRCLE_PROJECT_REPONAME!`);
+  }
+  if (!CIRCLE_PR_NUMBER) {
+    throw new Error(`Missing CIRCLE_PR_NUMBER!`);
+  }
+  if (!CIRCLE_BUILD_NUM) {
+    throw new Error(`Missing CIRCLE_BUILD_NUM!`);
+  }
+
+  return waitForVercel()
+    .then(async (url) => {
+      const results: LighthouseResult = await lighthouseCheck({
+        urls: [url],
+        prCommentAccessToken: `${DANGER_GITHUB_API_TOKEN}`,
+        prCommentEnabled: true,
+        prCommentUrl: `https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/pulls/${CIRCLE_PR_NUMBER}/reviews`,
+        outputDirectory: Path.join('/tmp/lighthouse/'),
+      });
+      const repo = await danger.github.api.repos.get({
+        owner: CIRCLE_PROJECT_USERNAME,
+        repo: CIRCLE_PROJECT_REPONAME,
+      });
+
+      const result = results.data[0];
+
+      let mrkd = '';
+
+      (Object.keys(result.scores) as Array<keyof typeof result.scores>).forEach((current) => {
+        mrkd += getBadge({
+          title: lighthouseAuditTitles[current].replace(/ /g, '%20'),
+          score: result.scores[current],
+        });
+      });
+
+      const artifactsUrl = `https://${CIRCLE_BUILD_NUM}-${repo.data.id}-gh.circle-artifacts.com/0/tmp/lighthouse/`;
+      mrkd += `\n\n${result.url}`;
+      mrkd += `\n\n[Full report](${artifactsUrl})`;
+
+      markdown(
+        `
+# Lighthouse results
+${mrkd}
+`.trim()
+      );
+    })
+    .catch((err) => {
+      fail(err.message || err);
+    });
+}
+
+async function commentSizesReport() {
   // const upstreamRepo = danger.github.pr.base.repo.full_name;
   const baseBranch = danger.github.pr.base.ref; // i.e. develop
   const prBranch = danger.github.pr.head.ref;
@@ -254,6 +335,11 @@ async function run() {
 `;
 
   markdown(details);
+}
+
+async function run() {
+  await commentSizesReport();
+  await commentLightHouseReport();
 }
 
 (async () => {

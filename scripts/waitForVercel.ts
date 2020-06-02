@@ -5,7 +5,7 @@ import Path from 'path';
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-async function run() {
+export async function waitForVercel() {
   const {
     CIRCLE_PROJECT_REPONAME,
     CIRCLE_SHA1,
@@ -67,12 +67,3 @@ async function run() {
     }
   }
 }
-
-run()
-  .then((url) => {
-    return Fs.writeFileSync(Path.join(__dirname, '../.deployment-url'), url, 'utf8');
-  })
-  .catch((err) => {
-    console.error(err);
-    process.exit(1);
-  });
