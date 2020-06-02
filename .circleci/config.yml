@@ -14,7 +14,7 @@ jobs:
       - run: git status
       - run: npm run build > analyze.next
       - run: cat analyze.next
-      - run: npm run create-size && mv size-snapshot.json current-size-snapshot.json
+      - run: npm run create-size && mv size-snapshot.json /tmp/current-size-snapshot.json
       - run: rm analyze.next && rm -rf .next
 
       - run: git fetch && git checkout develop && git reset --hard origin/develop
@@ -23,6 +23,7 @@ jobs:
       - run: npm run build > analyze.next
       - run: cat analyze.next
       - run: npm run create-size && mv size-snapshot.json previous-size-snapshot.json
+      - run: mv /tmp/current-size-snapshot.json ./
 
       - run: npm run danger ci
 
