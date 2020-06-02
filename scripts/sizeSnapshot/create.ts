@@ -90,6 +90,8 @@ async function getNextPagesSize(): Promise<
     if (pageUrl.startsWith('css/')) {
       cssChunks.push(prettyBytesInverse(sizeFormatted, sizeUnit));
       return null;
+    } else if (pageUrl === 'static/pages/_app.js') {
+      snapshotId = 'shared:_app.js';
     } else if (/^runtime\/main\.(.+)\.js$/.test(pageUrl)) {
       snapshotId = 'shared:runtime/main';
     } else if (/^runtime\/webpack\.(.+)\.js$/.test(pageUrl)) {
@@ -115,15 +117,16 @@ async function getNextPagesSize(): Promise<
       {
         parsed: prettyBytesInverse(sizeFormatted, sizeUnit),
         childrenSize: childrenSizeSum,
-        children: children.map((c) => ({
-          [c.pageUrl.replace(/\/[a-z0-9]{20}/, '/[hash]')]: {
-            parsed: prettyBytesInverse(c.sizeFormatted, c.sizeUnit),
-          },
-        })),
+        children: children.reduce((acc, c) => {
+          const key = c.pageUrl.replace(/\/[a-z0-9]{20}/, '/[hash]');
+          acc[key] = acc[key] || { parsed: 0 };
+          acc[key].parsed += prettyBytesInverse(c.sizeFormatted, c.sizeUnit);
+          return acc;
+        }, {} as Record<string, { parsed: number }>),
       } as {
         parsed: number;
         childrenSize: number;
-        children: Array<Record<string, { parsed: number }>>;
+        children: Record<string, { parsed: number }>;
         count?: number;
       },
     ] as const;
@@ -141,7 +144,7 @@ async function getNextPagesSize(): Promise<
       parsed: jsChunks.reduce((sum, size) => sum + size, 0),
       count: jsChunks.length,
       childrenSize: 0,
-      children: [],
+      children: {},
     },
   ]);
   nonEmptyEntries.push([
@@ -150,7 +153,7 @@ async function getNextPagesSize(): Promise<
       parsed: cssChunks.reduce((sum, size) => sum + size, 0),
       count: cssChunks.length,
       childrenSize: 0,
-      children: [],
+      children: {},
     },
   ]);
 

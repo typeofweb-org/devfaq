@@ -11,15 +11,24 @@ type Sizes = {
     absoluteDiff: number;
     relativeDiff: number;
   };
+  children: Record<
+    string,
+    {
+      parsed: {
+        previous: number;
+        current: number;
+        absoluteDiff: number;
+        relativeDiff: number;
+      };
+    }
+  >;
 };
 type ComparisonBundleEntry = [string, Sizes];
 
-const nullSnapshot = { parsed: 0 };
+const nullSnapshot = { parsed: 0, children: {} as Record<string, { parsed: number }> };
 
 async function loadComparison() {
-  // @ts-ignore
   const previousSnapshot = (await import('./previous-size-snapshot.json')).default;
-  // @ts-ignore
   const currentSnapshot = (await import('./current-size-snapshot.json')).default;
 
   const bundleKeys = Object.keys({ ...currentSnapshot, ...previousSnapshot }) as Array<
@@ -28,18 +37,43 @@ async function loadComparison() {
 
   return Object.fromEntries(
     bundleKeys.map((bundle) => {
-      const currentSize = currentSnapshot[bundle] || nullSnapshot;
-      const previousSize = previousSnapshot[bundle] || nullSnapshot;
+      const current = currentSnapshot[bundle] || nullSnapshot;
+      const previous = previousSnapshot[bundle] || nullSnapshot;
+
+      const currentChildrenKeys = Object.keys(current.children);
+      const previousChildrenKeys = Object.keys(previous.children);
+      const allKeys = [...new Set([...currentChildrenKeys, ...previousChildrenKeys])];
+
+      const children = Object.fromEntries(
+        allKeys.map((key) => {
+          const currentChild =
+            current.children[key as keyof typeof current.children] || nullSnapshot;
+          const previousChild =
+            previous.children[key as keyof typeof previous.children] || nullSnapshot;
+          return [
+            key,
+            {
+              parsed: {
+                previous: previousChild.parsed,
+                current: currentChild.parsed,
+                absoluteDiff: currentChild.parsed - previousChild.parsed,
+                relativeDiff: currentChild.parsed / previousChild.parsed - 1,
+              },
+            },
+          ];
+        })
+      );
 
       return [
         bundle,
         {
           parsed: {
-            previous: previousSize.parsed,
-            current: currentSize.parsed,
-            absoluteDiff: currentSize.parsed - previousSize.parsed,
-            relativeDiff: currentSize.parsed / previousSize.parsed - 1,
+            previous: previous.parsed,
+            current: current.parsed,
+            absoluteDiff: current.parsed - previous.parsed,
+            relativeDiff: current.parsed / previous.parsed - 1,
           },
+          children,
         },
       ];
     })
@@ -118,7 +152,7 @@ function createComparisonTable(
 
   return generateMDTable(
     [
-      { label: 'bundle', align: 'left' },
+      { label: 'File', align: 'left' },
       { label: 'Size Change', align: 'right' },
       { label: 'Size', align: 'right' },
     ],
@@ -134,12 +168,23 @@ function createComparisonTable(
         }
         return compareParsedDiff;
       })
-      .map(([label, { parsed }]) => {
-        return [
-          label,
-          formatDiff(parsed.absoluteDiff, parsed.relativeDiff),
-          prettyBytes(parsed.current),
+      .flatMap(([label, { parsed, children }]) => {
+        const result = [
+          [
+            label,
+            formatDiff(parsed.absoluteDiff, parsed.relativeDiff),
+            prettyBytes(parsed.current),
+          ],
+          ...Object.entries(children).map(([childName, { parsed }]) => {
+            return [
+              `  └ ${childName}`,
+              formatDiff(parsed.absoluteDiff, parsed.relativeDiff),
+              prettyBytes(parsed.current),
+            ];
+          }),
         ];
+
+        return result;
       })
   );
 }
@@ -153,11 +198,20 @@ async function run() {
   const commitRange = `${mergeBaseCommit}...${prBranch}`;
   const comparison = await loadComparison();
 
-  const results = Object.entries(comparison) as Array<[keyof typeof comparison, Sizes]>;
+  const results = Object.entries(comparison);
+
+  const summary = results.reduce(
+    (acc, x) => {
+      acc.current += x[1].parsed.current || 0;
+      acc.previous += x[1].parsed.previous || 0;
+      return acc;
+    },
+    { current: 0, previous: 0 }
+  );
 
   const pageDetailsTable = createComparisonTable(results, {
     computeBundleLabel: (bundleId) => {
-      if (bundleId.startsWith('shared:') || bundleId === 'static/pages/_app.js') {
+      if (bundleId.startsWith('shared:')) {
         return bundleId;
       }
 
@@ -169,10 +223,21 @@ async function run() {
     },
   });
 
+  const summaryOfResults = {
+    previous: summary.previous,
+    current: summary.current,
+    absoluteDiff: summary.current - summary.previous,
+    relativeDiff: summary.current / summary.previous - 1,
+  };
+
   const details = `
-  <summary>Details of bundle changes.</summary>
+  ## Bundle size changes
 
   <p>Comparing: ${commitRange}</p>
+  
+  ### Summary
+  * Size change: ${formatDiff(summaryOfResults.absoluteDiff, summaryOfResults.relativeDiff)}
+  * Size: ${prettyBytes(summaryOfResults.current)}
 
   <details>
   <summary>Details of page changes</summary>
