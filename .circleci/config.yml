@@ -43,6 +43,9 @@ jobs:
       - run: echo 'export DEPLOYMENT_URL=$(cat .deployment-url)' >> $BASH_ENV
       - lighthouse-check/audit:
           urls: ${DEPLOYMENT_URL}
+          prCommentAccessToken: ${GITHUB_ACCESS_TOKEN}
+          prCommentEnabled: true
+          prCommentUrl: https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/pulls/${CIRCLE_PR_NUMBER}/reviews
 
 workflows:
   compare-sizes:
