@@ -18,10 +18,23 @@ interface ActiveLinkOwnProps {
 
 type ActiveLinkComponentProps = Omit<LinkProps, 'as'> & ActiveLinkOwnProps;
 
-class ActiveLinkComponent extends React.Component<
+const ActiveLinkComponent: React.FC<
   ActiveLinkComponentProps & ReturnType<typeof mapStateToProps>
-> {
-  conditionallyAddClassToChild = (
+> = ({
+  isMatch,
+  activeClassName,
+  disabledWhenActive,
+  query,
+  as,
+  children,
+  href,
+  replace,
+  scroll,
+  shallow,
+  passHref,
+  prefetch,
+}) => {
+  const conditionallyAddClassToChild = (
     shouldAddActiveClass: boolean,
     activeClassName: string,
     child: React.ReactElement<any>
@@ -36,47 +49,29 @@ class ActiveLinkComponent extends React.Component<
     return modifiedChild;
   };
 
-  render() {
-    const {
-      isMatch,
-      activeClassName,
-      disabledWhenActive,
-      query,
-      as,
-      children,
+  invariant(activeClassName != null, 'activeClassName is required!');
 
-      href,
-      replace,
-      scroll,
-      shallow,
-      passHref,
-      prefetch,
-    } = this.props;
+  const child = React.Children.only(children);
+  const newChild = conditionallyAddClassToChild(isMatch, activeClassName, child);
 
-    invariant(activeClassName != null, 'activeClassName is required!');
+  // if (isMatch && this.props.disabledWhenActive) {
+  //   return <div aria-disabled="true">{newChild}</div>;
+  // }
 
-    const child = React.Children.only(children);
-    const newChild = this.conditionallyAddClassToChild(isMatch, activeClassName, child);
-
-    // if (isMatch && this.props.disabledWhenActive) {
-    //   return <div aria-disabled="true">{newChild}</div>;
-    // }
-
-    return (
-      <Link
-        href={href}
-        as={as}
-        replace={replace}
-        scroll={scroll}
-        shallow={shallow}
-        passHref={passHref}
-        prefetch={prefetch}
-      >
-        {newChild}
-      </Link>
-    );
-  }
-}
+  return (
+    <Link
+      href={href}
+      as={as}
+      replace={replace}
+      scroll={scroll}
+      shallow={shallow}
+      passHref={passHref}
+      prefetch={prefetch}
+    >
+      {newChild}
+    </Link>
+  );
+};
 
 const checkForMatch = (
   routeDetails: RouteDetails,
