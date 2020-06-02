@@ -1,5 +1,5 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftypeofweb%2Fdevfaq-www.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftypeofweb%2Fdevfaq-www?ref=badge_shield)
 
@@ -18,6 +18,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/pavveu"><img src="https://avatars3.githubusercontent.com/u/108490?v=4" width="100px;" alt=""/><br /><sub><b>Pawel Pawlowski</b></sub></a><br /><a href="#design-pavveu" title="Design">🎨</a></td>
     <td align="center"><a href="https://github.com/Survikrowa"><img src="https://avatars2.githubusercontent.com/u/35381167?v=4" width="100px;" alt=""/><br /><sub><b>Survikrowa</b></sub></a><br /><a href="https://github.com/typeofweb/devfaq-www/commits?author=Survikrowa" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/mczeplowski"><img src="https://avatars3.githubusercontent.com/u/43904845?v=4" width="100px;" alt=""/><br /><sub><b>mczeplowski</b></sub></a><br /><a href="https://github.com/typeofweb/devfaq-www/commits?author=mczeplowski" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/drillprop"><img src="https://avatars3.githubusercontent.com/u/51168865?v=4" width="100px;" alt=""/><br /><sub><b>Bartosz Dryl</b></sub></a><br /><a href="https://github.com/typeofweb/devfaq-www/commits?author=drillprop" title="Code">💻</a></td>
   </tr>
 </table>
 
