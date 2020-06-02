@@ -23,7 +23,6 @@ async function run() {
   if (!CIRCLE_PROJECT_USERNAME) {
     throw new Error(`CIRCLE_PROJECT_USERNAME is missing!`);
   }
-
   if (!GITHUB_ACCESS_TOKEN) {
     throw new Error(`GITHUB_ACCESS_TOKEN is missing!`);
   }
