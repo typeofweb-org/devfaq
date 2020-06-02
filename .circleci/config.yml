@@ -11,19 +11,17 @@ jobs:
           steps:
             - run: npm ci
 
-      - run: export BASE_BRANCH=$(git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//')
-
       - run: npm run build > analyze.next
       - run: npm run create-size && mv size-snapshot.json current-size-snapshot.json
       - run: rm analyze.next && rm -rf .next
 
-      - run: echo Switching to base branch $BASE_BRANCH
-      - run: git checkout $BASE_BRANCH
+      - run: echo Switching to base branch $(git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//')
+      - run: git checkout $(git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//')
       - run: npm ci
       - run: npm run build > analyze.next
       - run: npm run create-size && mv size-snapshot.json previous-size-snapshot.json
 
-      - run: npm run danger
+      - run: npm run danger ci
 
       - store_artifacts:
           path: ./current-size-snapshot.json
