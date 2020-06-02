@@ -1,4 +1,5 @@
-// https://github.com/mui-org/material-ui/blob/3eb02f5498857bd01bb7924eed9b946f33e39052/dangerfile.js
+// @ts-nocheck
+// Based on https://github.com/mui-org/material-ui/blob/3eb02f5498857bd01bb7924eed9b946f33e39052/dangerfile.js
 // tslint:disable: no-implicit-dependencies
 import { danger, markdown } from 'danger';
 import { exec } from 'child_process';
