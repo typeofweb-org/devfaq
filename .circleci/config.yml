@@ -9,20 +9,23 @@ jobs:
     steps:
       - checkout
       - node/with-cache:
-          steps:
-            - run: npm ci
-            - run: npm run build > analyze.next
-            # current branch
-            - run: npm run create-size && mv size-snapshot.json current-size-snapshot.json
-            - run: rm analyze.next && rm -rf .next
-            # head branch
-            - run: git checkout $(git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//')
-            - run: npm ci
-            - run: npm run create-size && mv size-snapshot.json previous-size-snapshot.json
+        steps:
+          - run: npm ci
 
-            - run: npm run danger
+      - run: npm run build > analyze.next
+
+      - run: npm run create-size && mv size-snapshot.json current-size-snapshot.json
+      - run: rm analyze.next && rm -rf .next
+
+      - run: git checkout $(git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//')
+      - run: npm ci
+      - run: npm run create-size && mv size-snapshot.json previous-size-snapshot.json
+
+      - run: npm run danger
+
       - store_artifacts:
-          path: ./current-size-snapshot.json
+        path: ./current-size-snapshot.json
+
 workflows:
   compare-sizes:
     jobs:
