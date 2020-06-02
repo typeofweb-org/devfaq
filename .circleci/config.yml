@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
   node: circleci/node@1.1.6
-  lighthouse-check: foo-software/lighthouse-check@0.0.12
 
 jobs:
   compare-sizes:
@@ -30,28 +29,10 @@ jobs:
 
       - store_artifacts:
           path: ./current-size-snapshot.json
-
-  lighthouse:
-    executor: lighthouse-check/default
-    steps:
-      - checkout
-      - node/with-cache:
-          steps:
-            - run: npm ci
-      - run: ./node_modules/.bin/ts-node-script scripts/waitForVercel.ts
-      - run: cat .deployment-url
-      - run: echo 'export DEPLOYMENT_URL=$(cat .deployment-url)' >> $BASH_ENV
-      - run: echo https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/pulls/${CIRCLE_PR_NUMBER}/reviews
-      - lighthouse-check/audit:
-          urls: ${DEPLOYMENT_URL}
-          prCommentAccessToken: ${DANGER_GITHUB_API_TOKEN}
-          prCommentEnabled: true
-          prCommentUrl: https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/pulls/${CIRCLE_PR_NUMBER}/reviews
+      - store_artifacts:
+          path: /tmp/lighthouse
 
 workflows:
   compare-sizes:
     jobs:
       - compare-sizes
-  lighthouse:
-    jobs:
-      - lighthouse

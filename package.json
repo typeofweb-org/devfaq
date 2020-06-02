@@ -51,6 +51,7 @@
     "xss": "1.0.6"
   },
   "devDependencies": {
+    "@foo-software/lighthouse-check": "0.0.90",
     "@octokit/rest": "16.43.1",
     "@types/classnames": "2.2.10",
     "@types/commonmark": "0.27.4",
