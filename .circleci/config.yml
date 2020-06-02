@@ -32,7 +32,7 @@ jobs:
           path: ./current-size-snapshot.json
 
   lighthouse:
-    executor: node/default
+    executor: lighthouse-check/default
     steps:
       - checkout
       - node/with-cache:
@@ -40,6 +40,9 @@ jobs:
             - run: npm ci
       - run: ./node_modules/.bin/ts-node-script scripts/waitForVercel.ts
       - run: cat .deployment-url
+      - run: echo 'export DEPLOYMENT_URL=$(cat .deployment-url)' >> $BASH_ENV
+      - lighthouse-check/audit:
+          urls: ${DEPLOYMENT_URL}
 
 workflows:
   compare-sizes:
