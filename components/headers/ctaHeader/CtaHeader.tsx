@@ -13,7 +13,7 @@ import { ActionCreators } from '../../../redux/actions';
 
 const CtaHeaderComponent: React.FC<
   ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
-> = ({ uiOpenAddQuestionModal, areAnyQuestionSelected, isAdmin }) => {
+> = React.memo(({ uiOpenAddQuestionModal, areAnyQuestionSelected, isAdmin }) => {
   const onDownloadClick: React.MouseEventHandler<HTMLElement> = (_event) => {
     reportEvent('Pobierz plik PDF');
     // @todo open DownloadSuccessModal
@@ -81,7 +81,7 @@ const CtaHeaderComponent: React.FC<
       </header>
     </div>
   );
-};
+});
 
 const mapStateToProps = (state: AppState) => {
   return {

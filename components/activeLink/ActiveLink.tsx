@@ -20,58 +20,60 @@ type ActiveLinkComponentProps = Omit<LinkProps, 'as'> & ActiveLinkOwnProps;
 
 const ActiveLinkComponent: React.FC<
   ActiveLinkComponentProps & ReturnType<typeof mapStateToProps>
-> = ({
-  isMatch,
-  activeClassName,
-  disabledWhenActive,
-  query,
-  as,
-  children,
-  href,
-  replace,
-  scroll,
-  shallow,
-  passHref,
-  prefetch,
-}) => {
-  const conditionallyAddClassToChild = (
-    shouldAddActiveClass: boolean,
-    activeClassName: string,
-    child: React.ReactElement<any>
-  ): React.ReactElement<any> => {
-    if (!shouldAddActiveClass) {
-      return child;
-    }
-    const modifiedChild = React.cloneElement(child, {
-      ...child.props,
-      className: classNames(child.props.className, { [activeClassName]: shouldAddActiveClass }),
-    });
-    return modifiedChild;
-  };
+> = React.memo(
+  ({
+    isMatch,
+    activeClassName,
+    disabledWhenActive,
+    query,
+    as,
+    children,
+    href,
+    replace,
+    scroll,
+    shallow,
+    passHref,
+    prefetch,
+  }) => {
+    const conditionallyAddClassToChild = (
+      shouldAddActiveClass: boolean,
+      activeClassName: string,
+      child: React.ReactElement<any>
+    ): React.ReactElement<any> => {
+      if (!shouldAddActiveClass) {
+        return child;
+      }
+      const modifiedChild = React.cloneElement(child, {
+        ...child.props,
+        className: classNames(child.props.className, { [activeClassName]: shouldAddActiveClass }),
+      });
+      return modifiedChild;
+    };
 
-  invariant(activeClassName != null, 'activeClassName is required!');
+    invariant(activeClassName != null, 'activeClassName is required!');
 
-  const child = React.Children.only(children);
-  const newChild = conditionallyAddClassToChild(isMatch, activeClassName, child);
+    const child = React.Children.only(children);
+    const newChild = conditionallyAddClassToChild(isMatch, activeClassName, child);
 
-  // if (isMatch && this.props.disabledWhenActive) {
-  //   return <div aria-disabled="true">{newChild}</div>;
-  // }
+    // if (isMatch && this.props.disabledWhenActive) {
+    //   return <div aria-disabled="true">{newChild}</div>;
+    // }
 
-  return (
-    <Link
-      href={href}
-      as={as}
-      replace={replace}
-      scroll={scroll}
-      shallow={shallow}
-      passHref={passHref}
-      prefetch={prefetch}
-    >
-      {newChild}
-    </Link>
-  );
-};
+    return (
+      <Link
+        href={href}
+        as={as}
+        replace={replace}
+        scroll={scroll}
+        shallow={shallow}
+        passHref={passHref}
+        prefetch={prefetch}
+      >
+        {newChild}
+      </Link>
+    );
+  }
+);
 
 const checkForMatch = (
   routeDetails: RouteDetails,
