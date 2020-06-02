@@ -218,10 +218,14 @@ async function run() {
         return bundleId;
       }
 
+      const owner = danger.github.pr.head.repo.owner.login;
+
+      const path = owner === 'typeofweb' ? '' : `fork-${owner}-`;
+
       // nicer URLs
       const page = bundleId.replace('[technology]', 'js').replace('[id]', '247');
 
-      const host = `https://devfaq-www-git-${danger.github.pr.head.ref}.typeofweb.now.sh`;
+      const host = `https://devfaq-www-git-${path}${danger.github.pr.head.ref}.typeofweb.now.sh`;
       return `[${bundleId}](${host}${page})`;
     },
   });
