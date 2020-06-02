@@ -4,6 +4,8 @@ orbs:
 
 jobs:
   compare-sizes:
+    environment:
+      BASE_BRANCH: $(git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//')
     executor: node/default
     steps:
       - checkout
@@ -12,12 +14,13 @@ jobs:
             - run: npm ci
 
       - run: npm run build > analyze.next
-
       - run: npm run create-size && mv size-snapshot.json current-size-snapshot.json
       - run: rm analyze.next && rm -rf .next
 
-      - run: git checkout $(git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//')
+      - run: echo Switching to base branch $BASE_BRANCH
+      - run: git checkout $BASE_BRANCH
       - run: npm ci
+      - run: npm run build > analyze.next
       - run: npm run create-size && mv size-snapshot.json previous-size-snapshot.json
 
       - run: npm run danger
