@@ -13,6 +13,7 @@
     "test": "npm run test:tsc && npm run jest",
     "test:tsc": "tsc --project tsconfig.json --noEmit && tslint -p tsconfig.json",
     "jest": "jest",
+    "create-size": "ts-node-script scripts/sizeSnapshot/create.ts",
     "danger": "danger"
   },
   "dependencies": {
@@ -54,6 +55,7 @@
     "@types/commonmark": "0.27.4",
     "@types/cookie-parser": "1.4.2",
     "@types/express": "4.17.6",
+    "@types/fs-extra": "9.0.1",
     "@types/invariant": "2.2.33",
     "@types/jest": "25.2.3",
     "@types/lodash": "4.14.154",
@@ -68,6 +70,7 @@
     "cross-env": "7.0.2",
     "danger": "10.2.0",
     "fast-check": "1.24.2",
+    "fs-extra": "9.0.0",
     "husky": "4.2.5",
     "jest": "26.0.1",
     "prettier": "2.0.5",
@@ -77,7 +80,8 @@
     "tslint": "5.18.0",
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.9.4",
-    "typescript-plugin-css-modules": "2.3.0"
+    "typescript-plugin-css-modules": "2.3.0",
+    "webpack-bundle-analyzer": "3.8.0"
   },
   "engines": {
     "node": "12.x.x"

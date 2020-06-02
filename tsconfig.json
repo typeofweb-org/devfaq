@@ -33,6 +33,13 @@
       }
     ]
   },
-  "exclude": ["node_modules", "**/*.spec.ts", "**/*.spec.tsx", "**/*.test.ts", "**/*.test.tsx"],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "dangerfile.ts"
+  ],
   "include": ["**/*.ts", "**/*.tsx"]
 }

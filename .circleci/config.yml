@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@1.1.6
 
 jobs:
-  build-and-test:
+  compare-sizes:
     executor:
       name: node/default
     steps:
@@ -11,17 +11,19 @@ jobs:
       - node/with-cache:
           steps:
             - run: npm ci
-            - run: npm run build
-            - run: npm
-      - attach_workspace:
-        at: /tmp/workspace
+            - run: npm run build > analyze.next
+            # current branch
+            - run: npm run create-size && mv size-snapshot.json current-size-snapshot.json
+            - run: rm analyze.next && rm -rf .next
+            # head branch
+            - run: git checkout $(git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//')
+            - run: npm ci
+            - run: npm run create-size && mv size-snapshot.json previous-size-snapshot.json
+
+            - run: npm run danger
       - store_artifacts:
-          path: /tmp/workspace/bundle-sizes.json
-      - persist_to_workspace:
-          root: /tmp/workspace
-          paths:
-            - bundle-sizes.json
+          path: ./current-size-snapshot.json
 workflows:
-  build-and-test:
+  compare-sizes:
     jobs:
-      - build-and-test
+      - compare-sizes
