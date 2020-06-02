@@ -13,14 +13,19 @@ function readDirRecursively(paths) {
 }
 
 const base = ['.next', 'static'];
-module.exports = readDirRecursively(base)
+const pages = readDirRecursively(base)
   .map((path) => {
     // remove with or without trailing separator
     const relativePath = path
       .replace(Path.join(...base) + Path.sep, '')
       .replace(Path.join(...base), '');
     const segments = relativePath.split(Path.sep);
-
+    return { segments, path };
+  })
+  .filter(({ segments, path }) => {
+    return !['runtime', 'css', 'chunks'].includes(segments[0]);
+  })
+  .map(({ segments, path }) => {
     // if it's longer than 8 then we assume it's the directory Next.js
     // randomly generates and we want to skip its name
     if (segments[0].length > 8) {
@@ -29,11 +34,7 @@ module.exports = readDirRecursively(base)
     return { segments, path };
   })
   .filter(({ segments, path }) => {
-    // skip
-    if (['_buildManifest.js', '_ssgManifest.js'].includes(segments[0])) {
-      return false;
-    }
-    return true;
+    return !['_buildManifest.js', '_ssgManifest.js'].includes(segments[0]);
   })
   .map(({ segments, path }) => {
     return {
@@ -43,3 +44,15 @@ module.exports = readDirRecursively(base)
       gzip: true,
     };
   });
+
+module.exports = [
+  ...pages,
+  ...['runtime', 'css', 'chunks'].map((name) => {
+    return {
+      path: Path.join(...base, name),
+      name,
+      running: false,
+      gzip: true,
+    };
+  }),
+];
