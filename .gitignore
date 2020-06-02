@@ -4,3 +4,7 @@ npm-debug.log
 /.next/
 /out/
 .version
+previous-size-snapshot.json
+current-size-snapshot.json
+size-snapshot.json
+analyze.next

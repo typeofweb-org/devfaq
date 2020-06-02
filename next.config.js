@@ -8,6 +8,28 @@ const withOffline = require('next-offline');
 
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
+const withBundleAnalyzer = (nextConfig = {}) => {
+  return Object.assign({}, nextConfig, {
+    webpack(config, options) {
+      if (process.env.ANALYZE && !options.isServer) {
+        const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+        config.plugins.push(
+          new BundleAnalyzerPlugin({
+            analyzerMode: 'json',
+            generateStatsFile: true,
+            statsFilename: options.isServer ? '../analyze/server.json' : './analyze/client.json',
+          })
+        );
+      }
+
+      if (typeof nextConfig.webpack === 'function') {
+        return nextConfig.webpack(config, options);
+      }
+      return config;
+    },
+  });
+};
+
 const regexEqual = (x, y) => {
   return (
     x instanceof RegExp &&
@@ -57,13 +79,15 @@ const withPolyfills = (module.exports = (nextConfig = {}) => {
   });
 });
 
-const config = withPolyfills(
-  withImages({
-    webpack: (config, options) => {
-      config.plugins.push(new LodashModuleReplacementPlugin());
-      return config;
-    },
-  })
+const config = withBundleAnalyzer(
+  withPolyfills(
+    withImages({
+      webpack: (config, options) => {
+        config.plugins.push(new LodashModuleReplacementPlugin());
+        return config;
+      },
+    })
+  )
 );
 
 config.exportPathMap = function () {
@@ -72,10 +96,6 @@ config.exportPathMap = function () {
     '/authors': { page: '/authors' },
     '/regulations': { page: '/regulations' },
   };
-};
-
-config.experimental = {
-  publicDirectory: true,
 };
 
 config.env = {
