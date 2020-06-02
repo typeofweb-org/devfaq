@@ -53,11 +53,3 @@ jobs:
       - name: Run build
         if: steps.cache-to-skip.outputs.cache-hit != 'true'
         run: npm run build
-
-      - name: Sizelimit
-        if: steps.cache-to-skip.outputs.cache-hit != 'true'
-        uses: typeofweb/size-limit-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          skip_step: build
-          artifact-name: size-limit.md
