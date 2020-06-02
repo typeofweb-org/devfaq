@@ -204,7 +204,6 @@ $shadow-width: 2px;
   &--voting {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
     margin-top: 20px;
     color: $grey-dark;
     transition: color 0.2s;
