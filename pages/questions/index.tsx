@@ -2,12 +2,10 @@ import React from 'react';
 import { redirect } from '../../utils/redirect';
 import { GetInitialPropsContext } from '../../utils/types';
 
-export default class QuestionsPage extends React.PureComponent {
-  static async getInitialProps(ctx: GetInitialPropsContext) {
-    return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx);
-  }
+const QuestionsPage = () => null;
 
-  render() {
-    return null;
-  }
-}
+QuestionsPage.getInitialProps = async (ctx: GetInitialPropsContext) => {
+  return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx);
+};
+
+export default QuestionsPage;

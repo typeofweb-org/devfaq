@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import Layout from '../../components/layout/Layout';
 import QuestionsListLayout from '../../components/questions/questionsListLayout/QuestionsListLayout';
 import { redirect } from '../../utils/redirect';
@@ -15,60 +15,51 @@ import { Dispatch } from 'redux';
 import styles from '../pages.module.scss';
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
-class QuestionsPageComponent extends React.Component<Props> {
-  static async getInitialProps(ctx: GetInitialPropsContext) {
-    if (!ctx.query || !ctx.query.technology || Array.isArray(ctx.query.technology)) {
-      return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx);
-    }
+const QuestionsPageComponent = ({ technology, selectedLevels, reFetchQuestions }: Props) => {
+  const label = technology ? Technology[technology] : '';
 
-    const state = ctx.store.getState();
+  useEffect(() => {
+    reFetchQuestions();
+  }, [selectedLevels, reFetchQuestions]);
 
-    const page = getPage(state);
-
-    if (!page) {
-      return redirect(
-        '/questions/[technology]',
-        { technology: ctx.query.technology, page: '1' },
-        ctx
-      );
-    }
-
-    const sortBy = getSortByArray(state);
-
-    await ctx.store.dispatch(ActionCreators.fetchQuestions(page, sortBy, ctx));
-  }
-
-  componentDidUpdate(prevProps: Props) {
-    if (this.props.selectedLevels.length === prevProps.selectedLevels.length) {
-      return;
-    }
-
-    this.props.reFetchQuestions();
-  }
-
-  render() {
-    const { technology } = this.props;
-    const label = technology ? Technology[technology] : '';
-
-    return (
-      <Layout title={`Pytania ${label}`}>
-        <QuestionsListLayout>
-          <div className={styles.questionsContainer}>
-            <QuestionsSidebar />
-            <AllQuestions />
-          </div>
-          <MobileActionButtons justDownload={false} />
-        </QuestionsListLayout>
-      </Layout>
-    );
-  }
-}
+  return (
+    <Layout title={`Pytania ${label}`}>
+      <QuestionsListLayout>
+        <div className={styles.questionsContainer}>
+          <QuestionsSidebar />
+          <AllQuestions />
+        </div>
+        <MobileActionButtons justDownload={false} />
+      </QuestionsListLayout>
+    </Layout>
+  );
+};
 
 const mapStateToProps = (state: AppState) => {
   return {
     technology: getTechnology(state),
     selectedLevels: state.selectedLevels,
   };
+};
+
+QuestionsPageComponent.getInitialProps = async (ctx: GetInitialPropsContext) => {
+  if (!ctx.query || !ctx.query.technology || Array.isArray(ctx.query.technology)) {
+    return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx);
+  }
+
+  const state = ctx.store.getState();
+
+  const page = getPage(state);
+
+  if (!page) {
+    return redirect(
+      '/questions/[technology]',
+      { technology: ctx.query.technology, page: '1' },
+      ctx
+    );
+  }
+  const sortBy = getSortByArray(state);
+  await ctx.store.dispatch(ActionCreators.fetchQuestions(page, sortBy, ctx));
 };
 
 const mapDispatchToProps = (
@@ -87,4 +78,5 @@ const mapDispatchToProps = (
 };
 
 const QuestionsPage = connect(mapStateToProps, mapDispatchToProps)(QuestionsPageComponent);
+
 export default QuestionsPage;
