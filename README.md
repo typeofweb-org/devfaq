@@ -30,4 +30,6 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 
 ## License
+AGPL 3.0
+
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftypeofweb%2Fdevfaq-www.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftypeofweb%2Fdevfaq-www?ref=badge_large)
