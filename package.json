@@ -12,7 +12,8 @@
     "analyze": "cross-env ANALYZE=1 NODE_ENV=production next build",
     "test": "npm run test:tsc && npm run jest",
     "test:tsc": "tsc --project tsconfig.json --noEmit && tslint -p tsconfig.json",
-    "jest": "jest"
+    "jest": "jest",
+    "danger": "danger"
   },
   "dependencies": {
     "@sentry/browser": "5.15.5",
@@ -65,10 +66,12 @@
     "all-contributors-cli": "6.15.0",
     "babel-jest": "26.0.1",
     "cross-env": "7.0.2",
+    "danger": "10.2.0",
     "fast-check": "1.24.2",
     "husky": "4.2.5",
     "jest": "26.0.1",
     "prettier": "2.0.5",
+    "pretty-bytes": "5.3.0",
     "pretty-quick": "2.0.1",
     "ts-node": "8.10.2",
     "tslint": "5.18.0",
