@@ -4,7 +4,8 @@ orbs:
 
 jobs:
   compare-sizes:
-    # executor: node/default
+    branches:
+      ignore: /dependabot\/*/
     docker:
       - image: circleci/node:12-browsers
     steps:
