@@ -247,7 +247,6 @@ async function commentLightHouseReport() {
     DANGER_GITHUB_API_TOKEN,
     CIRCLE_PROJECT_USERNAME,
     CIRCLE_PROJECT_REPONAME,
-    CIRCLE_PR_NUMBER,
     CIRCLE_BUILD_NUM,
   } = process.env;
   if (!DANGER_GITHUB_API_TOKEN) {
@@ -258,9 +257,6 @@ async function commentLightHouseReport() {
   }
   if (!CIRCLE_PROJECT_REPONAME) {
     throw new Error(`Missing CIRCLE_PROJECT_REPONAME!`);
-  }
-  if (!CIRCLE_PR_NUMBER) {
-    throw new Error(`Missing CIRCLE_PR_NUMBER!`);
   }
   if (!CIRCLE_BUILD_NUM) {
     throw new Error(`Missing CIRCLE_BUILD_NUM!`);
