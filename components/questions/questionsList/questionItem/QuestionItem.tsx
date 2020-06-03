@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 
 import { Question } from '../../../../redux/reducers/questions';
 import { isQuestionSelected } from '../../questionsUtils';
-import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
+import AnimateHeight from '../../../animateProperty/AnimateProperty';
 import { isEqual } from 'lodash';
 import ActiveLink from '../../../activeLink/ActiveLink';
 import QuestionVoting from './QuestionVoting';
