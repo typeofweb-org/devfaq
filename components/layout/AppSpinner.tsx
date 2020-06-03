@@ -8,7 +8,7 @@ const SUSPENSE_TIME = 150;
 const AppSpinnerComponent: React.FC<ReturnType<typeof mapStateToProps>> = React.memo(
   ({ isLoading }) => {
     const [show, setShow] = useState(false);
-    let timerId = useRef<number | undefined>();
+    const timerId = useRef<number | undefined>();
 
     const startTimer = () => {
       if (isLoading) {
@@ -31,7 +31,7 @@ const AppSpinnerComponent: React.FC<ReturnType<typeof mapStateToProps>> = React.
 
     useEffect(() => {
       startTimer();
-      return () => stopTimer();
+      return stopTimer;
     }, [startTimer, stopTimer, isLoading]);
 
     return show ? <div className={styles.spinner} /> : null;
