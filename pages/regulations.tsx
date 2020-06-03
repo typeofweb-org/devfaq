@@ -8,7 +8,10 @@ import styles from './staticPage.module.scss';
 
 const RegulationsPage = () => {
   return (
-    <Layout title="Regulations">
+    <Layout
+      title="Regulamin DevFAQ.pl"
+      description="Niniejszy Regulamin określa zasady korzystania z serwisu DevFAQ.pl dla użytkowników indywidualnych"
+    >
       <Container>
         <article className={classNames(styles.appStaticPage, styles.regulations)}>
           <h2>Regulamin DevFAQ.pl</h2>

@@ -15,7 +15,21 @@ import type { RouteDetails, AppStore } from '../utils/types';
 import 'prismjs/themes/prism-coy.css';
 import './index.scss';
 
-export function reportWebVitals({ id, name, label, value }: any) {
+type WebVitalsReport =
+  | {
+      id: string;
+      name: 'CLS' | 'TTFB';
+      label: 'web-vital';
+      value: number;
+    }
+  | {
+      id: string;
+      name: 'Next.js-hydration';
+      label: 'custom';
+      value: number;
+    };
+
+export function reportWebVitals({ id, name, label, value }: WebVitalsReport) {
   // These metrics can be sent to any analytics service
   console.log({ id, name, label, value });
   gtag('event', name, {
