@@ -1,54 +1,42 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styles from './appSpinner.module.scss';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/reducers';
 
 const SUSPENSE_TIME = 150;
 
-class AppSpinnerComponent extends React.Component<
-  ReturnType<typeof mapStateToProps>,
-  { show: boolean }
-> {
-  state = { show: false };
+const AppSpinnerComponent: React.FC<ReturnType<typeof mapStateToProps>> = React.memo(
+  ({ isLoading }) => {
+    const [show, setShow] = useState(false);
+    let timerId = useRef<number | undefined>();
 
-  private timerId?: number;
-
-  startTimer() {
-    if (this.props.isLoading) {
-      if (!this.timerId && !this.state.show) {
-        this.timerId = window.setTimeout(() => {
-          this.setState({ show: true });
-        }, SUSPENSE_TIME);
+    const startTimer = () => {
+      if (isLoading) {
+        if (!timerId.current && !show) {
+          timerId.current = window.setTimeout(() => {
+            setShow(true);
+          }, SUSPENSE_TIME);
+        }
+      } else {
+        stopTimer();
+        if (show) {
+          setShow(false);
+        }
       }
-    } else {
-      this.stopTimer();
-      if (this.state.show) {
-        this.setState({ show: false });
-      }
-    }
-  }
+    };
+    const stopTimer = () => {
+      window.clearTimeout(timerId.current);
+      timerId.current = undefined;
+    };
 
-  stopTimer() {
-    window.clearTimeout(this.timerId);
-    this.timerId = undefined;
-  }
+    useEffect(() => {
+      startTimer();
+      return () => stopTimer();
+    }, [startTimer, stopTimer, isLoading]);
 
-  componentDidMount() {
-    this.startTimer();
+    return show ? <div className={styles.spinner} /> : null;
   }
-
-  componentDidUpdate() {
-    this.startTimer();
-  }
-
-  componentWillUnmount() {
-    this.stopTimer();
-  }
-
-  render() {
-    return this.state.show && <div className={styles.spinner} />;
-  }
-}
+);
 
 const mapStateToProps = (state: AppState) => {
   return {
