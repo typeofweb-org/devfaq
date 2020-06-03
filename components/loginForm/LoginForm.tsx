@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import { connect } from 'react-redux';
 
 import { ActionCreators } from '../../redux/actions';
@@ -12,7 +12,7 @@ import styles from './loginForm.module.scss';
 
 type LoginFormReduxProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-const LoginFormComponent: React.FC<LoginFormReduxProps> = React.memo(
+const LoginFormComponent: React.FC<LoginFormReduxProps> = memo(
   ({ user, isTransitioning, previousPath, auth, logInWithGitHub }) => {
     const reportEvent = (action: string) => {
       globalReportEvent(action, 'Logowanie');

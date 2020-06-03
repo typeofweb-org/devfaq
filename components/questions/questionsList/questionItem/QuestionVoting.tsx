@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import { ActionCreators } from '../../../../redux/actions';
@@ -27,11 +27,11 @@ const QuestionVotingComponent: React.FC<QuestionVotingProps> = ({
 }) => {
   const { votesCount, currentUserVotedOn } = question;
 
-  const reportEvent = React.useCallback((action: string) => {
+  const reportEvent = useCallback((action: string) => {
     globalReportEvent(action, 'Głosowanie');
   }, []);
 
-  const onVote = React.useCallback(() => {
+  const onVote = useCallback(() => {
     if (!isLoggedIn) {
       reportEvent('logowanie');
       redirect('/login', {

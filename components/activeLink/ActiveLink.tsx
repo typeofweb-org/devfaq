@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import invariant from 'invariant';
 import Link, { LinkProps } from 'next/link';
-import React from 'react';
+import React, { memo } from 'react';
 import { connect } from 'react-redux';
 
 import type { AppState } from '../../redux/reducers/index';
@@ -21,7 +21,7 @@ type ActiveLinkComponentProps = Omit<LinkProps, 'as'> & ActiveLinkOwnProps;
 
 const ActiveLinkComponent: React.FC<
   ActiveLinkComponentProps & ReturnType<typeof mapStateToProps>
-> = React.memo(
+> = memo(
   ({
     isMatch,
     activeClassName,

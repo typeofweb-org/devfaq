@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { memo } from 'react';
 import { connect } from 'react-redux';
 
 import { ActionCreators } from '../../../redux/actions';
@@ -15,7 +15,7 @@ import styles from './ctaHeader.module.scss';
 
 export const CtaHeaderComponent: React.FC<
   ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
-> = React.memo(({ uiOpenAddQuestionModal, areAnyQuestionSelected, isAdmin }) => {
+> = memo(({ uiOpenAddQuestionModal, areAnyQuestionSelected, isAdmin }) => {
   const onDownloadClick: React.MouseEventHandler<HTMLElement> = (_event) => {
     reportEvent('Pobierz plik PDF');
     // @todo open DownloadSuccessModal

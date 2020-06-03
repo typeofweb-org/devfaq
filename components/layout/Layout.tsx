@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { memo } from 'react';
 
 import env from '../../utils/env';
 import { AppFooter } from '../footer/AppFooter';
@@ -14,7 +14,7 @@ interface LayoutProps {
   title?: string;
   description?: string;
 }
-const Layout: React.FC<LayoutProps> = React.memo(
+const Layout: React.FC<LayoutProps> = memo(
   ({
     title = 'Front-end Frequently Asked Questions',
     description = 'DevFAQ.pl — największa baza pytań z front-endu tworzona przez społeczność. DevFAQ.pl jest serwisem internetowym służącym do udostępniania i wymiany pytań rekrutacyjnych na stanowiska front-end developerów.',
