@@ -24,6 +24,9 @@ jobs:
       - run: npm ci
       - run: npm run build > analyze.next
       - run: cat analyze.next
+      - run: mv analyze.next /tmp/
+      - run: git fetch && git checkout $CIRCLE_BRANCH && git reset --hard origin/$CIRCLE_BRANCH
+      - run: mv /tmp/analyze.next ./
       - run: npm run create-size && mv size-snapshot.json previous-size-snapshot.json
       - run: mv /tmp/current-size-snapshot.json ./
 
