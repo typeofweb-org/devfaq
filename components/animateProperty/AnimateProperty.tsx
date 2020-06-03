@@ -32,7 +32,6 @@ export const AnimateHeight: React.FC<AnimateHeightProps> = memo(
         }}
         onExiting={() => {
           if (!nodeRef.current) return;
-          console.log(nodeRef.current);
           nodeRef.current.style.height = '0';
           nodeRef.current.style.opacity = '0';
           nodeRef.current.style.minHeight = '0';
@@ -40,7 +39,6 @@ export const AnimateHeight: React.FC<AnimateHeightProps> = memo(
         }}
         onExited={() => {
           if (!nodeRef.current) return;
-          console.log(nodeRef.current);
           nodeRef.current.style.height = '';
           nodeRef.current.style.opacity = '';
           nodeRef.current.style.transition = '';
