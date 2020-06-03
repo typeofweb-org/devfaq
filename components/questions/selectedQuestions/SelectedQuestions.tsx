@@ -12,7 +12,7 @@ import { Question } from '../../../redux/reducers/questions';
 import { TechnologyKey, technologyIconItems } from '../../../constants/technology-icon-items';
 import { ActionCreators } from '../../../redux/actions';
 import { TransitionGroup } from 'react-transition-group';
-import { AnimateHeight } from '../../animateProperty/AnimateProperty';
+import AnimateHeight from '../../animateProperty/AnimateProperty';
 import { isEqual } from 'lodash';
 import styles from './selectedQuestions.module.scss';
 

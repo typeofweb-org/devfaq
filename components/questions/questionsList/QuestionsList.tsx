@@ -3,7 +3,7 @@ import { Question } from '../../../redux/reducers/questions';
 import styles from './questionsList.module.scss';
 import QuestionItem from './questionItem/QuestionItem';
 import { TransitionGroup } from 'react-transition-group';
-import { AnimateHeight } from '../../animateProperty/AnimateProperty';
+import AnimateHeight from '../../animateProperty/AnimateProperty';
 import { AppState } from '../../../redux/reducers/index';
 
 const defaultProps = {
