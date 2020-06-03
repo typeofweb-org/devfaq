@@ -32,16 +32,19 @@ export async function waitForVercel() {
   };
   const octokit = new Octokit.Octokit(options);
 
-  const deploymentsForThisPR = await octokit.repos.listDeployments({
-    owner: CIRCLE_PROJECT_USERNAME,
-    repo: CIRCLE_PROJECT_REPONAME,
-    sha: CIRCLE_SHA1,
-  });
-  const deployment = deploymentsForThisPR.data?.[0];
-  console.log({ deployment });
-
   for (let i = 0; ; ++i) {
     try {
+      const deploymentsForThisPR = await octokit.repos.listDeployments({
+        owner: CIRCLE_PROJECT_USERNAME,
+        repo: CIRCLE_PROJECT_REPONAME,
+        sha: CIRCLE_SHA1,
+      });
+      const deployment = deploymentsForThisPR.data?.[0];
+      console.log({ deployment });
+      if (!deployment) {
+        throw new Error(`Deployment not ready yet!`);
+      }
+
       const statuses = await octokit.repos.listDeploymentStatuses({
         owner: CIRCLE_PROJECT_USERNAME,
         repo: CIRCLE_PROJECT_REPONAME,
