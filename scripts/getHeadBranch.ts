@@ -1,6 +1,5 @@
 // tslint:disable: no-implicit-dependencies
 import Fs from 'fs';
-import Path from 'path';
 
 import Octokit from '@octokit/rest';
 
@@ -44,7 +43,8 @@ export async function getHeadBranch() {
 
 getHeadBranch()
   .then((name) => {
-    return Fs.writeFileSync(Path.join(__dirname, '../.headbranch'), name, 'utf8');
+    console.log({ name });
+    return Fs.writeFileSync('/tmp/.headbranch', name, 'utf8');
   })
   .catch((err) => {
     console.error(err);
