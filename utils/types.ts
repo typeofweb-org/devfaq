@@ -1,9 +1,9 @@
+import { NextPageContext } from 'next';
 import { SingletonRouter } from 'next/router';
 import { Store } from 'redux';
-import { AppState } from '../redux/reducers/index';
-import { AsyncAction } from '../redux/actions';
 
-import { NextPageContext } from 'next';
+import { AsyncAction } from '../redux/actions';
+import { AppState } from '../redux/reducers/index';
 
 export type AppStore = Store<AppState> & {
   dispatch<R>(asyncAction: AsyncAction<R>): R;

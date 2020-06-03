@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import styles from './appSpinner.module.scss';
 import { connect } from 'react-redux';
+
 import { AppState } from '../../redux/reducers';
+
+import styles from './appSpinner.module.scss';
 
 const SUSPENSE_TIME = 150;
 
@@ -10,7 +12,12 @@ const AppSpinnerComponent: React.FC<ReturnType<typeof mapStateToProps>> = React.
     const [show, setShow] = useState(false);
     const timerId = useRef<number | undefined>();
 
-    const startTimer = () => {
+    const stopTimer = React.useCallback(() => {
+      window.clearTimeout(timerId.current);
+      timerId.current = undefined;
+    }, []);
+
+    const startTimer = React.useCallback(() => {
       if (isLoading) {
         if (!timerId.current && !show) {
           timerId.current = window.setTimeout(() => {
@@ -23,16 +30,12 @@ const AppSpinnerComponent: React.FC<ReturnType<typeof mapStateToProps>> = React.
           setShow(false);
         }
       }
-    };
-    const stopTimer = () => {
-      window.clearTimeout(timerId.current);
-      timerId.current = undefined;
-    };
+    }, [isLoading, show, stopTimer]);
 
     useEffect(() => {
       startTimer();
       return stopTimer;
-    }, [startTimer, stopTimer, isLoading]);
+    }, [startTimer, stopTimer]);
 
     return show ? <div className={styles.spinner} /> : null;
   }

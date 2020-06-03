@@ -1,7 +1,5 @@
 // tslint:disable: no-implicit-dependencies
 import Octokit from '@octokit/rest';
-import Fs from 'fs';
-import Path from 'path';
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

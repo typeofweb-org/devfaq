@@ -1,7 +1,9 @@
-import React from 'react';
 import { polishPlurals } from 'polish-plurals';
-import headerStyles from './allQuestionsHeader.module.scss';
+import React from 'react';
+
 import styles from '../allQuestions.module.scss';
+
+import headerStyles from './allQuestionsHeader.module.scss';
 
 const getQuestionsLabel = polishPlurals.bind(null, 'pytanie', 'pytania', 'pytań');
 

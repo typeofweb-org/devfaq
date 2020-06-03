@@ -1,13 +1,14 @@
-import { levelsWithLabels, LevelWithLabel } from '../../../../constants/level';
-import React from 'react';
 import classNames from 'classnames';
-import styles from './levelFilter.module.scss';
+import React from 'react';
 import { connect } from 'react-redux';
-import { AppState } from '../../../../redux/reducers/index';
+
+import { levelsWithLabels, LevelWithLabel } from '../../../../constants/level';
 import { ActionCreators } from '../../../../redux/actions';
+import { AppState } from '../../../../redux/reducers/index';
 import { getPage } from '../../../../redux/selectors/selectors';
-import Router from 'next/router';
 import { redirect } from '../../../../utils/redirect';
+
+import styles from './levelFilter.module.scss';
 
 class LevelFilterComponent extends React.Component<
   ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps

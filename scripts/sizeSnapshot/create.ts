@@ -1,7 +1,8 @@
 // @ts-nocheck
 // tslint:disable: no-implicit-dependencies
-import fse from 'fs-extra';
 import path from 'path';
+
+import fse from 'fs-extra';
 
 const workspaceRoot = path.join(__dirname, '../../');
 const snapshotDestPath = path.join(workspaceRoot, 'size-snapshot.json');

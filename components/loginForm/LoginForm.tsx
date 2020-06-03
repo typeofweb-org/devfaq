@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
-import styles from './loginForm.module.scss';
 import { connect } from 'react-redux';
-import { AppState } from '../../redux/reducers/index';
+
 import { ActionCreators } from '../../redux/actions';
+import { AppState } from '../../redux/reducers';
 import { getLoggedInUser, getPreviousPath } from '../../redux/selectors/selectors';
-import AppLogo from '../appLogo/AppLogo';
-import ActiveLink from '../activeLink/ActiveLink';
 import { redirect, getHrefQueryFromPreviousPath } from '../../utils/redirect';
+import ActiveLink from '../activeLink/ActiveLink';
+import AppLogo from '../appLogo/AppLogo';
+
+import styles from './loginForm.module.scss';
 
 type LoginFormReduxProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -29,7 +31,7 @@ const LoginFormComponent: React.FC<LoginFormReduxProps> = React.memo(
           redirect('/');
         }
       }
-    }, [user, isTransitioning, previousPath, redirect]);
+    }, [user, isTransitioning, previousPath]);
 
     const route = previousPath || { href: '/', query: {} };
     return (

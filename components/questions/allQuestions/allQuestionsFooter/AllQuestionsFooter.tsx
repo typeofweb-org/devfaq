@@ -1,3 +1,5 @@
+import React from 'react';
+
 import styles from './allQuestionsFooter.module.scss';
 
 export const AllQuestionsFooter: React.SFC<{

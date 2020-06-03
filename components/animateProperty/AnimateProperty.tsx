@@ -7,7 +7,7 @@ interface AnimateHeightProps {
   exitTime: number;
 }
 
-const AnimateHeight: React.FC<AnimateHeightProps> = React.memo(
+export const AnimateHeight: React.FC<AnimateHeightProps> = React.memo(
   ({ enterTime, exitTime, in: isIn, children }) => {
     const reflow = (el: HTMLElement): void => {
       // @ts-ignore
@@ -68,5 +68,3 @@ const AnimateHeight: React.FC<AnimateHeightProps> = React.memo(
     );
   }
 );
-
-export default AnimateHeight;

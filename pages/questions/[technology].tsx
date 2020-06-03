@@ -1,17 +1,18 @@
-import React, { useEffect, useCallback } from 'react';
-import Layout from '../../components/layout/Layout';
-import QuestionsListLayout from '../../components/questions/questionsListLayout/QuestionsListLayout';
-import { redirect } from '../../utils/redirect';
-import { GetInitialPropsContext } from '../../utils/types';
-import QuestionsSidebar from '../../components/questions/questionsSidebar/QuestionsSidebar';
-import MobileActionButtons from '../../components/questions/mobileActionButtons/MobileActionButtons';
-import AllQuestions from '../../components/questions/allQuestions/AllQuestions';
-import { ActionCreators, AsyncAction } from '../../redux/actions';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+
+import Layout from '../../components/layout/Layout';
+import AllQuestions from '../../components/questions/allQuestions/AllQuestions';
+import MobileActionButtons from '../../components/questions/mobileActionButtons/MobileActionButtons';
+import QuestionsListLayout from '../../components/questions/questionsListLayout/QuestionsListLayout';
+import QuestionsSidebar from '../../components/questions/questionsSidebar/QuestionsSidebar';
+import { Technology } from '../../constants/technology-icon-items';
+import { ActionCreators, AsyncAction } from '../../redux/actions';
 import { AppState } from '../../redux/reducers/index';
 import { getTechnology, getSortByArray, getPage } from '../../redux/selectors/selectors';
-import { Technology } from '../../constants/technology-icon-items';
-import { Dispatch } from 'redux';
+import { redirect } from '../../utils/redirect';
+import { GetInitialPropsContext } from '../../utils/types';
 import styles from '../pages.module.scss';
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;

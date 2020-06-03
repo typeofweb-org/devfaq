@@ -1,19 +1,21 @@
-import { connect } from 'react-redux';
+import { isEqual } from 'lodash';
 import React from 'react';
+import { connect } from 'react-redux';
+import { TransitionGroup } from 'react-transition-group';
+
+import { TechnologyKey, technologyIconItems } from '../../../constants/technology-icon-items';
+import { ActionCreators } from '../../../redux/actions';
 import { AppState } from '../../../redux/reducers/index';
+import { Question } from '../../../redux/reducers/questions';
 import {
   getAreAnyQuestionSelected,
   getSelectedQuestionsIds,
   getSelectedQuestionsWithCategories,
 } from '../../../redux/selectors/selectors';
+import { AnimateHeight } from '../../animateProperty/AnimateProperty';
 import QuestionsList from '../questionsList/QuestionsList';
+
 import NoQuestionsSelectedInfo from './NoQuestionsSelectedInfo';
-import { Question } from '../../../redux/reducers/questions';
-import { TechnologyKey, technologyIconItems } from '../../../constants/technology-icon-items';
-import { ActionCreators } from '../../../redux/actions';
-import { TransitionGroup } from 'react-transition-group';
-import AnimateHeight from '../../animateProperty/AnimateProperty';
-import { isEqual } from 'lodash';
 import styles from './selectedQuestions.module.scss';
 
 type SelectedQuestionsProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;

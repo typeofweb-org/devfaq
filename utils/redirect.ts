@@ -1,6 +1,7 @@
 import { NextPageContext } from 'next';
-import Router from 'next/router';
 import { LinkProps } from 'next/link';
+import Router from 'next/router';
+
 import { RouteDetails } from './types';
 
 export type Query = RouteDetails['query'] & { previousPath?: string };
@@ -62,7 +63,7 @@ export function hrefQueryToAsPath(
   const href = String(url);
 
   // matches anything like [bla-bla]
-  const replacementsPattern = /\[([^\[\]\s]+)\]/gi;
+  const replacementsPattern = /\[([^[\]\s]+)\]/gi;
 
   const matches = allMatches(href, replacementsPattern);
   const excessQueryProperties = Object.keys(query).filter(

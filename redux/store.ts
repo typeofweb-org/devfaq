@@ -1,10 +1,11 @@
-import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import nextReduxWrapper from 'next-redux-wrapper';
 import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
-import { reducers } from './reducers';
-import { AppState } from './reducers/index';
+
 import { AppStore } from '../utils/types';
+
+import { reducers, AppState } from './reducers';
 
 const composeEnhancers = composeWithDevTools({
   // options like actionSanitizer, stateSanitizer

@@ -1,6 +1,9 @@
-import ActiveLink from '../../activeLink/ActiveLink';
-import styles from './noQuestionsSelectedInfo.module.scss';
 import classNames from 'classnames';
+import React from 'react';
+
+import ActiveLink from '../../activeLink/ActiveLink';
+
+import styles from './noQuestionsSelectedInfo.module.scss';
 
 const NoQuestionsSelectedInfo = () => {
   return (

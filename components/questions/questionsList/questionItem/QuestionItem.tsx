@@ -1,16 +1,19 @@
-import styles from './questionItem.module.scss';
-import React from 'react';
 import classNames from 'classnames';
+import { isEqual } from 'lodash';
 import dynamic from 'next/dynamic';
+import React from 'react';
 
 import { Question } from '../../../../redux/reducers/questions';
-import { isQuestionSelected } from '../../questionsUtils';
-import AnimateHeight from '../../../animateProperty/AnimateProperty';
-import { isEqual } from 'lodash';
 import ActiveLink from '../../../activeLink/ActiveLink';
-import QuestionVoting from './QuestionVoting';
+import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
+import { isQuestionSelected } from '../../questionsUtils';
 
-const MarkdownText = dynamic(() => import('../../../markdownText/MarkdownText'));
+import QuestionVoting from './QuestionVoting';
+import styles from './questionItem.module.scss';
+
+const MarkdownText = dynamic(() =>
+  import(/* webpackChunkName: "MarkdownText" */ '../../../markdownText/MarkdownText')
+);
 
 const longDate = (dateStr?: string) => {
   if (!dateStr) {
@@ -171,7 +174,7 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
     return (
       <div>
         <button onClick={this.props.editQuestion} className={styles.editBtn}>
-          <img src="/images/action-icons/edit.svg" />
+          <img src="/images/action-icons/edit.svg" alt="Edit question" />
         </button>
         <button
           onClick={this.props.deleteQuestion}

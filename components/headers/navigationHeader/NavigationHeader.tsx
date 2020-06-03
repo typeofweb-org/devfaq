@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
 import classNames from 'classnames';
-import AppLogo from '../../appLogo/AppLogo';
-import styles from './navigationHeader.module.scss';
-import ActiveLink from '../../activeLink/ActiveLink';
-import LoginStatusLink from './loginStatusLink/LoginStatusLink';
+import React, { useState } from 'react';
 
-export default () => {
+import ActiveLink from '../../activeLink/ActiveLink';
+import AppLogo from '../../appLogo/AppLogo';
+
+import LoginStatusLink from './loginStatusLink/LoginStatusLink';
+import styles from './navigationHeader.module.scss';
+
+export const NavigationHeader = () => {
   const [open, toggle] = useState(false);
 
   const toggleMenu = () => {
@@ -62,6 +64,7 @@ export default () => {
               <a
                 href="https://www.facebook.com/DevFAQ"
                 target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => reportEvent('Facebook')}
               >
                 Facebook

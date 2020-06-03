@@ -1,6 +1,7 @@
-import { Actions, ActionTypes } from '../actions';
-import { Question } from './questions';
 import { CommonModalProps } from '../../components/modals/baseModal/BaseModal';
+import { Actions, ActionTypes } from '../actions';
+
+import { Question } from './questions';
 
 type ModalState<T = any> = {
   open: boolean;

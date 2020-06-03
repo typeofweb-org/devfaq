@@ -4,8 +4,8 @@ require('dotenv').config({
   path: `.env.production`,
 });
 
-const express = require('express');
 const cookieParser = require('cookie-parser');
+const express = require('express');
 const next = require('next');
 
 const app = next({ dev: false });

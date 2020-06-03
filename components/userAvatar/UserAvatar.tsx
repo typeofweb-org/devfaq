@@ -1,4 +1,7 @@
+import React from 'react';
+
 import { UserData } from '../../redux/reducers/auth';
+
 import styles from './userAvatar.module.scss';
 
 const UserAvatar: React.FC<{ user: UserData }> = ({ user }) => {

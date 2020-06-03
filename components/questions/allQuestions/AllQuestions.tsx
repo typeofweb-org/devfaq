@@ -1,22 +1,24 @@
 import React from 'react';
-import { AppState } from '../../../redux/reducers/index';
 import { connect } from 'react-redux';
+
+import { Level } from '../../../constants/level';
 import { technologyIconItems, Technology } from '../../../constants/technology-icon-items';
-import styles from './allQuestions.module.scss';
-import { AllQuestionsHeader } from './allQuestionsHeader/AllQuestionsHeader';
-import { AllQuestionsFooter } from './allQuestionsFooter/AllQuestionsFooter';
-import QuestionsList from '../questionsList/QuestionsList';
+import { ActionCreators } from '../../../redux/actions';
+import { AppState } from '../../../redux/reducers/index';
 import { Question } from '../../../redux/reducers/questions';
 import {
   getSelectedQuestionsIds,
   getTechnology,
   getSortBy,
 } from '../../../redux/selectors/selectors';
-import { ActionCreators } from '../../../redux/actions';
-import { isQuestionSelected } from '../questionsUtils';
-import { Level } from '../../../constants/level';
-import QuestionsPagination from '../../questionsPagination/QuestionsPagination';
 import { redirect } from '../../../utils/redirect';
+import QuestionsPagination from '../../questionsPagination/QuestionsPagination';
+import QuestionsList from '../questionsList/QuestionsList';
+import { isQuestionSelected } from '../questionsUtils';
+
+import styles from './allQuestions.module.scss';
+import { AllQuestionsFooter } from './allQuestionsFooter/AllQuestionsFooter';
+import { AllQuestionsHeader } from './allQuestionsHeader/AllQuestionsHeader';
 
 type AllQuestionsComponentProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 

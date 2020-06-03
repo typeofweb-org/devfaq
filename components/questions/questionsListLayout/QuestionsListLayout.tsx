@@ -1,3 +1,5 @@
+import React from 'react';
+
 import styles from './questionsListLayout.module.scss';
 
 const QuestionsListLayout: React.SFC = ({ children }) => (

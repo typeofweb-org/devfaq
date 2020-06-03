@@ -1,15 +1,17 @@
-import React from 'react';
-import BaseModal, { CommonModalProps } from '../baseModal/BaseModal';
 import classNames from 'classnames';
-import { technologyIconItems, TechnologyKey } from '../../../constants/technology-icon-items';
-import { levelsWithLabels, LevelKey } from '../../../constants/level';
-import styles from './addQuestionModal.module.scss';
-import QuestionEditor from '../../questionEditor/QuestionEditor';
-import { Api } from '../../../services/Api';
+import { isEqual } from 'lodash';
+import React from 'react';
 import { connect } from 'react-redux';
+
+import { levelsWithLabels, LevelKey } from '../../../constants/level';
+import { technologyIconItems, TechnologyKey } from '../../../constants/technology-icon-items';
 import { ActionCreators } from '../../../redux/actions';
 import { Question } from '../../../redux/reducers/questions';
-import { isEqual } from 'lodash';
+import { Api } from '../../../services/Api';
+import QuestionEditor from '../../questionEditor/QuestionEditor';
+import BaseModal, { CommonModalProps } from '../baseModal/BaseModal';
+
+import styles from './addQuestionModal.module.scss';
 
 interface AddQuestionModalState {
   technology?: TechnologyKey;
