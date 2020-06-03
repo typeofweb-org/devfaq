@@ -19,7 +19,7 @@
     "danger": "danger"
   },
   "dependencies": {
-    "@sentry/browser": "5.15.5",
+    "@sentry/browser": "5.16.0",
     "@sentry/node": "5.15.5",
     "@zeit/next-typescript": "1.1.1",
     "babel-plugin-lodash": "3.3.4",
