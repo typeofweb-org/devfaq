@@ -15,6 +15,13 @@ const lighthouseAuditTitles = {
   progressiveWebApp: 'Progressive Web App',
   seo: 'SEO',
 };
+const lighthouseAuditUrls = {
+  accessibility: 'accessibility',
+  bestPractices: 'best-practices',
+  performance: 'performance',
+  progressiveWebApp: 'pwa',
+  seo: 'seo',
+};
 
 const getLighthouseScoreColor = ({ isHex, score }) => {
   if (typeof score !== 'number') {
@@ -274,19 +281,20 @@ async function commentLightHouseReport() {
       });
 
       const result = results.data[0];
+      const artifactsUrl = `https://${CIRCLE_BUILD_NUM}-${repo.data.id}-gh.circle-artifacts.com/0${result.localReport}`;
 
       let mrkd = '';
 
       (Object.keys(result.scores) as Array<keyof typeof result.scores>).forEach((current) => {
-        mrkd += getBadge({
+        const badge = getBadge({
           title: lighthouseAuditTitles[current].replace(/ /g, '%20'),
           score: result.scores[current],
         });
+        mrkd += `[${badge}](${artifactsUrl}#${lighthouseAuditUrls[current]})`;
       });
 
-      const artifactsUrl = `https://${CIRCLE_BUILD_NUM}-${repo.data.id}-gh.circle-artifacts.com/0${result.localReport}`;
-      mrkd += `\n\n${result.url}`;
-      mrkd += `\n\n[Full report](${artifactsUrl})`;
+      mrkd += `\n\n[Open full report](${artifactsUrl})`;
+      mrkd += `\n\nVercel preview deploy: ${result.url}`;
       markdown(
         `
 # Lighthouse results
