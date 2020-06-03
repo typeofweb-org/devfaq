@@ -270,9 +270,6 @@ async function commentLightHouseReport() {
     .then(async (url) => {
       const results: LighthouseResult = await lighthouseCheck({
         urls: [url],
-        prCommentAccessToken: `${DANGER_GITHUB_API_TOKEN}`,
-        prCommentEnabled: true,
-        prCommentUrl: `https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/pulls/${CIRCLE_PR_NUMBER}/reviews`,
         outputDirectory: Path.join('/tmp/lighthouse/'),
       });
       const repo = await danger.github.api.repos.get({
