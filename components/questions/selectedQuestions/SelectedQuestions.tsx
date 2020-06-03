@@ -49,10 +49,11 @@ class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps>
 
   renderSelectedQuestionsCategory(category: TechnologyKey, questions: Question[]) {
     const icon = technologyIconItems.find((i) => i.name === category)!;
+    const sectionRef = React.createRef<HTMLElement>();
 
     return (
-      <AnimateHeight enterTime={700} exitTime={700} key={category}>
-        <section className={styles.selectedQuestionsCategory}>
+      <AnimateHeight nodeRef={sectionRef} enterTime={700} exitTime={700} key={category}>
+        <section ref={sectionRef} className={styles.selectedQuestionsCategory}>
           <div className={styles.selectedQuestionsListContainer}>
             <div className={styles.technologyIconContainer}>
               <span className={styles.technologyIconLabel}>{icon.label}</span>

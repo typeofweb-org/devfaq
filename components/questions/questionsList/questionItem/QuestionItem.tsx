@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { isEqual, noop } from 'lodash';
 import dynamic from 'next/dynamic';
-import React, { useEffect, memo, useRef, useCallback, useMemo, useState } from 'react';
+import React, { useEffect, memo, useRef, useCallback, useMemo, useState, forwardRef } from 'react';
 
 import { Question } from '../../../../redux/reducers/questions';
 import ActiveLink from '../../../activeLink/ActiveLink';
@@ -72,14 +72,16 @@ interface QuestionContentProps {
   toggleQuestion(): any;
   deleteQuestion(): any;
   editQuestion(): any;
+  forwardRef?: React.RefObject<HTMLDivElement>;
 }
 
 class QuestionContent extends React.PureComponent<QuestionContentProps> {
   render() {
-    const { question, isSelected } = this.props;
+    const { question, isSelected, forwardRef } = this.props;
 
     return (
       <div
+        ref={forwardRef}
         className={classNames(styles.appQuestionsQuestion, {
           [styles.active]: isSelected,
         })}
@@ -211,7 +213,6 @@ const QuestionItemDeleteProgress: React.FC<QuestionItemDeleteProgressProps> = me
     questionRemovalTimer,
     isQuestionBeingRemoved,
   }) => {
-    console.log({ questionRemovalTimer, isQuestionBeingRemoved });
     return (
       <div
         className={classNames(styles.appQuestionsQuestion, styles.appQuestionsQuestionDeleted, {
@@ -231,125 +232,145 @@ const QuestionItemDeleteProgress: React.FC<QuestionItemDeleteProgressProps> = me
   }
 );
 
-export const QuestionItem: React.FC<QuestionItemOwnProps> = memo(
-  ({
-    question,
-    selectable,
-    unselectable,
-    editable,
-    toggleQuestion,
-    editQuestion,
-    selectedQuestionIds,
-  }) => {
-    const questionRemovalTimerRef = useRef<NodeJS.Timeout | undefined>(undefined);
-    const [isQuestionBeingRemoved, setIsQuestionBeingRemoved] = useState<boolean>(false);
-    const [, rerender] = useState();
+export const QuestionItem = memo(
+  forwardRef<HTMLElement, QuestionItemOwnProps>(
+    (
+      {
+        question,
+        selectable,
+        unselectable,
+        editable,
+        toggleQuestion,
+        editQuestion,
+        selectedQuestionIds,
+      },
+      ref
+    ) => {
+      const questionRemovalTimerRef = useRef<NodeJS.Timeout | undefined>(undefined);
+      const [isQuestionBeingRemoved, setIsQuestionBeingRemoved] = useState<boolean>(false);
+      const [, rerender] = useState();
 
-    const toggleCurrentQuestion = useCallback(() => toggleQuestion(question.id), [
-      question.id,
-      toggleQuestion,
-    ]);
+      const toggleCurrentQuestion = useCallback(() => toggleQuestion(question.id), [
+        question.id,
+        toggleQuestion,
+      ]);
 
-    const editCurrentQuestion = useCallback(() => {
-      if (editable && editQuestion) {
-        editQuestion(question.id);
-      }
-    }, [editQuestion, editable, question.id]);
-
-    const reportEventOnSelectedQuestions = useCallback(
-      (action: string, label?: string, questionId?: number) =>
-        globalReportEvent(action, 'Wybrane pytania', label, questionId),
-      []
-    );
-
-    const stopDeletionTimer = useCallback(() => {
-      if (!questionRemovalTimerRef.current || !isQuestionBeingRemoved) {
-        return;
-      }
-
-      clearTimeout(questionRemovalTimerRef.current);
-      questionRemovalTimerRef.current = undefined;
-      rerender({});
-    }, [isQuestionBeingRemoved]);
-
-    const undoDeleteQuestion = useCallback(() => {
-      setIsQuestionBeingRemoved(false);
-      stopDeletionTimer();
-      reportEventOnSelectedQuestions('Usuń pytanie', 'Anuluj usuwanie', question.id);
-    }, [question.id, reportEventOnSelectedQuestions, stopDeletionTimer]);
-
-    const startDeletionTimer = useCallback(() => {
-      if (questionRemovalTimerRef.current) {
-        return;
-      }
-
-      questionRemovalTimerRef.current = setTimeout(() => {
-        toggleCurrentQuestion();
-      }, QUESTION_DELETION_DELAY);
-      setIsQuestionBeingRemoved(true);
-      rerender({});
-    }, [toggleCurrentQuestion]);
-
-    const deleteCurrentQuestion = useCallback(() => {
-      if (editable) {
-        if (window.confirm('Czy na pewno chcesz usunąć to pytanie?')) {
-          toggleQuestion(question.id);
+      const editCurrentQuestion = useCallback(() => {
+        if (editable && editQuestion) {
+          editQuestion(question.id);
         }
-      } else {
-        startDeletionTimer();
-        setIsQuestionBeingRemoved(true);
-        reportEventOnSelectedQuestions('Usuń pytanie', 'Klik', question.id);
-      }
-    }, [editable, question.id, reportEventOnSelectedQuestions, startDeletionTimer, toggleQuestion]);
+      }, [editQuestion, editable, question.id]);
 
-    const isCurrentQuestionSelected = useMemo(
-      () => isQuestionSelected(selectedQuestionIds, question.id),
-      [question.id, selectedQuestionIds]
-    );
+      const reportEventOnSelectedQuestions = useCallback(
+        (action: string, label?: string, questionId?: number) =>
+          globalReportEvent(action, 'Wybrane pytania', label, questionId),
+        []
+      );
 
-    useEffect(() => {
-      return () => {
+      const stopDeletionTimer = useCallback(() => {
+        if (!questionRemovalTimerRef.current || !isQuestionBeingRemoved) {
+          return;
+        }
+
+        clearTimeout(questionRemovalTimerRef.current);
+        questionRemovalTimerRef.current = undefined;
+        rerender({});
+      }, [isQuestionBeingRemoved]);
+
+      const undoDeleteQuestion = useCallback(() => {
+        setIsQuestionBeingRemoved(false);
+        stopDeletionTimer();
+        reportEventOnSelectedQuestions('Usuń pytanie', 'Anuluj usuwanie', question.id);
+      }, [question.id, reportEventOnSelectedQuestions, stopDeletionTimer]);
+
+      const startDeletionTimer = useCallback(() => {
         if (questionRemovalTimerRef.current) {
-          stopDeletionTimer();
-          toggleQuestion(question.id);
+          return;
         }
-      };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
-    return (
-      <article
-        key={question.id}
-        itemScope
-        itemType="http://schema.org/Question"
-        id={`question-${question.id}`}
-      >
-        <div className={styles.appQuestionsQuestionContainer}>
-          {unselectable && (
-            <QuestionItemDeleteProgress
-              stopDeletionTimer={stopDeletionTimer}
-              startDeletionTimer={startDeletionTimer}
-              undoDeleteQuestion={undoDeleteQuestion}
-              questionRemovalTimer={questionRemovalTimerRef.current}
-              isQuestionBeingRemoved={isQuestionBeingRemoved}
-            />
-          )}
-          <AnimateHeight enterTime={700} exitTime={700} in={!isQuestionBeingRemoved}>
-            <QuestionContent
-              selectable={selectable}
-              unselectable={unselectable}
-              isSelected={isCurrentQuestionSelected}
-              editable={editable}
-              isQuestionBeingRemoved={isQuestionBeingRemoved}
-              question={question}
-              toggleQuestion={toggleCurrentQuestion}
-              deleteQuestion={deleteCurrentQuestion}
-              editQuestion={editCurrentQuestion}
-            />
-          </AnimateHeight>
-        </div>
-      </article>
-    );
-  },
+        questionRemovalTimerRef.current = setTimeout(() => {
+          toggleCurrentQuestion();
+        }, QUESTION_DELETION_DELAY);
+        setIsQuestionBeingRemoved(true);
+        rerender({});
+      }, [toggleCurrentQuestion]);
+
+      const deleteCurrentQuestion = useCallback(() => {
+        if (editable) {
+          if (window.confirm('Czy na pewno chcesz usunąć to pytanie?')) {
+            toggleQuestion(question.id);
+          }
+        } else {
+          startDeletionTimer();
+          setIsQuestionBeingRemoved(true);
+          reportEventOnSelectedQuestions('Usuń pytanie', 'Klik', question.id);
+        }
+      }, [
+        editable,
+        question.id,
+        reportEventOnSelectedQuestions,
+        startDeletionTimer,
+        toggleQuestion,
+      ]);
+
+      const isCurrentQuestionSelected = useMemo(
+        () => isQuestionSelected(selectedQuestionIds, question.id),
+        [question.id, selectedQuestionIds]
+      );
+
+      useEffect(() => {
+        return () => {
+          if (questionRemovalTimerRef.current) {
+            stopDeletionTimer();
+            toggleQuestion(question.id);
+          }
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
+
+      const contentRef = useRef<HTMLDivElement>(null);
+
+      return (
+        <article
+          ref={ref}
+          key={question.id}
+          itemScope
+          itemType="http://schema.org/Question"
+          id={`question-${question.id}`}
+        >
+          <div className={styles.appQuestionsQuestionContainer}>
+            {unselectable && (
+              <QuestionItemDeleteProgress
+                stopDeletionTimer={stopDeletionTimer}
+                startDeletionTimer={startDeletionTimer}
+                undoDeleteQuestion={undoDeleteQuestion}
+                questionRemovalTimer={questionRemovalTimerRef.current}
+                isQuestionBeingRemoved={isQuestionBeingRemoved}
+              />
+            )}
+            <AnimateHeight
+              nodeRef={contentRef}
+              enterTime={700}
+              exitTime={700}
+              in={!isQuestionBeingRemoved}
+            >
+              <QuestionContent
+                forwardRef={contentRef}
+                selectable={selectable}
+                unselectable={unselectable}
+                isSelected={isCurrentQuestionSelected}
+                editable={editable}
+                isQuestionBeingRemoved={isQuestionBeingRemoved}
+                question={question}
+                toggleQuestion={toggleCurrentQuestion}
+                deleteQuestion={deleteCurrentQuestion}
+                editQuestion={editCurrentQuestion}
+              />
+            </AnimateHeight>
+          </div>
+        </article>
+      );
+    }
+  ),
   (prevProps, nextProps) => isEqual(prevProps, nextProps)
 );

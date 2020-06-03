@@ -36,20 +36,23 @@ export default class QuestionsList extends React.PureComponent<
         className={classNames(styles.appQuestionsList, this.props.className)}
         component="div"
       >
-        {this.props.questions.data.data.map((question) => (
-          // tslint:disable-next-line:no-magic-numbers
-          <AnimateHeight enterTime={700} exitTime={700} key={question.id}>
-            <QuestionItem
-              question={question}
-              selectable={this.props.selectable}
-              editable={this.props.editable}
-              unselectable={this.props.unselectable}
-              selectedQuestionIds={this.props.selectedQuestionIds}
-              toggleQuestion={this.props.toggleQuestion}
-              editQuestion={this.props.editQuestion}
-            />
-          </AnimateHeight>
-        ))}
+        {this.props.questions.data.data.map((question) => {
+          const nodeRef = React.createRef<HTMLElement>();
+          return (
+            <AnimateHeight nodeRef={nodeRef} enterTime={700} exitTime={700} key={question.id}>
+              <QuestionItem
+                ref={nodeRef}
+                question={question}
+                selectable={this.props.selectable}
+                editable={this.props.editable}
+                unselectable={this.props.unselectable}
+                selectedQuestionIds={this.props.selectedQuestionIds}
+                toggleQuestion={this.props.toggleQuestion}
+                editQuestion={this.props.editQuestion}
+              />
+            </AnimateHeight>
+          );
+        })}
       </TransitionGroup>
     );
   }
