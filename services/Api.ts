@@ -7,15 +7,6 @@ import type { Question } from '../redux/reducers/questions';
 import env from '../utils/env';
 import type { GetInitialPropsContext } from '../utils/types';
 
-if (typeof window === 'undefined') {
-  (global as any).fetch =
-    (global as any).fetch ||
-    // tslint:disable-next-line:only-arrow-functions
-    function (url: string, opts: any) {
-      return require('node-fetch')(url.replace(/^\/\//g, 'https://'), opts);
-    };
-}
-
 const omitUndefined = <T extends object>(obj: T) => pickBy(obj, (v) => !isUndefined(v));
 
 type QsValues = string | number;

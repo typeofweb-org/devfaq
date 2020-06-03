@@ -5,10 +5,11 @@ interface AnimateHeightProps {
   in?: boolean;
   enterTime: number;
   exitTime: number;
+  nodeRef: React.RefObject<HTMLElement>;
 }
 
 export const AnimateHeight: React.FC<AnimateHeightProps> = memo(
-  ({ enterTime, exitTime, in: isIn, children }) => {
+  ({ enterTime, exitTime, in: isIn, children, nodeRef }) => {
     const reflow = (el: HTMLElement): void => {
       // @ts-ignore
       const _ignore = el.scrollTop;
@@ -19,47 +20,56 @@ export const AnimateHeight: React.FC<AnimateHeightProps> = memo(
 
     return (
       <Transition
+        nodeRef={nodeRef}
         in={isIn}
         timeout={{ enter: enterTime, exit: exitTime }}
-        onExit={(el) => {
-          el.style.willChange = 'height, opacity';
-          el.style.height = el.scrollHeight + 'px';
-          el.style.opacity = '1';
-          reflow(el);
+        onExit={() => {
+          if (!nodeRef.current) return;
+          nodeRef.current.style.willChange = 'height, opacity';
+          nodeRef.current.style.height = nodeRef.current.scrollHeight + 'px';
+          nodeRef.current.style.opacity = '1';
+          reflow(nodeRef.current);
         }}
-        onExiting={(el) => {
-          el.style.height = '0';
-          el.style.opacity = '0';
-          el.style.minHeight = '0';
-          el.style.transition = `height ${exitTime}ms, opacity ${exitTime}ms`;
+        onExiting={() => {
+          if (!nodeRef.current) return;
+          nodeRef.current.style.height = '0';
+          nodeRef.current.style.opacity = '0';
+          nodeRef.current.style.minHeight = '0';
+          nodeRef.current.style.transition = `height ${exitTime}ms, opacity ${exitTime}ms`;
         }}
-        onExited={(el) => {
-          el.style.height = '';
-          el.style.opacity = '';
-          el.style.transition = '';
-          el.style.minHeight = '';
+        onExited={() => {
+          if (!nodeRef.current) return;
+          nodeRef.current.style.height = '';
+          nodeRef.current.style.opacity = '';
+          nodeRef.current.style.transition = '';
+          nodeRef.current.style.minHeight = '';
+          nodeRef.current.style.willChange = '';
         }}
-        onEnter={(el, isAppearing) => {
-          // @ts-ignore
-          el.style.willChange = 'height, opacity';
-          el.style.height = '0';
-          el.style.opacity = '0';
-          el.style.minHeight = '0';
-          reflow(el);
+        onEnter={(isAppearing) => {
+          if (!nodeRef.current) return;
+          nodeRef.current.style.willChange = 'height, opacity';
+          nodeRef.current.style.height = '0';
+          nodeRef.current.style.opacity = '0';
+          nodeRef.current.style.minHeight = '0';
+          reflow(nodeRef.current);
         }}
-        onEntering={(el, isAppearing) => {
-          el.style.height = el.scrollHeight + 'px';
-          el.style.opacity = '1';
-          el.style.transition = `height ${enterTime}ms, opacity ${enterTime}ms`;
+        onEntering={(isAppearing) => {
+          if (!nodeRef.current) return;
+          nodeRef.current.style.height = nodeRef.current.scrollHeight + 'px';
+          nodeRef.current.style.opacity = '1';
+          nodeRef.current.style.transition = `height ${enterTime}ms, opacity ${enterTime}ms`;
         }}
-        onEntered={(el, isAppearing) => {
-          el.style.height = '';
-          el.style.opacity = '';
-          el.style.transition = '';
-          el.style.minHeight = '';
+        onEntered={(isAppearing) => {
+          if (!nodeRef.current) return;
+          nodeRef.current.style.height = '';
+          nodeRef.current.style.opacity = '';
+          nodeRef.current.style.transition = '';
+          nodeRef.current.style.minHeight = '';
+          nodeRef.current.style.willChange = '';
         }}
-        addEndListener={(el, done) => {
-          el.addEventListener('transitionend', done, { once: true, passive: true });
+        addEndListener={(done) => {
+          if (!nodeRef.current) return;
+          nodeRef.current.addEventListener('transitionend', done, { once: true, passive: true });
         }}
         unmountOnExit={isBrowser}
       >

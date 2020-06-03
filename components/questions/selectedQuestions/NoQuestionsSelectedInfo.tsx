@@ -1,13 +1,13 @@
-import classNames from 'classnames';
 import React from 'react';
 
 import ActiveLink from '../../activeLink/ActiveLink';
+import { Container } from '../../container/Container';
 
 import styles from './noQuestionsSelectedInfo.module.scss';
 
 const NoQuestionsSelectedInfo = () => {
   return (
-    <div className={classNames(styles.selectedQuestionsEmpty, 'container')}>
+    <Container className={styles.selectedQuestionsEmpty}>
       <p>Najpierw zaznacz jakieś pytania, a następnie wróć tutaj aby zobaczyć podgląd!</p>
       <ActiveLink href="/questions" activeClassName="">
         <a
@@ -17,7 +17,7 @@ const NoQuestionsSelectedInfo = () => {
           Zaznacz pytania
         </a>
       </ActiveLink>
-    </div>
+    </Container>
   );
 };
 

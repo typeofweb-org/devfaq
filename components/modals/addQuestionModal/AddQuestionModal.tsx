@@ -10,6 +10,7 @@ import { Question } from '../../../redux/reducers/questions';
 import { Api } from '../../../services/Api';
 import QuestionEditor from '../../questionEditor/QuestionEditor';
 import BaseModal, { CommonModalProps } from '../baseModal/BaseModal';
+import modalStyles from '../baseModal/baseModal.module.scss';
 
 import styles from './addQuestionModal.module.scss';
 
@@ -92,7 +93,7 @@ class AddQuestionModalComponent extends React.PureComponent<
   renderContent = () => {
     return (
       <div>
-        <h2 className={styles.appModalTitle} id="add-question-modal-title">
+        <h2 className={modalStyles.appModalTitle} id="add-question-modal-title">
           {this.state.originalQuestion ? 'Edytuj pytanie' : 'Nowe pytanie'}
         </h2>
         <form onSubmit={(e) => e.preventDefault()}>
@@ -100,7 +101,7 @@ class AddQuestionModalComponent extends React.PureComponent<
             <div className={styles.appQuestionFormOptionsContainer}>
               <select
                 required
-                className={classNames('app-select', styles.appQuestionFormTechnology)}
+                className={classNames(styles.appSelect, styles.appQuestionFormTechnology)}
                 value={this.state.technology || ''}
                 onChange={this.handleChangeTechnology}
               >
@@ -115,7 +116,7 @@ class AddQuestionModalComponent extends React.PureComponent<
               </select>
               <select
                 required
-                className={classNames('app-select', styles.appQuestionFormLevel)}
+                className={classNames(styles.appSelect, styles.appQuestionFormLevel)}
                 value={this.state.level || ''}
                 onChange={this.handleChangeLevel}
               >

@@ -21,7 +21,6 @@ type BaseModalOwnProps = CommonModalProps & {
 
 class FixBodyService {
   private windowOffsetY = 0;
-  // @ts-ignore
   private scrollbarWidth = 0;
 
   constructor() {

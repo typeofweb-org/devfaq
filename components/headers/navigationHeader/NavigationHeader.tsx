@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 import ActiveLink from '../../activeLink/ActiveLink';
 import AppLogo from '../../appLogo/AppLogo';
+import { Container } from '../../container/Container';
 
 import LoginStatusLink from './loginStatusLink/LoginStatusLink';
 import styles from './navigationHeader.module.scss';
@@ -39,7 +40,7 @@ export const NavigationHeader = () => {
 
   return (
     <div className={classNames('app-navigation-header', styles.navigationHeader)}>
-      <header className={classNames(styles.appHeaderMain, 'container', { open })}>
+      <Container as="header" className={classNames(styles.appHeaderMain, { open })}>
         <ActiveLink href="/questions" activeClassName={styles.active}>
           <a>
             <h1>
@@ -85,7 +86,7 @@ export const NavigationHeader = () => {
             <span />
           </button>
         </nav>
-      </header>
+      </Container>
     </div>
   );
 };

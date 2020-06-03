@@ -10,6 +10,7 @@ import {
   getIsAdmin,
 } from '../../../redux/selectors/selectors';
 import ActiveLink from '../../activeLink/ActiveLink';
+import { Container } from '../../container/Container';
 
 import styles from './ctaHeader.module.scss';
 
@@ -32,7 +33,7 @@ export const CtaHeaderComponent: React.FC<
   };
   return (
     <div className={classNames('app-cta-header', styles.ctaHeader)}>
-      <header className={classNames(styles.appHeaderCta, 'container')}>
+      <Container as="header" className={styles.appHeaderCta}>
         <nav className={styles.appTabs}>
           <ActiveLink href="/questions" activeClassName={styles.active}>
             <a onClick={() => reportEvent('Lista pytań')} className={styles.appTabsTab}>
@@ -80,7 +81,7 @@ export const CtaHeaderComponent: React.FC<
             Dodaj pytanie
           </button>
         </div>
-      </header>
+      </Container>
     </div>
   );
 });

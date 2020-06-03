@@ -48,7 +48,7 @@ const withPolyfills = (module.exports = (nextConfig = {}) => {
       const originalEntry = config.entry;
       config.entry = function entry() {
         return Promise.resolve(originalEntry()).then((entries) => {
-          if (entries['main.js']) {
+          if (entries['main.js'] && !entries['main.js'].includes('./polyfills.js')) {
             entries['main.js'].unshift('./polyfills.js');
           }
 
@@ -106,6 +106,11 @@ config.env = {
   ABSOLUTE_URL: process.env.ABSOLUTE_URL || 'https://' + process.env.VERCEL_URL,
   SENTRY_DSN: process.env.SENTRY_DSN,
   ENV: process.env.ENV,
+};
+
+config.reactStrictMode = true;
+config.experimental = {
+  modern: true,
 };
 
 config.sassOptions = {
