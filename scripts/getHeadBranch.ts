@@ -4,7 +4,7 @@ import Path from 'path';
 
 import Octokit from '@octokit/rest';
 
-export async function getTargetBranch() {
+export async function getHeadBranch() {
   const {
     CIRCLE_PROJECT_REPONAME,
     CIRCLE_PROJECT_USERNAME,
@@ -42,9 +42,9 @@ export async function getTargetBranch() {
   return pulls.data.head.ref;
 }
 
-getTargetBranch()
+getHeadBranch()
   .then((name) => {
-    return Fs.writeFileSync(Path.join(__dirname, '.headbranch'), name, 'utf8');
+    return Fs.writeFileSync(Path.join(__dirname, '../.headbranch'), name, 'utf8');
   })
   .catch((err) => {
     console.error(err);

@@ -15,7 +15,7 @@
     "test:tsc": "tsc --project tsconfig.json --noEmit",
     "jest": "jest",
     "create-size": "ts-node-script scripts/sizeSnapshot/create.ts",
-    "get-head-branch": "ts-node-script scripts/getTargetBranch.ts",
+    "get-head-branch": "ts-node-script scripts/getHeadBranch.ts",
     "danger": "danger"
   },
   "dependencies": {
