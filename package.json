@@ -69,7 +69,7 @@
     "@types/hapi__cookie": "10.1.0",
     "@types/hapi__hapi": "19.0.3",
     "@types/hapi__inert": "5.2.0",
-    "@types/hapi__joi": "17.1.0",
+    "@types/hapi__joi": "17.1.2",
     "@types/hapi__vision": "5.5.1",
     "@types/inert": "5.1.2",
     "@types/lodash": "4.14.154",
