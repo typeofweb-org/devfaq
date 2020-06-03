@@ -1,11 +1,13 @@
-import { connect } from 'react-redux';
-import { Question } from '../../../../redux/reducers/questions';
-import { AppState } from '../../../../redux/reducers';
-import { getLoggedInUser } from '../../../../redux/selectors/selectors';
-import React from 'react';
-import { ActionCreators } from '../../../../redux/actions';
 import classnames from 'classnames';
+import React, { useCallback } from 'react';
+import { connect } from 'react-redux';
+
+import { ActionCreators } from '../../../../redux/actions';
+import { AppState } from '../../../../redux/reducers';
+import { Question } from '../../../../redux/reducers/questions';
+import { getLoggedInUser } from '../../../../redux/selectors/selectors';
 import { redirect, getPreviousPathFromHrefQuery } from '../../../../utils/redirect';
+
 import styles from './questionItem.module.scss';
 
 type QuestionVotingOwnProps = {
@@ -25,11 +27,11 @@ const QuestionVotingComponent: React.FC<QuestionVotingProps> = ({
 }) => {
   const { votesCount, currentUserVotedOn } = question;
 
-  const reportEvent = React.useCallback((action: string) => {
+  const reportEvent = useCallback((action: string) => {
     globalReportEvent(action, 'Głosowanie');
   }, []);
 
-  const onVote = React.useCallback(() => {
+  const onVote = useCallback(() => {
     if (!isLoggedIn) {
       reportEvent('logowanie');
       redirect('/login', {
@@ -42,7 +44,16 @@ const QuestionVotingComponent: React.FC<QuestionVotingProps> = ({
       reportEvent('upvote');
       void upvoteQuestion(question.id);
     }
-  }, [isLoggedIn, currentUserVotedOn, route, question]);
+  }, [
+    isLoggedIn,
+    currentUserVotedOn,
+    reportEvent,
+    route.pathname,
+    route.query,
+    downvoteQuestion,
+    question.id,
+    upvoteQuestion,
+  ]);
 
   return (
     <footer

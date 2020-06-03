@@ -1,11 +1,12 @@
-import React from 'react';
 import classNames from 'classnames';
-import { AppState } from '../../redux/reducers/index';
-import { connect } from 'react-redux';
-import { RouteDetails } from '../../utils/types';
-import Link, { LinkProps } from 'next/link';
-import { hrefQueryToAsPath } from '../../utils/redirect';
 import invariant from 'invariant';
+import Link, { LinkProps } from 'next/link';
+import React, { memo } from 'react';
+import { connect } from 'react-redux';
+
+import type { AppState } from '../../redux/reducers/index';
+import { hrefQueryToAsPath } from '../../utils/redirect';
+import type { RouteDetails } from '../../utils/types';
 
 interface ActiveLinkOwnProps {
   activeClassName: string;
@@ -20,7 +21,7 @@ type ActiveLinkComponentProps = Omit<LinkProps, 'as'> & ActiveLinkOwnProps;
 
 const ActiveLinkComponent: React.FC<
   ActiveLinkComponentProps & ReturnType<typeof mapStateToProps>
-> = React.memo(
+> = memo(
   ({
     isMatch,
     activeClassName,

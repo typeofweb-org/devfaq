@@ -1,7 +1,9 @@
-import { getHtmlFromMarkdown, highlightSyntax } from '../markdownText/MarkdownText';
-import React from 'react';
-import styles from './questionEditor.module.scss';
 import classNames from 'classnames';
+import React from 'react';
+
+import { getHtmlFromMarkdown, highlightSyntax } from '../markdownText/MarkdownText';
+
+import styles from './questionEditor.module.scss';
 
 interface QuestionEditorProps {
   id?: string;

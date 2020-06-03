@@ -1,17 +1,18 @@
 import React from 'react';
-import Layout from '../../../components/layout/Layout';
-import QuestionsListLayout from '../../../components/questions/questionsListLayout/QuestionsListLayout';
-import { redirect } from '../../../utils/redirect';
-import { GetInitialPropsContext } from '../../../utils/types';
-import QuestionsSidebar from '../../../components/questions/questionsSidebar/QuestionsSidebar';
-import MobileActionButtons from '../../../components/questions/mobileActionButtons/MobileActionButtons';
-import { ActionCreators } from '../../../redux/actions';
 import { connect } from 'react-redux';
-import { AppState } from '../../../redux/reducers/index';
-import QuestionItem from '../../../components/questions/questionsList/questionItem/QuestionItem';
-import pageStyles from '../../pages.module.scss';
+
+import Layout from '../../../components/layout/Layout';
 import questionStyles from '../../../components/questions/allQuestions/allQuestions.module.scss';
+import MobileActionButtons from '../../../components/questions/mobileActionButtons/MobileActionButtons';
+import QuestionItem from '../../../components/questions/questionsList/questionItem/QuestionItem';
+import QuestionsListLayout from '../../../components/questions/questionsListLayout/QuestionsListLayout';
+import QuestionsSidebar from '../../../components/questions/questionsSidebar/QuestionsSidebar';
 import questionListStyles from '../../../components/questions/selectedQuestions/selectedQuestions.module.scss';
+import { ActionCreators } from '../../../redux/actions';
+import { AppState } from '../../../redux/reducers/index';
+import { redirect } from '../../../utils/redirect';
+import type { GetInitialPropsContext } from '../../../utils/types';
+import pageStyles from '../../pages.module.scss';
 
 type Props = ReturnType<typeof mapStateToProps>;
 const OneQuestionPageComponent = ({ question }: Props) => {

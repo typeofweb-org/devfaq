@@ -1,11 +1,13 @@
 // tslint:disable:no-implicit-dependencies
+import fc from 'fast-check';
+
+import * as Arbitraries from '../fast-check-arbitraries';
+
 import {
   hrefQueryToAsPath,
   getPreviousPathFromHrefQuery,
   getHrefQueryFromPreviousPath,
 } from './redirect';
-import fc from 'fast-check';
-import * as Arbitraries from '../fast-check-arbitraries';
 
 describe('hrefQueryToAsPath', () => {
   describe('unit test', () => {

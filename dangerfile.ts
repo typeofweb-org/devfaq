@@ -1,11 +1,14 @@
+/* eslint-disable import/dynamic-import-chunkname */
 // @ts-nocheck
 // Based on https://github.com/mui-org/material-ui/blob/3eb02f5498857bd01bb7924eed9b946f33e39052/dangerfile.js
-// tslint:disable: no-implicit-dependencies
-import { danger, markdown, fail } from 'danger';
+// tslint:disable
 import { exec } from 'child_process';
-import prettyBytes from 'pretty-bytes';
-import { lighthouseCheck } from '@foo-software/lighthouse-check';
 import Path from 'path';
+
+import { lighthouseCheck } from '@foo-software/lighthouse-check';
+import { danger, markdown, fail } from 'danger';
+import prettyBytes from 'pretty-bytes';
+
 import { waitForVercel } from './scripts/waitForVercel';
 
 const lighthouseAuditTitles = {
@@ -249,6 +252,7 @@ async function commentLightHouseReport() {
     CIRCLE_PROJECT_REPONAME,
     CIRCLE_BUILD_NUM,
   } = process.env;
+
   if (!DANGER_GITHUB_API_TOKEN) {
     throw new Error(`Missing DANGER_GITHUB_API_TOKEN!`);
   }
@@ -302,7 +306,7 @@ ${mrkd}
       );
     })
     .catch((err) => {
-      fail(err.message || err);
+      fail(`Couldn't show Lighthouse results because: ` + (err.message || err));
     });
 }
 

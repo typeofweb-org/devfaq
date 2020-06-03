@@ -20,7 +20,7 @@ export class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.error) {
-      return <a onClick={this.onReportFeedbackClick}>Report feedback</a>;
+      return <button onClick={this.onReportFeedbackClick}>Report feedback</button>;
     } else {
       return this.props.children;
     }

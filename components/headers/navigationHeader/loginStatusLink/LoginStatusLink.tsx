@@ -1,11 +1,12 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import { connect } from 'react-redux';
-import { getLoggedInUser } from '../../../../redux/selectors/selectors';
+
 import { AppState } from '../../../../redux/reducers';
+import { getLoggedInUser } from '../../../../redux/selectors/selectors';
+import { getPreviousPathFromHrefQuery } from '../../../../utils/redirect';
 import ActiveLink from '../../../activeLink/ActiveLink';
 import UserAvatar from '../../../userAvatar/UserAvatar';
-import { useRouter } from 'next/router';
-import { getPreviousPathFromHrefQuery } from '../../../../utils/redirect';
 import navigationHeaderStyles from '../navigationHeader.module.scss';
 
 type LoginStatusLinkProps = ReturnType<typeof mapStateToProps>;

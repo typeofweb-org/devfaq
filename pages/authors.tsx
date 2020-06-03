@@ -1,8 +1,10 @@
 import React from 'react';
+
 import Layout from '../components/layout/Layout';
+
 import styles from './staticPage.module.scss';
 
-export default () => {
+const Authors = () => {
   return (
     <Layout title="Autorzy">
       <div className="container">
@@ -41,7 +43,7 @@ export default () => {
             <h3>Specjalne podziękowania</h3>
             <ul>
               <li>
-                <a href="http://www.angular.love" target="_blank" rel="noopener">
+                <a href="http://www.angular.love" target="_blank" rel="noreferrer noopener">
                   <strong>Tomasz Nastały</strong>
                 </a>{' '}
                 - za pierwszy frontend aplikacji
@@ -50,7 +52,7 @@ export default () => {
                 <a
                   href="https://www.linkedin.com/in/ewelina-sygut-a8687883/"
                   target="_blank"
-                  rel="noopener"
+                  rel="noreferrer noopener"
                 >
                   <strong>Ewelina Sygut</strong>
                 </a>{' '}
@@ -58,14 +60,18 @@ export default () => {
                 <a
                   href="https://www.linkedin.com/in/paweł-pawłowski-89917114/"
                   target="_blank"
-                  rel="noopener"
+                  rel="noreferrer noopener"
                 >
                   <strong>Paweł Pawłowski</strong>
                 </a>{' '}
                 - za projekt graficzny ❤️
               </li>
               <li>
-                <a href="https://www.linkedin.com/in/cytrowski" target="_blank" rel="noopener">
+                <a
+                  href="https://www.linkedin.com/in/cytrowski"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
                   <strong>Bartosz Cytrowski</strong>
                 </a>{' '}
                 - za ogromną liczbę świetnych pytań z React
@@ -77,3 +83,4 @@ export default () => {
     </Layout>
   );
 };
+export default Authors;

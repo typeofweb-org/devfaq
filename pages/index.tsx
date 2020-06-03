@@ -1,6 +1,5 @@
-import React from 'react';
-import { GetInitialPropsContext } from '../utils/types';
 import { redirect } from '../utils/redirect';
+import type { GetInitialPropsContext } from '../utils/types';
 
 const Index = () => null;
 

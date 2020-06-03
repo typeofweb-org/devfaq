@@ -1,5 +1,6 @@
-import React from 'react';
 import classNames from 'classnames';
+import React from 'react';
+
 import styles from './baseModal.module.scss';
 
 export type ModalType = 'warning' | 'confirmation' | 'thumbs-up' | 'add';

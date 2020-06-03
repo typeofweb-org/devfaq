@@ -1,10 +1,12 @@
-import styles from './mobileActionButtons.module.scss';
-import React from 'react';
-import { AppState } from '../../../redux/reducers';
-import { connect } from 'react-redux';
 import classNames from 'classnames';
+import React from 'react';
+import { connect } from 'react-redux';
+
 import { ActionCreators } from '../../../redux/actions';
+import { AppState } from '../../../redux/reducers';
 import { getAreAnyQuestionSelected, getDownloadUrl } from '../../../redux/selectors/selectors';
+
+import styles from './mobileActionButtons.module.scss';
 
 interface MobileActionButtonsProps {
   justDownload: boolean;

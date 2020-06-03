@@ -1,7 +1,6 @@
-import React from 'react';
-import NextError, { ErrorProps } from 'next/error';
 import { NextPageContext } from 'next';
-import { redirect } from '../utils/redirect';
+import NextError, { ErrorProps } from 'next/error';
+import React from 'react';
 
 export default class Error extends React.Component<ErrorProps> {
   static async getInitialProps(ctx: NextPageContext) {

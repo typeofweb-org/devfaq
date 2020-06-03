@@ -1,9 +1,12 @@
-import styles from './appFooter.module.scss';
-import ActiveLink from '../activeLink/ActiveLink';
-import env from '../../utils/env';
 import classNames from 'classnames';
+import React from 'react';
 
-const AppFooter = () => {
+import env from '../../utils/env';
+import ActiveLink from '../activeLink/ActiveLink';
+
+import styles from './appFooter.module.scss';
+
+export const AppFooter = () => {
   const version = env.VERSION;
   return (
     <div className={styles.footerContainer}>
@@ -27,12 +30,12 @@ const AppFooter = () => {
               </ActiveLink>
             </li>
             <li className={classNames(styles.footerNavigationLinksItem, 'mobile-hide')}>
-              <a href="https://www.facebook.com/DevFAQ" target="_blank">
+              <a href="https://www.facebook.com/DevFAQ" target="_blank" rel="noopener noreferrer">
                 Facebook
               </a>
             </li>
             <li className={styles.footerNavigationLinksItem}>
-              <a href="https://typeofweb.com/" target="_blank">
+              <a href="https://typeofweb.com/" target="_blank" rel="noopener noreferrer">
                 Type of Web
               </a>
             </li>
@@ -42,5 +45,3 @@ const AppFooter = () => {
     </div>
   );
 };
-
-export default AppFooter;

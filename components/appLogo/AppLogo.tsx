@@ -1,3 +1,5 @@
+import React from 'react';
+
 import styles from './appLogo.module.scss';
 
 const AppLogo = ({ fill = '#ffffff' }) => {

@@ -1,10 +1,12 @@
 import React from 'react';
-import { Question } from '../../../redux/reducers/questions';
-import styles from './questionsList.module.scss';
-import QuestionItem from './questionItem/QuestionItem';
 import { TransitionGroup } from 'react-transition-group';
-import AnimateHeight from '../../animateProperty/AnimateProperty';
+
 import { AppState } from '../../../redux/reducers/index';
+import { Question } from '../../../redux/reducers/questions';
+import { AnimateHeight } from '../../animateProperty/AnimateProperty';
+
+import QuestionItem from './questionItem/QuestionItem';
+import styles from './questionsList.module.scss';
 
 const defaultProps = {
   selectable: true,

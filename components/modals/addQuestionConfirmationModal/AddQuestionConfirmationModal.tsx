@@ -1,7 +1,9 @@
-import BaseModal, { CommonModalProps } from '../baseModal/BaseModal';
-import React from 'react';
-import styles from './addQuestionConfirmationModal.module.scss';
 import classNames from 'classnames';
+import React from 'react';
+
+import BaseModal, { CommonModalProps } from '../baseModal/BaseModal';
+
+import styles from './addQuestionConfirmationModal.module.scss';
 
 export default class AddQuestionConfirmationModal extends React.PureComponent<CommonModalProps> {
   componentDidMount() {
@@ -43,6 +45,7 @@ export default class AddQuestionConfirmationModal extends React.PureComponent<Co
           <a
             href="https://typeofweb.com/"
             target="_blank"
+            rel="noopener noreferrer"
             title="Type of Web"
             onClick={() => this.reportEvent('Type of Web - klik')}
           >

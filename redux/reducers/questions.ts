@@ -1,7 +1,7 @@
-import { Actions, ActionTypes } from '../actions';
-import { TechnologyKey } from '../../constants/technology-icon-items';
 import { LevelKey } from '../../constants/level';
+import { TechnologyKey } from '../../constants/technology-icon-items';
 import { ApiResponse } from '../../services/Api';
+import { Actions, ActionTypes } from '../actions';
 
 export interface Question {
   id: number;

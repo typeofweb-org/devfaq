@@ -3,10 +3,11 @@ require('dotenv').config({
   path: isProduction ? `.env.${process.env.ENV}` : '.env',
 });
 
-const withImages = require('next-images');
-const withOffline = require('next-offline');
+const path = require('path');
 
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const withImages = require('next-images');
+const withOffline = require('next-offline');
 
 const withBundleAnalyzer = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
@@ -107,7 +108,6 @@ config.env = {
   ENV: process.env.ENV,
 };
 
-const path = require('path');
 config.sassOptions = {
   includePaths: [path.join(__dirname, 'styles')],
 };

@@ -1,4 +1,5 @@
-import { Actions, ActionTypes } from '../actions';
+import type { Actions } from '../actions';
+import { ActionTypes } from '../actions';
 
 export interface UserData {
   id: number;

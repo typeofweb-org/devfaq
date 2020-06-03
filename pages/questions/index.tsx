@@ -1,6 +1,5 @@
-import React from 'react';
 import { redirect } from '../../utils/redirect';
-import { GetInitialPropsContext } from '../../utils/types';
+import type { GetInitialPropsContext } from '../../utils/types';
 
 const QuestionsPage = () => null;
 

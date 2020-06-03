@@ -1,11 +1,13 @@
+import React from 'react';
+
 import {
   technologyIconItems,
   TechnologyIconItem,
 } from '../../../../constants/technology-icon-items';
-import React from 'react';
 import ActiveLink from '../../../activeLink/ActiveLink';
-import styles from './technologyFilter.module.scss';
 import levelStyles from '../levelFilter/levelFilter.module.scss';
+
+import styles from './technologyFilter.module.scss';
 
 export class TechnologyFilter extends React.Component {
   render() {

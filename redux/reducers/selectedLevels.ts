@@ -1,5 +1,5 @@
-import { Actions, ActionTypes } from '../actions';
 import { LevelKey } from '../../constants/level';
+import { Actions, ActionTypes } from '../actions';
 
 const initialSelectedLevels: LevelKey[] = [];
 

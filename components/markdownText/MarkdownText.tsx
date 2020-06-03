@@ -1,5 +1,5 @@
-import React from 'react';
 import commonmark from 'commonmark';
+import React from 'react';
 import xss from 'xss';
 
 interface MarkdownTextProps {
@@ -27,7 +27,7 @@ export function getHtmlFromMarkdown(markdown: string): string {
 }
 
 export function highlightSyntax(el: Element): void {
-  import('prismjs')
+  import(/* webpackChunkName: "prismjs" */ 'prismjs')
     .then((Prism) => {
       Prism.highlightAllUnder(el);
     })

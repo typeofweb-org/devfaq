@@ -1,11 +1,13 @@
-import React from 'react';
-import styles from './questionsSidebar.module.scss';
 import classNames from 'classnames';
-import { AppState } from '../../../redux/reducers/index';
-import { ActionCreators } from '../../../redux/actions';
+import React from 'react';
 import { connect } from 'react-redux';
-import { TechnologyFilter } from './technologyFilter/TechnologyFilter';
+
+import { ActionCreators } from '../../../redux/actions';
+import { AppState } from '../../../redux/reducers/index';
+
 import LevelFilter from './levelFilter/LevelFilter';
+import styles from './questionsSidebar.module.scss';
+import { TechnologyFilter } from './technologyFilter/TechnologyFilter';
 
 class QuestionsSidebarComponent extends React.Component<
   ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps

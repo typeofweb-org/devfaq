@@ -1,8 +1,10 @@
 import React from 'react';
+
 import Layout from '../components/layout/Layout';
+
 import styles from './staticPage.module.scss';
 
-export default () => {
+const About = () => {
   return (
     <Layout title="Jak korzystać? FAQ">
       <div className="container">
@@ -67,7 +69,7 @@ export default () => {
 
           <p>
             Więcej informacji na temat Markdown oraz kompletną dokumentację znajdziesz na stronie{' '}
-            <a href="http://commonmark.org/" target="_blank">
+            <a href="http://commonmark.org/" target="_blank" rel="noopener noreferrer">
               CommonMark
             </a>
             .
@@ -77,3 +79,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default About;

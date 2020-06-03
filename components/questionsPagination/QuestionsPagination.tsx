@@ -1,9 +1,11 @@
 import React from 'react';
-import ActiveLink from '../activeLink/ActiveLink';
 import { connect } from 'react-redux';
+
 import { AppState } from '../../redux/reducers';
 import { getTechnology } from '../../redux/selectors/selectors';
 import { PAGE_SIZE } from '../../services/Api';
+import ActiveLink from '../activeLink/ActiveLink';
+
 import styles from './questionsPagination.module.scss';
 
 type QuestionsPaginationProps = ReturnType<typeof mapStateToProps>;

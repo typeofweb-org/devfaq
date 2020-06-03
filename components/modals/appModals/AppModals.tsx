@@ -1,10 +1,11 @@
-import { connect } from 'react-redux';
 import React from 'react';
-import AddQuestionModal from '../addQuestionModal/AddQuestionModal';
-import { AppState } from '../../../redux/reducers/index';
-import { ActionCreators } from '../../../redux/actions';
+import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
+
+import { ActionCreators } from '../../../redux/actions';
+import { AppState } from '../../../redux/reducers/index';
 import AddQuestionConfirmationModal from '../addQuestionConfirmationModal/AddQuestionConfirmationModal';
+import AddQuestionModal from '../addQuestionModal/AddQuestionModal';
 import { CommonModalProps } from '../baseModal/BaseModal';
 import styles from '../baseModal/baseModal.module.scss';
 

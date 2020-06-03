@@ -1,16 +1,17 @@
-import React from 'react';
-
-import nextReduxWrapper from 'next-redux-wrapper';
-import { makeStore } from '../redux/store';
-import { Provider } from 'react-redux';
-import AppComponent, { Container, AppContext } from 'next/app';
-import { withRouter, SingletonRouter, default as Router } from 'next/router';
-import { ActionCreators } from '../redux/actions';
-import { RouteDetails, GetInitialPropsContext, AppStore } from '../utils/types';
-import AppModals from '../components/modals/appModals/AppModals';
-import * as analytics from '../utils/analytics';
 import * as Sentry from '@sentry/browser';
+import nextReduxWrapper from 'next-redux-wrapper';
+import AppComponent, { AppContext } from 'next/app';
+import { SingletonRouter, default as Router } from 'next/router';
+import React from 'react';
+import { Provider } from 'react-redux';
+
+import AppModals from '../components/modals/appModals/AppModals';
+import { ActionCreators } from '../redux/actions';
+import { makeStore } from '../redux/store';
+import * as analytics from '../utils/analytics';
 import env from '../utils/env';
+import type { RouteDetails, AppStore } from '../utils/types';
+
 import 'prismjs/themes/prism-coy.css';
 import './index.scss';
 

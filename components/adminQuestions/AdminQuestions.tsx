@@ -1,15 +1,16 @@
+import classNames from 'classnames';
 import React, { useState, useEffect } from 'react';
-import QuestionsList from '../questions/questionsList/QuestionsList';
+import { connect } from 'react-redux';
+
+import spinnerStyles from '../../components/layout/appSpinner.module.scss';
+import { TechnologyKey } from '../../constants/technology-icon-items';
 import { ActionCreators } from '../../redux/actions';
 import { AppState } from '../../redux/reducers/index';
-import { connect } from 'react-redux';
-import { TechnologyKey } from '../../constants/technology-icon-items';
 import { Question } from '../../redux/reducers/questions';
 import { CommonModalProps } from '../modals/baseModal/BaseModal';
+import QuestionsList from '../questions/questionsList/QuestionsList';
 import questionListStyles from '../questions/questionsList/questionsList.module.scss';
 import noQuestionsStyles from '../questions/selectedQuestions/noQuestionsSelectedInfo.module.scss';
-import spinnerStyles from '../../components/layout/appSpinner.module.scss';
-import classNames from 'classnames';
 
 type AdminQuestionsProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 const AdminQuestions: React.FC<AdminQuestionsProps> = React.memo(
@@ -23,23 +24,26 @@ const AdminQuestions: React.FC<AdminQuestionsProps> = React.memo(
     const [status, setStatus] = useState<'pending' | 'accepted'>('pending');
     const [technology] = useState<TechnologyKey | undefined>(undefined);
 
-    useEffect(() => {
-      refetchQuestions();
-    }, [selectedLevels, status]);
-
-    const refetchQuestions = () => {
+    const refetchQuestions = React.useCallback(() => {
       fetchQuestionsForAdmin({
         technology,
         selectedLevels,
         status,
       });
-    };
+    }, [fetchQuestionsForAdmin, selectedLevels, status, technology]);
 
-    const onEditFinished: CommonModalProps['onClose'] = (e) => {
-      if (e.reason && e.reason === 'submit') {
-        refetchQuestions();
-      }
-    };
+    useEffect(() => {
+      refetchQuestions();
+    }, [refetchQuestions, selectedLevels, status]);
+
+    const onEditFinished: CommonModalProps['onClose'] = React.useCallback(
+      (e) => {
+        if (e.reason && e.reason === 'submit') {
+          refetchQuestions();
+        }
+      },
+      [refetchQuestions]
+    );
 
     const toggleQuestion = React.useCallback(
       (questionId: Question['id']) => {

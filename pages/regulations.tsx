@@ -1,8 +1,10 @@
 import React from 'react';
+
 import Layout from '../components/layout/Layout';
+
 import styles from './staticPage.module.scss';
 
-export default () => {
+const RegulationsPage = () => {
   return (
     <Layout title="Regulations">
       <div className="container">
@@ -243,3 +245,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default RegulationsPage;
