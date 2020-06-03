@@ -252,6 +252,7 @@ async function commentLightHouseReport() {
     CIRCLE_PROJECT_REPONAME,
     CIRCLE_BUILD_NUM,
   } = process.env;
+
   if (!DANGER_GITHUB_API_TOKEN) {
     throw new Error(`Missing DANGER_GITHUB_API_TOKEN!`);
   }
