@@ -1,3 +1,4 @@
+import { HYDRATE } from 'next-redux-wrapper';
 import { combineReducers } from 'redux';
 
 import { auth } from './auth';
@@ -17,7 +18,19 @@ const reducersObj = {
   routeDetails,
   auth,
 };
-export const reducers = combineReducers(reducersObj);
+export const combinedReducer = combineReducers(reducersObj);
+
+export const reducers = (state: any, action: any) => {
+  if (action.type === HYDRATE) {
+    const nextState = {
+      ...state, // use previous state
+      ...action.payload, // apply delta from hydration
+    };
+    return nextState;
+  } else {
+    return combinedReducer(state, action);
+  }
+};
 
 export type AppState = { [K in keyof typeof reducersObj]: ReturnType<typeof reducersObj[K]> };
 

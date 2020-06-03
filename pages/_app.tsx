@@ -1,13 +1,13 @@
 import * as Sentry from '@sentry/browser';
 import nextReduxWrapper from 'next-redux-wrapper';
-import AppComponent, { AppContext } from 'next/app';
-import { default as Router } from 'next/router';
+import AppComponent, { AppContext, Container, AppContext } from 'next/app';
+import { default as Router, withRouter, SingletonRouter, default as Router } from 'next/router';
 import React from 'react';
 import { Provider } from 'react-redux';
 
 import { AppModals } from '../components/modals/appModals/AppModals';
 import { ActionCreators } from '../redux/actions';
-import { makeStore } from '../redux/store';
+import { nextReduxWrapper, makeStore } from '../redux/store';
 import * as analytics from '../utils/analytics';
 import env from '../utils/env';
 import type { RouteDetails, AppStore } from '../utils/types';
@@ -104,21 +104,17 @@ class MyApp extends AppComponent<{ store: AppStore; ctx: RouteDetails }> {
   };
 
   render() {
-    const { Component, pageProps, store } = this.props;
+    const { Component, pageProps } = this.props;
     return (
-      <Provider store={store}>
+      <>
         <Component {...pageProps} />
         <AppModals />
-      </Provider>
+      </>
     );
   }
 }
 
-const options = {
-  debug: false,
-};
-
-export default nextReduxWrapper(makeStore, options)(MyApp);
+export default nextReduxWrapper.withRedux(MyApp);
 
 if (typeof window !== 'undefined') {
   // @ts-ignore
