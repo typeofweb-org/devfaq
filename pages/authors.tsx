@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Container } from '../components/container/Container';
 import Layout from '../components/layout/Layout';
 
 import styles from './staticPage.module.scss';
@@ -7,7 +8,7 @@ import styles from './staticPage.module.scss';
 const Authors = () => {
   return (
     <Layout title="Autorzy">
-      <div className="container">
+      <Container>
         <React.Fragment>
           <article className={styles.appStaticPage}>
             <h2>Autorzy</h2>
@@ -79,7 +80,7 @@ const Authors = () => {
             </ul>
           </article>
         </React.Fragment>
-      </div>
+      </Container>
     </Layout>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Container } from '../components/container/Container';
 import Layout from '../components/layout/Layout';
 
 import styles from './staticPage.module.scss';
@@ -7,7 +8,7 @@ import styles from './staticPage.module.scss';
 const About = () => {
   return (
     <Layout title="Jak korzystać? FAQ">
-      <div className="container">
+      <Container>
         <article className={styles.appStaticPage}>
           <h2>Jak korzystać? FAQ</h2>
           <h3>Co to jest DevFAQ.pl?</h3>
@@ -75,7 +76,7 @@ const About = () => {
             .
           </p>
         </article>
-      </div>
+      </Container>
     </Layout>
   );
 };

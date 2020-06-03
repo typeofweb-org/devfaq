@@ -7,6 +7,7 @@ import { TechnologyKey } from '../../constants/technology-icon-items';
 import { ActionCreators } from '../../redux/actions';
 import { AppState } from '../../redux/reducers/index';
 import { Question } from '../../redux/reducers/questions';
+import { Container } from '../container/Container';
 import { CommonModalProps } from '../modals/baseModal/BaseModal';
 import QuestionsList from '../questions/questionsList/QuestionsList';
 import questionListStyles from '../questions/questionsList/questionsList.module.scss';
@@ -74,9 +75,9 @@ const AdminQuestions: React.FC<AdminQuestionsProps> = React.memo(
       }
       return (
         <div className={questionListStyles.appQuestionsList} style={{ flex: 1 }}>
-          <div className={classNames(noQuestionsStyles, 'container')}>
+          <Container className={noQuestionsStyles.selectedQuestionsEmpty}>
             <p>Nie ma żadnych pytań do zaakceptowania!</p>
-          </div>
+          </Container>
         </div>
       );
     };

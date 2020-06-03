@@ -28,6 +28,7 @@ export const AnimateHeight: React.FC<AnimateHeightProps> = memo(
           reflow(el);
         }}
         onExiting={(el) => {
+          console.log(el);
           el.style.height = '0';
           el.style.opacity = '0';
           el.style.minHeight = '0';

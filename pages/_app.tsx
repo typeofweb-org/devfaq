@@ -15,11 +15,15 @@ import type { RouteDetails, AppStore } from '../utils/types';
 import 'prismjs/themes/prism-coy.css';
 import './index.scss';
 
-interface MyAppProps {
-  Component: React.ComponentType;
-  pageProps: object;
-  store: AppStore;
-  router: SingletonRouter;
+export function reportWebVitals({ id, name, label, value }: any) {
+  // These metrics can be sent to any analytics service
+  console.log({ id, name, label, value });
+  gtag('event', name, {
+    event_category: label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
+    event_label: id,
+    value: Math.round(name === 'CLS' ? value * 1000 : value),
+    non_interaction: true,
+  });
 }
 
 function getRouteDetails(routeDetails: RouteDetails) {

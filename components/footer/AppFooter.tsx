@@ -3,6 +3,7 @@ import React from 'react';
 
 import env from '../../utils/env';
 import ActiveLink from '../activeLink/ActiveLink';
+import { Container } from '../container/Container';
 
 import styles from './appFooter.module.scss';
 
@@ -10,7 +11,7 @@ export const AppFooter = () => {
   const version = env.VERSION;
   return (
     <div className={styles.footerContainer}>
-      <footer className="container">
+      <Container as="footer">
         <small style={{ color: 'transparent', position: 'absolute', left: 0 }}>{version}</small>
         <nav className={styles.footerNavigation}>
           <ul className={styles.footerNavigationLinks}>
@@ -41,7 +42,7 @@ export const AppFooter = () => {
             </li>
           </ul>
         </nav>
-      </footer>
+      </Container>
     </div>
   );
 };

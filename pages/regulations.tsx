@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import { Container } from '../components/container/Container';
 import Layout from '../components/layout/Layout';
 
 import styles from './staticPage.module.scss';
@@ -8,7 +9,7 @@ import styles from './staticPage.module.scss';
 const RegulationsPage = () => {
   return (
     <Layout title="Regulations">
-      <div className="container">
+      <Container>
         <article className={classNames(styles.appStaticPage, styles.regulations)}>
           <h2>Regulamin DevFAQ.pl</h2>
           <h3>Wersja z&nbsp;dnia 3.&nbsp;czerwca 2020&nbsp;r.</h3>
@@ -316,7 +317,7 @@ const RegulationsPage = () => {
             </li>
           </ol>
         </article>
-      </div>
+      </Container>
     </Layout>
   );
 };

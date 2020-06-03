@@ -59,6 +59,7 @@ class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps>
               <span className={icon.icon} />
             </div>
             <QuestionsList
+              className={styles.appQuestionsList}
               selectedQuestionIds={this.props.selectedQuestionIds}
               questions={{ isLoading: false, data: { data: questions } }}
               selectable={false}

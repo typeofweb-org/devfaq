@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import { TransitionGroup } from 'react-transition-group';
 
@@ -5,7 +6,7 @@ import { AppState } from '../../../redux/reducers/index';
 import { Question } from '../../../redux/reducers/questions';
 import { AnimateHeight } from '../../animateProperty/AnimateProperty';
 
-import QuestionItem from './questionItem/QuestionItem';
+import { QuestionItem } from './questionItem/QuestionItem';
 import styles from './questionsList.module.scss';
 
 const defaultProps = {
@@ -20,7 +21,7 @@ export default class QuestionsList extends React.PureComponent<
   typeof defaultProps & {
     toggleQuestion(questionId: Question['id']): any;
     editQuestion?(questionId: Question['id']): any;
-  }
+  } & { className?: string }
 > {
   static defaultProps = defaultProps;
 
@@ -32,7 +33,7 @@ export default class QuestionsList extends React.PureComponent<
       <TransitionGroup
         appear={false}
         enter={false}
-        className={styles.appQuestionsList}
+        className={classNames(styles.appQuestionsList, this.props.className)}
         component="div"
       >
         {this.props.questions.data.data.map((question) => (

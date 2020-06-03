@@ -24,12 +24,12 @@ export const reportEvent = (
 ) => {
   console.log({ action, category, label, questionId });
 
-  const params: GtagEventParams = { event_category: category };
+  const params: Gtag.EventParams | Gtag.CustomParams = { event_category: category };
   if (label) {
     params.event_label = label;
   }
   if (questionId) {
-    params.question_id = String(questionId);
+    (params as Gtag.CustomParams).question_id = String(questionId);
   }
   gtag('event', action, params);
 };
