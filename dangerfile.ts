@@ -40,11 +40,12 @@ const getBadge = ({ title, score }: { title: string; score: number }) =>
   `![](https://img.shields.io/badge/${title}-${score}-${getLighthouseScoreColor({
     isHex: false,
     score,
-  })}?style=flat-square) `;
+  })}?style=flat-square&logo=lighthouse) `;
 
 type LighthouseResult = {
   code: 'SUCCESS';
   data: Array<{
+    localReport: string;
     name: string;
     report: string;
     url: string;
@@ -283,10 +284,9 @@ async function commentLightHouseReport() {
         });
       });
 
-      const artifactsUrl = `https://${CIRCLE_BUILD_NUM}-${repo.data.id}-gh.circle-artifacts.com/0/tmp/lighthouse/`;
+      const artifactsUrl = `https://${CIRCLE_BUILD_NUM}-${repo.data.id}-gh.circle-artifacts.com/0${result.localReport}`;
       mrkd += `\n\n${result.url}`;
       mrkd += `\n\n[Full report](${artifactsUrl})`;
-
       markdown(
         `
 # Lighthouse results
@@ -345,11 +345,11 @@ async function commentSizesReport() {
   };
 
   const details = `
-  ## Bundle size changes
+  # Bundle size changes
 
   <p>Comparing: ${commitRange}</p>
   
-  ### Summary
+  ## Summary
   * Size change: ${formatDiff(summaryOfResults.absoluteDiff, summaryOfResults.relativeDiff)}
   * Size: ${prettyBytes(summaryOfResults.current)}
 
