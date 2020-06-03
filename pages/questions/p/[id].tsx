@@ -11,7 +11,7 @@ import questionListStyles from '../../../components/questions/selectedQuestions/
 import { ActionCreators } from '../../../redux/actions';
 import { AppState } from '../../../redux/reducers/index';
 import { redirect } from '../../../utils/redirect';
-import { GetInitialPropsContext } from '../../../utils/types';
+import type { GetInitialPropsContext } from '../../../utils/types';
 import pageStyles from '../../pages.module.scss';
 
 type Props = ReturnType<typeof mapStateToProps>;

@@ -2,7 +2,7 @@ import { NextPageContext } from 'next';
 import { LinkProps } from 'next/link';
 import Router from 'next/router';
 
-import { RouteDetails } from './types';
+import type { RouteDetails } from './types';
 
 export type Query = RouteDetails['query'] & { previousPath?: string };
 

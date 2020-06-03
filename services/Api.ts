@@ -2,10 +2,10 @@ import { pickBy, isUndefined } from 'lodash';
 
 import { LevelKey } from '../constants/level';
 import { TechnologyKey, SortBy } from '../constants/technology-icon-items';
-import { AuthData, SessionData, UserData } from '../redux/reducers/auth';
-import { Question } from '../redux/reducers/questions';
+import type { AuthData, SessionData, UserData } from '../redux/reducers/auth';
+import type { Question } from '../redux/reducers/questions';
 import env from '../utils/env';
-import { GetInitialPropsContext } from '../utils/types';
+import type { GetInitialPropsContext } from '../utils/types';
 
 if (typeof window === 'undefined') {
   (global as any).fetch =

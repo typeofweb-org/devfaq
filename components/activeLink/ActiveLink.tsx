@@ -4,9 +4,9 @@ import Link, { LinkProps } from 'next/link';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { AppState } from '../../redux/reducers/index';
+import type { AppState } from '../../redux/reducers/index';
 import { hrefQueryToAsPath } from '../../utils/redirect';
-import { RouteDetails } from '../../utils/types';
+import type { RouteDetails } from '../../utils/types';
 
 interface ActiveLinkOwnProps {
   activeClassName: string;

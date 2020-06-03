@@ -12,7 +12,7 @@ import { ActionCreators, AsyncAction } from '../../redux/actions';
 import { AppState } from '../../redux/reducers/index';
 import { getTechnology, getSortByArray, getPage } from '../../redux/selectors/selectors';
 import { redirect } from '../../utils/redirect';
-import { GetInitialPropsContext } from '../../utils/types';
+import type { GetInitialPropsContext } from '../../utils/types';
 import styles from '../pages.module.scss';
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;

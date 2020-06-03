@@ -2,8 +2,8 @@ import { createSelector } from 'reselect';
 
 import { TechnologyKey, SortBy } from '../../constants/technology-icon-items';
 import env from '../../utils/env';
-import { AppState } from '../reducers';
-import { Question } from '../reducers/questions';
+import type { AppState } from '../reducers';
+import type { Question } from '../reducers/questions';
 
 // const questionsSelector = (state: AppState) => state.questions;
 const selectedQuestionsSelector = (state: AppState) => state.selectedQuestions;

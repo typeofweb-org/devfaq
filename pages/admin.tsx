@@ -5,7 +5,7 @@ import Layout from '../components/layout/Layout';
 import QuestionsListLayout from '../components/questions/questionsListLayout/QuestionsListLayout';
 import { getLoggedInUser } from '../redux/selectors/selectors';
 import { redirect, getPreviousPathFromHrefQuery } from '../utils/redirect';
-import { GetInitialPropsContext } from '../utils/types';
+import type { GetInitialPropsContext } from '../utils/types';
 
 import styles from './pages.module.scss';
 

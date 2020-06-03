@@ -10,7 +10,7 @@ import { ActionCreators } from '../redux/actions';
 import { makeStore } from '../redux/store';
 import * as analytics from '../utils/analytics';
 import env from '../utils/env';
-import { RouteDetails, AppStore } from '../utils/types';
+import type { RouteDetails, AppStore } from '../utils/types';
 
 import 'prismjs/themes/prism-coy.css';
 import './index.scss';

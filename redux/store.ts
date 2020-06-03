@@ -3,7 +3,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
 
-import { AppStore } from '../utils/types';
+import type { AppStore } from '../utils/types';
 
 import { reducers, AppState } from './reducers';
 

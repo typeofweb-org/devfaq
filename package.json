@@ -10,9 +10,9 @@
     "build:vercel": "next build",
     "start": "node app.js",
     "analyze": "cross-env ANALYZE=1 NODE_ENV=production next build",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "test": "npm run test:tsc && npm run jest",
-    "test:tsc": "tsc --project tsconfig.json --noEmit && tslint -p tsconfig.json",
+    "test:tsc": "tsc --project tsconfig.json --noEmit && npm run eslint",
     "jest": "jest",
     "create-size": "ts-node-script scripts/sizeSnapshot/create.ts",
     "danger": "danger"

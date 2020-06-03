@@ -1,4 +1,4 @@
-import { RouteDetails } from '../../utils/types';
+import type { RouteDetails } from '../../utils/types';
 import { Actions, ActionTypes } from '../actions';
 
 interface InitialState {
