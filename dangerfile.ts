@@ -285,7 +285,13 @@ async function commentLightHouseReport() {
 
       let mrkd = '';
 
-      (Object.keys(result.scores) as Array<keyof typeof result.scores>).forEach((current) => {
+      ([
+        'performance',
+        'accessibility',
+        'bestPractices',
+        'seo',
+        'progressiveWebApp',
+      ] as const).forEach((current) => {
         const badge = getBadge({
           title: lighthouseAuditTitles[current].replace(/ /g, '%20'),
           score: result.scores[current],
