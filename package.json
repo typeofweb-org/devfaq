@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@sentry/browser": "5.15.5",
-    "@sentry/node": "5.15.5",
+    "@sentry/node": "5.16.1",
     "@zeit/next-typescript": "1.1.1",
     "babel-plugin-lodash": "3.3.4",
     "classnames": "2.2.6",
