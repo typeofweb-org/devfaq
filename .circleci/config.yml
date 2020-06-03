@@ -4,7 +4,9 @@ orbs:
 
 jobs:
   compare-sizes:
-    executor: node/default
+    # executor: node/default
+    docker:
+      - image: circleci/node:12-browsers
     steps:
       - checkout
       - node/with-cache:
