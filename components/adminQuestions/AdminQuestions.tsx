@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import QuestionsList from '../questions/questionsList/QuestionsList';
 import { ActionCreators } from '../../redux/actions';
 import { AppState } from '../../redux/reducers/index';
@@ -12,107 +12,104 @@ import spinnerStyles from '../../components/layout/appSpinner.module.scss';
 import classNames from 'classnames';
 
 type AdminQuestionsProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
-type AdminQuestionsState = {
-  status: 'pending' | 'accepted';
-  technology?: TechnologyKey;
-};
+const AdminQuestions: React.FC<AdminQuestionsProps> = React.memo(
+  ({
+    fetchQuestionsForAdmin,
+    selectedLevels,
+    deleteQuestionForAdmin,
+    questions,
+    uiOpenEditQuestionModal,
+  }) => {
+    const [status, setStatus] = useState<'pending' | 'accepted'>('pending');
+    const [technology] = useState<TechnologyKey | undefined>(undefined);
 
-class AdminQuestions extends React.Component<AdminQuestionsProps, AdminQuestionsState> {
-  state: AdminQuestionsState = {
-    status: 'pending',
-  };
+    useEffect(() => {
+      refetchQuestions();
+    }, [selectedLevels, status]);
 
-  componentDidMount() {
-    this.refetchQuestions();
-  }
+    const refetchQuestions = () => {
+      fetchQuestionsForAdmin({
+        technology,
+        selectedLevels,
+        status,
+      });
+    };
 
-  componentDidUpdate(prevProps: AdminQuestionsProps, prevState: AdminQuestionsState) {
-    if (prevState !== this.state || this.props.selectedLevels !== prevProps.selectedLevels) {
-      this.refetchQuestions();
-    }
-  }
+    const onEditFinished: CommonModalProps['onClose'] = (e) => {
+      if (e.reason && e.reason === 'submit') {
+        refetchQuestions();
+      }
+    };
 
-  refetchQuestions = () => {
-    const { technology, status } = this.state;
-    const { selectedLevels } = this.props;
-
-    this.props.fetchQuestionsForAdmin({
-      technology,
-      selectedLevels,
-      status,
-    });
-  };
-
-  toggleQuestion = (questionId: Question['id']) => {
-    this.props.deleteQuestionForAdmin(questionId);
-  };
-
-  editQuestion = (questionId: Question['id']) => {
-    if (!this.props.questions.data) {
-      return;
-    }
-
-    const question = this.props.questions.data.data.find((q) => q.id === questionId);
-    if (!question) {
-      return;
-    }
-
-    this.props.uiOpenEditQuestionModal(question, this.onEditFinished);
-  };
-
-  onEditFinished: CommonModalProps['onClose'] = (e) => {
-    if (e.reason && e.reason === 'submit') {
-      this.refetchQuestions();
-    }
-  };
-
-  maybeRenderEmptyMessage = () => {
-    if (!this.props.questions.data || this.props.questions.data.data.length > 0) {
-      return null;
-    }
-    return (
-      <div className={questionListStyles.appQuestionsList} style={{ flex: 1 }}>
-        <div className={classNames(noQuestionsStyles, 'container')}>
-          <p>Nie zadnych pytań do zaakceptowania!</p>
-        </div>
-      </div>
+    const toggleQuestion = React.useCallback(
+      (questionId: Question['id']) => {
+        deleteQuestionForAdmin(questionId);
+      },
+      [deleteQuestionForAdmin]
     );
-  };
 
-  updateStatus: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    this.setState({ status: e.currentTarget.value as 'pending' | 'accepted' });
-  };
+    const editQuestion = React.useCallback(
+      (questionId: Question['id']) => {
+        if (!questions.data) {
+          return;
+        }
 
-  render() {
-    if (!this.props.questions || this.props.questions.isLoading) {
+        const question = questions.data.data.find((q) => q.id === questionId);
+        if (!question) {
+          return;
+        }
+
+        uiOpenEditQuestionModal(question, onEditFinished);
+      },
+      [questions.data, uiOpenEditQuestionModal, onEditFinished]
+    );
+
+    const maybeRenderEmptyMessage = () => {
+      if (!questions.data || questions.data.data.length > 0) {
+        return null;
+      }
+      return (
+        <div className={questionListStyles.appQuestionsList} style={{ flex: 1 }}>
+          <div className={classNames(noQuestionsStyles, 'container')}>
+            <p>Nie ma żadnych pytań do zaakceptowania!</p>
+          </div>
+        </div>
+      );
+    };
+
+    const updateStatus: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
+      setStatus(e.currentTarget.value as 'pending' | 'accepted');
+    };
+
+    if (!questions || questions.isLoading) {
       return null;
     }
 
     return (
-      <React.Fragment>
+      <>
         <label>
           {' '}
           Status:
-          <select onChange={this.updateStatus} value={this.state.status}>
+          <select onChange={updateStatus} value={status}>
             <option value="pending">pending</option>
             <option value="accepted">accepted</option>
           </select>
         </label>
-        {this.props.questions.isLoading && <div className={spinnerStyles.spinner} />}
-        {this.maybeRenderEmptyMessage()}
+        {questions.isLoading && <div className={spinnerStyles.spinner} />}
+        {maybeRenderEmptyMessage()}
         <QuestionsList
           selectable={false}
           unselectable={false}
           editable={true}
-          questions={this.props.questions}
+          questions={questions}
           selectedQuestionIds={[]}
-          toggleQuestion={this.toggleQuestion}
-          editQuestion={this.editQuestion}
+          toggleQuestion={toggleQuestion}
+          editQuestion={editQuestion}
         />
-      </React.Fragment>
+      </>
     );
   }
-}
+);
 
 const mapStateToProps = (state: AppState) => {
   return {
