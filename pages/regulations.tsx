@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 
 import Layout from '../components/layout/Layout';
@@ -8,235 +9,309 @@ const RegulationsPage = () => {
   return (
     <Layout title="Regulations">
       <div className="container">
-        <article className={styles.appStaticPage}>
-          <h2>Regulamin</h2>
-          <h3>Regulamin Świadczenia Usług Drogą Elektroniczną Portalu devfaq.pl</h3>
-
+        <article className={classNames(styles.appStaticPage, styles.regulations)}>
+          <h2>Regulamin DevFAQ.pl</h2>
+          <h3>Wersja z&nbsp;dnia 3.&nbsp;czerwca 2020&nbsp;r.</h3>
           <ol>
             <li>
-              Postanowienia ogólne (wstępne)
+              Postanowienia ogólne
               <ol>
                 <li>
-                  Niniejszy Regulamin stanowi regulamin świadczenia usług drogą elektroniczną w
-                  rozumieniu ustawy o świadczeniu usług drogą elektroniczną i określa zasady
-                  korzystania z serwisu devfaq.pl (dalej zwanego „Serwisem”) dla użytkowników
-                  indywidualnych (dalej zwanych „Użytkownikami”)
+                  Niniejszy Regulamin (zwany dalej „Regulaminem”) określa zasady korzystania z
+                  serwisu devfaq.pl (zwanego dalej: „Serwisem”) dla użytkowników indywidualnych
+                  (zwanych dalej „Użytkownikami”).
                 </li>
                 <li>
-                  Administratorem Serwisu jest Type of Web - Michał Miszczyszyn, NIP PL6040080451,
-                  REGON 366128021, ul. Bażantowa 9/21, 80-175 Gdańsk (dalej zwany „Usługodawcą”)
-                </li>
-                <li>
-                  Serwis internetowy devfaq.pl służy do przechowywania i udostępniania pytań
-                  rekrutacyjnych dodawanych przez Użytkowników innym Użytkownikom. Usługodawca
-                  świadczy usługę polegającą na udostępnianiu infrastruktury teleinformatycznej
-                  celem dodawania i przechowywania dodawanych przez Użytkowników pytań.
-                </li>
-                <li>
-                  Treści umieszczone w Serwisie są dostępne dla wszystkich użytkowników Internetu.
+                  Administratorem Serwisu jest Michał Miszczyszyn prowadzący działalność gospodarczą
+                  pod firmą „Type of Web - Michał Miszczyszyn”, zarejestrowaną w&nbsp;Centralnej
+                  Ewidencji i&nbsp;Informacji o&nbsp;Działalności Gospodarczej pod adresem ul.
+                  Bażantowa 9/21, 80-175 Gdańsk, NIP: 6040080451 (zwany dalej: „Usługodawcą”). Adres
+                  do korespondencji: ul. Bażantowa 9/21, 80-175 Gdańsk; adres e-mail:
+                  hi@typeofweb.com.
                 </li>
               </ol>
             </li>
-
             <li>
-              Korzytanie z Serwisu
+              Zasady korzystania z&nbsp;Serwisu
               <ol>
                 <li>
-                  Użytkownik nie może wykorzystywać Serwisu ani treści w nim zamieszczonych do
-                  działalności komercyjnej. Pod pojęciem działalności komercyjnej rozumie się
-                  jakąkolwiek działalność marketingową, promocyjną lub wspomagającą te działania, na
-                  przykład umieszczanie reklam w treściach dodawanych do Serwisu, lub dowolne inne
-                  sposoby czerpania korzyści majątkowej z Serwisu.
+                  Serwis służy do udostępniania pytań rekrutacyjnych dodawanych przez Użytkowników.
+                  Usługodawca świadczy usługę polegającą na udostępnianiu infrastruktury
+                  teleinformatycznej celem dodawania, przechowywania i&nbsp;udostępniania pytań
+                  dodawanych przez Użytkowników.
                 </li>
                 <li>
-                  Dodając treść do Serwisu Użytkownik ponosi pełną odpowiedzialność przewidzianą w
-                  prawie i niniejszym Regulaminie, związaną z ewentualnym naruszeniem praw
-                  autorskich, umów o zachowaniu poufności i innych.
+                  Korzystanie z&nbsp;Serwisu jest bezpłatne i&nbsp;nie wymaga logowania Użytkownika.
                 </li>
                 <li>
-                  Użytkownik zrzeka się majątkowych praw autorskich do dodawanych w Serwisie treści
-                  i niniejszym nieodpłatnie przekazuje je na rzecz Usługodawcy.
+                  Korzystanie z&nbsp;Serwisu wymaga przeglądarki internetowej z&nbsp;włączoną
+                  obsługą języka JavaScript. Usługodawca zastrzega sobie prawo do wspierania tylko
+                  wybranych, najpopularniejszych przeglądarek internetowych.
                 </li>
                 <li>
-                  Usługodawca zastrzega sobie prawo do modyfikowania, moderowania, a także do
-                  niepublikowania treści dodawanych przez Użytkowników celem utrzymania wysokiej
-                  jakości treści w Serwisie.
+                  Każde pytanie dodawane do Serwisu, przed opublikowaniem podlega weryfikacji przez
+                  Usługodawcę i&nbsp;może zostać zmodyfikowane lub usunięte. Okres od dodania
+                  pytania, do jego opublikowania w&nbsp;Serwisie, może trwać kilka dni.
                 </li>
                 <li>
-                  Usługodawca zastrzega sobie prawo do usuwania treści z Serwisu w przypadku
-                  wiarygodnego zawiadomienia o złamaniu prawa od innego podmiotu, a także w innym
-                  przypadku bez podania przyczyny.
-                </li>
-                <li>
-                  Użytkownik może korzystać z treści zamieszczonych w Portalu zgodnie z Dozwolonym
-                  Użytkiem określonym przez ustawę o prawie autorskim i prawach pokrewnych w
-                  artykułach 23 — 35.
-                </li>
-                <li>
-                  Jeśli zdaniem Użytkownika zamieszczona treść narusza prawo, Regulamin lub zasady
-                  dobrego smaku, Użytkownik ma możliwość zawiadomienia o tym fakcie Usługodawcy przy
-                  pomocy poczty elektronicznej lub za pośrednictwem odpowiednich formularzy
-                  kontaktowych w Serwisie.
-                </li>
-                <li>
-                  Korzystanie z Serwisu wymaga przeglądarki internetowej z włączoną obsługą języka
-                  JavaScript. Usługodawca zastrzega sobie prawo do wspierania tylko wybranych
-                  najpopularniejszych przeglądarek internetowych.
-                </li>
-              </ol>
-            </li>
-
-            <li>
-              Obowiązki Użytkownika
-              <ol>
-                <li>
-                  Użytkownik zobowiązany jest do używania Serwisu zgodnie z jego przeznaczeniem,
-                  obowiązującymi przepisami prawa, normami obyczajowymi i niniejszym Regulaminem
-                  oraz zasadami netykiety, a w szczególności do:
+                  Dodając treść do Serwisu, Użytkownik:
                   <ol>
-                    <li>korzystania z Serwisu w sposób nienaruszający praw innych Użytkowników</li>
-                    <li>umieszczania wyłącznie treści związanych z tematyką Serwisu</li>
-                    <li>bieżącego kontrolowania zmian w niniejszym Regulaminie</li>
+                    <li>ma obowiązek przestrzegania zasad kultury osobistej i&nbsp;netykiety;</li>
                     <li>
-                      poprawnego formatowania dodawanych treści z wykorzystaniem technologii
-                      Markdown w standardzie CommonMark, a także do przestrzegania zasad ortografii
-                      i gramatyki języka polskiego
+                      ma obowiązek poprawnego formatowania tekstu z&nbsp;wykorzystaniem technologii
+                      Markdown w&nbsp;standardzie CommonMark, a&nbsp;także do przestrzegania zasad
+                      ortografii i&nbsp;gramatyki języka polskiego;
+                    </li>
+                    <li>
+                      oświadcza, że przysługują mu prawa do publikacji dodawanych treści
+                      i&nbsp;wyraża zgodę na ich wykorzystanie przez Usługodawcę w&nbsp;Serwisie,
+                      a&nbsp;także poza nim, nie wyłączając celów komercyjnych;
+                    </li>
+                    <li>
+                      ponosi pełną odpowiedzialność związaną z&nbsp;ewentualnym naruszeniem
+                      Regulaminu i przepisów prawa, a&nbsp;w tym dóbr osobistych, praw własności
+                      intelektualnej, umów o&nbsp;zachowaniu poufności i&nbsp;innych;
+                    </li>
+                    <li>
+                      wyraża zgodę na modyfikowanie, moderowanie oraz odmowę publikacji treści przez
+                      Usługodawcę, w&nbsp;celu utrzymania wysokiej jakości treści publikowanych w
+                      Serwisie.
+                    </li>
+                  </ol>
+                </li>
+                <li>
+                  Użytkownik nie może:
+                  <ol>
+                    <li>
+                      wykorzystywać Serwisu, ani treści w&nbsp;nim zamieszczonych, do działalności
+                      komercyjnej. Pod pojęciem działalności komercyjnej rozumie się jakąkolwiek
+                      działalność marketingową, promocyjną lub wspomagającą te działania, na
+                      przykład umieszczanie reklam w&nbsp;treściach dodawanych do Serwisu, lub
+                      dowolne inne sposoby czerpania korzyści majątkowej z&nbsp;Serwisu;
+                    </li>
+                    <li>
+                      dodawać do Serwisu treści o&nbsp;charakterze erotycznym, zawierających
+                      wulgaryzmy lub z&nbsp;innych względów nieodpowiednich dla osób poniżej 18.
+                      roku życia;
+                    </li>
+                    <li>
+                      dodawać do Serwisu treści nawołujących do nienawiści na tle etnicznym,
+                      rasowym, religijnym lub jakimkolwiek innym oraz propagujących faszyzm, nazizm,
+                      komunizm oraz inne zbrodnicze ideologie;
+                    </li>
+                    <li>w nadmierny sposób obciążać serwera, na którym znajduje się Serwis;</li>
+                    <li>
+                      dodawać do Serwisu treści zawierających jakiekolwiek dane osobowe lub
+                      oznaczenia umożliwiające identyfikację konkretnych podmiotów.
+                    </li>
+                  </ol>
+                </li>
+                <li>
+                  Usługodawca ma prawo do usuwania treści z&nbsp;Serwisu bez podania przyczyny,
+                  a&nbsp;w szczególności w&nbsp;przypadku powzięcia wiarygodnej informacji
+                  o&nbsp;naruszeniu prawa lub Regulaminu.
+                </li>
+                <li>
+                  Jeśli zdaniem Użytkownika opublikowana w&nbsp;Serwisie treść narusza prawo,
+                  Regulamin lub zasady współżycia społecznego, Użytkownik może powiadomić
+                  Usługodawcę za pośrednictwem poczty elektronicznej na adres e-mail:
+                  abuse@devfaq.pl.
+                </li>
+              </ol>
+            </li>
+            <li>
+              Logowanie Użytkownika
+              <ol>
+                <li>
+                  Użytkownik ma możliwość zalogowania się w&nbsp;Serwisie za pośrednictwem GitHub.
+                </li>
+                <li>Logowanie jest bezpłatne.</li>
+                <li>
+                  Zalogowany Użytkownik ma możliwość korzystania z&nbsp;następujących dodatkowych
+                  funkcji Serwisu:{' '}
+                  <ol>
+                    <li>głosowanie na poszczególne pytania opublikowane w&nbsp;Serwisie.</li>
+                  </ol>
+                </li>
+              </ol>
+            </li>
+            <li>
+              Odpowiedzialność i&nbsp;sankcje
+              <ol>
+                <li>
+                  Użytkownik zobowiązuje się, że w&nbsp;momencie wystąpienia przez osoby trzecie z
+                  roszczeniami w&nbsp;stosunku do Usługodawcy z&nbsp;tytułu naruszenia jakichkolwiek
+                  praw tych osób trzecich przez treści zamieszczone przez Użytkownika, Użytkownik
+                  ten wstąpi do sprawy w&nbsp;miejsce Usługodawcy oraz przejmie na siebie
+                  w&nbsp;całości koszty ewentualnego postępowania sądowego, zasądzonych odszkodowań
+                  oraz inne.
+                </li>
+                <li>
+                  Naruszenie Regulaminu przez Użytkownika może skutkować zablokowaniem mu dostępu do
+                  Serwisu, a&nbsp;w przypadku gdy naruszone zostały przepisy prawa, również
+                  zawiadomieniem odpowiednich organów lub skierowaniem sprawy do sądu.
+                </li>
+                <li>
+                  Przez naruszenie Regulaminu rozumie się także namawianie innych osób do jego
+                  naruszenia, a&nbsp;także ułatwianie jego obchodzenia, jak również czerpanie
+                  korzyści majątkowych z&nbsp;tych czynności.
+                </li>
+              </ol>
+            </li>
+            <li>
+              Wyłączenie odpowiedzialności i&nbsp;zastrzeżenia
+              <ol>
+                <li>
+                  W&nbsp;najszerszym zakresie dopuszczalnym przez prawo, wyłączona zostaje
+                  odpowiedzialność Usługodawcy za:{' '}
+                  <ol>
+                    <li>
+                      szkody wynikające ze sposobu w&nbsp;jaki Użytkownicy korzystają
+                      z&nbsp;Serwisu, niewłaściwego działania Serwisu, braku dostępu do Serwisu, jak
+                      również szkody powstałe w&nbsp;wyniku działania siły wyższej;
+                    </li>
+                    <li>jakiekolwiek treści zamieszczone w&nbsp;Serwisie przez Użytkowników.</li>
+                  </ol>
+                </li>
+                <li>
+                  W&nbsp;najszerszym dopuszczalnym zakresie, Usługodawca ma prawo do:
+                  <ol>
+                    <li>zmiany parametrów oraz sposobu działania Serwisu;</li>
+                    <li>wyłączania Serwisu bez wcześniejszego powiadomienia Użytkowników;</li>
+                    <li>usuwania opublikowanych treści;</li>
+                    <li>całkowitego zaprzestania świadczenia usług;</li>
+                    <li>
+                      przeniesienia wszelkich praw i&nbsp;obowiązków związanych ze świadczeniem
+                      usług drogą elektroniczną w&nbsp;Serwisie na inny podmiot.
                     </li>
                   </ol>
                 </li>
               </ol>
             </li>
-
             <li>
-              Nakazy i zakazy
+              Informacje o&nbsp;zagrożeniach
               <ol>
                 <li>
-                  Użytkownikowi zabrania się:
-                  <ol>
-                    <li>
-                      umieszczania treści o charakterze erotycznym lub z innych względów
-                      nieodpowiednich dla osób poniżej 18-roku życia
-                    </li>
-                    <li>
-                      rozpowszechniania za pośrednictwem Serwisu treści do których Użytkownik nie
-                      posiada praw lub uprawnień do ich publikacji
-                    </li>
-                    <li>
-                      umieszczania treści nawołujących do nienawiści na tle etnicznym, rasowym,
-                      religijnym lub jakimkolwiek innym oraz propagujących faszyzm, nazim, komunizm
-                      oraz inne zbrodnicze ideologie
-                    </li>
-                    <li>
-                      podejmowania działań mających na celu odczytanie haseł dostępowych innych
-                      Użytkowników, w tym podejmowania prób odgadnięcia haseł
-                    </li>
-                    <li>nadmiernego obciążąnia serwera, na którym znajduje się Serwis</li>
-                    <li>
-                      umieszczania w Serwisie treści zawierających jakiekolwiek dane osobowe lub
-                      nazwy firm
-                    </li>
-                  </ol>
+                  Podstawowym zagrożeniem każdego użytkownika Internetu, w&nbsp;tym osób
+                  korzystających z usług świadczonych drogą elektroniczną, jest możliwość
+                  zainfekowania systemu teleinformatycznego przez złośliwe oprogramowanie tworzone
+                  głównie w&nbsp;celu wyrządzania szkód, takie jak wirusy, robaki, czy konie
+                  trojańskie. Aby uniknąć zagrożeń z&nbsp;tym związanych, a&nbsp;w tym pojawiających
+                  się w&nbsp;momencie otwierania wiadomości e-mail, należy wyposażyć swoje
+                  urządzenia dostępowe w&nbsp;programy antywirusowe i&nbsp;pamiętać o&nbsp;ich
+                  bieżącej aktualizacji do najnowszych wersji. Korzystanie z&nbsp;usług świadczonych
+                  przez Internet wiąże się z&nbsp;możliwą działalnością hackerów, zmierzających do
+                  włamania się zarówno do Serwisu (np. ataki na witrynę lub serwer), jak i&nbsp;do
+                  systemu Użytkownika. Warto pamiętać, że mimo stosowania przez Usługodawcę
+                  różnorodnych, nowoczesnych technologii obronnych, nie istnieje w 100% skuteczne
+                  zabezpieczenie przed opisanymi wyżej niepożądanymi działaniami. Więcej na temat
+                  stosowanych przez Usługodawcę zasad ochrony danych znaleźć można w Polityce
+                  prywatności.
                 </li>
               </ol>
             </li>
-
             <li>
-              Odpowiedzialność i sankcje
+              Ochrona danych osobowych
               <ol>
                 <li>
-                  Dodając treść do Serwisu Użytkownik ponosi pełną odpowiedzialność przewidzianą w
-                  prawie i niniejszym Regulaminie, związaną z ewentualnym naruszeniem praw
-                  autorskich, umów o zachowaniu poufności i innych.
+                  Administratorem danych osobowych Użytkowników, jest Michał Miszczyszyn prowadzący
+                  działalność gospodarczą pod firmą „Type of Web - Michał Miszczyszyn”,
+                  zarejestrowaną w&nbsp;Centralnej Ewidencji i&nbsp;Informacji o&nbsp;Działalności
+                  Gospodarczej pod adresem ul. Bażantowa 9/21, 80-175 Gdańsk, NIP: 6040080451 (zwany
+                  dalej „Administratorem”). Adres do korespondencji: ul. Bażantowa 9/21, 80-175
+                  Gdańsk; adres e-mail: hi@typeofweb.com
                 </li>
                 <li>
-                  Użytkownik zobowiązuje się, że w momencie wystąpienia przez osoby trzecie z
-                  roszczeniami w stosunku do Usługodawcy z tytułu naruszenia jakichkolwiek praw tych
-                  osób trzecich przez treści zamieszczone przez Użytkownika, Użytkownik ten wstąpi
-                  do sprawy w miejsce Usługodawcy oraz przejmie na siebie w całości koszta
-                  ewentualnego postępowania sądowego, zasądzonych odszkodowań oraz inne.
+                  Korzystanie z&nbsp;Serwisu wiąże się z&nbsp;przetwarzaniem danych osobowych
+                  Użytkowników w celu logowania Użytkownika - na podstawie art. 6 ust. 1 RODO, czyli
+                  zgody Użytkownika, przetwarzane są adres e-mail, imię i&nbsp;nazwisko oraz
+                  ewentualnie nazwa użytkownika.
                 </li>
                 <li>
-                  Naruszenie niniejszego Regulaminu przez Użytkownika może skutkować blokadą dostępu
-                  do Serwisu i/lub w przypadku gdy złamane zostały przepisy prawa, zawiadomieniem
-                  odpowiednich służb oraz skierowaniem sprawy do sądu.
+                  Dane osobowe nie są przetwarzane w&nbsp;celu zautomatyzowanego podejmowania
+                  decyzji bez wyraźnej zgody Użytkowników.
                 </li>
                 <li>
-                  Za Naruszenie niniejszego Regulaminu rozumie się także namawianie innych osób do
-                  jego naruszenia, a także ułatwianie jego obchodzenia, jak również czerpanie
-                  korzyści majątkowych z tych czynności.
+                  Dane osobowe nie są przekazywane podmiotom trzecim i&nbsp;są przechowywane przez
+                  czas posiadania konta Użytkownika. W&nbsp;przypadku opublikowania komentarza przez
+                  zalogowanego Użytkownika, jego nazwa będzie widoczna dla wszystkich odwiedzających
+                  Serwis. Dane osobowe zgromadzone w&nbsp;związku z&nbsp;zamieszczeniem komentarza
+                  będą przechowywane przez czas wyświetlania tego komentarza, chyba że wcześniej
+                  Użytkownik poprosi o&nbsp;usunięcie komentarza.
                 </li>
-              </ol>
-            </li>
-
-            <li>
-              Wyłączenie odpowiedzialności i zastrzeżenia
-              <ol>
                 <li>
-                  W zakresie dopuszczalnym przez prawo wyłączona zostaje odpowiedzialność
-                  Usługodawcy za:
+                  Zgodnie z&nbsp;RODO, Użytkownik ma następujące prawa w&nbsp;związku
+                  z&nbsp;przetwarzaniem jego danych osobowych:
                   <ol>
+                    <li>Prawo do informacji, w&nbsp;jaki sposób dane osobowe są przetwarzane;</li>
+                    <li>Prawo do dostępu i&nbsp;sprostowania danych osobowych;</li>
                     <li>
-                      wszelkie szkody wynikające ze sposobu w jaki Użytkownicy korzystają z Serwisu.
+                      Prawo do usunięcia danych osobowych; Administrator może odmówić usunięcia
+                      danych, co do których ma podstawę do ich dalszego przetwarzania (np.
+                      realizacja obowiązku prawnego lub dochodzenia roszczeń lub obrony przed
+                      roszczeniami, które mogą być kierowane przeciwko Administratorowi);
                     </li>
-                    <li>jakiekolwiek szkody wynikłe z niewłaściwego działania Serwisu</li>
-                    <li>jakiekolwiek szkody wyniakające z braku dostępu do Serwisu</li>
-                    <li>szkody powstałe w wyniku działania siły wyższej</li>
-                    <li>jakiekolwiek informacje zamieszczone w serwisie przez Użytkowników</li>
-                    <li>szkody powstałe w związku z treściami dodawanymi przez Użytkowników</li>
+                    <li>Prawo do żądania ograniczenia przetwarzania danych osobowych;</li>
+                    <li>
+                      Prawo do zgłoszenia sprzeciwu co do przetwarzania danych osobowych, jeżeli
+                      podstawą przetwarzania jest uzasadniony interes Administratora lub wykonywanie
+                      zadań w&nbsp;interesie publicznym;
+                    </li>
+                    <li>
+                      Prawo do cofnięcia zgody, jeżeli dane osobowe były przetwarzane na podstawie
+                      zgody użytkownika;
+                    </li>
+                    <li>Prawo do przeniesienia danych osobowych.</li>
                   </ol>
                 </li>
                 <li>
-                  W zakresie dopuszczalnym przez prawo, Usługodawca zastrzega sobie prawo do:
-                  <ol>
-                    <li>zmiany parametrów oraz sposobu działania Serwisu</li>
-                    <li>wyłączania Serwisu bez wcześniejszego powiadomienia Użytkowników</li>
-                    <li>usunięcia treści dodawanych przez Użytkowników</li>
-                    <li>całkowitego zaprzestania świadczenia usług</li>
-                    <li>
-                      przeniesienia wszelkich praw i obowiązków związanych ze świadczeniem usług
-                      drogą elektroniczną w Serwisie devfaq.pl na inny podmiot
-                    </li>
-                    <li>
-                      wykorzystywania treści dodawanych przez Użytkowników w Serwisie, a także poza
-                      nim, nie wyłączając celów komercyjnych
-                    </li>
-                  </ol>
+                  Wszystkie powyższe prawa można zrealizować kontaktując się z&nbsp;Administratorem
+                  drogą elektroniczną pod adresem: hi@typeofweb.com. Zgłoszone żądania będą
+                  realizowane bez zbędnej zwłoki, nie później niż w&nbsp;terminie 30 dni od dnia
+                  otrzymania żądania. W&nbsp;tym terminie Administrator udzieli odpowiedzi lub
+                  poinformuje o&nbsp;ewentualnym wydłużeniu terminu i&nbsp;wyjaśni przyczyny. Jeżeli
+                  Administrator poweźmie wątpliwości co do tego, czy określone żądanie zostało
+                  zgłoszone przez osobę uprawnioną, może on zadać kilka dodatkowych pytań
+                  w&nbsp;celu weryfikacji tożsamości zgłaszającego.
+                </li>
+                <li>
+                  Administrator gwarantuje poufność wszelkich przekazanych mu danych osobowych.
+                  Administrator zapewnia podjęcie wszelkich środków bezpieczeństwa i&nbsp;ochrony
+                  danych osobowych wymaganych przez przepisy prawa. Dane osobowe są gromadzone
+                  z&nbsp;należytą starannością i&nbsp;odpowiednio chronione przed dostępem do nich
+                  przez osoby do tego nieupoważnione.
+                </li>
+                <li>
+                  Jeśli uważasz, że Administrator przetwarza dane osobowe niezgodnie z&nbsp;prawem,
+                  możesz wnieść skargę do właściwego organu, którym jest Prezes Urzędu Ochrony
+                  Danych Osobowych.{' '}
                 </li>
               </ol>
             </li>
-
             <li>
-              Zmiany Regulaminu
+              Postanowienia końcowe{' '}
               <ol>
                 <li>
-                  Wszelkie postanowienia niniejszego Regulaminu mogą być zmieniane przez Usługodawcę
-                  w dowolnym momencie bez podania przyczyny.
+                  Usługodawca zastrzega sobie prawo do zmiany Regulaminu. O&nbsp;treści zmian
+                  Regulaminu Usługodawca poinformuje Użytkowników przez umieszczenie na stronie
+                  internetowej https://devfaq.pl/regulations wiadomości o&nbsp;zmianie Regulaminu,
+                  zawierającej zestawienie zmian Regulaminu i&nbsp;utrzymanie tej informacji przez
+                  okres co najmniej 14 kolejnych dni kalendarzowych.{' '}
                 </li>
                 <li>
-                  Zmiany w Regulaminie będą publikowanie w postaci tekstu jednolitego na podstronie
-                  Serwisu.
+                  Zmiany Regulaminu wchodzą w&nbsp;życie w&nbsp;terminie podanym wraz
+                  z&nbsp;informacją o&nbsp;jego zmianie, nie wcześniej jednak niż po upływie 14 dni
+                  kalendarzowych od momentu poinformowania o&nbsp;zmianach Regulaminu, z&nbsp;tym
+                  zastrzeżeniem, że zmieniony Regulamin będzie wiązać Użytkownika, o&nbsp;ile nie
+                  zaprzestanie on korzystania z&nbsp;Serwisu.
                 </li>
                 <li>
-                  W przypadku braku akceptacji postanowień Regulaminu Użytkownik zobowiązany jest do
-                  zaprzestania korzystania z Serwisu. Korzystanie z Serwisu będzie rozumiane jako
-                  wyrażenie zgody na aktualnie obowiązującą treść Regulaminu.
+                  Regulamin dostępny jest nieodpłatnie pod adresem https://devfaq.pl/regulations w
+                  formie, która umożliwia pozyskanie, odtwarzanie i&nbsp;utrwalanie treści
+                  Regulaminu za pomocą systemu teleinformatycznego, którym posługuje się Użytkownik.
+                  Pod tym samym adresem dostępne są wszystkie archiwalne wersje Regulaminu wraz
+                  z&nbsp;informacją o ramach czasowych ich obowiązywania.
                 </li>
-              </ol>
-            </li>
-
-            <li>
-              Postanowienia końcowe
-              <ol>
-                <li>
-                  Wszelkie informacje o naruszeniach niniejszego Regulaminu należy zgłaszać na adres{' '}
-                  <a href="mailto:abuse@devfaq.pl">abuse@devfaq.pl</a>
-                </li>
-                <li>
-                  Żadne z postanowień niniejszego Regulaminu nie może być interpretowane w sposób,
-                  który ograniczałby prawa przysługujące konsumentom stosowanie do obowiązujących
-                  przepisów prawa.
-                </li>
-                <li>Regulamin wchodzi w życie z dniem 12. grudnia 2017 r.</li>
               </ol>
             </li>
           </ol>
