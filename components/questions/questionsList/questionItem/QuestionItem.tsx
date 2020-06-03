@@ -1,16 +1,19 @@
-import './questionItem.scss';
-import React from 'react';
 import classNames from 'classnames';
+import { isEqual } from 'lodash';
 import dynamic from 'next/dynamic';
+import React from 'react';
 
 import { Question } from '../../../../redux/reducers/questions';
-import { isQuestionSelected } from '../../questionsUtils';
-import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
-import { isEqual } from 'lodash';
 import ActiveLink from '../../../activeLink/ActiveLink';
-import QuestionVoting from './QuestionVoting';
+import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
+import { isQuestionSelected } from '../../questionsUtils';
 
-const MarkdownText = dynamic(() => import('../../../markdownText/MarkdownText'));
+import QuestionVoting from './QuestionVoting';
+import styles from './questionItem.module.scss';
+
+const MarkdownText = dynamic(() =>
+  import(/* webpackChunkName: "MarkdownText" */ '../../../markdownText/MarkdownText')
+);
 
 const longDate = (dateStr?: string) => {
   if (!dateStr) {
@@ -82,15 +85,15 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
 
     return (
       <div
-        className={classNames('app-questions--question', {
-          active: isSelected,
+        className={classNames(styles.appQuestionsQuestion, {
+          [styles.active]: isSelected,
         })}
       >
-        <div className="app-questions--content-container">
+        <div className={styles.appQuestionsContentContainer}>
           {this.maybeRenderCheckbox()}
           {this.maybeRenderAdminButtons()}
 
-          <div className="app-questions--question--text" itemProp="text">
+          <div className={styles.appQuestionsQuestionText} itemProp="text">
             <MarkdownText value={question.question} />
           </div>
 
@@ -112,7 +115,7 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
         onChange={this.props.toggleQuestion}
         checked={this.props.isSelected}
         type="checkbox"
-        className="app-questions--question--checkbox"
+        className={styles.appQuestionsQuestionCheckbox}
       />
     );
   }
@@ -120,30 +123,34 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
   renderMeta() {
     const { question } = this.props;
     const keywords = [question._levelId, question._categoryId].join(', ');
+    const className = `tag_${question._levelId}` as 'tag_junior' | 'tag_mid' | 'tag_senior';
 
     return (
-      <div className="app-questions--question--meta">
-        <span
-          className={classNames(
-            'app-questions--question--tag',
-            `app-questions--question--tag_${question._levelId}`
-          )}
-        >
-          {question._levelId}
-        </span>
+      <div className={styles.appQuestionsQuestionMeta}>
+        <span className={classNames(styles.tag, styles[className])}>{question._levelId}</span>
         <meta itemProp="dateCreated" content={question.acceptedAt} />
         <meta itemProp="keywords" content={keywords} />
         <time
           dateTime={question.acceptedAt}
-          className="app-questions--question--date app-questions--question--date_long"
+          className={classNames(
+            styles.appQuestionsQuestionDate,
+            styles.appQuestionsQuestionDateLong
+          )}
         >
-          <ActiveLink href="/questions/p/[id]" query={{ id: String(question.id) }}>
+          <ActiveLink
+            href="/questions/p/[id]"
+            query={{ id: String(question.id) }}
+            activeClassName=""
+          >
             <a>{longDate(question.acceptedAt)}</a>
           </ActiveLink>
         </time>
         <time
           dateTime={question.acceptedAt}
-          className="app-questions--question--date app-questions--question--date_short"
+          className={classNames(
+            styles.appQuestionsQuestionDate,
+            styles.appQuestionsQuestionDateShort
+          )}
         >
           {shortDate(question.acceptedAt)}
         </time>
@@ -166,12 +173,12 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
 
     return (
       <div>
-        <button onClick={this.props.editQuestion} className="edit-btn">
-          <img src="/images/action-icons/edit.svg" />
+        <button onClick={this.props.editQuestion} className={styles.editBtn}>
+          <img src="/images/action-icons/edit.svg" alt="Edit question" />
         </button>
         <button
           onClick={this.props.deleteQuestion}
-          className="app-questions--question--remove--icon"
+          className={styles.appQuestionsQuestionRemoveIcon}
         />
       </div>
     );
@@ -183,9 +190,9 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
     }
 
     return (
-      <div className="app-questions--question--remove-container">
+      <div className={styles.appQuestionsQuestionRemoveContainer}>
         <button
-          className="app-questions--question--remove--icon"
+          className={styles.appQuestionsQuestionRemoveIcon}
           onClick={this.props.deleteQuestion}
         />
       </div>
@@ -225,7 +232,7 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
         itemType="http://schema.org/Question"
         id={`question-${question.id}`}
       >
-        <div className="app-questions--question-container">
+        <div className={styles.appQuestionsQuestionContainer}>
           {this.maybeRenderDeleteProgress()}
           <AnimateHeight enterTime={700} exitTime={700} in={!isQuestionBeingRemoved}>
             <QuestionContent
@@ -252,19 +259,19 @@ export default class QuestionItem extends React.Component<QuestionItemOwnProps, 
 
     return (
       <div
-        className={classNames('app-questions--question', 'app-questions--question_deleted', {
-          'being-removed': this.state.isQuestionBeingRemoved,
+        className={classNames(styles.appQuestionsQuestion, styles.appQuestionsQuestionDeleted, {
+          [styles.beingRemoved]: this.state.isQuestionBeingRemoved,
         })}
         onMouseOver={this.stopDeletionTimer}
         onMouseLeave={this.startDeletionTimer}
       >
-        <div className="action-icon action-icon_warning icon-small" />
+        <div className={classNames(styles.actionIcon, 'action-icon_warning icon-small')} />
         <p>Usunąłeś pytanie ze swojej listy!</p>
         <button className="round-button branding-button-inverse" onClick={this.undoDeleteQuestion}>
           Cofnij
         </button>
         {this.state.questionRemovalTimer && (
-          <div className="app-questions--question_deleted--progress" />
+          <div className={styles.appQuestionsQuestionDeletedProgress} />
         )}
       </div>
     );

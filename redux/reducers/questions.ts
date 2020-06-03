@@ -1,7 +1,7 @@
-import { Actions, ActionTypes } from '../actions';
-import { TechnologyKey } from '../../constants/technology-icon-items';
 import { LevelKey } from '../../constants/level';
+import { TechnologyKey } from '../../constants/technology-icon-items';
 import { ApiResponse } from '../../services/Api';
+import { Actions, ActionTypes } from '../actions';
 
 export interface Question {
   id: number;
@@ -38,7 +38,7 @@ export const questions = (response = intialState, action: Actions): typeof intia
 
       const newResponse: undefined | ApiResponse<Question[]> = response.data
         ? {
-            data: response.data.data.filter(q => q.id !== id),
+            data: response.data.data.filter((q) => q.id !== id),
             meta: response.data.meta
               ? {
                   total: response.data.meta.total - 1,
@@ -61,7 +61,7 @@ export const questions = (response = intialState, action: Actions): typeof intia
         ...(response.data && {
           data: {
             ...response.data,
-            data: response.data.data.map(q => {
+            data: response.data.data.map((q) => {
               if (q.id !== id) {
                 return q;
               }
@@ -83,7 +83,7 @@ export const questions = (response = intialState, action: Actions): typeof intia
         ...(response.data && {
           data: {
             ...response.data,
-            data: response.data.data.map(q => {
+            data: response.data.data.map((q) => {
               if (q.id !== id) {
                 return q;
               }

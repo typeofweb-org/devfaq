@@ -4,8 +4,8 @@ require('dotenv').config({
   path: `.env.production`,
 });
 
-const express = require('express');
 const cookieParser = require('cookie-parser');
+const express = require('express');
 const next = require('next');
 
 const app = next({ dev: false });
@@ -24,7 +24,7 @@ app
     const port = process.env.PORT || '3000';
     server.listen(port, () => console.log(`Server listening at localhost:${port}`));
   })
-  .catch(err => {
+  .catch((err) => {
     console.error(err);
     process.exit(1);
   });

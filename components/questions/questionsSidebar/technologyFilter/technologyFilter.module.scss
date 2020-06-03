@@ -1,4 +1,4 @@
-@import "common";
+@import 'common';
 .app-filter {
   &--technologies {
     display: flex;
@@ -63,7 +63,7 @@
       &--label {
         font-size: 1.4rem;
       }
-      [class*="devicon-"] {
+      [class*='devicon-'] {
         font-size: 5rem;
       }
     }

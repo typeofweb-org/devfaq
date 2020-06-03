@@ -5,8 +5,10 @@ import Document, {
   DocumentContext,
   DocumentInitialProps,
 } from 'next/document';
-import env, { unsafe_getEnvScriptForDocument } from '../utils/env';
+import React from 'react';
+
 import * as analytics from '../utils/analytics';
+import env, { unsafe_getEnvScriptForDocument } from '../utils/env';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {

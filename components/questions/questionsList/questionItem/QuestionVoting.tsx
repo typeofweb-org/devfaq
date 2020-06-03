@@ -1,11 +1,14 @@
-import { connect } from 'react-redux';
-import { Question } from '../../../../redux/reducers/questions';
-import { AppState } from '../../../../redux/reducers';
-import { getLoggedInUser } from '../../../../redux/selectors/selectors';
-import React from 'react';
-import { ActionCreators } from '../../../../redux/actions';
 import classnames from 'classnames';
+import React, { useCallback } from 'react';
+import { connect } from 'react-redux';
+
+import { ActionCreators } from '../../../../redux/actions';
+import { AppState } from '../../../../redux/reducers';
+import { Question } from '../../../../redux/reducers/questions';
+import { getLoggedInUser } from '../../../../redux/selectors/selectors';
 import { redirect, getPreviousPathFromHrefQuery } from '../../../../utils/redirect';
+
+import styles from './questionItem.module.scss';
 
 type QuestionVotingOwnProps = {
   question: Question;
@@ -24,11 +27,11 @@ const QuestionVotingComponent: React.FC<QuestionVotingProps> = ({
 }) => {
   const { votesCount, currentUserVotedOn } = question;
 
-  const reportEvent = React.useCallback((action: string) => {
+  const reportEvent = useCallback((action: string) => {
     globalReportEvent(action, 'Głosowanie');
   }, []);
 
-  const onVote = React.useCallback(() => {
+  const onVote = useCallback(() => {
     if (!isLoggedIn) {
       reportEvent('logowanie');
       redirect('/login', {
@@ -41,18 +44,27 @@ const QuestionVotingComponent: React.FC<QuestionVotingProps> = ({
       reportEvent('upvote');
       void upvoteQuestion(question.id);
     }
-  }, [isLoggedIn, currentUserVotedOn, route, question]);
+  }, [
+    isLoggedIn,
+    currentUserVotedOn,
+    reportEvent,
+    route.pathname,
+    route.query,
+    downvoteQuestion,
+    question.id,
+    upvoteQuestion,
+  ]);
 
   return (
     <footer
       className={classnames([
-        'app-questions--question--voting',
+        styles.appQuestionsQuestionVoting,
         {
-          'app-questions--question--voting_voted': currentUserVotedOn,
+          [styles.appQuestionsQuestionVotingVoted]: currentUserVotedOn,
         },
       ])}
     >
-      <button className="vote-button" type="button" onClick={onVote}>
+      <button className={styles.voteButton} type="button" onClick={onVote}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
@@ -81,9 +93,6 @@ const mapDispatchToProps = {
   downvoteQuestion: ActionCreators.downvoteQuestion,
 };
 
-const QuestionVoting = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(QuestionVotingComponent);
+const QuestionVoting = connect(mapStateToProps, mapDispatchToProps)(QuestionVotingComponent);
 
 export default QuestionVoting;

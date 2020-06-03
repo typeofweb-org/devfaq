@@ -1,18 +1,20 @@
-import { connect } from 'react-redux';
 import React from 'react';
-import AddQuestionModal from '../addQuestionModal/AddQuestionModal';
-import { AppState } from '../../../redux/reducers/index';
-import { ActionCreators } from '../../../redux/actions';
+import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
+
+import { ActionCreators } from '../../../redux/actions';
+import { AppState } from '../../../redux/reducers/index';
 import AddQuestionConfirmationModal from '../addQuestionConfirmationModal/AddQuestionConfirmationModal';
+import AddQuestionModal from '../addQuestionModal/AddQuestionModal';
 import { CommonModalProps } from '../baseModal/BaseModal';
+import styles from '../baseModal/baseModal.module.scss';
 
 const timeout = 200;
 
 class AppModalsComponent extends React.Component<
   ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
 > {
-  closeQuestionModal: CommonModalProps['onClose'] = args => {
+  closeQuestionModal: CommonModalProps['onClose'] = (args) => {
     if (this.props.addQuestionModalState.onClose) {
       this.props.addQuestionModalState.onClose(args);
     }
@@ -30,7 +32,13 @@ class AppModalsComponent extends React.Component<
           in={this.props.addQuestionModalState.open}
           unmountOnExit={true}
           mountOnEnter={true}
-          classNames="fade"
+          classNames={{
+            enter: styles.fadeEnter,
+            enterActive: styles.fadeEnterActive,
+            enterDone: styles.fadeEnterDone,
+            exit: styles.fadeExit,
+            exitActive: styles.fadeExitActive,
+          }}
           timeout={timeout}
         >
           <AddQuestionModal
@@ -43,7 +51,13 @@ class AppModalsComponent extends React.Component<
           in={this.props.isAddQuestionConfirmationModalOpen}
           unmountOnExit={true}
           mountOnEnter={true}
-          classNames="fade"
+          classNames={{
+            enter: styles.fadeEnter,
+            enterActive: styles.fadeEnterActive,
+            enterDone: styles.fadeEnterDone,
+            exit: styles.fadeExit,
+            exitActive: styles.fadeExitActive,
+          }}
           timeout={timeout}
         >
           <AddQuestionConfirmationModal onClose={this.props.uiCloseAddQuestionConfirmationModal} />
@@ -66,8 +80,5 @@ const mapDispatchToProps = {
   uiCloseAddQuestionConfirmationModal: ActionCreators.uiCloseAddQuestionConfirmationModal,
 };
 
-const AppModals = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppModalsComponent);
+const AppModals = connect(mapStateToProps, mapDispatchToProps)(AppModalsComponent);
 export default AppModals;

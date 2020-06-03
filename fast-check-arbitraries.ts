@@ -9,17 +9,12 @@ type Routes = ReturnType<typeof segmentsDictEntriesToRoutes>;
 type MergedRoute = ReturnType<typeof routesToMergedRoute>;
 
 export const path = () => {
-  return fc.array(fc.webSegment()).map(arr => '/' + arr.join('/'));
+  return fc.array(fc.webSegment()).map((arr) => '/' + arr.join('/'));
 };
 
 export const routeWithReplacements = (excessReplacements = false) => {
   return segmentsRecordWithReplacements(excessReplacements).map(
-    pipe(
-      entries,
-      segmentsDictEntriesToRoutes,
-      routesToMergedRoute,
-      routeToResult
-    )
+    pipe(entries, segmentsDictEntriesToRoutes, routesToMergedRoute, routeToResult)
   );
 };
 
@@ -28,7 +23,7 @@ const segmentsRecordWithReplacements = (excessReplacements = false) => {
     fc.webSegment().filter(identity),
     fc.record({
       replacement: excessReplacements
-        ? fc.oneof<false | string>(fc.constant(false as const), fc.webSegment().filter(identity))
+        ? fc.oneof(fc.constant(false as const), fc.webSegment().filter(identity))
         : fc.constant(false as const),
       isExcess: fc.boolean(),
     })

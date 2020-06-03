@@ -6,8 +6,8 @@ export class ErrorBoundary extends React.Component {
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo & Record<string, any>) {
     this.setState({ error });
-    configureScope(scope => {
-      Object.keys(errorInfo).forEach(key => {
+    configureScope((scope) => {
+      Object.keys(errorInfo).forEach((key) => {
         scope.setExtra(key, errorInfo[key]);
       });
     });
@@ -20,7 +20,7 @@ export class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.error) {
-      return <a onClick={this.onReportFeedbackClick}>Report feedback</a>;
+      return <button onClick={this.onReportFeedbackClick}>Report feedback</button>;
     } else {
       return this.props.children;
     }

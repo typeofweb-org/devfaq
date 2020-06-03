@@ -1,4 +1,4 @@
-@import "common";
+@import 'common';
 .add-question-modal {
   .app-question-form {
     display: flex;
@@ -8,7 +8,7 @@
     @include mediaquery('gt-sm') {
       padding-bottom: 30px;
     }
-    &>* {
+    & > * {
       width: 100%;
     }
     &--options-container {

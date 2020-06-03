@@ -1,11 +1,13 @@
 // tslint:disable:no-implicit-dependencies
+import fc from 'fast-check';
+
+import * as Arbitraries from '../fast-check-arbitraries';
+
 import {
   hrefQueryToAsPath,
   getPreviousPathFromHrefQuery,
   getHrefQueryFromPreviousPath,
 } from './redirect';
-import fc from 'fast-check';
-import * as Arbitraries from '../fast-check-arbitraries';
 
 describe('hrefQueryToAsPath', () => {
   describe('unit test', () => {
@@ -40,7 +42,7 @@ describe('hrefQueryToAsPath', () => {
   describe('property tests', () => {
     it(`returns the same url when there are no replacements`, () => {
       fc.assert(
-        fc.property(Arbitraries.path(), path => {
+        fc.property(Arbitraries.path(), (path) => {
           const result = hrefQueryToAsPath(path);
           return result.as === result.href && result.as === path;
         })

@@ -1,4 +1,37 @@
-@import "common";
+@import 'common';
+
+.fade-enter,
+.fade-exit {
+  will-change: opacity, transition;
+}
+
+.fade-enter-active,
+.fade-exit-active {
+  transition: opacity 200ms;
+}
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+}
+
+.fade-enter,
+.fade-exit,
+.fade-enter-done {
+  display: block !important;
+}
+
 .app-modal-container {
   @include hardwareAcceleration();
   position: fixed;
@@ -9,10 +42,6 @@
   background-color: transparentize($white-text, 0.1);
   z-index: $z-index-modal-container;
   display: none;
-
-  &.fade-enter, &.fade-exit, &.fade-enter-done {
-    display: block;
-  }
 }
 
 .app-modal {
@@ -98,11 +127,11 @@
     .branding-button-inverse {
       box-shadow: $grey-text-secondary 0 2px 4px;
     }
-    >* {
+    > * {
       display: flex;
       flex-direction: column;
       align-items: center;
-      >button {
+      > button {
         margin-bottom: 10px;
         width: 85%;
       }
@@ -110,7 +139,7 @@
         flex-direction: row-reverse;
         justify-content: flex-start;
         align-items: center;
-        >button {
+        > button {
           margin-bottom: 0;
           width: auto;
           &:first-child {

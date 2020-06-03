@@ -1,5 +1,6 @@
-import { Actions, ActionTypes } from '../actions';
 import { ApiResponse } from '../../services/Api';
+import { Actions, ActionTypes } from '../actions';
+
 import { Question } from './questions';
 
 const intialState: {

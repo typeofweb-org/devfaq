@@ -1,13 +1,14 @@
 import React from 'react';
-import Layout from '../components/layout/Layout';
-import './index.scss';
-import './staticPage.scss';
 
-export default () => {
+import Layout from '../components/layout/Layout';
+
+import styles from './staticPage.module.scss';
+
+const About = () => {
   return (
     <Layout title="Jak korzystać? FAQ">
       <div className="container">
-        <article className="app-static-page">
+        <article className={styles.appStaticPage}>
           <h2>Jak korzystać? FAQ</h2>
           <h3>Co to jest DevFAQ.pl?</h3>
           <p>
@@ -63,12 +64,12 @@ export default () => {
           return 'Hello World';
         }
         `}
-            ```
+            {/* prettier-ignore */ '```'}
           </pre>
 
           <p>
             Więcej informacji na temat Markdown oraz kompletną dokumentację znajdziesz na stronie{' '}
-            <a href="http://commonmark.org/" target="_blank">
+            <a href="http://commonmark.org/" target="_blank" rel="noopener noreferrer">
               CommonMark
             </a>
             .
@@ -78,3 +79,5 @@ export default () => {
     </Layout>
   );
 };
+
+export default About;

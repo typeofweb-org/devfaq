@@ -1,54 +1,43 @@
-import React from 'react';
-import './appSpinner.scss';
+import React, { useState, useRef, useEffect, memo, useCallback } from 'react';
 import { connect } from 'react-redux';
+
 import { AppState } from '../../redux/reducers';
+
+import styles from './appSpinner.module.scss';
 
 const SUSPENSE_TIME = 150;
 
-class AppSpinnerComponent extends React.Component<
-  ReturnType<typeof mapStateToProps>,
-  { show: boolean }
-> {
-  state = { show: false };
+const AppSpinnerComponent: React.FC<ReturnType<typeof mapStateToProps>> = memo(({ isLoading }) => {
+  const [show, setShow] = useState(false);
+  const timerId = useRef<number | undefined>();
 
-  private timerId?: number;
+  const stopTimer = useCallback(() => {
+    window.clearTimeout(timerId.current);
+    timerId.current = undefined;
+  }, []);
 
-  startTimer() {
-    if (this.props.isLoading) {
-      if (!this.timerId && !this.state.show) {
-        this.timerId = window.setTimeout(() => {
-          this.setState({ show: true });
+  const startTimer = useCallback(() => {
+    if (isLoading) {
+      if (!timerId.current && !show) {
+        timerId.current = window.setTimeout(() => {
+          setShow(true);
         }, SUSPENSE_TIME);
       }
     } else {
-      this.stopTimer();
-      if (this.state.show) {
-        this.setState({ show: false });
+      stopTimer();
+      if (show) {
+        setShow(false);
       }
     }
-  }
+  }, [isLoading, show, stopTimer]);
 
-  stopTimer() {
-    window.clearTimeout(this.timerId);
-    this.timerId = undefined;
-  }
+  useEffect(() => {
+    startTimer();
+    return stopTimer;
+  }, [startTimer, stopTimer]);
 
-  componentDidMount() {
-    this.startTimer();
-  }
-
-  componentDidUpdate() {
-    this.startTimer();
-  }
-
-  componentWillUnmount() {
-    this.stopTimer();
-  }
-
-  render() {
-    return this.state.show && <div className="spinner" />;
-  }
-}
+  return show ? <div className={styles.spinner} /> : null;
+});
 
 const mapStateToProps = (state: AppState) => {
   return {

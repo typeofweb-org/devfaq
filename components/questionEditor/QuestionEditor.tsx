@@ -1,7 +1,9 @@
-import { getHtmlFromMarkdown, highlightSyntax } from '../markdownText/MarkdownText';
-import React from 'react';
-import './questionEditor.scss';
 import classNames from 'classnames';
+import React from 'react';
+
+import { getHtmlFromMarkdown, highlightSyntax } from '../markdownText/MarkdownText';
+
+import styles from './questionEditor.module.scss';
 
 interface QuestionEditorProps {
   id?: string;
@@ -81,7 +83,7 @@ export default class QuestionEditor extends React.Component<
     el.setSelectionRange(selectionStart + startTokenLenths, selectionEnd + startTokenLenths);
   };
 
-  handleAction = (action: Actions): React.MouseEventHandler<HTMLButtonElement> => e => {
+  handleAction = (action: Actions): React.MouseEventHandler<HTMLButtonElement> => (e) => {
     e.preventDefault();
 
     const el = this.textAreaRef.current;
@@ -95,10 +97,10 @@ export default class QuestionEditor extends React.Component<
     this.handleTextChange();
   };
 
-  togglePreview: React.MouseEventHandler<HTMLButtonElement> = e => {
+  togglePreview: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
     this.setState(
-      state => ({ isPreview: !state.isPreview }),
+      (state) => ({ isPreview: !state.isPreview }),
       () => {
         if (this.previewRef.current) {
           highlightSyntax(this.previewRef.current);
@@ -112,8 +114,8 @@ export default class QuestionEditor extends React.Component<
   render() {
     const { isPreview } = this.state;
     return (
-      <div className="markdown-editor-container">
-        <div className="markdown-editor-toolbar">
+      <div className={styles.markdownEditorContainer}>
+        <div className={styles.markdownEditorToolbar}>
           <button
             className="devicon-bold"
             disabled={isPreview}
@@ -135,7 +137,7 @@ export default class QuestionEditor extends React.Component<
             aria-label="wstaw nagłówek"
             title="wstaw nagłówek"
           />
-          <span className="separator">|</span>
+          <span className={styles.separator}>|</span>
           <button
             className="devicon-code"
             disabled={isPreview}
@@ -157,7 +159,7 @@ export default class QuestionEditor extends React.Component<
             aria-label="wstaw listę uporządkowaną"
             title="wstaw listę uporządkowaną"
           />
-          <span className="separator">|</span>
+          <span className={styles.separator}>|</span>
           <button
             className="devicon-eye"
             onClick={this.togglePreview}
@@ -166,14 +168,14 @@ export default class QuestionEditor extends React.Component<
           />
         </div>
         <div
-          className={classNames('markdown-editor-content', {
-            'markdown-editor-content_preview': isPreview,
+          className={classNames(styles.markdownEditorContent, {
+            [styles.markdownEditorContentPreview]: isPreview,
           })}
           onClick={this.autoFocus}
         >
           {!isPreview && (
             <textarea
-              className="markdown-editor-field"
+              className={styles.markdownEditorField}
               ref={this.textAreaRef}
               value={this.props.value}
               onChange={this.handleTextChange}
@@ -181,7 +183,7 @@ export default class QuestionEditor extends React.Component<
           )}
           {isPreview && (
             <div
-              className="markdown-editor-preview"
+              className={styles.markdownEditorPreview}
               ref={this.previewRef}
               dangerouslySetInnerHTML={{ __html: getHtmlFromMarkdown(this.props.value) }}
             />

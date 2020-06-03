@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
-import { questions } from './questions';
-import { selectedQuestions } from './selectedQuestions';
-import { ui } from './ui';
-import { selectedLevels } from './selectedLevels';
-import { routeDetails } from './routeDetails';
+
 import { auth } from './auth';
 import { oneQuestion } from './oneQuestion';
+import { questions } from './questions';
+import { routeDetails } from './routeDetails';
+import { selectedLevels } from './selectedLevels';
+import { selectedQuestions } from './selectedQuestions';
+import { ui } from './ui';
 
 const reducersObj = {
   questions,

@@ -1,22 +1,24 @@
 import React from 'react';
-import { AppState } from '../../../redux/reducers/index';
 import { connect } from 'react-redux';
+
+import { Level } from '../../../constants/level';
 import { technologyIconItems, Technology } from '../../../constants/technology-icon-items';
-import './allQuestions.scss';
-import { AllQuestionsHeader } from './allQuestionsHeader/AllQuestionsHeader';
-import { AllQuestionsFooter } from './allQuestionsFooter/AllQuestionsFooter';
-import QuestionsList from '../questionsList/QuestionsList';
+import { ActionCreators } from '../../../redux/actions';
+import { AppState } from '../../../redux/reducers/index';
 import { Question } from '../../../redux/reducers/questions';
 import {
   getSelectedQuestionsIds,
   getTechnology,
   getSortBy,
 } from '../../../redux/selectors/selectors';
-import { ActionCreators } from '../../../redux/actions';
-import { isQuestionSelected } from '../questionsUtils';
-import { Level } from '../../../constants/level';
-import QuestionsPagination from '../../questionsPagination/QuestionsPagination';
 import { redirect } from '../../../utils/redirect';
+import QuestionsPagination from '../../questionsPagination/QuestionsPagination';
+import QuestionsList from '../questionsList/QuestionsList';
+import { isQuestionSelected } from '../questionsUtils';
+
+import styles from './allQuestions.module.scss';
+import { AllQuestionsFooter } from './allQuestionsFooter/AllQuestionsFooter';
+import { AllQuestionsHeader } from './allQuestionsHeader/AllQuestionsHeader';
 
 type AllQuestionsComponentProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -24,7 +26,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
   render() {
     const { technology, sortBy } = this.props;
 
-    const technologyIconItem = technologyIconItems.find(t => t.name === technology);
+    const technologyIconItem = technologyIconItems.find((t) => t.name === technology);
     const category = (technologyIconItem && technologyIconItem.label) || '';
 
     const length =
@@ -33,7 +35,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
       this.props.questions.data.meta.total;
 
     return (
-      <section className="app-questions">
+      <section className={styles.appQuestions}>
         {this.props.questions.data && technology && (
           <AllQuestionsHeader
             category={category}
@@ -51,7 +53,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
     );
   }
 
-  changeSortBy: React.ChangeEventHandler<HTMLSelectElement> = e => {
+  changeSortBy: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
     const query = {
       ...this.props.route.query,
       sortBy: e.currentTarget.value,
@@ -96,7 +98,7 @@ class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> 
   toggleQuestion = (questionId: Question['id']) => {
     const isSelected = isQuestionSelected(this.props.selectedQuestionsIds, questionId);
     const question =
-      this.props.questions.data && this.props.questions.data.data.find(q => q.id === questionId);
+      this.props.questions.data && this.props.questions.data.data.find((q) => q.id === questionId);
 
     if (isSelected) {
       this.props.deselectQuestion(questionId);
@@ -135,8 +137,5 @@ const mapDispatchToProps = {
   uiOpenAddQuestionModal: ActionCreators.uiOpenAddQuestionModal,
 };
 
-const AllQuestions = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AllQuestionsComponent);
+const AllQuestions = connect(mapStateToProps, mapDispatchToProps)(AllQuestionsComponent);
 export default AllQuestions;

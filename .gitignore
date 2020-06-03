@@ -1,6 +1,12 @@
 .DS_Store
 npm-debug.log
-/node_modules/
-/.next/
-/out/
+node_modules
+.next
+out
 .version
+previous-size-snapshot.json
+current-size-snapshot.json
+size-snapshot.json
+analyze.next
+.deployment-url
+.basebranch

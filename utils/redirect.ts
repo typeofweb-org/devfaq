@@ -1,7 +1,8 @@
 import { NextPageContext } from 'next';
-import Router from 'next/router';
 import { LinkProps } from 'next/link';
-import { RouteDetails } from './types';
+import Router from 'next/router';
+
+import type { RouteDetails } from './types';
 
 export type Query = RouteDetails['query'] & { previousPath?: string };
 
@@ -56,22 +57,22 @@ const allMatches = (str: string, regex: RegExp): RegExpExecArray[] => {
 
 export function hrefQueryToAsPath(
   url: LinkProps['href'],
-  query: Record<string, string[] | string> = {},
+  query: Record<string, string[] | string | undefined> = {},
   skipExcessQueryProps = false
 ) {
   const href = String(url);
 
   // matches anything like [bla-bla]
-  const replacementsPattern = /\[([^\[\]\s]+)\]/gi;
+  const replacementsPattern = /\[([^[\]\s]+)\]/gi;
 
   const matches = allMatches(href, replacementsPattern);
   const excessQueryProperties = Object.keys(query).filter(
-    key => !matches.find(([, replacement]) => key === replacement)
+    (key) => !matches.find(([, replacement]) => key === replacement)
   );
 
   const maybeQueryString = skipExcessQueryProps
     ? ''
-    : excessQueryProperties.map(prop => `${prop}=${query[prop]}`).join('&');
+    : excessQueryProperties.map((prop) => `${prop}=${query[prop]}`).join('&');
   const queryString = maybeQueryString ? '?' + maybeQueryString : '';
 
   return {

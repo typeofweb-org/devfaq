@@ -1,40 +1,40 @@
-@import "variables";
+@import 'variables';
 
 html,
 a,
 p,
 li {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 html {
-    font-size: 10px;
+  font-size: 10px;
 }
 
 html,
 body {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 body,
 button {
-    color: $grey-text-primary;
+  color: $grey-text-primary;
 }
 
 body {
-    background: $grey-background;
-    font-size: 1.4rem;
-    line-height: 1.4;
+  background: $grey-background;
+  font-size: 1.4rem;
+  line-height: 1.4;
 }
 
 a {
-    color: $purple;
-    transition: color 0.1s;
+  color: $purple;
+  transition: color 0.1s;
 }
 
 code {
-    font-feature-settings: "calt" 1;
-    font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important;
+  font-feature-settings: 'calt' 1;
+  font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important;
 }

@@ -1,36 +1,35 @@
+import dynamic from 'next/dynamic';
 import React from 'react';
-import { redirect, getPreviousPathFromHrefQuery } from '../utils/redirect';
+
 import Layout from '../components/layout/Layout';
 import QuestionsListLayout from '../components/questions/questionsListLayout/QuestionsListLayout';
-import { AsyncComponent } from '../components/asyncComponent/AsyncComponent';
 import { getLoggedInUser } from '../redux/selectors/selectors';
-import { NextPageContext } from 'next';
+import { redirect, getPreviousPathFromHrefQuery } from '../utils/redirect';
+import type { GetInitialPropsContext } from '../utils/types';
 
-export default class AdminPage extends React.Component {
-  static async getInitialProps(ctx: NextPageContext) {
-    const state = ctx.store.getState();
-    if (!getLoggedInUser(state)) {
-      return redirect('/login', { previousPath: getPreviousPathFromHrefQuery('/admin') }, ctx);
-    }
-  }
+import styles from './pages.module.scss';
 
-  render() {
-    return (
-      <Layout title="Admin">
-        <QuestionsListLayout>
-          <div className="questions-container">
-            <AsyncComponent
-              componentProps={{}}
-              componentProvider={() => {
-                const component = import('../components/adminQuestions/AdminQuestions').then(
-                  module => module.default
-                );
-                return component;
-              }}
-            />
-          </div>
-        </QuestionsListLayout>
-      </Layout>
-    );
+const AdminQuestions = dynamic(() =>
+  import(/* webpackChunkName: "AdminQuestions" */ '../components/adminQuestions/AdminQuestions')
+);
+
+const AdminPage = () => {
+  return (
+    <Layout title="Admin">
+      <QuestionsListLayout>
+        <div className={styles.questionsContainer}>
+          <AdminQuestions />
+        </div>
+      </QuestionsListLayout>
+    </Layout>
+  );
+};
+
+AdminPage.getInitialProps = (ctx: GetInitialPropsContext) => {
+  const state = ctx.store.getState();
+  if (!getLoggedInUser(state)) {
+    return redirect('/login', { previousPath: getPreviousPathFromHrefQuery('/admin') }, ctx);
   }
-}
+};
+
+export default AdminPage;

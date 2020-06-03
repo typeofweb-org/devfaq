@@ -1,37 +1,41 @@
-import './appFooter.scss';
-import ActiveLink from '../activeLink/ActiveLink';
-import env from '../../utils/env';
+import classNames from 'classnames';
+import React from 'react';
 
-const AppFooter = () => {
+import env from '../../utils/env';
+import ActiveLink from '../activeLink/ActiveLink';
+
+import styles from './appFooter.module.scss';
+
+export const AppFooter = () => {
   const version = env.VERSION;
   return (
-    <div className="footer-container">
-      <footer className="app-footer container">
+    <div className={styles.footerContainer}>
+      <footer className="container">
         <small style={{ color: 'transparent', position: 'absolute', left: 0 }}>{version}</small>
-        <nav className="footer-navigation">
-          <ul className="footer-navigation--links">
-            <li className="footer-navigation--links--item mobile-hide">
-              <ActiveLink href="/about">
+        <nav className={styles.footerNavigation}>
+          <ul className={styles.footerNavigationLinks}>
+            <li className={classNames(styles.footerNavigationLinksItem, 'mobile-hide')}>
+              <ActiveLink href="/about" activeClassName="">
                 <a>Jak korzystać?</a>
               </ActiveLink>
             </li>
-            <li className="footer-navigation--links--item">
-              <ActiveLink href="/regulations">
+            <li className={styles.footerNavigationLinksItem}>
+              <ActiveLink href="/regulations" activeClassName="">
                 <a>Regulamin</a>
               </ActiveLink>
             </li>
-            <li className="footer-navigation--links--item mobile-hide">
-              <ActiveLink href="/authors">
+            <li className={classNames(styles.footerNavigationLinksItem, 'mobile-hide')}>
+              <ActiveLink href="/authors" activeClassName="">
                 <a>Autorzy</a>
               </ActiveLink>
             </li>
-            <li className="footer-navigation--links--item mobile-hide">
-              <a href="https://www.facebook.com/DevFAQ" target="_blank">
+            <li className={classNames(styles.footerNavigationLinksItem, 'mobile-hide')}>
+              <a href="https://www.facebook.com/DevFAQ" target="_blank" rel="noopener noreferrer">
                 Facebook
               </a>
             </li>
-            <li className="footer-navigation--links--item">
-              <a href="https://typeofweb.com/" target="_blank">
+            <li className={styles.footerNavigationLinksItem}>
+              <a href="https://typeofweb.com/" target="_blank" rel="noopener noreferrer">
                 Type of Web
               </a>
             </li>
@@ -41,5 +45,3 @@ const AppFooter = () => {
     </div>
   );
 };
-
-export default AppFooter;

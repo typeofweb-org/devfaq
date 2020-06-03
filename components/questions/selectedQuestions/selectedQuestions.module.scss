@@ -1,4 +1,4 @@
-@import "common";
+@import 'common';
 .selected-questions-container {
   margin: 20px 0;
 }
@@ -24,7 +24,7 @@
     span {
       display: block;
     }
-    [class*="devicon-"] {
+    [class*='devicon-'] {
       font-size: 4rem;
     }
   }

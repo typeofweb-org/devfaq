@@ -1,23 +1,24 @@
 import React from 'react';
-import Layout from '../components/layout/Layout';
-import './index.scss';
-import './staticPage.scss';
 
-export default () => {
+import Layout from '../components/layout/Layout';
+
+import styles from './staticPage.module.scss';
+
+const Authors = () => {
   return (
     <Layout title="Autorzy">
       <div className="container">
         <React.Fragment>
-          <article className="app-static-page">
+          <article className={styles.appStaticPage}>
             <h2>Autorzy</h2>
-            <div className="app-authors">
-              <div className="app-author">
+            <div className={styles.appAuthors}>
+              <div className={styles.appAuthor}>
                 <img
                   src="/images/michal_miszczyszyn.jpg"
                   alt="Michał Miszczyszyn"
-                  className="app-author__image"
+                  className={styles.appAuthorImage}
                 />
-                <p className="app-author__name">Michał Miszczyszyn</p>
+                <p className={styles.appAuthorName}>Michał Miszczyszyn</p>
                 <p>
                   Zmotywowany full-stack, który nie boi się żadnej technologii. Doświadczony
                   programista i leader zespołów. Przedsiębiorca, aktywista, bloger na{' '}
@@ -38,11 +39,11 @@ export default () => {
               </div>
             </div>
           </article>
-          <article className="app-static-page">
+          <article className={styles.appStaticPage}>
             <h3>Specjalne podziękowania</h3>
             <ul>
               <li>
-                <a href="http://www.angular.love" target="_blank" rel="noopener">
+                <a href="http://www.angular.love" target="_blank" rel="noreferrer noopener">
                   <strong>Tomasz Nastały</strong>
                 </a>{' '}
                 - za pierwszy frontend aplikacji
@@ -51,7 +52,7 @@ export default () => {
                 <a
                   href="https://www.linkedin.com/in/ewelina-sygut-a8687883/"
                   target="_blank"
-                  rel="noopener"
+                  rel="noreferrer noopener"
                 >
                   <strong>Ewelina Sygut</strong>
                 </a>{' '}
@@ -59,14 +60,18 @@ export default () => {
                 <a
                   href="https://www.linkedin.com/in/paweł-pawłowski-89917114/"
                   target="_blank"
-                  rel="noopener"
+                  rel="noreferrer noopener"
                 >
                   <strong>Paweł Pawłowski</strong>
                 </a>{' '}
                 - za projekt graficzny ❤️
               </li>
               <li>
-                <a href="https://www.linkedin.com/in/cytrowski" target="_blank" rel="noopener">
+                <a
+                  href="https://www.linkedin.com/in/cytrowski"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
                   <strong>Bartosz Cytrowski</strong>
                 </a>{' '}
                 - za ogromną liczbę świetnych pytań z React
@@ -78,3 +83,4 @@ export default () => {
     </Layout>
   );
 };
+export default Authors;

@@ -1,11 +1,13 @@
-import './appLogo.scss';
+import React from 'react';
+
+import styles from './appLogo.module.scss';
 
 const AppLogo = ({ fill = '#ffffff' }) => {
   return (
-    <span className="app-logo">
-      <span className="scaling-svg-container" style={{ height: '100%' }}>
+    <span className={styles.appLogo}>
+      <span className={styles.scalingSvgContainer} style={{ height: '100%' }}>
         <svg
-          className="scaling-svg"
+          className={styles.scalingSvg}
           width="472px"
           height="104px"
           xmlns="http://www.w3.org/2000/svg"

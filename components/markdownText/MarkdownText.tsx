@@ -1,7 +1,5 @@
-import React from 'react';
-
 import commonmark from 'commonmark';
-import './markdownText.scss';
+import React from 'react';
 import xss from 'xss';
 
 interface MarkdownTextProps {
@@ -29,11 +27,11 @@ export function getHtmlFromMarkdown(markdown: string): string {
 }
 
 export function highlightSyntax(el: Element): void {
-  import('prismjs')
-    .then(Prism => {
+  import(/* webpackChunkName: "prismjs" */ 'prismjs')
+    .then((Prism) => {
       Prism.highlightAllUnder(el);
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
     });
 }
@@ -42,7 +40,7 @@ export default class MarkdownText extends React.Component<MarkdownTextProps> {
   markdownRef = React.createRef<HTMLDivElement>();
 
   getHtmlFromMarkdown(markdown: string): string {
-    return getHtmlFromMarkdown(markdown);
+    return getHtmlFromMarkdown(markdown.replace(/\r\n\n/gi, '\n'));
   }
 
   shouldComponentUpdate(nextProps: MarkdownTextProps): boolean {
