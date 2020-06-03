@@ -1,4 +1,5 @@
 import { HYDRATE } from 'next-redux-wrapper';
+import { route } from 'next/dist/next-server/server/router';
 import { combineReducers } from 'redux';
 
 import { auth } from './auth';
@@ -22,9 +23,14 @@ export const combinedReducer = combineReducers(reducersObj);
 
 export const reducers = (state: any, action: any) => {
   if (action.type === HYDRATE) {
+    const hydrateState = action.payload;
+    // hydrateState.routeDetails = !state.routeDetails.pathname
+    //   ? hydrateState.routeDetails
+    //   : state.routeDetails;
+
     const nextState = {
       ...state, // use previous state
-      ...action.payload, // apply delta from hydration
+      ...hydrateState, // apply delta from hydration
     };
     return nextState;
   } else {

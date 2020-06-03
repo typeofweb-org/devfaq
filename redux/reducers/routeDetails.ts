@@ -9,7 +9,6 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  previous: undefined,
   current: {
     pathname: '',
     query: {},

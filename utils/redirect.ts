@@ -1,4 +1,5 @@
-import { NextPageContext } from 'next';
+import { ServerResponse } from 'http';
+
 import { LinkProps } from 'next/link';
 import Router from 'next/router';
 
@@ -31,12 +32,12 @@ export function getHrefQueryFromPreviousPath(
   return null;
 }
 
-export function redirect(href: string, query: Query = {}, ctx?: NextPageContext) {
+export function redirect(href: string, query: Query = {}, res?: ServerResponse) {
   const result = hrefQueryToAsPath(href, query);
 
-  if (ctx && ctx.res) {
-    ctx.res.writeHead(302, { Location: result.as });
-    return ctx.res.end();
+  if (res) {
+    res.writeHead(302, { Location: result.as });
+    return res.end();
   } else {
     return Router.push(result.href, result.as);
   }

@@ -1,9 +1,10 @@
 import * as Sentry from '@sentry/browser';
 import nextReduxWrapper from 'next-redux-wrapper';
-import AppComponent, { AppContext, Container, AppContext } from 'next/app';
+import AppComponent, { AppProps, Container } from 'next/app';
 import { default as Router, withRouter, SingletonRouter, default as Router } from 'next/router';
 import React from 'react';
 import { Provider } from 'react-redux';
+import React, { useEffect } from 'react';
 
 import { AppModals } from '../components/modals/appModals/AppModals';
 import { ActionCreators } from '../redux/actions';
@@ -14,6 +15,8 @@ import type { RouteDetails, AppStore } from '../utils/types';
 
 import 'prismjs/themes/prism-coy.css';
 import './index.scss';
+import { useStore } from 'react-redux';
+import { NextPage } from 'next';
 
 type WebVitalsReport =
   | {
@@ -51,58 +54,35 @@ function getRouteDetails(routeDetails: RouteDetails) {
   return newRouteDetails;
 }
 
-class MyApp extends AppComponent<{ store: AppStore; ctx: RouteDetails }> {
-  static async getInitialProps({ Component, ctx }: AppContext) {
-    if (ctx.req) {
-      await ctx.store.dispatch(ActionCreators.validateToken(ctx));
-    }
+const MyApp = ({ Component, pageProps, router }: AppProps) => {
+  const store = useStore();
 
-    const newRouteDetails = getRouteDetails(ctx);
+  useEffect(() => {
+    Router.events.on('routeChangeComplete', onRouteChangeComplete);
+    Router.events.on('routeChangeStart', onRouteChangeStart);
+    Router.events.on('routeChangeError', onRouteChangeError);
+    return () => {
+      Router.events.off('routeChangeComplete', onRouteChangeComplete);
+      Router.events.off('routeChangeStart', onRouteChangeStart);
+      Router.events.off('routeChangeError', onRouteChangeError);
+    };
+  }, []);
 
-    // when changing routes on the client side
-    // it's actually still in progress at this point
-    const routeChangeInProgress = !ctx.req;
-    await ctx.store.dispatch(
-      ActionCreators.updateRouteSuccess(newRouteDetails, routeChangeInProgress)
-    );
-
-    const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
-
-    return { pageProps };
-  }
-
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo & Record<string, any>) {
-    console.log('CUSTOM ERROR HANDLING', error);
-    // This is needed to render errors correctly in development / production
-    super.componentDidCatch(error, errorInfo);
-  }
-
-  componentDidMount() {
-    Router.events.on('routeChangeComplete', this.onRouteChangeComplete);
-    Router.events.on('routeChangeStart', this.onRouteChangeStart);
-    Router.events.on('routeChangeError', this.onRouteChangeError);
-  }
-
-  componentWillUnmount() {
-    Router.events.off('routeChangeComplete', this.onRouteChangeComplete);
-    Router.events.off('routeChangeStart', this.onRouteChangeStart);
-    Router.events.off('routeChangeError', this.onRouteChangeError);
-  }
-
-  onRouteChangeComplete = (url: string) => {
+  const onRouteChangeComplete = (url: string) => {
     analytics.reportPageView(url);
-    const newRouteDetails = getRouteDetails(this.props.router);
-    this.props.store.dispatch(ActionCreators.updateRouteSuccess(newRouteDetails));
+    const newRouteDetails = getRouteDetails(router);
+    store.dispatch(ActionCreators.updateRouteSuccess(newRouteDetails));
   };
 
-  onRouteChangeStart = (_url: string) => {
-    this.props.store.dispatch(ActionCreators.updateRouteStarted());
+  const onRouteChangeStart = (_url: string) => {
+    store.dispatch(ActionCreators.updateRouteStarted());
   };
 
-  onRouteChangeError = (error: any, _url: string) => {
-    this.props.store.dispatch(ActionCreators.updateRouteError(error));
+  const onRouteChangeError = (error: any, _url: string) => {
+    store.dispatch(ActionCreators.updateRouteError(error));
   };
 
+<<<<<<< HEAD
   render() {
     const { Component, pageProps } = this.props;
     return (
@@ -111,8 +91,34 @@ class MyApp extends AppComponent<{ store: AppStore; ctx: RouteDetails }> {
         <AppModals />
       </>
     );
+=======
+  return (
+    <React.Fragment>
+      <Component {...pageProps} />
+      <AppModals />
+    </React.Fragment>
+  );
+};
+
+MyApp.getInitialProps = async function ({ Component, ctx }: AppContext) {
+  if (ctx.req) {
+    await ctx.store.dispatch(ActionCreators.validateToken(ctx));
+>>>>>>> e727124... ISSUE-8: Changes related to newest version of next-redux-wrapper
   }
-}
+
+  const newRouteDetails = getRouteDetails({ route: '', ...ctx });
+
+  // when changing routes on the client side
+  // it's actually still in progress at this point
+  const routeChangeInProgress = !ctx.req;
+  await ctx.store.dispatch(
+    ActionCreators.updateRouteSuccess(newRouteDetails, routeChangeInProgress)
+  );
+
+  const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+
+  return { pageProps };
+};
 
 export default nextReduxWrapper.withRedux(MyApp);
 

@@ -21,9 +21,9 @@ LoginPage.getInitialProps = async (ctx) => {
 
     const route = getHrefQueryFromPreviousPath(query && query.previousPath);
     if (!route) {
-      return redirect('/', {}, ctx);
+      return redirect('/', {}, ctx.res);
     } else {
-      return redirect(route.href, route.query, ctx);
+      return redirect(route.href, route.query, ctx.res);
     }
   }
 };

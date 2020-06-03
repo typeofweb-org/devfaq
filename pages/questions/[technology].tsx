@@ -45,7 +45,7 @@ const mapStateToProps = (state: AppState) => {
 
 QuestionsPageComponent.getInitialProps = async (ctx: GetInitialPropsContext) => {
   if (!ctx.query || !ctx.query.technology || Array.isArray(ctx.query.technology)) {
-    return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx);
+    return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx.res);
   }
 
   const state = ctx.store.getState();
@@ -56,7 +56,7 @@ QuestionsPageComponent.getInitialProps = async (ctx: GetInitialPropsContext) => 
     return redirect(
       '/questions/[technology]',
       { technology: ctx.query.technology, page: '1' },
-      ctx
+      ctx.res
     );
   }
   const sortBy = getSortByArray(state);
