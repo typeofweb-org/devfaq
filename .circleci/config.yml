@@ -27,6 +27,7 @@ jobs:
       - run: npm run create-size && mv size-snapshot.json previous-size-snapshot.json
       - run: mv /tmp/current-size-snapshot.json ./
 
+      - run: mkdir -p /tmp/lighthouse/
       - run: npm run danger ci
 
       - store_artifacts:
