@@ -316,7 +316,7 @@ async function commentSizesReport() {
   const prBranch = danger.github.pr.head.ref;
 
   const mergeBaseCommit = await git(`merge-base HEAD origin/${baseBranch}`);
-  const commitRange = `${mergeBaseCommit}...${prBranch}`;
+  const commitRange = `${mergeBaseCommit}...${danger.github.pr.head.sha}`;
   const comparison = await loadComparison();
 
   const results = Object.entries(comparison);
@@ -343,7 +343,7 @@ async function commentSizesReport() {
       // nicer URLs
       const page = bundleId.replace('[technology]', 'js').replace('[id]', '247');
 
-      const host = `https://devfaq-www-git-${path}${danger.github.pr.head.ref}.typeofweb.now.sh`;
+      const host = `https://devfaq-www-git-${path}${prBranch}.typeofweb.now.sh`;
       return `[${bundleId}](${host}${page})`;
     },
   });

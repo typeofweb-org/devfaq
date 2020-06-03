@@ -3,7 +3,7 @@ import Fs from 'fs';
 
 import Octokit from '@octokit/rest';
 
-export async function getHeadBranch() {
+export async function getBaseBranch() {
   const {
     CIRCLE_PROJECT_REPONAME,
     CIRCLE_PROJECT_USERNAME,
@@ -38,13 +38,13 @@ export async function getHeadBranch() {
     pull_number: prNumber,
   });
 
-  return pulls.data.head.ref;
+  return pulls.data.base.ref;
 }
 
-getHeadBranch()
+getBaseBranch()
   .then((name) => {
     console.log({ name });
-    return Fs.writeFileSync('/tmp/.headbranch', name, 'utf8');
+    return Fs.writeFileSync('/tmp/.basebranch', name, 'utf8');
   })
   .catch((err) => {
     console.error(err);

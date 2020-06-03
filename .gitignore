@@ -9,4 +9,4 @@ current-size-snapshot.json
 size-snapshot.json
 analyze.next
 .deployment-url
-.headbranch
+.basebranch

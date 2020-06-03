@@ -12,14 +12,14 @@ jobs:
           steps:
             - run: npm ci
 
-      - run: npm run get-head-branch
+      - run: npm run get-base-branch
       - run: git status
       - run: npm run build > analyze.next
       - run: cat analyze.next
       - run: npm run create-size && mv size-snapshot.json /tmp/current-size-snapshot.json
       - run: rm analyze.next && rm -rf .next
 
-      - run: git fetch && git checkout $(cat /tmp/.headbranch) && git reset --hard origin/$(cat /tmp/.headbranch)
+      - run: git fetch && git checkout $(cat /tmp/.basebranch) && git reset --hard origin/$(cat /tmp/.basebranch)
       - run: git status
       - run: npm ci
       - run: npm run build > analyze.next
