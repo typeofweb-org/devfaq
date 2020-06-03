@@ -18,45 +18,42 @@ interface ActiveLinkOwnProps {
 
 type ActiveLinkComponentProps = Omit<LinkProps, 'as'> & ActiveLinkOwnProps;
 
-class ActiveLinkComponent extends React.Component<
+const ActiveLinkComponent: React.FC<
   ActiveLinkComponentProps & ReturnType<typeof mapStateToProps>
-> {
-  conditionallyAddClassToChild = (
-    shouldAddActiveClass: boolean,
-    activeClassName: string,
-    child: React.ReactElement<any>
-  ): React.ReactElement<any> => {
-    if (!shouldAddActiveClass) {
-      return child;
-    }
-    const modifiedChild = React.cloneElement(child, {
-      ...child.props,
-      className: classNames(child.props.className, { [activeClassName]: shouldAddActiveClass }),
-    });
-    return modifiedChild;
-  };
-
-  render() {
-    const {
-      isMatch,
-      activeClassName,
-      disabledWhenActive,
-      query,
-      as,
-      children,
-
-      href,
-      replace,
-      scroll,
-      shallow,
-      passHref,
-      prefetch,
-    } = this.props;
+> = React.memo(
+  ({
+    isMatch,
+    activeClassName,
+    disabledWhenActive,
+    query,
+    as,
+    children,
+    href,
+    replace,
+    scroll,
+    shallow,
+    passHref,
+    prefetch,
+  }) => {
+    const conditionallyAddClassToChild = (
+      shouldAddActiveClass: boolean,
+      activeClassName: string,
+      child: React.ReactElement<any>
+    ): React.ReactElement<any> => {
+      if (!shouldAddActiveClass) {
+        return child;
+      }
+      const modifiedChild = React.cloneElement(child, {
+        ...child.props,
+        className: classNames(child.props.className, { [activeClassName]: shouldAddActiveClass }),
+      });
+      return modifiedChild;
+    };
 
     invariant(activeClassName != null, 'activeClassName is required!');
 
     const child = React.Children.only(children);
-    const newChild = this.conditionallyAddClassToChild(isMatch, activeClassName, child);
+    const newChild = conditionallyAddClassToChild(isMatch, activeClassName, child);
 
     // if (isMatch && this.props.disabledWhenActive) {
     //   return <div aria-disabled="true">{newChild}</div>;
@@ -76,7 +73,7 @@ class ActiveLinkComponent extends React.Component<
       </Link>
     );
   }
-}
+);
 
 const checkForMatch = (
   routeDetails: RouteDetails,
