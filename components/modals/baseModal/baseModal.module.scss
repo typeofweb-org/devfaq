@@ -124,6 +124,7 @@
     text-align: center;
   }
   &--footer {
+    margin-bottom: 40px;
     .branding-button-inverse {
       box-shadow: $grey-text-secondary 0 2px 4px;
     }
@@ -160,13 +161,6 @@
     width: 100%;
     @include mediaquery('gt-sm') {
       width: 240px;
-    }
-  }
-  .CodeMirror,
-  .CodeMirror-scroll {
-    min-height: 200px;
-    @include mediaquery('gt-sm') {
-      min-height: 300px;
     }
   }
 }

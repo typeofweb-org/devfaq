@@ -1,248 +1,164 @@
-import classNames from 'classnames';
 import { isEqual } from 'lodash';
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { memo, useState, useEffect, useCallback, forwardRef } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { levelsWithLabels, LevelKey } from '../../../constants/level';
-import { technologyIconItems, TechnologyKey } from '../../../constants/technology-icon-items';
+import type { LevelKey } from '../../../constants/level';
+import type { TechnologyKey } from '../../../constants/technology-icon-items';
 import { ActionCreators } from '../../../redux/actions';
 import { Question } from '../../../redux/reducers/questions';
 import { Api } from '../../../services/Api';
-import QuestionEditor from '../../questionEditor/QuestionEditor';
-import BaseModal, { CommonModalProps } from '../baseModal/BaseModal';
-import modalStyles from '../baseModal/baseModal.module.scss';
+import { useDidMount, useRenderProp } from '../../../utils/hooks';
+import { BaseModal, CommonModalProps } from '../baseModal/BaseModal';
 
+import { AddQuestionModalContent } from './AddQuestionModalContent';
+import { AddQuestionModalFooter } from './AddQuestionModalFooter';
 import styles from './addQuestionModal.module.scss';
 
-interface AddQuestionModalState {
-  technology?: TechnologyKey;
-  level?: LevelKey;
-  questionText: string;
-  isLoading: boolean;
-  valid: boolean;
-  originalQuestion?: Question;
-}
+const reportEvent = (action: string) => globalReportEvent(action, 'Nowe pytanie warstwa');
 
 interface AddQuestionModalOwnProps {
   originalQuestion?: Question;
 }
 
-type AddQuestionModalProps = AddQuestionModalOwnProps &
-  CommonModalProps &
-  ReturnType<typeof mapStateToProps> &
-  typeof mapDispatchToProps;
+type AddQuestionModalProps = AddQuestionModalOwnProps & CommonModalProps;
 
-class AddQuestionModalComponent extends React.PureComponent<
-  AddQuestionModalProps,
-  AddQuestionModalState
-> {
-  static getDerivedStateFromProps: React.GetDerivedStateFromProps<
-    AddQuestionModalProps,
-    AddQuestionModalState
-  > = (props, state) => {
-    if (!props.originalQuestion || isEqual(props.originalQuestion, state.originalQuestion)) {
-      return null;
-    }
+export const AddQuestionModal = memo(
+  forwardRef<HTMLDivElement, AddQuestionModalProps>(({ onClose, originalQuestion }, ref) => {
+    const [editedQuestion, setEditedQuestion] = useState<Question>();
+    const [questionText, setQuestionText] = useState('');
+    const [level, setLevel] = useState<LevelKey>();
+    const [technology, setTechnology] = useState<TechnologyKey>();
+    const [isLoading, setIsLoading] = useState(false);
+    const [valid, setValid] = useState(false);
 
-    const { originalQuestion } = props;
+    const dispatch = useDispatch();
 
-    return {
+    const isValid = useCallback(() => Boolean(level && technology && questionText.trim()), [
+      level,
+      questionText,
+      technology,
+    ]);
+
+    const handleClose: CommonModalProps['onClose'] = useCallback(
+      (args) => {
+        if (args.reason === 'cancel') {
+          reportEvent('Anuluj');
+        } else if (args.reason === 'submit') {
+          reportEvent('Dodaj pytanie');
+        } else {
+          reportEvent('Zamknij');
+        }
+        return onClose(args);
+      },
+      [onClose]
+    );
+
+    const onCancelClick: React.MouseEventHandler<HTMLButtonElement> = useCallback(
+      (e) => {
+        handleClose({ reason: 'cancel', event: e });
+      },
+      [handleClose]
+    );
+
+    const handleChangeTechnology: React.ChangeEventHandler<HTMLSelectElement> = useCallback((e) => {
+      const value = e.currentTarget.value as TechnologyKey;
+      setTechnology(value);
+    }, []);
+
+    const handleChangeLevel: React.ChangeEventHandler<HTMLSelectElement> = useCallback((e) => {
+      const value = e.currentTarget.value as LevelKey;
+      setLevel(value);
+    }, []);
+
+    const handleChangeQuestionText = useCallback((text: string) => {
+      setQuestionText(text);
+    }, []);
+
+    const handleSubmit: React.MouseEventHandler<HTMLButtonElement> = useCallback(() => {
+      if (!isValid()) {
+        return;
+      }
+
+      setIsLoading(true);
+
+      // remove `| undefined` because `isValid()` determines we're good to go
+      const body = {
+        question: questionText!,
+        level: level!,
+        category: technology!,
+      };
+
+      if (originalQuestion) {
+        return Api.updateQuestion(originalQuestion.id, {
+          ...body,
+          status: 'accepted',
+        })
+          .then(() => {
+            onClose({ reason: 'submit' });
+          })
+          .finally(() => setIsLoading(false));
+      } else {
+        return Api.createQuestion(body)
+          .then(() => {
+            onClose({ reason: 'submit' });
+            dispatch(ActionCreators.uiOpenAddQuestionConfirmationModal());
+          })
+          .finally(() => setIsLoading(false));
+      }
+    }, [dispatch, isValid, level, onClose, originalQuestion, questionText, technology]);
+
+    const validate = useCallback(() => {
+      setValid(isValid());
+    }, [isValid]);
+
+    const renderContent = useRenderProp(AddQuestionModalContent, {
+      handleChangeLevel,
+      handleChangeQuestionText,
+      handleChangeTechnology,
+      level,
       originalQuestion,
-      level: originalQuestion._levelId,
-      technology: originalQuestion._categoryId,
-      questionText: originalQuestion.question,
-    };
-  };
+      questionText,
+      technology,
+    });
 
-  state: AddQuestionModalState = { questionText: '', isLoading: false, valid: false };
+    const renderFooter = useRenderProp(AddQuestionModalFooter, {
+      handleSubmit,
+      isLoading,
+      onCancelClick,
+      valid,
+    });
 
-  componentDidMount() {
-    this.reportEvent('Wyświetlenie');
-    this.setState((state) => ({ valid: this.isValid(state) }));
-  }
+    useEffect(() => {
+      validate();
+    });
 
-  render() {
+    useDidMount(() => {
+      reportEvent('Wyświetlenie');
+      setValid(isValid());
+    });
+
+    useEffect(() => {
+      if (!originalQuestion || isEqual(originalQuestion, editedQuestion)) {
+        return;
+      }
+      setEditedQuestion(originalQuestion);
+      setLevel(originalQuestion._levelId);
+      setTechnology(originalQuestion._categoryId);
+      setQuestionText(originalQuestion.question);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [originalQuestion]);
+
     return (
       <BaseModal
+        ref={ref}
         type="add"
         className={styles.addQuestionModal}
         closable={true}
-        renderContent={this.renderContent}
-        renderFooter={this.renderFooter}
-        onClose={this.onClose}
+        renderContent={renderContent}
+        renderFooter={renderFooter}
+        onClose={handleClose}
         aria-labelledby="addQuestionModalTitle"
       />
     );
-  }
-
-  onCancelClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    this.onClose({ reason: 'cancel', event: e });
-  };
-
-  onClose: CommonModalProps['onClose'] = (args) => {
-    if (args.reason === 'cancel') {
-      this.reportEvent('Anuluj');
-    } else if (args.reason === 'submit') {
-      this.reportEvent('Dodaj pytanie');
-    } else {
-      this.reportEvent('Zamknij');
-    }
-    this.props.onClose(args);
-  };
-
-  renderContent = () => {
-    return (
-      <div>
-        <h2 className={modalStyles.appModalTitle} id="add-question-modal-title">
-          {this.state.originalQuestion ? 'Edytuj pytanie' : 'Nowe pytanie'}
-        </h2>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <div className={styles.appQuestionForm}>
-            <div className={styles.appQuestionFormOptionsContainer}>
-              <select
-                required
-                className={classNames(styles.appSelect, styles.appQuestionFormTechnology)}
-                value={this.state.technology || ''}
-                onChange={this.handleChangeTechnology}
-              >
-                <option key="undefined" value="" disabled={true}>
-                  Wybierz technologię
-                </option>
-                {technologyIconItems.map((technology) => (
-                  <option key={technology.name} value={technology.name}>
-                    {technology.label}
-                  </option>
-                ))}
-              </select>
-              <select
-                required
-                className={classNames(styles.appSelect, styles.appQuestionFormLevel)}
-                value={this.state.level || ''}
-                onChange={this.handleChangeLevel}
-              >
-                <option key="undefined" value="" disabled={true}>
-                  Wybierz poziom
-                </option>
-                {levelsWithLabels.map((level) => (
-                  <option key={level.value} value={level.value}>
-                    {level.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <QuestionEditor
-              id="add-question-modal"
-              onChange={this.handleChangeQuestionText}
-              value={this.state.questionText}
-            />
-          </div>
-        </form>
-      </div>
-    );
-  };
-
-  renderFooter = () => {
-    return (
-      <div>
-        <button
-          className={classNames('round-button', styles.brandingButtonInverse, {
-            loading: this.state.isLoading,
-          })}
-          disabled={!this.state.valid || this.state.isLoading}
-          type="button"
-          onClick={this.handleSubmit}
-        >
-          {this.state.originalQuestion ? 'Akceptuj' : 'Dodaj pytanie'}
-        </button>
-        <button className="round-button branding-button" onClick={this.onCancelClick}>
-          Anuluj
-        </button>
-      </div>
-    );
-  };
-
-  handleChangeTechnology: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const value = e.currentTarget.value as TechnologyKey;
-    this.setState(
-      {
-        technology: value,
-      },
-      this.validate
-    );
-  };
-
-  handleChangeLevel: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const value = e.currentTarget.value as LevelKey;
-    this.setState(
-      {
-        level: value,
-      },
-      this.validate
-    );
-  };
-
-  handleChangeQuestionText = (text: string) => {
-    this.setState(
-      {
-        questionText: text,
-      },
-      this.validate
-    );
-  };
-
-  validate = () => {
-    this.setState((state) => ({
-      valid: this.isValid(state),
-    }));
-  };
-
-  isValid(state: AddQuestionModalState): state is Required<AddQuestionModalState> {
-    return Boolean(state.level && state.technology && state.questionText.trim());
-  }
-
-  handleSubmit: React.MouseEventHandler<HTMLButtonElement> = () => {
-    if (!this.isValid(this.state)) {
-      return;
-    }
-
-    this.setState({ isLoading: true });
-
-    const body = {
-      question: this.state.questionText,
-      level: this.state.level,
-      category: this.state.technology,
-    };
-
-    if (this.state.originalQuestion) {
-      return Api.updateQuestion(this.state.originalQuestion.id, {
-        ...body,
-        status: 'accepted',
-      })
-        .then(() => {
-          this.onClose({ reason: 'submit' });
-        })
-        .finally(() => this.setState({ isLoading: false }));
-    } else {
-      return Api.createQuestion(body)
-        .then(() => {
-          this.onClose({ reason: 'submit' });
-          this.props.uiOpenAddQuestionConfirmationModal();
-        })
-        .finally(() => this.setState({ isLoading: false }));
-    }
-  };
-
-  reportEvent(action: string) {
-    globalReportEvent(action, 'Nowe pytanie warstwa');
-  }
-}
-
-const mapStateToProps = (_state: any, _ownProps: AddQuestionModalOwnProps) => ({});
-
-const mapDispatchToProps = {
-  uiOpenAddQuestionConfirmationModal: ActionCreators.uiOpenAddQuestionConfirmationModal,
-};
-
-const AddQuestionModal = connect(mapStateToProps, mapDispatchToProps)(AddQuestionModalComponent);
-export default AddQuestionModal;
+  })
+);

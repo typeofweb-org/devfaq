@@ -1,4 +1,4 @@
-import { NextPageContext } from 'next';
+import type { NextPageContext, NextComponentType } from 'next';
 
 import env from '../utils/env';
 
@@ -30,11 +30,9 @@ const sitemapXml = (items: ReadonlyArray<Item>) => {
   </urlset>`;
 };
 
-const Sitemap = () => {
-  // nothing
-};
+const Sitemap: NextComponentType = () => null;
 
-Sitemap.getInitialProps = async ({ res }: NextPageContext) => {
+Sitemap.getInitialProps = async ({ res }) => {
   if (!res) {
     return;
   }

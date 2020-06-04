@@ -1,3 +1,4 @@
+import type { NextComponentType } from 'next';
 import React from 'react';
 
 import { Container } from '../components/container/Container';
@@ -5,7 +6,7 @@ import Layout from '../components/layout/Layout';
 
 import styles from './staticPage.module.scss';
 
-const About = () => {
+const AboutPage: NextComponentType = () => {
   return (
     <Layout title="Jak korzystać? FAQ">
       <Container>
@@ -81,4 +82,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default AboutPage;

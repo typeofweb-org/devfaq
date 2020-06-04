@@ -5,6 +5,8 @@ import type { Store } from 'redux';
 import type { AsyncAction } from '../redux/actions';
 import type { AppState } from '../redux/reducers/index';
 
+export type Nil<T> = T | null | undefined;
+
 export type AppStore = Store<AppState> & {
   dispatch<R>(asyncAction: AsyncAction<R>): R;
 };

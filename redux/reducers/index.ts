@@ -20,3 +20,8 @@ const reducersObj = {
 export const reducers = combineReducers(reducersObj);
 
 export type AppState = { [K in keyof typeof reducersObj]: ReturnType<typeof reducersObj[K]> };
+
+declare module 'react-redux' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultRootState extends AppState {}
+}

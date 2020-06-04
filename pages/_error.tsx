@@ -1,24 +1,16 @@
-import { NextPageContext } from 'next';
+import type { NextPageContext, NextComponentType } from 'next';
 import NextError, { ErrorProps } from 'next/error';
 import React from 'react';
 
-export default class Error extends React.Component<ErrorProps> {
-  static async getInitialProps(ctx: NextPageContext) {
-    const { err, pathname, asPath, res } = ctx;
-    const statusCode = res ? res.statusCode : err ? err.statusCode : null;
+const ErrorPage: NextComponentType<NextPageContext, ErrorProps, ErrorProps> = (props) => (
+  <NextError {...props} />
+);
 
-    // if (statusCode === 404) {
-    //   if (asPath && asPath.endsWith('/')) {
-    //     const newAsPath = asPath.slice(0, asPath.length - 1);
-    //     if (newAsPath !== asPath) {
-    //       return redirect(newAsPath, {}, ctx);
-    //     }
-    //   }
-    //   return redirect('/', {}, ctx);
-    // }
-    return { err, pathname, asPath, statusCode };
-  }
-  render() {
-    return <NextError {...this.props} />;
-  }
-}
+ErrorPage.getInitialProps = (ctx) => {
+  const { err, res } = ctx;
+  const statusCode = res?.statusCode || err?.statusCode || 500;
+
+  return { statusCode };
+};
+
+export default ErrorPage;

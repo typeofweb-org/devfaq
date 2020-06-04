@@ -16,9 +16,14 @@ const withBundleAnalyzer = (nextConfig = {}) => {
         const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
         config.plugins.push(
           new BundleAnalyzerPlugin({
-            analyzerMode: 'json',
-            generateStatsFile: true,
-            statsFilename: options.isServer ? '../analyze/server.json' : './analyze/client.json',
+            analyzerMode: 'static',
+            defaultSizes: 'gzip',
+            openAnalyzer: true,
+            statsFilename: './analyze/client.html',
+
+            // analyzerMode: 'json',
+            // generateStatsFile: true,
+            // statsFilename: options.isServer ? '../analyze/server.json' : './analyze/client.json',
           })
         );
       }

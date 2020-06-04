@@ -1,3 +1,4 @@
+import type { NextComponentType } from 'next';
 import React from 'react';
 
 import Layout from '../components/layout/Layout';
@@ -5,7 +6,7 @@ import MobileActionButtons from '../components/questions/mobileActionButtons/Mob
 import QuestionsListLayout from '../components/questions/questionsListLayout/QuestionsListLayout';
 import SelectedQuestions from '../components/questions/selectedQuestions/SelectedQuestions';
 
-const SelectedQuestionsPage = () => {
+const SelectedQuestionsPage: NextComponentType = () => {
   return (
     <Layout title="Wybrane pytania">
       <QuestionsListLayout>

@@ -1,12 +1,12 @@
+import type { NextComponentType } from 'next';
 import React from 'react';
 
 import Layout from '../components/layout/Layout';
 import LoginForm from '../components/loginForm/LoginForm';
 import { getLoggedInUser } from '../redux/selectors/selectors';
 import { redirect, getHrefQueryFromPreviousPath } from '../utils/redirect';
-import type { GetInitialPropsContext } from '../utils/types';
 
-const LoginPage = () => {
+const LoginPage: NextComponentType = () => {
   return (
     <Layout title="Logowanie">
       <LoginForm />
@@ -14,7 +14,7 @@ const LoginPage = () => {
   );
 };
 
-LoginPage.getInitialProps = async (ctx: GetInitialPropsContext) => {
+LoginPage.getInitialProps = async (ctx) => {
   const state = ctx.store.getState();
   if (getLoggedInUser(state)) {
     const query = state.routeDetails.current.query;

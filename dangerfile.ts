@@ -1,7 +1,6 @@
-/* eslint-disable import/dynamic-import-chunkname */
+/* eslint-disable */
 // @ts-nocheck
 // Based on https://github.com/mui-org/material-ui/blob/3eb02f5498857bd01bb7924eed9b946f33e39052/dangerfile.js
-// tslint:disable
 import { exec } from 'child_process';
 import Path from 'path';
 

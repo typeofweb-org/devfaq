@@ -1,11 +1,11 @@
 import * as Sentry from '@sentry/browser';
 import nextReduxWrapper from 'next-redux-wrapper';
 import AppComponent, { AppContext } from 'next/app';
-import { SingletonRouter, default as Router } from 'next/router';
+import { default as Router } from 'next/router';
 import React from 'react';
 import { Provider } from 'react-redux';
 
-import AppModals from '../components/modals/appModals/AppModals';
+import { AppModals } from '../components/modals/appModals/AppModals';
 import { ActionCreators } from '../redux/actions';
 import { makeStore } from '../redux/store';
 import * as analytics from '../utils/analytics';
@@ -107,10 +107,8 @@ class MyApp extends AppComponent<{ store: AppStore; ctx: RouteDetails }> {
     const { Component, pageProps, store } = this.props;
     return (
       <Provider store={store}>
-        <React.Fragment>
-          <Component {...pageProps} />
-          <AppModals />
-        </React.Fragment>
+        <Component {...pageProps} />
+        <AppModals />
       </Provider>
     );
   }
