@@ -84,7 +84,7 @@
     "eslint-plugin-react": "7.20.0",
     "eslint-plugin-react-hooks": "4.0.4",
     "fast-check": "1.24.2",
-    "fs-extra": "9.0.0",
+    "fs-extra": "9.0.1",
     "husky": "4.2.5",
     "jest": "26.0.1",
     "prettier": "2.0.5",
