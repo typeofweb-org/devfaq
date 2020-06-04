@@ -7,7 +7,7 @@ import type { TechnologyKey } from '../../../constants/technology-icon-items';
 import { ActionCreators } from '../../../redux/actions';
 import { Question } from '../../../redux/reducers/questions';
 import { Api } from '../../../services/Api';
-import { useDidMount } from '../../../utils/hooks';
+import { useDidMount, useRenderProp } from '../../../utils/hooks';
 import { BaseModal, CommonModalProps } from '../baseModal/BaseModal';
 
 import { AddQuestionModalContent } from './AddQuestionModalContent';
@@ -111,40 +111,22 @@ export const AddQuestionModal = memo(
       setValid(isValid());
     }, [isValid]);
 
-    const renderContent = useCallback(
-      () => (
-        <AddQuestionModalContent
-          originalQuestion={originalQuestion}
-          questionText={questionText}
-          level={level}
-          technology={technology}
-          handleChangeTechnology={handleChangeTechnology}
-          handleChangeLevel={handleChangeLevel}
-          handleChangeQuestionText={handleChangeQuestionText}
-        />
-      ),
-      [
-        handleChangeLevel,
-        handleChangeQuestionText,
-        handleChangeTechnology,
-        level,
-        originalQuestion,
-        questionText,
-        technology,
-      ]
-    );
+    const renderContent = useRenderProp(AddQuestionModalContent, {
+      handleChangeLevel,
+      handleChangeQuestionText,
+      handleChangeTechnology,
+      level,
+      originalQuestion,
+      questionText,
+      technology,
+    });
 
-    const renderFooter = useCallback(
-      () => (
-        <AddQuestionModalFooter
-          isLoading={isLoading}
-          valid={valid}
-          handleSubmit={handleSubmit}
-          onCancelClick={onCancelClick}
-        />
-      ),
-      [handleSubmit, isLoading, onCancelClick, valid]
-    );
+    const renderFooter = useRenderProp(AddQuestionModalFooter, {
+      handleSubmit,
+      isLoading,
+      onCancelClick,
+      valid,
+    });
 
     useEffect(() => {
       validate();
