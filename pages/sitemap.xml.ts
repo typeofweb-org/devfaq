@@ -30,10 +30,7 @@ const sitemapXml = (items: ReadonlyArray<Item>) => {
   </urlset>`;
 };
 
-const Sitemap: NextComponentType = () => {
-  // nothing
-  return null;
-};
+const Sitemap: NextComponentType = () => null;
 
 Sitemap.getInitialProps = async ({ res }) => {
   if (!res) {

@@ -42,7 +42,7 @@ export const AppModals = memo(() => {
   );
 
   return (
-    <React.Fragment>
+    <>
       <CSSTransition
         in={addQuestionModalState.open}
         unmountOnExit={true}
@@ -83,6 +83,6 @@ export const AppModals = memo(() => {
           onClose={closeConfirmationModal}
         />
       </CSSTransition>
-    </React.Fragment>
+    </>
   );
 });

@@ -1,6 +1,9 @@
 import React, { memo, useCallback, useMemo, PropsWithChildren } from 'react';
 import { Transition } from 'react-transition-group';
 
+import { updateStyles } from '../../utils/styles';
+import type { Nil } from '../../utils/types';
+
 interface AnimateHeightProps {
   in?: boolean;
   enterTime: number;
@@ -10,10 +13,10 @@ interface AnimateHeightProps {
 
 export const AnimateHeight = memo<PropsWithChildren<AnimateHeightProps>>(
   ({ enterTime, exitTime, in: isIn, children, nodeRef }) => {
-    const reflow = useCallback((el: HTMLElement): void => {
+    const reflow = useCallback((el: Nil<HTMLElement>): void => {
       // @ts-ignore
       // reading scrollTop causes reflow of an element
-      const _ignore = el.scrollTop;
+      const _ignore = el?.scrollTop;
       return;
     }, []);
 
@@ -22,37 +25,41 @@ export const AnimateHeight = memo<PropsWithChildren<AnimateHeightProps>>(
     const timeout = useMemo(() => ({ enter: enterTime, exit: exitTime }), [enterTime, exitTime]);
 
     const onExit = useCallback(() => {
-      if (!nodeRef.current) return;
-      nodeRef.current.style.willChange = 'height, opacity';
-      nodeRef.current.style.height = nodeRef.current.scrollHeight + 'px';
-      nodeRef.current.style.opacity = '1';
+      updateStyles(nodeRef.current, {
+        willChange: 'height, opacity',
+        height: nodeRef.current?.scrollHeight + 'px',
+        opacity: '1',
+      });
       reflow(nodeRef.current);
     }, [nodeRef, reflow]);
 
     const onExiting = useCallback(() => {
-      if (!nodeRef.current) return;
-      nodeRef.current.style.height = '0';
-      nodeRef.current.style.opacity = '0';
-      nodeRef.current.style.minHeight = '0';
-      nodeRef.current.style.transition = `height ${exitTime}ms, opacity ${exitTime}ms`;
+      updateStyles(nodeRef.current, {
+        height: '0',
+        opacity: '0',
+        minHeight: '0',
+        transition: `height ${exitTime}ms, opacity ${exitTime}ms`,
+      });
     }, [exitTime, nodeRef]);
 
     const onExited = useCallback(() => {
-      if (!nodeRef.current) return;
-      nodeRef.current.style.height = '';
-      nodeRef.current.style.opacity = '';
-      nodeRef.current.style.transition = '';
-      nodeRef.current.style.minHeight = '';
-      nodeRef.current.style.willChange = '';
+      updateStyles(nodeRef.current, {
+        height: '',
+        opacity: '',
+        transition: '',
+        minHeight: '',
+        willChange: '',
+      });
     }, [nodeRef]);
 
     const onEnter = useCallback(
       (isAppearing: boolean) => {
-        if (!nodeRef.current) return;
-        nodeRef.current.style.willChange = 'height, opacity';
-        nodeRef.current.style.height = '0';
-        nodeRef.current.style.opacity = '0';
-        nodeRef.current.style.minHeight = '0';
+        updateStyles(nodeRef.current, {
+          willChange: 'height, opacity',
+          height: '0',
+          opacity: '0',
+          minHeight: '0',
+        });
         reflow(nodeRef.current);
       },
       [nodeRef, reflow]
@@ -60,30 +67,31 @@ export const AnimateHeight = memo<PropsWithChildren<AnimateHeightProps>>(
 
     const onEntering = useCallback(
       (isAppearing: boolean) => {
-        if (!nodeRef.current) return;
-        nodeRef.current.style.height = nodeRef.current.scrollHeight + 'px';
-        nodeRef.current.style.opacity = '1';
-        nodeRef.current.style.transition = `height ${enterTime}ms, opacity ${enterTime}ms`;
+        updateStyles(nodeRef.current, {
+          height: nodeRef.current?.scrollHeight + 'px',
+          opacity: '1',
+          transition: `height ${enterTime}ms, opacity ${enterTime}ms`,
+        });
       },
       [enterTime, nodeRef]
     );
 
     const onEntered = useCallback(
       (isAppearing: boolean) => {
-        if (!nodeRef.current) return;
-        nodeRef.current.style.height = '';
-        nodeRef.current.style.opacity = '';
-        nodeRef.current.style.transition = '';
-        nodeRef.current.style.minHeight = '';
-        nodeRef.current.style.willChange = '';
+        updateStyles(nodeRef.current, {
+          height: '',
+          opacity: '',
+          transition: '',
+          minHeight: '',
+          willChange: '',
+        });
       },
       [nodeRef]
     );
 
     const addEndListener = useCallback(
       (done: () => void) => {
-        if (!nodeRef.current) return;
-        nodeRef.current.addEventListener('transitionend', done, { once: true, passive: true });
+        nodeRef.current?.addEventListener('transitionend', done, { once: true, passive: true });
       },
       [nodeRef]
     );

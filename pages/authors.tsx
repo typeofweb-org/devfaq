@@ -10,7 +10,7 @@ const AuthorsPage: NextComponentType = () => {
   return (
     <Layout title="Autorzy">
       <Container>
-        <React.Fragment>
+        <>
           <article className={styles.appStaticPage}>
             <h2>Autorzy</h2>
             <div className={styles.appAuthors}>
@@ -80,7 +80,7 @@ const AuthorsPage: NextComponentType = () => {
               </li>
             </ul>
           </article>
-        </React.Fragment>
+        </>
       </Container>
     </Layout>
   );

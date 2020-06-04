@@ -61,9 +61,9 @@ export const AddQuestionModalContent = memo<AddQuestionModalContentProps>(
                 <option key="undefined" value="" disabled={true}>
                   Wybierz poziom
                 </option>
-                {levelsWithLabels.map((level) => (
-                  <option key={level.value} value={level.value}>
-                    {level.label}
+                {levelsWithLabels.map(({ value, label }) => (
+                  <option key={value} value={value}>
+                    {label}
                   </option>
                 ))}
               </select>
