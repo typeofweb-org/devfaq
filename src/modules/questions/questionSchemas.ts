@@ -21,10 +21,7 @@ export const GetQuestionsRequestSchema = {
   query: Joi.object({
     category: QuestionCategorySchema,
     status: QuestionStatusSchema,
-    level: Joi.array()
-      .items(...questionLevels)
-      .single()
-      .optional(),
+    level: Joi.array().items(QuestionLevelSchema).single().optional(),
     limit: Joi.number().integer().optional(),
     offset: Joi.number().integer().optional(),
     orderBy: Joi.string().valid('acceptedAt', 'level', 'votesCount'),

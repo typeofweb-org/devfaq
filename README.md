@@ -4,6 +4,8 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
+[![Discord](https://img.shields.io/discord/440163731704643589?color=738ADB&label=Discord&logo=discord&logoColor=white&style=flat-square)](https://discord.typeofweb.com/)
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):

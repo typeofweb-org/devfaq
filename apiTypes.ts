@@ -55,16 +55,16 @@ export interface definitions {
   /**
    * @summary Health check endpoint default Successful response
    */
-  getHealthcheckDefaultResponse: string;
+  getHealthCheckDefaultResponse: string;
 
   /**
    * @summary Test endpoint default Successful response
    */
-  getHelloworldDefaultResponse: string;
+  getHelloWorldDefaultResponse: string;
   getQuestionsRequestQuery: {
     category?: 'html' | 'css' | 'js' | 'angular' | 'react' | 'git' | 'other';
     status?: 'accepted' | 'pending';
-    level?: ('mid' | 'senior' | 'junior')[];
+    level?: ('junior' | 'mid' | 'senior')[];
     limit?: number;
     offset?: number;
     orderBy?: 'acceptedAt' | 'level' | 'votesCount';
@@ -113,7 +113,7 @@ export interface definitions {
    * @summary Deletes one question default Successful response
    */
   deleteQuestionsIdDefaultResponse: string;
-  postQuestionvotesRequestQuery: {
+  postQuestionVotesRequestQuery: {
     _userId: number;
     _questionId: number;
   };
@@ -121,8 +121,8 @@ export interface definitions {
   /**
    * @summary Votes on a question 200 Successful response
    */
-  postQuestionvotes200Response: definitions['Model7'];
-  deleteQuestionvotesRequestQuery: {
+  postQuestionVotes200Response: definitions['Model7'];
+  deleteQuestionVotesRequestQuery: {
     _userId: number;
     _questionId: number;
   };
@@ -130,7 +130,7 @@ export interface definitions {
   /**
    * @summary Votes on a question default Successful response
    */
-  deleteQuestionvotesDefaultResponse: string;
+  deleteQuestionVotesDefaultResponse: string;
 
   postOauthLogoutDefaultResponse: string;
 }

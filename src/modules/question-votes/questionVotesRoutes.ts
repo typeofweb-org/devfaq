@@ -28,11 +28,11 @@ export const questionVotesRoutes = {
           schema: CreateQuestionVoteResponseSchema,
         },
       },
-      async handler(request): Promise<definitions['postQuestionvotes200Response']> {
+      async handler(request): Promise<definitions['postQuestionVotes200Response']> {
         const {
           _userId,
           _questionId,
-        } = (request.query as unknown) as definitions['postQuestionvotesRequestQuery'];
+        } = (request.query as unknown) as definitions['postQuestionVotesRequestQuery'];
 
         const question = await Question.findByPk(_questionId, { attributes: ['id'] });
         if (!question) {
@@ -86,7 +86,7 @@ export const questionVotesRoutes = {
         const {
           _userId,
           _questionId,
-        } = (request.query as unknown) as definitions['deleteQuestionvotesRequestQuery'];
+        } = (request.query as unknown) as definitions['deleteQuestionVotesRequestQuery'];
 
         await QuestionVote.destroy({
           where: {
