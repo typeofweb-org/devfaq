@@ -1,10 +1,11 @@
+import type { NextComponentType } from 'next';
+
 import { redirect } from '../utils/redirect';
-import type { GetInitialPropsContext } from '../utils/types';
 
-const Index = () => null;
+const IndexPage: NextComponentType = () => null;
 
-Index.getInitialProps = async (ctx: GetInitialPropsContext) => {
+IndexPage.getInitialProps = async (ctx) => {
   return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx);
 };
 
-export default Index;
+export default IndexPage;

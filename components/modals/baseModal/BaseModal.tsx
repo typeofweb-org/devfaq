@@ -1,7 +1,8 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { memo, useRef, useEffect, useCallback, forwardRef } from 'react';
 
 import styles from './baseModal.module.scss';
+import { FixBodyService } from './fixBodyService';
 
 export type ModalType = 'warning' | 'confirmation' | 'thumbs-up' | 'add';
 
@@ -19,144 +20,84 @@ type BaseModalOwnProps = CommonModalProps & {
   renderFooter?(): React.ReactNode;
 };
 
-class FixBodyService {
-  private windowOffsetY = 0;
-  private scrollbarWidth = 0;
+const fixBodyService = new FixBodyService();
 
-  constructor() {
-    if (typeof window === 'undefined') {
-      return;
-    }
+const findFirstFocusableChild = (el: HTMLElement) => {
+  return el.querySelector('input, select, textarea, button, [tabindex]');
+};
 
-    this.scrollbarWidth = this.getScrollbarWidth();
-  }
+const elementIsFocusable = (el: Node | null): el is HTMLElement => {
+  return el ? 'focus' in el : false;
+};
 
-  fixBody() {
-    if (typeof window === 'undefined') {
-      return;
-    }
+export const BaseModal = memo(
+  forwardRef<HTMLDivElement, BaseModalOwnProps>(
+    (
+      {
+        closable = false,
+        type = undefined,
+        renderContent = () => null,
+        renderFooter = () => null,
+        onClose,
+        className,
+        'aria-labelledby': ariaLabelledby,
+        'aria-describedby': ariaLescribedby,
+      },
+      ref
+    ) => {
+      const contentRef = useRef<HTMLDivElement | null>(null);
+      const previousFocusedElement = useRef<Element | null>(null);
 
-    this.windowOffsetY = window.pageYOffset;
-    document.body.classList.add('not-scrollable');
-    document.body.style.top = `-${this.windowOffsetY}px`;
-    document.body.style.paddingRight = `${this.scrollbarWidth}px`;
-    // tslint:disable-next-line:no-magic-numbers
-    document.body.style.marginLeft = `-${this.scrollbarWidth / 2}px`;
-  }
+      const close: React.MouseEventHandler<HTMLButtonElement> = useCallback(
+        (e) => onClose({ event: e }),
+        [onClose]
+      );
 
-  unfixBody() {
-    if (typeof window === 'undefined') {
-      return;
-    }
+      useEffect(() => {
+        fixBodyService.fixBody();
+        previousFocusedElement.current = document.activeElement;
 
-    document.body.classList.remove('not-scrollable');
-    document.body.style.top = '';
-    document.body.style.paddingRight = '';
-    document.body.style.marginLeft = '';
-    requestAnimationFrame(() => window.scrollTo(0, this.windowOffsetY));
-  }
+        const firstFocusable = contentRef.current && findFirstFocusableChild(contentRef.current);
+        if (elementIsFocusable(firstFocusable)) {
+          firstFocusable.focus();
+        }
 
-  private getScrollbarWidth() {
-    const outer = document.createElement('div');
-    outer.style.visibility = 'hidden';
-    outer.style.width = '100px';
-    // outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+        return () => {
+          fixBodyService.unfixBody();
+          if (elementIsFocusable(previousFocusedElement.current)) {
+            previousFocusedElement.current.focus();
+          }
+        };
+      }, []);
 
-    document.body.appendChild(outer);
-
-    const widthNoScroll = outer.offsetWidth;
-    // force scrollbars
-    outer.style.overflow = 'scroll';
-
-    // add innerdiv
-    const inner = document.createElement('div');
-    inner.style.width = '100%';
-    outer.appendChild(inner);
-
-    const widthWithScroll = inner.offsetWidth;
-
-    // remove divs
-    outer.parentNode!.removeChild(outer);
-
-    return widthNoScroll - widthWithScroll;
-  }
-}
-
-// tslint:disable-next-line:max-classes-per-file
-export default class BaseModal extends React.Component<BaseModalOwnProps> {
-  static defaultProps: Partial<BaseModalOwnProps> = {
-    closable: false,
-    type: undefined,
-    renderContent: () => null,
-    renderFooter: () => null,
-  };
-
-  contentRef = React.createRef<HTMLDivElement>();
-  fixBodyService = new FixBodyService();
-  lastFocusedElement: Element | null = null;
-
-  componentDidMount() {
-    this.fixBodyService.fixBody();
-    this.lastFocusedElement = document.activeElement;
-
-    const firstFocusable =
-      this.contentRef.current && this.findFirstFocusableChild(this.contentRef.current);
-    if (this.elementIsFocusable(firstFocusable)) {
-      firstFocusable.focus();
-    }
-  }
-
-  componentWillUnmount() {
-    this.fixBodyService.unfixBody();
-    if (this.elementIsFocusable(this.lastFocusedElement)) {
-      this.lastFocusedElement.focus();
-    }
-  }
-
-  render() {
-    const { closable, type, renderContent, renderFooter } = this.props;
-    return (
-      <div
-        className={classNames(
-          'app-modal-container',
-          styles.appModalContainer,
-          this.props.className
-        )}
-        role="dialog"
-        tabIndex={0}
-        aria-modal={true}
-        aria-labelledby={this.props['aria-labelledby']}
-        aria-describedby={this.props['aria-describedby']}
-      >
-        <div className={classNames('app-modal', styles.appModal)}>
-          {closable && (
-            <header className={styles.appModalHeader}>
-              <button className={styles.appModalClose} title="Zamknij" onClick={this.close}>
-                &times;
-              </button>
-            </header>
-          )}
-          <div className={styles.appModalContent} ref={this.contentRef}>
-            <div className={styles.appModalBody}>
-              <div className={classNames(styles.actionIcon, 'action-icon_' + type || '')} />
-              {renderContent!()}
+      return (
+        <div
+          ref={ref}
+          className={classNames('app-modal-container', styles.appModalContainer, className)}
+          role="dialog"
+          tabIndex={0}
+          aria-modal={true}
+          aria-labelledby={ariaLabelledby}
+          aria-describedby={ariaLescribedby}
+        >
+          <div className={classNames('app-modal', styles.appModal)}>
+            {closable && (
+              <header className={styles.appModalHeader}>
+                <button className={styles.appModalClose} title="Zamknij" onClick={close}>
+                  &times;
+                </button>
+              </header>
+            )}
+            <div className={styles.appModalContent} ref={contentRef}>
+              <div className={styles.appModalBody}>
+                <div className={classNames(styles.actionIcon, 'action-icon_' + type || '')} />
+                {renderContent()}
+              </div>
+              <footer className={styles.appModalFooter}>{renderFooter()}</footer>
             </div>
-            <footer className={styles.appModalFooter}>{renderFooter!()}</footer>
           </div>
         </div>
-      </div>
-    );
-  }
-
-  close: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    this.props.onClose({ event: e });
-  };
-
-  private findFirstFocusableChild(el: HTMLElement) {
-    return el.querySelector('input, select, textarea, button, [tabindex]');
-  }
-
-  private elementIsFocusable(el: Node | null): el is HTMLElement {
-    return el ? 'focus' in el : false;
-  }
-}
+      );
+    }
+  )
+);

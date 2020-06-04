@@ -34,7 +34,6 @@ const getEnvObjForDocument = () => {
   };
 };
 
-// tslint:disable-next-line:variable-name
 export const unsafe_getEnvScriptForDocument = () => {
   const env = getEnvObjForDocument();
   return { __html: '__ENV__ = ' + require('htmlescape')(env) };

@@ -1,3 +1,4 @@
+import type { NextComponentType } from 'next';
 import dynamic from 'next/dynamic';
 import React from 'react';
 
@@ -5,7 +6,6 @@ import Layout from '../components/layout/Layout';
 import QuestionsListLayout from '../components/questions/questionsListLayout/QuestionsListLayout';
 import { getLoggedInUser } from '../redux/selectors/selectors';
 import { redirect, getPreviousPathFromHrefQuery } from '../utils/redirect';
-import type { GetInitialPropsContext } from '../utils/types';
 
 import styles from './pages.module.scss';
 
@@ -13,7 +13,7 @@ const AdminQuestions = dynamic(() =>
   import(/* webpackChunkName: "AdminQuestions" */ '../components/adminQuestions/AdminQuestions')
 );
 
-const AdminPage = () => {
+const AdminPage: NextComponentType = () => {
   return (
     <Layout title="Admin">
       <QuestionsListLayout>
@@ -25,7 +25,7 @@ const AdminPage = () => {
   );
 };
 
-AdminPage.getInitialProps = (ctx: GetInitialPropsContext) => {
+AdminPage.getInitialProps = async (ctx) => {
   const state = ctx.store.getState();
   if (!getLoggedInUser(state)) {
     return redirect('/login', { previousPath: getPreviousPathFromHrefQuery('/admin') }, ctx);

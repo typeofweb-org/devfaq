@@ -1,5 +1,4 @@
 // @ts-nocheck
-// tslint:disable: no-implicit-dependencies
 import path from 'path';
 
 import fse from 'fs-extra';

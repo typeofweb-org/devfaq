@@ -1,84 +1,88 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useRef, memo, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 
 import { ActionCreators } from '../../../redux/actions';
-import { AppState } from '../../../redux/reducers/index';
-import AddQuestionConfirmationModal from '../addQuestionConfirmationModal/AddQuestionConfirmationModal';
-import AddQuestionModal from '../addQuestionModal/AddQuestionModal';
+import { AddQuestionConfirmationModal } from '../addQuestionConfirmationModal/AddQuestionConfirmationModal';
+import { AddQuestionModal } from '../addQuestionModal/AddQuestionModal';
 import { CommonModalProps } from '../baseModal/BaseModal';
 import styles from '../baseModal/baseModal.module.scss';
 
 const timeout = 200;
 
-class AppModalsComponent extends React.Component<
-  ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
-> {
-  closeQuestionModal: CommonModalProps['onClose'] = (args) => {
-    if (this.props.addQuestionModalState.onClose) {
-      this.props.addQuestionModalState.onClose(args);
-    }
-    if (this.props.addQuestionModalState.data) {
-      this.props.uiCloseEditQuestionModal();
-    } else {
-      this.props.uiCloseAddQuestionModal();
-    }
-  };
+export const AppModals = memo(() => {
+  const addQuestionModalRef = useRef<HTMLDivElement>(null);
+  const addQuestionConfirmationModalRef = useRef<HTMLDivElement>(null);
 
-  render() {
-    return (
-      <React.Fragment>
-        <CSSTransition
-          in={this.props.addQuestionModalState.open}
-          unmountOnExit={true}
-          mountOnEnter={true}
-          classNames={{
-            enter: styles.fadeEnter,
-            enterActive: styles.fadeEnterActive,
-            enterDone: styles.fadeEnterDone,
-            exit: styles.fadeExit,
-            exitActive: styles.fadeExitActive,
-          }}
-          timeout={timeout}
-        >
-          <AddQuestionModal
-            originalQuestion={this.props.addQuestionModalState.data}
-            onClose={this.closeQuestionModal}
-          />
-        </CSSTransition>
+  const dispatch = useDispatch();
+  const addQuestionModalState = useSelector((state) => state.ui.addQuestionModal);
+  const isAddQuestionConfirmationModalOpen = useSelector(
+    (state) => state.ui.isAddQuestionConfirmationModalOpen
+  );
 
-        <CSSTransition
-          in={this.props.isAddQuestionConfirmationModalOpen}
-          unmountOnExit={true}
-          mountOnEnter={true}
-          classNames={{
-            enter: styles.fadeEnter,
-            enterActive: styles.fadeEnterActive,
-            enterDone: styles.fadeEnterDone,
-            exit: styles.fadeExit,
-            exitActive: styles.fadeExitActive,
-          }}
-          timeout={timeout}
-        >
-          <AddQuestionConfirmationModal onClose={this.props.uiCloseAddQuestionConfirmationModal} />
-        </CSSTransition>
-      </React.Fragment>
-    );
-  }
-}
+  const closeQuestionModal: CommonModalProps['onClose'] = useCallback(
+    (args) => {
+      if (addQuestionModalState.onClose) {
+        addQuestionModalState.onClose(args);
+      }
+      if (addQuestionModalState.data) {
+        dispatch(ActionCreators.uiCloseEditQuestionModal());
+      } else {
+        dispatch(ActionCreators.uiCloseAddQuestionModal());
+      }
+    },
+    [addQuestionModalState, dispatch]
+  );
 
-const mapStateToProps = (state: AppState) => {
-  return {
-    addQuestionModalState: state.ui.addQuestionModal,
-    isAddQuestionConfirmationModalOpen: state.ui.isAddQuestionConfirmationModalOpen,
-  };
-};
+  const closeConfirmationModal: CommonModalProps['onClose'] = useCallback(
+    (_args) => {
+      dispatch(ActionCreators.uiCloseAddQuestionConfirmationModal());
+    },
+    [dispatch]
+  );
 
-const mapDispatchToProps = {
-  uiCloseAddQuestionModal: ActionCreators.uiCloseAddQuestionModal,
-  uiCloseEditQuestionModal: ActionCreators.uiCloseEditQuestionModal,
-  uiCloseAddQuestionConfirmationModal: ActionCreators.uiCloseAddQuestionConfirmationModal,
-};
+  return (
+    <React.Fragment>
+      <CSSTransition
+        in={addQuestionModalState.open}
+        unmountOnExit={true}
+        mountOnEnter={true}
+        classNames={{
+          enter: styles.fadeEnter,
+          enterActive: styles.fadeEnterActive,
+          enterDone: styles.fadeEnterDone,
+          exit: styles.fadeExit,
+          exitActive: styles.fadeExitActive,
+        }}
+        timeout={timeout}
+        nodeRef={addQuestionModalRef}
+      >
+        <AddQuestionModal
+          ref={addQuestionModalRef}
+          originalQuestion={addQuestionModalState.data}
+          onClose={closeQuestionModal}
+        />
+      </CSSTransition>
 
-const AppModals = connect(mapStateToProps, mapDispatchToProps)(AppModalsComponent);
-export default AppModals;
+      <CSSTransition
+        in={isAddQuestionConfirmationModalOpen}
+        unmountOnExit={true}
+        mountOnEnter={true}
+        nodeRef={addQuestionConfirmationModalRef}
+        classNames={{
+          enter: styles.fadeEnter,
+          enterActive: styles.fadeEnterActive,
+          enterDone: styles.fadeEnterDone,
+          exit: styles.fadeExit,
+          exitActive: styles.fadeExitActive,
+        }}
+        timeout={timeout}
+      >
+        <AddQuestionConfirmationModal
+          ref={addQuestionConfirmationModalRef}
+          onClose={closeConfirmationModal}
+        />
+      </CSSTransition>
+    </React.Fragment>
+  );
+});

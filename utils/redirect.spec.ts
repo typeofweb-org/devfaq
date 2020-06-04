@@ -1,4 +1,3 @@
-// tslint:disable:no-implicit-dependencies
 import fc from 'fast-check';
 
 import * as Arbitraries from '../fast-check-arbitraries';

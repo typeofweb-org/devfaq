@@ -1,3 +1,4 @@
+import type { NextComponentType } from 'next';
 import React from 'react';
 
 import { Container } from '../components/container/Container';
@@ -5,7 +6,7 @@ import Layout from '../components/layout/Layout';
 
 import styles from './staticPage.module.scss';
 
-const Authors = () => {
+const AuthorsPage: NextComponentType = () => {
   return (
     <Layout title="Autorzy">
       <Container>
@@ -84,4 +85,4 @@ const Authors = () => {
     </Layout>
   );
 };
-export default Authors;
+export default AuthorsPage;

@@ -1,4 +1,3 @@
-// tslint:disable: no-implicit-dependencies
 import Fs from 'fs';
 
 import Octokit from '@octokit/rest';

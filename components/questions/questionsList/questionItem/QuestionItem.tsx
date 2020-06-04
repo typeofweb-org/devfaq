@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import React, { useEffect, memo, useRef, useCallback, useMemo, useState, forwardRef } from 'react';
 
 import { Question } from '../../../../redux/reducers/questions';
+import { useWillUnmount } from '../../../../utils/hooks';
 import ActiveLink from '../../../activeLink/ActiveLink';
 import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
 import { isQuestionSelected } from '../../questionsUtils';
@@ -318,15 +319,12 @@ export const QuestionItem = memo(
         [question.id, selectedQuestionIds]
       );
 
-      useEffect(() => {
-        return () => {
-          if (questionRemovalTimerRef.current) {
-            stopDeletionTimer();
-            toggleQuestion(question.id);
-          }
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []);
+      useWillUnmount(() => {
+        if (questionRemovalTimerRef.current) {
+          stopDeletionTimer();
+          toggleQuestion(question.id);
+        }
+      });
 
       const contentRef = useRef<HTMLDivElement>(null);
 

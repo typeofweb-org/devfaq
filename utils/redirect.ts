@@ -48,7 +48,6 @@ export function redirect(href: string, query: Query = {}, ctx?: NextPageContext)
 const allMatches = (str: string, regex: RegExp): RegExpExecArray[] => {
   let x: RegExpExecArray | null;
   const result: RegExpExecArray[] = [];
-  // tslint:disable-next-line:no-conditional-assignment
   while ((x = regex.exec(str))) {
     result.push(x);
   }
