@@ -25,11 +25,12 @@ const AdminPage: NextComponentType = () => {
   );
 };
 
-AdminPage.getInitialProps = async (ctx) => {
+AdminPage.getInitialProps = (ctx) => {
   const state = ctx.store.getState();
   if (!getLoggedInUser(state)) {
-    return redirect('/login', { previousPath: getPreviousPathFromHrefQuery('/admin') }, ctx);
+    redirect('/login', { previousPath: getPreviousPathFromHrefQuery('/admin') }, ctx);
   }
+  return {};
 };
 
 export default AdminPage;

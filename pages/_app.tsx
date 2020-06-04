@@ -107,10 +107,8 @@ class MyApp extends AppComponent<{ store: AppStore; ctx: RouteDetails }> {
     const { Component, pageProps, store } = this.props;
     return (
       <Provider store={store}>
-        <>
-          <Component {...pageProps} />
-          <AppModals />
-        </>
+        <Component {...pageProps} />
+        <AppModals />
       </Provider>
     );
   }
