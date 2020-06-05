@@ -103,7 +103,7 @@
     "tslint": "6.1.2",
     "tslint-config-prettier": "1.18.0",
     "tslint-immutable": "6.0.1",
-    "typescript": "3.9.3"
+    "typescript": "3.9.5"
   },
   "husky": {
     "hooks": {
