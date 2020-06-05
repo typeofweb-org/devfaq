@@ -1,8 +1,10 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-[![Discord](https://img.shields.io/discord/440163731704643589?color=738ADB&label=Discord&logo=discord&logoColor=white&style=flat-square)](https://discord.typeofweb.com/)
+![Test and Build](https://github.com/typeofweb/devfaq-api/workflows/Test%20and%20Build/badge.svg) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=typeofweb_devfaq-api&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=typeofweb_devfaq-api) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftypeofweb%2Fdevfaq-api.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftypeofweb%2Fdevfaq-api?ref=badge_shield) [![Discord](https://img.shields.io/discord/440163731704643589?color=738ADB&label=Discord&logo=discord&logoColor=white&style=flat-square)](https://discord.typeofweb.com/)
 
 ## Contributors ✨
 
@@ -24,6 +26,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
