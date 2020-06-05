@@ -8,7 +8,7 @@ export type RawModel<M> = Pick<M, Exclude<keyof M, keyof AnyModel>> & {
   id: number;
 };
 
-export const sequelize = new Sequelize({
+export const sequelizeConfig = {
   ...config[getConfig('ENV')],
   pool: {
     max: 5,
@@ -25,7 +25,9 @@ export const sequelize = new Sequelize({
       : (sql: string, _model: unknown) => {
           console.log(sql);
         },
-});
+};
+
+export const sequelize = new Sequelize(sequelizeConfig);
 
 export const initDb = async () => {
   await sequelize.addModels([__dirname + '/models']);

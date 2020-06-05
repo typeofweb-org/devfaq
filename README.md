@@ -27,3 +27,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+## License
+
+AGPL 3.0
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftypeofweb%2Fdevfaq-api.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftypeofweb%2Fdevfaq-api?ref=badge_large)

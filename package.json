@@ -4,7 +4,7 @@
   "main": "dist/src/index.js",
   "private": true,
   "scripts": {
-    "dev": "npm run build && npm run prepare-db && ts-node-dev src/index.ts",
+    "dev": "npm run db:migrate:up && ts-node-dev src/index.ts",
     "test": "cross-env NODE_ENV=test ENV=test npm run test:all",
     "test:integration": "cross-env NODE_ENV=test ENV=test npm run test:_integration",
     "test:integration:single": "cross-env NODE_ENV=test ENV=test npm run test:prepare:integration && npm run mocha",
@@ -13,22 +13,22 @@
     "mocha": "cross-env ENV=test mocha --config test/.mocharc.js",
     "tslint": "tslint -p tsconfig.json",
     "tsc": "tsc --noEmit -p tsconfig.json",
+    "db:seed:up": "ts-node --transpile-only -e 'require(`./migrate.ts`).seedUp()'",
+    "db:seed:down": "ts-node --transpile-only -e 'require(`./migrate.ts`).seedDown()'",
+    "db:migrate:up": "ts-node --transpile-only -e 'require(`./migrate.ts`).migrateUp()'",
+    "db:migrate:down": "ts-node --transpile-only -e 'require(`./migrate.ts`).migrateDown()'",
     "//1": "/*****************************************************************************",
     "//2": "* Rest of those commands are used internally and should not be used directly!",
     "//3": "*****************************************************************************/",
-    "db:test:create": "cross-env NODE_ENV=test ENV=test sequelize --config='dist/src/config/database.js' db:create || true",
-    "db:test:drop": "cross-env NODE_ENV=test ENV=test sequelize --config='dist/src/config/database.js' db:drop || true",
-    "test:all": "npm run tsc && npm run tslint && npm run test:unit && npm run test:integration",
-    "test:prepare:integration": "npm run build && npm run db:test:drop && npm run db:test:create && npm run prepare-db",
+    "db:test:create": "cross-env NODE_ENV=test ENV=test ts-node --transpile-only ./node_modules/.bin/sequelize --config='./src/config/database.js' db:create || true",
+    "db:test:drop": "cross-env NODE_ENV=test ENV=test ts-node --transpile-only ./node_modules/.bin/sequelize --config='./src/config/database.js' db:drop || true",
+    "test:all": "concurrently --kill-others-on-fail --names *typescript,*****tslint,*tests:unit,integration --prefix-colors blue.inverse,blue,yellow,green 'npm run tsc' 'npm run tslint' 'npm run test:unit' 'npm run test:integration'",
+    "test:prepare:integration": "npm run db:test:drop && npm run db:test:create && npm run db:migrate:up",
     "test:_integration": "npm run test:prepare:integration && npm run mocha -- src/**/*.integration.test.ts",
     "test:ci": "cross-env NODE_ENV=test ENV=test npm run mocha:ci",
     "mocha:ci": "npm run test:prepare:integration && cross-env mocha 'src/**/*.test.ts'",
     "clean": "rm -rf dist",
     "build": "npm run clean && tsc && rsync -av --exclude='*.ts' src/** dist/src/",
-    "prepare-db": "npm run migrate:copy && npm run db-clean && npm run migrate:db",
-    "db-clean": "rm dist/src/migrations/*.ts && rm dist/src/migrations/*.js.map",
-    "migrate:db": "sequelize db:migrate --config='dist/src/config/database.js' --migrations-path='dist/src/migrations'",
-    "migrate:copy": "cp -R src/migrations/* dist/src/migrations",
     "danger": "danger ci",
     "generate-api-types": "./node_modules/@manifoldco/swagger-to-ts/pkg/bin/cli.js http://localhost:3002/swagger.json --output apiTypes.ts --prettier-config .prettierrc",
     "postinstall": "cd ./node_modules/@manifoldco/swagger-to-ts && npm i && npm run build"
@@ -90,7 +90,6 @@
     "cross-env": "7.0.2",
     "danger": "10.2.0",
     "husky": "4.2.5",
-    "joi-extract-type": "git+https://github.com/TCMiranda/joi-extract-type.git#feature/chris-joi16-namespace-fix",
     "mocha": "7.2.0",
     "nodemon": "2.0.4",
     "prettier": "2.0.5",
@@ -103,8 +102,15 @@
     "tslint": "6.1.2",
     "tslint-config-prettier": "1.18.0",
     "tslint-immutable": "6.0.1",
-    "typescript": "3.9.5"
+    "typescript": "3.9.5",
+    "umzug": "3.0.0-beta.5"
   },
+  "engines": {
+    "node": "12.x.x"
+  },
+  "keywords": [],
+  "author": "Michał Miszczyszyn <michal@mmiszy.pl> (https://typeofweb.com/)",
+  "license": "AGPL-3.0-only",
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"
