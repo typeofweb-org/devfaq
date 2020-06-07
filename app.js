@@ -3,6 +3,7 @@ function loadDotEnv() {
   const fs = require('fs');
   const version = fs.readFileSync('.version', 'utf-8');
   process.env.ENV = version.split(':').shift();
+  console.log('process.env.ENV', process.env.ENV);
   require('dotenv').config({
     path: `.env.${process.env.ENV}`,
   });
