@@ -1,9 +1,17 @@
 // MyDevil.net specific
 
-const isProduction = process.env.NODE_ENV === 'production';
-require('dotenv').config({
-  path: isProduction ? `.env.${process.env.ENV}` : '.env',
-});
+const match = process.cwd().match(/\/(\w+)\.devfaq\.pl/i);
+if (match && match[1]) {
+  if (match[1] === 'app') {
+    require('dotenv').config({
+      path: `.env.production`,
+    });
+  } else if (match[1] === 'staging') {
+    require('dotenv').config({
+      path: `.env.staging`,
+    });
+  }
+}
 
 const cookieParser = require('cookie-parser');
 const express = require('express');
