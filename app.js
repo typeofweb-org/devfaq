@@ -1,7 +1,8 @@
 // MyDevil.net specific
 
+const isProduction = process.env.NODE_ENV === 'production';
 require('dotenv').config({
-  path: `.env.production`,
+  path: isProduction ? `.env.${process.env.ENV}` : '.env',
 });
 
 const cookieParser = require('cookie-parser');

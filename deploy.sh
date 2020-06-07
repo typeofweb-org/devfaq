@@ -3,12 +3,12 @@ set -e
 
 DIR=`dirname $0`
 
-
 if [[ "$1" == "production" ]]; then
   SUBDOMAIN="app"
   BRANCH="master"
-# elif [[ "$1" == "staging" ]]; then
-#   SUBDOMAIN="staging"
+elif [[ "$1" == "staging" ]]; then
+  SUBDOMAIN="staging"
+  BRANCH="develop"
 else
   echo 'Incorrect environment. "production" allowed.'
   exit 1
