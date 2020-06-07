@@ -1,13 +1,18 @@
-const isProduction = process.env.NODE_ENV === 'production';
-require('dotenv').config({
-  path: isProduction ? `.env.${process.env.ENV}` : '.env',
-});
-
+const fs = require('fs');
 const path = require('path');
 
+const dotenv = require('dotenv');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const withImages = require('next-images');
 const withOffline = require('next-offline');
+
+const isProduction = process.env.NODE_ENV === 'production';
+
+const envConfig = dotenv.parse(fs.readFileSync(isProduction ? `.env.${process.env.ENV}` : '.env'));
+for (const k in envConfig) {
+  // force override next.js env variables
+  process.env[k] = envConfig[k];
+}
 
 const withBundleAnalyzer = (nextConfig = {}) => {
   return Object.assign({}, nextConfig, {
