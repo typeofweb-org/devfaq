@@ -1,17 +1,13 @@
 // MyDevil.net specific
-
-const match = process.cwd().match(/\/(\w+)\.devfaq\.pl/i);
-if (match && match[1]) {
-  if (match[1] === 'app') {
-    require('dotenv').config({
-      path: `.env.production`,
-    });
-  } else if (match[1] === 'staging') {
-    require('dotenv').config({
-      path: `.env.staging`,
-    });
-  }
+function loadDotEnv() {
+  const fs = require('fs');
+  const version = fs.readFileSync('.version', 'utf-8');
+  process.env.ENV = version.split(':').shift();
+  require('dotenv').config({
+    path: `.env.${process.env.ENV}`,
+  });
 }
+loadDotEnv();
 
 const cookieParser = require('cookie-parser');
 const express = require('express');
@@ -24,6 +20,7 @@ const handle = app.getRequestHandler();
 app
   .prepare()
   .then(() => {
+    loadDotEnv();
     const server = express().use(cookieParser());
 
     server.get('*', (req, res) => {
