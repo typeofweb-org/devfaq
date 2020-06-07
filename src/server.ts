@@ -4,7 +4,7 @@ import HapiSwagger from 'hapi-swagger';
 import Inert from '@hapi/inert';
 import Vision from '@hapi/vision';
 import pkg from '../package.json';
-import { getConfig, isProd } from './config';
+import { getConfig, isProd, isStaging } from './config';
 import * as Sentry from '@sentry/node';
 import { handleException, routeToLabel } from './utils/utils';
 import { helloWorldRoute } from './modules/hello-world/helloWorldRoute';
@@ -157,7 +157,7 @@ export async function getServerWithPlugins() {
       plugin: AuthPlugin,
       options: {
         cookieDomain: getConfig('COOKIE_DOMAIN'),
-        isProduction: isProd(),
+        isProduction: isProd() || isStaging(),
         cookiePassword: getConfig('COOKIE_PASSWORD'),
         githubClientId: getConfig('GITHUB_CLIENT_ID'),
         githubClientSecret: getConfig('GITHUB_CLIENT_SECRET'),

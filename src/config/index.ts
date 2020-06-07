@@ -29,3 +29,4 @@ export function getConfig(name: string): string {
 }
 
 export const isProd = () => getConfig('ENV') === 'production';
+export const isStaging = () => getConfig('ENV') === 'staging';
