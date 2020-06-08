@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import { Level } from '../../../constants/level';
@@ -22,104 +22,113 @@ import { AllQuestionsHeader } from './allQuestionsHeader/AllQuestionsHeader';
 
 type AllQuestionsComponentProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-class AllQuestionsComponent extends React.Component<AllQuestionsComponentProps> {
-  render() {
-    const { technology, sortBy } = this.props;
-
+const AllQuestionsComponent: React.FC<AllQuestionsComponentProps> = React.memo(
+  ({
+    technology,
+    sortBy,
+    questions,
+    selectedQuestionsIds,
+    route,
+    uiOpenAddQuestionModal,
+    selectQuestion,
+    deselectQuestion,
+  }) => {
     const technologyIconItem = technologyIconItems.find((t) => t.name === technology);
     const category = (technologyIconItem && technologyIconItem.label) || '';
 
-    const length =
-      this.props.questions.data &&
-      this.props.questions.data.meta &&
-      this.props.questions.data.meta.total;
+    const length = questions.data && questions.data.meta && questions.data.meta.total;
+
+    const changeSortBy: React.ChangeEventHandler<HTMLSelectElement> = useCallback(
+      (e) => {
+        const query = {
+          ...route.query,
+          sortBy: e.currentTarget.value,
+        };
+        redirect('/questions/[technology]', query);
+      },
+      [redirect, route.query]
+    );
+
+    const reportEvent = (action: string, label?: string, questionId?: number) => {
+      globalReportEvent(action, 'Lista pytań', label, questionId);
+    };
+
+    const onAddNewClick = useCallback(() => {
+      reportEvent('CTA Dodaj nowe pytanie');
+      uiOpenAddQuestionModal();
+    }, [uiOpenAddQuestionModal]);
+
+    const toggleQuestion = useCallback(
+      (questionId: Question['id']) => {
+        const isSelected = isQuestionSelected(selectedQuestionsIds, questionId);
+        const question = questions.data && questions.data.data.find((q) => q.id === questionId);
+
+        if (isSelected) {
+          deselectQuestion(questionId);
+        } else {
+          if (question) {
+            selectQuestion(question);
+          }
+        }
+
+        if (!question) {
+          return;
+        }
+
+        const action = isSelected
+          ? 'Checkbox - odznaczone pytanie'
+          : 'Checkbox - zaznaczone pytanie';
+        reportEvent(
+          action,
+          `${Technology[question._categoryId]}, ${Level[question._levelId]}`,
+          question.id
+        );
+      },
+      [questions.data, deselectQuestion, selectQuestion]
+    );
+
+    const renderList = () => {
+      if (questions.error) {
+        return (
+          <div>
+            <div>{questions.error.name}</div>
+            <div>{questions.error.message}</div>
+            <div>{questions.error.stack}</div>
+          </div>
+        );
+      }
+      if (!questions.data || questions.data.data.length === 0) {
+        return null; // @todo handle errors and loading
+      }
+
+      return (
+        <QuestionsList
+          selectable={true}
+          unselectable={false}
+          questions={questions}
+          selectedQuestionIds={selectedQuestionsIds}
+          toggleQuestion={toggleQuestion}
+        />
+      );
+    };
 
     return (
       <section className={styles.appQuestions}>
-        {this.props.questions.data && technology && (
+        {questions.data && technology && (
           <AllQuestionsHeader
             category={category}
             questionsLength={length}
-            onSortByChange={this.changeSortBy}
+            onSortByChange={changeSortBy}
             sortBy={sortBy || 'acceptedAt*desc'}
           />
         )}
-        {this.renderList()}
-        {this.props.questions.data && technology && (
-          <AllQuestionsFooter onAddNewClick={this.onAddNewClick} />
-        )}
+        {renderList()}
+        {questions.data && technology && <AllQuestionsFooter onAddNewClick={onAddNewClick} />}
         <QuestionsPagination />
       </section>
     );
   }
-
-  changeSortBy: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const query = {
-      ...this.props.route.query,
-      sortBy: e.currentTarget.value,
-    };
-    redirect('/questions/[technology]', query);
-  };
-
-  renderList = () => {
-    if (this.props.questions.error) {
-      return (
-        <div>
-          <div>{this.props.questions.error.name}</div>
-          <div>{this.props.questions.error.message}</div>
-          <div>{this.props.questions.error.stack}</div>
-        </div>
-      );
-    }
-    if (!this.props.questions.data || this.props.questions.data.data.length === 0) {
-      return null; // @todo handle errors and loading
-    }
-
-    return (
-      <QuestionsList
-        selectable={true}
-        unselectable={false}
-        questions={this.props.questions}
-        selectedQuestionIds={this.props.selectedQuestionsIds}
-        toggleQuestion={this.toggleQuestion}
-      />
-    );
-  };
-
-  onAddNewClick = () => {
-    this.reportEvent('CTA Dodaj nowe pytanie');
-    this.props.uiOpenAddQuestionModal();
-  };
-
-  reportEvent(action: string, label?: string, questionId?: number) {
-    globalReportEvent(action, 'Lista pytań', label, questionId);
-  }
-
-  toggleQuestion = (questionId: Question['id']) => {
-    const isSelected = isQuestionSelected(this.props.selectedQuestionsIds, questionId);
-    const question =
-      this.props.questions.data && this.props.questions.data.data.find((q) => q.id === questionId);
-
-    if (isSelected) {
-      this.props.deselectQuestion(questionId);
-    } else {
-      if (question) {
-        this.props.selectQuestion(question);
-      }
-    }
-
-    if (!question) {
-      return;
-    }
-
-    const action = isSelected ? 'Checkbox - odznaczone pytanie' : 'Checkbox - zaznaczone pytanie';
-    this.reportEvent(
-      action,
-      `${Technology[question._categoryId]}, ${Level[question._levelId]}`,
-      question.id
-    );
-  };
-}
+);
 
 const mapStateToProps = (state: AppState) => {
   return {
