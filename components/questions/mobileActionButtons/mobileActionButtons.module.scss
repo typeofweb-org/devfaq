@@ -8,7 +8,7 @@
     position: sticky;
     width: 100%;
     bottom: 30px;
-    z-index: #{$z-index-mobile-sidebar - 1};
+    z-index: #{var(--z-index-mobile-sidebar) - 1};
     flex-direction: row;
     justify-content: center;
     margin-bottom: 30px;
@@ -16,7 +16,7 @@
     button,
     a {
       display: block;
-      z-index: #{$z-index-mobile-sidebar - 1};
+      z-index: #{var(--z-index-mobile-sidebar) - 1};
       transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
       margin: 0 7px;
     }
@@ -29,7 +29,7 @@
     .download {
       background-image: url(/images/action-icons/download.svg);
       background-size: 18px;
-      background-color: $red-branding;
+      background-color: var(--red-branding);
       &.disabled {
         background-color: #c5c5c5;
         pointer-events: none;

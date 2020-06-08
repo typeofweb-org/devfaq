@@ -39,8 +39,8 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: transparentize($white-text, 0.1);
-  z-index: $z-index-modal-container;
+  background-color: rgba(var(--white-text), 0.9);
+  z-index: var(--z-index-modal-container);
   display: none;
 }
 
@@ -70,7 +70,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    z-index: #{$z-index-modal + 1};
+    z-index: #{var(--z-index-modal) + 1};
   }
   &--close {
     position: absolute;
@@ -79,7 +79,7 @@
     appearance: none;
     border: 0;
     background: transparent;
-    color: $purple-branding-light;
+    color: var(--purple-branding-light);
     cursor: pointer;
     transition: color 0.2s, background-color 0.2s;
     border-radius: 50%;
@@ -91,12 +91,12 @@
     padding: 0 0 1px 0;
     transition: background-color 0.1s, color 0.1s, box-shadow 0.1s;
     &:hover {
-      background-color: $purple-branding;
-      color: $white-text;
+      background-color: var(--purple-branding);
+      color: var(--white-text);
     }
     &:focus {
       outline: 0;
-      box-shadow: $purple-branding 0 0 10px;
+      box-shadow: var(--purple-branding) 0 0 10px;
     }
   }
   &--content {
@@ -105,8 +105,8 @@
     max-width: 100%;
     width: 100%;
     background-color: #fff;
-    z-index: $z-index-modal;
-    box-shadow: $modal-shadow 0 2px 6px 1px;
+    z-index: var(--z-index-modal);
+    box-shadow: var(--modal-shadow) 0 2px 6px 1px;
     box-sizing: border-box;
     overflow-y: auto;
     position: absolute;
@@ -119,14 +119,14 @@
   }
   &--body {
     font-size: 1.6rem;
-    color: $purple-branding;
+    color: var(--purple-branding);
     line-height: 2;
     text-align: center;
   }
   &--footer {
     margin-bottom: 40px;
     .branding-button-inverse {
-      box-shadow: $grey-text-secondary 0 2px 4px;
+      box-shadow: var(--grey-text-secondary) 0 2px 4px;
     }
     > * {
       display: flex;
@@ -154,7 +154,7 @@
     text-transform: uppercase;
     font-size: 2rem;
     font-weight: 700;
-    color: $purple-branding;
+    color: var(--purple-branding);
     margin-top: 0;
   }
   .app-select {

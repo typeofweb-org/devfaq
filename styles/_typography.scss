@@ -20,17 +20,17 @@ body {
 
 body,
 button {
-  color: $grey-text-primary;
+  color: var(--grey-text-primary);
 }
 
 body {
-  background: $grey-background;
+  background: var(--grey-background);
   font-size: 1.4rem;
   line-height: 1.4;
 }
 
 a {
-  color: $purple;
+  color: var(--purple);
   transition: color 0.1s;
 }
 

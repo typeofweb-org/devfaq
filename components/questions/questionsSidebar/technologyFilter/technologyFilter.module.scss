@@ -25,7 +25,7 @@
       margin: 0;
     }
     a {
-      color: $grey-text-primary;
+      color: var(--grey-text-primary);
       cursor: pointer;
       display: flex;
       flex-direction: column;
@@ -34,7 +34,7 @@
       text-decoration: none;
       box-sizing: border-box;
       border-radius: 9px;
-      background-color: $white-text;
+      background-color: var(--white-text);
       box-shadow: rgba(128, 128, 128, 0.5) 0 1px 4px 0;
       display: flex;
       justify-content: center;
@@ -45,11 +45,11 @@
       margin: 12px 0;
       transition: background-color 0.1s;
       &.active {
-        background-color: $purple-branding-superlight;
-        border: 1px solid $purple-branding;
+        background-color: var(--purple-branding-superlight);
+        border: 1px solid var(--purple-branding);
       }
       &:hover {
-        background-color: $purple-branding-superlight;
+        background-color: var(--purple-branding-superlight);
       }
     }
     &--label {

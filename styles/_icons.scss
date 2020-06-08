@@ -8,7 +8,7 @@
   width: $size;
   height: $size;
   box-sizing: border-box;
-  border: $border-size solid $purple-branding;
+  border: $border-size solid var(--purple-branding);
   border-radius: 50%;
   display: block;
   margin: 0 auto;
@@ -26,7 +26,7 @@
     display: block;
     width: $size;
     height: $size;
-    background-color: $purple-branding-light;
+    background-color: var(--purple-branding-light);
     border-radius: 50%;
     position: absolute;
     z-index: -1;
