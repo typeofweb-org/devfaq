@@ -8,7 +8,9 @@ const withOffline = require('next-offline');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-const envConfig = dotenv.parse(fs.readFileSync(isProduction ? `.env.${process.env.ENV}` : '.env'));
+const envConfig = dotenv.parse(
+  fs.readFileSync(isProduction ? `.env.${process.env.ENV || 'staging'}` : '.env')
+);
 for (const k in envConfig) {
   // force override next.js env variables
   process.env[k] = envConfig[k];
