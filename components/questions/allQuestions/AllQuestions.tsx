@@ -66,9 +66,7 @@ const AllQuestionsComponent = React.memo<AllQuestionsComponentProps>(
         if (isSelected) {
           deselectQuestion(questionId);
         } else if (question) {
-          {
-            selectQuestion(question);
-          }
+          selectQuestion(question);
         }
 
         if (!question) {
