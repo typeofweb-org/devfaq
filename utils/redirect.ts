@@ -1,5 +1,6 @@
 import { ServerResponse } from 'http';
 
+import { NextPageContext } from 'next';
 import { LinkProps } from 'next/link';
 import Router from 'next/router';
 
@@ -32,15 +33,16 @@ export function getHrefQueryFromPreviousPath(
   return null;
 }
 
-export function redirect(href: string, query: Query = {}, res?: ServerResponse) {
+export function redirect(href: string, query: Query = {}, ctx?: NextPageContext) {
   const result = hrefQueryToAsPath(href, query);
 
-  if (res) {
-    res.writeHead(302, { Location: result.as });
-    return res.end();
+  if (ctx?.res) {
+    ctx.res.writeHead(302, { Location: result.as });
+    ctx.res.end();
   } else {
-    return Router.push(result.href, result.as);
+    Router.push(result.href, result.as);
   }
+  return {};
 }
 
 /**

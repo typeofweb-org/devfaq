@@ -46,7 +46,7 @@ export const CtaHeaderComponent: React.FC<
                 reportEvent(areAnyQuestionSelected ? 'Wybrane pytania' : 'Wybrane pytania (puste)')
               }
               className={classNames(styles.appTabsTab, {
-                'has-notification': areAnyQuestionSelected,
+                [styles.hasNotification]: areAnyQuestionSelected,
               })}
             >
               Wybrane pytania

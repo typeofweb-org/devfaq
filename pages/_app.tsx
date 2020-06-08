@@ -1,22 +1,18 @@
 import * as Sentry from '@sentry/browser';
-import nextReduxWrapper from 'next-redux-wrapper';
-import AppComponent, { AppProps, Container } from 'next/app';
-import { default as Router, withRouter, SingletonRouter, default as Router } from 'next/router';
-import React from 'react';
-import { Provider } from 'react-redux';
-import React, { useEffect } from 'react';
+import App, { AppContext, AppProps } from 'next/app';
+import Router from 'next/router';
+import React, { useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { AppModals } from '../components/modals/appModals/AppModals';
 import { ActionCreators } from '../redux/actions';
-import { nextReduxWrapper, makeStore } from '../redux/store';
+import { nextReduxWrapper } from '../redux/store';
 import * as analytics from '../utils/analytics';
 import env from '../utils/env';
-import type { RouteDetails, AppStore } from '../utils/types';
+import type { RouteDetails } from '../utils/types';
 
 import 'prismjs/themes/prism-coy.css';
 import './index.scss';
-import { useStore } from 'react-redux';
-import { NextPage } from 'next';
 
 type WebVitalsReport =
   | {
@@ -55,7 +51,34 @@ function getRouteDetails(routeDetails: RouteDetails) {
 }
 
 const MyApp = ({ Component, pageProps, router }: AppProps) => {
-  const store = useStore();
+  const dispatch = useDispatch();
+
+  const onRouteChangeComplete = useCallback(
+    (url: string) => {
+      console.log('onRouteChangeComplete');
+      analytics.reportPageView(url);
+      const newRouteDetails = getRouteDetails(router);
+      console.log(newRouteDetails);
+      dispatch(ActionCreators.updateRouteSuccess(newRouteDetails));
+    },
+    [router, dispatch]
+  );
+
+  const onRouteChangeStart = useCallback(
+    (_url: string) => {
+      console.log('onRouteChangeStart');
+      dispatch(ActionCreators.updateRouteStarted());
+    },
+    [dispatch]
+  );
+
+  const onRouteChangeError = useCallback(
+    (error: any, _url: string) => {
+      console.log('onRouteChangeError');
+      dispatch(ActionCreators.updateRouteError(error));
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     Router.events.on('routeChangeComplete', onRouteChangeComplete);
@@ -66,44 +89,20 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
       Router.events.off('routeChangeStart', onRouteChangeStart);
       Router.events.off('routeChangeError', onRouteChangeError);
     };
-  }, []);
+  }, [onRouteChangeComplete, onRouteChangeError, onRouteChangeStart]);
 
-  const onRouteChangeComplete = (url: string) => {
-    analytics.reportPageView(url);
-    const newRouteDetails = getRouteDetails(router);
-    store.dispatch(ActionCreators.updateRouteSuccess(newRouteDetails));
-  };
-
-  const onRouteChangeStart = (_url: string) => {
-    store.dispatch(ActionCreators.updateRouteStarted());
-  };
-
-  const onRouteChangeError = (error: any, _url: string) => {
-    store.dispatch(ActionCreators.updateRouteError(error));
-  };
-
-<<<<<<< HEAD
-  render() {
-    const { Component, pageProps } = this.props;
-    return (
-      <>
-        <Component {...pageProps} />
-        <AppModals />
-      </>
-    );
-=======
   return (
-    <React.Fragment>
+    <>
       <Component {...pageProps} />
       <AppModals />
-    </React.Fragment>
+    </>
   );
 };
 
-MyApp.getInitialProps = async function ({ Component, ctx }: AppContext) {
+MyApp.getInitialProps = async function (appContext: AppContext) {
+  const { ctx } = appContext;
   if (ctx.req) {
     await ctx.store.dispatch(ActionCreators.validateToken(ctx));
->>>>>>> e727124... ISSUE-8: Changes related to newest version of next-redux-wrapper
   }
 
   const newRouteDetails = getRouteDetails({ route: '', ...ctx });
@@ -114,13 +113,15 @@ MyApp.getInitialProps = async function ({ Component, ctx }: AppContext) {
   await ctx.store.dispatch(
     ActionCreators.updateRouteSuccess(newRouteDetails, routeChangeInProgress)
   );
+  console.log('getInitialProps');
 
-  const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+  const pageProps = await App.getInitialProps(appContext);
 
   return { pageProps };
 };
 
-export default nextReduxWrapper.withRedux(MyApp);
+const WrapperApp = nextReduxWrapper.withRedux(MyApp);
+export default WrapperApp;
 
 if (typeof window !== 'undefined') {
   // @ts-ignore

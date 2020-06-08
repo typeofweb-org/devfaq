@@ -52,9 +52,10 @@ const OneQuestionPageComponent = ({ question }: Props) => {
 OneQuestionPageComponent.getInitialProps = async (ctx: GetInitialPropsContext) => {
   const id = ctx.query && ctx.query.id;
   if (!id || Array.isArray(id)) {
-    return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx.res);
+    return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx);
   }
   await ctx.store.dispatch(ActionCreators.fetchOneQuestion(ctx));
+  return {};
 };
 
 const mapStateToProps = (state: AppState) => {

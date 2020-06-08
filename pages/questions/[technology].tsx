@@ -45,7 +45,7 @@ const mapStateToProps = (state: AppState) => {
 
 QuestionsPageComponent.getInitialProps = async (ctx: GetInitialPropsContext) => {
   if (!ctx.query || !ctx.query.technology || Array.isArray(ctx.query.technology)) {
-    return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx.res);
+    return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx);
   }
 
   const state = ctx.store.getState();
@@ -56,11 +56,12 @@ QuestionsPageComponent.getInitialProps = async (ctx: GetInitialPropsContext) => 
     return redirect(
       '/questions/[technology]',
       { technology: ctx.query.technology, page: '1' },
-      ctx.res
+      ctx
     );
   }
   const sortBy = getSortByArray(state);
   await ctx.store.dispatch(ActionCreators.fetchQuestions(page, sortBy, ctx));
+  return {};
 };
 
 const mapDispatchToProps = (

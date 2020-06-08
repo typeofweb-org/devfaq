@@ -2,7 +2,7 @@ import type { NextComponentType } from 'next';
 import React from 'react';
 
 import Layout from '../components/layout/Layout';
-import LoginForm from '../components/loginForm/LoginForm';
+import { LoginForm } from '../components/loginForm/LoginForm';
 import { getLoggedInUser } from '../redux/selectors/selectors';
 import { redirect, getHrefQueryFromPreviousPath } from '../utils/redirect';
 
@@ -21,11 +21,12 @@ LoginPage.getInitialProps = async (ctx) => {
 
     const route = getHrefQueryFromPreviousPath(query && query.previousPath);
     if (!route) {
-      return redirect('/', {}, ctx.res);
+      return redirect('/', {}, ctx);
     } else {
-      return redirect(route.href, route.query, ctx.res);
+      return redirect(route.href, route.query, ctx);
     }
   }
+  return {};
 };
 
 export default LoginPage;
