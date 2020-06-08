@@ -2,9 +2,9 @@ import React from 'react';
 
 import styles from './allQuestionsFooter.module.scss';
 
-export const AllQuestionsFooter: React.SFC<{
+export const AllQuestionsFooter = React.memo<{
   onAddNewClick: React.MouseEventHandler<HTMLButtonElement>;
-}> = ({ onAddNewClick }) => (
+}>(({ onAddNewClick }) => (
   <footer className={styles.appQuestionsFooter}>
     <p>
       <strong>Czegoś brakuje?</strong> Możesz dodać własne pytania!
@@ -13,4 +13,4 @@ export const AllQuestionsFooter: React.SFC<{
       Dodaj nowe pytanie
     </button>
   </footer>
-);
+));
