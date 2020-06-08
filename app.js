@@ -1,8 +1,14 @@
 // MyDevil.net specific
-
-require('dotenv').config({
-  path: `.env.production`,
-});
+function loadDotEnv() {
+  const fs = require('fs');
+  const version = fs.readFileSync('.version', 'utf-8');
+  process.env.ENV = version.split(':').shift();
+  console.log('process.env.ENV', process.env.ENV);
+  require('dotenv').config({
+    path: `.env.${process.env.ENV}`,
+  });
+}
+loadDotEnv();
 
 const cookieParser = require('cookie-parser');
 const express = require('express');
@@ -15,6 +21,7 @@ const handle = app.getRequestHandler();
 app
   .prepare()
   .then(() => {
+    loadDotEnv();
     const server = express().use(cookieParser());
 
     server.get('*', (req, res) => {

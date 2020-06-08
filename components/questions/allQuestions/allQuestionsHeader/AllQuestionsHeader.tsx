@@ -7,12 +7,12 @@ import headerStyles from './allQuestionsHeader.module.scss';
 
 const getQuestionsLabel = polishPlurals.bind(null, 'pytanie', 'pytania', 'pytań');
 
-export const AllQuestionsHeader: React.SFC<{
+export const AllQuestionsHeader = React.memo<{
   category: string;
   questionsLength: number | undefined;
   sortBy: string;
   onSortByChange: React.ChangeEventHandler<HTMLSelectElement>;
-}> = ({ category, questionsLength, onSortByChange, sortBy }) => {
+}>(({ category, questionsLength, onSortByChange, sortBy }) => {
   return (
     <header className={headerStyles.appQuestionsHeader}>
       <output>
@@ -35,4 +35,4 @@ export const AllQuestionsHeader: React.SFC<{
       </label>
     </header>
   );
-};
+});

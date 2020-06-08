@@ -55,6 +55,7 @@ OneQuestionPageComponent.getInitialProps = async (ctx: GetInitialPropsContext) =
     return redirect('/questions/[technology]', { technology: 'js', page: '1' }, ctx);
   }
   await ctx.store.dispatch(ActionCreators.fetchOneQuestion(ctx));
+  return {};
 };
 
 const mapStateToProps = (state: AppState) => {

@@ -12,60 +12,57 @@ interface MobileActionButtonsProps {
   justDownload: boolean;
 }
 
-class MobileActionButtonsComponent extends React.Component<
+const MobileActionButtonsComponent = React.memo<
   MobileActionButtonsProps & ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
-> {
-  render() {
-    const { justDownload } = this.props;
-    return (
-      <div className={styles.mobileActionButtons}>
-        {!justDownload && (
-          <button
-            className={classNames(styles.openSidebar, 'circle-button')}
-            title="Filtruj wyniki"
-            aria-label="Filtruj wyniki"
-            onClick={this.props.uiOpenSidebar}
-          />
-        )}
-        {!justDownload && (
-          <button
-            className={classNames(styles.addQuestion, 'circle-button')}
-            title="Dodaj pytanie"
-            aria-label="Dodaj pytanie"
-            onClick={this.props.uiOpenAddQuestionModal}
-          />
-        )}
-        {/* {!justDownload && (
+>(({ justDownload, uiOpenSidebar, uiOpenAddQuestionModal }) => {
+  const onDownloadClick = () => {
+    // @todo
+  };
+  return (
+    <div className={styles.mobileActionButtons}>
+      {!justDownload && (
+        <button
+          className={classNames(styles.openSidebar, 'circle-button')}
+          title="Filtruj wyniki"
+          aria-label="Filtruj wyniki"
+          onClick={uiOpenSidebar}
+        />
+      )}
+      {!justDownload && (
+        <button
+          className={classNames(styles.addQuestion, 'circle-button')}
+          title="Dodaj pytanie"
+          aria-label="Dodaj pytanie"
+          onClick={uiOpenAddQuestionModal}
+        />
+      )}
+      {/* {!justDownload && (
           <a
             className={classNames('download', 'circle-button', {
-              disabled: !this.props.areAnyQuestionSelected,
+              disabled: !areAnyQuestionSelected,
             })}
             title="Pobierz PDF"
             aria-label="Pobierz PDF"
-            href={this.props.downloadUrl}
-            onClick={this.onDownloadClick}
+            href={downloadUrl}
+            onClick={onDownloadClick}
             target="_blank"
-            tabIndex={this.props.areAnyQuestionSelected ? 0 : -1}
-            aria-disabled={!this.props.areAnyQuestionSelected}
+            tabIndex={areAnyQuestionSelected ? 0 : -1}
+            aria-disabled={!areAnyQuestionSelected}
           />
         )}
-        {justDownload && this.props.areAnyQuestionSelected && (
+        {justDownload && areAnyQuestionSelected && (
           <a
             className="round-button alert-button"
-            href={this.props.downloadUrl}
-            onClick={this.onDownloadClick}
+            href={downloadUrl}
+            onClick={onDownloadClick}
             target="_blank"
           >
             Pobierz plik PDF
           </a>
         )} */}
-      </div>
-    );
-  }
-  onDownloadClick = () => {
-    // @todo
-  };
-}
+    </div>
+  );
+});
 
 const mapStateToProps = (state: AppState) => {
   return {

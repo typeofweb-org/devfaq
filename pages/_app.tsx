@@ -1,37 +1,39 @@
 import * as Sentry from '@sentry/browser';
-import nextReduxWrapper from 'next-redux-wrapper';
-import AppComponent, { AppContext } from 'next/app';
-import { default as Router } from 'next/router';
-import React from 'react';
-import { Provider } from 'react-redux';
+import App, { AppContext, AppProps } from 'next/app';
+import Router from 'next/router';
+import React, { useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { AppModals } from '../components/modals/appModals/AppModals';
 import { ActionCreators } from '../redux/actions';
-import { makeStore } from '../redux/store';
+import { nextReduxWrapper } from '../redux/store';
 import * as analytics from '../utils/analytics';
 import env from '../utils/env';
-import type { RouteDetails, AppStore } from '../utils/types';
+import type { RouteDetails } from '../utils/types';
 
 import 'prismjs/themes/prism-coy.css';
 import './index.scss';
 
 type WebVitalsReport =
   | {
-      id: string;
-      name: 'CLS' | 'TTFB';
-      label: 'web-vital';
-      value: number;
+      id?: string;
+      name?: 'TTFB' | 'FCP' | 'LCP' | 'FID' | 'CLS';
+      label?: 'web-vital';
+      value?: number;
     }
   | {
-      id: string;
-      name: 'Next.js-hydration';
-      label: 'custom';
-      value: number;
+      id?: string;
+      name?: 'Next.js-hydration' | 'Next.js-route-change-to-render' | 'Next.js-render';
+      label?: 'custom';
+      value?: number;
     };
 
-export function reportWebVitals({ id, name, label, value }: WebVitalsReport) {
+export function reportWebVitals({ id, name, label, value = 1 }: WebVitalsReport = {}) {
   // These metrics can be sent to any analytics service
   console.log({ id, name, label, value });
+  if (!id || !name) {
+    return;
+  }
   gtag('event', name, {
     event_category: label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
     event_label: id,
@@ -51,74 +53,73 @@ function getRouteDetails(routeDetails: RouteDetails) {
   return newRouteDetails;
 }
 
-class MyApp extends AppComponent<{ store: AppStore; ctx: RouteDetails }> {
-  static async getInitialProps({ Component, ctx }: AppContext) {
-    if (ctx.req) {
-      await ctx.store.dispatch(ActionCreators.validateToken(ctx));
-    }
+const MyApp = ({ Component, pageProps, router }: AppProps) => {
+  const dispatch = useDispatch();
 
-    const newRouteDetails = getRouteDetails(ctx);
+  const onRouteChangeComplete = useCallback(
+    (url: string) => {
+      analytics.reportPageView(url);
+      const newRouteDetails = getRouteDetails(router);
+      dispatch(ActionCreators.updateRouteSuccess(newRouteDetails));
+    },
+    [router, dispatch]
+  );
 
-    // when changing routes on the client side
-    // it's actually still in progress at this point
-    const routeChangeInProgress = !ctx.req;
-    await ctx.store.dispatch(
-      ActionCreators.updateRouteSuccess(newRouteDetails, routeChangeInProgress)
-    );
+  const onRouteChangeStart = useCallback(
+    (_url: string) => {
+      dispatch(ActionCreators.updateRouteStarted());
+    },
+    [dispatch]
+  );
 
-    const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+  const onRouteChangeError = useCallback(
+    (error: any, _url: string) => {
+      dispatch(ActionCreators.updateRouteError(error));
+    },
+    [dispatch]
+  );
 
-    return { pageProps };
-  }
+  useEffect(() => {
+    Router.events.on('routeChangeComplete', onRouteChangeComplete);
+    Router.events.on('routeChangeStart', onRouteChangeStart);
+    Router.events.on('routeChangeError', onRouteChangeError);
+    return () => {
+      Router.events.off('routeChangeComplete', onRouteChangeComplete);
+      Router.events.off('routeChangeStart', onRouteChangeStart);
+      Router.events.off('routeChangeError', onRouteChangeError);
+    };
+  }, [onRouteChangeComplete, onRouteChangeError, onRouteChangeStart]);
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo & Record<string, any>) {
-    console.log('CUSTOM ERROR HANDLING', error);
-    // This is needed to render errors correctly in development / production
-    super.componentDidCatch(error, errorInfo);
-  }
-
-  componentDidMount() {
-    Router.events.on('routeChangeComplete', this.onRouteChangeComplete);
-    Router.events.on('routeChangeStart', this.onRouteChangeStart);
-    Router.events.on('routeChangeError', this.onRouteChangeError);
-  }
-
-  componentWillUnmount() {
-    Router.events.off('routeChangeComplete', this.onRouteChangeComplete);
-    Router.events.off('routeChangeStart', this.onRouteChangeStart);
-    Router.events.off('routeChangeError', this.onRouteChangeError);
-  }
-
-  onRouteChangeComplete = (url: string) => {
-    analytics.reportPageView(url);
-    const newRouteDetails = getRouteDetails(this.props.router);
-    this.props.store.dispatch(ActionCreators.updateRouteSuccess(newRouteDetails));
-  };
-
-  onRouteChangeStart = (_url: string) => {
-    this.props.store.dispatch(ActionCreators.updateRouteStarted());
-  };
-
-  onRouteChangeError = (error: any, _url: string) => {
-    this.props.store.dispatch(ActionCreators.updateRouteError(error));
-  };
-
-  render() {
-    const { Component, pageProps, store } = this.props;
-    return (
-      <Provider store={store}>
-        <Component {...pageProps} />
-        <AppModals />
-      </Provider>
-    );
-  }
-}
-
-const options = {
-  debug: false,
+  return (
+    <>
+      <Component {...pageProps} />
+      <AppModals />
+    </>
+  );
 };
 
-export default nextReduxWrapper(makeStore, options)(MyApp);
+MyApp.getInitialProps = async function (appContext: AppContext) {
+  const { ctx } = appContext;
+  if (ctx.req) {
+    await ctx.store.dispatch(ActionCreators.validateToken(ctx));
+  }
+
+  const newRouteDetails = getRouteDetails({ route: '', ...ctx });
+
+  // when changing routes on the client side
+  // it's actually still in progress at this point
+  const routeChangeInProgress = !ctx.req;
+  await ctx.store.dispatch(
+    ActionCreators.updateRouteSuccess(newRouteDetails, routeChangeInProgress)
+  );
+
+  const pageProps = await App.getInitialProps(appContext);
+
+  return { pageProps };
+};
+
+const WrapperApp = nextReduxWrapper.withRedux(MyApp);
+export default WrapperApp;
 
 if (typeof window !== 'undefined') {
   // @ts-ignore

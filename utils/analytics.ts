@@ -4,7 +4,7 @@ export const GA_TRACKING_ID = env.GA_TRACKING_ID;
 export const CUSTOM_MAP = { dimension1: 'question_id' };
 
 export const reportPageView = (url: string) => {
-  console.log('pageview', url);
+  // console.log('pageview', url);
   gtag('config', GA_TRACKING_ID, {
     page_path: url,
     custom_map: CUSTOM_MAP,
@@ -12,7 +12,7 @@ export const reportPageView = (url: string) => {
 };
 
 export const reportPdfDownload = (ids: Array<number | string>) => {
-  console.log('pdfDownload', ids);
+  // console.log('pdfDownload', ids);
   ids.forEach((id) => gtag('event', 'download_question_pdf', { question_id: String(id) }));
 };
 
@@ -22,7 +22,7 @@ export const reportEvent = (
   label?: string,
   questionId?: number | string
 ) => {
-  console.log({ action, category, label, questionId });
+  // console.log({ action, category, label, questionId });
 
   const params: Gtag.EventParams | Gtag.CustomParams = { event_category: category };
   if (label) {

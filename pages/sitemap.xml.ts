@@ -1,4 +1,4 @@
-import type { NextPageContext, NextComponentType } from 'next';
+import type { NextComponentType } from 'next';
 
 import env from '../utils/env';
 

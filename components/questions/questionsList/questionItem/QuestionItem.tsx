@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { isEqual, noop } from 'lodash';
 import dynamic from 'next/dynamic';
-import React, { useEffect, memo, useRef, useCallback, useMemo, useState, forwardRef } from 'react';
+import React, { memo, useRef, useCallback, useMemo, useState, forwardRef } from 'react';
 
 import { Question } from '../../../../redux/reducers/questions';
 import { useWillUnmount } from '../../../../utils/hooks';
@@ -76,9 +76,104 @@ interface QuestionContentProps {
   forwardRef?: React.RefObject<HTMLDivElement>;
 }
 
-class QuestionContent extends React.PureComponent<QuestionContentProps> {
-  render() {
-    const { question, isSelected, forwardRef } = this.props;
+export const QuestionContent = memo<QuestionContentProps>(
+  ({
+    question,
+    isSelected,
+    forwardRef,
+    selectable,
+    unselectable,
+    editable,
+    toggleQuestion,
+    editQuestion,
+    deleteQuestion,
+  }) => {
+    const maybeRenderCheckbox = () => {
+      if (!selectable) {
+        return null;
+      }
+
+      return (
+        <input
+          onChange={toggleQuestion}
+          checked={isSelected}
+          type="checkbox"
+          className={styles.appQuestionsQuestionCheckbox}
+        />
+      );
+    };
+
+    const renderMeta = () => {
+      const keywords = [question._levelId, question._categoryId].join(', ');
+      const className = `tag_${question._levelId}` as 'tag_junior' | 'tag_mid' | 'tag_senior';
+
+      return (
+        <div className={styles.appQuestionsQuestionMeta}>
+          <span className={classNames(styles.tag, styles[className])}>{question._levelId}</span>
+          <meta itemProp="dateCreated" content={question.acceptedAt} />
+          <meta itemProp="keywords" content={keywords} />
+          <time
+            dateTime={question.acceptedAt}
+            className={classNames(
+              styles.appQuestionsQuestionDate,
+              styles.appQuestionsQuestionDateLong
+            )}
+          >
+            <ActiveLink
+              href="/questions/p/[id]"
+              query={{ id: String(question.id) }}
+              activeClassName=""
+            >
+              <a>{longDate(question.acceptedAt)}</a>
+            </ActiveLink>
+          </time>
+          <time
+            dateTime={question.acceptedAt}
+            className={classNames(
+              styles.appQuestionsQuestionDate,
+              styles.appQuestionsQuestionDateShort
+            )}
+          >
+            {shortDate(question.acceptedAt)}
+          </time>
+        </div>
+      );
+    };
+
+    const maybeRenderVoting = () => {
+      if (editable) {
+        return null;
+      }
+
+      return <QuestionVoting question={question} />;
+    };
+
+    const maybeRenderAdminButtons = () => {
+      if (!editable) {
+        return null;
+      }
+
+      return (
+        <div>
+          <button onClick={editQuestion} className={styles.editBtn}>
+            <img src="/images/action-icons/edit.svg" alt="Edit question" />
+          </button>
+          <button onClick={deleteQuestion} className={styles.appQuestionsQuestionRemoveIcon} />
+        </div>
+      );
+    };
+
+    const maybeRenderDeleteButton = () => {
+      if (!unselectable) {
+        return null;
+      }
+
+      return (
+        <div className={styles.appQuestionsQuestionRemoveContainer}>
+          <button className={styles.appQuestionsQuestionRemoveIcon} onClick={deleteQuestion} />
+        </div>
+      );
+    };
 
     return (
       <div
@@ -88,115 +183,21 @@ class QuestionContent extends React.PureComponent<QuestionContentProps> {
         })}
       >
         <div className={styles.appQuestionsContentContainer}>
-          {this.maybeRenderCheckbox()}
-          {this.maybeRenderAdminButtons()}
+          {maybeRenderCheckbox()}
+          {maybeRenderAdminButtons()}
 
           <div className={styles.appQuestionsQuestionText} itemProp="text">
             <MarkdownText value={question.question} />
           </div>
 
-          {this.renderMeta()}
-          {this.maybeRenderDeleteButton()}
+          {renderMeta()}
+          {maybeRenderDeleteButton()}
         </div>
-        {this.maybeRenderVoting()}
+        {maybeRenderVoting()}
       </div>
     );
   }
-
-  maybeRenderCheckbox() {
-    if (!this.props.selectable) {
-      return null;
-    }
-
-    return (
-      <input
-        onChange={this.props.toggleQuestion}
-        checked={this.props.isSelected}
-        type="checkbox"
-        className={styles.appQuestionsQuestionCheckbox}
-      />
-    );
-  }
-
-  renderMeta() {
-    const { question } = this.props;
-    const keywords = [question._levelId, question._categoryId].join(', ');
-    const className = `tag_${question._levelId}` as 'tag_junior' | 'tag_mid' | 'tag_senior';
-
-    return (
-      <div className={styles.appQuestionsQuestionMeta}>
-        <span className={classNames(styles.tag, styles[className])}>{question._levelId}</span>
-        <meta itemProp="dateCreated" content={question.acceptedAt} />
-        <meta itemProp="keywords" content={keywords} />
-        <time
-          dateTime={question.acceptedAt}
-          className={classNames(
-            styles.appQuestionsQuestionDate,
-            styles.appQuestionsQuestionDateLong
-          )}
-        >
-          <ActiveLink
-            href="/questions/p/[id]"
-            query={{ id: String(question.id) }}
-            activeClassName=""
-          >
-            <a>{longDate(question.acceptedAt)}</a>
-          </ActiveLink>
-        </time>
-        <time
-          dateTime={question.acceptedAt}
-          className={classNames(
-            styles.appQuestionsQuestionDate,
-            styles.appQuestionsQuestionDateShort
-          )}
-        >
-          {shortDate(question.acceptedAt)}
-        </time>
-      </div>
-    );
-  }
-
-  maybeRenderVoting() {
-    if (this.props.editable) {
-      return null;
-    }
-
-    return <QuestionVoting question={this.props.question} />;
-  }
-
-  maybeRenderAdminButtons() {
-    if (!this.props.editable) {
-      return null;
-    }
-
-    return (
-      <div>
-        <button onClick={this.props.editQuestion} className={styles.editBtn}>
-          <img src="/images/action-icons/edit.svg" alt="Edit question" />
-        </button>
-        <button
-          onClick={this.props.deleteQuestion}
-          className={styles.appQuestionsQuestionRemoveIcon}
-        />
-      </div>
-    );
-  }
-
-  maybeRenderDeleteButton() {
-    if (!this.props.unselectable) {
-      return null;
-    }
-
-    return (
-      <div className={styles.appQuestionsQuestionRemoveContainer}>
-        <button
-          className={styles.appQuestionsQuestionRemoveIcon}
-          onClick={this.props.deleteQuestion}
-        />
-      </div>
-    );
-  }
-}
+);
 
 type QuestionItemDeleteProgressProps = {
   stopDeletionTimer: () => void;

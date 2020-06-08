@@ -12192,7 +12192,7 @@
         {
           "order": 0,
           "id": 2,
-          "name": "npm-original-wordmark",
+          "name": "yarn -original-wordmark",
           "prevSize": 32,
           "code": 59730
         },
@@ -13882,7 +13882,7 @@
           "colorPermutations": {
             "2552552551441421871": []
           },
-          "tags": ["npm-original-wordmark"],
+          "tags": ["yarn -original-wordmark"],
           "grid": 0
         },
         {
@@ -21687,8 +21687,8 @@
           "id": 433
         },
         {
-          "name": "npm",
-          "ligatures": "npm, brand41",
+          "name": "yarn ",
+          "ligatures": "yarn , brand41",
           "order": 0,
           "id": 434
         },
@@ -26650,7 +26650,7 @@
         },
         {
           "paths": ["M0 0v1024h1024v-1024h-1024zM832 832h-128v-512h-192v512h-320v-640h640v640z"],
-          "tags": ["npm", "brand"],
+          "tags": ["yarn ", "brand"],
           "defaultCode": 60081,
           "grid": 16,
           "id": 434,

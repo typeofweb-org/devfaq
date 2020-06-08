@@ -10,3 +10,4 @@ size-snapshot.json
 analyze.next
 .deployment-url
 .basebranch
+package-lock.json

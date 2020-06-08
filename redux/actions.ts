@@ -120,10 +120,10 @@ const AsyncActionCreators = {
     dispatch(SyncActionCreators.fetchQuestionsStarted(abortController));
 
     const technology = getTechnology(state);
+    console.log(state);
     if (!technology) {
       return dispatch(SyncActionCreators.fetchQuestionsError(new Error('Invalid category')));
     }
-
     return Api.getQuestionsForCategoryAndLevels(
       page,
       sortBy,
@@ -133,7 +133,10 @@ const AsyncActionCreators = {
       ctx
     )
       .then((data) => dispatch(SyncActionCreators.fetchQuestionsSuccess(data)))
-      .catch((err) => dispatch(SyncActionCreators.fetchQuestionsError(err)));
+      .catch((err) => {
+        console.log(err);
+        dispatch(SyncActionCreators.fetchQuestionsError(err));
+      });
   },
 
   fetchOneQuestion: (ctx?: GetInitialPropsContext): AsyncAction => (dispatch, getState) => {

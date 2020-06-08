@@ -9,46 +9,51 @@ import { AnimateHeight } from '../../animateProperty/AnimateProperty';
 import { QuestionItem } from './questionItem/QuestionItem';
 import styles from './questionsList.module.scss';
 
-const defaultProps = {
-  selectable: true,
-  unselectable: false,
-  editable: false,
-  questions: {} as AppState['questions'],
-  selectedQuestionIds: [] as Array<Question['id']>,
+type QuestionListProps = {
+  selectable?: boolean;
+  unselectable?: boolean;
+  editable?: boolean;
+  questions?: AppState['questions'];
+  selectedQuestionIds?: Array<Question['id']>;
+  toggleQuestion(questionId: Question['id']): any;
+  editQuestion?(questionId: Question['id']): any;
+  className?: string;
 };
 
-export default class QuestionsList extends React.PureComponent<
-  typeof defaultProps & {
-    toggleQuestion(questionId: Question['id']): any;
-    editQuestion?(questionId: Question['id']): any;
-  } & { className?: string }
-> {
-  static defaultProps = defaultProps;
-
-  render() {
-    if (!this.props.questions.data) {
+const QuestionsList = React.memo<QuestionListProps>(
+  ({
+    selectable = true,
+    unselectable = false,
+    editable = false,
+    questions = {},
+    selectedQuestionIds = [],
+    className,
+    toggleQuestion,
+    editQuestion,
+  }) => {
+    if (!questions.data) {
       return null;
     }
     return (
       <TransitionGroup
         appear={false}
         enter={false}
-        className={classNames(styles.appQuestionsList, this.props.className)}
+        className={classNames(styles.appQuestionsList, className)}
         component="div"
       >
-        {this.props.questions.data.data.map((question) => {
+        {questions.data.data.map((question) => {
           const nodeRef = React.createRef<HTMLElement>();
           return (
             <AnimateHeight nodeRef={nodeRef} enterTime={700} exitTime={700} key={question.id}>
               <QuestionItem
                 ref={nodeRef}
                 question={question}
-                selectable={this.props.selectable}
-                editable={this.props.editable}
-                unselectable={this.props.unselectable}
-                selectedQuestionIds={this.props.selectedQuestionIds}
-                toggleQuestion={this.props.toggleQuestion}
-                editQuestion={this.props.editQuestion}
+                selectable={selectable}
+                editable={editable}
+                unselectable={unselectable}
+                selectedQuestionIds={selectedQuestionIds}
+                toggleQuestion={toggleQuestion}
+                editQuestion={editQuestion}
               />
             </AnimateHeight>
           );
@@ -56,4 +61,6 @@ export default class QuestionsList extends React.PureComponent<
       </TransitionGroup>
     );
   }
-}
+);
+
+export default QuestionsList;
