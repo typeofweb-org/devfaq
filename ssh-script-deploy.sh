@@ -7,10 +7,10 @@ SUBDOMAIN=$1
 cd ~/domains/$SUBDOMAIN.devfaq.pl/public_nodejs
 
 node -v
-npm -v
+yarn -v
 
 echo "👉 Installing deps…"
-npm ci
+yarn install --frozen-lockfile
 echo "👉 Restarting…"
 devil www restart $SUBDOMAIN.devfaq.pl
 echo "👉 Fetching…"

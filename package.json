@@ -11,7 +11,7 @@
     "start": "node app.js",
     "analyze": "cross-env ANALYZE=1 NODE_ENV=production next build",
     "eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
-    "test": "npm run test:tsc && npm run eslint && npm run jest",
+    "test": "yarn test:tsc && yarn eslint && yarn jest",
     "test:tsc": "tsc --project tsconfig.json --noEmit",
     "jest": "jest",
     "create-size": "ts-node-script scripts/sizeSnapshot/create.ts",
