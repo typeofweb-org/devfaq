@@ -1,11 +1,9 @@
-import { isEqual } from 'lodash';
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { TransitionGroup } from 'react-transition-group';
 
 import { TechnologyKey, technologyIconItems } from '../../../constants/technology-icon-items';
 import { ActionCreators } from '../../../redux/actions';
-import { AppState } from '../../../redux/reducers/index';
 import { Question } from '../../../redux/reducers/questions';
 import {
   getAreAnyQuestionSelected,
@@ -18,36 +16,19 @@ import QuestionsList from '../questionsList/QuestionsList';
 import NoQuestionsSelectedInfo from './NoQuestionsSelectedInfo';
 import styles from './selectedQuestions.module.scss';
 
-type SelectedQuestionsProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
-class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps> {
-  shouldComponentUpdate(nextProps: Readonly<SelectedQuestionsProps>): boolean {
-    return !isEqual(this.props, nextProps);
-  }
+export default React.memo(() => {
+  const selectedQuestionsWithCategories = useSelector(getSelectedQuestionsWithCategories);
+  const selectedQuestionIds = useSelector(getSelectedQuestionsIds);
+  const areAnyQuestionSelected = useSelector(getAreAnyQuestionSelected);
+  const dispatch = useDispatch();
 
-  render() {
-    if (this.props.areAnyQuestionSelected) {
-      return (
-        <TransitionGroup
-          appear={false}
-          enter={false}
-          className={styles.selectedQuestionsContainer}
-          component="div"
-        >
-          {this.renderSelectedQuestionsList()}
-        </TransitionGroup>
-      );
-    } else {
-      return <NoQuestionsSelectedInfo />;
-    }
-  }
-
-  renderSelectedQuestionsList() {
-    return this.props.selectedQuestionsWithCategories.map(([category, questions]) => {
-      return this.renderSelectedQuestionsCategory(category, questions);
+  const renderSelectedQuestionsList = () => {
+    return selectedQuestionsWithCategories.map(([category, questions]) => {
+      return renderSelectedQuestionsCategory(category, questions);
     });
-  }
+  };
 
-  renderSelectedQuestionsCategory(category: TechnologyKey, questions: Question[]) {
+  const renderSelectedQuestionsCategory = (category: TechnologyKey, questions: Question[]) => {
     const icon = technologyIconItems.find((i) => i.name === category)!;
     const sectionRef = React.createRef<HTMLElement>();
 
@@ -61,32 +42,37 @@ class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps>
             </div>
             <QuestionsList
               className={styles.appQuestionsList}
-              selectedQuestionIds={this.props.selectedQuestionIds}
+              selectedQuestionIds={selectedQuestionIds}
               questions={{ isLoading: false, data: { data: questions } }}
               selectable={false}
               unselectable={true}
-              toggleQuestion={this.toggleQuestion}
+              toggleQuestion={toggleQuestion}
             />
           </div>
         </section>
       </AnimateHeight>
     );
+  };
+
+  const toggleQuestion = useCallback(
+    (questionId: Question['id']) => {
+      dispatch(() => ActionCreators.deselectQuestion(questionId));
+    },
+    [dispatch]
+  );
+
+  if (areAnyQuestionSelected) {
+    return (
+      <TransitionGroup
+        appear={false}
+        enter={false}
+        className={styles.selectedQuestionsContainer}
+        component="div"
+      >
+        {renderSelectedQuestionsList()}
+      </TransitionGroup>
+    );
+  } else {
+    return <NoQuestionsSelectedInfo />;
   }
-
-  toggleQuestion = (questionId: Question['id']) => {
-    this.props.deselectQuestion(questionId);
-  };
-}
-
-const mapStateToProps = (state: AppState) => {
-  return {
-    selectedQuestionsWithCategories: getSelectedQuestionsWithCategories(state),
-    selectedQuestionIds: getSelectedQuestionsIds(state),
-    areAnyQuestionSelected: getAreAnyQuestionSelected(state),
-  };
-};
-
-const mapDispatchToProps = { deselectQuestion: ActionCreators.deselectQuestion };
-
-const SelectedQuestions = connect(mapStateToProps, mapDispatchToProps)(SelectedQuestionsComponent);
-export default SelectedQuestions;
+});
