@@ -1,16 +1,16 @@
 @import 'common';
 
 .navigation-header {
-  background-color: $purple-branding;
+  background-color: var(--purple-branding);
   @include mediaquery('gt-sm') {
     overflow: hidden;
-    height: $navigation-header-height;
+    height: var(--navigation-header-height);
   }
   a {
-    color: $white-text;
+    color: var(--white-text);
     text-decoration: none;
     &:hover {
-      color: darken($white-text, 10%);
+      color: var(--white-text-dark);
     }
   }
   h1 {
@@ -25,24 +25,24 @@
   align-items: center;
   box-sizing: border-box;
   position: relative;
-  color: $white-text;
+  color: var(--white-text);
   &.open {
     a {
       position: relative;
-      z-index: #{$z-index-modal + 1};
+      z-index: #{var(--z-index-modal) + 1};
     }
   }
   @include mediaquery('gt-sm') {
     &::after {
       content: '';
-      background: $purple-border-lighter;
+      background: var(--purple-border-lighter);
       height: 1px;
       width: 100vw;
       position: absolute;
       bottom: 0;
       left: 0;
-      @media screen and (min-width: #{$container-large-width}) {
-        left: calc((#{$container-large-width} - 100vw) / 2);
+      @media screen and (min-width: #{var(--container-large-width)}) {
+        left: calc((#{var(--container-large-width)} - 100vw) / 2);
       }
     }
   }
@@ -64,7 +64,7 @@
     position: absolute;
     top: 10px;
     right: 15px;
-    color: $white-text;
+    color: var(--white-text);
     background-position: 50% 50%;
     background-repeat: no-repeat;
     font-size: 6rem;
@@ -143,8 +143,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: $purple-branding;
-    z-index: $z-index-modal;
+    background: var(--purple-branding);
+    z-index: var(--z-index-modal);
     ul {
       display: flex;
       flex-direction: column;

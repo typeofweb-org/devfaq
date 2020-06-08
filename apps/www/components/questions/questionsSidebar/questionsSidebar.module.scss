@@ -3,15 +3,15 @@
   box-sizing: border-box;
   @include mediaquery('gt-sm') {
     $shadow-width: 2px;
-    top: $sticky-header-height;
-    height: calc(100vh - #{$sticky-header-height+$footer-height});
-    width: $sidebar-width;
-    padding: 30px #{$container-large-padding + $shadow-width} 0 0;
+    top: var(--sticky-header-height);
+    height: calc(100vh - #{var(--sticky-header-height)+var(--footer-height)});
+    width: var(--sidebar-width);
+    padding: 30px #{var(--container-large-padding) + $shadow-width} 0 0;
     position: sticky;
     z-index: 1;
     &::after {
       content: '';
-      height: calc(100% + #{$footer-height});
+      height: calc(100% + #{var(--footer-height)});
       position: absolute;
       width: 1px;
       box-shadow: 4px 0 4px rgba(0, 0, 0, 0.23);
@@ -33,9 +33,9 @@
       top: 0;
       transform: translate3d(-100%, 0, 0);
       width: 100%;
-      z-index: $z-index-mobile-sidebar;
+      z-index: var(--z-index-mobile-sidebar);
       height: 100%;
-      padding: 30px $container-small-padding 20px;
+      padding: 30px var(--container-small-padding) 20px;
       box-sizing: border-box;
       transition: transform 0.3s;
       display: flex;
@@ -59,7 +59,7 @@
         appearance: none;
         border: 0;
         background: transparent;
-        color: $purple-branding-light;
+        color: var(--purple-branding-light);
         cursor: pointer;
         transition: color 0.2s, background-color 0.2s;
         border-radius: 50%;
@@ -71,12 +71,12 @@
         padding: 0 0 1px 0;
         transition: background-color 0.1s, color 0.1s, box-shadow 0.1s;
         &:hover {
-          background-color: $purple-branding;
-          color: $white-text;
+          background-color: var(--purple-branding);
+          color: var(--white-text);
         }
         &:focus {
           outline: 0;
-          box-shadow: $purple-branding 0 0 10px;
+          box-shadow: var(--purple-branding) 0 0 10px;
         }
       }
     }

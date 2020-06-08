@@ -4,10 +4,10 @@
   width: 100%;
   box-sizing: border-box;
   margin: 0 auto;
-  max-width: $container-small-width;
-  padding: 0 $container-small-padding;
+  max-width: var(--container-small-width);
+  padding: 0 var(--container-small-padding);
   @include mediaquery('gt-sm') {
-    max-width: $container-large-width;
-    padding: 0 $container-large-padding;
+    max-width: var(--container-large-width);
+    padding: 0 var(--container-large-padding);
   }
 }

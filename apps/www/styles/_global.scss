@@ -86,8 +86,8 @@ html.ios-standalone {
     left: 0;
     right: 0;
     height: $size;
-    background-color: $purple-branding;
-    z-index: $z-index-modal;
+    background-color: var(--purple-branding);
+    z-index: var(--z-index-modal);
   }
   .app-modal {
     top: $size;
@@ -97,7 +97,7 @@ html.ios-standalone {
     height: calc(100% - #{$size});
   }
   app-navigation-header {
-    z-index: $z-index-modal;
+    z-index: var(--z-index-modal);
   }
   app-cta-header {
     padding-top: $size;

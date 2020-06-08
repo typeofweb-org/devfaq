@@ -4,8 +4,8 @@
   padding: 15px 0 0 0;
   width: 100%;
   @include mediaquery('gt-sm') {
-    padding: 30px 0 60px $container-large-padding;
-    width: calc(100% - #{$sidebar-width});
+    padding: 30px 0 60px var(--container-large-padding);
+    width: calc(100% - #{var(--sidebar-width)});
   }
   &--sorting-container {
     height: 18px;
@@ -17,7 +17,7 @@
   &--sorting-select {
     box-sizing: border-box;
     appearance: none;
-    color: $grey-text-darker;
+    color: var(--grey-text-darker);
     border: none;
     cursor: pointer;
     padding: 4px 25px 4px 4px;

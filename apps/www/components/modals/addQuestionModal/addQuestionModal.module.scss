@@ -4,7 +4,7 @@
   width: 240px;
   max-width: 100%;
   margin: 0;
-  color: $purple-branding;
+  color: var(--purple-branding);
   font-size: 1.3rem;
   box-sizing: border-box;
   appearance: none;
@@ -16,16 +16,16 @@
   background-repeat: no-repeat;
   background-position: 100% 50%;
   background-color: transparent;
-  border-bottom: 1px solid $purple-branding;
+  border-bottom: 1px solid var(--purple-branding);
   border-radius: 0;
   text-transform: capitalize;
   transition: background-color 0.1s, color 0.1s, box-shadow 0.1s;
   &:focus {
     outline: 0;
-    box-shadow: $purple-branding 0 0 10px;
+    box-shadow: var(--purple-branding) 0 0 10px;
   }
   &:hover {
-    background-color: transparentize($purple-branding, 0.95);
+    background-color: rgba(var(--purple-branding), 0.05);
   }
 }
 

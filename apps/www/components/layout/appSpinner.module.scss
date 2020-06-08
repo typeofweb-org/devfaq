@@ -1,7 +1,7 @@
 @import 'common';
 
 .spinner {
-  color: $purple;
+  color: var(--purple);
   font-size: 90px;
   text-indent: -9999em;
   overflow: hidden;
@@ -13,7 +13,7 @@
   left: 50%;
   top: calc(15% + 155px);
   transform: translate3d(-50%, -50%, 0.00001px);
-  z-index: $z-index-spinner;
+  z-index: var(--z-index-spinner);
 }
 
 @keyframes load6 {
