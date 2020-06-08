@@ -16,21 +16,24 @@ import './index.scss';
 
 type WebVitalsReport =
   | {
-      id: string;
-      name: 'CLS' | 'TTFB';
-      label: 'web-vital';
-      value: number;
+      id?: string;
+      name?: 'CLS' | 'TTFB';
+      label?: 'web-vital';
+      value?: number;
     }
   | {
-      id: string;
-      name: 'Next.js-hydration';
-      label: 'custom';
-      value: number;
+      id?: string;
+      name?: 'Next.js-hydration';
+      label?: 'custom';
+      value?: number;
     };
 
-export function reportWebVitals({ id, name, label, value }: WebVitalsReport) {
+export function reportWebVitals({ id, name, label, value = 1 }: WebVitalsReport = {}) {
   // These metrics can be sent to any analytics service
   console.log({ id, name, label, value });
+  if (!id || !name) {
+    return;
+  }
   gtag('event', name, {
     event_category: label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
     event_label: id,
