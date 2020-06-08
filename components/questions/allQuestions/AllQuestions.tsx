@@ -46,7 +46,7 @@ const AllQuestionsComponent: React.FC<AllQuestionsComponentProps> = React.memo(
         };
         redirect('/questions/[technology]', query);
       },
-      [redirect, route.query]
+      [route.query]
     );
 
     const reportEvent = (action: string, label?: string, questionId?: number) => {
@@ -84,7 +84,7 @@ const AllQuestionsComponent: React.FC<AllQuestionsComponentProps> = React.memo(
           question.id
         );
       },
-      [questions.data, deselectQuestion, selectQuestion]
+      [questions.data, deselectQuestion, selectQuestion, selectedQuestionsIds]
     );
 
     const renderList = () => {
