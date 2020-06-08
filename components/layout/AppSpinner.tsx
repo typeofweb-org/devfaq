@@ -1,15 +1,15 @@
 import React, { useState, useRef, useEffect, memo, useCallback } from 'react';
-import { connect } from 'react-redux';
-
-import { AppState } from '../../redux/reducers';
+import { useSelector } from 'react-redux';
 
 import styles from './appSpinner.module.scss';
 
 const SUSPENSE_TIME = 150;
 
-const AppSpinnerComponent: React.FC<ReturnType<typeof mapStateToProps>> = memo(({ isLoading }) => {
+export const AppSpinner = memo(() => {
   const [show, setShow] = useState(false);
   const timerId = useRef<number | undefined>();
+
+  const isLoading = useSelector((state) => state.routeDetails.isTransitioning);
 
   const stopTimer = useCallback(() => {
     window.clearTimeout(timerId.current);
@@ -38,12 +38,3 @@ const AppSpinnerComponent: React.FC<ReturnType<typeof mapStateToProps>> = memo((
 
   return show ? <div className={styles.spinner} /> : null;
 });
-
-const mapStateToProps = (state: AppState) => {
-  return {
-    isLoading: state.routeDetails.isTransitioning,
-  };
-};
-
-const AppSpinner = connect(mapStateToProps)(AppSpinnerComponent);
-export default AppSpinner;

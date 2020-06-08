@@ -7,7 +7,7 @@ const intialState: {
   error?: Error;
   data?: ApiResponse<Question>;
   isLoading: boolean;
-} = { isLoading: false, data: undefined, error: undefined };
+} = { isLoading: false };
 
 export const oneQuestion = (oneQuestion = intialState, action: Actions): typeof intialState => {
   switch (action.type) {

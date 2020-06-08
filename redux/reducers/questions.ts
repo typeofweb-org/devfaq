@@ -18,7 +18,7 @@ const intialState: {
   data?: ApiResponse<Question[]>;
   isLoading: boolean;
   abortController?: AbortController;
-} = { isLoading: false, data: undefined, error: undefined };
+} = { isLoading: false };
 
 export const questions = (response = intialState, action: Actions): typeof intialState => {
   switch (action.type) {

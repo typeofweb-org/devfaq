@@ -5,6 +5,7 @@ import React from 'react';
 import Layout from '../components/layout/Layout';
 import QuestionsListLayout from '../components/questions/questionsListLayout/QuestionsListLayout';
 import { getLoggedInUser } from '../redux/selectors/selectors';
+import { nextReduxWrapper } from '../redux/store';
 import { redirect, getPreviousPathFromHrefQuery } from '../utils/redirect';
 
 import styles from './pages.module.scss';
