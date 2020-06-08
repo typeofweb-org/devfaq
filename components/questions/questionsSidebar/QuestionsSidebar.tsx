@@ -8,7 +8,7 @@ import LevelFilter from './levelFilter/LevelFilter';
 import styles from './questionsSidebar.module.scss';
 import { TechnologyFilter } from './technologyFilter/TechnologyFilter';
 
-export default () => {
+const QuestionsSidebar = () => {
   const isSidebarOpen = useSelector((state) => state.ui.isSidebarOpen);
   const dispatch = useDispatch();
 
@@ -42,3 +42,5 @@ export default () => {
     </div>
   );
 };
+
+export default QuestionsSidebar;
