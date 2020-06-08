@@ -7,7 +7,7 @@ import { AppFooter } from '../footer/AppFooter';
 import { CtaHeader } from '../headers/ctaHeader/CtaHeader';
 import { NavigationHeader } from '../headers/navigationHeader/NavigationHeader';
 
-import AppSpinner from './AppSpinner';
+import { AppSpinner } from './AppSpinner';
 import styles from './layout.module.scss';
 
 interface LayoutProps {

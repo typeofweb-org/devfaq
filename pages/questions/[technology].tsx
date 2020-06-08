@@ -61,6 +61,7 @@ QuestionsPageComponent.getInitialProps = async (ctx: GetInitialPropsContext) => 
   }
   const sortBy = getSortByArray(state);
   await ctx.store.dispatch(ActionCreators.fetchQuestions(page, sortBy, ctx));
+  return {};
 };
 
 const mapDispatchToProps = (

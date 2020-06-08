@@ -24,8 +24,8 @@ export interface RouteDetails {
   route: SingletonRouter['route'];
 }
 
-declare module 'next' {
-  interface NextPageContext extends RouteDetails {
-    store: AppStore;
-  }
-}
+// declare module 'next' {
+//   interface NextPageContext extends RouteDetails {
+//     store: AppStore;
+//   }
+// }
