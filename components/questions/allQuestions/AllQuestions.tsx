@@ -56,7 +56,7 @@ const AllQuestionsComponent: React.FC<AllQuestionsComponentProps> = React.memo(
     const onAddNewClick = useCallback(() => {
       reportEvent('CTA Dodaj nowe pytanie');
       uiOpenAddQuestionModal();
-    }, [uiOpenAddQuestionModal]);
+    }, [uiOpenAddQuestionModal, reportEvent]);
 
     const toggleQuestion = useCallback(
       (questionId: Question['id']) => {
@@ -84,7 +84,7 @@ const AllQuestionsComponent: React.FC<AllQuestionsComponentProps> = React.memo(
           question.id
         );
       },
-      [questions.data, deselectQuestion, selectQuestion, selectedQuestionsIds]
+      [questions.data, deselectQuestion, selectQuestion, selectedQuestionsIds, reportEvent]
     );
 
     const renderList = () => {
