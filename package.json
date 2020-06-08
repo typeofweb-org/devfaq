@@ -47,7 +47,7 @@
     "redux-thunk": "2.3.0",
     "reselect": "4.0.0",
     "what-input": "5.2.10",
-    "xss": "1.0.6"
+    "xss": "1.0.7"
   },
   "devDependencies": {
     "@foo-software/lighthouse-check": "0.0.90",
