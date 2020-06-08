@@ -1,11 +1,10 @@
-import { isEqual } from 'lodash';
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback, memo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { TransitionGroup } from 'react-transition-group';
+import { isEqual } from 'lodash';
 
 import { TechnologyKey, technologyIconItems } from '../../../constants/technology-icon-items';
 import { ActionCreators } from '../../../redux/actions';
-import { AppState } from '../../../redux/reducers/index';
 import { Question } from '../../../redux/reducers/questions';
 import {
   getAreAnyQuestionSelected,
@@ -18,14 +17,53 @@ import QuestionsList from '../questionsList/QuestionsList';
 import NoQuestionsSelectedInfo from './NoQuestionsSelectedInfo';
 import styles from './selectedQuestions.module.scss';
 
-type SelectedQuestionsProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
-class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps> {
-  shouldComponentUpdate(nextProps: Readonly<SelectedQuestionsProps>): boolean {
-    return !isEqual(this.props, nextProps);
-  }
+const SelectedQuestions = memo(
+  () => {
+    const selectedQuestionsWithCategories = useSelector(getSelectedQuestionsWithCategories);
+    const selectedQuestionIds = useSelector(getSelectedQuestionsIds);
+    const areAnyQuestionSelected = useSelector(getAreAnyQuestionSelected);
+    const dispatch = useDispatch();
 
-  render() {
-    if (this.props.areAnyQuestionSelected) {
+    const renderSelectedQuestionsList = () => {
+      return selectedQuestionsWithCategories.map(([category, questions]) => {
+        return renderSelectedQuestionsCategory(category, questions);
+      });
+    };
+
+    const renderSelectedQuestionsCategory = (category: TechnologyKey, questions: Question[]) => {
+      const icon = technologyIconItems.find((i) => i.name === category)!;
+      const sectionRef = React.createRef<HTMLElement>();
+
+      return (
+        <AnimateHeight nodeRef={sectionRef} enterTime={700} exitTime={700} key={category}>
+          <section ref={sectionRef} className={styles.selectedQuestionsCategory}>
+            <div className={styles.selectedQuestionsListContainer}>
+              <div className={styles.technologyIconContainer}>
+                <span className={styles.technologyIconLabel}>{icon.label}</span>
+                <span className={icon.icon} />
+              </div>
+              <QuestionsList
+                className={styles.appQuestionsList}
+                selectedQuestionIds={selectedQuestionIds}
+                questions={{ isLoading: false, data: { data: questions } }}
+                selectable={false}
+                unselectable={true}
+                toggleQuestion={toggleQuestion}
+              />
+            </div>
+          </section>
+        </AnimateHeight>
+      );
+    };
+
+    const toggleQuestion = useCallback(
+      (questionId: Question['id']) => {
+        dispatch(() => ActionCreators.deselectQuestion(questionId));
+      },
+      [dispatch]
+    );
+
+    if (areAnyQuestionSelected) {
       return (
         <TransitionGroup
           appear={false}
@@ -33,60 +71,14 @@ class SelectedQuestionsComponent extends React.Component<SelectedQuestionsProps>
           className={styles.selectedQuestionsContainer}
           component="div"
         >
-          {this.renderSelectedQuestionsList()}
+          {renderSelectedQuestionsList()}
         </TransitionGroup>
       );
     } else {
       return <NoQuestionsSelectedInfo />;
     }
-  }
+  },
+  (prevProps, nextProps) => isEqual(prevProps, nextProps)
+);
 
-  renderSelectedQuestionsList() {
-    return this.props.selectedQuestionsWithCategories.map(([category, questions]) => {
-      return this.renderSelectedQuestionsCategory(category, questions);
-    });
-  }
-
-  renderSelectedQuestionsCategory(category: TechnologyKey, questions: Question[]) {
-    const icon = technologyIconItems.find((i) => i.name === category)!;
-    const sectionRef = React.createRef<HTMLElement>();
-
-    return (
-      <AnimateHeight nodeRef={sectionRef} enterTime={700} exitTime={700} key={category}>
-        <section ref={sectionRef} className={styles.selectedQuestionsCategory}>
-          <div className={styles.selectedQuestionsListContainer}>
-            <div className={styles.technologyIconContainer}>
-              <span className={styles.technologyIconLabel}>{icon.label}</span>
-              <span className={icon.icon} />
-            </div>
-            <QuestionsList
-              className={styles.appQuestionsList}
-              selectedQuestionIds={this.props.selectedQuestionIds}
-              questions={{ isLoading: false, data: { data: questions } }}
-              selectable={false}
-              unselectable={true}
-              toggleQuestion={this.toggleQuestion}
-            />
-          </div>
-        </section>
-      </AnimateHeight>
-    );
-  }
-
-  toggleQuestion = (questionId: Question['id']) => {
-    this.props.deselectQuestion(questionId);
-  };
-}
-
-const mapStateToProps = (state: AppState) => {
-  return {
-    selectedQuestionsWithCategories: getSelectedQuestionsWithCategories(state),
-    selectedQuestionIds: getSelectedQuestionsIds(state),
-    areAnyQuestionSelected: getAreAnyQuestionSelected(state),
-  };
-};
-
-const mapDispatchToProps = { deselectQuestion: ActionCreators.deselectQuestion };
-
-const SelectedQuestions = connect(mapStateToProps, mapDispatchToProps)(SelectedQuestionsComponent);
 export default SelectedQuestions;
