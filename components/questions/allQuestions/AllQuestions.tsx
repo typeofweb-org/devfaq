@@ -22,7 +22,7 @@ import { AllQuestionsHeader } from './allQuestionsHeader/AllQuestionsHeader';
 
 type AllQuestionsComponentProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-const AllQuestionsComponent: React.FC<AllQuestionsComponentProps> = React.memo(
+const AllQuestionsComponent = React.memo<AllQuestionsComponentProps>(
   ({
     technology,
     sortBy,
