@@ -375,7 +375,8 @@ async function commentSizesReport() {
 
 async function run() {
   await commentSizesReport();
-  await commentLightHouseReport();
+  // @todo reenable after creating builds for each PR
+  // await commentLightHouseReport();
 }
 
 (async () => {
