@@ -82,7 +82,7 @@
     "@types/sinon-chai": "3.2.4",
     "@types/uuid": "8.0.0",
     "@types/vision": "5.3.7",
-    "all-contributors-cli": "6.15.0",
+    "all-contributors-cli": "6.16.0",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
     "chai-datetime": "1.6.0",
