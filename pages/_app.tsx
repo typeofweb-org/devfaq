@@ -58,10 +58,8 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
 
   const onRouteChangeComplete = useCallback(
     (url: string) => {
-      console.log('onRouteChangeComplete');
       analytics.reportPageView(url);
       const newRouteDetails = getRouteDetails(router);
-      console.log(newRouteDetails);
       dispatch(ActionCreators.updateRouteSuccess(newRouteDetails));
     },
     [router, dispatch]
@@ -69,7 +67,6 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
 
   const onRouteChangeStart = useCallback(
     (_url: string) => {
-      console.log('onRouteChangeStart');
       dispatch(ActionCreators.updateRouteStarted());
     },
     [dispatch]
@@ -77,7 +74,6 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
 
   const onRouteChangeError = useCallback(
     (error: any, _url: string) => {
-      console.log('onRouteChangeError');
       dispatch(ActionCreators.updateRouteError(error));
     },
     [dispatch]
@@ -116,7 +112,6 @@ MyApp.getInitialProps = async function (appContext: AppContext) {
   await ctx.store.dispatch(
     ActionCreators.updateRouteSuccess(newRouteDetails, routeChangeInProgress)
   );
-  console.log('getInitialProps');
 
   const pageProps = await App.getInitialProps(appContext);
 

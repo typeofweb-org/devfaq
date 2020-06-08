@@ -23,12 +23,12 @@ echo SUBDOMAIN=$SUBDOMAIN
 echo BRANCH=$BRANCH
 echo ENVIRONMENT=$ENVIRONMENT
 node -v
-npm -v
+yarn -v
 
 echo "👉 Installing…"
-npm ci
+yarn install --frozen-lockfile
 echo "👉 Building…"
-NODE_ENV=production ENV=$ENVIRONMENT npm run build
+NODE_ENV=production ENV=$ENVIRONMENT yarn build
 echo "👉 Uploading…"
 rsync -avP -e ssh --exclude=node_modules --exclude=".git" --include="**/.*" ./ typeofweb@s18.mydevil.net:/home/typeofweb/domains/$SUBDOMAIN.devfaq.pl/public_nodejs/
 echo "👉 Installing…"
