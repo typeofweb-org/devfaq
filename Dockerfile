@@ -1,10 +1,10 @@
-FROM node:8-alpine
+FROM node:12-alpine
 WORKDIR /app
 
 #copy all the app files
 COPY . .
 
-RUN npm install
-RUN npm run build
+RUN yarn install
+RUN yarn run build
 
-CMD NODE_ENV=production npm start
+CMD NODE_ENV=production yarn start

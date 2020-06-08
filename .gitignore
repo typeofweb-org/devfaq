@@ -69,7 +69,7 @@ jspm_packages/
 .env
 .env.dev
 
-yarn.lock
+package-lock.json
 
 *.tsbuildinfo
 .version

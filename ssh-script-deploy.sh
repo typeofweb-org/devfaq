@@ -14,7 +14,7 @@ else
 fi
 
 node -v
-npm -v
+yarn -v
 
 cd ~/domains/$SUBDOMAIN.devfaq.pl/public_nodejs
 
@@ -33,11 +33,11 @@ fi
 git pull origin $BRANCH
 
 echo "👉 Installing deps…"
-npm ci
+yarn install --frozen-lockfile
 echo "👉 Bulding…"
-NODE_ENV=production ENV=$1 npm run build
+NODE_ENV=production ENV=$1 yarn run build
 echo "👉 Running migrations…"
-NODE_ENV=production ENV=$1 npm run db:migrate:up
+NODE_ENV=production ENV=$1 yarn run db:migrate:up
 echo `git rev-parse HEAD` > .version
 
 echo "👉 Restarting the server…"
