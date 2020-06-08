@@ -15,12 +15,12 @@ type QuestionListProps = {
   editable?: boolean;
   questions?: AppState['questions'];
   selectedQuestionIds?: Array<Question['id']>;
-} & {
   toggleQuestion(questionId: Question['id']): any;
   editQuestion?(questionId: Question['id']): any;
-} & { className?: string };
+  className?: string;
+};
 
-const QuestionsList: React.FC<QuestionListProps> = React.memo(
+const QuestionsList = React.memo<QuestionListProps>(
   ({
     selectable = true,
     unselectable = false,

@@ -76,7 +76,7 @@ interface QuestionContentProps {
   forwardRef?: React.RefObject<HTMLDivElement>;
 }
 
-export const QuestionContent: React.FC<QuestionContentProps> = memo(
+export const QuestionContent = memo<QuestionContentProps>(
   ({
     question,
     isSelected,

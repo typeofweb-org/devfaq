@@ -36,7 +36,7 @@ const AllQuestionsComponent: React.FC<AllQuestionsComponentProps> = React.memo(
     const technologyIconItem = technologyIconItems.find((t) => t.name === technology);
     const category = (technologyIconItem && technologyIconItem.label) || '';
 
-    const length = questions.data && questions.data.meta && questions.data.meta.total;
+    const length = questions.data?.meta?.total;
 
     const changeSortBy: React.ChangeEventHandler<HTMLSelectElement> = useCallback(
       (e) => {
@@ -49,9 +49,9 @@ const AllQuestionsComponent: React.FC<AllQuestionsComponentProps> = React.memo(
       [route.query]
     );
 
-    const reportEvent = (action: string, label?: string, questionId?: number) => {
+    const reportEvent = useCallback((action: string, label?: string, questionId?: number) => {
       globalReportEvent(action, 'Lista pytań', label, questionId);
-    };
+    }, []);
 
     const onAddNewClick = useCallback(() => {
       reportEvent('CTA Dodaj nowe pytanie');
@@ -65,8 +65,8 @@ const AllQuestionsComponent: React.FC<AllQuestionsComponentProps> = React.memo(
 
         if (isSelected) {
           deselectQuestion(questionId);
-        } else {
-          if (question) {
+        } else if (question) {
+          {
             selectQuestion(question);
           }
         }

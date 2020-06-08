@@ -12,9 +12,9 @@ interface MobileActionButtonsProps {
   justDownload: boolean;
 }
 
-const MobileActionButtonsComponent: React.FC<
+const MobileActionButtonsComponent = React.memo<
   MobileActionButtonsProps & ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
-> = React.memo(({ justDownload, uiOpenSidebar, uiOpenAddQuestionModal }) => {
+>(({ justDownload, uiOpenSidebar, uiOpenAddQuestionModal }) => {
   const onDownloadClick = () => {
     // @todo
   };
