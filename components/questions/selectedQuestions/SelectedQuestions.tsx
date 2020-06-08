@@ -1,7 +1,7 @@
+import { isEqual } from 'lodash';
 import React, { useCallback, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { TransitionGroup } from 'react-transition-group';
-import { isEqual } from 'lodash';
 
 import { TechnologyKey, technologyIconItems } from '../../../constants/technology-icon-items';
 import { ActionCreators } from '../../../redux/actions';
@@ -58,7 +58,7 @@ const SelectedQuestions = memo(
 
     const toggleQuestion = useCallback(
       (questionId: Question['id']) => {
-        dispatch(() => ActionCreators.deselectQuestion(questionId));
+        dispatch(ActionCreators.deselectQuestion(questionId));
       },
       [dispatch]
     );

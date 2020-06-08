@@ -17,13 +17,13 @@ import './index.scss';
 type WebVitalsReport =
   | {
       id?: string;
-      name?: 'CLS' | 'TTFB';
+      name?: 'TTFB' | 'FCP' | 'LCP' | 'FID' | 'CLS';
       label?: 'web-vital';
       value?: number;
     }
   | {
       id?: string;
-      name?: 'Next.js-hydration';
+      name?: 'Next.js-hydration' | 'Next.js-route-change-to-render' | 'Next.js-render';
       label?: 'custom';
       value?: number;
     };

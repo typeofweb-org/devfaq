@@ -37,10 +37,10 @@ export default memo(() => {
 
   const toggleSelectedLevel = (level: LevelWithLabel) => {
     if (isSelected(level)) {
-      dispatch(() => ActionCreators.deselectLevel(level.value));
+      dispatch(ActionCreators.deselectLevel(level.value));
     } else {
       globalReportEvent('Wybierz poziom', 'Lista pytań', level.label);
-      dispatch(() => ActionCreators.selectLevel(level.value));
+      dispatch(ActionCreators.selectLevel(level.value));
     }
     if (page !== 1) {
       redirect('/questions', { page: '1' });
