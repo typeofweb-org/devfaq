@@ -1,0 +1,8 @@
+@import 'common';
+@import 'node_modules/normalize-scss/sass/normalize.scss';
+@import 'global';
+@include normalize();
+
+body {
+  overflow-y: scroll;
+}

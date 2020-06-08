@@ -1,0 +1,92 @@
+@import 'common';
+.cta-header {
+  background-color: $purple-branding;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  a {
+    color: $white-text;
+    text-decoration: none;
+    &:hover {
+      color: darken($white-text, 10%);
+    }
+  }
+}
+
+.app-header--cta {
+  height: $sticky-header-height;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+}
+
+.app-tabs {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 2px;
+  box-sizing: border-box;
+  width: 100%;
+  @include mediaquery('gt-sm') {
+    width: auto;
+  }
+  &--tab {
+    display: block;
+    padding: 0;
+    flex: 1;
+    height: 50px;
+    box-sizing: border-box;
+    border-bottom: 2px solid transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-left: 15px;
+    font-size: 1.5rem;
+    white-space: nowrap;
+    position: relative;
+    @include mediaquery('gt-sm') {
+      padding: 0 29px;
+      flex: initial;
+    }
+    &:first-child {
+      margin-left: 0;
+    }
+    &.active {
+      border-color: $white-text;
+      font-weight: 700;
+    }
+    &.active:hover {
+      border-color: currentColor;
+    }
+    &::after {
+      content: '';
+      display: inline-block;
+      border-radius: 50%;
+      width: 6px;
+      height: 6px;
+      margin-left: 6px;
+      transition: background-color 0.2s;
+      transform: translateY(-50%); // right: 15px;
+    }
+    &.has-notification {
+      &::after {
+        background-color: $orange-notification;
+      }
+    }
+  }
+}
+
+.call-to-action-buttons {
+  display: none;
+  @include mediaquery('gt-sm') {
+    display: block;
+  }
+  .round-button {
+    margin-left: 30px;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}

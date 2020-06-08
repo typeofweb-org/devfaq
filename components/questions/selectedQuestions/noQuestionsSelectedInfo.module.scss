@@ -1,0 +1,17 @@
+.selected-questions--empty {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  padding: 25px 60px;
+  margin: 40px 0;
+  p {
+    margin: 0 0 30px 0;
+    font-size: 1.7rem;
+  }
+  .round-button {
+    font-size: 1.7rem;
+  }
+}

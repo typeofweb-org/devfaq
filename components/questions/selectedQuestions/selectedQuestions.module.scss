@@ -1,0 +1,49 @@
+@import 'common';
+.selected-questions-container {
+  min-height: 71px;
+  margin: 20px 0;
+}
+
+.selected-questions--category {
+  overflow: hidden;
+}
+
+.selected-questions--list-container {
+  display: flex;
+  flex-direction: column;
+  @include mediaquery('gt-sm') {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin: 20px 0;
+  }
+  .technology-icon-container {
+    width: 50px;
+    text-align: center;
+    @include mediaquery('gt-sm') {
+      padding-top: 10px;
+    }
+    span {
+      display: block;
+    }
+    [class*='devicon-'] {
+      font-size: 4rem;
+    }
+  }
+  .technology-icon-label {
+    color: $black-text-light;
+    font-size: 1.4rem;
+  }
+  .app-questions--list {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    article {
+      min-height: 110px;
+    }
+    @include mediaquery('gt-sm') {
+      flex: 0 1 calc(100% - 245px);
+      padding-left: 45px;
+      width: calc(100% - 245px);
+    }
+  }
+}

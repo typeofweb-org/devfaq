@@ -1,0 +1,55 @@
+@import 'common';
+.action-icon {
+  $icons: 'thumbs-up' 'confirmation' 'warning' 'add';
+  $size: 72px;
+  $border-size: 4px;
+  $size-small: 40px;
+  $border-size-small: 2px;
+  width: $size;
+  height: $size;
+  box-sizing: border-box;
+  border: $border-size solid $purple-branding;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  margin-bottom: 45px;
+  background: no-repeat 50% 50% transparent;
+  background-size: 44px;
+  @each $icon in $icons {
+    &.action-icon_#{$icon} {
+      background-image: url(/images/action-icons/#{$icon}.svg);
+    }
+  }
+  &::before {
+    content: '';
+    display: block;
+    width: $size;
+    height: $size;
+    background-color: $purple-branding-light;
+    border-radius: 50%;
+    position: absolute;
+    z-index: -1;
+    left: #{-$border-size - 9px};
+    top: #{-$border-size + 9px};
+  }
+  &.icon-small {
+    width: $size-small;
+    height: $size-small;
+    margin-bottom: 15px;
+    border-width: $border-size-small;
+    background-size: 20px;
+    &::before {
+      width: $size-small;
+      height: $size-small;
+      left: #{-$border-size-small - 4px};
+      top: #{-$border-size-small + 4px};
+    }
+  }
+  &.action-icon_warning.icon-small {
+    background-size: 4px;
+  }
+  &.action-icon_add {
+    @extend .icon-small;
+  }
+}

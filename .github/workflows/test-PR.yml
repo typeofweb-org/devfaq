@@ -1,0 +1,62 @@
+name: Test and Build
+
+on:
+  pull_request:
+    branches: [develop, master]
+
+jobs:
+  build:
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Read git tree hash
+        run: echo "##[set-output name=GIT_TREE_HASH;]$(git rev-parse HEAD:)"
+        id: git-tree-hash
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+            ${{ runner.OS }}-
+
+      - name: Read .nvmrc
+        if: steps.cache-to-skip.outputs.cache-hit != 'true'
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+      - name: Use Node.js
+        if: steps.cache-to-skip.outputs.cache-hit != 'true'
+        uses: actions/setup-node@v1
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+
+      - name: Cache Node.js modules
+        if: steps.cache-to-skip.outputs.cache-hit != 'true'
+        uses: actions/cache@v2
+        with:
+          path: ~/.yarn
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies
+        if: steps.cache-to-skip.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile
+
+      - name: Run tests
+        if: steps.cache-to-skip.outputs.cache-hit != 'true'
+        run: yarn test
+
+      - name: Run build
+        if: steps.cache-to-skip.outputs.cache-hit != 'true'
+        run: yarn build

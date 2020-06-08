@@ -1,0 +1,83 @@
+{
+  "projectName": "devfaq-www",
+  "projectOwner": "typeofweb",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "gitmoji",
+  "contributors": [
+    {
+      "login": "mmiszy",
+      "name": "Michał Miszczyszyn",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1338731?v=4",
+      "profile": "https://typeofweb.com",
+      "contributions": [
+        "code",
+        "maintenance",
+        "platform",
+        "ideas"
+      ]
+    },
+    {
+      "login": "tomasznastaly",
+      "name": "Tomasz Nastały",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/16205492?v=4",
+      "profile": "https://github.com/tomasznastaly",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
+    },
+    {
+      "login": "cytrowski",
+      "name": "Bartosz Cytrowski",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2965690?v=4",
+      "profile": "https://github.com/cytrowski",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "pavveu",
+      "name": "Pawel Pawlowski",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/108490?v=4",
+      "profile": "https://github.com/pavveu",
+      "contributions": [
+        "design"
+      ]
+    },
+    {
+      "login": "Survikrowa",
+      "name": "Survikrowa",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/35381167?v=4",
+      "profile": "https://github.com/Survikrowa",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "mczeplowski",
+      "name": "mczeplowski",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/43904845?v=4",
+      "profile": "https://github.com/mczeplowski",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "drillprop",
+      "name": "Bartosz Dryl",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/51168865?v=4",
+      "profile": "https://github.com/drillprop",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true
+}
