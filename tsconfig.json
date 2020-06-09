@@ -15,7 +15,8 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ES2019"
+    "target": "ES2019",
+    "module": "commonjs"
   },
   "exclude": [
     "**/node_modules",
