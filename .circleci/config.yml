@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@1.1.6
 
 jobs:
-  www:
+  dangerfile:
     docker:
       - image: circleci/node:12-browsers
     steps:
@@ -13,15 +13,18 @@ jobs:
           fi
 
       - checkout
-      - node/with-cache:
-          steps:
-            - run: yarn install --frozen-lockfile
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: yarn install --frozen-lockfile
 
       - run: yarn get-base-branch
       - run: git status
+      - run: cat /tmp/.basebranch
       - run: git diff --name-only $(cat /tmp/.basebranch) | grep "apps/www"
       - when:
-          condition: git diff --name-only $(cat /tmp/.basebranch)
+          condition: git diff --name-only $(cat /tmp/.basebranch) | grep "apps/www"
           steps:
             - run: yarn workspace www build > analyze.next
             - run: cat analyze.next
@@ -46,15 +49,21 @@ jobs:
       # - run: mkdir -p /tmp/lighthouse/
       - run: yarn danger ci
 
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
       - store_artifacts:
           path: ./current-size-snapshot.json
       # - store_artifacts:
       #     path: /tmp/lighthouse
 
 workflows:
-  www:
+  dangerfile:
     jobs:
-      - www:
+      - dangerfile:
           filters:
             branches:
               ignore:
