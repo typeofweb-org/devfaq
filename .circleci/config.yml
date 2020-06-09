@@ -23,8 +23,7 @@ jobs:
       - run: yarn get-base-branch
       - run: git status
       - run: cat /tmp/.basebranch
-      - run: git fetch --unshallow && git checkout $CIRCLE_BRANCH && git reset --hard origin/$CIRCLE_BRANCH
-      - run: git diff --name-only $(cat /tmp/.basebranch) | grep "apps/www"
+      - run: git fetch && git checkout $CIRCLE_BRANCH && git reset --hard origin/$CIRCLE_BRANCH
       - when:
           condition: git diff --name-only $(cat /tmp/.basebranch) | grep "apps/www"
           steps:
