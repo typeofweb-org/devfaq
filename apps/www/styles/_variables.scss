@@ -1,7 +1,4 @@
-html {
-  --base-font-size: 10px;
-  --base-font-family: 'Fira Sans', sans-serif;
-
+:root {
   --white: #ffffff;
   --grey: #e6e6e6;
   --grey-light: #f1f1f1;
@@ -29,7 +26,7 @@ html {
   --grey-text-darker: #464646;
   --grey-shadow: #e4e4e4;
   --modal-shadow: #adadad;
-  --white-text: var(---white);
+  --white-text: #ffffff;
   --white-text-dark: #e6e6e6; // dark 10%;
   --grey-background: #f8f8f8;
   --purple-branding: #673ab7;
@@ -56,6 +53,7 @@ html {
   --sticky-header-height: 55px;
   --footer-height: 55px;
   --sidebar-width: 245px;
+  --shadow-width: 2px;
 
   --html5-color: #e54d26;
   --css3-color: #3e8fc6;

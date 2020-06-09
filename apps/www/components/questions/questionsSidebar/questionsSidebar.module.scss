@@ -2,16 +2,15 @@
 .questions-sidebar {
   box-sizing: border-box;
   @include mediaquery('gt-sm') {
-    $shadow-width: 2px;
     top: var(--sticky-header-height);
-    height: calc(100vh - #{var(--sticky-header-height)+var(--footer-height)});
+    height: calc(100vh - var(--sticky-header-height) + var(--footer-height));
     width: var(--sidebar-width);
-    padding: 30px #{var(--container-large-padding) + $shadow-width} 0 0;
+    padding: 30px calc(var(--container-large-padding) + var(--shadow-width)) 0 0;
     position: sticky;
     z-index: 1;
     &::after {
       content: '';
-      height: calc(100% + #{var(--footer-height)});
+      height: calc(100% + var(--footer-height));
       position: absolute;
       width: 1px;
       box-shadow: 4px 0 4px rgba(0, 0, 0, 0.23);
