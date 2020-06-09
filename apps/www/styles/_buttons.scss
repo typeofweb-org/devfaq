@@ -36,7 +36,7 @@
       left: 50%;
       top: 50%;
       transform: translate3d(-50%, -50%, 0.00001px);
-      z-index: $z-index-spinner;
+      z-index: var(--z-index-spinner);
     }
   }
   &:hover {
@@ -53,11 +53,11 @@
     outline: 0;
   }
   &.alert-button {
-    color: $white-text;
+    color: var(--white-text);
     font-weight: 700;
-    background-color: $red-branding;
+    background-color: var(--red-branding);
     &:hover {
-      background-color: darken($red-branding, 5%);
+      background-color: var(--red-branding-dark);
     }
     &:disabled,
     &.disabled {
@@ -65,36 +65,36 @@
     }
   }
   &.branding-button {
-    color: $purple-branding;
-    border-color: $purple-branding;
+    color: var(--purple-branding);
+    border-color: var(--purple-branding);
     background-color: transparent;
     &:hover {
-      background-color: $purple-branding-superlight;
+      background-color: var(--purple-branding-superlight);
     }
     &:focus {
-      box-shadow: $purple-branding 0 0 10px;
+      box-shadow: var(--purple-branding) 0 0 10px;
     }
   }
   &.branding-button-inverse {
-    color: $white-text;
-    border-color: $white-text;
-    background-color: $purple-branding;
+    color: var(--white-text);
+    border-color: var(--white-text);
+    background-color: var(--purple-branding);
     &:hover {
-      background-color: lighten($purple-branding, 5%);
+      background-color: var(--purple-branding-light);
     }
     &:focus {
-      box-shadow: $white-text 0 0 10px;
+      box-shadow: var(--white-text) 0 0 10px;
     }
   }
   &.alternative-button {
-    color: $white-text;
-    border-color: $white-text;
-    background-color: $yellow-branding;
+    color: var(--white-text);
+    border-color: var(--white-text);
+    background-color: var(--yellow-branding);
     &:hover {
-      background-color: darken($yellow-branding, 4%);
+      background-color: var(--yellow-branding-dark);
     }
     &:focus {
-      box-shadow: $yellow-branding 0 0 10px;
+      box-shadow: var(--yellow-branding) 0 0 10px;
     }
   }
 }
@@ -114,8 +114,8 @@
   background-size: 24px;
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  background-color: $purple-branding;
+  background-color: var(--purple-branding);
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: $grey-text-darker 1px 2px 4px 0;
+  box-shadow: var(--grey-text-darker) 1px 2px 4px 0;
 }

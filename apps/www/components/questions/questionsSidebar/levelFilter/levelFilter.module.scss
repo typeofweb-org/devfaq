@@ -1,8 +1,8 @@
 @import 'common';
 .app-filter--title {
-  color: $purple-branding;
+  color: var(--purple-branding);
   font-size: 1.4rem;
-  border-bottom: 1px solid $purple-branding;
+  border-bottom: 1px solid var(--purple-branding);
   font-weight: 400;
   margin: 0;
   padding-bottom: 7px;
@@ -36,7 +36,7 @@
       padding: 0;
       box-sizing: border-box;
       appearance: none;
-      background-color: $white-text;
+      background-color: var(--white-text);
       box-shadow: rgba(128, 128, 128, 0.5) 0 1px 4px 0;
       border: 0;
       border-radius: 6px;
@@ -59,35 +59,85 @@
         height: 85px;
       }
     }
-    @mixin generate_styles_for_level($level, $main-color, $light-color) {
-      &_#{$level} {
+
+    &_junior {
+      button:focus {
+        box-shadow: inset var(--junior-main-color-darker) 0 0 3px;
+      }
+      button:hover {
+        background-color: var(--junior-light-color);
+      }
+      button:active {
+        transform: translateY(1px);
+      }
+      &.active {
+        button {
+          background-color: var(--junior-main-color);
+          box-shadow: inset var(--junior-main-color-darker) 0 2px 3px;
+          color: var(--white-text);
+        }
         button:focus {
-          box-shadow: inset darken($main-color, 20%) 0 0 3px;
+          box-shadow: var(--junior-main-color-dark) 0 0 10px,
+            var(--junior-main-color-darker) 0 2px 3px;
         }
         button:hover {
-          background-color: $light-color;
-        }
-        button:active {
-          transform: translateY(1px);
-        }
-        &.active {
-          button {
-            background-color: $main-color;
-            box-shadow: inset darken($main-color, 20%) 0 2px 3px;
-            color: $white-text;
-          }
-          button:focus {
-            box-shadow: darken($main-color, 10%) 0 0 10px, inset darken($main-color, 20%) 0 2px 3px;
-          }
-          button:hover {
-            background-color: lighten($main-color, 10%);
-            box-shadow: inset darken(lighten($main-color, 10%), 20%) 0 2px 3px;
-          }
+          background-color: var(--junior-main-color-light);
+          box-shadow: inset var(--junior-main-color-dark) 0 2px 3px;
         }
       }
     }
-    @include generate_styles_for_level(junior, $junior-main-color, $junior-light-color);
-    @include generate_styles_for_level(mid, $mid-main-color, $mid-light-color);
-    @include generate_styles_for_level(senior, $senior-main-color, $senior-light-color);
+
+    &_mid {
+      button:focus {
+        box-shadow: inset var(--mid-main-color-darker) 0 0 3px;
+      }
+      button:hover {
+        background-color: var(--mid-light-color);
+      }
+      button:active {
+        transform: translateY(1px);
+      }
+      &.active {
+        button {
+          background-color: var(--mid-main-color);
+          box-shadow: inset var(--mid-main-color-darker) 0 2px 3px;
+          color: var(--white-text);
+        }
+        button:focus {
+          box-shadow: var(--mid-main-color-dark) 0 0 10px, var(--mid-main-color-darker) 0 2px 3px;
+        }
+        button:hover {
+          background-color: var(--mid-main-color-light);
+          box-shadow: inset var(--mid-main-color-dark) 0 2px 3px;
+        }
+      }
+    }
+
+    &_senior {
+      button:focus {
+        box-shadow: inset var(--senior-main-color-darker) 0 0 3px;
+      }
+      button:hover {
+        background-color: var(--senior-light-color);
+      }
+      button:active {
+        transform: translateY(1px);
+      }
+      &.active {
+        button {
+          background-color: var(--senior-main-color);
+          box-shadow: inset var(--senior-main-color-darker) 0 2px 3px;
+          color: var(--white-text);
+        }
+        button:focus {
+          box-shadow: var(--senior-main-color-dark) 0 0 10px,
+            var(--senior-main-color-darker) 0 2px 3px;
+        }
+        button:hover {
+          background-color: var(--senior-main-color-light);
+          box-shadow: inset var(--senior-main-color-dark) 0 2px 3px;
+        }
+      }
+    }
   }
 }

@@ -1,20 +1,20 @@
 @import 'common';
 .cta-header {
-  background-color: $purple-branding;
+  background-color: var(--purple-branding);
   position: sticky;
   top: 0;
   z-index: 2;
   a {
-    color: $white-text;
+    color: var(--white-text);
     text-decoration: none;
     &:hover {
-      color: darken($white-text, 10%);
+      color: var(--white-text-dark);
     }
   }
 }
 
 .app-header--cta {
-  height: $sticky-header-height;
+  height: var(--sticky-header-height);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -54,7 +54,7 @@
       margin-left: 0;
     }
     &.active {
-      border-color: $white-text;
+      border-color: var(--white-text);
       font-weight: 700;
     }
     &.active:hover {
@@ -72,7 +72,7 @@
     }
     &.has-notification {
       &::after {
-        background-color: $orange-notification;
+        background-color: var(--orange-notification);
       }
     }
   }

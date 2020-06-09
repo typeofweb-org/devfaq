@@ -77,24 +77,24 @@
 
 .devicon {
   &-html5-plain {
-    color: $html5-color;
+    color: var(--html5-color);
   }
   &-css3-plain {
-    color: $css3-color;
+    color: var(--css3-color);
   }
   &-javascript-plain {
-    color: $javascript-color;
+    color: var(--javascript-color);
   }
   &-angularjs-plain {
-    color: $angularjs-color;
+    color: var(--angularjs-color);
   }
   &-react-original {
-    color: $react-color;
+    color: var(--react-color);
   }
   &-git-plain {
-    color: $git-color;
+    color: var(--git-color);
   }
   &-devicon-plain {
-    color: $other-color;
+    color: var(--other-color);
   }
 }

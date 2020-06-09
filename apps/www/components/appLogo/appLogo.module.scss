@@ -6,7 +6,7 @@
   height: 40px;
   @include mediaquery('gt-sm') {
     width: 140px;
-    height: $navigation-header-height;
+    height: var(--navigation-header-height);
   }
 }
 
