@@ -1,5 +1,5 @@
 {
-  "projectName": "devfaq-www",
+  "projectName": "devfaq",
   "projectOwner": "typeofweb",
   "repoType": "github",
   "repoHost": "https://github.com",
@@ -9,7 +9,7 @@
   "imageSize": 100,
   "commit": true,
   "commitConvention": "gitmoji",
-  "contributors": [
+  "contributors": [   
     {
       "login": "mmiszy",
       "name": "Michał Miszczyszyn",
@@ -75,6 +75,24 @@
       "profile": "https://github.com/drillprop",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "D0man",
+      "name": "Kuba Domański",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/22179216?v=4",
+      "profile": "https://github.com/D0man",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "kbkk",
+      "name": "Jakub Kisielewski",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/6276426?v=4",
+      "profile": "https://github.com/kbkk",
+      "contributions": [
+        "review"
       ]
     }
   ],

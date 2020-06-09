@@ -1,7 +1,11 @@
 {
+  "root": true,
   "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module"
+  },
   "plugins": [],
-  "extends": ["react-app", "prettier", "plugin:import/typescript"],
+  "extends": ["prettier", "plugin:import/typescript"],
   "rules": {
     "no-const-assign": "error",
     "import/no-anonymous-default-export": "error",
@@ -9,8 +13,6 @@
     "import/order": ["error", { "newlines-between": "always", "alphabetize": { "order": "asc" } }],
     "import/no-duplicates": "error",
     "import/no-cycle": "error",
-    "react-hooks/exhaustive-deps": ["error", { "additionalHooks": "useCustomCompareMemo" }],
-    "@typescript-eslint/no-unused-vars": 0,
-    "jsx-a11y/anchor-is-valid": 0
+    "@typescript-eslint/no-unused-vars": "off"
   }
 }

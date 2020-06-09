@@ -1,0 +1,45 @@
+@mixin hardwareAcceleration() {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+
+@mixin mediaquery($query) {
+  $breakpoints: (
+    'gt-sm': '(min-width: 640px)',
+    'ls-md': '(max-width: 639px)',
+    'large-filters': '(min-height: 800px), screen and (max-width: 639px)' // xs, sm, md, lg,,,,,,
+  );
+
+  @if map-has-key($breakpoints, $query) {
+    @media screen and #{map-get($breakpoints, $query)} {
+      @content;
+    }
+  } @else {
+    @error "ERROR: No breakpoint specified for query '#{$query}'";
+  }
+}
+
+@mixin placeholder() {
+  &::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    @content;
+  }
+  &::-moz-placeholder {
+    /* Firefox 19+ */
+    opacity: 1;
+    @content;
+  }
+  &:-ms-input-placeholder {
+    /* IE 10+ */
+    @content;
+  }
+  &:-moz-placeholder {
+    /* Firefox 18- */
+    @content;
+  }
+  &::-ms-input-placeholder {
+    /* Edge */
+    @content;
+  }
+}

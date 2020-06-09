@@ -5,58 +5,112 @@ on:
     branches: [develop, master]
 
 jobs:
-  build:
+  test_www:
     if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 100
 
-      - name: Read git tree hash
-        run: echo "##[set-output name=GIT_TREE_HASH;]$(git rev-parse HEAD:)"
-        id: git-tree-hash
+      - uses: marceloprado/has-changed-path@master
+        id: changed-www
+        with:
+          paths: apps/www
+
+      - name: Read .nvmrc
+        if: steps.changed-www.outputs.changed == 'true'
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+      - name: Use Node.js
+        if: steps.changed-www.outputs.changed == 'true'
+        uses: actions/setup-node@v1
+        with:
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
 
       - name: Get yarn cache directory path
+        if: steps.changed-www.outputs.changed == 'true'
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Cache Node.js modules
+        if: steps.changed-www.outputs.changed == 'true'
         uses: actions/cache@v1
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
             ${{ runner.OS }}-
 
+      - name: Install dependencies
+        if: steps.changed-www.outputs.changed == 'true'
+        run: yarn workspace www install --frozen-lockfile
+
+      - name: Run tests
+        if: steps.changed-www.outputs.changed == 'true'
+        run: yarn workspace www test
+
+      - name: Run build
+        if: steps.changed-www.outputs.changed == 'true'
+        run: yarn workspace www build
+
+  test_api:
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 100
+
+      - uses: marceloprado/has-changed-path@master
+        id: changed-api
+        with:
+          paths: apps/api
+
+      - name: Setup PostgreSQL
+        if: steps.changed-api.outputs.changed == 'true'
+        uses: Harmon758/postgresql-action@v1.0.0
+        with:
+          postgresql version: 12-alpine
+          postgresql db: database_development
+          postgresql user: postgres
+          postgresql password: -api2018
+
       - name: Read .nvmrc
-        if: steps.cache-to-skip.outputs.cache-hit != 'true'
+        if: steps.changed-api.outputs.changed == 'true'
         run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
         id: nvm
       - name: Use Node.js
-        if: steps.cache-to-skip.outputs.cache-hit != 'true'
+        if: steps.changed-api.outputs.changed == 'true'
         uses: actions/setup-node@v1
         with:
-          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+      - name: Get yarn cache directory path
+        if: steps.changed-api.outputs.changed == 'true'
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Cache Node.js modules
-        if: steps.cache-to-skip.outputs.cache-hit != 'true'
-        uses: actions/cache@v2
+        if: steps.changed-api.outputs.changed == 'true'
+        uses: actions/cache@v1
         with:
-          path: ~/.yarn
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.OS }}-node-
+            ${{ runner.os }}-yarn-
             ${{ runner.OS }}-
 
       - name: Install dependencies
-        if: steps.cache-to-skip.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile
+        if: steps.changed-api.outputs.changed == 'true'
+        run: yarn workspace api install --frozen-lockfile
 
       - name: Run tests
-        if: steps.cache-to-skip.outputs.cache-hit != 'true'
-        run: yarn test
+        if: steps.changed-api.outputs.changed == 'true'
+        run: yarn workspace api test
 
-      - name: Run build
-        if: steps.cache-to-skip.outputs.cache-hit != 'true'
-        run: yarn build
+      - name: Run build for dependabot
+        if: steps.changed-api.outputs.changed == 'true' && (github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]')
+        run: yarn workspace api build

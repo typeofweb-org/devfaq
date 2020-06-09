@@ -1,57 +1,57 @@
-version: 2.1
-orbs:
-  node: circleci/node@1.1.6
+# version: 2.1
+# orbs:
+#   node: circleci/node@1.1.6
 
-jobs:
-  compare-sizes:
-    docker:
-      - image: circleci/node:12-browsers
-    steps:
-      - run: |
-          if [ "$CIRCLE_BRANCH" = "develop" ] || [ "$CIRCLE_BRANCH" = "master" ]; then
-            circleci-agent step halt
-          fi
+# jobs:
+#   www:
+#     docker:
+#       - image: circleci/node:12-browsers
+#     steps:
+#       - run: |
+#           if [ "$CIRCLE_BRANCH" = "develop" ] || [ "$CIRCLE_BRANCH" = "master" ]; then
+#             circleci-agent step halt
+#           fi
 
-      - checkout
-      - node/with-cache:
-          steps:
-            - run: yarn install --frozen-lockfile
+#       - checkout
+#       - node/with-cache:
+#           steps:
+#             - run: yarn install --frozen-lockfile
 
-      - run: yarn get-base-branch
-      - run: git status
-      - run: yarn build > analyze.next
-      - run: cat analyze.next
-      - run: yarn create-size && mv size-snapshot.json /tmp/current-size-snapshot.json
-      - run: rm analyze.next && rm -rf .next
+#       - run: yarn get-base-branch
+#       - run: git status
+#       - run: yarn workspace www build > analyze.next
+#       - run: cat analyze.next
+#       - run: yarn create-size && mv size-snapshot.json /tmp/current-size-snapshot.json
+#       - run: rm analyze.next && rm -rf .next
 
-      - run: git fetch && git checkout $(cat /tmp/.basebranch) && git reset --hard origin/$(cat /tmp/.basebranch)
-      - run: git status
-      - run: yarn install --frozen-lockfile
-      - run: yarn build > analyze.next
-      - run: cat analyze.next
-      - run: mv analyze.next /tmp/
+#       - run: git fetch && git checkout $(cat /tmp/.basebranch) && git reset --hard origin/$(cat /tmp/.basebranch)
+#       - run: git status
+#       - run: yarn install --frozen-lockfile
+#       - run: yarn workspace www build > analyze.next
+#       - run: cat analyze.next
+#       - run: mv analyze.next /tmp/
 
-      - run: git fetch && git checkout $CIRCLE_BRANCH && git reset --hard origin/$CIRCLE_BRANCH
-      - run: git status
-      - run: yarn install --frozen-lockfile
+#       - run: git fetch && git checkout $CIRCLE_BRANCH && git reset --hard origin/$CIRCLE_BRANCH
+#       - run: git status
+#       - run: yarn install --frozen-lockfile
 
-      - run: mv /tmp/analyze.next ./
-      - run: yarn create-size && mv size-snapshot.json previous-size-snapshot.json
-      - run: mv /tmp/current-size-snapshot.json ./
+#       - run: mv /tmp/analyze.next ./
+#       - run: yarn create-size && mv size-snapshot.json previous-size-snapshot.json
+#       - run: mv /tmp/current-size-snapshot.json ./
 
-      - run: mkdir -p /tmp/lighthouse/
-      - run: yarn danger ci
+#       # - run: mkdir -p /tmp/lighthouse/
+#       - run: yarn workspace www danger ci
 
-      - store_artifacts:
-          path: ./current-size-snapshot.json
-      - store_artifacts:
-          path: /tmp/lighthouse
+#       - store_artifacts:
+#           path: ./current-size-snapshot.json
+#       # - store_artifacts:
+#       #     path: /tmp/lighthouse
 
-workflows:
-  compare-sizes:
-    jobs:
-      - compare-sizes:
-          filters:
-            branches:
-              ignore:
-                - /dependabot\/*/
+# workflows:
+#   www:
+#     jobs:
+#       - www:
+#           filters:
+#             branches:
+#               ignore:
+#                 - /dependabot\/*/

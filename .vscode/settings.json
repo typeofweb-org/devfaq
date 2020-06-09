@@ -17,7 +17,8 @@
   "search.exclude": {
     "**/node_modules": true,
     "**/bower_components": true,
-    ".next": true
+    ".next": true,
+    "**/dist": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.preferences.importModuleSpecifier": "relative",
@@ -29,5 +30,15 @@
     "titleBar.inactiveBackground": "#401886",
     "titleBar.activeForeground": "#ffffff",
     "titleBar.inactiveForeground": "#ffffff"
-  }
+  },
+  "tslint.autoFixOnSave": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/dist": true
+  },
+  "prettier.configPath": "./.prettierrc"
 }
