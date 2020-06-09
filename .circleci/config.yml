@@ -19,7 +19,7 @@ jobs:
 
       - run: yarn get-base-branch
       - run: git status
-      - run: git diff --name-only $(cat /tmp/.basebranch)
+      - run: git diff --name-only $(cat /tmp/.basebranch) | grep "apps/www"
       - when:
           condition: git diff --name-only $(cat /tmp/.basebranch)
           steps:
