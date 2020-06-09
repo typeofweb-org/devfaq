@@ -93,8 +93,8 @@ type ComparisonBundleEntry = [string, Sizes];
 const nullSnapshot = { parsed: 0, children: {} as Record<string, { parsed: number }> };
 
 async function loadComparison() {
-  const previousSnapshot = (await import('./previous-size-snapshot.json')).default;
-  const currentSnapshot = (await import('./current-size-snapshot.json')).default;
+  const previousSnapshot = (await import('../previous-size-snapshot.json')).default;
+  const currentSnapshot = (await import('../current-size-snapshot.json')).default;
   console.log(previousSnapshot);
   console.log(currentSnapshot);
 
@@ -331,19 +331,20 @@ async function commentSizesReport() {
 
   const pageDetailsTable = createComparisonTable(results, {
     computeBundleLabel: (bundleId) => {
-      if (bundleId.startsWith('shared:')) {
-        return bundleId;
-      }
+      return bundleId;
+      // if (bundleId.startsWith('shared:')) {
+      //   return bundleId;
+      // }
 
-      const owner = danger.github.pr.head.repo.owner.login;
+      // const owner = danger.github.pr.head.repo.owner.login;
 
-      const path = owner === 'typeofweb' ? '' : `fork-${owner}-`;
+      // const path = owner === 'typeofweb' ? '' : `fork-${owner}-`;
 
       // nicer URLs
-      const page = bundleId.replace('[technology]', 'js').replace('[id]', '247');
+      // const page = bundleId.replace('[technology]', 'js').replace('[id]', '247');
 
-      const host = `https://devfaq-www-git-${path}${prBranch}.typeofweb.now.sh`;
-      return `[${bundleId}](${host}${page})`;
+      // const host = `https://devfaq-www-git-${path}${prBranch}.typeofweb.now.sh`;
+      // return `[${bundleId}](${host}${page})`;
     },
   });
 
@@ -373,23 +374,8 @@ async function commentSizesReport() {
   markdown(details);
 }
 
-async function run() {
+export const wwwDanger = async () => {
   await commentSizesReport();
   // @todo reenable after creating builds for each PR
   // await commentLightHouseReport();
-}
-
-(async () => {
-  let exitCode = 0;
-  try {
-    await run();
-  } catch (err) {
-    console.error(err);
-    exitCode = 1;
-  }
-
-  process.exit(exitCode);
-})().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+};
