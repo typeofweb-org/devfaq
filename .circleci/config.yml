@@ -48,13 +48,14 @@ jobs:
             - run: mv /tmp/current-size-snapshot.json ./
 
       # - run: mkdir -p /tmp/lighthouse/
-      - run: node -r ts-node/register ./node_modules/.bin/danger ci
+      - run: yarn danger ci
 
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
+            - /home/circleci/.cache/yarn/v6
 
       - store_artifacts:
           path: ./current-size-snapshot.json
