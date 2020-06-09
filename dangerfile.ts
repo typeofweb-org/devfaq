@@ -1,13 +1,25 @@
 /* eslint-disable */
-// @ts-nocheck
-import { apiDanger } from './scripts/api-dangerfile';
-import { wwwDanger } from './scripts/www-dangerfile';
+// @t s-nocheck
+import { danger } from 'danger';
+import { run as apiDanger } from './apps/api/dangerfile';
+import { run as wwwDanger } from './apps/www/dangerfile';
 
 (async () => {
   let exitCode = 0;
   try {
-    await apiDanger();
-    await wwwDanger();
+    const shouldRunForApi =
+      danger.git.modified_files.some((file) => file.includes('apps/api/')) ||
+      danger.git.created_files.some((file) => file.includes('apps/api/'));
+    const shouldRunForWww =
+      danger.git.modified_files.some((file) => file.includes('apps/www/')) ||
+      danger.git.created_files.some((file) => file.includes('apps/www/'));
+
+    if (shouldRunForApi) {
+      await apiDanger();
+    }
+    if (shouldRunForWww) {
+      await wwwDanger();
+    }
   } catch (err) {
     console.error(err);
     exitCode = 1;

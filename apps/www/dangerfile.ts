@@ -374,7 +374,7 @@ async function commentSizesReport() {
   markdown(details);
 }
 
-export const wwwDanger = async () => {
+export const run = async () => {
   await commentSizesReport();
   // @todo reenable after creating builds for each PR
   // await commentLightHouseReport();

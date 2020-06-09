@@ -1,7 +1,7 @@
 // tslint:disable-next-line:no-implicit-dependencies
 import { warn, danger, fail } from 'danger';
 
-export const apiDanger = async () => {
+export const run = async () => {
   /**
    * Check if yarn.lock is updated when package.json is changed
    */
