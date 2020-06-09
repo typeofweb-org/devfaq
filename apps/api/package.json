@@ -36,7 +36,6 @@
     "mocha:ci": "yarn test:prepare:integration && cross-env mocha 'src/**/*.test.ts'",
     "clean": "rm -rf dist",
     "build": "yarn clean && tsc && rsync -av --exclude='*.ts' src/** dist/src/",
-    "danger": "danger ci",
     "generate-api-types": "./node_modules/@manifoldco/swagger-to-ts/pkg/bin/cli.js http://localhost:3002/swagger.json --output apiTypes.ts --prettier-config .prettierrc",
     "postinstall": "cd ./node_modules/@manifoldco/swagger-to-ts && yarn && yarn build"
   },
@@ -94,7 +93,6 @@
     "chai-datetime": "1.6.0",
     "concurrently": "5.2.0",
     "cross-env": "7.0.2",
-    "danger": "10.2.0",
     "eslint": "7.2.0",
     "mocha": "7.2.0",
     "nodemon": "2.0.4",

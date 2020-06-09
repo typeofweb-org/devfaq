@@ -1,57 +1,72 @@
-# version: 2.1
-# orbs:
-#   node: circleci/node@1.1.6
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
 
-# jobs:
-#   www:
-#     docker:
-#       - image: circleci/node:12-browsers
-#     steps:
-#       - run: |
-#           if [ "$CIRCLE_BRANCH" = "develop" ] || [ "$CIRCLE_BRANCH" = "master" ]; then
-#             circleci-agent step halt
-#           fi
+jobs:
+  dangerfile:
+    docker:
+      - image: circleci/node:12-browsers
+    steps:
+      - run: |
+          if [ "$CIRCLE_BRANCH" = "develop" ] || [ "$CIRCLE_BRANCH" = "master" ]; then
+            circleci-agent step halt
+          fi
 
-#       - checkout
-#       - node/with-cache:
-#           steps:
-#             - run: yarn install --frozen-lockfile
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run: yarn install --frozen-lockfile
+      - run: yarn cache dir
 
-#       - run: yarn get-base-branch
-#       - run: git status
-#       - run: yarn workspace www build > analyze.next
-#       - run: cat analyze.next
-#       - run: yarn create-size && mv size-snapshot.json /tmp/current-size-snapshot.json
-#       - run: rm analyze.next && rm -rf .next
+      - run: yarn get-base-branch
+      - run: git status
+      - run: cat /tmp/.basebranch
+      - run: git fetch && git checkout $CIRCLE_BRANCH && git reset --hard origin/$CIRCLE_BRANCH
+      - when:
+          condition: git diff --name-only $(cat /tmp/.basebranch) | grep "apps/www"
+          steps:
+            - run: yarn workspace www build > analyze.next
+            - run: cat analyze.next
+            - run: yarn create-size && mv size-snapshot.json /tmp/current-size-snapshot.json
+            - run: rm analyze.next && rm -rf apps/www/.next
 
-#       - run: git fetch && git checkout $(cat /tmp/.basebranch) && git reset --hard origin/$(cat /tmp/.basebranch)
-#       - run: git status
-#       - run: yarn install --frozen-lockfile
-#       - run: yarn workspace www build > analyze.next
-#       - run: cat analyze.next
-#       - run: mv analyze.next /tmp/
+            - run: git checkout $(cat /tmp/.basebranch) && git reset --hard origin/$(cat /tmp/.basebranch)
+            - run: git status
+            - run: yarn install --frozen-lockfile
+            - run: yarn workspace www build > analyze.next
+            - run: cat analyze.next
+            - run: mv analyze.next /tmp/
 
-#       - run: git fetch && git checkout $CIRCLE_BRANCH && git reset --hard origin/$CIRCLE_BRANCH
-#       - run: git status
-#       - run: yarn install --frozen-lockfile
+            - run: git checkout $CIRCLE_BRANCH && git reset --hard origin/$CIRCLE_BRANCH
+            - run: git status
+            - run: yarn install --frozen-lockfile
 
-#       - run: mv /tmp/analyze.next ./
-#       - run: yarn create-size && mv size-snapshot.json previous-size-snapshot.json
-#       - run: mv /tmp/current-size-snapshot.json ./
+            - run: mv /tmp/analyze.next ./
+            - run: yarn create-size && mv size-snapshot.json previous-size-snapshot.json
+            - run: mv /tmp/current-size-snapshot.json ./
 
-#       # - run: mkdir -p /tmp/lighthouse/
-#       - run: yarn workspace www danger ci
+      # - run: mkdir -p /tmp/lighthouse/
+      - run: yarn danger ci
 
-#       - store_artifacts:
-#           path: ./current-size-snapshot.json
-#       # - store_artifacts:
-#       #     path: /tmp/lighthouse
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+            - /home/circleci/.cache/yarn/v6
 
-# workflows:
-#   www:
-#     jobs:
-#       - www:
-#           filters:
-#             branches:
-#               ignore:
-#                 - /dependabot\/*/
+      - store_artifacts:
+          path: ./current-size-snapshot.json
+      # - store_artifacts:
+      #     path: /tmp/lighthouse
+
+workflows:
+  dangerfile:
+    jobs:
+      - dangerfile:
+          filters:
+            branches:
+              ignore:
+                - /dependabot\/*/

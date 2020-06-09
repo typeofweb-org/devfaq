@@ -53,7 +53,6 @@
     "xss": "1.0.7"
   },
   "devDependencies": {
-    "@foo-software/lighthouse-check": "0.0.90",
     "@types/classnames": "2.2.10",
     "@types/commonmark": "0.27.4",
     "@types/cookie-parser": "1.4.2",
@@ -70,7 +69,6 @@
     "babel-eslint": "10.1.0",
     "babel-jest": "26.0.1",
     "cross-env": "7.0.2",
-    "danger": "10.2.0",
     "eslint-config-react-app": "5.2.1",
     "eslint-plugin-css-modules": "2.11.0",
     "eslint-plugin-flowtype": "5.1.3",
