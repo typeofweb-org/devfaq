@@ -18,6 +18,7 @@ jobs:
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run: yarn install --frozen-lockfile
+      - run: yarn cache dir
 
       - run: yarn get-base-branch
       - run: git status
