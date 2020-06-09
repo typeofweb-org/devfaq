@@ -82,13 +82,13 @@ if [ -n "$API_CHANGED" ]; then
   NODE_ENV=production ENV=$ENV yarn workspace api db:migrate:up
   echo "👉 Restarting API server…"
   devil www restart $API_SUBDOMAIN.devfaq.pl
-  curl -I https://$API_SUBDOMAIN.devfaq.pl
+  curl --fail -I https://$API_SUBDOMAIN.devfaq.pl/health-check
 fi
 
 if [ -n "$WWW_CHANGED" ]; then
   echo "👉 Restarting WWW server…"
   devil www restart $WWW_SUBDOMAIN.devfaq.pl
-  curl -I https://$WWW_SUBDOMAIN.devfaq.pl
+  curl --fail -I https://$WWW_SUBDOMAIN.devfaq.pl
 fi
 
 echo "👉 Done! 😱 👍"
