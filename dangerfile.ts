@@ -1,8 +1,8 @@
 /* eslint-disable */
 // @t s-nocheck
 import { danger } from 'danger';
-import { run as apiDanger } from './apps/api/dangerfile';
-import { run as wwwDanger } from './apps/www/dangerfile';
+const { run: apiDanger } = require('./apps/api/dangerfile');
+const { run: wwwDanger } = require('./apps/www/dangerfile');
 
 (async () => {
   let exitCode = 0;
