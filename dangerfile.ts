@@ -94,8 +94,8 @@ const apiDanger = async () => {
 };
 
 async function loadComparison() {
-  const previousSnapshot = (await import('../previous-size-snapshot.json')).default;
-  const currentSnapshot = (await import('../current-size-snapshot.json')).default;
+  const previousSnapshot = (await import('./previous-size-snapshot.json')).default;
+  const currentSnapshot = (await import('./current-size-snapshot.json')).default;
   console.log(previousSnapshot);
   console.log(currentSnapshot);
   return generateComparison({ previousSnapshot, currentSnapshot });
