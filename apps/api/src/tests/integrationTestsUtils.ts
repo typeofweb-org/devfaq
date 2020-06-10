@@ -1,11 +1,11 @@
 import faker from 'faker';
 
-import { initDb, sequelize, getAllModels } from '../db';
+import { initLegacyDb, sequelize, getAllModels } from '../lagacy_db';
 import { questionCategories, questionLevels, questionStatuses } from '../models-consts';
 import { Question } from '../models/Question';
 
 before(async () => {
-  await initDb();
+  await initLegacyDb();
   await sequelize.sync({ match: /_test$/, logging: false });
   await clearDB();
 });

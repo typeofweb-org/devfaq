@@ -6,7 +6,7 @@ import { Sequelize } from 'sequelize';
 // tslint:disable-next-line: no-implicit-dependencies
 import { Umzug, SequelizeStorage, Migration } from 'umzug';
 
-import { sequelizeConfig } from './src/db';
+import { sequelizeConfig } from './src/lagacy_db';
 
 const sequelize = new Sequelize({ ...sequelizeConfig, logging: undefined });
 

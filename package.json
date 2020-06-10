@@ -9,7 +9,7 @@
   },
   "keywords": [],
   "scripts": {
-    "dev": "concurrently --kill-others-on-fail --names docker,===api,===www --prefix-colors yellow,magenta,blue 'yarn workspace api start:db' 'yarn workspace api dev' 'yarn workspace www dev'",
+    "dev": "concurrently --restart-tries 99, --restart-after 2000 --names docker,pgtype,===api,===www --prefix-colors yellow,orange,magenta,blue 'yarn workspace api start:db' 'yarn workspace api pgtyped -w' 'yarn workspace api dev' 'yarn workspace www dev'",
     "test": "concurrently --kill-others-on-fail --names ===api,===www --prefix-colors magenta,blue 'yarn workspace api test' 'yarn workspace www test'",
     "eslint": "concurrently --kill-others-on-fail --names ===api,===www --prefix-colors magenta,blue 'yarn workspace api eslint' 'yarn workspace www eslint'",
     "build": "concurrently --kill-others-on-fail --names ===api,===www --prefix-colors magenta,blue 'yarn workspace api build' 'yarn workspace www build'",

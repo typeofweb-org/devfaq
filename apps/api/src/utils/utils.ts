@@ -58,18 +58,12 @@ export function getNewSessionValidUntil(keepMeSignedIn: boolean): Date {
 }
 
 export const getCurrentUser = (request: Hapi.Request): User | undefined => {
-  return (
-    request &&
-    request.auth &&
-    request.auth.credentials &&
-    request.auth.credentials.session &&
-    request.auth.credentials.session._user
-  );
+  return request.auth.credentials?.session?._user;
 };
 
 export const isAdmin = (request: Hapi.Request): boolean => {
   const user = getCurrentUser(request);
-  return Boolean(user && user._roleId === 'admin');
+  return user?._roleId === 'admin';
 };
 
 // tslint:disable-next-line:no-any

@@ -3,7 +3,9 @@ import Hapi from '@hapi/hapi';
 import { IFindOptions } from 'sequelize-typescript';
 
 import { definitions } from '../../../apiTypes';
+import { getDb } from '../../db';
 import { Question } from '../../models/Question';
+import { findAllQuestions, countAllQuestions } from '../../questions.queries';
 import { isAdmin, getCurrentUser } from '../../utils/utils';
 
 import {
@@ -23,18 +25,11 @@ function columnNameFromQuery(
   switch (orderBy) {
     case 'level':
       return '_levelId';
-    default:
-      return orderBy;
+    case 'acceptedAt':
+      return 'acceptedAt';
+    case 'votesCount':
+      return 'votesCount';
   }
-}
-
-function getOrderFromQuery(request: Hapi.Request): IFindOptions<Question>['order'] {
-  const { order, orderBy } = request.query as definitions['getQuestionsRequestQuery'];
-  if (!order || !orderBy) {
-    return undefined;
-  }
-
-  return [[columnNameFromQuery(orderBy), order], ['id']];
 }
 
 export const questionsRoutes = {
@@ -58,31 +53,32 @@ export const questionsRoutes = {
           status,
           limit,
           offset,
+          orderBy,
+          order,
         } = request.query as definitions['getQuestionsRequestQuery'];
         const currentUser = getCurrentUser(request);
 
+        const db = await getDb();
+
         const where = {
-          ...(category && { _categoryId: category }),
-          ...(level && { _levelId: level }),
-          ...(status && isAdmin(request) ? { _statusId: status } : { _statusId: 'accepted' }),
+          category,
+          ...(isAdmin(request) ? { status } : { status: 'accepted' }),
+          levels: level || [null],
         };
 
-        const total = await Question.count({
-          where,
-        });
-
-        const order = getOrderFromQuery(request);
-
-        const questions = await Question.findAllWithVotes(
-          {
-            where,
-            limit,
-            offset,
-            ...(order && { order }),
-            subQuery: false,
-          },
-          currentUser && currentUser.id
-        );
+        const [questions, total] = await Promise.all([
+          findAllQuestions.run(
+            {
+              ...where,
+              userId: currentUser?.id,
+              orderBy: orderBy ? `${columnNameFromQuery(orderBy)} ${order}, id asc` : `id asc`,
+              limit,
+              offset,
+            },
+            db
+          ),
+          countAllQuestions.run(where, db),
+        ]);
 
         const data = questions.map((q) => {
           return {
@@ -95,9 +91,9 @@ export const questionsRoutes = {
             votesCount: q.votesCount,
             currentUserVotedOn: q.didUserVoteOn,
           };
-        });
+        }) as definitions['getQuestions200Response']['data'];
 
-        return { data, meta: { total } };
+        return { data, meta: { total: total[0].count } };
       },
     });
 

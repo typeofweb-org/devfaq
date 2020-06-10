@@ -17,7 +17,7 @@ import {
   Sequelize,
 } from 'sequelize-typescript';
 
-import { sequelize } from '../db';
+import { sequelize } from '../lagacy_db';
 import { QuestionLevelUnion, QuestionCategoryUnion, QuestionStatusUnion } from '../models-consts';
 
 import { QuestionCategory } from './QuestionCategory';

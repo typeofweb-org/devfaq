@@ -2,7 +2,8 @@ import * as Sentry from '@sentry/node';
 import dotenv from 'dotenv';
 
 import { getConfig } from './config';
-import { initDb } from './db';
+import { initDb, getDb } from './db';
+import { initLegacyDb } from './lagacy_db';
 import { getServerWithPlugins } from './server';
 import { handleException } from './utils/utils';
 
@@ -25,6 +26,8 @@ if (getConfig('NODE_ENV') !== 'production') {
 // tslint:disable-next-line:no-floating-promises
 (async () => {
   try {
+    await initLegacyDb(); // sequelize
+
     await initDb();
     const devfaqServer = await getServerWithPlugins();
     await devfaqServer.start();
