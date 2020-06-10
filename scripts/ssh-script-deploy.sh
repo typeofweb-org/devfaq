@@ -32,33 +32,63 @@ echo "👉 Pulling from the server…"
 git fetch origin --tags
 git checkout $BRANCH
 
-if git diff --quiet remotes/origin/$BRANCH; then
-  echo "👉 Up to date; nothing to do!"
-  exit
+# if git diff --quiet remotes/origin/$BRANCH; then
+#   echo "👉 Up to date; nothing to do!"
+#   exit
+# fi
+
+if git diff --name-only HEAD remotes/origin/$BRANCH | grep -q "apps/api/"
+then
+  API_CHANGED=1;
+fi
+
+if git diff --name-only HEAD remotes/origin/$BRANCH | grep -q "apps/www/"
+then
+  WWW_CHANGED=1;
 fi
 
 git pull origin $BRANCH
 
 echo $ENVIRONMENT:`git rev-parse --abbrev-ref HEAD`:`git rev-parse HEAD` > .version
-echo "🥁 VERSION: " `.version`
+echo "🥁 VERSION: "$(cat .version)
 cp .version apps/api/
 cp .version apps/www/
 
-echo "👉 Installing deps…"
-yarn install --frozen-lockfile
+if [ -n "$API_CHANGED" ] && [ -n "$WWW_CHANGED" ]; then
+  echo "👩‍💻 Installing both API and WWW"
+  yarn install --frozen-lockfile
+  
+  echo "👉 Bulding both API and WWW…"
+  NODE_ENV=production ENV=$ENV yarn run build
+elif [ -n "$API_CHANGED" ]; then
+  echo "👾 Installing only API"
+  yarn workspace api install --focus --frozen-lockfile
+  
+  echo "👉 Bulding only API…"
+  NODE_ENV=production ENV=$ENV yarn workspace api build
+elif [ -n "$WWW_CHANGED" ]; then
+  echo "🌍 Installing only WWW"
+  yarn workspace www install --focus --frozen-lockfile
+  
+  echo "👉 Bulding only WWW…"
+  NODE_ENV=production ENV=$ENV yarn workspace www build
+else
+  echo 'No changes inside /apps. Exiting.'
+  exit 0
+fi
 
-echo "👉 Bulding…"
-NODE_ENV=production ENV=$ENV yarn run build
+if [ -n "$API_CHANGED" ]; then
+  echo "👉 Running API migrations…"
+  NODE_ENV=production ENV=$ENV yarn workspace api db:migrate:up
+  echo "👉 Restarting API server…"
+  devil www restart $API_SUBDOMAIN.devfaq.pl
+  curl --fail -I https://$API_SUBDOMAIN.devfaq.pl/health-check
+fi
 
-echo "👉 Running API migrations…"
-NODE_ENV=production ENV=$ENV yarn workspace api db:migrate:up
-
-echo "👉 Restarting API server…"
-devil www restart $API_SUBDOMAIN.devfaq.pl
-curl -I https://$API_SUBDOMAIN.devfaq.pl
-
-echo "👉 Restarting WWW server…"
-devil www restart $WWW_SUBDOMAIN.devfaq.pl
-curl -I https://$WWW_SUBDOMAIN.devfaq.pl
+if [ -n "$WWW_CHANGED" ]; then
+  echo "👉 Restarting WWW server…"
+  devil www restart $WWW_SUBDOMAIN.devfaq.pl
+  curl --fail -I https://$WWW_SUBDOMAIN.devfaq.pl
+fi
 
 echo "👉 Done! 😱 👍"
