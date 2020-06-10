@@ -115,6 +115,7 @@ export const questionsRoutes = {
         },
       },
       async handler(request): Promise<definitions['postQuestions200Response']> {
+        console.log(typeof request.payload);
         const {
           question,
           level,

@@ -15,12 +15,18 @@ type AddQuestionModalFooterProps = {
 
 export const AddQuestionModalFooter = memo<AddQuestionModalFooterProps>(
   ({ isLoading, valid, originalQuestion, handleSubmit, onCancelClick }) => {
+    console.log({ valid, isLoading });
     return (
       <div>
         <button
-          className={classNames('round-button', styles.brandingButtonInverse, {
-            loading: isLoading,
-          })}
+          className={classNames(
+            'round-button',
+            'branding-button-inverse',
+            styles.brandingButtonInverse,
+            {
+              loading: isLoading,
+            }
+          )}
           disabled={!valid || isLoading}
           type="button"
           onClick={handleSubmit}
