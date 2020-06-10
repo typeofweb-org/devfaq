@@ -181,7 +181,7 @@ export async function getServerWithPlugins() {
 
   await server.route({
     method: 'GET',
-    path: '/public',
+    path: '/',
     options: {
       auth: {
         mode: 'try',
@@ -193,7 +193,7 @@ export async function getServerWithPlugins() {
         return request.auth.credentials;
       }
 
-      return 'Not logged in!';
+      return `<h1>Stay awhile and listen.</h1> <h2>You're not logged in.</h2>`;
     },
   });
 
