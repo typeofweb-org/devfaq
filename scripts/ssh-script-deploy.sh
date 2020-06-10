@@ -49,7 +49,7 @@ fi
 
 git pull origin $BRANCH
 
-echo $ENVIRONMENT:`git rev-parse --abbrev-ref HEAD`:`git rev-parse HEAD` > .version
+echo $ENV:`git rev-parse --abbrev-ref HEAD`:`git rev-parse HEAD` > .version
 echo "🥁 VERSION: "$(cat .version)
 cp .version apps/api/
 cp .version apps/www/
