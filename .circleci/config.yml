@@ -25,7 +25,7 @@ jobs:
       - run: cat /tmp/.basebranch
       - run: git fetch && git checkout $CIRCLE_BRANCH && git reset --hard origin/$CIRCLE_BRANCH
       - when:
-          condition: git diff --name-only $(cat /tmp/.basebranch) | grep "apps/www"
+          condition: git diff --name-only HEAD $(cat /tmp/.basebranch) | grep -q "apps/www"
           steps:
             - run: yarn workspace www build > analyze.next
             - run: cat analyze.next
