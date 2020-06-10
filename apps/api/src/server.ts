@@ -36,10 +36,6 @@ const getServer = () => {
         },
       },
       validate: {
-        options: {
-          debug: true,
-          convert: true,
-        },
         async failAction(_request, _h, err) {
           if (isProd()) {
             // In prod, log a limited error message and throw the default Bad Request error.
