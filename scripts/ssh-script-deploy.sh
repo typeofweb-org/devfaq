@@ -18,7 +18,7 @@ else
 fi
 
 node -v
-yarn -v
+yarnpkg -v
 
 cd ~/domains/devfaq.pl/devfaq/$ENV
 
@@ -54,24 +54,26 @@ echo "🥁 VERSION: "$(cat .version)
 cp .version apps/api/
 cp .version apps/www/
 
+npm i -g yarn@1.22
+
 if [ -n "$API_CHANGED" ] && [ -n "$WWW_CHANGED" ]; then
   echo "👩‍💻 Installing both API and WWW"
-  yarn install --frozen-lockfile
+  yarnpkg install --frozen-lockfile
   
   echo "👉 Bulding both API and WWW…"
-  NODE_ENV=production ENV=$ENV yarn run build
+  NODE_ENV=production ENV=$ENV yarnpkg run build
 elif [ -n "$API_CHANGED" ]; then
   echo "👾 Installing only API"
-  yarn workspace api install --focus --frozen-lockfile
+  yarnpkg workspace api install --focus --frozen-lockfile
   
   echo "👉 Bulding only API…"
-  NODE_ENV=production ENV=$ENV yarn workspace api build
+  NODE_ENV=production ENV=$ENV yarnpkg workspace api build
 elif [ -n "$WWW_CHANGED" ]; then
   echo "🌍 Installing only WWW"
-  yarn workspace www install --focus --frozen-lockfile
+  yarnpkg workspace www install --focus --frozen-lockfile
   
   echo "👉 Bulding only WWW…"
-  NODE_ENV=production ENV=$ENV yarn workspace www build
+  NODE_ENV=production ENV=$ENV yarnpkg workspace www build
 else
   echo 'No changes inside /apps. Exiting.'
   exit 0
@@ -79,7 +81,7 @@ fi
 
 if [ -n "$API_CHANGED" ]; then
   echo "👉 Running API migrations…"
-  NODE_ENV=production ENV=$ENV yarn workspace api db:migrate:up
+  NODE_ENV=production ENV=$ENV yarnpkg workspace api db:migrate:up
   echo "👉 Restarting API server…"
   devil www restart $API_SUBDOMAIN.devfaq.pl
   curl --fail -I https://$API_SUBDOMAIN.devfaq.pl/health-check
