@@ -15,7 +15,6 @@ type AddQuestionModalFooterProps = {
 
 export const AddQuestionModalFooter = memo<AddQuestionModalFooterProps>(
   ({ isLoading, valid, originalQuestion, handleSubmit, onCancelClick }) => {
-    console.log({ valid, isLoading });
     return (
       <div>
         <button
