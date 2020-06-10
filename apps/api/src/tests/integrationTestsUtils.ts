@@ -1,6 +1,6 @@
 import faker from 'faker';
 
-import { initLegacyDb, sequelize, getAllModels } from '../lagacy_db';
+import { initLegacyDb, sequelize, getAllModels } from '../legacy_db';
 import { questionCategories, questionLevels, questionStatuses } from '../models-consts';
 import { Question } from '../models/Question';
 
