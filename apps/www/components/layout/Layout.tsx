@@ -17,7 +17,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = memo(
   ({
     title = 'Front-end Frequently Asked Questions',
-    description = 'DevFAQ.pl — największa baza pytań z front-endu tworzona przez społeczność. DevFAQ.pl jest serwisem internetowym służącym do udostępniania i wymiany pytań rekrutacyjnych na stanowiska front-end developerów.',
+    description = 'DevFAQ.pl — największa baza pytań z programowania tworzona przez społeczność. DevFAQ.pl jest serwisem internetowym służącym do udostępniania i wymiany pytań rekrutacyjnych na stanowiska developerów.',
     children,
   }) => {
     const router = useRouter();
