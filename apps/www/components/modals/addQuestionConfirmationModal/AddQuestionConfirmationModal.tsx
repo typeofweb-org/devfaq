@@ -40,7 +40,7 @@ export const AddQuestionConfirmationModal = memo(
           <p id="add-question-confirmation-modal-description">
             Jeszcze momencik… a Twoje pytanie pojawi się na liście dostępnych pytań. Najpierw musimy
             rzucić na nie okiem i zatwierdzić.
-            <br /> W międzyczasie zajrzyj na nasze blogi ❤️
+            <br /> W międzyczasie zajrzyj na bloga ❤️
           </p>
           <div className={styles.logos}>
             <a
@@ -50,10 +50,13 @@ export const AddQuestionConfirmationModal = memo(
               title="Type of Web"
               onClick={() => reportEvent('Type of Web - klik')}
             >
-              <img src="/images/type_of_web_logo.png" alt="Type of Web" />
+              <img src="/images/typeofweb-logo.svg" alt="Type of Web" />
             </a>
           </div>
-          <button className={classNames(styles.roundButton, 'alternative-button')} onClick={close}>
+          <button
+            className={classNames('round-button', styles.roundButton, 'alternative-button')}
+            onClick={close}
+          >
             OK!
           </button>
         </div>

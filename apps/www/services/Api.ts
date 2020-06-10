@@ -60,7 +60,9 @@ async function makeRequest<T>(
   const options: RequestInit = {
     ...otherOptions,
     method,
-    headers: {},
+    headers: {
+      'Content-Type': 'application/json',
+    },
     credentials: 'include',
   };
 

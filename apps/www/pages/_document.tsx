@@ -33,7 +33,7 @@ export default class MyDocument extends Document {
           <meta
             property="og:image"
             itemProp="logo image"
-            content={`${env.ABSOLUTE_URL}/img/fefaq-cover-facebook.png`}
+            content={`${env.ABSOLUTE_URL}/img/devfaq-cover-facebook.png`}
           />
           <meta property="og:site_name" content="DevFAQ.pl" />
           <meta property="fb:app_id" content="2005583769700691" />
@@ -44,7 +44,6 @@ export default class MyDocument extends Document {
           <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
           <link rel="manifest" href="/manifest.json" />
           <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#673ab7" />
-          <link rel="apple-touch-startup-image" href="/splash-iphone-8.png" />
           <meta name="msapplication-TileColor" content="#673ab7" />
           <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
           <meta name="theme-color" content="#ffffff" />

@@ -54,6 +54,7 @@ const getServer = () => {
 
 export async function getServerWithPlugins() {
   const server = getServer();
+  server.validator(Joi);
 
   if (process.env.ENV !== 'test') {
     /**

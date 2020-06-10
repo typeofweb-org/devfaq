@@ -236,7 +236,7 @@ $transition-time: 300ms;
     }
 
     &_voted {
-      color: var(--purple);
+      color: var(--purple-branding);
       .vote-button {
         svg {
           transform: translateY(2px) rotate(180deg) scale(0.8);
