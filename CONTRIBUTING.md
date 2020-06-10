@@ -6,10 +6,10 @@
 
 ## Introduction
 
-DevFAQ is organised into a monorepo with yarn workspaces. You'll find frontend ([www](./apps/www)) and backend ([api](./apps/www)) in the `apps` directory.
+DevFAQ is organised into a monorepo with yarn workspaces. You'll find frontend ([www](./apps/www)) and backend ([api](./apps/api)) in the [apps](./apps) directory.
 
-- Frontend is written in Next.js (React) with TypeScript.
-- Backend is a REST API, and uses HapiJS, PostgreSQL, and TypeScript.
+- Frontend is written in **Next.js (React) with TypeScript**.
+- Backend is a REST API, and uses **HapiJS, PostgreSQL, and TypeScript**.
 
 ## Project setup
 
@@ -17,11 +17,11 @@ DevFAQ is organised into a monorepo with yarn workspaces. You'll find frontend (
 1. Fork and clone the repo. `develop` is the default branch and you should base your work off of it.
 2. Run `yarn` inside the repo to install all the dependencies.
 3. Run `yarn dev` to start both frontend and backend locally.
-4. In order for to sign-in functionality to work, you'll need to add two entries to your `/etc/hosts`. See [Configuring localhost domain](#configuring-localhost-domain) section.
+4. In order for everything to work smoothly, you'll need to add two entries to your `/etc/hosts`. See [Configuring localhost domain](#configuring-localhost-domain) section.
 
 ### Configuring localhost domain
 
-DevFAQ uses cookies for storing the session token. The cookie is `httpOnly`, `secure` (on production) and `sameSite=Lax` which means it you'll need to run www and api on the same domain for it to work. To do it locally, add the following lines to your `/etc/hosts`:
+DevFAQ uses cookies for storing the session token. The cookie is `httpOnly`, `secure` (on production) and `sameSite=Lax` which means you'll need to run frontend and backend on the same domain for it to work. To do it locally, add the following lines to your `/etc/hosts`:
 
 ```
 127.0.0.1 api.devfaq.localhost
@@ -32,7 +32,7 @@ Now you should be able to access your app at [app.devfaq.localhost:3000](http://
 
 ## Running tests
 
-There are a few tests in the API and WWW. We definitely need more! To run all tests execute the following command:
+There are only a few tests and we definitely need more! To run all tests execute the following command:
 
 ```
 yarn test
