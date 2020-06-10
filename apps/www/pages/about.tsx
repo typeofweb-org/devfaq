@@ -15,8 +15,8 @@ const AboutPage: NextComponentType = () => {
           <h3>Co to jest DevFAQ.pl?</h3>
           <p>
             DevFAQ.pl jest serwisem internetowym służącym do udostępniania i wymiany pytań
-            rekrutacyjnych na stanowiska front-end developerów oraz inne pokrewne. Został stworzony
-            przez programistów dla programistów, a jego celem jest wymiana wiedzy oraz możliwość
+            rekrutacyjnych na stanowiska developerów oraz inne pokrewne. Został stworzony przez
+            programistów dla programistów, a jego celem jest wymiana wiedzy oraz możliwość
             przygotowania się do rozmów rekrutacyjnych.
           </p>
 
@@ -66,7 +66,7 @@ const AboutPage: NextComponentType = () => {
           return 'Hello World';
         }
         `}
-            {/* prettier-ignore */ '```'}
+            {'```'}
           </pre>
 
           <p>
