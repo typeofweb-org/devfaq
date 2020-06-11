@@ -9,10 +9,6 @@
   },
   "keywords": [],
   "scripts": {
-    "dev": "concurrently --kill-others-on-fail --names docker,===api,===www --prefix-colors yellow,magenta,blue 'yarn workspace api start:db' 'yarn workspace api dev' 'yarn workspace www dev'",
-    "test": "concurrently --kill-others-on-fail --names ===api,===www --prefix-colors magenta,blue 'yarn workspace api test' 'yarn workspace www test'",
-    "eslint": "concurrently --kill-others-on-fail --names ===api,===www --prefix-colors magenta,blue 'yarn workspace api eslint' 'yarn workspace www eslint'",
-    "build": "concurrently --kill-others-on-fail --names ===api,===www --prefix-colors magenta,blue 'yarn workspace api build' 'yarn workspace www build'",
     "create-size": "ts-node-script scripts/sizeSnapshot/create.ts",
     "get-base-branch": "ts-node-script scripts/circleGetBaseBranch.ts"
   },
