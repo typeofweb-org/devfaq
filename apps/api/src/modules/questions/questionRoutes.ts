@@ -58,13 +58,13 @@ export const questionsRoutes = {
         } = request.query as definitions['getQuestionsRequestQuery'];
         const currentUser = getCurrentUser(request);
 
-        const db = await getDb();
-
         const where = {
           category,
           ...(isAdmin(request) ? { status } : { status: 'accepted' }),
           levels: level || [null],
         };
+
+        const db = await getDb();
 
         const [questions, total] = await Promise.all([
           findAllQuestions.run(
@@ -82,13 +82,9 @@ export const questionsRoutes = {
 
         const data = questions.map((q) => {
           return {
+            ...q,
             id: q.id,
-            question: q.question,
-            _categoryId: q._categoryId,
-            _levelId: q._levelId,
-            _statusId: q._statusId,
             acceptedAt: q.acceptedAt?.toISOString(),
-            votesCount: q.votesCount,
             currentUserVotedOn: q.didUserVoteOn,
           };
         }) as definitions['getQuestions200Response']['data'];
