@@ -1,11 +1,13 @@
 import * as Sentry from '@sentry/browser';
-import App, { AppContext, AppProps } from 'next/app';
+import { ReduxWrapperAppProps } from 'next-redux-wrapper';
+import App, { AppContext } from 'next/app';
 import Router from 'next/router';
 import React, { useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 
 import { AppModals } from '../components/modals/appModals/AppModals';
 import { ActionCreators } from '../redux/actions';
+import { AppState } from '../redux/reducers';
 import { nextReduxWrapper } from '../redux/store';
 import * as analytics from '../utils/analytics';
 import env from '../utils/env';
@@ -53,30 +55,28 @@ function getRouteDetails(routeDetails: RouteDetails) {
   return newRouteDetails;
 }
 
-const MyApp = ({ Component, pageProps, router }: AppProps) => {
-  const dispatch = useDispatch();
-
+const MyApp = ({ Component, pageProps, router, store }: ReduxWrapperAppProps<AppState>) => {
   const onRouteChangeComplete = useCallback(
     (url: string) => {
       analytics.reportPageView(url);
       const newRouteDetails = getRouteDetails(router);
-      dispatch(ActionCreators.updateRouteSuccess(newRouteDetails));
+      store.dispatch(ActionCreators.updateRouteSuccess(newRouteDetails));
     },
-    [router, dispatch]
+    [router, store]
   );
 
   const onRouteChangeStart = useCallback(
     (_url: string) => {
-      dispatch(ActionCreators.updateRouteStarted());
+      store.dispatch(ActionCreators.updateRouteStarted());
     },
-    [dispatch]
+    [store]
   );
 
   const onRouteChangeError = useCallback(
     (error: any, _url: string) => {
-      dispatch(ActionCreators.updateRouteError(error));
+      store.dispatch(ActionCreators.updateRouteError(error));
     },
-    [dispatch]
+    [store]
   );
 
   useEffect(() => {
@@ -91,10 +91,10 @@ const MyApp = ({ Component, pageProps, router }: AppProps) => {
   }, [onRouteChangeComplete, onRouteChangeError, onRouteChangeStart]);
 
   return (
-    <>
+    <Provider store={store}>
       <Component {...pageProps} />
       <AppModals />
-    </>
+    </Provider>
   );
 };
 
@@ -118,7 +118,7 @@ MyApp.getInitialProps = async function (appContext: AppContext) {
   return { pageProps };
 };
 
-const WrapperApp = nextReduxWrapper.withRedux(MyApp);
+const WrapperApp = nextReduxWrapper(MyApp);
 export default WrapperApp;
 
 if (typeof window !== 'undefined') {

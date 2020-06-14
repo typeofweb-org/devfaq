@@ -1,4 +1,4 @@
-import React, { useEffect, EffectCallback, useRef, useCallback } from 'react';
+import React, { useEffect, EffectCallback, useRef, useCallback, DependencyList } from 'react';
 
 export const useDidMount = (fn: EffectCallback) => {
   const ref = useRef(fn);
@@ -8,6 +8,26 @@ export const useDidMount = (fn: EffectCallback) => {
 
   useEffect(() => {
     ref.current();
+  }, []);
+};
+
+export const useDidUpdate = (fn: EffectCallback, deps: DependencyList = []) => {
+  const ref = useRef(false);
+  const fnRef = useRef(fn);
+
+  useEffect(() => {
+    fnRef.current = fn;
+  }, [fn]);
+
+  useEffect(() => {
+    if (ref.current) {
+      fnRef.current();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+
+  useEffect(() => {
+    ref.current = true;
   }, []);
 };
 
