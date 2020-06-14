@@ -7,7 +7,7 @@ ENV=$1
 if [[ "$ENV" == "production" ]]; then
   WWW_SUBDOMAIN="app"
   API_SUBDOMAIN="api"
-  BRANCH="master"
+  BRANCH="main"
 elif [[ "$ENV" == "staging" ]]; then
   WWW_SUBDOMAIN="staging"
   API_SUBDOMAIN="staging-api"
