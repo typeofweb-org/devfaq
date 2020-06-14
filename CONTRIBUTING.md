@@ -6,7 +6,7 @@
 
 ## Introduction
 
-DevFAQ is organised into a monorepo with yarn workspaces. You'll find frontend ([www](./apps/www)) and backend ([api](./apps/api)) in the [apps](./apps) directory.
+DevFAQ is organised into a monorepo with lerna and yarn workspaces. You'll find frontend ([www](./apps/www)) and backend ([api](./apps/api)) in the [apps](./apps) directory.
 
 - Frontend is written in **Next.js (React) with TypeScript**.
 - Backend is a REST API, and uses **HapiJS, PostgreSQL, and TypeScript**.
