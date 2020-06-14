@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { connect } from 'react-redux';
 
 import { Level } from '../../../constants/level';
@@ -11,7 +11,6 @@ import {
   getTechnology,
   getSortBy,
 } from '../../../redux/selectors/selectors';
-import { redirect } from '../../../utils/redirect';
 import QuestionsPagination from '../../questionsPagination/QuestionsPagination';
 import QuestionsList from '../questionsList/QuestionsList';
 import { isQuestionSelected } from '../questionsUtils';
@@ -19,13 +18,12 @@ import { isQuestionSelected } from '../questionsUtils';
 import styles from './allQuestions.module.scss';
 import { AllQuestionsFooter } from './allQuestionsFooter/AllQuestionsFooter';
 import { AllQuestionsHeader } from './allQuestionsHeader/AllQuestionsHeader';
+import { useQuestionsFilter } from '../../../utils/useFilter';
 
 type AllQuestionsComponentProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const AllQuestionsComponent = React.memo<AllQuestionsComponentProps>(
   ({
-    technology,
-    sortBy,
     questions,
     selectedQuestionsIds,
     route,
@@ -33,18 +31,18 @@ const AllQuestionsComponent = React.memo<AllQuestionsComponentProps>(
     selectQuestion,
     deselectQuestion,
   }) => {
-    const technologyIconItem = technologyIconItems.find((t) => t.name === technology);
-    const category = (technologyIconItem && technologyIconItem.label) || '';
+    const filter = useQuestionsFilter();
+    const technologyIconItem = useMemo(
+      () => technologyIconItems.find((t) => t.name === filter.selected.technology),
+      [filter.selected.technology]
+    );
+    const category = technologyIconItem?.label || '';
 
     const length = questions.data?.meta?.total;
 
     const changeSortBy: React.ChangeEventHandler<HTMLSelectElement> = useCallback(
       (e) => {
-        const query = {
-          ...route.query,
-          sortBy: e.currentTarget.value,
-        };
-        redirect('/questions/[technology]', query);
+        filter.updateFilter({ sortBy: e.currentTarget.value.split(/[,*]/) }, false);
       },
       [route.query]
     );
@@ -112,16 +110,18 @@ const AllQuestionsComponent = React.memo<AllQuestionsComponentProps>(
 
     return (
       <section className={styles.appQuestions}>
-        {questions.data && technology && (
+        {questions.data && filter.selected.technology && (
           <AllQuestionsHeader
             category={category}
             questionsLength={length}
             onSortByChange={changeSortBy}
-            sortBy={sortBy || 'acceptedAt*desc'}
+            sortBy={filter.selected.sortBy || ['acceptedAt', 'desc']}
           />
         )}
         {renderList()}
-        {questions.data && technology && <AllQuestionsFooter onAddNewClick={onAddNewClick} />}
+        {questions.data && filter.selected.technology && (
+          <AllQuestionsFooter onAddNewClick={onAddNewClick} />
+        )}
         <QuestionsPagination />
       </section>
     );

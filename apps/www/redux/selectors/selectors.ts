@@ -22,7 +22,7 @@ export const getSortBy = createSelector(
 
 export const getSortByArray = createSelector(
   getSortBy,
-  (sortBy) => (sortBy ? sortBy.split('*') : ['acceptedAt', 'desc']) as SortBy
+  (sortBy) => (sortBy ? sortBy.split(/[,*]/) : ['acceptedAt', 'desc']) as SortBy
 );
 
 export const getQuestionId = createSelector(

@@ -97,13 +97,6 @@ export const questions = (response = intialState, action: Actions): typeof intia
         }),
       };
     }
-
-    case ActionTypes.UPDATE_ROUTE_STARTED:
-      return {
-        data: undefined,
-        isLoading: false,
-        abortController: response.abortController,
-      };
     default:
       return response;
   }

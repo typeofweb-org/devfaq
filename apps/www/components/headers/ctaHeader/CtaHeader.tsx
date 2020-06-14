@@ -9,7 +9,7 @@ import {
   getDownloadUrl,
   getIsAdmin,
 } from '../../../redux/selectors/selectors';
-import ActiveLink from '../../activeLink/ActiveLink';
+import { ActiveLink } from '../../activeLink/ActiveLink';
 import { Container } from '../../container/Container';
 
 import styles from './ctaHeader.module.scss';

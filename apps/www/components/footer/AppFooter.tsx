@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import env from '../../utils/env';
-import ActiveLink from '../activeLink/ActiveLink';
+import { ActiveLink } from '../activeLink/ActiveLink';
 import { Container } from '../container/Container';
 
 import styles from './appFooter.module.scss';

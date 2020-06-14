@@ -120,7 +120,7 @@ const AsyncActionCreators = {
     dispatch(SyncActionCreators.fetchQuestionsStarted(abortController));
 
     const technology = getTechnology(state);
-    console.log(state);
+    // console.log('page', state, page);
     if (!technology) {
       return dispatch(SyncActionCreators.fetchQuestionsError(new Error('Invalid category')));
     }
@@ -129,6 +129,50 @@ const AsyncActionCreators = {
       sortBy,
       technology,
       state.selectedLevels,
+      abortController,
+      ctx
+    )
+      .then((data) => dispatch(SyncActionCreators.fetchQuestionsSuccess(data)))
+      .catch((err) => {
+        console.log(err);
+        dispatch(SyncActionCreators.fetchQuestionsError(err));
+      });
+  },
+
+  fetchQuestions2: (
+    {
+      page = 1,
+      sortBy = undefined,
+      technology,
+      selectedLevels = [],
+    }: {
+      page: number;
+      sortBy?: SortBy | undefined;
+      technology: TechnologyKey;
+      selectedLevels?: LevelKey[] | undefined;
+    },
+    ctx?: GetInitialPropsContext
+  ): AsyncAction => (dispatch, getState) => {
+    const state = getState();
+
+    let abortController: AbortController | undefined;
+    if (typeof AbortController !== 'undefined') {
+      abortController = new AbortController();
+      if (state.questions.abortController) {
+        state.questions.abortController.abort();
+      }
+    }
+
+    dispatch(SyncActionCreators.fetchQuestionsStarted(abortController));
+
+    if (!technology) {
+      return dispatch(SyncActionCreators.fetchQuestionsError(new Error('Invalid category')));
+    }
+    return Api.getQuestionsForCategoryAndLevels(
+      page,
+      sortBy,
+      technology,
+      selectedLevels,
       abortController,
       ctx
     )

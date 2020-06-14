@@ -10881,6 +10881,11 @@ mute-stream@0.0.8, mute-stream@~0.0.4:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
+myzod@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/myzod/-/myzod-1.0.2.tgz#5d2ec88cf54e3bf83c4f5bb58d984568b2976c0a"
+  integrity sha512-1r5OJcTZstRpNr8h2gX0kzFuWpHXW+TLqxoSrXSdbN+67Hke2T7tKT8VBIChlKohZhIob6oE7YAQAfjeze+7MA==
+
 mz@^2.5.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/mz/-/mz-2.7.0.tgz#95008057a56cafadc2bc63dde7f9ff6955948e32"

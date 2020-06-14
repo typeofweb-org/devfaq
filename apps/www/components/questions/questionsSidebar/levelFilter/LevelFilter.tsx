@@ -1,55 +1,76 @@
 import classNames from 'classnames';
-import React, { memo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { memo, useCallback } from 'react';
 
-import { levelsWithLabels, LevelWithLabel } from '../../../../constants/level';
-import { ActionCreators } from '../../../../redux/actions';
-import { getPage } from '../../../../redux/selectors/selectors';
-import { redirect } from '../../../../utils/redirect';
+import { levelsWithLabels, LevelWithLabel, LevelKey } from '../../../../constants/level';
+import { useQuestionsFilter } from '../../../../utils/useFilter';
 
 import styles from './levelFilter.module.scss';
 
-export default memo(() => {
-  const dispatch = useDispatch();
-  const selectedLevels = useSelector((state) => state.selectedLevels);
-  const page = useSelector(getPage);
+const isLevelSelected = (level: LevelWithLabel, selectedLevels?: LevelKey[]) =>
+  selectedLevels && selectedLevels.includes(level.value);
 
-  const renderLevel = (level: LevelWithLabel) => {
-    const className = ('app-filter--level_' + level.value) as
-      | 'app-filter--level_junior'
-      | 'app-filter--level_mid'
-      | 'app-filter--level_senior';
-    return (
-      <li
-        key={level.value}
-        className={classNames(styles.appFilterLevel, styles[className], {
-          [styles.active]: isSelected(level),
-        })}
-      >
-        <button onClick={() => toggleSelectedLevel(level)}>{level.label}</button>
-      </li>
-    );
-  };
+export const LevelFilter = memo(() => {
+  const filter = useQuestionsFilter();
+  const { selectedLevels } = filter.selected;
 
-  const isSelected = (level: LevelWithLabel): boolean => {
-    return selectedLevels.includes(level.value);
-  };
+  const isSelected = useCallback(
+    (level: LevelWithLabel) => Boolean(isLevelSelected(level, selectedLevels)),
+    [selectedLevels]
+  );
 
-  const toggleSelectedLevel = (level: LevelWithLabel) => {
-    if (isSelected(level)) {
-      dispatch(ActionCreators.deselectLevel(level.value));
-    } else {
-      globalReportEvent('Wybierz poziom', 'Lista pytań', level.label);
-      dispatch(ActionCreators.selectLevel(level.value));
-    }
-    if (page !== 1) {
-      redirect('/questions', { page: '1' });
-    }
-  };
+  const toggleSelectedLevel = useCallback(
+    (level: LevelWithLabel) => {
+      if (isSelected(level)) {
+        const newLevels = (selectedLevels || []).filter((l) => l !== level.value);
+        filter.updateFilter({ selectedLevels: newLevels, page: 1 });
+      } else {
+        globalReportEvent('Wybierz poziom', 'Lista pytań', level.label);
+        filter.updateFilter({
+          selectedLevels: [...(selectedLevels || []), level.value],
+          page: 1,
+        });
+      }
+    },
+    [filter, isSelected, selectedLevels]
+  );
+
   return (
     <div>
-      <h2 className={styles['app-filter--title']}>Wybierz poziom</h2>
-      <ul className={styles.appFilterLevels}>{levelsWithLabels.map(renderLevel)}</ul>
+      <h2 className={styles.appFilterTitle}>Wybierz poziom</h2>
+      <ul className={styles.appFilterLevels}>
+        {levelsWithLabels.map((level) => (
+          <LevelItem
+            key={level.value}
+            level={level}
+            isActive={isSelected(level)}
+            toggleSelectedLevel={toggleSelectedLevel}
+          />
+        ))}
+      </ul>
     </div>
+  );
+});
+
+const LevelItem = memo<{
+  level: LevelWithLabel;
+  isActive: boolean;
+  toggleSelectedLevel: (level: LevelWithLabel) => void;
+}>(({ level, isActive, toggleSelectedLevel }) => {
+  const className = ('app-filter--level_' + level.value) as
+    | 'app-filter--level_junior'
+    | 'app-filter--level_mid'
+    | 'app-filter--level_senior';
+
+  const toggle = useCallback(() => toggleSelectedLevel(level), [level, toggleSelectedLevel]);
+
+  return (
+    <li
+      key={level.value}
+      className={classNames(styles.appFilterLevel, styles[className], {
+        [styles.active]: isActive,
+      })}
+    >
+      <button onClick={toggle}>{level.label}</button>
+    </li>
   );
 });

@@ -1,16 +1,18 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { ActionCreators } from '../../../redux/actions';
 
-import LevelFilter from './levelFilter/LevelFilter';
+import { LevelFilter } from './levelFilter/LevelFilter';
 import styles from './questionsSidebar.module.scss';
 import { TechnologyFilter } from './technologyFilter/TechnologyFilter';
 
-const QuestionsSidebar = () => {
+export const QuestionsSidebar = memo(() => {
   const isSidebarOpen = useSelector((state) => state.ui.isSidebarOpen);
   const dispatch = useDispatch();
+
+  const close = useCallback(() => dispatch(ActionCreators.uiCloseSidebar()), [dispatch]);
 
   return (
     <div className={styles.questionsSidebar}>
@@ -27,20 +29,14 @@ const QuestionsSidebar = () => {
         </section>
         <button
           className={classNames(styles.appSidebarAccept, 'round-button branding-button-inverse')}
-          onClick={() => dispatch(ActionCreators.uiCloseSidebar())}
+          onClick={close}
         >
           Pokaż wyniki
         </button>
-        <button
-          className={styles.appSidebarClose}
-          title="Zamknij"
-          onClick={() => dispatch(ActionCreators.uiCloseSidebar())}
-        >
+        <button className={styles.appSidebarClose} title="Zamknij" onClick={close}>
           &times;
         </button>
       </aside>
     </div>
   );
-};
-
-export default QuestionsSidebar;
+});

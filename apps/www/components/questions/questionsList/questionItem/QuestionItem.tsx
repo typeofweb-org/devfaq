@@ -5,7 +5,7 @@ import React, { memo, useRef, useCallback, useMemo, useState, forwardRef } from 
 
 import { Question } from '../../../../redux/reducers/questions';
 import { useWillUnmount } from '../../../../utils/hooks';
-import ActiveLink from '../../../activeLink/ActiveLink';
+import { ActiveLink } from '../../../activeLink/ActiveLink';
 import { AnimateHeight } from '../../../animateProperty/AnimateProperty';
 import { isQuestionSelected } from '../../questionsUtils';
 

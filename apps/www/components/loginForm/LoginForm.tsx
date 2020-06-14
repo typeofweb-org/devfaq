@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ActionCreators } from '../../redux/actions';
 import { getLoggedInUser, getPreviousPath } from '../../redux/selectors/selectors';
 import { redirect, getHrefQueryFromPreviousPath } from '../../utils/redirect';
-import ActiveLink from '../activeLink/ActiveLink';
+import { ActiveLink } from '../activeLink/ActiveLink';
 import AppLogo from '../appLogo/AppLogo';
 
 import styles from './loginForm.module.scss';

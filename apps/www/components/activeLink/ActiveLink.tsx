@@ -1,12 +1,11 @@
 import classNames from 'classnames';
 import invariant from 'invariant';
 import Link, { LinkProps } from 'next/link';
-import React, { memo } from 'react';
-import { connect } from 'react-redux';
+import { useRouter } from 'next/router';
+import React, { memo, useMemo } from 'react';
 
-import type { AppState } from '../../redux/reducers/index';
 import { hrefQueryToAsPath } from '../../utils/redirect';
-import type { RouteDetails } from '../../utils/types';
+import { RouteDetails } from '../../utils/types';
 
 interface ActiveLinkOwnProps {
   activeClassName: string;
@@ -17,25 +16,31 @@ interface ActiveLinkOwnProps {
   query?: Record<string, string[] | string | undefined>;
 }
 
-type ActiveLinkComponentProps = Omit<LinkProps, 'as'> & ActiveLinkOwnProps;
+type ActiveLinkProps = Omit<LinkProps, 'as'> & ActiveLinkOwnProps;
 
-const ActiveLinkComponent: React.FC<
-  ActiveLinkComponentProps & ReturnType<typeof mapStateToProps>
-> = memo(
+export const ActiveLink = memo<ActiveLinkProps>(
   ({
-    isMatch,
     activeClassName,
+    exact,
     disabledWhenActive,
-    query,
-    as,
+    onClick,
     children,
-    href,
-    replace,
-    scroll,
-    shallow,
-    passHref,
-    prefetch,
+    query,
+    href: originalHref,
+    ...otherProps
   }) => {
+    const { as, href } = hrefQueryToAsPath(originalHref, query);
+    const router = useRouter();
+
+    const isMatch = useMemo(() => {
+      return checkForMatch(router, {
+        as,
+        href: originalHref,
+        query,
+        exact,
+      });
+    }, [as, exact, originalHref, query, router]);
+
     const conditionallyAddClassToChild = (
       shouldAddActiveClass: boolean,
       activeClassName: string,
@@ -61,15 +66,7 @@ const ActiveLinkComponent: React.FC<
     // }
 
     return (
-      <Link
-        href={href}
-        as={as}
-        replace={replace}
-        scroll={scroll}
-        shallow={shallow}
-        passHref={passHref}
-        prefetch={prefetch}
-      >
+      <Link {...otherProps} href={href} as={as}>
         {newChild}
       </Link>
     );
@@ -84,8 +81,8 @@ const checkForMatch = (
     as,
     exact,
   }: {
-    href: ActiveLinkComponentProps['href'];
-    query: ActiveLinkComponentProps['query'];
+    href: ActiveLinkProps['href'];
+    query: ActiveLinkProps['query'];
     as: string;
     exact?: boolean;
   }
@@ -107,23 +104,3 @@ const checkForMatch = (
 
   return false;
 };
-
-const mapStateToProps = (state: AppState, ownProps: ActiveLinkComponentProps) => {
-  const { as, href } = hrefQueryToAsPath(ownProps.href, ownProps.query);
-
-  const isMatch = checkForMatch(state.routeDetails.current, {
-    as,
-    href: ownProps.href,
-    query: ownProps.query,
-    exact: ownProps.exact,
-  });
-
-  return {
-    isMatch,
-    as,
-    href,
-  };
-};
-
-const ActiveLink = connect(mapStateToProps)(ActiveLinkComponent);
-export default ActiveLink;

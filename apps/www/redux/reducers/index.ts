@@ -25,9 +25,11 @@ export const reducers: Reducer<AppState, AnyAction> = (state, action) => {
   if (action.type === HYDRATE) {
     const hydrateState = action.payload;
 
+    // console.log({ state, hydrateState });
+
     const nextState = {
-      ...hydrateState,
       ...state,
+      ...hydrateState,
       routeDetails: {
         ...state?.routeDetails,
         ...hydrateState.routeDetails,

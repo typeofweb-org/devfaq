@@ -1,16 +1,17 @@
 import { polishPlurals } from 'polish-plurals';
-import React from 'react';
+import React, { memo } from 'react';
 
 import styles from '../allQuestions.module.scss';
 
 import headerStyles from './allQuestionsHeader.module.scss';
+import { SortBy } from '../../../../constants/technology-icon-items';
 
 const getQuestionsLabel = polishPlurals.bind(null, 'pytanie', 'pytania', 'pytań');
 
-export const AllQuestionsHeader = React.memo<{
+export const AllQuestionsHeader = memo<{
   category: string;
   questionsLength: number | undefined;
-  sortBy: string;
+  sortBy: SortBy;
   onSortByChange: React.ChangeEventHandler<HTMLSelectElement>;
 }>(({ category, questionsLength, onSortByChange, sortBy }) => {
   return (
@@ -25,12 +26,12 @@ export const AllQuestionsHeader = React.memo<{
           value={sortBy}
           className={styles.appQuestionsSortingSelect}
         >
-          <option value="acceptedAt*desc">od najnowszych</option>
-          <option value="acceptedAt*asc">od najstarszych</option>
-          <option value="level*asc">od najprostszych</option>
-          <option value="level*desc">od najtrudniejszych</option>
-          <option value="votesCount*asc">od najmniej popularnych</option>
-          <option value="votesCount*desc">od najpopularniejszych</option>
+          <option value="acceptedAt,desc">od najnowszych</option>
+          <option value="acceptedAt,asc">od najstarszych</option>
+          <option value="level,asc">od najprostszych</option>
+          <option value="level,desc">od najtrudniejszych</option>
+          <option value="votesCount,asc">od najmniej popularnych</option>
+          <option value="votesCount,desc">od najpopularniejszych</option>
         </select>
       </label>
     </header>

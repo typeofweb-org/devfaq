@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ActiveLink from '../../activeLink/ActiveLink';
+import { ActiveLink } from '../../activeLink/ActiveLink';
 import { Container } from '../../container/Container';
 
 import styles from './noQuestionsSelectedInfo.module.scss';

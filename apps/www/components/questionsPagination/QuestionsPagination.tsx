@@ -1,17 +1,17 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { memo } from 'react';
+import { useSelector } from 'react-redux';
 
-import { AppState } from '../../redux/reducers';
-import { getTechnology } from '../../redux/selectors/selectors';
 import { PAGE_SIZE } from '../../services/Api';
-import ActiveLink from '../activeLink/ActiveLink';
+import { useQuestionsFilter } from '../../utils/useFilter';
+import { ActiveLink } from '../activeLink/ActiveLink';
 
 import styles from './questionsPagination.module.scss';
 
-type QuestionsPaginationProps = ReturnType<typeof mapStateToProps>;
+const QuestionsPagination = memo(() => {
+  const filter = useQuestionsFilter();
+  const total = useSelector((state) => state.questions?.data?.meta?.total);
 
-const QuestionsPaginationComponent: React.FC<QuestionsPaginationProps> = ({ total, route }) => {
-  if (!total) {
+  if (!total || total <= PAGE_SIZE) {
     return null;
   }
 
@@ -21,8 +21,8 @@ const QuestionsPaginationComponent: React.FC<QuestionsPaginationProps> = ({ tota
     <footer className={styles.questionsPagination}>
       <ul>
         {Array.from({ length: pages }).map((_, i) => {
-          const query: QuestionsPaginationProps['route']['query'] = {
-            ...route.query,
+          const query = {
+            ...filter.selected,
             page: String(i + 1),
           };
 
@@ -42,18 +42,6 @@ const QuestionsPaginationComponent: React.FC<QuestionsPaginationProps> = ({ tota
       </ul>
     </footer>
   );
-};
+});
 
-const mapStateToProps = (state: AppState) => {
-  const technology = getTechnology(state);
-  const questions = state.questions;
-
-  return {
-    technology,
-    total: questions.data && questions.data.meta && questions.data.meta.total,
-    route: state.routeDetails.current,
-  };
-};
-
-const QuestionsPagination = QuestionsPaginationComponent;
-export default connect(mapStateToProps)(QuestionsPagination);
+export default QuestionsPagination;

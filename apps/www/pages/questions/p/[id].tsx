@@ -6,7 +6,7 @@ import questionStyles from '../../../components/questions/allQuestions/allQuesti
 import MobileActionButtons from '../../../components/questions/mobileActionButtons/MobileActionButtons';
 import { QuestionItem } from '../../../components/questions/questionsList/questionItem/QuestionItem';
 import QuestionsListLayout from '../../../components/questions/questionsListLayout/QuestionsListLayout';
-import QuestionsSidebar from '../../../components/questions/questionsSidebar/QuestionsSidebar';
+import { QuestionsSidebar } from '../../../components/questions/questionsSidebar/QuestionsSidebar';
 import questionListStyles from '../../../components/questions/selectedQuestions/selectedQuestions.module.scss';
 import { ActionCreators } from '../../../redux/actions';
 import { AppState } from '../../../redux/reducers/index';

@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { useState } from 'react';
 
-import ActiveLink from '../../activeLink/ActiveLink';
+import { ActiveLink } from '../../activeLink/ActiveLink';
 import AppLogo from '../../appLogo/AppLogo';
 import { Container } from '../../container/Container';
 

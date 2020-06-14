@@ -30,7 +30,7 @@ type WebVitalsReport =
 
 export function reportWebVitals({ id, name, label, value = 1 }: WebVitalsReport = {}) {
   // These metrics can be sent to any analytics service
-  console.log({ id, name, label, value });
+  // console.log({ id, name, label, value });
   if (!id || !name) {
     return;
   }

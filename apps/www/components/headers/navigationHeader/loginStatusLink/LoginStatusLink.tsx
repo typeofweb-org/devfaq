@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { AppState } from '../../../../redux/reducers';
 import { getLoggedInUser } from '../../../../redux/selectors/selectors';
 import { getPreviousPathFromHrefQuery } from '../../../../utils/redirect';
-import ActiveLink from '../../../activeLink/ActiveLink';
+import { ActiveLink } from '../../../activeLink/ActiveLink';
 import UserAvatar from '../../../userAvatar/UserAvatar';
 import navigationHeaderStyles from '../navigationHeader.module.scss';
 
