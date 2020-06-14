@@ -9,6 +9,10 @@
   },
   "keywords": [],
   "scripts": {
+    "dev": "yarn lerna run dev --parallel",
+    "build": "yarn lerna run build --stream",
+    "test": "yarn lerna run test --stream",
+    "eslint": "yarn lerna run eslint --stream",
     "create-size": "ts-node-script scripts/sizeSnapshot/create.ts",
     "get-base-branch": "ts-node-script scripts/circleGetBaseBranch.ts"
   },
