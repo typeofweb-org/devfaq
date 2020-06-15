@@ -2,7 +2,7 @@ name: Test and Build
 
 on:
   pull_request:
-    branches: [develop, master]
+    branches: [develop, main]
 
 jobs:
   test_www:
@@ -27,7 +27,7 @@ jobs:
         if: steps.changed-www.outputs.changed == 'true'
         uses: actions/setup-node@v1
         with:
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Get yarn cache directory path
         if: steps.changed-www.outputs.changed == 'true'
@@ -87,7 +87,7 @@ jobs:
         if: steps.changed-api.outputs.changed == 'true'
         uses: actions/setup-node@v1
         with:
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
       - name: Get yarn cache directory path
         if: steps.changed-api.outputs.changed == 'true'
         id: yarn-cache-dir-path

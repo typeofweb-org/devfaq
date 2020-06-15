@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/order
+const newrelic = require('newrelic');
+
 // MyDevil.net specific
 function loadDotEnv() {
   const fs = require('fs');
@@ -9,6 +12,8 @@ function loadDotEnv() {
   });
 }
 loadDotEnv();
+
+const Url = require('url');
 
 const cookieParser = require('cookie-parser');
 const express = require('express');
@@ -25,6 +30,10 @@ app
     const server = express().use(cookieParser());
 
     server.get('*', (req, res) => {
+      const parsedUrl = Url.parse(req.url, true);
+      const { pathname, query } = parsedUrl;
+      newrelic.setTransactionName(pathname);
+
       return handle(req, res);
     });
 

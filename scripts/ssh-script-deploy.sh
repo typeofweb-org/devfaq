@@ -7,7 +7,7 @@ ENV=$1
 if [[ "$ENV" == "production" ]]; then
   WWW_SUBDOMAIN="app"
   API_SUBDOMAIN="api"
-  BRANCH="master"
+  BRANCH="main"
 elif [[ "$ENV" == "staging" ]]; then
   WWW_SUBDOMAIN="staging"
   API_SUBDOMAIN="staging-api"
@@ -64,13 +64,13 @@ if [ -n "$API_CHANGED" ] && [ -n "$WWW_CHANGED" ]; then
   NODE_ENV=production ENV=$ENV yarnpkg run build
 elif [ -n "$API_CHANGED" ]; then
   echo "👾 Installing only API"
-  yarnpkg workspace api install --focus --frozen-lockfile
+  yarnpkg workspace api install --frozen-lockfile
   
   echo "👉 Bulding only API…"
   NODE_ENV=production ENV=$ENV yarnpkg workspace api build
 elif [ -n "$WWW_CHANGED" ]; then
   echo "🌍 Installing only WWW"
-  yarnpkg workspace www install --focus --frozen-lockfile
+  yarnpkg workspace www install --frozen-lockfile
   
   echo "👉 Bulding only WWW…"
   NODE_ENV=production ENV=$ENV yarnpkg workspace www build

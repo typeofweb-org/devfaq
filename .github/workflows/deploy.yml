@@ -2,7 +2,7 @@ name: Deploy to staging and production
 
 on:
   push:
-    branches: [master, develop]
+    branches: [main, develop]
 
 jobs:
   deploy:
@@ -21,5 +21,5 @@ jobs:
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
           if [[ "${GITHUB_REF##*/}" == 'develop' ]]; then ENV="staging"; fi
-          if [[ "${GITHUB_REF##*/}" == 'master' ]]; then ENV="production"; fi
+          if [[ "${GITHUB_REF##*/}" == 'main' ]]; then ENV="production"; fi
           ssh typeofweb@s18.mydevil.net 'source ~/.bashrc && ssh-add ~/.ssh/github && bash -s' < ./scripts/ssh-script-deploy.sh $ENV

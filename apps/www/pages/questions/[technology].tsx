@@ -11,6 +11,7 @@ import { Technology } from '../../constants/technology-icon-items';
 import { ActionCreators, AsyncAction } from '../../redux/actions';
 import { AppState } from '../../redux/reducers/index';
 import { getTechnology, getSortByArray, getPage } from '../../redux/selectors/selectors';
+import { useDidUpdate } from '../../utils/hooks';
 import { redirect } from '../../utils/redirect';
 import type { GetInitialPropsContext } from '../../utils/types';
 import styles from '../pages.module.scss';
@@ -19,9 +20,9 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
 const QuestionsPageComponent = ({ technology, selectedLevels, reFetchQuestions }: Props) => {
   const label = technology ? Technology[technology] : '';
 
-  useEffect(() => {
+  useDidUpdate(() => {
     reFetchQuestions();
-  }, [selectedLevels, reFetchQuestions]);
+  }, [selectedLevels.length]);
 
   return (
     <Layout title={`Pytania ${label}`}>

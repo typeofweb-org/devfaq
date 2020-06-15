@@ -8,6 +8,9 @@ analyze.next
 .deployment-url
 .basebranch
 package-lock.json
+spmdb/
+spmlogs/
+newrelic.js
 
 
 node_modules

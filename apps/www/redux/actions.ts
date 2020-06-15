@@ -120,7 +120,7 @@ const AsyncActionCreators = {
     dispatch(SyncActionCreators.fetchQuestionsStarted(abortController));
 
     const technology = getTechnology(state);
-    console.log(state);
+
     if (!technology) {
       return dispatch(SyncActionCreators.fetchQuestionsError(new Error('Invalid category')));
     }

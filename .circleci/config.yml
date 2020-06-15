@@ -8,7 +8,7 @@ jobs:
       - image: circleci/node:12-browsers
     steps:
       - run: |
-          if [ "$CIRCLE_BRANCH" = "develop" ] || [ "$CIRCLE_BRANCH" = "master" ]; then
+          if [ "$CIRCLE_BRANCH" = "develop" ] || [ "$CIRCLE_BRANCH" = "main" ]; then
             circleci-agent step halt
           fi
 
