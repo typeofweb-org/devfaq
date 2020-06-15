@@ -1,3 +1,5 @@
+require('newrelic');
+
 // MyDevil.net specific
 function loadDotEnv() {
   const fs = require('fs');
