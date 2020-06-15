@@ -107,7 +107,7 @@
     "sinon": "9.0.2",
     "sinon-chai": "3.5.0",
     "ts-node": "8.10.2",
-    "ts-node-dev": "1.0.0-pre.44",
+    "ts-node-dev": "1.0.0-pre.48",
     "typescript": "3.9.5",
     "umzug": "3.0.0-beta.5",
     "wait-on": "5.0.1"
