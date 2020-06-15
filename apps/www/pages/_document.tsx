@@ -83,11 +83,6 @@ export default class MyDocument extends Document {
             `,
             }}
           />
-          <span
-            dangerouslySetInnerHTML={{
-              __html: require('newrelic').getBrowserTimingHeader(),
-            }}
-          />
         </Head>
         <body>
           <Main />
