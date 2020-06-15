@@ -41,7 +41,7 @@ if (!getConfig('SENTRY_DSN')) {
             token: process.env.LOGS_TOKEN,
             level: 'info',
             type: 'test_logs',
-            url: 'https://logsene-receiver.sematext.com/_bulk',
+            url: 'http://logsene-receiver.sematext.com/_bulk',
           }),
         ],
       });
@@ -56,12 +56,13 @@ if (!getConfig('SENTRY_DSN')) {
           : response.headers['content-length'];
         const status = Boom.isBoom(response) ? response.output.statusCode : response.statusCode;
 
-        logger.info('response', {
+        const log = status < 400 ? logger.info.bind(logger) : logger.warn.bind(logger);
+        log('response', {
           responseTime: responseTime,
           contentLength: contentLength,
           method: method.toUpperCase(),
           url: url.toString(),
-          status: status,
+          status,
           env,
         });
       });
