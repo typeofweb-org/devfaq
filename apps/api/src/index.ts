@@ -50,12 +50,10 @@ if (!getConfig('SENTRY_DSN')) {
       const responseTime =
         (info.completed !== undefined ? info.completed : info.responded) - info.received;
 
-      if (Boom.isBoom(response)) {
-        return;
-      }
-
-      const contentLength = response.headers['content-length'];
-      const status = response.statusCode;
+      const contentLength = Boom.isBoom(response)
+        ? (response.output.headers as Record<string, string | number>)['content-length']
+        : response.headers['content-length'];
+      const status = Boom.isBoom(response) ? response.output.statusCode : response.statusCode;
 
       logger.info('response', {
         responseTime: responseTime,

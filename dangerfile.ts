@@ -26,7 +26,7 @@ const apiDanger = async () => {
    * Check if yarn.lock is updated when package.json is changed
    */
   {
-    const packageChanged = danger.git.modified_files.includes('package.json');
+    const packageChanged = danger.git.modified_files.some((path) => path.includes('package.json'));
     const lockfileChanged = danger.git.modified_files.includes('yarn.lock');
     if (packageChanged && !lockfileChanged) {
       const text = 'Changes were made to package.json, but not to yarn.lock!';
