@@ -7,7 +7,6 @@ declare function globalReportEvent(
   label?: string,
   questionId?: number | string
 );
-declare function strum(label: string, meta: string | object);
 
 declare namespace NodeJS {
   interface ProcessEnv {

@@ -9,7 +9,6 @@ const defaultEnv: ProcessENV = {
   SENTRY_DSN: '',
   NODE_ENV: 'development',
   ENV: 'development',
-  STRUM_TOKEN: '',
 };
 
 // set default env
@@ -32,7 +31,6 @@ const getEnvObjForDocument = () => {
     SENTRY_DSN: process.env.SENTRY_DSN,
     NODE_ENV: process.env.NODE_ENV,
     ENV: process.env.ENV,
-    STRUM_TOKEN: process.env.STRUM_TOKEN,
   };
 };
 

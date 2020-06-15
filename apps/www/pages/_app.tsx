@@ -15,7 +15,6 @@ import type { RouteDetails } from '../utils/types';
 
 import 'prismjs/themes/prism-coy.css';
 import './index.scss';
-import { useDidMount } from '../utils/hooks';
 
 type WebVitalsReport =
   | {
@@ -62,7 +61,6 @@ const MyApp = ({ Component, pageProps, router, store }: ReduxWrapperAppProps<App
       analytics.reportPageView(url);
       const newRouteDetails = getRouteDetails(router);
       store.dispatch(ActionCreators.updateRouteSuccess(newRouteDetails));
-      strum('routeChange', window.location.href);
     },
     [router, store]
   );
@@ -91,14 +89,6 @@ const MyApp = ({ Component, pageProps, router, store }: ReduxWrapperAppProps<App
       Router.events.off('routeChangeError', onRouteChangeError);
     };
   }, [onRouteChangeComplete, onRouteChangeError, onRouteChangeStart]);
-
-  useDidMount(() => {
-    if (env.NODE_ENV === 'production' && env.STRUM_TOKEN)
-      strum('config', {
-        token: env.STRUM_TOKEN,
-        receiverUrl: 'https://rum-receiver.sematext.com',
-      });
-  });
 
   return (
     <Provider store={store}>
