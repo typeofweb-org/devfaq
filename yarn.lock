@@ -10,15 +10,16 @@
     cross-fetch "3.0.4"
     lru-cache "5.1.1"
 
-"@ampproject/toolbox-optimizer@2.5.1":
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/@ampproject/toolbox-optimizer/-/toolbox-optimizer-2.5.1.tgz#0f5897d77d0e73957541c85f0f3f49a73e3449fe"
-  integrity sha512-C4pYFt9K9+sXngBeYB/+zrW+38mMhjG8Xu3iTO13WsPL6Ym/UNopLjmhK99mxsnQgn/lkzcACY0n7QH7WMp4JA==
+"@ampproject/toolbox-optimizer@2.5.2":
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/@ampproject/toolbox-optimizer/-/toolbox-optimizer-2.5.2.tgz#17085463255d96a81606803c4bf5d1f1414cfc17"
+  integrity sha512-hDvDgAMTHUnye2Y7WhoF+6MtgOlkru+4EJtLUdrfOKdZyNGJ7s9E+lGsncFHwyyIaEWcs5RkthcZMVHgkg7ZoQ==
   dependencies:
     "@ampproject/toolbox-core" "^2.5.1"
     "@ampproject/toolbox-runtime-version" "^2.5.1"
     "@ampproject/toolbox-script-csp" "^2.3.0"
     "@ampproject/toolbox-validator-rules" "^2.3.0"
+    abort-controller "3.0.0"
     cross-fetch "3.0.4"
     cssnano "4.1.10"
     dom-serializer "1.0.1"
@@ -2505,10 +2506,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@next/react-dev-overlay@9.4.5-canary.9":
-  version "9.4.5-canary.9"
-  resolved "https://registry.yarnpkg.com/@next/react-dev-overlay/-/react-dev-overlay-9.4.5-canary.9.tgz#795de113a435cb4ed0265c73eb46fdb7eb81609c"
-  integrity sha512-1u+Q2a4WHR6zbJK4v8ukNxHOJ1k0RvbwuQA6kF1+Z4zKjJlD6Ib9N//hhbLsh5nb1/vQi9NWW2yjFHkHqA7Uaw==
+"@next/react-dev-overlay@9.4.5-canary.12":
+  version "9.4.5-canary.12"
+  resolved "https://registry.yarnpkg.com/@next/react-dev-overlay/-/react-dev-overlay-9.4.5-canary.12.tgz#a4a67b39588b70512328a93c7909c13965969448"
+  integrity sha512-atetxqgl7FJhqACWJi3ZLa5buZk4f5/Fdzo+oNadFEsQVe/r0vDfMv8u2RYhA3jvh4RzsFn+2c3xz5FSePKvDw==
   dependencies:
     "@babel/code-frame" "7.8.3"
     ally.js "1.4.1"
@@ -2521,10 +2522,10 @@
     stacktrace-parser "0.1.10"
     strip-ansi "6.0.0"
 
-"@next/react-refresh-utils@9.4.5-canary.9":
-  version "9.4.5-canary.9"
-  resolved "https://registry.yarnpkg.com/@next/react-refresh-utils/-/react-refresh-utils-9.4.5-canary.9.tgz#6a9debee0647618194d3fd5b2746ec2af32ea238"
-  integrity sha512-5bPl6UAEMmqMTKrAGAQwByeDEPWA4dZhBPpwxRrBOGPJnsb0v7D8U92yQ191aXCHYqt/WDI4hjzIqSQYT4nc7w==
+"@next/react-refresh-utils@9.4.5-canary.12":
+  version "9.4.5-canary.12"
+  resolved "https://registry.yarnpkg.com/@next/react-refresh-utils/-/react-refresh-utils-9.4.5-canary.12.tgz#e5274e286fc48c594cca5e0c4e432958110fe598"
+  integrity sha512-BHGOtDD/woN1i64XPyC9JdJgQ8ZsyJDA42I9IgXjHzapfG0SNKtmmNnk2UXD1ND31b2q5WtK8UaIEDF/cezltg==
 
 "@nodelib/fs.stat@^1.1.2":
   version "1.1.3"
@@ -3688,7 +3689,7 @@ abbrev@1:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
-abort-controller@^3.0.0:
+abort-controller@3.0.0, abort-controller@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/abort-controller/-/abort-controller-3.0.0.tgz#eaf54d53b62bae4138e809ca225c8439a6efb392"
   integrity sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==
@@ -11220,12 +11221,12 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-next@9.4.5-canary.9:
-  version "9.4.5-canary.9"
-  resolved "https://registry.yarnpkg.com/next/-/next-9.4.5-canary.9.tgz#c1b490f391c05d4ccecd937fcb3ed5f475a9fea3"
-  integrity sha512-SYFSiXh8/goII1/JIomYHMukTOBYcu5Rfvurr1OC1FCabLcmXYOKCAnnOLaGTS0EFaHXSMNm+XwQrQxyygdnLA==
+next@9.4.5-canary.12:
+  version "9.4.5-canary.12"
+  resolved "https://registry.yarnpkg.com/next/-/next-9.4.5-canary.12.tgz#38d2873fef1fdbc674814fef93609fef97cb471a"
+  integrity sha512-vXWz87wqstYedUp3uSE+dtBPUEwrWuLklwPK+deZaiNmeF0C6FeD2dWG7j/DOf72oKyTRRsInnjCB3et1nVJ8w==
   dependencies:
-    "@ampproject/toolbox-optimizer" "2.5.1"
+    "@ampproject/toolbox-optimizer" "2.5.2"
     "@babel/code-frame" "7.8.3"
     "@babel/core" "7.7.7"
     "@babel/plugin-proposal-class-properties" "7.8.3"
@@ -11243,8 +11244,8 @@ next@9.4.5-canary.9:
     "@babel/preset-typescript" "7.9.0"
     "@babel/runtime" "7.9.6"
     "@babel/types" "7.9.6"
-    "@next/react-dev-overlay" "9.4.5-canary.9"
-    "@next/react-refresh-utils" "9.4.5-canary.9"
+    "@next/react-dev-overlay" "9.4.5-canary.12"
+    "@next/react-refresh-utils" "9.4.5-canary.12"
     babel-plugin-syntax-jsx "6.18.0"
     babel-plugin-transform-define "2.0.0"
     babel-plugin-transform-react-remove-prop-types "0.4.24"
