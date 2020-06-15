@@ -20,6 +20,10 @@ declare module '@hapi/hapi' {
   }
 }
 
+declare module '@hapi/boom' {
+  export function isBoom(err: any, statusCode?: number): err is Boom;
+}
+
 interface RequiredOptions {
   cookieDomain: string;
   isProduction: boolean;

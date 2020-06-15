@@ -62,7 +62,10 @@
     "reflect-metadata": "0.1.13",
     "sequelize": "4.44.4",
     "sequelize-typescript": "0.6.11",
-    "uuid": "8.1.0"
+    "spm-agent-nodejs": "4.0.2",
+    "uuid": "8.1.0",
+    "winston": "3.2.1",
+    "winston-logsene": "2.0.8"
   },
   "devDependencies": {
     "@manifoldco/swagger-to-ts": "github:mmiszy/swagger-to-ts#develop",
@@ -71,6 +74,7 @@
     "@types/chai-datetime": "0.0.33",
     "@types/dotenv": "8.2.0",
     "@types/faker": "4.1.12",
+    "@types/hapi-pino": "8.0.0",
     "@types/hapi__bell": "11.0.0",
     "@types/hapi__boom": "9.0.1",
     "@types/hapi__cookie": "10.1.0",

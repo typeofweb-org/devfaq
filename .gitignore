@@ -8,6 +8,8 @@ analyze.next
 .deployment-url
 .basebranch
 package-lock.json
+spmdb/
+spmlogs/
 
 
 node_modules
