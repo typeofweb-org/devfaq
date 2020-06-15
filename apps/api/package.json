@@ -55,7 +55,7 @@
     "hapi-swagger": "13.0.2",
     "lodash": "4.17.15",
     "moment": "2.26.0",
-    "nanoid": "3.1.9",
+    "nanoid": "3.1.10",
     "node-fetch": "2.6.0",
     "pg": "8.2.1",
     "pg-hstore": "2.3.3",
