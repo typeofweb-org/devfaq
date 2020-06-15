@@ -7160,10 +7160,10 @@ faker@4.1.0:
   resolved "https://registry.yarnpkg.com/faker/-/faker-4.1.0.tgz#1e45bbbecc6774b3c195fad2835109c6d748cc3f"
   integrity sha1-HkW7vsxndLPBlfrSg1EJxtdIzD8=
 
-fast-check@1.25.0:
-  version "1.25.0"
-  resolved "https://registry.yarnpkg.com/fast-check/-/fast-check-1.25.0.tgz#ae22f452e2d53577c32c7903d5b4e1eb3aacf7d5"
-  integrity sha512-HhiFqNBfty56YNuPLBlEKBmyCmUtAAV8d9qr/n3DJT1mi8dM34uK542tnO5HAgrhVjICLQuH3jrD6kULw+uCJQ==
+fast-check@1.25.1:
+  version "1.25.1"
+  resolved "https://registry.yarnpkg.com/fast-check/-/fast-check-1.25.1.tgz#aab6e34496a23ba7d7d20188699d9abdcaaa2dcc"
+  integrity sha512-4lyIDY2YKpSiPXpceCQBTfDxLh/7/C3OHgvzToea3y1YAlv38Wz9mfIsu+MD4go0NX3ow/g98kEmlW00+CoH3w==
   dependencies:
     pure-rand "^2.0.0"
     tslib "^2.0.0"
@@ -10956,7 +10956,7 @@ next-offline@5.0.2:
     fs-extra "~8.1.0"
     workbox-webpack-plugin "^5.0.0"
 
-next-redux-wrapper@5:
+next-redux-wrapper@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-5.0.0.tgz#0f36f94ea00581fbdc94f2405594f6360beb08dc"
   integrity sha512-jw893pPRJ4DCwskChp8iB+OjzfvblkEEw7frO3+u/jgZxlQ2yLaTAIRyEBjdCxTf7AOQGYb8aiWdC5toZOHJjg==
