@@ -2,6 +2,7 @@ import Boom from '@hapi/boom';
 import * as Sentry from '@sentry/node';
 import dotenv from 'dotenv';
 import Winston from 'winston';
+// @ts-expect-error
 import WinstonLogsene from 'winston-logsene';
 
 import { getConfig } from './config';
@@ -15,7 +16,7 @@ if (getConfig('NODE_ENV') !== 'production') {
   dotenv.config();
 }
 
-const spmAgent = require('spm-agent-nodejs');
+require('spm-agent-nodejs');
 const logger = Winston.createLogger({
   levels: Winston.config.npm.levels,
   transports: [
@@ -44,6 +45,7 @@ if (!getConfig('SENTRY_DSN')) {
     await initDb();
     const devfaqServer = await getServerWithPlugins();
 
+    const env = getConfig('ENV');
     devfaqServer.events.on('response', ({ url, method, info, response }) => {
       const responseTime =
         (info.completed !== undefined ? info.completed : info.responded) - info.received;
@@ -61,6 +63,7 @@ if (!getConfig('SENTRY_DSN')) {
         method: method.toUpperCase(),
         url: url.toString(),
         status: status,
+        env,
       });
     });
     await devfaqServer.start();
