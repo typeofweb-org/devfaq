@@ -1,36 +1,98 @@
 /** Types generated for queries found in "src/questions.sql" */
 import { PreparedQuery } from '@pgtyped/query';
 
-/** 'FindAllQuestions' parameters type */
-export interface IFindAllQuestionsParams {
-  levels: Array<string | null | void>;
-  userId: number | null | void;
-  category: string | null | void;
-  status: string | null | void;
-  orderBy: string | null | void;
-  limit: number | null | void;
-  offset: number | null | void;
-}
+/** Query 'FindAllQuestions' is invalid, so its result is assigned type 'never' */
+export type IFindAllQuestionsResult = never;
 
-/** 'FindAllQuestions' return type */
-export interface IFindAllQuestionsResult {
-  id: number;
-  question: string;
-  _categoryId: string;
-  _levelId: string;
-  _statusId: string;
-  acceptedAt: Date | null;
-  didUserVoteOn: boolean;
-  votesCount: number;
-}
+/** Query 'FindAllQuestions' is invalid, so its parameters are assigned type 'never' */
+export type IFindAllQuestionsParams = never;
 
-/** 'FindAllQuestions' query type */
-export interface IFindAllQuestionsQuery {
-  params: IFindAllQuestionsParams;
-  result: IFindAllQuestionsResult;
-}
-
-const findAllQuestionsIR: any = {"name":"FindAllQuestions","params":[{"name":"levels","codeRefs":{"defined":{"a":35,"b":40,"line":3,"col":8},"used":[{"a":762,"b":767,"line":32,"col":33},{"a":781,"b":786,"line":33,"col":11}]},"transform":{"type":"array_spread"}},{"name":"userId","transform":{"type":"scalar"},"codeRefs":{"used":[{"a":341,"b":346,"line":16,"col":25}]}},{"name":"category","transform":{"type":"scalar"},"codeRefs":{"used":[{"a":674,"b":681,"line":28,"col":35},{"a":695,"b":702,"line":29,"col":11}]}},{"name":"status","transform":{"type":"scalar"},"codeRefs":{"used":[{"a":846,"b":851,"line":36,"col":33},{"a":865,"b":870,"line":37,"col":11}]}},{"name":"orderBy","transform":{"type":"scalar"},"codeRefs":{"used":[{"a":924,"b":930,"line":41,"col":10}]}},{"name":"limit","transform":{"type":"scalar"},"codeRefs":{"used":[{"a":939,"b":943,"line":42,"col":7}]}},{"name":"offset","transform":{"type":"scalar"},"codeRefs":{"used":[{"a":953,"b":958,"line":42,"col":21}]}}],"usedParamSet":{"userId":true,"category":true,"levels":true,"status":true,"orderBy":true,"limit":true,"offset":true},"statement":{"body":"SELECT \"Question\".\"id\",\n  \"Question\".\"question\",\n  \"Question\".\"_categoryId\",\n  \"Question\".\"_levelId\",\n  \"Question\".\"_statusId\",\n  \"Question\".\"acceptedAt\",\n  COALESCE(\n    (\n      SELECT true\n      FROM \"QuestionVote\"\n      WHERE \"_questionId\" = \"Question\".\"id\"\n        AND \"_userId\" = :userId\n      LIMIT 1\n    ), false\n  ) as \"didUserVoteOn\",\n  count(\"_votes\".\"id\") as \"votesCount\"\nFROM \"Question\"\n  LEFT OUTER JOIN (\n    \"QuestionVote\"\n    INNER JOIN \"User\" AS \"_votes\" ON \"_votes\".\"id\" = \"QuestionVote\".\"_userId\"\n  ) ON \"Question\".\"id\" = \"QuestionVote\".\"_questionId\"\nWHERE (\n    (\n      (\"Question\".\"_categoryId\" = :category)\n      OR (:category IS NULL)\n    )\n    AND (\n      (\"Question\".\"_levelId\" IN :levels)\n      OR (:levels IS NULL)\n    )\n    AND (\n      (\"Question\".\"_statusId\" = :status)\n      OR (:status IS NULL)\n    )\n  )\nGROUP BY \"Question\".id\nORDER BY :orderBy\nLIMIT :limit OFFSET :offset","loc":{"a":55,"b":958,"line":5,"col":0}}};
+const findAllQuestionsIR: any = {
+  name: 'FindAllQuestions',
+  params: [
+    {
+      name: 'levels',
+      codeRefs: {
+        defined: { a: 35, b: 40, line: 3, col: 8 },
+        used: [
+          { a: 665, b: 670, line: 30, col: 33 },
+          { a: 684, b: 689, line: 31, col: 11 },
+        ],
+      },
+      transform: { type: 'array_spread' },
+    },
+    {
+      name: 'userId',
+      transform: { type: 'scalar' },
+      codeRefs: { used: [{ a: 341, b: 346, line: 16, col: 25 }] },
+    },
+    {
+      name: 'category',
+      transform: { type: 'scalar' },
+      codeRefs: {
+        used: [
+          { a: 577, b: 584, line: 26, col: 35 },
+          { a: 598, b: 605, line: 27, col: 11 },
+        ],
+      },
+    },
+    {
+      name: 'status',
+      transform: { type: 'scalar' },
+      codeRefs: {
+        used: [
+          { a: 749, b: 754, line: 34, col: 33 },
+          { a: 768, b: 773, line: 35, col: 11 },
+        ],
+      },
+    },
+    {
+      name: 'order',
+      transform: { type: 'scalar' },
+      codeRefs: {
+        used: [
+          { a: 843, b: 847, line: 40, col: 10 },
+          { a: 1076, b: 1080, line: 50, col: 10 },
+        ],
+      },
+    },
+    {
+      name: 'orderBy',
+      transform: { type: 'scalar' },
+      codeRefs: {
+        used: [
+          { a: 874, b: 880, line: 41, col: 7 },
+          { a: 1108, b: 1114, line: 51, col: 7 },
+        ],
+      },
+    },
+    {
+      name: 'limit',
+      transform: { type: 'scalar' },
+      codeRefs: { used: [{ a: 1300, b: 1304, line: 59, col: 7 }] },
+    },
+    {
+      name: 'offset',
+      transform: { type: 'scalar' },
+      codeRefs: { used: [{ a: 1314, b: 1319, line: 59, col: 21 }] },
+    },
+  ],
+  usedParamSet: {
+    userId: true,
+    category: true,
+    levels: true,
+    status: true,
+    order: true,
+    orderBy: true,
+    limit: true,
+    offset: true,
+  },
+  statement: {
+    body:
+      'SELECT "Question"."id",\n  "Question"."question",\n  "Question"."_categoryId",\n  "Question"."_levelId",\n  "Question"."_statusId",\n  "Question"."acceptedAt",\n  COALESCE(\n    (\n      SELECT true\n      FROM "QuestionVote"\n      WHERE "_questionId" = "Question"."id"\n        AND "_userId" = :userId\n      LIMIT 1\n    ), false\n  ) as "didUserVoteOn",\n  count("QuestionVote") as "votesCount"\nFROM "Question",\n  "QuestionVote"\nWHERE (\n    "QuestionVote"."_questionId" = "Question"."id"\n    AND (\n      ("Question"."_categoryId" = :category)\n      OR (:category IS NULL)\n    )\n    AND (\n      ("Question"."_levelId" IN :levels)\n      OR (:levels IS NULL)\n    )\n    AND (\n      ("Question"."_statusId" = :status)\n      OR (:status IS NULL)\n    )\n  )\nGROUP BY "Question"."id"\nORDER BY CASE\n    WHEN :order = \'asc\' THEN CASE\n      :orderBy\n      WHEN \'level\' THEN "_levelId"\n      WHEN \'acceptedAt\' THEN "acceptedAt"\n      WHEN \'votesCount\' THEN count("QuestionVote")\n      ELSE NULL\n    END\n    ELSE NULL\n  END ASC,\n  CASE\n    WHEN :order = \'desc\' THEN CASE\n      :orderBy\n      WHEN \'level\' THEN "_levelId"\n      WHEN \'acceptedAt\' THEN "acceptedAt"\n      WHEN \'votesCount\' THEN count("QuestionVote")\n      ELSE NULL\n    END\n    ELSE NULL\n  END DESC\nLIMIT :limit OFFSET :offset',
+    loc: { a: 55, b: 1319, line: 5, col: 0 },
+  },
+};
 
 /**
  * Query generated from SQL:
@@ -50,14 +112,12 @@ const findAllQuestionsIR: any = {"name":"FindAllQuestions","params":[{"name":"le
  *       LIMIT 1
  *     ), false
  *   ) as "didUserVoteOn",
- *   count("_votes"."id") as "votesCount"
- * FROM "Question"
- *   LEFT OUTER JOIN (
- *     "QuestionVote"
- *     INNER JOIN "User" AS "_votes" ON "_votes"."id" = "QuestionVote"."_userId"
- *   ) ON "Question"."id" = "QuestionVote"."_questionId"
+ *   count("QuestionVote") as "votesCount"
+ * FROM "Question",
+ *   "QuestionVote"
  * WHERE (
- *     (
+ *     "QuestionVote"."_questionId" = "Question"."id"
+ *     AND (
  *       ("Question"."_categoryId" = :category)
  *       OR (:category IS NULL)
  *     )
@@ -70,13 +130,33 @@ const findAllQuestionsIR: any = {"name":"FindAllQuestions","params":[{"name":"le
  *       OR (:status IS NULL)
  *     )
  *   )
- * GROUP BY "Question".id
- * ORDER BY :orderBy
+ * GROUP BY "Question"."id"
+ * ORDER BY CASE
+ *     WHEN :order = 'asc' THEN CASE
+ *       :orderBy
+ *       WHEN 'level' THEN "_levelId"
+ *       WHEN 'acceptedAt' THEN "acceptedAt"
+ *       WHEN 'votesCount' THEN count("QuestionVote")
+ *       ELSE NULL
+ *     END
+ *     ELSE NULL
+ *   END ASC,
+ *   CASE
+ *     WHEN :order = 'desc' THEN CASE
+ *       :orderBy
+ *       WHEN 'level' THEN "_levelId"
+ *       WHEN 'acceptedAt' THEN "acceptedAt"
+ *       WHEN 'votesCount' THEN count("QuestionVote")
+ *       ELSE NULL
+ *     END
+ *     ELSE NULL
+ *   END DESC
  * LIMIT :limit OFFSET :offset
  * ```
  */
-export const findAllQuestions = new PreparedQuery<IFindAllQuestionsParams,IFindAllQuestionsResult>(findAllQuestionsIR);
-
+export const findAllQuestions = new PreparedQuery<IFindAllQuestionsParams, IFindAllQuestionsResult>(
+  findAllQuestionsIR
+);
 
 /** 'CountAllQuestions' parameters type */
 export interface ICountAllQuestionsParams {
@@ -96,7 +176,48 @@ export interface ICountAllQuestionsQuery {
   result: ICountAllQuestionsResult;
 }
 
-const countAllQuestionsIR: any = {"name":"CountAllQuestions","params":[{"name":"levels","codeRefs":{"defined":{"a":997,"b":1002,"line":45,"col":8},"used":[{"a":1186,"b":1191,"line":55,"col":33},{"a":1205,"b":1210,"line":56,"col":11}]},"transform":{"type":"array_spread"}},{"name":"category","transform":{"type":"scalar"},"codeRefs":{"used":[{"a":1098,"b":1105,"line":51,"col":35},{"a":1119,"b":1126,"line":52,"col":11}]}},{"name":"status","transform":{"type":"scalar"},"codeRefs":{"used":[{"a":1270,"b":1275,"line":59,"col":33},{"a":1289,"b":1294,"line":60,"col":11}]}}],"usedParamSet":{"category":true,"levels":true,"status":true},"statement":{"body":"SELECT COUNT(*)\nFROM \"Question\"\nWHERE (\n    (\n      (\"Question\".\"_categoryId\" = :category)\n      OR (:category IS NULL)\n    )\n    AND (\n      (\"Question\".\"_levelId\" IN :levels)\n      OR (:levels IS NULL)\n    )\n    AND (\n      (\"Question\".\"_statusId\" = :status)\n      OR (:status IS NULL)\n    )\n  )","loc":{"a":1017,"b":1313,"line":47,"col":0}}};
+const countAllQuestionsIR: any = {
+  name: 'CountAllQuestions',
+  params: [
+    {
+      name: 'levels',
+      codeRefs: {
+        defined: { a: 1358, b: 1363, line: 62, col: 8 },
+        used: [
+          { a: 1547, b: 1552, line: 72, col: 33 },
+          { a: 1566, b: 1571, line: 73, col: 11 },
+        ],
+      },
+      transform: { type: 'array_spread' },
+    },
+    {
+      name: 'category',
+      transform: { type: 'scalar' },
+      codeRefs: {
+        used: [
+          { a: 1459, b: 1466, line: 68, col: 35 },
+          { a: 1480, b: 1487, line: 69, col: 11 },
+        ],
+      },
+    },
+    {
+      name: 'status',
+      transform: { type: 'scalar' },
+      codeRefs: {
+        used: [
+          { a: 1631, b: 1636, line: 76, col: 33 },
+          { a: 1650, b: 1655, line: 77, col: 11 },
+        ],
+      },
+    },
+  ],
+  usedParamSet: { category: true, levels: true, status: true },
+  statement: {
+    body:
+      'SELECT COUNT(*)\nFROM "Question"\nWHERE (\n    (\n      ("Question"."_categoryId" = :category)\n      OR (:category IS NULL)\n    )\n    AND (\n      ("Question"."_levelId" IN :levels)\n      OR (:levels IS NULL)\n    )\n    AND (\n      ("Question"."_statusId" = :status)\n      OR (:status IS NULL)\n    )\n  )',
+    loc: { a: 1378, b: 1674, line: 64, col: 0 },
+  },
+};
 
 /**
  * Query generated from SQL:
@@ -119,6 +240,7 @@ const countAllQuestionsIR: any = {"name":"CountAllQuestions","params":[{"name":"
  *   )
  * ```
  */
-export const countAllQuestions = new PreparedQuery<ICountAllQuestionsParams,ICountAllQuestionsResult>(countAllQuestionsIR);
-
-
+export const countAllQuestions = new PreparedQuery<
+  ICountAllQuestionsParams,
+  ICountAllQuestionsResult
+>(countAllQuestionsIR);

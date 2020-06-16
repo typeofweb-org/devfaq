@@ -12,7 +12,7 @@
   "scripts": {
     "start:db": "docker-compose up",
     "pgtyped": "wait-on tcp:5432 --interval 5000 && yarn ts-node node_modules/.bin/pgtyped -c pgtypedconfig.ts",
-    "dev": "concurrently --kill-others-on-fail 'yarn start:db' 'yarn dev_' 'yarn pgtyped'",
+    "dev": "concurrently --kill-others-on-fail 'yarn start:db' 'yarn dev_' 'yarn pgtyped -w'",
     "dev_": "wait-on tcp:5432 --interval 5000 && yarn db:migrate:up && ts-node-dev src/index.ts",
     "test": "cross-env NODE_ENV=test ENV=test yarn test:all",
     "test:integration": "cross-env NODE_ENV=test ENV=test yarn test:_integration",

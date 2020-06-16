@@ -2,11 +2,9 @@ import Boom from '@hapi/boom';
 import * as Sentry from '@sentry/node';
 import dotenv from 'dotenv';
 
-import { getConfig } from './config';
-import { initDb, getDb } from './db';
-import { initLegacyDb } from './legacy_db';
 import { getConfig, isStaging, isProd } from './config';
 import { initDb } from './db';
+import { initLegacyDb } from './legacy_db';
 import { getServerWithPlugins } from './server';
 import { handleException } from './utils/utils';
 

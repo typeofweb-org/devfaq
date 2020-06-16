@@ -19,19 +19,6 @@ import {
   UpdateQuestionResponseSchema,
 } from './questionSchemas';
 
-function columnNameFromQuery(
-  orderBy: NonNullable<definitions['getQuestionsRequestQuery']['orderBy']>
-): string {
-  switch (orderBy) {
-    case 'level':
-      return '_levelId';
-    case 'acceptedAt':
-      return 'acceptedAt';
-    case 'votesCount':
-      return 'votesCount';
-  }
-}
-
 export const questionsRoutes = {
   async init(server: Hapi.Server) {
     await server.route({
@@ -71,7 +58,8 @@ export const questionsRoutes = {
             {
               ...where,
               userId: currentUser?.id,
-              orderBy: orderBy ? `${columnNameFromQuery(orderBy)} ${order}, id asc` : `id asc`,
+              orderBy: orderBy || 'id',
+              order: 'desc',
               limit,
               offset,
             },

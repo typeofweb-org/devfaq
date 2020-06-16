@@ -17,14 +17,12 @@ SELECT "Question"."id",
       LIMIT 1
     ), false
   ) as "didUserVoteOn",
-  count("_votes"."id") as "votesCount"
-FROM "Question"
-  LEFT OUTER JOIN (
-    "QuestionVote"
-    INNER JOIN "User" AS "_votes" ON "_votes"."id" = "QuestionVote"."_userId"
-  ) ON "Question"."id" = "QuestionVote"."_questionId"
+  count("QuestionVote") as "votesCount"
+FROM "Question",
+  "QuestionVote"
 WHERE (
-    (
+    "QuestionVote"."_questionId" = "Question"."id"
+    AND (
       ("Question"."_categoryId" = :category)
       OR (:category IS NULL)
     )
@@ -37,8 +35,8 @@ WHERE (
       OR (:status IS NULL)
     )
   )
-GROUP BY "Question".id
-ORDER BY :orderBy
+GROUP BY "Question"."id"
+ORDER BY :unsafe_orderBy
 LIMIT :limit OFFSET :offset;
 /*
  @name CountAllQuestions

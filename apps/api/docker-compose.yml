@@ -3,6 +3,7 @@ version: '2'
 services:
   devfaq_db:
     image: postgres:12-alpine
+    command: ['postgres', '-c', 'log_statement=all', '-c', 'log_destination=stderr']
     ports:
       - '5432:5432'
     environment:
