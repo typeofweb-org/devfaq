@@ -144,7 +144,11 @@ config.exportPathMap = function () {
   };
 };
 
-const version = fs.readFileSync('.version', 'utf-8');
+const version = fs.existsSync('.version')
+  ? fs.readFileSync('.version', 'utf-8')
+  : process.env.CI
+  ? 'CI'
+  : 'dev';
 
 config.env = {
   API_URL: process.env.API_URL,
