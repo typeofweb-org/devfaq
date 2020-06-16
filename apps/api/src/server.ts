@@ -142,7 +142,8 @@ export async function getServerWithPlugins() {
   const swaggerOptions: HapiSwagger.RegisterOptions = {
     info: {
       title: `${pkg.name} Documentation`,
-      version: getConfig('ENV') + '-' + pkg.version + '-' + fs.readFileSync('.version', 'utf-8'),
+      version:
+        getConfig('ENV') + '-' + pkg.version + '-' + fs.readFileSync('.version', 'utf-8').trim(),
     },
     auth: false,
   };

@@ -22,6 +22,7 @@ Sentry.init({
   dsn: env.SENTRY_DSN,
   debug: isDev,
   environment: env.ENV,
+  release: env.SENTRY_VERSION,
 });
 
 type WebVitalsReport =

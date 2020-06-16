@@ -4,6 +4,7 @@ const env: ProcessENV = 'undefined' !== typeof window ? (window.__ENV__ as objec
 const defaultEnv: ProcessENV = {
   API_URL: 'https://api.localhost',
   VERSION: 'dev',
+  SENTRY_VERSION: '',
   GA_TRACKING_ID: '',
   ABSOLUTE_URL: '',
   SENTRY_DSN: '',
@@ -26,6 +27,7 @@ const getEnvObjForDocument = () => {
   return {
     API_URL: process.env.API_URL,
     VERSION: process.env.VERSION,
+    SENTRY_VERSION: process.env.VERSION?.split(':').pop()?.trim(),
     GA_TRACKING_ID: process.env.GA_TRACKING_ID,
     ABSOLUTE_URL: process.env.ABSOLUTE_URL,
     SENTRY_DSN: process.env.SENTRY_DSN,

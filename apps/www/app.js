@@ -1,11 +1,12 @@
 // eslint-disable-next-line import/order
-const newrelic = require('newrelic')
+const newrelic = require('newrelic');
 
 // MyDevil.net specific
 function loadDotEnv() {
   const fs = require('fs');
-  const version = fs.readFileSync('.version', 'utf-8');
+  const version = fs.readFileSync('.version', 'utf-8').trim();
   process.env.ENV = version.split(':').shift();
+  process.env.VERSION = version.split(':');
   console.log('process.env.ENV', process.env.ENV);
   require('dotenv').config({
     path: `.env.${process.env.ENV}`,

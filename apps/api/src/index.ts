@@ -1,8 +1,7 @@
-import Boom from '@hapi/boom';
 import * as Sentry from '@sentry/node';
 import dotenv from 'dotenv';
 
-import { getConfig, isStaging, isProd } from './config';
+import { getConfig } from './config';
 import { initDb } from './db';
 import { getServerWithPlugins } from './server';
 import { handleException } from './utils/utils';
@@ -20,6 +19,7 @@ if (!getConfig('SENTRY_DSN')) {
     debug: false,
     dsn: getConfig('SENTRY_DSN'),
     environment: getConfig('ENV'),
+    release: getConfig('SENTRY_VERSION'),
   });
 }
 

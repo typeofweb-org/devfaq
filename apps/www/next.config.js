@@ -144,20 +144,13 @@ config.exportPathMap = function () {
   };
 };
 
-const version = fs.existsSync('.version')
-  ? fs.readFileSync('.version', 'utf-8')
-  : process.env.CI
-  ? 'CI'
-  : 'dev';
-
 config.env = {
   API_URL: process.env.API_URL,
-  VERSION: version,
+  VERSION: process.env.VERSION,
   GA_TRACKING_ID: process.env.GA_TRACKING_ID,
   ABSOLUTE_URL: process.env.ABSOLUTE_URL || 'https://' + process.env.VERCEL_URL,
   SENTRY_DSN: process.env.SENTRY_DSN,
   ENV: process.env.ENV,
-  NODE_ENV: process.env.NODE_ENV,
 };
 
 config.reactStrictMode = true;
