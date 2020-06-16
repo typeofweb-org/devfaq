@@ -44,8 +44,8 @@ jobs:
             ${{ runner.os }}-yarn-
             ${{ runner.OS }}-
 
-      - run: cp apps/www/.env cp apps/www/.env.staging
-      - run: cp apps/www/.env cp apps/www/.env.production
+      - run: cp apps/www/.env apps/www/.env.staging
+      - run: cp apps/www/.env apps/www/.env.production
 
       - name: Install dependencies
         if: steps.changed-www.outputs.changed == 'true'
