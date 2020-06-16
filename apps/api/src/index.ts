@@ -28,43 +28,6 @@ if (!getConfig('SENTRY_DSN')) {
   try {
     await initDb();
     const devfaqServer = await getServerWithPlugins();
-
-    // if (process.env.LOGS_TOKEN && (isProd() || isStaging())) {
-    //   require('spm-agent-nodejs');
-    //   const logger = Winston.createLogger({
-    //     levels: Winston.config.npm.levels,
-    //     transports: [
-    //       new WinstonLogsene({
-    //         token: process.env.LOGS_TOKEN,
-    //         level: 'info',
-    //         type: 'test_logs',
-    //         url: 'http://logsene-receiver.sematext.com/_bulk',
-    //       }),
-    //     ],
-    //   });
-
-    //   const env = getConfig('ENV');
-    //   devfaqServer.events.on('response', ({ url, method, info, response }) => {
-    //     const responseTime =
-    //       (info.completed !== undefined ? info.completed : info.responded) - info.received;
-
-    //     const contentLength = Boom.isBoom(response)
-    //       ? (response.output.headers as Record<string, string | number>)['content-length']
-    //       : response.headers['content-length'];
-    //     const status = Boom.isBoom(response) ? response.output.statusCode : response.statusCode;
-
-    //     const log = status < 400 ? logger.info.bind(logger) : logger.warn.bind(logger);
-    //     log('response', {
-    //       responseTime: responseTime,
-    //       contentLength: contentLength,
-    //       method: method.toUpperCase(),
-    //       url: url.toString(),
-    //       status,
-    //       env,
-    //     });
-    //   });
-    // }
-
     await devfaqServer.start();
 
     console.info('Server running at:', devfaqServer.info.uri);
