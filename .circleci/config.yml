@@ -29,6 +29,8 @@ jobs:
       - when:
           condition: git diff --name-only HEAD $(cat /tmp/.basebranch) | grep -q "apps/www"
           steps:
+            - run: cp .env .env.staging
+            - run: cp .env .env.production
             - run: yarn workspace www build > analyze.next
             - run: cat analyze.next
             - run: yarn create-size && mv size-snapshot.json /tmp/current-size-snapshot.json
@@ -37,6 +39,8 @@ jobs:
             - run: git checkout $(cat /tmp/.basebranch) && git reset --hard origin/$(cat /tmp/.basebranch)
             - run: git status
             - run: yarn install --frozen-lockfile
+            - run: cp .env .env.staging
+            - run: cp .env .env.production
             - run: yarn workspace www build > analyze.next
             - run: cat analyze.next
             - run: mv analyze.next /tmp/
@@ -44,6 +48,8 @@ jobs:
             - run: git checkout $CIRCLE_BRANCH && git reset --hard origin/$CIRCLE_BRANCH
             - run: git status
             - run: yarn install --frozen-lockfile
+            - run: cp .env .env.staging
+            - run: cp .env .env.production
 
             - run: mv /tmp/analyze.next ./
             - run: yarn create-size && mv size-snapshot.json previous-size-snapshot.json
