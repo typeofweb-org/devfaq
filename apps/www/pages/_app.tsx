@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/node';
 import { ReduxWrapperAppProps } from 'next-redux-wrapper';
 import App, { AppContext } from 'next/app';
 import Router from 'next/router';
