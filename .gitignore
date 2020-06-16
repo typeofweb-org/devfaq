@@ -80,5 +80,7 @@ jspm_packages/
 # dotenv environment variables file
 .env
 .env.dev
+apps/www/.env.staging
+apps/www/.env.production
 
 *.tsbuildinfo

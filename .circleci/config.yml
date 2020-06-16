@@ -32,6 +32,8 @@ jobs:
             - run: cp apps/www/.env apps/www/.env.staging
             - run: cp apps/www/.env apps/www/.env.production
             - run: yarn workspace www build > analyze.next
+            - run: rm apps/www/.env.staging
+            - run: rm apps/www/.env.production
             - run: cat analyze.next
             - run: yarn create-size && mv size-snapshot.json /tmp/current-size-snapshot.json
             - run: rm analyze.next && rm -rf apps/www/.next
@@ -42,6 +44,8 @@ jobs:
             - run: cp apps/www/.env apps/www/.env.staging
             - run: cp apps/www/.env apps/www/.env.production
             - run: yarn workspace www build > analyze.next
+            - run: rm apps/www/.env.staging
+            - run: rm apps/www/.env.production
             - run: cat analyze.next
             - run: mv analyze.next /tmp/
 

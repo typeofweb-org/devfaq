@@ -16,6 +16,14 @@ import type { RouteDetails } from '../utils/types';
 import 'prismjs/themes/prism-coy.css';
 import './index.scss';
 
+const isDev = env.NODE_ENV !== 'production';
+Sentry.init({
+  enabled: env.NODE_ENV === 'production',
+  dsn: env.SENTRY_DSN,
+  debug: isDev,
+  environment: env.ENV,
+});
+
 type WebVitalsReport =
   | {
       id?: string;
@@ -55,7 +63,13 @@ function getRouteDetails(routeDetails: RouteDetails) {
   return newRouteDetails;
 }
 
-const MyApp = ({ Component, pageProps, router, store }: ReduxWrapperAppProps<AppState>) => {
+const MyApp = ({
+  Component,
+  pageProps,
+  router,
+  store,
+  err,
+}: ReduxWrapperAppProps<AppState> & { err: any }) => {
   const onRouteChangeComplete = useCallback(
     (url: string) => {
       analytics.reportPageView(url);
@@ -92,7 +106,7 @@ const MyApp = ({ Component, pageProps, router, store }: ReduxWrapperAppProps<App
 
   return (
     <Provider store={store}>
-      <Component {...pageProps} />
+      <Component {...pageProps} err={err} />
       <AppModals />
     </Provider>
   );
@@ -124,8 +138,6 @@ export default WrapperApp;
 if (typeof window !== 'undefined') {
   // @ts-ignore
   window.globalReportEvent = analytics.reportEvent;
-  const isDev = env.NODE_ENV !== 'production';
-  Sentry.init({ dsn: env.SENTRY_DSN, debug: isDev });
 } else {
   // @ts-ignore
   global.globalReportEvent = (
