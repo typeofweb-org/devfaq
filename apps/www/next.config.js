@@ -146,9 +146,13 @@ config.exportPathMap = function () {
   };
 };
 
+const version = fs.existsSync('.version') ? fs.readFileSync('.version', 'utf-8').trim() : 'dev';
+process.env.VERSION = version;
+
 config.env = {
   API_URL: process.env.API_URL,
-  VERSION: process.env.VERSION,
+  VERSION: version,
+  SENTRY_VERSION: version.split(':').pop() || '',
   GA_TRACKING_ID: process.env.GA_TRACKING_ID,
   ABSOLUTE_URL: process.env.ABSOLUTE_URL || 'https://' + process.env.VERCEL_URL,
   SENTRY_DSN: process.env.SENTRY_DSN,
