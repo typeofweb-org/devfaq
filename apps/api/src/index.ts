@@ -1,8 +1,8 @@
-import * as Sentry from '@sentry/node';
 import dotenv from 'dotenv';
 
 import { getConfig } from './config';
 import { initDb } from './db';
+import { SentryCLS } from './plugins/cls/context';
 import { getServerWithPlugins } from './server';
 import { handleException } from './utils/utils';
 
@@ -15,7 +15,7 @@ if (getConfig('NODE_ENV') !== 'production') {
 if (!getConfig('SENTRY_DSN')) {
   console.warn('SENTRY_DSN is missing. No errors will be reported!');
 } else {
-  Sentry.init({
+  SentryCLS.init({
     debug: false,
     dsn: getConfig('SENTRY_DSN'),
     environment: getConfig('ENV'),
@@ -32,9 +32,9 @@ if (!getConfig('SENTRY_DSN')) {
 
     console.info('Server running at:', devfaqServer.info.uri);
   } catch (err) {
-    handleException(err, Sentry.Severity.Fatal);
+    handleException(err, SentryCLS.Severity.Fatal);
 
-    const client = Sentry.getCurrentHub().getClient();
+    const client = SentryCLS.getCurrentHub().getClient();
     if (client) {
       client
         // tslint:disable-next-line:no-magic-numbers

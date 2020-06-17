@@ -1,11 +1,12 @@
 import Hapi, { RequestRoute } from '@hapi/hapi';
-import { withScope, Severity, captureException } from '@sentry/node';
+import type { Severity } from '@sentry/node';
 import { isUndefined, omitBy, upperFirst, camelCase } from 'lodash';
 import moment from 'moment';
 import { Model } from 'sequelize-typescript';
 
 import { getConfig } from '../config';
 import { User } from '../models/User';
+import { SentryCLS } from '../plugins/cls/context';
 
 type Nil<T> = T | undefined | null;
 export function defaultToAny<T>(v1: T): T;
@@ -29,12 +30,12 @@ export function handleException(err: any, level?: Severity) {
   }
 
   if (level) {
-    withScope((scope) => {
+    SentryCLS.withScope((scope) => {
       scope.setLevel(level);
-      captureException(err);
+      SentryCLS.captureException(err);
     });
   } else {
-    captureException(err);
+    SentryCLS.captureException(err);
   }
 }
 

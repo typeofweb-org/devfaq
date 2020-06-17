@@ -1,5 +1,7 @@
 import { Server } from '@hapi/hapi';
 
+import { getConfig } from '../../config';
+
 export const healthCheckRoute = {
   init(server: Server) {
     return server.route({
@@ -11,7 +13,10 @@ export const healthCheckRoute = {
         auth: false,
       },
       handler() {
-        return null;
+        return {
+          ENV: getConfig('ENV'),
+          SENTRY_VERSION: getConfig('SENTRY_VERSION'),
+        };
       },
     });
   },

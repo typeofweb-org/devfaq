@@ -5,6 +5,7 @@ import Router from 'next/router';
 import React, { useEffect, useCallback } from 'react';
 import { Provider } from 'react-redux';
 
+import { ErrorBoundary } from '../components/errorBoundary/ErrorBoundary';
 import { AppModals } from '../components/modals/appModals/AppModals';
 import { ActionCreators } from '../redux/actions';
 import { AppState } from '../redux/reducers';
@@ -18,7 +19,6 @@ import './index.scss';
 
 const isDev = env.NODE_ENV !== 'production';
 Sentry.init({
-  enabled: env.NODE_ENV === 'production',
   dsn: env.SENTRY_DSN,
   debug: isDev,
   environment: env.ENV,
@@ -106,10 +106,12 @@ const MyApp = ({
   }, [onRouteChangeComplete, onRouteChangeError, onRouteChangeStart]);
 
   return (
-    <Provider store={store}>
-      <Component {...pageProps} err={err} />
-      <AppModals />
-    </Provider>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <Component {...pageProps} err={err} />
+        <AppModals />
+      </Provider>
+    </ErrorBoundary>
   );
 };
 
