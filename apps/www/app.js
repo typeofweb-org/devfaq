@@ -1,4 +1,6 @@
 /* eslint-disable import/order */
+const { Dsn } = require('@sentry/utils');
+
 const newrelic = require('newrelic');
 
 const { v4 } = require('uuid');
@@ -17,8 +19,12 @@ function loadDotEnv() {
 }
 loadDotEnv();
 
+const { projectId, user } = (process.env.SENTRY_DSN && new Dsn(process.env.SENTRY_DSN)) || {};
 const apiUrl = process.env.API_URL;
-const cspReportEndpoint = `${apiUrl}/csp`;
+const cspReportEndpoint =
+  projectId && user
+    ? `https://o125101.ingest.sentry.io/api/${projectId}/security/?sentry_key=${user}&sentry_environment=${process.env.ENV}&sentry_release=${process.env.SENTRY_VERSION}`
+    : '';
 
 const Sentry = require('@sentry/node');
 const isDev = process.env.NODE_ENV !== 'production';
@@ -52,24 +58,30 @@ app
     server.use((req, res, next) => {
       res.locals.nonce = v4();
 
-      res.setHeader(
-        'Report-To',
-        JSON.stringify({
-          group: 'csp-group',
-          max_age: 10886400,
-          endpoints: [{ url: cspReportEndpoint }],
-        })
-      );
+      if (cspReportEndpoint) {
+        res.setHeader(
+          'Report-To',
+          JSON.stringify({
+            group: 'csp-group',
+            max_age: 10886400,
+            endpoints: [{ url: cspReportEndpoint }],
+          })
+        );
+      }
       helmet({
         contentSecurityPolicy: {
           directives: {
             defaultSrc: ["'self'"],
-            connectSrc: ["'self'", apiUrl],
+            connectSrc: ["'self'", apiUrl, "'https://*.sentry.io'", "'https://sentry.io'"],
             styleSrc: ["'self'", 'https://fonts.googleapis.com'],
             scriptSrc: [(_req, res) => `'nonce-${res.locals.nonce}'`, `'strict-dynamic'`],
             fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
-            imgSrc: ["'self'", 'https://www.google-analytics.com'],
-            reportUri: cspReportEndpoint,
+            imgSrc: [
+              "'self'",
+              'https://www.google-analytics.com',
+              'https://*.githubusercontent.com',
+            ],
+            ...(cspReportEndpoint && { reportUri: cspReportEndpoint }),
             reportTo: `csp-group`,
           },
           reportOnly: true,
