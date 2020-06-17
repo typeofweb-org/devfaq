@@ -16,7 +16,7 @@ const EmptyAdminQuestions = memo(({ questions }: { questions?: Question[] }) => 
     return null;
   }
   return (
-    <div className={questionListStyles.appQuestionsList} style={{ flex: 1 }}>
+    <div className={questionListStyles.appQuestionsList}>
       <Container className={noQuestionsStyles.selectedQuestionsEmpty}>
         <p>Nie ma żadnych pytań do zaakceptowania!</p>
       </Container>

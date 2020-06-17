@@ -13,3 +13,11 @@ declare namespace NodeJS {
     readonly ENV: 'development' | 'production' | 'test' | 'staging';
   }
 }
+
+interface Window {
+  dataLayer: Array<any>;
+}
+
+interface Navigator {
+  standalone?: boolean;
+}

@@ -26,12 +26,8 @@ export class ErrorBoundary extends React.Component {
     if (this.state.error) {
       return (
         <>
-          <h1 style={{ textAlign: 'center' }}>Something went wrong…</h1>
-          <button
-            style={{ alignSelf: 'center' }}
-            className="round-button"
-            onClick={this.onReportFeedbackClick}
-          >
+          <h1>Something went wrong…</h1>
+          <button className="round-button" onClick={this.onReportFeedbackClick}>
             Report feedback
           </button>
         </>

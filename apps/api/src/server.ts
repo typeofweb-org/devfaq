@@ -181,6 +181,79 @@ export async function getServerWithPlugins() {
   await questionsRoutes.init(server);
   await questionVotesRoutes.init(server);
 
+  type CspReport = {
+    'blocked-uri': string;
+    'document-uri': string;
+    'original-policy': string;
+    referrer: string;
+    'violated-directive': string;
+    'column-number'?: number;
+    'line-number'?: number;
+    'source-file': string;
+  };
+
+  server.route({
+    path: '/csp',
+    method: 'POST',
+    options: {
+      tags: ['api'],
+      auth: {
+        mode: 'try',
+      },
+      payload: {
+        override: 'application/json',
+      },
+    },
+    handler(request, h) {
+      if (typeof request.payload !== 'object' || !('csp-report' in request.payload)) {
+        return null;
+      }
+      const cspReport = request.payload as {
+        'csp-report': CspReport;
+      };
+
+      SentryCLS.withScope((scope) => {
+        const {
+          info: { host, received, remoteAddress },
+          method,
+          query,
+          headers,
+          state,
+          path,
+          auth,
+        } = request;
+        const baseUrl = `${server.info.protocol}://${host}`;
+        scope.setExtra('timestamp', received);
+        scope.setExtra('remoteAddress', remoteAddress);
+
+        const user = auth?.credentials?.session?._user;
+        if (user) {
+          scope.setUser({
+            id: String(user.id),
+            username: user.email,
+            email: user.email,
+            json: user.toJSON(),
+          });
+        }
+
+        const extraData = {
+          method,
+          query_string: query,
+          headers,
+          cookies: state,
+          url: baseUrl + path,
+          data: cspReport['csp-report'],
+        };
+
+        scope.setExtra('request', extraData);
+
+        handleException(new Error('CSP Error'));
+      });
+
+      return null;
+    },
+  });
+
   await server.route({
     method: 'GET',
     path: '/',
