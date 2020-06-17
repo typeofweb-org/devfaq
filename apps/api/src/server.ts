@@ -5,7 +5,6 @@ import Hapi from '@hapi/hapi';
 import Inert from '@hapi/inert';
 import Joi from '@hapi/joi';
 import Vision from '@hapi/vision';
-import * as Sentry from '@sentry/node';
 import HapiSwagger from 'hapi-swagger';
 
 import pkg from '../package.json';
@@ -16,6 +15,7 @@ import { helloWorldRoute } from './modules/hello-world/helloWorldRoute';
 import { questionVotesRoutes } from './modules/question-votes/questionVotesRoutes';
 import { questionsRoutes } from './modules/questions/questionRoutes';
 import AuthPlugin from './plugins/auth';
+import { SentryCLS } from './plugins/cls/context';
 import { handleException, routeToLabel } from './utils/utils';
 
 const getServer = () => {
@@ -39,11 +39,11 @@ const getServer = () => {
         async failAction(_request, _h, err) {
           if (isProd()) {
             // In prod, log a limited error message and throw the default Bad Request error.
-            handleException(err, Sentry.Severity.Warning);
+            handleException(err, SentryCLS.Severity.Warning);
 
             throw Boom.badRequest(`Invalid request payload input`);
           } else {
-            handleException(err, Sentry.Severity.Warning);
+            handleException(err, SentryCLS.Severity.Warning);
             throw err;
           }
         },
@@ -106,7 +106,7 @@ export async function getServerWithPlugins() {
   server.events.on({ name: 'request', channels: 'error' }, (request, event, _tags) => {
     const baseUrl = `${server.info.protocol}://${request.info.host}`;
 
-    Sentry.withScope((scope) => {
+    SentryCLS.withScope((scope) => {
       scope.setExtra('timestamp', request.info.received);
       scope.setExtra('remoteAddress', request.info.remoteAddress);
 
