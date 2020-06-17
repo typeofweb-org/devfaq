@@ -213,11 +213,20 @@ export async function getServerWithPlugins() {
       };
 
       SentryCLS.withScope((scope) => {
-        const baseUrl = `${server.info.protocol}://${request.info.host}`;
-        scope.setExtra('timestamp', request.info.received);
-        scope.setExtra('remoteAddress', request.info.remoteAddress);
+        const {
+          info: { host, received, remoteAddress },
+          method,
+          query,
+          headers,
+          state,
+          path,
+          auth,
+        } = request;
+        const baseUrl = `${server.info.protocol}://${host}`;
+        scope.setExtra('timestamp', received);
+        scope.setExtra('remoteAddress', remoteAddress);
 
-        const user = request?.auth?.credentials?.session?._user;
+        const user = auth?.credentials?.session?._user;
         if (user) {
           scope.setUser({
             id: String(user.id),
@@ -228,11 +237,11 @@ export async function getServerWithPlugins() {
         }
 
         const extraData = {
-          method: request.method,
-          query_string: request.query,
-          headers: request.headers,
-          cookies: request.state,
-          url: baseUrl + request.path,
+          method,
+          query_string: query,
+          headers,
+          cookies: state,
+          url: baseUrl + path,
           data: cspReport['csp-report'],
         };
 

@@ -17,6 +17,8 @@ function loadDotEnv() {
 }
 loadDotEnv();
 
+const cspReportEndpoint = `${process.env.API_URL}/csp`
+
 const Sentry = require('@sentry/node');
 const isDev = process.env.NODE_ENV !== 'production';
 Sentry.init({
@@ -53,7 +55,7 @@ app
         "group": "csp-group",
         "max_age": 10886400,
         "endpoints": [
-          { "url": `${process.env.API_URL}/csp` }
+          { "url": cspReportEndpoint }
         ]
       }))
       helmet({
@@ -70,7 +72,7 @@ app
               "data:",
               "https://fonts.gstatic.com",
             ],
-            reportUri: `${process.env.API_URL}/csp`,
+            reportUri: cspReportEndpoint,
             reportTo: `csp-group`
           },
           reportOnly: true,
@@ -81,7 +83,7 @@ app
 
     server.get('*', (req, res) => {
       const parsedUrl = Url.parse(req.url, true);
-      const { pathname, query } = parsedUrl;
+      const { pathname } = parsedUrl;
       newrelic.setTransactionName(pathname);
 
       return handle(req, res);
