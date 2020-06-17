@@ -10,12 +10,27 @@ import React from 'react';
 import * as analytics from '../utils/analytics';
 import env, { unsafe_getEnvScriptForDocument } from '../utils/env';
 
-export default class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
-    return Document.getInitialProps(ctx);
+type DocumentContextWithNonce = DocumentContext & {
+  res: DocumentContext['res'] & { locals: { nonce?: string } };
+};
+
+type CustomDocumentProps = {
+  nonce?: string;
+};
+
+export default class MyDocument extends Document<CustomDocumentProps> {
+  static async getInitialProps(
+    ctx: DocumentContextWithNonce
+  ): Promise<DocumentInitialProps & CustomDocumentProps> {
+    const { nonce } = ctx.res.locals;
+
+    const props = await Document.getInitialProps(ctx);
+
+    return { ...props, nonce };
   }
 
   render() {
+    const { nonce } = this.props;
     return (
       <html
         lang="pl-PL"
@@ -23,7 +38,7 @@ export default class MyDocument extends Document {
         itemScope
         itemType="http://schema.org/WebPage"
       >
-        <Head>
+        <Head nonce={nonce}>
           <base href="/" />
           <meta
             name="viewport"
@@ -55,8 +70,9 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Fira+Sans:200,400,700&amp;subset=latin-ext"
             rel="stylesheet"
           />
-          <script dangerouslySetInnerHTML={unsafe_getEnvScriptForDocument()} />
+          <script nonce={nonce} dangerouslySetInnerHTML={unsafe_getEnvScriptForDocument()} />
           <script
+            nonce={nonce}
             dangerouslySetInnerHTML={{
               __html: `
               if (window.navigator.standalone) {
@@ -66,10 +82,12 @@ export default class MyDocument extends Document {
             }}
           />
           <script
+            nonce={nonce}
             async
             src={`https://www.googletagmanager.com/gtag/js?id=${analytics.GA_TRACKING_ID}`}
           />
           <script
+            nonce={nonce}
             dangerouslySetInnerHTML={{
               __html: `
               window.dataLayer = window.dataLayer || [];
@@ -86,7 +104,7 @@ export default class MyDocument extends Document {
         </Head>
         <body>
           <Main />
-          <NextScript />
+          <NextScript nonce={nonce} />
         </body>
       </html>
     );

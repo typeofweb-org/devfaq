@@ -163,6 +163,7 @@ config.reactStrictMode = true;
 config.experimental = {
   modern: true,
 };
+config.poweredByHeader = false;
 
 config.sassOptions = {
   includePaths: [path.join(__dirname, 'styles')],

@@ -5,7 +5,7 @@ import styles from './appLogo.module.scss';
 const AppLogo = ({ fill = '#ffffff' }) => {
   return (
     <span className={styles.appLogo}>
-      <span className={styles.scalingSvgContainer} style={{ height: '100%' }}>
+      <span className={styles.scalingSvgContainer}>
         <svg
           className={styles.scalingSvg}
           xmlns="http://www.w3.org/2000/svg"

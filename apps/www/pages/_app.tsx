@@ -42,10 +42,10 @@ type WebVitalsReport =
 export function reportWebVitals({ id, name, label, value = 1 }: WebVitalsReport = {}) {
   // These metrics can be sent to any analytics service
   console.log({ id, name, label, value });
-  if (!id || !name) {
+  if (!id || !name || typeof window === 'undefined') {
     return;
   }
-  gtag('event', name, {
+  window.gtag('event', name, {
     event_category: label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
     event_label: id,
     value: Math.round(name === 'CLS' ? value * 1000 : value),
