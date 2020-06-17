@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const SentryWebpackPlugin = require('@sentry/webpack-plugin');
+// https://github.com/getsentry/sentry-cli/issues/764
+// const SentryWebpackPlugin = require('@sentry/webpack-plugin');
 const withSourceMaps = require('@zeit/next-source-maps')();
 const dotenv = require('dotenv');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
@@ -112,22 +113,23 @@ const config = withSourceMaps(
           // and upload the source maps to sentry.
           // This is an alternative to manually uploading the source maps
           // Note: This is disabled in development mode.
-          if (
-            process.env.SENTRY_DSN &&
-            process.env.SENTRY_ORG &&
-            process.env.SENTRY_PROJECT &&
-            process.env.SENTRY_AUTH_TOKEN &&
-            process.env.NODE_ENV === 'production'
-          ) {
-            config.plugins.push(
-              new SentryWebpackPlugin({
-                include: '.next',
-                ignore: ['node_modules'],
-                urlPrefix: '~/_next',
-                release: options.buildId,
-              })
-            );
-          }
+          // https://github.com/getsentry/sentry-cli/issues/764
+          // if (
+          //   process.env.SENTRY_DSN &&
+          //   process.env.SENTRY_ORG &&
+          //   process.env.SENTRY_PROJECT &&
+          //   process.env.SENTRY_AUTH_TOKEN &&
+          //   process.env.NODE_ENV === 'production'
+          // ) {
+          //   config.plugins.push(
+          //     new SentryWebpackPlugin({
+          //       include: '.next',
+          //       ignore: ['node_modules'],
+          //       urlPrefix: '~/_next',
+          //       release: options.buildId,
+          //     })
+          //   );
+          // }
 
           return config;
         },
@@ -144,9 +146,13 @@ config.exportPathMap = function () {
   };
 };
 
+const version = fs.existsSync('.version') ? fs.readFileSync('.version', 'utf-8').trim() : 'dev';
+process.env.VERSION = version;
+
 config.env = {
   API_URL: process.env.API_URL,
-  VERSION: process.env.VERSION,
+  VERSION: version,
+  SENTRY_VERSION: version.split(':').pop() || '',
   GA_TRACKING_ID: process.env.GA_TRACKING_ID,
   ABSOLUTE_URL: process.env.ABSOLUTE_URL || 'https://' + process.env.VERCEL_URL,
   SENTRY_DSN: process.env.SENTRY_DSN,

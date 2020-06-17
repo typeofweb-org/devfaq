@@ -1,26 +1,41 @@
-import { configureScope, captureException, showReportDialog } from '@sentry/browser';
+import * as Sentry from '@sentry/browser';
 import React from 'react';
 
 export class ErrorBoundary extends React.Component {
-  state = { error: null };
+  state: { error: Error | null } = {
+    error: null,
+  };
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo & Record<string, any>) {
-    this.setState({ error });
-    configureScope((scope) => {
+    if (!this.state.error) {
+      this.setState({ error });
+    }
+    Sentry.configureScope((scope) => {
       Object.keys(errorInfo).forEach((key) => {
         scope.setExtra(key, errorInfo[key]);
       });
+      Sentry.captureException(error);
     });
-    captureException(error);
   }
 
   onReportFeedbackClick = () => {
-    showReportDialog();
+    Sentry.showReportDialog();
   };
 
   render() {
     if (this.state.error) {
-      return <button onClick={this.onReportFeedbackClick}>Report feedback</button>;
+      return (
+        <>
+          <h1 style={{ textAlign: 'center' }}>Something went wrong…</h1>
+          <button
+            style={{ alignSelf: 'center' }}
+            className="round-button"
+            onClick={this.onReportFeedbackClick}
+          >
+            Report feedback
+          </button>
+        </>
+      );
     } else {
       return this.props.children;
     }
