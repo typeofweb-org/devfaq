@@ -72,7 +72,7 @@ app
         contentSecurityPolicy: {
           directives: {
             defaultSrc: ["'self'"],
-            connectSrc: ["'self'", apiUrl, "'https://*.sentry.io'", "'https://sentry.io'"],
+            connectSrc: ["'self'", apiUrl, 'https://*.sentry.io', 'https://sentry.io'],
             styleSrc: ["'self'", 'https://fonts.googleapis.com'],
             scriptSrc: [(_req, res) => `'nonce-${res.locals.nonce}'`, `'strict-dynamic'`],
             fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
