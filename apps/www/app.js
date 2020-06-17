@@ -72,6 +72,10 @@ app
               "data:",
               "https://fonts.gstatic.com",
             ],
+            imgSrc: [
+              "'self'",
+              "https://www.google-analytics.com"
+            ],
             reportUri: cspReportEndpoint,
             reportTo: `csp-group`
           },
