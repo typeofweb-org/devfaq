@@ -61,6 +61,8 @@ if [ -n "$API_CHANGED" ] && [ -n "$WWW_CHANGED" ]; then
   yarnpkg install --frozen-lockfile
   
   echo "👉 Bulding both API and WWW…"
+  yarnpkg workspace www rimraf .next/static
+  yarnpkg workspace www rimraf .next/server
   NODE_ENV=production ENV=$ENV yarnpkg run build
 elif [ -n "$API_CHANGED" ]; then
   echo "👾 Installing only API"
@@ -73,6 +75,8 @@ elif [ -n "$WWW_CHANGED" ]; then
   yarnpkg workspace www install --frozen-lockfile
   
   echo "👉 Bulding only WWW…"
+  yarnpkg workspace www rimraf .next/static
+  yarnpkg workspace www rimraf .next/server
   NODE_ENV=production ENV=$ENV yarnpkg workspace www build
 else
   echo 'No changes inside /apps. Exiting.'

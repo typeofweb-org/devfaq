@@ -17,7 +17,8 @@ function loadDotEnv() {
 }
 loadDotEnv();
 
-const cspReportEndpoint = `${process.env.API_URL}/csp`
+const apiUrl = process.env.API_URL;
+const cspReportEndpoint = `${apiUrl}/csp`;
 
 const Sentry = require('@sentry/node');
 const isDev = process.env.NODE_ENV !== 'production';
@@ -32,7 +33,7 @@ const Url = require('url');
 
 const cookieParser = require('cookie-parser');
 const express = require('express');
-const helmet = require("helmet");
+const helmet = require('helmet');
 const next = require('next');
 
 const app = next({ dev: false });
@@ -43,7 +44,7 @@ app
   .prepare()
   .then(() => {
     loadDotEnv();
-    const server = express()
+    const server = express();
     server.use(Sentry.Handlers.requestHandler());
     server.use(Sentry.Handlers.errorHandler());
     server.use(helmet());
@@ -51,38 +52,30 @@ app
     server.use((req, res, next) => {
       res.locals.nonce = v4();
 
-      res.setHeader('Report-To', JSON.stringify({
-        "group": "csp-group",
-        "max_age": 10886400,
-        "endpoints": [
-          { "url": cspReportEndpoint }
-        ]
-      }))
+      res.setHeader(
+        'Report-To',
+        JSON.stringify({
+          group: 'csp-group',
+          max_age: 10886400,
+          endpoints: [{ url: cspReportEndpoint }],
+        })
+      );
       helmet({
-        contentSecurityPolicy: ({
+        contentSecurityPolicy: {
           directives: {
             defaultSrc: ["'self'"],
-            styleSrc: [
-              "'self'",
-              "https://fonts.googleapis.com",
-            ],
+            connectSrc: ["'self'", apiUrl],
+            styleSrc: ["'self'", 'https://fonts.googleapis.com'],
             scriptSrc: [(_req, res) => `'nonce-${res.locals.nonce}'`, `'strict-dynamic'`],
-            fontSrc: [
-              "'self'",
-              "data:",
-              "https://fonts.gstatic.com",
-            ],
-            imgSrc: [
-              "'self'",
-              "https://www.google-analytics.com"
-            ],
+            fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
+            imgSrc: ["'self'", 'https://www.google-analytics.com'],
             reportUri: cspReportEndpoint,
-            reportTo: `csp-group`
+            reportTo: `csp-group`,
           },
           reportOnly: true,
-        })
-      })(req, res, next)
-    })
+        },
+      })(req, res, next);
+    });
     server.use(cookieParser());
 
     server.get('*', (req, res) => {
