@@ -1,7 +1,7 @@
 # DevFAQ
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/Contributors-10-673ab7.svg)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 [![Sponsor Type of Web](https://badgen.net/badge/icon/Sponsor%20%E2%9D%A4?icon=github&label&color=ea4aaa)](https://github.com/sponsors/typeofweb) ![Test and Build](https://github.com/typeofweb/devfaq/workflows/Test%20and%20Build/badge.svg) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=typeofweb_devfaq&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=typeofweb_devfaq) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftypeofweb%2Fdevfaq.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftypeofweb%2Fdevfaq?ref=badge_shield) [![Discord](https://img.shields.io/discord/440163731704643589?color=738ADB&label=Discord&logo=discord&logoColor=white)](https://discord.typeofweb.com/)
