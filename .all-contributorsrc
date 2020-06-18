@@ -106,5 +106,6 @@
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": true
+  "skipCi": true,
+  "badgeTemplate": "[![All Contributors](https://img.shields.io/badge/Contributors-<%= contributors.length %>-673ab7.svg)](#contributors-)"
 }
