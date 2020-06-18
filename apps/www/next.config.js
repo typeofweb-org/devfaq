@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
+// https://github.com/getsentry/sentry-cli/issues/764
+// const SentryWebpackPlugin = require('@sentry/webpack-plugin');
+const withSourceMaps = require('@zeit/next-source-maps')();
 const dotenv = require('dotenv');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const withImages = require('next-images');
@@ -92,14 +95,46 @@ const withPolyfills = (module.exports = (nextConfig = {}) => {
   });
 });
 
-const config = withBundleAnalyzer(
-  withPolyfills(
-    withImages({
-      webpack: (config, options) => {
-        config.plugins.push(new LodashModuleReplacementPlugin());
-        return config;
-      },
-    })
+const config = withSourceMaps(
+  withBundleAnalyzer(
+    withPolyfills(
+      withImages({
+        webpack: (config, options) => {
+          config.plugins.push(new LodashModuleReplacementPlugin());
+
+          // So ask Webpack to replace @sentry/node imports with @sentry/browser when
+          // building the browser's bundle
+          if (!options.isServer) {
+            config.resolve.alias['@sentry/node'] = '@sentry/browser';
+          }
+
+          // When all the Sentry configuration env variables are available/configured
+          // The Sentry webpack plugin gets pushed to the webpack plugins to build
+          // and upload the source maps to sentry.
+          // This is an alternative to manually uploading the source maps
+          // Note: This is disabled in development mode.
+          // https://github.com/getsentry/sentry-cli/issues/764
+          // if (
+          //   process.env.SENTRY_DSN &&
+          //   process.env.SENTRY_ORG &&
+          //   process.env.SENTRY_PROJECT &&
+          //   process.env.SENTRY_AUTH_TOKEN &&
+          //   process.env.NODE_ENV === 'production'
+          // ) {
+          //   config.plugins.push(
+          //     new SentryWebpackPlugin({
+          //       include: '.next',
+          //       ignore: ['node_modules'],
+          //       urlPrefix: '~/_next',
+          //       release: options.buildId,
+          //     })
+          //   );
+          // }
+
+          return config;
+        },
+      })
+    )
   )
 );
 
@@ -111,9 +146,13 @@ config.exportPathMap = function () {
   };
 };
 
+const version = fs.existsSync('.version') ? fs.readFileSync('.version', 'utf-8').trim() : 'dev';
+process.env.VERSION = version;
+
 config.env = {
   API_URL: process.env.API_URL,
-  VERSION: process.env.VERSION,
+  VERSION: version,
+  SENTRY_VERSION: version.split(':').pop() || '',
   GA_TRACKING_ID: process.env.GA_TRACKING_ID,
   ABSOLUTE_URL: process.env.ABSOLUTE_URL || 'https://' + process.env.VERCEL_URL,
   SENTRY_DSN: process.env.SENTRY_DSN,
@@ -124,6 +163,7 @@ config.reactStrictMode = true;
 config.experimental = {
   modern: true,
 };
+config.poweredByHeader = false;
 
 config.sassOptions = {
   includePaths: [path.join(__dirname, 'styles')],

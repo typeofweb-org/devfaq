@@ -12,7 +12,6 @@ export const AppFooter = () => {
   return (
     <div className={styles.footerContainer}>
       <Container as="footer">
-        <small style={{ color: 'transparent', position: 'absolute', left: 0 }}>{version}</small>
         <nav className={styles.footerNavigation}>
           <ul className={styles.footerNavigationLinks}>
             <li className={classNames(styles.footerNavigationLinksItem, 'mobile-hide')}>

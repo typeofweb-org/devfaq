@@ -7,6 +7,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_LOG_LEVEL: debug
 
     steps:
       - uses: actions/checkout@v2
@@ -23,3 +26,24 @@ jobs:
           if [[ "${GITHUB_REF##*/}" == 'develop' ]]; then ENV="staging"; fi
           if [[ "${GITHUB_REF##*/}" == 'main' ]]; then ENV="production"; fi
           ssh typeofweb@s18.mydevil.net 'source ~/.bashrc && ssh-add ~/.ssh/github && bash -s' < ./scripts/ssh-script-deploy.sh $ENV
+
+      - name: Create Sentry Release
+        run: |
+          if [[ "${GITHUB_REF##*/}" == 'develop' ]]; then ENV="staging"; fi
+          if [[ "${GITHUB_REF##*/}" == 'main' ]]; then ENV="production"; fi
+
+          # Install Sentry CLI
+          curl -sL https://sentry.io/get-cli/ | bash
+
+          # Create new Sentry release
+          export SENTRY_VERSION=$(sentry-cli releases propose-version)
+
+          sentry-cli releases --org=typeofweb --project=devfaq-api new $SENTRY_VERSION
+          sentry-cli releases --org=typeofweb --project=devfaq-api set-commits --auto $SENTRY_VERSION
+          sentry-cli releases --org=typeofweb --project=devfaq-api finalize $SENTRY_VERSION
+          sentry-cli releases --org=typeofweb --project=devfaq-api deploys $SENTRY_VERSION new -e $ENV
+
+          sentry-cli releases --org=typeofweb --project=devfaq-www new $SENTRY_VERSION
+          sentry-cli releases --org=typeofweb --project=devfaq-www set-commits --auto $SENTRY_VERSION
+          sentry-cli releases --org=typeofweb --project=devfaq-www finalize $SENTRY_VERSION
+          sentry-cli releases --org=typeofweb --project=devfaq-www deploys $SENTRY_VERSION new -e $ENV

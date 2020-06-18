@@ -9,7 +9,7 @@
   "imageSize": 70,
   "commit": true,
   "commitConvention": "gitmoji",
-  "contributors": [   
+  "contributors": [
     {
       "login": "mmiszy",
       "name": "Michał Miszczyszyn",
@@ -94,8 +94,18 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "KonradNojman",
+      "name": "KonradNojman",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/60238331?v=4",
+      "profile": "https://github.com/KonradNojman",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": true
+  "skipCi": true,
+  "badgeTemplate": "[![All Contributors](https://img.shields.io/badge/Contributors-<%= contributors.length %>-673ab7.svg)](#contributors-)"
 }

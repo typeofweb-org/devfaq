@@ -91,7 +91,7 @@ async function getNextPagesSize(): Promise<
     if (pageUrl.startsWith('css/')) {
       cssChunks.push(prettyBytesInverse(sizeFormatted, sizeUnit));
       return null;
-    } else if (pageUrl === 'static/pages/_app.js') {
+    } else if (pageUrl.includes('pages/_app.')) {
       snapshotId = 'shared:_app.js';
     } else if (/^runtime\/main\.(.+)\.js$/.test(pageUrl)) {
       snapshotId = 'shared:runtime/main';
@@ -99,6 +99,8 @@ async function getNextPagesSize(): Promise<
       snapshotId = 'shared:runtime/webpack';
     } else if (/^chunks\/commons\.(.+)\.js$/.test(pageUrl)) {
       snapshotId = 'shared:chunk/commons';
+    } else if (/^chunks\/MarkdownText\.(.+)\.js$/.test(pageUrl)) {
+      snapshotId = 'shared:MarkdownText';
     } else if (/^chunks\/framework\.(.+)\.js$/.test(pageUrl)) {
       snapshotId = 'shared:chunk/framework';
     } else if (/^chunks\/(.*)\.js$/.test(pageUrl)) {

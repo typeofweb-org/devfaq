@@ -1,10 +1,11 @@
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/node';
 import { ReduxWrapperAppProps } from 'next-redux-wrapper';
 import App, { AppContext } from 'next/app';
 import Router from 'next/router';
 import React, { useEffect, useCallback } from 'react';
 import { Provider } from 'react-redux';
 
+import { ErrorBoundary } from '../components/errorBoundary/ErrorBoundary';
 import { AppModals } from '../components/modals/appModals/AppModals';
 import { ActionCreators } from '../redux/actions';
 import { AppState } from '../redux/reducers';
@@ -15,6 +16,14 @@ import type { RouteDetails } from '../utils/types';
 
 import 'prismjs/themes/prism-coy.css';
 import './index.scss';
+
+const isDev = env.NODE_ENV !== 'production';
+Sentry.init({
+  dsn: env.SENTRY_DSN,
+  debug: isDev,
+  environment: env.ENV,
+  release: env.SENTRY_VERSION,
+});
 
 type WebVitalsReport =
   | {
@@ -33,10 +42,10 @@ type WebVitalsReport =
 export function reportWebVitals({ id, name, label, value = 1 }: WebVitalsReport = {}) {
   // These metrics can be sent to any analytics service
   console.log({ id, name, label, value });
-  if (!id || !name) {
+  if (!id || !name || typeof window === 'undefined') {
     return;
   }
-  gtag('event', name, {
+  window.gtag('event', name, {
     event_category: label === 'web-vital' ? 'Web Vitals' : 'Next.js custom metric',
     event_label: id,
     value: Math.round(name === 'CLS' ? value * 1000 : value),
@@ -55,7 +64,13 @@ function getRouteDetails(routeDetails: RouteDetails) {
   return newRouteDetails;
 }
 
-const MyApp = ({ Component, pageProps, router, store }: ReduxWrapperAppProps<AppState>) => {
+const MyApp = ({
+  Component,
+  pageProps,
+  router,
+  store,
+  err,
+}: ReduxWrapperAppProps<AppState> & { err: any }) => {
   const onRouteChangeComplete = useCallback(
     (url: string) => {
       analytics.reportPageView(url);
@@ -91,10 +106,12 @@ const MyApp = ({ Component, pageProps, router, store }: ReduxWrapperAppProps<App
   }, [onRouteChangeComplete, onRouteChangeError, onRouteChangeStart]);
 
   return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-      <AppModals />
-    </Provider>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <Component {...pageProps} err={err} />
+        <AppModals />
+      </Provider>
+    </ErrorBoundary>
   );
 };
 
@@ -124,8 +141,6 @@ export default WrapperApp;
 if (typeof window !== 'undefined') {
   // @ts-ignore
   window.globalReportEvent = analytics.reportEvent;
-  const isDev = env.NODE_ENV !== 'production';
-  Sentry.init({ dsn: env.SENTRY_DSN, debug: isDev });
 } else {
   // @ts-ignore
   global.globalReportEvent = (
