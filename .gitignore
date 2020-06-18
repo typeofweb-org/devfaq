@@ -84,3 +84,8 @@ apps/www/.env.staging
 apps/www/.env.production
 
 *.tsbuildinfo
+
+# cypress
+
+apps/www/cypress/screenshots
+apps/www/cypress/videos

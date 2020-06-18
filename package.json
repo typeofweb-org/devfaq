@@ -14,7 +14,8 @@
     "test": "yarn lerna run test --stream",
     "eslint": "yarn lerna run eslint --stream",
     "create-size": "ts-node-script scripts/sizeSnapshot/create.ts",
-    "get-base-branch": "ts-node-script scripts/circleGetBaseBranch.ts"
+    "get-base-branch": "ts-node-script scripts/circleGetBaseBranch.ts",
+    "cypress": "cypress run"
   },
   "workspaces": {
     "packages": [

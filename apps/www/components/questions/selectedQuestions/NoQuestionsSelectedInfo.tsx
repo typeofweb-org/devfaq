@@ -11,6 +11,7 @@ const NoQuestionsSelectedInfo = () => {
       <p>Najpierw zaznacz jakieś pytania, a następnie wróć tutaj aby zobaczyć podgląd!</p>
       <ActiveLink href="/questions" activeClassName="">
         <a
+          data-cy="navigate main"
           className="round-button alternative-button"
           onClick={() => globalReportEvent('Zaznacz pytania', 'Wybrane pytania')}
         >
