@@ -1,1 +1,5 @@
-*       @mmiszy
+*                     @mmiszy
+package.json          @dependabot-preview @dependabot
+apps/www/package.json @dependabot-preview @dependabot
+apps/api/package.json @dependabot-preview @dependabot
+yarn-lock.json        @dependabot-preview @dependabot
