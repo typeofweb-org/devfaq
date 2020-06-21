@@ -15,7 +15,7 @@ export const AllQuestionsHeader = React.memo<{
 }>(({ category, questionsLength, onSortByChange, sortBy }) => {
   return (
     <header className={headerStyles.appQuestionsHeader}>
-      <output>
+      <output data-cy="category">
         <strong>{category}:</strong> {questionsLength} {getQuestionsLabel(questionsLength || 0)}
       </output>
       <label className={styles.appQuestionsSortingContainer}>

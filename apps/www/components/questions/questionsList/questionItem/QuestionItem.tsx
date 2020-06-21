@@ -109,7 +109,9 @@ export const QuestionContent = memo<QuestionContentProps>(
 
       return (
         <div className={styles.appQuestionsQuestionMeta}>
-          <span className={classNames(styles.tag, styles[className])}>{question._levelId}</span>
+          <span data-cy="question-meta-level" className={classNames(styles.tag, styles[className])}>
+            {question._levelId}
+          </span>
           <meta itemProp="dateCreated" content={question.acceptedAt} />
           <meta itemProp="keywords" content={keywords} />
           <time

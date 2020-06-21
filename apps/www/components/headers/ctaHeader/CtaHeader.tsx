@@ -37,7 +37,7 @@ export const CtaHeaderComponent: React.FC<
         <nav className={styles.appTabs}>
           <ActiveLink href="/questions" activeClassName={styles.active}>
             <a
-              data-cy="navigate list"
+              data-cy="navigate-list"
               onClick={() => reportEvent('Lista pytań')}
               className={styles.appTabsTab}
             >
@@ -46,7 +46,7 @@ export const CtaHeaderComponent: React.FC<
           </ActiveLink>
           <ActiveLink href="/selected-questions" activeClassName={styles.active}>
             <a
-              data-cy="navigate selected-questions"
+              data-cy="navigate-selected-questions"
               onClick={() =>
                 reportEvent(areAnyQuestionSelected ? 'Wybrane pytania' : 'Wybrane pytania (puste)')
               }
