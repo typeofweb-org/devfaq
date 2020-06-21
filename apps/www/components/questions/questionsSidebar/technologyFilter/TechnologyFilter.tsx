@@ -20,7 +20,7 @@ export const TechnologyFilter = () => {
           onClick={() => reportSelectTechnologyEvent(technology.label)}
           activeClassName={styles.active}
         >
-          <a title={technology.label}>
+          <a data-cy="technology-filter" title={technology.label}>
             <span className={styles.appFilterTechnologyLabel}>{technology.label}</span>
             <span className={technology.icon} />
           </a>

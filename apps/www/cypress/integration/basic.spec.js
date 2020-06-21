@@ -41,6 +41,14 @@ describe('Filters works', () => {
     cy.url().should('contain', 'questions/js');
   });
 
+  it('shows questions in specific category', () => {
+    cy.get('[data-cy="technology-filter"]').contains('React').click();
+    cy.get('[data-cy="category"]').within(() => {
+      cy.contains('strong', 'React');
+    });
+    cy.url().should('contain', 'questions/react');
+  });
+
   it('shows questions in selected level', () => {
     cy.get('[data-cy=filter-level-junior] > button').click();
     // wait because of leave animation
