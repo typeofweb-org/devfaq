@@ -1,5 +1,5 @@
-*                     @mmiszy
 package.json          @dependabot-preview @dependabot @github-actions
 apps/www/package.json @dependabot-preview @dependabot @github-actions
 apps/api/package.json @dependabot-preview @dependabot @github-actions
 yarn-lock.json        @dependabot-preview @dependabot @github-actions
+*                     @mmiszy
