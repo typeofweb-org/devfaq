@@ -38,7 +38,7 @@
     "lodash": "4.17.15",
     "lodash-webpack-plugin": "0.11.5",
     "newrelic": "6.10.0",
-    "next": "9.4.5-canary.13",
+    "next": "9.4.5-canary.32",
     "next-images": "1.4.0",
     "next-offline": "5.0.2",
     "next-redux-wrapper": "5.0.0",
