@@ -82,6 +82,7 @@ export const CtaHeaderComponent: React.FC<
           <button
             className={classNames(styles.roundButton, 'round-button', 'branding-button-inverse')}
             onClick={onOpenAddQuestionModalClick}
+            data-cy="open-add-question-form"
           >
             Dodaj pytanie
           </button>

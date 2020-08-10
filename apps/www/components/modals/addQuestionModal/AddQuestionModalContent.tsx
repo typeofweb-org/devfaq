@@ -38,6 +38,7 @@ export const AddQuestionModalContent = memo<AddQuestionModalContentProps>(
           <div className={styles.appQuestionForm}>
             <div className={styles.appQuestionFormOptionsContainer}>
               <select
+                data-cy="change-technology"
                 required
                 className={classNames(styles.appSelect, styles.appQuestionFormTechnology)}
                 value={technology || ''}
@@ -53,6 +54,7 @@ export const AddQuestionModalContent = memo<AddQuestionModalContentProps>(
                 ))}
               </select>
               <select
+                data-cy="change-level"
                 required
                 className={classNames(styles.appSelect, styles.appQuestionFormLevel)}
                 value={level || ''}

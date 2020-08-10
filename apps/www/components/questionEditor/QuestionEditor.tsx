@@ -189,6 +189,7 @@ export const QuestionEditor = memo<QuestionEditorProps>(({ onChange, value }) =>
             ref={textAreaRef}
             value={value}
             onChange={handleTextChange}
+            data-cy="add-question-body"
           />
         )}
         {isPreview && (

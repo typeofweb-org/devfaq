@@ -28,7 +28,7 @@ describe('Page and navigation works', () => {
   });
 });
 
-describe('Filters works', () => {
+describe('Filters work', () => {
   beforeEach(() => {
     cy.visit('/');
   });
@@ -56,5 +56,28 @@ describe('Filters works', () => {
     cy.get('[data-cy="question-meta-level"]').each((el) => {
       expect(el).to.contain('junior');
     });
+  });
+});
+
+describe('Add new question works like a charm', () => {
+  const successText =
+    'Jeszcze momencik… a Twoje pytanie pojawi się na liście dostępnych pytań. Najpierw musimy rzucić na nie okiem i zatwierdzić.';
+
+  beforeEach(() => {
+    cy.visit('/');
+  });
+
+  it('it successfully opens question form and adds new question', () => {
+    cy.get('[data-cy="open-add-question-form"]').click();
+    cy.get('[data-cy="change-technology"]').select('React');
+    cy.get('[data-cy="change-level"]').select('Mid');
+    // submit button is still disabled
+    cy.get('[data-cy="submit-question"]').should('be.disabled');
+    cy.get('[data-cy="add-question-body"]').type('To be or not to be that is the question');
+    cy.get('[data-cy="submit-question"]').click();
+    cy.contains(successText);
+
+    cy.get('[data-cy="close-add-question-form"]').click();
+    cy.contains(successText).should('not.exist');
   });
 });

@@ -19,7 +19,9 @@
     "eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "test": "yarn test:tsc && yarn eslint && yarn jest",
     "test:tsc": "tsc --project tsconfig.json --noEmit",
-    "jest": "jest"
+    "jest": "jest",
+    "test:e2e": "start-test dev 3000 cy:open",
+    "cy:open": "cypress open"
   },
   "dependencies": {
     "@sentry/browser": "5.17.0",
