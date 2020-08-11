@@ -19,7 +19,9 @@
     "eslint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "test": "yarn test:tsc && yarn eslint && yarn jest",
     "test:tsc": "tsc --project tsconfig.json --noEmit",
-    "jest": "jest"
+    "jest": "jest",
+    "cypress": "cypress run",
+    "cy:open": "cypress open"
   },
   "dependencies": {
     "@sentry/browser": "5.17.0",
@@ -73,6 +75,8 @@
     "babel-eslint": "10.1.0",
     "babel-jest": "26.1.0",
     "cross-env": "7.0.2",
+    "cypress": "4.8.0",
+    "cypress-axe": "0.8.1",
     "eslint-config-react-app": "5.2.1",
     "eslint-plugin-css-modules": "2.11.0",
     "eslint-plugin-flowtype": "5.1.3",

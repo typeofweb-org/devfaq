@@ -18,6 +18,7 @@ export const AddQuestionModalFooter = memo<AddQuestionModalFooterProps>(
     return (
       <div>
         <button
+          data-cy="submit-question"
           className={classNames(
             'round-button',
             'branding-button-inverse',

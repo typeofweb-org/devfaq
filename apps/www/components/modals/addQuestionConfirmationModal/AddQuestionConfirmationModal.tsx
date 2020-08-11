@@ -56,6 +56,7 @@ export const AddQuestionConfirmationModal = memo(
           <button
             className={classNames('round-button', styles.roundButton, 'alternative-button')}
             onClick={close}
+            data-cy="close-add-question-form"
           >
             OK!
           </button>

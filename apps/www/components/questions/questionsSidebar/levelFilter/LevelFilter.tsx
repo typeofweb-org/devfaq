@@ -21,6 +21,7 @@ export default memo(() => {
       | 'app-filter--level_senior';
     return (
       <li
+        data-cy={`filter-level-${level.value}`}
         key={level.value}
         className={classNames(styles.appFilterLevel, styles[className], {
           [styles.active]: isSelected(level),
