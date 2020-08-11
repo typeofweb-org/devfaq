@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+
 /// <reference types="cypress" />
 
 describe('Page and navigation works', () => {
@@ -60,8 +61,8 @@ describe('Filters work', () => {
 });
 
 describe('Add new question works like a charm', () => {
-  const successText =
-    'Jeszcze momencik… a Twoje pytanie pojawi się na liście dostępnych pytań. Najpierw musimy rzucić na nie okiem i zatwierdzić.';
+  // const successText =
+  //   'Jeszcze momencik… a Twoje pytanie pojawi się na liście dostępnych pytań. Najpierw musimy rzucić na nie okiem i zatwierdzić.';
 
   beforeEach(() => {
     cy.visit('/');
@@ -74,10 +75,13 @@ describe('Add new question works like a charm', () => {
     // submit button is still disabled
     cy.get('[data-cy="submit-question"]').should('be.disabled');
     cy.get('[data-cy="add-question-body"]').type('To be or not to be that is the question');
-    cy.get('[data-cy="submit-question"]').click();
-    cy.contains(successText);
+    cy.get('[data-cy="submit-question"]').should('be.enabled');
 
-    cy.get('[data-cy="close-add-question-form"]').click();
-    cy.contains(successText).should('not.exist');
+    // @todo enable on test admin account
+    // cy.get('[data-cy="submit-question"]').click();
+    // cy.contains(successText);
+
+    // cy.get('[data-cy="close-add-question-form"]').click();
+    // cy.contains(successText).should('not.exist');
   });
 });
