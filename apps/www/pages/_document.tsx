@@ -22,7 +22,7 @@ export default class MyDocument extends Document<CustomDocumentProps> {
   static async getInitialProps(
     ctx: DocumentContextWithNonce
   ): Promise<DocumentInitialProps & CustomDocumentProps> {
-    const { nonce } = ctx.res.locals;
+    const { nonce } = ctx.res.locals || {};
 
     const props = await Document.getInitialProps(ctx);
 
