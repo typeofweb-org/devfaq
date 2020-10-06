@@ -71,6 +71,14 @@
   --box-shadow: rgba(128, 128, 128, 0.5);
   --inset-box-shadow: rgba(60, 60, 60, 0.5);
 
+  --editor-icon-background: #efefef;
+  --editor-icon-color: #737373;
+
+  --md-editor-background: #fff;
+  --md-editor-color: #000;
+  --md-preview-background: #fafafa;
+  --md-preview-color: #673ab7;
+
   --z-index-mobile-sidebar: 9980;
   --z-index-modal-container: 9990;
   --z-index-modal: 10000;
@@ -94,7 +102,7 @@ html {
     --grey-background: #292929;
     --purple-branding: #401886;
     --purple-branding-text: #e6e6e6;
-    --purple-light: #daceef;
+    --purple-light: #401886;
     --purple-dark: #673ab7;
     --black-light: #f8f8f8;
     --purple-branding-light: #673ab7;
@@ -139,5 +147,13 @@ html {
 
     --box-shadow: rgba(27, 27, 27, 0.7);
     --inset-box-shadow: rgba(31, 31, 31, 0.8);
+
+    --editor-icon-background: #313131;
+    --editor-icon-color: #e6e6e6;
+
+    --md-editor-background: #313131;
+    --md-editor-color: #fff;
+    --md-preview-background: #444444;
+    --md-preview-color: #fff;
   }
 }
