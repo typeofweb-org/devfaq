@@ -27,7 +27,7 @@
     .app-sidebar {
       @include hardwareAcceleration();
       position: fixed;
-      background: #f8f8f8;
+      background: var(--grey-background);
       left: 0;
       top: 0;
       transform: translate3d(-100%, 0, 0);

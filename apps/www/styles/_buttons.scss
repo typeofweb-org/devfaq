@@ -65,8 +65,8 @@
     }
   }
   &.branding-button {
-    color: var(--purple-branding);
-    border-color: var(--purple-branding);
+    color: var(--purple-branding-text);
+    border-color: var(--purple-branding-text);
     background-color: transparent;
     &:hover {
       background-color: var(--purple-branding-superlight);
