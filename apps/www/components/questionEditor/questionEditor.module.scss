@@ -16,7 +16,8 @@
     button {
       appearance: none;
       text-align: center;
-      color: rgb(126, 137, 148);
+      color: var(--editor-icon-color);
+      background-color: var(--editor-icon-background);
       width: 30px;
       height: 30px;
       padding: 0;
@@ -28,7 +29,7 @@
       &:not(:disabled) {
         cursor: pointer;
         &:hover {
-          background: #fcfcfc;
+          background: var(--purple-branding-superlight);
           border-color: rgb(126, 137, 148);
         }
       }
@@ -58,6 +59,8 @@
     margin: 0;
     line-height: inherit;
     font: inherit;
+    background-color: var(--md-editor-background);
+    color: var(--md-editor-color);
     display: block;
     overflow: hidden;
     &:focus {
@@ -71,7 +74,8 @@
     cursor: text;
 
     &_preview {
-      background-color: #fafafa;
+      background-color: var(--md-preview-background);
+      color: var(--md-preview-color);
       cursor: initial;
     }
   }
