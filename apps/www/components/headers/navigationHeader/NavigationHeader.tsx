@@ -10,12 +10,9 @@ import DarkModeSwitcher from './darkModeSwitcher/DarkModeSwitcher';
 import LoginStatusLink from './loginStatusLink/LoginStatusLink';
 import styles from './navigationHeader.module.scss';
 
-const DarkModeSwitcher = dynamic(
-  () => import(/* webpackChunkName: "DarkModeSwitcher" */ './darkModeSwitcher/DarkModeSwitcher'),
-  {
-    ssr: false,
-  }
-);
+const DynamicDarkModeSwitcher = dynamic(() => import('./darkModeSwitcher/DarkModeSwitcher'), {
+  ssr: false,
+});
 
 export const NavigationHeader = () => {
   const [open, toggle] = useState(false);
