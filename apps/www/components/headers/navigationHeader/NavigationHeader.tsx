@@ -1,13 +1,17 @@
 import classNames from 'classnames';
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 
 import ActiveLink from '../../activeLink/ActiveLink';
 import AppLogo from '../../appLogo/AppLogo';
 import { Container } from '../../container/Container';
 
-import DarkModeSwitcher from './darkModeSwitcher/DarkModeSwitcher';
 import LoginStatusLink from './loginStatusLink/LoginStatusLink';
 import styles from './navigationHeader.module.scss';
+
+const DarkModeSwitcher = dynamic(() => import('./darkModeSwitcher/DarkModeSwitcher'), {
+  ssr: false,
+});
 
 export const NavigationHeader = () => {
   const [open, toggle] = useState(false);
