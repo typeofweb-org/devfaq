@@ -23,18 +23,13 @@ const getInitialColorMode = () => {
 };
 
 const DarkModeSwitcher = React.memo(() => {
-  const [colorMode, setColorMode] = useState<'light' | 'dark' | undefined>();
+  const [colorMode, setColorMode] = useState<'light' | 'dark'>(() => getInitialColorMode());
 
   useEffect(() => {
     const html = document.querySelector('html');
     if (colorMode === 'dark') html?.classList.add('theme-dark');
     if (colorMode === 'light') html?.classList.remove('theme-dark');
   }, [colorMode]);
-
-  useEffect(() => {
-    const mode = getInitialColorMode();
-    setColorMode(mode);
-  }, []);
 
   const handleColorModeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const mode = e.target.checked ? 'dark' : 'light';
