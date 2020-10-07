@@ -81,7 +81,7 @@ export const NavigationHeader = () => {
               <LoginStatusLink onLoginClick={onLoginClick} />
             </li>
             <li>
-              <DarkModeSwitcher />
+              <DynamicDarkModeSwitcher />
             </li>
           </ul>
           <button
