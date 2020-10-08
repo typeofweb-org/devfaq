@@ -7,6 +7,11 @@ import Document, {
 } from 'next/document';
 import React from 'react';
 
+import {
+  getBrowserColorMode,
+  initializeColorMode,
+  setColorModeClass,
+} from '../components/headers/navigationHeader/darkModeSwitcher/DarkModeSwitcher';
 import * as analytics from '../utils/analytics';
 import env, { unsafe_getEnvScriptForDocument } from '../utils/env';
 
@@ -40,10 +45,6 @@ export default class MyDocument extends Document<CustomDocumentProps> {
       >
         <Head nonce={nonce}>
           <base href="/" />
-          <meta
-            name="viewport"
-            content="width=device-width, user-scalable=yes, initial-scale=1.0, viewport-fit=cover"
-          />
           <meta property="og:type" content="website" />
           <meta
             property="og:image"
@@ -69,6 +70,12 @@ export default class MyDocument extends Document<CustomDocumentProps> {
           <link
             href="https://fonts.googleapis.com/css?family=Fira+Sans:200,400,700&amp;subset=latin-ext"
             rel="stylesheet"
+          />
+          <script
+            nonce={nonce}
+            dangerouslySetInnerHTML={{
+              __html: `${getBrowserColorMode.toString()}; ${setColorModeClass.toString()}; (${initializeColorMode.toString()})()`,
+            }}
           />
           <script nonce={nonce} dangerouslySetInnerHTML={unsafe_getEnvScriptForDocument()} />
           <script
