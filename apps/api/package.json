@@ -59,7 +59,7 @@
     "moment": "2.27.0",
     "nanoid": "3.1.10",
     "newrelic": "6.10.0",
-    "node-fetch": "2.6.0",
+    "node-fetch": "2.6.1",
     "pg": "8.2.1",
     "pg-hstore": "2.3.3",
     "reflect-metadata": "0.1.13",
