@@ -84,7 +84,7 @@
     "fast-check": "1.25.1",
     "jest": "26.0.1",
     "pretty-bytes": "5.3.0",
-    "sass": "1.26.8",
+    "sass": "1.27.0",
     "ts-node": "8.10.2",
     "typescript": "3.9.5",
     "typescript-plugin-css-modules": "2.3.0",
