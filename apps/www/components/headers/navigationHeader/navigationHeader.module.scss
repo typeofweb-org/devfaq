@@ -167,6 +167,7 @@
     ul {
       display: flex;
       flex-direction: row;
+      align-items: center;
     }
     li {
       &:first-child {
@@ -175,8 +176,6 @@
       &:last-child {
         width: 30px;
       }
-      display: grid;
-      align-content: center;
       margin-left: 30px;
     }
   }
