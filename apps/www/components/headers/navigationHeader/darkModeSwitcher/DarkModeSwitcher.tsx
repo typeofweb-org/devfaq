@@ -2,11 +2,15 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import styles from './darkModeSwitcher.module.scss';
 
-const getInitialColorMode = () => {
-  if (typeof window === 'undefined') {
-    return 'light';
-  }
+type ColorMode = 'light' | 'dark';
 
+export function initializeColorMode() {
+  try {
+    setColorModeClass(document.querySelector('html')!, getBrowserColorMode());
+  } catch {}
+}
+
+export function getBrowserColorMode() {
   const persistedColorPreference = window.localStorage.getItem('color-mode');
 
   if (persistedColorPreference === 'dark' || persistedColorPreference === 'light') {
@@ -20,18 +24,25 @@ const getInitialColorMode = () => {
   }
 
   return 'light';
-};
+}
+
+export function setColorModeClass(target: HTMLElement, colorMode: ColorMode) {
+  if (colorMode === 'dark') {
+    target?.classList.add('theme-dark');
+  } else {
+    target?.classList.remove('theme-dark');
+  }
+}
 
 const DarkModeSwitcher = React.memo(() => {
-  const [colorMode, setColorMode] = useState<'light' | 'dark'>(() => getInitialColorMode());
+  const [colorMode, setColorMode] = useState<ColorMode>(() => getBrowserColorMode());
 
   useEffect(() => {
-    const html = document.querySelector('html');
-    if (colorMode === 'dark') html?.classList.add('theme-dark');
-    if (colorMode === 'light') html?.classList.remove('theme-dark');
+    const html = document.querySelector('html')!;
+    setColorModeClass(html, colorMode);
   }, [colorMode]);
 
-  const handleColorModeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleColorModeChange = useCallback<React.ChangeEventHandler<HTMLInputElement>>((e) => {
     const mode = e.target.checked ? 'dark' : 'light';
     setColorMode(mode);
     window.localStorage.setItem('color-mode', mode);
