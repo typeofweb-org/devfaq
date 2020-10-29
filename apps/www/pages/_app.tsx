@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 
 import { ErrorBoundary } from '../components/errorBoundary/ErrorBoundary';
 import { AppModals } from '../components/modals/appModals/AppModals';
+import UIContextProvider from '../contexts/UIContextProvider';
 import { ActionCreators } from '../redux/actions';
 import { AppState } from '../redux/reducers';
 import { nextReduxWrapper } from '../redux/store';
@@ -108,8 +109,10 @@ const MyApp = ({
   return (
     <ErrorBoundary>
       <Provider store={store}>
-        <Component {...pageProps} err={err} />
-        <AppModals />
+        <UIContextProvider>
+          <Component {...pageProps} err={err} />
+          <AppModals />
+        </UIContextProvider>
       </Provider>
     </ErrorBoundary>
   );
