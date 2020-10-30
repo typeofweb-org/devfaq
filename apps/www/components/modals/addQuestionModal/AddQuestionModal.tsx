@@ -1,10 +1,9 @@
 import { isEqual } from 'lodash';
-import React, { memo, useState, useEffect, useCallback, forwardRef } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { forwardRef, memo, useCallback, useEffect, useState } from 'react';
 
 import type { LevelKey } from '../../../constants/level';
 import type { TechnologyKey } from '../../../constants/technology-icon-items';
-import { ActionCreators } from '../../../redux/actions';
+import { useUIContext } from '../../../contexts/UIContextProvider';
 import { Question } from '../../../redux/reducers/questions';
 import { Api } from '../../../services/Api';
 import { useDidMount, useRenderProp } from '../../../utils/hooks';
@@ -24,14 +23,13 @@ type AddQuestionModalProps = AddQuestionModalOwnProps & CommonModalProps;
 
 export const AddQuestionModal = memo(
   forwardRef<HTMLDivElement, AddQuestionModalProps>(({ onClose, originalQuestion }, ref) => {
+    const { setIsAddQuestionConfirmationModalOpen } = useUIContext();
     const [editedQuestion, setEditedQuestion] = useState<Question>();
     const [questionText, setQuestionText] = useState('');
     const [level, setLevel] = useState<LevelKey>();
     const [technology, setTechnology] = useState<TechnologyKey>();
     const [isLoading, setIsLoading] = useState(false);
     const [valid, setValid] = useState(false);
-
-    const dispatch = useDispatch();
 
     const isValid = useCallback(() => Boolean(level && technology && questionText.trim()), [
       level,
@@ -101,11 +99,19 @@ export const AddQuestionModal = memo(
         return Api.createQuestion(body)
           .then(() => {
             onClose({ reason: 'submit' });
-            dispatch(ActionCreators.uiOpenAddQuestionConfirmationModal());
+            setIsAddQuestionConfirmationModalOpen(true);
           })
           .finally(() => setIsLoading(false));
       }
-    }, [dispatch, isValid, level, onClose, originalQuestion, questionText, technology]);
+    }, [
+      isValid,
+      level,
+      onClose,
+      originalQuestion,
+      questionText,
+      setIsAddQuestionConfirmationModalOpen,
+      technology,
+    ]);
 
     const validate = useCallback(() => {
       setValid(isValid());

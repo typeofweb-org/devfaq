@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import spinnerStyles from '../../components/layout/appSpinner.module.scss';
 import { TechnologyKey } from '../../constants/technology-icon-items';
+import { useUIContext } from '../../contexts/UIContextProvider';
 import { ActionCreators } from '../../redux/actions';
 import { Question } from '../../redux/reducers/questions';
 import { Container } from '../container/Container';
@@ -25,6 +26,7 @@ const EmptyAdminQuestions = memo(({ questions }: { questions?: Question[] }) => 
 });
 
 const AdminQuestions = memo(() => {
+  const { openEditQuestionModal } = useUIContext();
   const [status, setStatus] = useState<'pending' | 'accepted'>('pending');
   const [technology] = useState<TechnologyKey | undefined>(undefined);
 
@@ -74,9 +76,9 @@ const AdminQuestions = memo(() => {
         return;
       }
 
-      dispatch(ActionCreators.uiOpenEditQuestionModal(question, onEditFinished));
+      openEditQuestionModal(question, onEditFinished);
     },
-    [dispatch, onEditFinished, questions.data]
+    [onEditFinished, openEditQuestionModal, questions.data]
   );
 
   const updateStatus: React.ChangeEventHandler<HTMLSelectElement> = useCallback((e) => {

@@ -1,8 +1,7 @@
-import React, { useRef, memo, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { memo, useCallback, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
-import { ActionCreators } from '../../../redux/actions';
+import { useUIContext } from '../../../contexts/UIContextProvider';
 import { AddQuestionConfirmationModal } from '../addQuestionConfirmationModal/AddQuestionConfirmationModal';
 import { AddQuestionModal } from '../addQuestionModal/AddQuestionModal';
 import { CommonModalProps } from '../baseModal/BaseModal';
@@ -14,11 +13,13 @@ export const AppModals = memo(() => {
   const addQuestionModalRef = useRef<HTMLDivElement>(null);
   const addQuestionConfirmationModalRef = useRef<HTMLDivElement>(null);
 
-  const dispatch = useDispatch();
-  const addQuestionModalState = useSelector((state) => state.ui.addQuestionModal);
-  const isAddQuestionConfirmationModalOpen = useSelector(
-    (state) => state.ui.isAddQuestionConfirmationModalOpen
-  );
+  const {
+    addQuestionModalState,
+    closeAddQuestionModal,
+    isAddQuestionConfirmationModalOpen,
+    closeEditQuestionModal,
+    setIsAddQuestionConfirmationModalOpen,
+  } = useUIContext();
 
   const closeQuestionModal: CommonModalProps['onClose'] = useCallback(
     (args) => {
@@ -26,19 +27,19 @@ export const AppModals = memo(() => {
         addQuestionModalState.onClose(args);
       }
       if (addQuestionModalState.data) {
-        dispatch(ActionCreators.uiCloseEditQuestionModal());
+        closeEditQuestionModal();
       } else {
-        dispatch(ActionCreators.uiCloseAddQuestionModal());
+        closeAddQuestionModal();
       }
     },
-    [addQuestionModalState, dispatch]
+    [addQuestionModalState, closeAddQuestionModal, closeEditQuestionModal]
   );
 
   const closeConfirmationModal: CommonModalProps['onClose'] = useCallback(
     (_args) => {
-      dispatch(ActionCreators.uiCloseAddQuestionConfirmationModal());
+      setIsAddQuestionConfirmationModalOpen(false);
     },
-    [dispatch]
+    [setIsAddQuestionConfirmationModalOpen]
   );
 
   return (

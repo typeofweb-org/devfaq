@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { Level } from '../../../constants/level';
 import { technologyIconItems, Technology } from '../../../constants/technology-icon-items';
+import { useUIContext } from '../../../contexts/UIContextProvider';
 import { ActionCreators } from '../../../redux/actions';
 import { AppState } from '../../../redux/reducers/index';
 import { Question } from '../../../redux/reducers/questions';
@@ -29,10 +30,10 @@ const AllQuestionsComponent = React.memo<AllQuestionsComponentProps>(
     questions,
     selectedQuestionsIds,
     route,
-    uiOpenAddQuestionModal,
     selectQuestion,
     deselectQuestion,
   }) => {
+    const { openAddQuestionModal } = useUIContext();
     const technologyIconItem = technologyIconItems.find((t) => t.name === technology);
     const category = (technologyIconItem && technologyIconItem.label) || '';
 
@@ -55,8 +56,8 @@ const AllQuestionsComponent = React.memo<AllQuestionsComponentProps>(
 
     const onAddNewClick = useCallback(() => {
       reportEvent('CTA Dodaj nowe pytanie');
-      uiOpenAddQuestionModal();
-    }, [uiOpenAddQuestionModal, reportEvent]);
+      openAddQuestionModal();
+    }, [openAddQuestionModal, reportEvent]);
 
     const toggleQuestion = useCallback(
       (questionId: Question['id']) => {
@@ -141,7 +142,6 @@ const mapStateToProps = (state: AppState) => {
 const mapDispatchToProps = {
   selectQuestion: ActionCreators.selectQuestion,
   deselectQuestion: ActionCreators.deselectQuestion,
-  uiOpenAddQuestionModal: ActionCreators.uiOpenAddQuestionModal,
 };
 
 const AllQuestions = connect(mapStateToProps, mapDispatchToProps)(AllQuestionsComponent);
