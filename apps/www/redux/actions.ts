@@ -23,14 +23,6 @@ declare module 'redux' {
 }
 
 export enum ActionTypes {
-  UI_OPEN_SIDEBAR = 'UI_OPEN_SIDEBAR',
-  UI_CLOSE_SIDEBAR = 'UI_CLOSE_SIDEBAR',
-  UI_OPEN_ADD_QUESTION_MODAL = 'UI_OPEN_ADD_QUESTION_MODAL',
-  UI_CLOSE_ADD_QUESTION_MODAL = 'UI_CLOSE_ADD_QUESTION_MODAL',
-  UI_OPEN_EDIT_QUESTION_MODAL = 'UI_OPEN_EDIT_QUESTION_MODAL',
-  UI_CLOSE_EDIT_QUESTION_MODAL = 'UI_CLOSE_EDIT_QUESTION_MODAL',
-  UI_OPEN_ADD_QUESTION_CONFIRMATION_MODAL = 'UI_OPEN_ADD_QUESTION_CONFIRMATION_MODAL',
-  UI_CLOSE_ADD_QUESTION_CONFIRMATION_MODAL = 'UI_CLOSE_ADD_QUESTION_CONFIRMATION_MODAL',
   SELECT_LEVEL = 'SELECT_LEVEL',
   DESELECT_LEVEL = 'DESELECT_LEVEL',
   SELECT_QUESTION = 'SELECT_QUESTION',
@@ -57,17 +49,6 @@ export enum ActionTypes {
 }
 
 const SyncActionCreators = {
-  uiOpenSidebar: () => createAction(ActionTypes.UI_OPEN_SIDEBAR),
-  uiCloseSidebar: () => createAction(ActionTypes.UI_CLOSE_SIDEBAR),
-  uiOpenAddQuestionModal: () => createAction(ActionTypes.UI_OPEN_ADD_QUESTION_MODAL),
-  uiCloseAddQuestionModal: () => createAction(ActionTypes.UI_CLOSE_ADD_QUESTION_MODAL),
-  uiOpenEditQuestionModal: (question: Question, onClose?: CommonModalProps['onClose']) =>
-    createAction(ActionTypes.UI_OPEN_EDIT_QUESTION_MODAL, { question, onClose }),
-  uiCloseEditQuestionModal: () => createAction(ActionTypes.UI_CLOSE_EDIT_QUESTION_MODAL),
-  uiOpenAddQuestionConfirmationModal: () =>
-    createAction(ActionTypes.UI_OPEN_ADD_QUESTION_CONFIRMATION_MODAL),
-  uiCloseAddQuestionConfirmationModal: () =>
-    createAction(ActionTypes.UI_CLOSE_ADD_QUESTION_CONFIRMATION_MODAL),
   selectLevel: (level: LevelKey) => createAction(ActionTypes.SELECT_LEVEL, level),
   deselectLevel: (level: LevelKey) => createAction(ActionTypes.DESELECT_LEVEL, level),
   selectQuestion: (q: Question) => createAction(ActionTypes.SELECT_QUESTION, q),
