@@ -1,13 +1,12 @@
-import { CommonModalProps } from '../components/modals/baseModal/BaseModal';
 import { LevelKey } from '../constants/level';
-import { TechnologyKey, SortBy } from '../constants/technology-icon-items';
-import { Api } from '../services/Api';
+import { SortBy, TechnologyKey } from '../constants/technology-icon-items';
 import type { ApiResponse } from '../services/Api';
-import type { RouteDetails, AppStore, GetInitialPropsContext } from '../utils/types';
+import { Api } from '../services/Api';
+import type { AppStore, GetInitialPropsContext, RouteDetails } from '../utils/types';
 
 import type { AuthData } from './reducers/auth';
 import type { Question } from './reducers/questions';
-import { getTechnology, getQuestionId, getLoggedInUser } from './selectors/selectors';
+import { getLoggedInUser, getQuestionId, getTechnology } from './selectors/selectors';
 import { ActionsUnion, createAction } from './types';
 
 export type AsyncAction<R = any> = (
@@ -23,14 +22,6 @@ declare module 'redux' {
 }
 
 export enum ActionTypes {
-  UI_OPEN_SIDEBAR = 'UI_OPEN_SIDEBAR',
-  UI_CLOSE_SIDEBAR = 'UI_CLOSE_SIDEBAR',
-  UI_OPEN_ADD_QUESTION_MODAL = 'UI_OPEN_ADD_QUESTION_MODAL',
-  UI_CLOSE_ADD_QUESTION_MODAL = 'UI_CLOSE_ADD_QUESTION_MODAL',
-  UI_OPEN_EDIT_QUESTION_MODAL = 'UI_OPEN_EDIT_QUESTION_MODAL',
-  UI_CLOSE_EDIT_QUESTION_MODAL = 'UI_CLOSE_EDIT_QUESTION_MODAL',
-  UI_OPEN_ADD_QUESTION_CONFIRMATION_MODAL = 'UI_OPEN_ADD_QUESTION_CONFIRMATION_MODAL',
-  UI_CLOSE_ADD_QUESTION_CONFIRMATION_MODAL = 'UI_CLOSE_ADD_QUESTION_CONFIRMATION_MODAL',
   SELECT_LEVEL = 'SELECT_LEVEL',
   DESELECT_LEVEL = 'DESELECT_LEVEL',
   SELECT_QUESTION = 'SELECT_QUESTION',
@@ -57,17 +48,6 @@ export enum ActionTypes {
 }
 
 const SyncActionCreators = {
-  uiOpenSidebar: () => createAction(ActionTypes.UI_OPEN_SIDEBAR),
-  uiCloseSidebar: () => createAction(ActionTypes.UI_CLOSE_SIDEBAR),
-  uiOpenAddQuestionModal: () => createAction(ActionTypes.UI_OPEN_ADD_QUESTION_MODAL),
-  uiCloseAddQuestionModal: () => createAction(ActionTypes.UI_CLOSE_ADD_QUESTION_MODAL),
-  uiOpenEditQuestionModal: (question: Question, onClose?: CommonModalProps['onClose']) =>
-    createAction(ActionTypes.UI_OPEN_EDIT_QUESTION_MODAL, { question, onClose }),
-  uiCloseEditQuestionModal: () => createAction(ActionTypes.UI_CLOSE_EDIT_QUESTION_MODAL),
-  uiOpenAddQuestionConfirmationModal: () =>
-    createAction(ActionTypes.UI_OPEN_ADD_QUESTION_CONFIRMATION_MODAL),
-  uiCloseAddQuestionConfirmationModal: () =>
-    createAction(ActionTypes.UI_CLOSE_ADD_QUESTION_CONFIRMATION_MODAL),
   selectLevel: (level: LevelKey) => createAction(ActionTypes.SELECT_LEVEL, level),
   deselectLevel: (level: LevelKey) => createAction(ActionTypes.DESELECT_LEVEL, level),
   selectQuestion: (q: Question) => createAction(ActionTypes.SELECT_QUESTION, q),

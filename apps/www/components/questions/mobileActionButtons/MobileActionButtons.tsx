@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { ActionCreators } from '../../../redux/actions';
+import { useUIContext } from '../../../contexts/UIContextProvider';
 import { AppState } from '../../../redux/reducers';
 import { getAreAnyQuestionSelected, getDownloadUrl } from '../../../redux/selectors/selectors';
 
@@ -13,8 +13,9 @@ interface MobileActionButtonsProps {
 }
 
 const MobileActionButtonsComponent = React.memo<
-  MobileActionButtonsProps & ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps
->(({ justDownload, uiOpenSidebar, uiOpenAddQuestionModal }) => {
+  MobileActionButtonsProps & ReturnType<typeof mapStateToProps>
+>(({ justDownload }) => {
+  const { openSideBar, openAddQuestionModal } = useUIContext();
   const onDownloadClick = () => {
     // @todo
   };
@@ -25,7 +26,7 @@ const MobileActionButtonsComponent = React.memo<
           className={classNames(styles.openSidebar, 'circle-button')}
           title="Filtruj wyniki"
           aria-label="Filtruj wyniki"
-          onClick={uiOpenSidebar}
+          onClick={openSideBar}
         />
       )}
       {!justDownload && (
@@ -33,7 +34,7 @@ const MobileActionButtonsComponent = React.memo<
           className={classNames(styles.addQuestion, 'circle-button')}
           title="Dodaj pytanie"
           aria-label="Dodaj pytanie"
-          onClick={uiOpenAddQuestionModal}
+          onClick={openAddQuestionModal}
         />
       )}
       {/* {!justDownload && (
@@ -71,13 +72,5 @@ const mapStateToProps = (state: AppState) => {
   };
 };
 
-const mapDispatchToProps = {
-  uiOpenSidebar: ActionCreators.uiOpenSidebar,
-  uiOpenAddQuestionModal: ActionCreators.uiOpenAddQuestionModal,
-};
-
-const MobileActionButtons = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MobileActionButtonsComponent);
+const MobileActionButtons = connect(mapStateToProps)(MobileActionButtonsComponent);
 export default MobileActionButtons;
