@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 
 import { CommonModalProps } from '../components/modals/baseModal/BaseModal';
 import { Question } from '../redux/reducers/questions';
@@ -69,25 +69,36 @@ const UIContextProvider: React.FC = ({ children }) => {
     setIsAddQuestionConfirmationModalOpen(false);
   }, []);
 
-  return (
-    <UIContext.Provider
-      value={{
-        isSidebarOpen,
-        openSideBar,
-        closeSidebar,
-        addQuestionModalState,
-        openAddQuestionModal,
-        closeAddQuestionModal,
-        openEditQuestionModal,
-        closeEditQuestionModal,
-        isAddQuestionConfirmationModalOpen,
-        openAddQuestionConfirmationModal,
-        closeAddQuestionConfirmationModal,
-      }}
-    >
-      {children}
-    </UIContext.Provider>
+  const memoizedValue = useMemo(
+    () => ({
+      isSidebarOpen,
+      openSideBar,
+      closeSidebar,
+      addQuestionModalState,
+      openAddQuestionModal,
+      closeAddQuestionModal,
+      openEditQuestionModal,
+      closeEditQuestionModal,
+      isAddQuestionConfirmationModalOpen,
+      openAddQuestionConfirmationModal,
+      closeAddQuestionConfirmationModal,
+    }),
+    [
+      isSidebarOpen,
+      openSideBar,
+      closeSidebar,
+      addQuestionModalState,
+      openAddQuestionModal,
+      closeAddQuestionModal,
+      openEditQuestionModal,
+      closeEditQuestionModal,
+      isAddQuestionConfirmationModalOpen,
+      openAddQuestionConfirmationModal,
+      closeAddQuestionConfirmationModal,
+    ]
   );
+
+  return <UIContext.Provider value={memoizedValue}>{children}</UIContext.Provider>;
 };
 
 export const useUIContext = () => {
