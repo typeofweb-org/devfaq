@@ -1,13 +1,12 @@
-import { CommonModalProps } from '../components/modals/baseModal/BaseModal';
 import { LevelKey } from '../constants/level';
-import { TechnologyKey, SortBy } from '../constants/technology-icon-items';
-import { Api } from '../services/Api';
+import { SortBy, TechnologyKey } from '../constants/technology-icon-items';
 import type { ApiResponse } from '../services/Api';
-import type { RouteDetails, AppStore, GetInitialPropsContext } from '../utils/types';
+import { Api } from '../services/Api';
+import type { AppStore, GetInitialPropsContext, RouteDetails } from '../utils/types';
 
 import type { AuthData } from './reducers/auth';
 import type { Question } from './reducers/questions';
-import { getTechnology, getQuestionId, getLoggedInUser } from './selectors/selectors';
+import { getLoggedInUser, getQuestionId, getTechnology } from './selectors/selectors';
 import { ActionsUnion, createAction } from './types';
 
 export type AsyncAction<R = any> = (

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 
 import { CommonModalProps } from '../components/modals/baseModal/BaseModal';
 import { Question } from '../redux/reducers/questions';
@@ -11,14 +11,16 @@ type ModalState<T = any> = {
 
 type UiContextType = {
   isSidebarOpen: boolean;
-  setIsSidebarOpen: Dispatch<SetStateAction<boolean>>;
+  openSideBar: () => void;
+  closeSidebar: () => void;
   addQuestionModalState: ModalState<Question>;
   openAddQuestionModal: () => void;
   closeAddQuestionModal: () => void;
   openEditQuestionModal: (question: Question, onClose?: CommonModalProps['onClose']) => void;
   closeEditQuestionModal: () => void;
   isAddQuestionConfirmationModalOpen: boolean;
-  setIsAddQuestionConfirmationModalOpen: Dispatch<SetStateAction<boolean>>;
+  openAddQuestionConfirmationModal: () => void;
+  closeAddQuestionConfirmationModal: () => void;
 };
 
 const UIContext = React.createContext<undefined | UiContextType>(undefined);
@@ -31,6 +33,14 @@ const UIContextProvider: React.FC = ({ children }) => {
   const [isAddQuestionConfirmationModalOpen, setIsAddQuestionConfirmationModalOpen] = useState(
     false
   );
+
+  const openSideBar = useCallback(() => {
+    setIsSidebarOpen(true);
+  }, []);
+
+  const closeSidebar = useCallback(() => {
+    setIsSidebarOpen(false);
+  }, []);
 
   const openAddQuestionModal = useCallback(() => {
     setAddQuestionModalState({ open: true });
@@ -51,18 +61,28 @@ const UIContextProvider: React.FC = ({ children }) => {
     setAddQuestionModalState({ open: false, data: undefined, onClose: undefined });
   }, []);
 
+  const openAddQuestionConfirmationModal = useCallback(() => {
+    setIsAddQuestionConfirmationModalOpen(true);
+  }, []);
+
+  const closeAddQuestionConfirmationModal = useCallback(() => {
+    setIsAddQuestionConfirmationModalOpen(false);
+  }, []);
+
   return (
     <UIContext.Provider
       value={{
         isSidebarOpen,
-        setIsSidebarOpen,
+        openSideBar,
+        closeSidebar,
         addQuestionModalState,
         openAddQuestionModal,
         closeAddQuestionModal,
         openEditQuestionModal,
         closeEditQuestionModal,
         isAddQuestionConfirmationModalOpen,
-        setIsAddQuestionConfirmationModalOpen,
+        openAddQuestionConfirmationModal,
+        closeAddQuestionConfirmationModal,
       }}
     >
       {children}
@@ -72,7 +92,7 @@ const UIContextProvider: React.FC = ({ children }) => {
 
 export const useUIContext = () => {
   const ctx = useContext(UIContext);
-  if (ctx === undefined) {
+  if (!ctx) {
     throw new Error('useUIContext must be used within a UIContextProvider');
   }
   return ctx;

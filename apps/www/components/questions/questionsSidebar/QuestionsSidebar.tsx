@@ -8,7 +8,7 @@ import styles from './questionsSidebar.module.scss';
 import { TechnologyFilter } from './technologyFilter/TechnologyFilter';
 
 const QuestionsSidebar = () => {
-  const { isSidebarOpen, setIsSidebarOpen } = useUIContext();
+  const { isSidebarOpen, closeSidebar } = useUIContext();
 
   return (
     <div className={styles.questionsSidebar}>
@@ -25,15 +25,11 @@ const QuestionsSidebar = () => {
         </section>
         <button
           className={classNames(styles.appSidebarAccept, 'round-button branding-button-inverse')}
-          onClick={() => setIsSidebarOpen(false)}
+          onClick={closeSidebar}
         >
           Pokaż wyniki
         </button>
-        <button
-          className={styles.appSidebarClose}
-          title="Zamknij"
-          onClick={() => setIsSidebarOpen(false)}
-        >
+        <button className={styles.appSidebarClose} title="Zamknij" onClick={closeSidebar}>
           &times;
         </button>
       </aside>

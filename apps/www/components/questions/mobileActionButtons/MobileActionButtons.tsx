@@ -15,7 +15,7 @@ interface MobileActionButtonsProps {
 const MobileActionButtonsComponent = React.memo<
   MobileActionButtonsProps & ReturnType<typeof mapStateToProps>
 >(({ justDownload }) => {
-  const { setIsSidebarOpen, openAddQuestionModal } = useUIContext();
+  const { openSideBar, openAddQuestionModal } = useUIContext();
   const onDownloadClick = () => {
     // @todo
   };
@@ -26,7 +26,7 @@ const MobileActionButtonsComponent = React.memo<
           className={classNames(styles.openSidebar, 'circle-button')}
           title="Filtruj wyniki"
           aria-label="Filtruj wyniki"
-          onClick={() => setIsSidebarOpen(true)}
+          onClick={openSideBar}
         />
       )}
       {!justDownload && (

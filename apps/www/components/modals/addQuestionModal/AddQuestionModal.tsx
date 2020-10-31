@@ -23,7 +23,7 @@ type AddQuestionModalProps = AddQuestionModalOwnProps & CommonModalProps;
 
 export const AddQuestionModal = memo(
   forwardRef<HTMLDivElement, AddQuestionModalProps>(({ onClose, originalQuestion }, ref) => {
-    const { setIsAddQuestionConfirmationModalOpen } = useUIContext();
+    const { openAddQuestionConfirmationModal } = useUIContext();
     const [editedQuestion, setEditedQuestion] = useState<Question>();
     const [questionText, setQuestionText] = useState('');
     const [level, setLevel] = useState<LevelKey>();
@@ -99,7 +99,7 @@ export const AddQuestionModal = memo(
         return Api.createQuestion(body)
           .then(() => {
             onClose({ reason: 'submit' });
-            setIsAddQuestionConfirmationModalOpen(true);
+            openAddQuestionConfirmationModal();
           })
           .finally(() => setIsLoading(false));
       }
@@ -107,9 +107,9 @@ export const AddQuestionModal = memo(
       isValid,
       level,
       onClose,
+      openAddQuestionConfirmationModal,
       originalQuestion,
       questionText,
-      setIsAddQuestionConfirmationModalOpen,
       technology,
     ]);
 

@@ -18,7 +18,7 @@ export const AppModals = memo(() => {
     closeAddQuestionModal,
     isAddQuestionConfirmationModalOpen,
     closeEditQuestionModal,
-    setIsAddQuestionConfirmationModalOpen,
+    closeAddQuestionConfirmationModal,
   } = useUIContext();
 
   const closeQuestionModal: CommonModalProps['onClose'] = useCallback(
@@ -37,9 +37,9 @@ export const AppModals = memo(() => {
 
   const closeConfirmationModal: CommonModalProps['onClose'] = useCallback(
     (_args) => {
-      setIsAddQuestionConfirmationModalOpen(false);
+      closeAddQuestionConfirmationModal();
     },
-    [setIsAddQuestionConfirmationModalOpen]
+    [closeAddQuestionConfirmationModal]
   );
 
   return (
