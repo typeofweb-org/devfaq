@@ -69,36 +69,32 @@ const UIContextProvider: React.FC = ({ children }) => {
     setIsAddQuestionConfirmationModalOpen(false);
   }, []);
 
-  const memoizedValue = useMemo(
+  const memoizedState = useMemo(
     () => ({
       isSidebarOpen,
-      openSideBar,
-      closeSidebar,
       addQuestionModalState,
-      openAddQuestionModal,
-      closeAddQuestionModal,
-      openEditQuestionModal,
-      closeEditQuestionModal,
       isAddQuestionConfirmationModalOpen,
-      openAddQuestionConfirmationModal,
-      closeAddQuestionConfirmationModal,
     }),
-    [
-      isSidebarOpen,
-      openSideBar,
-      closeSidebar,
-      addQuestionModalState,
-      openAddQuestionModal,
-      closeAddQuestionModal,
-      openEditQuestionModal,
-      closeEditQuestionModal,
-      isAddQuestionConfirmationModalOpen,
-      openAddQuestionConfirmationModal,
-      closeAddQuestionConfirmationModal,
-    ]
+    [isSidebarOpen, addQuestionModalState, isAddQuestionConfirmationModalOpen]
   );
 
-  return <UIContext.Provider value={memoizedValue}>{children}</UIContext.Provider>;
+  return (
+    <UIContext.Provider
+      value={{
+        openSideBar,
+        closeSidebar,
+        openAddQuestionModal,
+        closeAddQuestionModal,
+        openEditQuestionModal,
+        closeEditQuestionModal,
+        openAddQuestionConfirmationModal,
+        closeAddQuestionConfirmationModal,
+        ...memoizedState,
+      }}
+    >
+      {children}
+    </UIContext.Provider>
+  );
 };
 
 export const useUIContext = () => {
