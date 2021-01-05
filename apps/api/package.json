@@ -85,7 +85,7 @@
     "@types/hapi__joi": "17.1.2",
     "@types/hapi__vision": "5.5.1",
     "@types/inert": "5.1.2",
-    "@types/lodash": "4.14.155",
+    "@types/lodash": "4.14.167",
     "@types/mocha": "7.0.2",
     "@types/nanoid": "2.1.0",
     "@types/node": "14.0.13",
