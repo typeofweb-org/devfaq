@@ -37,7 +37,7 @@
     "helmet": "3.23.1",
     "htmlescape": "1.1.1",
     "invariant": "2.2.4",
-    "lodash": "4.17.15",
+    "lodash": "4.17.21",
     "lodash-webpack-plugin": "0.11.5",
     "newrelic": "6.10.0",
     "next": "9.5.0",
