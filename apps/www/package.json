@@ -24,7 +24,7 @@
     "cy:open": "cypress open"
   },
   "dependencies": {
-    "@sentry/browser": "5.17.0",
+    "@sentry/browser": "6.10.0",
     "@sentry/node": "5.17.0",
     "@types/helmet": "0.0.47",
     "@zeit/next-source-maps": "0.0.4-canary.1",
