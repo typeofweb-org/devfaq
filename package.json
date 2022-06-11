@@ -1,55 +1,26 @@
 {
-  "name": "devfaq",
-  "version": "6.0.0",
-  "author": "Michał Miszczyszyn - Type of Web <hi@typeofweb.com> (https://typeofweb.com/)",
-  "license": "AGPL-3.0-only",
+  "name": "devfaq-new2",
+  "version": "0.0.0",
   "private": true,
-  "engines": {
-    "node": "12.x.x"
-  },
-  "keywords": [],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "lerna run dev --parallel",
-    "build": "lerna run build --stream",
-    "test": "lerna run test --stream",
-    "eslint": "lerna run eslint --stream",
-    "create-size": "ts-node-script scripts/sizeSnapshot/create.ts",
-    "get-base-branch": "ts-node-script scripts/circleGetBaseBranch.ts"
-  },
-  "workspaces": {
-    "packages": [
-      "apps/*"
-    ],
-    "nohoist": [
-      "**"
-    ]
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@foo-software/lighthouse-check": "0.0.90",
-    "@octokit/rest": "16.43.1",
-    "@types/fs-extra": "9.0.1",
-    "@types/node": "14.0.13",
-    "@typescript-eslint/eslint-plugin": "3.3.0",
-    "@typescript-eslint/parser": "3.3.0",
-    "all-contributors-cli": "6.16.0",
-    "concurrently": "5.2.0",
-    "danger": "10.2.0",
-    "eslint": "7.5.0",
-    "eslint-config-prettier": "6.11.0",
-    "eslint-plugin-import": "2.21.2",
-    "fs-extra": "9.0.1",
-    "husky": "4.2.5",
-    "lerna": "3.22.1",
-    "prettier": "2.0.5",
-    "pretty-bytes": "5.3.0",
-    "pretty-quick": "2.0.1",
-    "rimraf": "3.0.2",
-    "ts-node": "8.10.2",
-    "typescript": "3.9.5"
+    "eslint-config-custom": "latest",
+    "prettier": "latest",
+    "turbo": "latest"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  }
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
+  },
+  "dependencies": {},
+  "packageManager": "yarn@1.22.18"
 }
