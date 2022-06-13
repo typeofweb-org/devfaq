@@ -1,0 +1,29 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail 'yarn dev:db' 'yarn dev:ts-node'",
+    "dev:db": "docker-compose up",
+    "dev:ts-node": "wait-on tcp:5432 --interval 1000 && prisma generate && nodemon index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "16.11.7",
+    "typescript": "4.7.3"
+  },
+  "dependencies": {
+    "@fastify/sensible": "5.0.0",
+    "@fastify/type-provider-typebox": "1.0.0",
+    "@prisma/client": "3.15.1",
+    "@sinclair/typebox": "0.23.5",
+    "@swc/core": "1.2.198",
+    "concurrently": "7.2.1",
+    "fastify": "4.0.1",
+    "fastify-plugin": "3.0.1",
+    "nodemon": "2.0.16",
+    "prisma": "3.15.1",
+    "ts-node": "10.8.1",
+    "wait-on": "6.0.1"
+  }
+}

@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Question {
+  id               Int              @id @default(autoincrement())
+  question         String           @unique
+  acceptedAt       DateTime?        @db.Timestamptz(6)
+  categoryId       String           @map("_categoryId")
+  levelId          String           @map("_levelId")
+  statusId         String           @default("pending") @map("_statusId")
+  createdAt        DateTime         @default(now()) @db.Timestamptz(6)
+  updatedAt        DateTime         @updatedAt() @db.Timestamptz(6)
+  QuestionCategory QuestionCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  QuestionLevel    QuestionLevel    @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  QuestionStatus   QuestionStatus   @relation(fields: [statusId], references: [id], onDelete: Cascade)
+  QuestionVote     QuestionVote[]
+}
+
+model QuestionCategory {
+  id        String     @id
+  createdAt DateTime   @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime   @updatedAt() @db.Timestamptz(6)
+  Question  Question[]
+}
+
+model QuestionLevel {
+  id        String     @id
+  createdAt DateTime   @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime   @updatedAt() @db.Timestamptz(6)
+  Question  Question[]
+}
+
+model QuestionStatus {
+  id        String     @id
+  createdAt DateTime   @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime   @updatedAt() @db.Timestamptz(6)
+  Question  Question[]
+}
+
+model QuestionVote {
+  userId     Int      @map("_userId")
+  questionId Int      @map("_questionId")
+  createdAt  DateTime @default(now()) @db.Timestamptz(6)
+  Question   Question @relation(fields: [questionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  User       User     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([userId, questionId])
+}
+
+model SequelizeMeta {
+  name String @id @db.VarChar(255)
+}
+
+model Session {
+  id             String   @id @db.VarChar(255)
+  keepMeSignedIn Boolean  @default(false)
+  validUntil     DateTime @db.Timestamptz(6)
+  userId         Int      @map("_userId")
+  createdAt      DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt      DateTime @updatedAt() @db.Timestamptz(6)
+  User           User     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model User {
+  id           Int            @id @default(autoincrement())
+  email        String         @unique
+  firstName    String?
+  lastName     String?
+  roleId       String         @default("user") @map("_roleId")
+  createdAt    DateTime       @default(now()) @db.Timestamptz(6)
+  updatedAt    DateTime       @updatedAt() @db.Timestamptz(6)
+  socialLogin  Json           @default("{}")
+  UserRole     UserRole       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  QuestionVote QuestionVote[]
+  Session      Session[]
+}
+
+model UserRole {
+  id        String   @id
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt() @db.Timestamptz(6)
+  User      User[]
+}
