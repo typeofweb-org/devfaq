@@ -13,6 +13,13 @@ const fastify = Fastify({
 }).withTypeProvider<TypeBoxTypeProvider>();
 
 await fastify.register(import('@fastify/sensible'));
+await fastify.register(import('@fastify/swagger'), {
+  routePrefix: '/documentation',
+  uiConfig: {
+    docExpansion: 'full',
+  },
+  exposeRoute: true,
+});
 await fastify.register(import('./modules/db/db.js'));
 await fastify.register(import('./modules/questions/questions.routes.js'));
 

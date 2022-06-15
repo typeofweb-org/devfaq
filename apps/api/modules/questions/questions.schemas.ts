@@ -11,8 +11,9 @@ const getQuestionsQuerySchema = Type.Object({
   ),
   order: Type.Optional(Type.Union([Type.Literal('asc'), Type.Literal('desc')])),
 });
-export type GetQuestionsOrderBy = Static<typeof getQuestionsQuerySchema>['orderBy'];
-export type GetQuestionsOrder = Static<typeof getQuestionsQuerySchema>['order'];
+export type GetQuestionsQuery = Static<typeof getQuestionsQuerySchema>;
+export type GetQuestionsOrderBy = GetQuestionsQuery['orderBy'];
+export type GetQuestionsOrder = GetQuestionsQuery['order'];
 
 const questionShape = {
   id: Type.Integer(),
@@ -23,22 +24,64 @@ const questionShape = {
   acceptedAt: Type.Optional(Type.String({ format: 'date-time' })),
 } as const;
 
+const createQuestionShape = {
+  question: Type.String(),
+  level: Type.String(),
+  category: Type.String(),
+};
+
 const questionResponseSchema = Type.Object({
   ...questionShape,
   votesCount: Type.Integer(),
   currentUserVotedOn: Type.Boolean(),
 });
 
-const getQuestionsResponseSchema = Type.Object({
-  data: Type.Array(questionResponseSchema),
-  meta: Type.Object({
-    total: Type.Integer(),
-  }),
-});
-
 export const getQuestionsSchema = {
   querystring: getQuestionsQuerySchema,
   response: {
-    200: getQuestionsResponseSchema,
+    200: Type.Object({
+      data: Type.Array(questionResponseSchema),
+      meta: Type.Object({
+        total: Type.Integer(),
+      }),
+    }),
   },
 } as const;
+
+export const postQuestionsSchema = {
+  body: Type.Object(createQuestionShape),
+  response: {
+    200: Type.Object({
+      data: questionResponseSchema,
+    }),
+  },
+} as const;
+
+export const patchQuestionByIdSchema = {
+  params: Type.Object({
+    id: Type.Integer(),
+  }),
+  body: Type.Object({ ...createQuestionShape, status: Type.String() }),
+  response: {
+    200: Type.Object({
+      data: questionResponseSchema,
+    }),
+  },
+};
+
+export const getQuestionByIdSchema = {
+  params: Type.Object({
+    id: Type.Integer(),
+  }),
+  response: {
+    200: Type.Object({
+      data: questionResponseSchema,
+    }),
+  },
+};
+
+export const deleteQuestionByIdSchema = {
+  params: Type.Object({
+    id: Type.Integer(),
+  }),
+};
