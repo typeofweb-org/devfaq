@@ -1,5 +1,5 @@
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
-import { FastifyPluginAsync } from 'fastify';
+import { FastifyInstance, FastifyPluginAsync } from 'fastify';
 import {
   deleteQuestionByIdSchema,
   getQuestionByIdSchema,
@@ -7,6 +7,7 @@ import {
   patchQuestionByIdSchema,
   postQuestionsSchema,
 } from './questions.schemas.js';
+import { validateCategory, validateLevels, validateStatus } from './questions.validators.js';
 
 const questionsPlugin: FastifyPluginAsync = async (fastify) => {
   await fastify.register(import('./questions.utils.js'));
@@ -18,15 +19,17 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
     async handler(request, reply) {
       // const currentUser = getCurrentUser(request);
       const { category, level, status, limit, offset, order, orderBy } = request.query;
+      const levels = level?.split(',');
 
-      const categories = await fastify.questionsGetCategories();
-      if (category && !categories.includes(category)) {
-        throw fastify.httpErrors.badRequest();
-      }
+      await Promise.all([
+        validateCategory(fastify, category),
+        validateLevels(fastify, levels),
+        validateStatus(fastify, status),
+      ]);
 
       const where = {
         ...(category && { categoryId: category }),
-        ...(level && { levelId: { in: level } }),
+        ...(levels && { levelId: { in: levels } }),
         // ...(status && isAdmin(request) ? { _statusId: status } : { _statusId: 'accepted' }),
         ...{ statusId: 'accepted' },
       };
@@ -75,6 +78,8 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
     async handler(request, reply) {
       const { question, level, category } = request.body;
 
+      await Promise.all([validateCategory(fastify, category), validateLevels(fastify, [level])]);
+
       const newQuestion = await fastify.db.question.create({
         data: {
           question,
@@ -107,6 +112,12 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
       const { id } = request.params;
 
       const { question, level, category, status } = request.body;
+
+      await Promise.all([
+        validateCategory(fastify, category),
+        validateLevels(fastify, [level]),
+        validateStatus(fastify, status),
+      ]);
 
       // const currentUser = getCurrentUser(request);
 

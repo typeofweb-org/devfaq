@@ -3,7 +3,7 @@ import { Type, Static } from '@sinclair/typebox';
 const getQuestionsQuerySchema = Type.Object({
   category: Type.Optional(Type.String()),
   status: Type.Optional(Type.String()),
-  level: Type.Optional(Type.Array(Type.String(), { minItems: 1 })),
+  level: Type.Optional(Type.String({ pattern: '^(\\w+,?)+$' })),
   limit: Type.Optional(Type.Integer()),
   offset: Type.Optional(Type.Integer()),
   orderBy: Type.Optional(
