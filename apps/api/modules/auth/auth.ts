@@ -33,6 +33,7 @@ const auth: FastifyPluginAsync = async (fastify, options) => {
     },
   });
 
+  await fastify.register(import('./githubAuth.js'));
   await fastify.register(import('./auth.routes.js'));
 };
 
