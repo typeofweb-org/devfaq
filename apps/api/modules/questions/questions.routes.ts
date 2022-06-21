@@ -17,8 +17,7 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
     method: 'GET',
     schema: getQuestionsSchema,
     async handler(request, reply) {
-      // const currentUser = getCurrentUser(request);
-      const { category, level, status, limit, offset, order, orderBy } = request.query;
+      const { category, level, status = 'accepted', limit, offset, order, orderBy } = request.query;
       const levels = level?.split(',');
 
       await Promise.all([
@@ -30,8 +29,9 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
       const where = {
         ...(category && { categoryId: category }),
         ...(levels && { levelId: { in: levels } }),
-        // ...(status && isAdmin(request) ? { _statusId: status } : { _statusId: 'accepted' }),
-        ...{ statusId: 'accepted' },
+        ...(status && request.session.data?.User.UserRole.id === 'admin'
+          ? { statusId: status }
+          : { statusId: 'accepted' }),
       };
 
       // @todo also get votes
@@ -46,9 +46,35 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
           ...(order &&
             orderBy && {
               orderBy: {
-                [order]: orderBy,
+                ...(orderBy === 'votesCount'
+                  ? {
+                      QuestionVote: {
+                        _count: order,
+                      },
+                    }
+                  : {
+                      [orderBy]: order,
+                    }),
               },
             }),
+          select: {
+            id: true,
+            question: true,
+            categoryId: true,
+            levelId: true,
+            statusId: true,
+            acceptedAt: true,
+            _count: {
+              select: {
+                QuestionVote: true,
+              },
+            },
+            QuestionVote: {
+              where: {
+                userId: request.session.data?.User.id || 0,
+              },
+            },
+          },
         }),
       ]);
 
@@ -60,10 +86,8 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
           _levelId: q.levelId,
           _statusId: q.statusId,
           acceptedAt: q.acceptedAt?.toISOString(),
-          votesCount: 0,
-          currentUserVotedOn: false,
-          // votesCount: q.votesCount,
-          // currentUserVotedOn: q.didUserVoteOn,
+          votesCount: q._count.QuestionVote,
+          currentUserVotedOn: q.QuestionVote.length > 0,
         };
       });
 
@@ -119,8 +143,6 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
         validateStatus(fastify, status),
       ]);
 
-      // const currentUser = getCurrentUser(request);
-
       const q = await fastify.db.question.update({
         where: { id },
         data: {
@@ -128,6 +150,24 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
           QuestionLevel: { connect: { id: level } },
           QuestionCategory: { connect: { id: category } },
           QuestionStatus: { connect: { id: status } },
+        },
+        select: {
+          id: true,
+          question: true,
+          categoryId: true,
+          levelId: true,
+          statusId: true,
+          acceptedAt: true,
+          _count: {
+            select: {
+              QuestionVote: true,
+            },
+          },
+          QuestionVote: {
+            where: {
+              userId: request.session.data?.User.id || 0,
+            },
+          },
         },
       });
 
@@ -138,12 +178,8 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
         _levelId: q.levelId,
         _statusId: q.statusId,
         acceptedAt: q.acceptedAt?.toISOString(),
-        currentUserVotedOn: false,
-        votesCount: 0,
-        // currentUserVotedOn: currentUser
-        //   ? await Question.didUserVoteOn(currentUser, question)
-        //   : false,
-        // votesCount: question.votesCount,
+        votesCount: q._count.QuestionVote,
+        currentUserVotedOn: q.QuestionVote.length > 0,
       };
 
       return { data };
@@ -157,41 +193,60 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
     async handler(request, reply) {
       const { id } = request.params;
 
-      const question = await fastify.db.question.findFirst({
+      const q = await fastify.db.question.findFirst({
         where: {
           id,
           statusId: 'accepted',
         },
+        select: {
+          id: true,
+          question: true,
+          categoryId: true,
+          levelId: true,
+          statusId: true,
+          acceptedAt: true,
+          _count: {
+            select: {
+              QuestionVote: true,
+            },
+          },
+          QuestionVote: {
+            where: {
+              userId: request.session.data?.User.id || 0,
+            },
+          },
+        },
       });
 
-      if (!question) {
+      if (!q) {
         return reply.notFound();
       }
 
       const data = {
-        id: question.id,
-        question: question.question,
-        _categoryId: question.categoryId,
-        _levelId: question.levelId,
-        _statusId: question.statusId,
-        acceptedAt: question.acceptedAt?.toISOString(),
-        currentUserVotedOn: false,
-        votesCount: 0,
-        // currentUserVotedOn: currentUser
-        //   ? await Question.didUserVoteOn(currentUser, question)
-        //   : false,
-        // votesCount: question.votesCount,
+        id: q.id,
+        question: q.question,
+        _categoryId: q.categoryId,
+        _levelId: q.levelId,
+        _statusId: q.statusId,
+        acceptedAt: q.acceptedAt?.toISOString(),
+        votesCount: q._count.QuestionVote,
+        currentUserVotedOn: q.QuestionVote.length > 0,
       };
 
       return { data };
     },
   });
 
-  // @todo admin only
   fastify.withTypeProvider<TypeBoxTypeProvider>().route({
     url: '/questions/:id',
     method: 'DELETE',
     schema: deleteQuestionByIdSchema,
+    preValidation(request, reply, done) {
+      if (request.session.data?.User.UserRole.id !== 'admin') {
+        throw fastify.httpErrors.unauthorized();
+      }
+      done();
+    },
     async handler(request, reply) {
       const { id } = request.params;
 
