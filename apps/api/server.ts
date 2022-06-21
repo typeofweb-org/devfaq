@@ -21,6 +21,7 @@ await fastify.register(import('@fastify/swagger'), {
   exposeRoute: true,
 });
 await fastify.register(import('./modules/db/db.js'));
+await fastify.register(import('./modules/auth/auth.js'));
 await fastify.register(import('./modules/questions/questions.routes.js'));
 
 fastify.get(
