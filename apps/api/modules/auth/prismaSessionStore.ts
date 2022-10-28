@@ -1,4 +1,3 @@
-import FastifySessionPlugin from '@fastify/session';
 import { PrismaClient } from '@prisma/client';
 import type * as Fastify from 'fastify';
 import ms from 'ms';
@@ -61,6 +60,7 @@ export class PrismaSessionStore {
         return callback();
       }
       // @todo ?
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       return callback(null, { data: sessionDb });
     } catch (err) {

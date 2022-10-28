@@ -13,12 +13,12 @@ const fastify = Fastify({
 }).withTypeProvider<TypeBoxTypeProvider>();
 
 await fastify.register(import('@fastify/sensible'));
-await fastify.register(import('@fastify/swagger'), {
+await fastify.register(import('@fastify/swagger'));
+await fastify.register(import('@fastify/swagger-ui'), {
   routePrefix: '/documentation',
   uiConfig: {
     docExpansion: 'full',
   },
-  exposeRoute: true,
 });
 await fastify.register(import('./modules/db/db.js'));
 await fastify.register(import('./modules/auth/auth.js'));

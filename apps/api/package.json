@@ -14,9 +14,9 @@
   "devDependencies": {
     "@types/ms": "0.7.31",
     "@types/node": "18.11.7",
-    "typescript": "4.8.4",
     "eslint-config-devfaq": "workspace:*",
-    "tsconfig": "workspace:*"
+    "tsconfig": "workspace:*",
+    "typescript": "4.8.4"
   },
   "dependencies": {
     "@fastify/cookie": "8.3.0",
@@ -24,6 +24,7 @@
     "@fastify/sensible": "5.1.1",
     "@fastify/session": "10.0.2",
     "@fastify/swagger": "8.1.0",
+    "@fastify/swagger-ui": "1.1.0",
     "@fastify/type-provider-typebox": "2.3.0",
     "@prisma/client": "4.5.0",
     "@sinclair/typebox": "0.24.51",

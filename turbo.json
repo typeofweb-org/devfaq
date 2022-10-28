@@ -4,9 +4,8 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
-    "lint": {
-      "outputs": []
-    },
+    "lint": {},
+    "check-types": {},
     "lint:fix": {
       "cache": false
     },

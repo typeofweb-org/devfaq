@@ -85,7 +85,7 @@ export default authRoutesPlugin;
 async function getGitHubProfile(fastify: FastifyInstance, gitHubCredentials: OAuth2Token) {
   const res = await fetch('https://api.github.com/user', {
     headers: {
-      Authorization: `token ${gitHubCredentials.access_token}`,
+      Authorization: `token ${gitHubCredentials.token.access_token}`,
     },
   });
 
@@ -101,7 +101,7 @@ async function getGitHubProfile(fastify: FastifyInstance, gitHubCredentials: OAu
 async function getGitHubPrimaryEmail(fastify: FastifyInstance, gitHubCredentials: OAuth2Token) {
   const res = await fetch('https://api.github.com/user/emails', {
     headers: {
-      Authorization: `token ${gitHubCredentials.access_token}`,
+      Authorization: `token ${gitHubCredentials.token.access_token}`,
     },
   });
 
@@ -124,7 +124,7 @@ async function getGitHubPrimaryEmail(fastify: FastifyInstance, gitHubCredentials
 }
 
 function getName(gitHubUser: GitHubUser) {
-  const [firstName, ...rest] = (gitHubUser.name ?? '').split(' ');
+  const [firstName = '', ...rest] = (gitHubUser.name ?? '').split(' ');
   return {
     firstName,
     lastName: rest.join(' '),

@@ -38,7 +38,7 @@ const authRoutesPlugin: FastifyPluginAsync = async (fastify) => {
         throw fastify.httpErrors.unauthorized();
       }
 
-      request.session.destroy();
+      await request.session.destroy();
 
       return reply.status(204).send();
     },

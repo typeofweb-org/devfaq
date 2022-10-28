@@ -7,7 +7,8 @@
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "check-types": "turbo run check-types"
   },
   "devDependencies": {
     "eslint-config-devfaq": "workspace:*",

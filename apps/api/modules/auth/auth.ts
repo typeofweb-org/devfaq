@@ -20,7 +20,6 @@ const auth: FastifyPluginAsync = async (fastify, options) => {
   await fastify.register(import('@fastify/cookie'));
   await fastify.register(import('@fastify/session'), {
     cookieName: 'session',
-    unsignSignedCookie: true,
     secret: getConfig('COOKIE_PASSWORD'),
     store: sessionStore as FastifySessionPlugin.SessionStore,
     rolling: true,

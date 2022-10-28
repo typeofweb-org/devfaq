@@ -23,4 +23,9 @@ module.exports = {
     },
   },
   ignorePatterns: ['build/', '.turbo/', 'dist/', 'node_modules/', '*.js', '*.jsx'],
+  rules: {
+    '@typescript-eslint/require-await': 'off',
+    '@typescript-eslint/no-empty-interface': 'off',
+    '@next/next/no-html-link-for-pages': ['off'],
+  },
 };

@@ -10,7 +10,7 @@ export async function validateCategory(fastify: FastifyInstance, category: strin
 export async function validateLevels(fastify: FastifyInstance, levels: string[] | undefined) {
   const validLevels = await fastify.questionsGetLevels();
   if (levels && !levels.every((level) => validLevels.includes(level))) {
-    throw fastify.httpErrors.badRequest(`Invalid levels: ${levels}`);
+    throw fastify.httpErrors.badRequest(`Invalid levels: ${levels.join(', ')}`);
   }
 }
 

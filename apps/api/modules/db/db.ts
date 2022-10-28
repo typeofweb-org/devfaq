@@ -26,7 +26,7 @@ const db: FastifyPluginAsync = async (fastify, options) => {
       }
     }
 
-    originalErrorHandler(error, request, reply);
+    return originalErrorHandler(error, request, reply);
   });
 };
 
