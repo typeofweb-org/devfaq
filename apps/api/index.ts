@@ -9,4 +9,7 @@ const start = async () => {
     process.exit(1);
   }
 };
-start();
+start().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

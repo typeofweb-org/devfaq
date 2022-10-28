@@ -1,8 +1,6 @@
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import { Type } from '@sinclair/typebox';
-import { randomUUID } from 'crypto';
 import { FastifyPluginAsync } from 'fastify';
-import ms from 'ms';
 import { meSchema } from './auth.schemas.js';
 
 const authRoutesPlugin: FastifyPluginAsync = async (fastify) => {
