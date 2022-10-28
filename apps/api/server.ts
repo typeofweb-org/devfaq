@@ -3,7 +3,19 @@ import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import { Type } from '@sinclair/typebox';
 
 const fastify = Fastify({
-  logger: true,
+  // logger: true,
+  logger:
+    process.env.NODE_ENV === 'production'
+      ? true
+      : {
+          transport: {
+            target: 'pino-pretty',
+            options: {
+              levelFirst: true,
+              ignore: 'pid,hostname',
+            },
+          },
+        },
   ajv: {
     customOptions: {
       strict: 'log',
