@@ -75,7 +75,7 @@ importers:
 
   apps/web:
     specifiers:
-      '@types/node': ^18.11.7
+      '@types/node': 18.11.7
       '@types/react': 18.0.24
       eslint: 8.26.0
       eslint-config-devfaq: workspace:*
@@ -84,7 +84,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0
       tsconfig: workspace:*
-      typescript: ^4.8.4
+      typescript: 4.8.4
       ui: workspace:*
     dependencies:
       next: registry.npmjs.org/next/13.0.0_biqbaboplfbrettd7655fr4n2y
@@ -122,13 +122,13 @@ importers:
 
   packages/ui:
     specifiers:
-      '@types/react': ^18.0.24
-      '@types/react-dom': ^18.0.8
-      eslint: ^8.26.0
+      '@types/react': 18.0.24
+      '@types/react-dom': 18.0.8
+      eslint: 8.26.0
       eslint-config-devfaq: workspace:*
-      react: ^18.2.0
+      react: 18.2.0
       tsconfig: workspace:*
-      typescript: ^4.8.4
+      typescript: 4.8.4
     devDependencies:
       '@types/react': registry.npmjs.org/@types/react/18.0.24
       '@types/react-dom': registry.npmjs.org/@types/react-dom/18.0.8
