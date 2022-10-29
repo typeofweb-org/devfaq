@@ -17,12 +17,12 @@
 		"ui": "workspace:*"
 	},
 	"devDependencies": {
-		"@types/node": "^18.11.7",
+		"@types/node": "18.11.7",
 		"@types/react": "18.0.24",
 		"eslint": "8.26.0",
 		"eslint-config-devfaq": "workspace:*",
 		"next-transpile-modules": "9.1.0",
 		"tsconfig": "workspace:*",
-		"typescript": "^4.8.4"
+		"typescript": "4.8.4"
 	}
 }
