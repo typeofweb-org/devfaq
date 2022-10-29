@@ -20,9 +20,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install dependencies
-        # run: pnpm --version && pnpm install --frozen-lockfile
-        # temporary
-        run: pnpm --version && pnpm install --no-frozen-lockfile
+        run: pnpm --version && pnpm install --frozen-lockfile
 
       - name: Turbo Cache
         uses: actions/cache@v3
