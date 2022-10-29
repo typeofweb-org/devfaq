@@ -72,7 +72,7 @@ importers:
       tsconfig: link:../../packages/tsconfig
       typescript: registry.npmjs.org/typescript/4.8.4
 
-  apps/app:
+  apps/web:
     specifiers:
       "@types/node": ^18.11.7
       "@types/react": 18.0.24

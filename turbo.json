@@ -1,6 +1,7 @@
 {
 	"pipeline": {
 		"build": {
+			"cache": true,
 			"dependsOn": ["^build"],
 			"outputs": ["dist/**", ".next/**"]
 		},
