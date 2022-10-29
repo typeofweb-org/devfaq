@@ -33,10 +33,10 @@ jobs:
             turbo-${{ github.job }}-${{ github.ref_name }}-
 
       - name: Build
-        run: pnpm run build
+        run: pnpm run build --cache-dir=".turbo"
 
       - name: Check linters
-        run: pnpm run lint
+        run: pnpm run lint --cache-dir=".turbo"
 
       - name: Check TypeScript
-        run: pnpm run check-types
+        run: pnpm run check-types --cache-dir=".turbo"
