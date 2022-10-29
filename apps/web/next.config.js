@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  experimental: {
-    appDir: true,
-    transpilePackages: ['ui'],
-  },
+	reactStrictMode: true,
+	swcMinify: true,
+	experimental: {
+		appDir: true,
+		transpilePackages: ["ui"],
+	},
 };
 
 module.exports = nextConfig;

@@ -1,11 +1,11 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Api",
-  "extends": "./base.json",
-  "compilerOptions": {
-    "lib": ["es2022"],
-    "module": "es2022",
-    "target": "es2022",
-    "moduleResolution": "node"
-  }
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"display": "Api",
+	"extends": "./base.json",
+	"compilerOptions": {
+		"lib": ["es2022"],
+		"module": "es2022",
+		"target": "es2022",
+		"moduleResolution": "node"
+	}
 }

@@ -1,7 +1,7 @@
 {
-  "extends": "tsconfig/api.json",
-  "ts-node": {
-    "transpileOnly": true,
-    "transpiler": "ts-node/transpilers/swc-experimental"
-  }
+	"extends": "tsconfig/api.json",
+	"ts-node": {
+		"transpileOnly": true,
+		"transpiler": "ts-node/transpilers/swc-experimental"
+	}
 }

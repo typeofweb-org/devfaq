@@ -1,28 +1,28 @@
 {
-  "name": "app",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev --turbo",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint --dir .",
-    "lint:fix": "next lint --dir . --fix --quiet",
-    "check-types": "tsc --noEmit"
-  },
-  "dependencies": {
-    "next": "13.0.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "ui": "workspace:*"
-  },
-  "devDependencies": {
-    "@types/node": "^18.11.7",
-    "@types/react": "18.0.24",
-    "eslint": "8.26.0",
-    "eslint-config-devfaq": "workspace:*",
-    "next-transpile-modules": "9.1.0",
-    "tsconfig": "workspace:*",
-    "typescript": "^4.8.4"
-  }
+	"name": "app",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev --turbo",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint --dir .",
+		"lint:fix": "next lint --dir . --fix --quiet",
+		"check-types": "tsc --noEmit"
+	},
+	"dependencies": {
+		"next": "13.0.0",
+		"react": "18.2.0",
+		"react-dom": "18.2.0",
+		"ui": "workspace:*"
+	},
+	"devDependencies": {
+		"@types/node": "^18.11.7",
+		"@types/react": "18.0.24",
+		"eslint": "8.26.0",
+		"eslint-config-devfaq": "workspace:*",
+		"next-transpile-modules": "9.1.0",
+		"tsconfig": "workspace:*",
+		"typescript": "^4.8.4"
+	}
 }

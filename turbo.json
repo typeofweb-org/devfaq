@@ -1,16 +1,16 @@
 {
-  "pipeline": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
-    },
-    "lint": {},
-    "check-types": {},
-    "lint:fix": {
-      "cache": false
-    },
-    "dev": {
-      "cache": false
-    }
-  }
+	"pipeline": {
+		"build": {
+			"dependsOn": ["^build"],
+			"outputs": ["dist/**", ".next/**"]
+		},
+		"lint": {},
+		"check-types": {},
+		"lint:fix": {
+			"cache": false
+		},
+		"dev": {
+			"cache": false
+		}
+	}
 }
