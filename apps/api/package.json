@@ -9,7 +9,8 @@
 		"dev:ts-node": "wait-on tcp:5432 --interval 1000 && prisma generate && prisma migrate dev && nodemon index.ts",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix --quiet",
-		"check-types": "tsc --noEmit"
+		"check-types": "tsc --noEmit",
+		"postinstall": "prisma generate"
 	},
 	"devDependencies": {
 		"@types/ms": "0.7.31",
