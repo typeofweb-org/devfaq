@@ -29,7 +29,7 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
       const where = {
         ...(category && { categoryId: category }),
         ...(levels && { levelId: { in: levels } }),
-        ...(status && request.session.data?.User.UserRole.id === 'admin'
+        ...(status && request.session.data?._user._roleId === 'admin'
           ? { statusId: status }
           : { statusId: 'accepted' }),
       };
@@ -71,7 +71,7 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
             },
             QuestionVote: {
               where: {
-                userId: request.session.data?.User.id || 0,
+                userId: request.session.data?._user.id || 0,
               },
             },
           },
@@ -165,7 +165,7 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
           },
           QuestionVote: {
             where: {
-              userId: request.session.data?.User.id || 0,
+              userId: request.session.data?._user.id || 0,
             },
           },
         },
@@ -212,7 +212,7 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
           },
           QuestionVote: {
             where: {
-              userId: request.session.data?.User.id || 0,
+              userId: request.session.data?._user.id || 0,
             },
           },
         },
@@ -242,7 +242,7 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
     method: 'DELETE',
     schema: deleteQuestionByIdSchema,
     preValidation(request, reply, done) {
-      if (request.session.data?.User.UserRole.id !== 'admin') {
+      if (request.session.data?._user._roleId !== 'admin') {
         throw fastify.httpErrors.unauthorized();
       }
       done();

@@ -1,21 +1,20 @@
 import { Static, Type } from '@sinclair/typebox';
 
 export const meSchema = Type.Object({
-  id: Type.String(),
-  validUntil: Type.String({ format: 'date-time' }),
+  createdAt: Type.String({ format: 'date-time' }),
+  updatedAt: Type.String({ format: 'date-time' }),
   keepMeSignedIn: Type.Boolean(),
-  User: Type.Object({
+  validUntil: Type.String({ format: 'date-time' }),
+  _user: Type.Object({
     id: Type.Number(),
     email: Type.String(),
     firstName: Type.Union([Type.String(), Type.Null()]),
     lastName: Type.Union([Type.String(), Type.Null()]),
-    socialLogin: Type.Union([
-      Type.Null(),
-      Type.Record(Type.String(), Type.Union([Type.String(), Type.Number()])),
-    ]),
-    UserRole: Type.Object({
-      id: Type.String(),
-    }),
+    _roleId: Type.String(),
+    createdAt: Type.String({ format: 'date-time' }),
+    updatedAt: Type.String({ format: 'date-time' }),
+    socialLogin: Type.Record(Type.String(), Type.Union([Type.String(), Type.Number()])),
   }),
 });
+
 export type MeSchema = Static<typeof meSchema>;

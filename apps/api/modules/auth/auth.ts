@@ -1,4 +1,5 @@
 import type FastifySessionPlugin from '@fastify/session';
+import { Prisma } from '@prisma/client';
 import type { FastifyPluginAsync } from 'fastify';
 import FP from 'fastify-plugin';
 import ms from 'ms';
@@ -10,9 +11,37 @@ declare module 'fastify' {
   interface FastifyInstance {}
 
   interface Session {
-    data?: MeSchema;
+    data?: MeSchema & { id: string };
   }
 }
+
+export const userSelect = Prisma.validator<Prisma.UserArgs>()({
+  select: {
+    id: true,
+    email: true,
+    firstName: true,
+    lastName: true,
+    socialLogin: true,
+    createdAt: true,
+    updatedAt: true,
+    UserRole: {
+      select: {
+        id: true,
+      },
+    },
+  },
+});
+
+export const sessionSelect = Prisma.validator<Prisma.SessionArgs>()({
+  select: {
+    id: true,
+    validUntil: true,
+    keepMeSignedIn: true,
+    createdAt: true,
+    updatedAt: true,
+    User: userSelect,
+  },
+});
 
 const auth: FastifyPluginAsync = async (fastify, options) => {
   const sessionStore = new PrismaSessionStore(fastify.db);

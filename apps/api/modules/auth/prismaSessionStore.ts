@@ -1,12 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 import type * as Fastify from 'fastify';
 import ms from 'ms';
+import { sessionSelect } from './auth.js';
+import { dbAuthToDto } from './auth.mapper.js';
 
 export class PrismaSessionStore {
   constructor(private readonly prisma: PrismaClient) {}
 
   async set(sessionId: string, session: Fastify.Session, callback: (err?: unknown) => void) {
-    if (!session.data?.User) {
+    if (!session.data?._user) {
       return callback();
     }
     try {
@@ -15,7 +17,7 @@ export class PrismaSessionStore {
         keepMeSignedIn: true,
         validUntil:
           session.cookie.expires || new Date(Date.now() + (session.cookie.maxAge || ms('7 days'))),
-        User: { connect: { id: session.data.User.id } },
+        User: { connect: { id: session.data._user.id } },
       };
 
       await this.prisma.session.upsert({
@@ -35,34 +37,18 @@ export class PrismaSessionStore {
 
       const sessionDb = await this.prisma.session.findUnique({
         where: { id: sessionId },
-        select: {
-          id: true,
-          validUntil: true,
-          keepMeSignedIn: true,
-          User: {
-            select: {
-              id: true,
-              email: true,
-              firstName: true,
-              lastName: true,
-              socialLogin: true,
-              UserRole: {
-                select: {
-                  id: true,
-                },
-              },
-            },
-          },
-        },
+        select: sessionSelect.select,
       });
 
       if (!sessionDb) {
         return callback();
       }
-      // @todo ?
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
+      const data: Fastify.Session['data'] = dbAuthToDto(sessionDb);
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- ?
       // @ts-ignore
-      return callback(null, { data: sessionDb });
+      return callback(null, { data });
     } catch (err) {
       return callback(err);
     }

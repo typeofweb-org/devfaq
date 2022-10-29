@@ -6,6 +6,8 @@ import { fetch } from 'undici';
 import { GitHubUser } from './githubProfile.type.js';
 import { randomUUID } from 'crypto';
 import ms from 'ms';
+import { userSelect } from './auth.js';
+import { dbAuthToDto } from './auth.mapper.js';
 
 declare module 'fastify' {
   interface FastifyInstance {
@@ -60,12 +62,14 @@ const authRoutesPlugin: FastifyPluginAsync = async (fastify) => {
         : null;
 
       await request.session.regenerate();
-      request.session.data = {
+      request.session.data = dbAuthToDto({
         id: randomUUID(),
-        validUntil: new Date(Date.now() + ms('7 days')).toISOString(),
+        validUntil: new Date(Date.now() + ms('7 days')),
         keepMeSignedIn: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
         User: { ...userAccount, socialLogin },
-      };
+      });
 
       // this is a hack to close the popup initiated on the frontend
       return reply.header('content-type', 'text/html').send(
@@ -131,26 +135,13 @@ function getName(gitHubUser: GitHubUser) {
   };
 }
 
-const userSelect = {
-  id: true,
-  email: true,
-  firstName: true,
-  lastName: true,
-  socialLogin: true,
-  UserRole: {
-    select: {
-      id: true,
-    },
-  },
-};
-
 async function findOrCreateAccountFor(
   fastify: FastifyInstance,
   { externalServiceId, email, firstName, lastName }: AuthDetails
 ) {
   const dbUser = await fastify.db.user.findFirst({
     where: { socialLogin: { equals: { github: externalServiceId } } },
-    select: userSelect,
+    select: userSelect.select,
   });
 
   if (dbUser) {
@@ -170,7 +161,7 @@ async function findOrCreateAccountFor(
       firstName,
       lastName,
     },
-    select: userSelect,
+    select: userSelect.select,
   });
 
   return newDbUser;
