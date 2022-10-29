@@ -1326,15 +1326,15 @@ packages:
     version: 1.0.3
     dev: false
 
-  registry.npmjs.org/@types/eslint/8.4.8:
+  registry.npmjs.org/@types/eslint/8.4.9:
     resolution:
       {
-        integrity: sha512-zUCKQI1bUCTi+0kQs5ZQzQ/XILWRLIlh15FXWNykJ+NG3TMKMVvwwC6GP3DR1Ylga15fB7iAExSzc4PNlR5i3w==,
+        integrity: sha512-jFCSo4wJzlHQLCpceUhUnXdrPuCNOjGFMQ8Eg6JXxlz3QaCKOb7eGi2cephQdM4XTYsNej69P9JDJ1zqNIbncQ==,
         registry: https://registry.npmjs.com/,
-        tarball: https://registry.npmjs.org/@types/eslint/-/eslint-8.4.8.tgz,
+        tarball: https://registry.npmjs.org/@types/eslint/-/eslint-8.4.9.tgz,
       }
     name: "@types/eslint"
-    version: 8.4.8
+    version: 8.4.9
     dependencies:
       "@types/estree": registry.npmjs.org/@types/estree/1.0.0
       "@types/json-schema": registry.npmjs.org/@types/json-schema/7.0.11
@@ -3045,7 +3045,7 @@ packages:
     dependencies:
       "@formatjs/icu-messageformat-parser": registry.npmjs.org/@formatjs/icu-messageformat-parser/2.1.10
       "@formatjs/ts-transformer": registry.npmjs.org/@formatjs/ts-transformer/3.11.1
-      "@types/eslint": registry.npmjs.org/@types/eslint/8.4.8
+      "@types/eslint": registry.npmjs.org/@types/eslint/8.4.9
       "@types/picomatch": registry.npmjs.org/@types/picomatch/2.3.0
       "@typescript-eslint/typescript-estree": registry.npmjs.org/@typescript-eslint/typescript-estree/5.41.0_typescript@4.8.4
       emoji-regex: registry.npmjs.org/emoji-regex/10.2.1
