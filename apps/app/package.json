@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev --turbo",
+		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint --dir .",
@@ -11,7 +11,7 @@
 		"check-types": "tsc --noEmit"
 	},
 	"dependencies": {
-		"next": "13.0.0",
+		"next": "13.0.1-canary.1",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"ui": "workspace:*"

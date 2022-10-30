@@ -73,13 +73,13 @@ importers:
       tsconfig: link:../../packages/tsconfig
       typescript: registry.npmjs.org/typescript/4.8.4
 
-  apps/web:
+  apps/app:
     specifiers:
       '@types/node': 18.11.7
       '@types/react': 18.0.24
       eslint: 8.26.0
       eslint-config-devfaq: workspace:*
-      next: 13.0.0
+      next: 13.0.1-canary.1
       next-transpile-modules: 9.1.0
       react: 18.2.0
       react-dom: 18.2.0
@@ -87,7 +87,7 @@ importers:
       typescript: 4.8.4
       ui: workspace:*
     dependencies:
-      next: registry.npmjs.org/next/13.0.0_biqbaboplfbrettd7655fr4n2y
+      next: registry.npmjs.org/next/13.0.1-canary.1_biqbaboplfbrettd7655fr4n2y
       react: registry.npmjs.org/react/18.2.0
       react-dom: registry.npmjs.org/react-dom/18.2.0_react@18.2.0
       ui: link:../../packages/ui
@@ -459,10 +459,10 @@ packages:
       '@jridgewell/sourcemap-codec': registry.npmjs.org/@jridgewell/sourcemap-codec/1.4.14
     dev: false
 
-  registry.npmjs.org/@next/env/13.0.0:
-    resolution: {integrity: sha512-65v9BVuah2Mplohm4+efsKEnoEuhmlGm8B2w6vD1geeEP2wXtlSJCvR/cCRJ3fD8wzCQBV41VcMBQeYET6MRkg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/env/-/env-13.0.0.tgz}
+  registry.npmjs.org/@next/env/13.0.1-canary.1:
+    resolution: {integrity: sha512-nequp8hoCEsAcz0Mh9iQ5lILZOQkbPoSBQ93HeXDkRSbXilPxjQQM1b46IoWF4yRJ+zJtwoglo/oD7PyNYI0OQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/env/-/env-13.0.1-canary.1.tgz}
     name: '@next/env'
-    version: 13.0.0
+    version: 13.0.1-canary.1
     dev: false
 
   registry.npmjs.org/@next/eslint-plugin-next/13.0.0:
@@ -473,10 +473,10 @@ packages:
       glob: registry.npmjs.org/glob/7.1.7
     dev: true
 
-  registry.npmjs.org/@next/swc-android-arm-eabi/13.0.0:
-    resolution: {integrity: sha512-+DUQkYF93gxFjWY+CYWE1QDX6gTgnUiWf+W4UqZjM1Jcef8U97fS6xYh+i+8rH4MM0AXHm7OSakvfOMzmjU6VA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-android-arm-eabi/-/swc-android-arm-eabi-13.0.0.tgz}
+  registry.npmjs.org/@next/swc-android-arm-eabi/13.0.1-canary.1:
+    resolution: {integrity: sha512-rCsZjzfIc/15JSjwJAB+mtdkfgkZ+ZkTX9vPI4NY/g+uts/8DD3vCERSagiQTObmsZ6+V4uScKFC2UBHJfMlxQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-android-arm-eabi/-/swc-android-arm-eabi-13.0.1-canary.1.tgz}
     name: '@next/swc-android-arm-eabi'
-    version: 13.0.0
+    version: 13.0.1-canary.1
     engines: {node: '>= 10'}
     cpu: [arm]
     os: [android]
@@ -484,10 +484,10 @@ packages:
     dev: false
     optional: true
 
-  registry.npmjs.org/@next/swc-android-arm64/13.0.0:
-    resolution: {integrity: sha512-RW9Uy3bMSc0zVGCa11klFuwfP/jdcdkhdruqnrJ7v+7XHm6OFKkSRzX6ee7yGR1rdDZvTnP4GZSRSpzjLv/N0g==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-android-arm64/-/swc-android-arm64-13.0.0.tgz}
+  registry.npmjs.org/@next/swc-android-arm64/13.0.1-canary.1:
+    resolution: {integrity: sha512-n4pvwK3unD08ihaisZ/HMmVbDWRy138oKlxQVsgbqHWkq/t09a8/HRoYV6zVTOy3beAGi6fy9urQcuoCHNbMkQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-android-arm64/-/swc-android-arm64-13.0.1-canary.1.tgz}
     name: '@next/swc-android-arm64'
-    version: 13.0.0
+    version: 13.0.1-canary.1
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [android]
@@ -495,10 +495,10 @@ packages:
     dev: false
     optional: true
 
-  registry.npmjs.org/@next/swc-darwin-arm64/13.0.0:
-    resolution: {integrity: sha512-APA26nps1j4qyhOIzkclW/OmgotVHj1jBxebSpMCPw2rXfiNvKNY9FA0TcuwPmUCNqaTnm703h6oW4dvp73A4Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-darwin-arm64/-/swc-darwin-arm64-13.0.0.tgz}
+  registry.npmjs.org/@next/swc-darwin-arm64/13.0.1-canary.1:
+    resolution: {integrity: sha512-bbHnQNI+Eo7jRICnLryTE+XJymgpqiaNGQ2ndv4WIk5wSFJ1+tpwZvF47h0GBcK/OtRH8ih/+7f5xVyXfqNy1g==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-darwin-arm64/-/swc-darwin-arm64-13.0.1-canary.1.tgz}
     name: '@next/swc-darwin-arm64'
-    version: 13.0.0
+    version: 13.0.1-canary.1
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -506,10 +506,10 @@ packages:
     dev: false
     optional: true
 
-  registry.npmjs.org/@next/swc-darwin-x64/13.0.0:
-    resolution: {integrity: sha512-qsUhUdoFuRJiaJ7LnvTQ6GZv1QnMDcRXCIjxaN0FNVXwrjkq++U7KjBUaxXkRzLV4C7u0NHLNOp0iZwNNE7ypw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-13.0.0.tgz}
+  registry.npmjs.org/@next/swc-darwin-x64/13.0.1-canary.1:
+    resolution: {integrity: sha512-tU3piVzURkG4sBY2fu+tKlEXcGPZmDCzW/uoab9mhAwyYozFh73Kw12oijZ0XCWn1MVDqOAga1vhxYzASBQMtA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-darwin-x64/-/swc-darwin-x64-13.0.1-canary.1.tgz}
     name: '@next/swc-darwin-x64'
-    version: 13.0.0
+    version: 13.0.1-canary.1
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -517,10 +517,10 @@ packages:
     dev: false
     optional: true
 
-  registry.npmjs.org/@next/swc-freebsd-x64/13.0.0:
-    resolution: {integrity: sha512-sCdyCbboS7CwdnevKH9J6hkJI76LUw1jVWt4eV7kISuLiPba3JmehZSWm80oa4ADChRVAwzhLAo2zJaYRrInbg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-freebsd-x64/-/swc-freebsd-x64-13.0.0.tgz}
+  registry.npmjs.org/@next/swc-freebsd-x64/13.0.1-canary.1:
+    resolution: {integrity: sha512-4t+ABKHL87pknIWLp7uaOsUH40wmEpAkaWxQGvcxbyODFfFjbBP/enED03iYM+fXgXlPP2oVcLBHSw5CCM3FiA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-freebsd-x64/-/swc-freebsd-x64-13.0.1-canary.1.tgz}
     name: '@next/swc-freebsd-x64'
-    version: 13.0.0
+    version: 13.0.1-canary.1
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [freebsd]
@@ -528,10 +528,10 @@ packages:
     dev: false
     optional: true
 
-  registry.npmjs.org/@next/swc-linux-arm-gnueabihf/13.0.0:
-    resolution: {integrity: sha512-/X/VxfFA41C9jrEv+sUsPLQ5vbDPVIgG0CJrzKvrcc+b+4zIgPgtfsaWq9ockjHFQi3ycvlZK4TALOXO8ovQ6Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-linux-arm-gnueabihf/-/swc-linux-arm-gnueabihf-13.0.0.tgz}
+  registry.npmjs.org/@next/swc-linux-arm-gnueabihf/13.0.1-canary.1:
+    resolution: {integrity: sha512-FVA66Ekbelhw6QisTPj+wtaawSKlwOOml4U5ucC8vjaAgeVaH6yX1Ahav+j6cCT9S3szfLaN4yJ1h9rRm7SiFQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-linux-arm-gnueabihf/-/swc-linux-arm-gnueabihf-13.0.1-canary.1.tgz}
     name: '@next/swc-linux-arm-gnueabihf'
-    version: 13.0.0
+    version: 13.0.1-canary.1
     engines: {node: '>= 10'}
     cpu: [arm]
     os: [linux]
@@ -539,10 +539,10 @@ packages:
     dev: false
     optional: true
 
-  registry.npmjs.org/@next/swc-linux-arm64-gnu/13.0.0:
-    resolution: {integrity: sha512-x6Oxr1GIi0ZtNiT6jbw+JVcbEi3UQgF7mMmkrgfL4mfchOwXtWSHKTSSPnwoJWJfXYa0Vy1n8NElWNTGAqoWFw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-linux-arm64-gnu/-/swc-linux-arm64-gnu-13.0.0.tgz}
+  registry.npmjs.org/@next/swc-linux-arm64-gnu/13.0.1-canary.1:
+    resolution: {integrity: sha512-to9ydnm5TUAHjOqzBC5poxWzzAHX1rjKSpCkufck+fm0Yt+hTxoJS8SbchY4BaKXIvYPTvwCM0DobBk9p9dhWQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-linux-arm64-gnu/-/swc-linux-arm64-gnu-13.0.1-canary.1.tgz}
     name: '@next/swc-linux-arm64-gnu'
-    version: 13.0.0
+    version: 13.0.1-canary.1
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -550,10 +550,10 @@ packages:
     dev: false
     optional: true
 
-  registry.npmjs.org/@next/swc-linux-arm64-musl/13.0.0:
-    resolution: {integrity: sha512-SnMH9ngI+ipGh3kqQ8+mDtWunirwmhQnQeZkEq9e/9Xsgjf04OetqrqRHKM1HmJtG2qMUJbyXFJ0F81TPuT+3g==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-linux-arm64-musl/-/swc-linux-arm64-musl-13.0.0.tgz}
+  registry.npmjs.org/@next/swc-linux-arm64-musl/13.0.1-canary.1:
+    resolution: {integrity: sha512-4EDWIsfdzUYWCI+BSlx0dGQkA5TXUP+83kg9VQkRCp73C1qx9WWYU+/dDjWr2QoIV+usK8ZCudB+7RAp+YpWqQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-linux-arm64-musl/-/swc-linux-arm64-musl-13.0.1-canary.1.tgz}
     name: '@next/swc-linux-arm64-musl'
-    version: 13.0.0
+    version: 13.0.1-canary.1
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -561,10 +561,10 @@ packages:
     dev: false
     optional: true
 
-  registry.npmjs.org/@next/swc-linux-x64-gnu/13.0.0:
-    resolution: {integrity: sha512-VSQwTX9EmdbotArtA1J67X8964oQfe0xHb32x4tu+JqTR+wOHyG6wGzPMdXH2oKAp6rdd7BzqxUXXf0J+ypHlw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-13.0.0.tgz}
+  registry.npmjs.org/@next/swc-linux-x64-gnu/13.0.1-canary.1:
+    resolution: {integrity: sha512-yfthNgzbhZDrp2Kb7DbB2uHUJ7uu3LvVP2r0+uGG22PIRJ2ws9SeyKfZreQLiUTCLWKqTJpemB69SgVvedPDEA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-13.0.1-canary.1.tgz}
     name: '@next/swc-linux-x64-gnu'
-    version: 13.0.0
+    version: 13.0.1-canary.1
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -572,10 +572,10 @@ packages:
     dev: false
     optional: true
 
-  registry.npmjs.org/@next/swc-linux-x64-musl/13.0.0:
-    resolution: {integrity: sha512-xBCP0nnpO0q4tsytXkvIwWFINtbFRyVY5gxa1zB0vlFtqYR9lNhrOwH3CBrks3kkeaePOXd611+8sjdUtrLnXA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-13.0.0.tgz}
+  registry.npmjs.org/@next/swc-linux-x64-musl/13.0.1-canary.1:
+    resolution: {integrity: sha512-oT+PRry1z0Twrx3wvdvbLxmwrfSJXLFoO2ZD8YK6nLuG3TnfAey+tupesZWBajtZI2w9EnY+myLNVeAcgBkV+Q==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-13.0.1-canary.1.tgz}
     name: '@next/swc-linux-x64-musl'
-    version: 13.0.0
+    version: 13.0.1-canary.1
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -583,10 +583,10 @@ packages:
     dev: false
     optional: true
 
-  registry.npmjs.org/@next/swc-win32-arm64-msvc/13.0.0:
-    resolution: {integrity: sha512-NutwDafqhGxqPj/eiUixJq9ImS/0sgx6gqlD7jRndCvQ2Q8AvDdu1+xKcGWGNnhcDsNM/n1avf1e62OG1GaqJg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-13.0.0.tgz}
+  registry.npmjs.org/@next/swc-win32-arm64-msvc/13.0.1-canary.1:
+    resolution: {integrity: sha512-k5zECjHecusSrScFRc1kass0WlnlBpMdQuas8y5LHSjNSfx9MOiwa/yc4yWpkz112CefT9Rx96w7BvmkyKrbHA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-13.0.1-canary.1.tgz}
     name: '@next/swc-win32-arm64-msvc'
-    version: 13.0.0
+    version: 13.0.1-canary.1
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
@@ -594,10 +594,10 @@ packages:
     dev: false
     optional: true
 
-  registry.npmjs.org/@next/swc-win32-ia32-msvc/13.0.0:
-    resolution: {integrity: sha512-zNaxaO+Kl/xNz02E9QlcVz0pT4MjkXGDLb25qxtAzyJL15aU0+VjjbIZAYWctG59dvggNIUNDWgoBeVTKB9xLg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-win32-ia32-msvc/-/swc-win32-ia32-msvc-13.0.0.tgz}
+  registry.npmjs.org/@next/swc-win32-ia32-msvc/13.0.1-canary.1:
+    resolution: {integrity: sha512-D0sS8jnREYT1S9X/Uy/U/wpdVLC9WTJonPyt+djHs2t0ahE+X6wpozOLDBT+gU0o250irjRaZt9jL4Tnb48EcQ==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-win32-ia32-msvc/-/swc-win32-ia32-msvc-13.0.1-canary.1.tgz}
     name: '@next/swc-win32-ia32-msvc'
-    version: 13.0.0
+    version: 13.0.1-canary.1
     engines: {node: '>= 10'}
     cpu: [ia32]
     os: [win32]
@@ -605,10 +605,10 @@ packages:
     dev: false
     optional: true
 
-  registry.npmjs.org/@next/swc-win32-x64-msvc/13.0.0:
-    resolution: {integrity: sha512-FFOGGWwTCRMu9W7MF496Urefxtuo2lttxF1vwS+1rIRsKvuLrWhVaVTj3T8sf2EBL6gtJbmh4TYlizS+obnGKA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.0.0.tgz}
+  registry.npmjs.org/@next/swc-win32-x64-msvc/13.0.1-canary.1:
+    resolution: {integrity: sha512-DGxazqnsg4R7JWbyyFnKIo2bBFLLwvkx/AsJNw7BFv6Ns0FLaXEtc1zf1W7frxC0h7stC0hkwUli9Bowq10blg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.0.1-canary.1.tgz}
     name: '@next/swc-win32-x64-msvc'
-    version: 13.0.0
+    version: 13.0.1-canary.1
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -3377,18 +3377,18 @@ packages:
       escalade: registry.npmjs.org/escalade/3.1.1
     dev: true
 
-  registry.npmjs.org/next/13.0.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-puH1WGM6rGeFOoFdXXYfUxN9Sgi4LMytCV5HkQJvVUOhHfC1DoVqOfvzaEteyp6P04IW+gbtK2Q9pInVSrltPA==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/next/-/next-13.0.0.tgz}
-    id: registry.npmjs.org/next/13.0.0
+  registry.npmjs.org/next/13.0.1-canary.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-OjAo/NqDRUfWh8JH9bNqTHLo9obv37sbJ9RPw8rd5wNaw1DRQaaKOT2Mi5tIwRDjGOCHNVjzhQXqqv63G6lLAw==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/next/-/next-13.0.1-canary.1.tgz}
+    id: registry.npmjs.org/next/13.0.1-canary.1
     name: next
-    version: 13.0.0
+    version: 13.0.1-canary.1
     engines: {node: '>=14.6.0'}
     hasBin: true
     peerDependencies:
       fibers: '>= 3.1.0'
       node-sass: ^6.0.0 || ^7.0.0
-      react: ^18.0.0-0
-      react-dom: ^18.0.0-0
+      react: ^18.2.0
+      react-dom: ^18.2.0
       sass: ^1.3.0
     peerDependenciesMeta:
       fibers:
@@ -3398,7 +3398,7 @@ packages:
       sass:
         optional: true
     dependencies:
-      '@next/env': registry.npmjs.org/@next/env/13.0.0
+      '@next/env': registry.npmjs.org/@next/env/13.0.1-canary.1
       '@swc/helpers': registry.npmjs.org/@swc/helpers/0.4.11
       caniuse-lite: registry.npmjs.org/caniuse-lite/1.0.30001426
       postcss: registry.npmjs.org/postcss/8.4.14
@@ -3407,19 +3407,19 @@ packages:
       styled-jsx: registry.npmjs.org/styled-jsx/5.1.0_react@18.2.0
       use-sync-external-store: registry.npmjs.org/use-sync-external-store/1.2.0_react@18.2.0
     optionalDependencies:
-      '@next/swc-android-arm-eabi': registry.npmjs.org/@next/swc-android-arm-eabi/13.0.0
-      '@next/swc-android-arm64': registry.npmjs.org/@next/swc-android-arm64/13.0.0
-      '@next/swc-darwin-arm64': registry.npmjs.org/@next/swc-darwin-arm64/13.0.0
-      '@next/swc-darwin-x64': registry.npmjs.org/@next/swc-darwin-x64/13.0.0
-      '@next/swc-freebsd-x64': registry.npmjs.org/@next/swc-freebsd-x64/13.0.0
-      '@next/swc-linux-arm-gnueabihf': registry.npmjs.org/@next/swc-linux-arm-gnueabihf/13.0.0
-      '@next/swc-linux-arm64-gnu': registry.npmjs.org/@next/swc-linux-arm64-gnu/13.0.0
-      '@next/swc-linux-arm64-musl': registry.npmjs.org/@next/swc-linux-arm64-musl/13.0.0
-      '@next/swc-linux-x64-gnu': registry.npmjs.org/@next/swc-linux-x64-gnu/13.0.0
-      '@next/swc-linux-x64-musl': registry.npmjs.org/@next/swc-linux-x64-musl/13.0.0
-      '@next/swc-win32-arm64-msvc': registry.npmjs.org/@next/swc-win32-arm64-msvc/13.0.0
-      '@next/swc-win32-ia32-msvc': registry.npmjs.org/@next/swc-win32-ia32-msvc/13.0.0
-      '@next/swc-win32-x64-msvc': registry.npmjs.org/@next/swc-win32-x64-msvc/13.0.0
+      '@next/swc-android-arm-eabi': registry.npmjs.org/@next/swc-android-arm-eabi/13.0.1-canary.1
+      '@next/swc-android-arm64': registry.npmjs.org/@next/swc-android-arm64/13.0.1-canary.1
+      '@next/swc-darwin-arm64': registry.npmjs.org/@next/swc-darwin-arm64/13.0.1-canary.1
+      '@next/swc-darwin-x64': registry.npmjs.org/@next/swc-darwin-x64/13.0.1-canary.1
+      '@next/swc-freebsd-x64': registry.npmjs.org/@next/swc-freebsd-x64/13.0.1-canary.1
+      '@next/swc-linux-arm-gnueabihf': registry.npmjs.org/@next/swc-linux-arm-gnueabihf/13.0.1-canary.1
+      '@next/swc-linux-arm64-gnu': registry.npmjs.org/@next/swc-linux-arm64-gnu/13.0.1-canary.1
+      '@next/swc-linux-arm64-musl': registry.npmjs.org/@next/swc-linux-arm64-musl/13.0.1-canary.1
+      '@next/swc-linux-x64-gnu': registry.npmjs.org/@next/swc-linux-x64-gnu/13.0.1-canary.1
+      '@next/swc-linux-x64-musl': registry.npmjs.org/@next/swc-linux-x64-musl/13.0.1-canary.1
+      '@next/swc-win32-arm64-msvc': registry.npmjs.org/@next/swc-win32-arm64-msvc/13.0.1-canary.1
+      '@next/swc-win32-ia32-msvc': registry.npmjs.org/@next/swc-win32-ia32-msvc/13.0.1-canary.1
+      '@next/swc-win32-x64-msvc': registry.npmjs.org/@next/swc-win32-x64-msvc/13.0.1-canary.1
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
