@@ -4,12 +4,21 @@ import ms from "ms";
 import { sessionSelect } from "./auth.js";
 import { dbAuthToDto } from "./auth.mapper.js";
 
+export const defer = <A extends unknown[], T extends (...args: A) => void>(
+	callback: T,
+	...args: A
+) => {
+	setImmediate(() => {
+		callback(...args);
+	});
+};
+
 export class PrismaSessionStore {
 	constructor(private readonly prisma: PrismaClient) {}
 
 	async set(sessionId: string, session: Fastify.Session, callback: (err?: unknown) => void) {
 		if (!session.data?._user) {
-			return callback();
+			return defer(callback);
 		}
 		try {
 			const sessionData = {
@@ -25,9 +34,9 @@ export class PrismaSessionStore {
 				create: sessionData,
 				update: sessionData,
 			});
-			callback();
+			defer(callback);
 		} catch (err) {
-			return callback(err);
+			return defer(callback, err);
 		}
 	}
 
@@ -41,26 +50,24 @@ export class PrismaSessionStore {
 			});
 
 			if (!sessionDb) {
-				return callback();
+				return defer(callback);
 			}
 
 			const data: Fastify.Session["data"] = dbAuthToDto(sessionDb);
 
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment -- ?
-			// @ts-ignore
-			return callback(null, { data });
+			return defer(callback, undefined, { data } as Fastify.Session);
 		} catch (err) {
-			return callback(err);
+			return defer(callback, err);
 		}
 	}
 
 	async destroy(sessionId: string, callback: (err?: unknown) => void) {
 		try {
 			await this.prisma.session.deleteMany({ where: { id: sessionId } });
-			callback();
+			defer(callback);
 		} catch (err) {
 			console.dir(err);
-			return callback(err);
+			return defer(callback, err);
 		}
 	}
 }
