@@ -1,3 +1,9 @@
+/**
+ * Copyright © 2022  Type of Web - Michał Miszczyszyn
+ * GNU AFFERO GENERAL PUBLIC LICENSE (AGPL)
+ * https://github.com/typeofweb
+ */
+
 import { PrismaClient } from "@prisma/client";
 import type * as Fastify from "fastify";
 import ms from "ms";
