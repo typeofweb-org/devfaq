@@ -19,6 +19,7 @@
 	"devDependencies": {
 		"@types/node": "18.11.8",
 		"@types/react": "18.0.24",
+		"@vercel/analytics": "0.1.5",
 		"eslint": "8.26.0",
 		"eslint-config-devfaq": "workspace:*",
 		"next-transpile-modules": "9.1.0",

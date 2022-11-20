@@ -1,10 +1,13 @@
-/* eslint-disable @next/next/no-head-element */
+import { AnalyticsWrapper } from "../components/analytics";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html>
+		<html lang="pl">
 			<head></head>
-			<body>{children}</body>
+			<body>
+				{children}
+				<AnalyticsWrapper />
+			</body>
 		</html>
 	);
 }

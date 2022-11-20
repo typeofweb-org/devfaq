@@ -77,6 +77,7 @@ importers:
     specifiers:
       '@types/node': 18.11.8
       '@types/react': 18.0.24
+      '@vercel/analytics': 0.1.5
       eslint: 8.26.0
       eslint-config-devfaq: workspace:*
       next: 13.0.1
@@ -94,6 +95,7 @@ importers:
     devDependencies:
       '@types/node': registry.npmjs.org/@types/node/18.11.8
       '@types/react': registry.npmjs.org/@types/react/18.0.24
+      '@vercel/analytics': registry.npmjs.org/@vercel/analytics/0.1.5_react@18.2.0
       eslint: registry.npmjs.org/eslint/8.26.0
       eslint-config-devfaq: link:../../packages/eslint-config-devfaq
       next-transpile-modules: registry.npmjs.org/next-transpile-modules/9.1.0
@@ -1209,6 +1211,17 @@ packages:
     dependencies:
       '@typescript-eslint/types': registry.npmjs.org/@typescript-eslint/types/5.42.0
       eslint-visitor-keys: registry.npmjs.org/eslint-visitor-keys/3.3.0
+    dev: true
+
+  registry.npmjs.org/@vercel/analytics/0.1.5_react@18.2.0:
+    resolution: {integrity: sha512-/k9N8Ea3Yc5A52GlkjzUEbi2vE/izClrOf++ryBkxEfrZM/OZwtHkdNw/QExZ1h/B67RCZLK7bCOnKKrhG7gTg==, registry: https://registry.npmjs.com/, tarball: https://registry.npmjs.org/@vercel/analytics/-/analytics-0.1.5.tgz}
+    id: registry.npmjs.org/@vercel/analytics/0.1.5
+    name: '@vercel/analytics'
+    version: 0.1.5
+    peerDependencies:
+      react: ^16.8||^17||^18
+    dependencies:
+      react: registry.npmjs.org/react/18.2.0
     dev: true
 
   registry.npmjs.org/abbrev/1.1.1:
