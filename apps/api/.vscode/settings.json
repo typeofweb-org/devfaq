@@ -1,0 +1,6 @@
+{
+	"typescript.preferences.importModuleSpecifierEnding": "js",
+	"[prisma]": {
+		"editor.defaultFormatter": "Prisma.prisma"
+	}
+}
