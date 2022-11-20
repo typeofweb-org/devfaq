@@ -6,6 +6,11 @@
 	"compilerOptions": {
 		"paths": {
 			"ui": ["../../packages/ui"]
-		}
+		},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		]
 	}
 }

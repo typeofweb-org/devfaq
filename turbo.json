@@ -3,7 +3,19 @@
 		"build": {
 			"cache": true,
 			"dependsOn": ["^build"],
-			"outputs": ["dist/**", ".next/**"]
+			"outputs": ["dist/**", ".next/**"],
+			"env": [
+				"ENV",
+				"NODE_ENV",
+				"PORT",
+				"COOKIE_DOMAIN",
+				"COOKIE_PASSWORD",
+				"GITHUB_CLIENT_ID",
+				"GITHUB_CLIENT_SECRET",
+				"SENTRY_VERSION",
+				"VERSION",
+				"DATABASE_URL"
+			]
 		},
 		"lint": {},
 		"check-types": {},
