@@ -7,7 +7,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN pnpm pnpm --filter=api i --frozen-lockfile
+RUN pnpm --filter=api i --frozen-lockfile
 
 ENV NODE_ENV production
 RUN pnpm --filter=api build
