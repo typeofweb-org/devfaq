@@ -13,9 +13,9 @@ DevFAQ is organised into a monorepo with Turborepo. You'll find frontend ([www](
 
 ## Project setup
 
-0. Make sure you have Docker installed and `docker-compose` command is available.
+0. Make sure you have Docker installed and `docker compose` command is available.
 1. Fork and clone the repo. `develop` is the default branch and you should base your work off of it.
-2. Run `pnpm` inside the repo to install all the dependencies.
+2. Run `pnpm install` inside the repo to install all the dependencies.
 3. Run `pnpm dev` to start both frontend and backend locally.
 4. In order for everything to work smoothly, you'll need to add two entries to your `/etc/hosts`. See [Configuring localhost domain](#configuring-localhost-domain) section.
 
