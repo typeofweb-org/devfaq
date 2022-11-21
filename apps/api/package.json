@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "pnpm tsc",
 		"start": "node index.js",
-		"dev": "concurrently --kill-others-on-fail 'yarn dev:db' 'yarn dev:ts-node'",
+		"dev": "concurrently --kill-others-on-fail 'pnpm run dev:db' 'pnpm run dev:ts-node'",
 		"dev:db": "docker-compose up",
 		"dev:ts-node": "wait-on tcp:5432 --interval 1000 && prisma generate && prisma migrate dev && nodemon index.ts",
 		"lint": "eslint .",
