@@ -1,8 +1,7 @@
-import Fs from "fs";
-
 export function getConfig(name: "ENV"): "production" | "staging" | "development" | "test";
 export function getConfig(name: "NODE_ENV"): "production" | "development";
 export function getConfig(name: "PORT"): number;
+export function getConfig(name: "VERSION"): string;
 export function getConfig(name: string): string;
 export function getConfig(name: string): string | number {
 	const val = process.env[name];
@@ -18,7 +17,7 @@ export function getConfig(name: string): string | number {
 		case "GITHUB_CLIENT_SECRET":
 			return val || "";
 		case "VERSION":
-			return Fs.existsSync(".version") ? Fs.readFileSync(".version", "utf-8").trim() : "dev";
+			return process.env.VERSION || "dev";
 		case "SENTRY_VERSION":
 			return getConfig("VERSION").split(":").pop() || "";
 	}

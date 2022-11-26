@@ -22,7 +22,7 @@ jobs:
         uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: Deploy to fly.io
-        run: flyctl deploy --config apps/api/fly.toml --remote-only
+        run: flyctl deploy --config apps/api/fly.toml --remote-only -e GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD) -e GIT_COMMIT_HASH=$(git rev-parse HEAD)
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
           TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
