@@ -7,12 +7,14 @@ WORKDIR /app
 
 COPY . .
 
+ENV TURBO_TEAM=""
+ENV TURBO_TOKEN=""
 RUN pnpm --filter=api... i --frozen-lockfile
 
-ENV NODE_ENV production
+ENV NODE_ENV=production
 RUN pnpm --filter=api... build
 
 LABEL fly_launch_runtime="nodejs"
 
-ENV PORT 3000
+ENV PORT=3000
 CMD [ "pnpm", "--filter=api", "run", "start" ]
