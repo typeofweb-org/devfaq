@@ -1,11 +1,11 @@
+import { randomUUID } from "crypto";
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
 import FastifyOauth, { OAuth2Namespace, OAuth2Token } from "@fastify/oauth2";
-import { getConfig } from "../../config/config.js";
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { fetch } from "undici";
-import { GitHubUser } from "./githubProfile.type.js";
-import { randomUUID } from "crypto";
 import ms from "ms";
+import { getConfig } from "../../config/config.js";
+import { GitHubUser } from "./githubProfile.type.js";
 import { userSelect } from "./auth.js";
 import { dbAuthToDto } from "./auth.mapper.js";
 

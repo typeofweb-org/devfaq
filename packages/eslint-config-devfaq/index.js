@@ -9,6 +9,8 @@ module.exports = {
 		"next/core-web-vitals",
 		"plugin:@typescript-eslint/recommended",
 		"plugin:@typescript-eslint/recommended-requiring-type-checking",
+		"plugin:import/recommended",
+		"plugin:import/typescript",
 		"prettier",
 	],
 	parserOptions: {
@@ -26,6 +28,8 @@ module.exports = {
 	rules: {
 		"@typescript-eslint/require-await": "off",
 		"@typescript-eslint/no-empty-interface": "off",
+		"@typescript-eslint/no-unused-vars": "off",
 		"@next/next/no-html-link-for-pages": ["off"],
+		"import/order": ["error"],
 	},
 };

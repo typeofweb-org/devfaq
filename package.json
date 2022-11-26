@@ -1,5 +1,5 @@
 {
-	"name": "devfaq-new2",
+	"name": "devfaq",
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
@@ -14,14 +14,15 @@
 	"devDependencies": {
 		"eslint-config-devfaq": "workspace:*",
 		"husky": "8.0.2",
-		"lint-staged": "13.0.3",
-		"prettier": "2.7.1",
+		"lint-staged": "13.0.4",
+		"prettier": "2.8.0",
 		"turbo": "1.6.3",
 		"typescript": "4.9.3"
 	},
 	"engines": {
 		"npm": ">=7.0.0",
-		"node": ">=18.0.0"
+		"pnpm": ">=7.11.0",
+		"node": ">=18.0.0 <19"
 	},
-	"packageManager": "pnpm@7.14.0"
+	"packageManager": "pnpm@7.17.0"
 }
