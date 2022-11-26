@@ -9,13 +9,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
 
       - name: Verify if deploy is needed
         id: should_run
-        run: echo "HAS_CHANGES=$(cd apps/api && npx -y @typeofweb/ignore-monorepo-buildstep@latest)" >> $GITHUB_OUTPUT
+        shell: bash
+        run: |
+          if [[ $(cd apps/api && npx -y @typeofweb/ignore-monorepo-buildstep@latest) ]];
+          then
+            echo "Running…"
+            echo "HAS_CHANGES=1" >> $GITHUB_OUTPUT
+          else
+            echo "Skipping…"
+            echo "HAS_CHANGES=0" >> $GITHUB_OUTPUT
+          fi
 
       - name: Create GitHub deployment
-        if: steps.should_run.outputs.HAS_CHANGES
+        if: steps.should_run.outputs.HAS_CHANGES == '1'
         uses: chrnorm/deployment-action@v2
         id: deployment
         with:
@@ -24,17 +35,17 @@ jobs:
           environment: production
 
       - name: Prepare flyctl
-        if: steps.should_run.outputs.HAS_CHANGES
+        if: steps.should_run.outputs.HAS_CHANGES == '1'
         uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: Deploy to fly.io
-        if: steps.should_run.outputs.HAS_CHANGES
+        if: steps.should_run.outputs.HAS_CHANGES == '1'
         run: flyctl deploy --config apps/api/fly.toml --remote-only -e GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD) -e GIT_COMMIT_HASH=$(git rev-parse HEAD)
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
       - name: Update deployment status (success)
-        if: steps.should_run.outputs.HAS_CHANGES && success()
+        if: steps.should_run.outputs.HAS_CHANGES == '1' && success()
         uses: chrnorm/deployment-status@v2
         with:
           token: "${{ github.token }}"
@@ -43,7 +54,7 @@ jobs:
           state: "success"
 
       - name: Update deployment status (failure)
-        if: steps.should_run.outputs.HAS_CHANGES && failure()
+        if: steps.should_run.outputs.HAS_CHANGES == '1' && failure()
         uses: chrnorm/deployment-status@v2
         with:
           token: "${{ github.token }}"
