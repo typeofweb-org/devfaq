@@ -9,6 +9,7 @@ COPY . .
 
 ENV TURBO_TEAM=""
 ENV TURBO_TOKEN=""
+ENV ENV="(unknown)"
 ENV GIT_BRANCH="(unknown)"
 ENV GIT_COMMIT_HASH="(unknown)"
 RUN pnpm i --frozen-lockfile

@@ -14,7 +14,8 @@
 				"GITHUB_CLIENT_ID",
 				"GITHUB_CLIENT_SECRET",
 				"SENTRY_VERSION",
-				"VERSION",
+				"GIT_BRANCH",
+				"GIT_COMMIT_HASH",
 				"DATABASE_URL"
 			]
 		},
