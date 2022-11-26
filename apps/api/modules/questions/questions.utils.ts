@@ -21,6 +21,7 @@ const questions: FastifyPluginAsync = async (fastify, options) => {
 	const cache = new LRUCache<Keys, readonly string[]>({
 		ttl: ms("1 hour"),
 		allowStale: true,
+		max: 100,
 		async fetchMethod(key) {
 			switch (key) {
 				case "questionsGetLevels":
