@@ -9,10 +9,10 @@ COPY . .
 
 ENV TURBO_TEAM=""
 ENV TURBO_TOKEN=""
-RUN pnpm --filter=api... i --frozen-lockfile
+RUN pnpm i --frozen-lockfile
 
 ENV NODE_ENV=production
-RUN pnpm --filter=api... build
+RUN pnpm build --filter=api...
 
 LABEL fly_launch_runtime="nodejs"
 
