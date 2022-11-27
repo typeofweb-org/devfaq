@@ -4,9 +4,7 @@
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
 	"exclude": ["node_modules"],
 	"compilerOptions": {
-		"paths": {
-			"ui": ["../../packages/ui"]
-		},
+		"paths": {},
 		"plugins": [
 			{
 				"name": "next"

@@ -4,7 +4,7 @@ const nextConfig = {
 	swcMinify: true,
 	experimental: {
 		appDir: true,
-		transpilePackages: ["ui"],
+		transpilePackages: [],
 		esmExternals: true,
 	},
 };
