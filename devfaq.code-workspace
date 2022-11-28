@@ -5,9 +5,6 @@
 		},
 		{
 			"path": "apps/app"
-		},
-		{
-			"path": "packages/ui"
 		}
 	],
 	"settings": {

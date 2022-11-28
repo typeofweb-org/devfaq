@@ -1,6 +1,6 @@
 module.exports = {
 	root: true,
-	extends: ["devfaq"],
+	extends: ["devfaq", "plugin:storybook/recommended"],
 	parserOptions: {
 		tsconfigRootDir: __dirname,
 	},
