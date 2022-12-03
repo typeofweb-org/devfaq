@@ -1,9 +1,9 @@
-import { DefaultTags } from "../DefaultTags";
+import { HeadTags } from "../../components/HeadTags";
 
 export default function Head() {
 	return (
 		<>
-			<DefaultTags title="foo" />
+			<HeadTags title="foo" />
 		</>
 	);
 }
