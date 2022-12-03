@@ -6,6 +6,6 @@ type DefaultTagsProps = Readonly<{
 export const DefaultTags = ({ title = "", description = "" }: DefaultTagsProps) => (
 	<>
 		<title>{`DevFAQ.pl • ${title}`}</title>
-		<meta key="description" name="description" content={description} />
+		<meta name="description" content={description} />
 	</>
 );
