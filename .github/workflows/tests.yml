@@ -33,11 +33,29 @@ jobs:
       - name: Build
         run: pnpm run build --cache-dir=".turbo"
 
-      - name: Build Storybook
-        run: pnpm --filter=app run build-storybook
-
       - name: Check linters
         run: pnpm run lint --cache-dir=".turbo"
 
       - name: Check TypeScript
         run: pnpm run check-types --cache-dir=".turbo"
+
+  storybook:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          run_install: false
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm --version && pnpm install --frozen-lockfile
+
+      - name: Build Storybook
+        run: pnpm --filter=app run build-storybook
