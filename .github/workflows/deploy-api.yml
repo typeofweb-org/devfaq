@@ -8,6 +8,7 @@ jobs:
   deploy:
     name: Deploy API
     runs-on: ubuntu-latest
+    environment: staging-api
     steps:
       - uses: actions/checkout@v3
         with:
@@ -34,7 +35,7 @@ jobs:
         with:
           token: "${{ github.token }}"
           environment-url: https://staging-api.devfaq.pl
-          environment: production
+          environment: staging-api
 
       - name: Prepare flyctl
         if: steps.should_run.outputs.HAS_CHANGES != 'false'
