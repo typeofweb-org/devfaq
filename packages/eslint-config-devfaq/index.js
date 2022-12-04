@@ -3,7 +3,7 @@
  */
 module.exports = {
 	parser: "@typescript-eslint/parser",
-	plugins: ["@typescript-eslint", "formatjs"],
+	plugins: ["@typescript-eslint"],
 	extends: [
 		"next",
 		"next/core-web-vitals",
@@ -29,7 +29,7 @@ module.exports = {
 		"@typescript-eslint/require-await": "off",
 		"@typescript-eslint/no-empty-interface": "off",
 		"@typescript-eslint/no-unused-vars": "off",
-		"@next/next/no-html-link-for-pages": ["off"],
+		"@next/next/no-html-link-for-pages": "off",
 		"import/order": ["error"],
 	},
 };
