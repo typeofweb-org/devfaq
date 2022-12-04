@@ -1,4 +1,4 @@
-import type FastifySessionPlugin from "@fastify/session";
+import type { SessionStore } from "@fastify/session";
 import { Prisma } from "@prisma/client";
 import type { FastifyPluginAsync } from "fastify";
 import FP from "fastify-plugin";
@@ -50,7 +50,7 @@ const auth: FastifyPluginAsync = async (fastify, options) => {
 	await fastify.register(import("@fastify/session"), {
 		cookieName: "session",
 		secret: getConfig("COOKIE_PASSWORD"),
-		store: sessionStore as FastifySessionPlugin.SessionStore,
+		store: sessionStore as SessionStore,
 		rolling: true,
 		cookie: {
 			sameSite: "lax",

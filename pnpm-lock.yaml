@@ -35,6 +35,7 @@ importers:
       '@types/ms': 0.7.31
       '@types/node': 18.11.10
       concurrently: 7.6.0
+      eslint: 8.29.0
       eslint-config-devfaq: workspace:*
       fastify: 4.10.2
       fastify-plugin: 4.4.0
@@ -60,6 +61,7 @@ importers:
       '@sinclair/typebox': registry.npmjs.org/@sinclair/typebox/0.25.10
       '@swc/core': registry.npmjs.org/@swc/core/1.3.21
       concurrently: registry.npmjs.org/concurrently/7.6.0
+      eslint: registry.npmjs.org/eslint/8.29.0
       fastify: registry.npmjs.org/fastify/4.10.2
       fastify-plugin: registry.npmjs.org/fastify-plugin/4.4.0
       lru-cache: registry.npmjs.org/lru-cache/7.14.1
