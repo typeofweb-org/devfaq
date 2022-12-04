@@ -16,17 +16,11 @@ jobs:
         id: should_run
         shell: bash
         run: |
-          if [[ $(cd apps/api && npx -y @typeofweb/ignore-monorepo-buildstep@latest) ]];
-          then
-            echo "Running…"
-            echo "HAS_CHANGES=1" >> $GITHUB_OUTPUT
-          else
-            echo "Skipping…"
-            echo "HAS_CHANGES=0" >> $GITHUB_OUTPUT
-          fi
+          HAS_CHANGES=$(npx -y turbo run build --filter='api...[HEAD^]' --dry=json | jq '.packages | length')
+          echo "HAS_CHANGES=$HAS_CHANGES" >> $GITHUB_OUTPUT
 
       - name: Create GitHub deployment
-        if: steps.should_run.outputs.HAS_CHANGES == '1'
+        if: steps.should_run.outputs.HAS_CHANGES == 'true'
         uses: chrnorm/deployment-action@v2
         id: deployment
         with:
@@ -35,17 +29,17 @@ jobs:
           environment: production
 
       - name: Prepare flyctl
-        if: steps.should_run.outputs.HAS_CHANGES == '1'
+        if: steps.should_run.outputs.HAS_CHANGES == 'true'
         uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: Deploy to fly.io
-        if: steps.should_run.outputs.HAS_CHANGES == '1'
+        if: steps.should_run.outputs.HAS_CHANGES == 'true'
         run: flyctl deploy --config apps/api/fly.toml --remote-only -e GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD) -e GIT_COMMIT_HASH=$(git rev-parse HEAD)
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
       - name: Update deployment status (success)
-        if: steps.should_run.outputs.HAS_CHANGES == '1' && success()
+        if: steps.should_run.outputs.HAS_CHANGES == 'true' && success()
         uses: chrnorm/deployment-status@v2
         with:
           token: "${{ github.token }}"
@@ -54,7 +48,7 @@ jobs:
           state: "success"
 
       - name: Update deployment status (failure)
-        if: steps.should_run.outputs.HAS_CHANGES == '1' && failure()
+        if: steps.should_run.outputs.HAS_CHANGES == 'true' && failure()
         uses: chrnorm/deployment-status@v2
         with:
           token: "${{ github.token }}"
