@@ -3,12 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
-import type { ComponentProps, ReactNode } from "react";
+import type { ComponentProps } from "react";
 
 type ActiveLinkProps = Readonly<{
-	href: string;
 	activeClassName: string;
-	children: ReactNode;
 }> &
 	ComponentProps<typeof Link>;
 
