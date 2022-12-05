@@ -15,7 +15,8 @@
 	"dependencies": {
 		"next": "13.0.4",
 		"react": "18.2.0",
-		"react-dom": "18.2.0"
+		"react-dom": "18.2.0",
+		"tailwind-merge": "1.8.0"
 	},
 	"devDependencies": {
 		"@csstools/postcss-oklab-function": "1.1.1",
@@ -25,6 +26,7 @@
 		"@storybook/nextjs": "^7.0.0-alpha.54",
 		"@storybook/react": "^7.0.0-alpha.54",
 		"@storybook/testing-library": "^0.0.13",
+		"@svgr/webpack": "6.5.1",
 		"@types/node": "18.11.10",
 		"@types/react": "18.0.26",
 		"@vercel/analytics": "0.1.5",
