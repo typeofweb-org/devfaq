@@ -1,5 +1,5 @@
 import { AnalyticsWrapper } from "../components/analytics";
-import { Header } from "../components/Header";
+import { Header } from "../components/Header/Header";
 
 import "../styles/globals.css";
 

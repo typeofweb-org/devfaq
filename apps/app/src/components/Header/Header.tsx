@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { twMerge } from "tailwind-merge";
-import Logo from "../../public/devfaq-logo.svg";
-import { Container } from "./Container";
-import { ActiveLink } from "./ActiveLink";
+import Logo from "../../../public/devfaq-logo.svg";
+import { Container } from "../Container";
+import { ActiveLink } from "../ActiveLink";
+import { HeaderNavigation } from "./HeaderNavigation";
 
 const ACTIVE_CLASS_NAME = "border-b border-white";
 
@@ -17,13 +17,7 @@ export const Header = () => (
 					<Logo className="h-full w-full" viewBox="0 0 503 104" />
 				</div>
 			</Link>
-			<nav
-				className={twMerge(
-					"fixed top-0 left-0 h-full w-full flex-col items-center justify-center gap-5 bg-violet-600 uppercase",
-					"sm:relative sm:flex sm:h-fit sm:w-fit sm:flex-row",
-					false ? "flex" : "hidden", // TODO: ADD NAVIGATION STATE
-				)}
-			>
+			<HeaderNavigation>
 				<ActiveLink href="/" activeClassName={ACTIVE_CLASS_NAME}>
 					Jak korzystać?
 				</ActiveLink>
@@ -36,7 +30,7 @@ export const Header = () => (
 				<ActiveLink href="#" activeClassName={ACTIVE_CLASS_NAME}>
 					Zaloguj
 				</ActiveLink>
-			</nav>
+			</HeaderNavigation>
 		</Container>
 	</div>
 );
