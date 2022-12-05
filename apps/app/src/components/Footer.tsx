@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Container } from "./Container";
 
 export const Footer = () => (
-	<footer className="bg-violet-700 dark:bg-violet-800">
+	<footer className="bg-primary">
 		<Container className="flex h-14 items-center justify-center sm:justify-end">
 			<nav className="flex flex-wrap justify-center gap-x-7 text-sm text-white">
 				<Link href="/about">Jak korzystać?</Link>
