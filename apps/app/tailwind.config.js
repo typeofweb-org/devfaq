@@ -1,3 +1,5 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 const violet = {
 	50: "oklch(95.27% 0.017 295)",
 	100: "oklch(87.14% 0.047 295)",
@@ -23,6 +25,10 @@ module.exports = {
 				"yellow-branding": "oklch(82.92% 0.17 80)",
 				"yellow-branding-dark": "oklch(78.94% 0.16 80)",
 				violet,
+			},
+			fontFamily: {
+				sans: ["var(--font-fira-sans)", ...defaultTheme.fontFamily.sans],
+				mono: ["var(--font-fira-code)", ...defaultTheme.fontFamily.mono],
 			},
 		},
 	},
