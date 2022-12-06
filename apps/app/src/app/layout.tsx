@@ -11,7 +11,7 @@ const firaSans = Fira_Sans({
 });
 
 const firaCode = Fira_Code({
-	weight: ["400", "700"],
+	weight: "variable",
 	variable: "--font-fira-code",
 });
 
