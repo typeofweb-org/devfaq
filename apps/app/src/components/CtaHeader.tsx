@@ -1,4 +1,4 @@
-import { ComponentProps, ReactNode } from "react";
+import { ReactNode } from "react";
 import { ActiveLink } from "./ActiveLink";
 import { Button } from "./Button/Button";
 import { Container } from "./Container";
@@ -17,7 +17,7 @@ const CtaHeaderActiveLink = (props: CtaHeaderActiveLinkProps) => (
 );
 
 export const CtaHeader = () => (
-	<div className="sticky top-0 bg-primary">
+	<div className="sticky top-0 bg-primary dark:bg-violet-800">
 		<Container as="header" className="flex h-14 items-center justify-between">
 			<nav className="flex grow gap-4 text-sm text-white sm:grow-0">
 				<CtaHeaderActiveLink href="/">Lista pytań</CtaHeaderActiveLink>
