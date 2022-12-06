@@ -2,12 +2,17 @@
 
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import type { ReactNode } from "react";
+import type { ReactNode, MouseEvent } from "react";
 
 const itemStyles = "ease h-0.5 w-6 bg-white transition duration-300";
 
 export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 	const [isOpen, setIsOpen] = useState(false);
+
+	const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault();
+		setIsOpen((prev) => !prev);
+	};
 
 	return (
 		<>
@@ -22,7 +27,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 			</nav>
 			<button
 				className="fixed right-4 flex h-8 w-8 flex-col items-center justify-center gap-1.5 sm:hidden"
-				onClick={() => setIsOpen((prev) => !prev)}
+				onClick={handleButtonClick}
 			>
 				<div className={twMerge(itemStyles, isOpen && "translate-y-2 rotate-45")} />
 				<div className={twMerge(itemStyles, isOpen ? "opacity-0" : "opacity-100")} />
