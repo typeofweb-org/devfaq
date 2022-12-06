@@ -19,7 +19,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 			<nav
 				id="header-navigation"
 				className={twMerge(
-					"fixed top-0 left-0 z-10 h-full w-full flex-col items-center justify-center gap-10 bg-primary text-xl uppercase dark:bg-violet-800 sm:gap-5 sm:text-sm",
+					"fixed top-0 left-0 z-10 h-full w-full flex-col items-center justify-center gap-10 bg-primary text-xl uppercase sm:gap-5 sm:text-sm",
 					"sm:relative sm:flex sm:h-fit sm:w-fit sm:flex-row",
 					isOpen ? "flex" : "hidden",
 				)}

@@ -20,7 +20,8 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				primary: violet[700],
+				"white-dark": "#313131",
+				primary: "var(--primary)",
 				"red-branding": "oklch(58.07% 0.214 17)",
 				"red-branding-dark": "oklch(53.89% 0.198 17)",
 				"yellow-branding": "oklch(82.92% 0.17 80)",
