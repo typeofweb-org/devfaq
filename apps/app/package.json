@@ -19,6 +19,7 @@
 		"tailwind-merge": "1.8.0"
 	},
 	"devDependencies": {
+		"@csstools/postcss-oklab-function": "1.1.1",
 		"@storybook/addon-essentials": "^7.0.0-alpha.54",
 		"@storybook/addon-interactions": "^7.0.0-alpha.54",
 		"@storybook/addon-links": "^7.0.0-alpha.54",
