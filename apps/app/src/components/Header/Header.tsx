@@ -5,10 +5,10 @@ import { HeaderNavigation } from "./HeaderNavigation";
 import { ActiveNavigationLink } from "./ActiveNagivationLink";
 
 export const Header = () => (
-	<div className="bg-violet-600">
+	<div className="bg-primary">
 		<Container
 			as="header"
-			className="flex h-16 items-center justify-between border-b border-violet-500 text-white"
+			className="flex h-16 items-center justify-between border-b border-violet-600 text-white"
 		>
 			<Link href="/">
 				<div className="h-10 w-24 sm:w-36">
