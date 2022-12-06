@@ -1,10 +1,8 @@
 import Link from "next/link";
 import Logo from "../../../public/devfaq-logo.svg";
 import { Container } from "../Container";
-import { ActiveLink } from "../ActiveLink";
 import { HeaderNavigation } from "./HeaderNavigation";
-
-const ACTIVE_CLASS_NAME = "border-b border-white";
+import { ActiveNavigationLink } from "./ActiveNagivationLink";
 
 export const Header = () => (
 	<div className="bg-violet-600">
@@ -18,18 +16,12 @@ export const Header = () => (
 				</div>
 			</Link>
 			<HeaderNavigation>
-				<ActiveLink href="/" activeClassName={ACTIVE_CLASS_NAME}>
-					Jak korzystać?
-				</ActiveLink>
-				<ActiveLink href="/foo" activeClassName={ACTIVE_CLASS_NAME}>
-					Autorzy
-				</ActiveLink>
+				<ActiveNavigationLink href="/">Jak korzystać?</ActiveNavigationLink>
+				<ActiveNavigationLink href="/foo">Autorzy</ActiveNavigationLink>
 				<a href="https://www.facebook.com/DevFAQ" target="_blank" rel="noreferrer">
 					FaceBook
 				</a>
-				<ActiveLink href="#" activeClassName={ACTIVE_CLASS_NAME}>
-					Zaloguj
-				</ActiveLink>
+				<ActiveNavigationLink href="#">Zaloguj</ActiveNavigationLink>
 			</HeaderNavigation>
 		</Container>
 	</div>
