@@ -23,13 +23,17 @@ const getCurrentTheme = (): Theme => {
 };
 
 export const ThemeProvider = ({ children }: { readonly children: ReactNode }) => {
-	const [theme, setTheme] = useState<Theme>(getCurrentTheme());
+	const [theme, setTheme] = useState<Theme>("light");
 
 	const changeTheme = (theme: Theme) => {
 		window.localStorage.setItem("theme", theme);
 
 		setTheme(theme);
 	};
+
+	useEffect(() => {
+		setTheme(getCurrentTheme());
+	}, []);
 
 	useEffect(() => {
 		const target = document.querySelector("html");
