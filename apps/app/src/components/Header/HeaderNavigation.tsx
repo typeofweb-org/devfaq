@@ -19,7 +19,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 			<nav
 				id="header-navigation"
 				className={twMerge(
-					"fixed top-0 left-0 h-full w-full flex-col items-center justify-center gap-5 bg-violet-600 text-sm uppercase",
+					"fixed top-0 left-0 z-10 h-full w-full flex-col items-center justify-center gap-5 bg-violet-600 uppercase",
 					"sm:relative sm:flex sm:h-fit sm:w-fit sm:flex-row",
 					isOpen ? "flex" : "hidden",
 				)}
@@ -27,7 +27,10 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 				{children}
 			</nav>
 			<button
-				className="fixed right-4 flex h-8 w-8 flex-col items-center justify-center gap-1.5 sm:hidden"
+				className={twMerge(
+					"right-4 z-50 flex h-8 w-8 flex-col items-center justify-center gap-1.5 sm:hidden",
+					isOpen ? "fixed" : "absolute",
+				)}
 				onClick={handleButtonClick}
 				type="button"
 				aria-label={`${isOpen ? "Zamknij" : "Otwórz"} menu`}

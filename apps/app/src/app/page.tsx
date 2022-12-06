@@ -16,6 +16,13 @@ export default function Page() {
 				<div className="h-24 w-24 bg-violet-800" />
 				<div className="h-24 w-24 bg-violet-900" />
 			</div>
+			<div className="flex">
+				<div className="h-24 w-24 bg-red-branding" />
+				<div className="h-24 w-24 bg-red-branding-dark" />
+				<div className="h-24 w-24 bg-yellow-branding" />
+				<div className="h-24 w-24 bg-yellow-branding-dark" />
+			</div>
+			<div className="h-screen" />
 			<ul className="font-mono">
 				<li>Test</li>
 				<li>NEXT_PUBLIC_API_URL: {process.env.NEXT_PUBLIC_API_URL}</li>

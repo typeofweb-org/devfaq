@@ -20,6 +20,10 @@ module.exports = {
 		extend: {
 			colors: {
 				primary: violet[700],
+				"red-branding": "oklch(58.07% 0.214 17)",
+				"red-branding-dark": "oklch(53.89% 0.198 17)",
+				"yellow-branding": "oklch(82.92% 0.17 80)",
+				"yellow-branding-dark": "oklch(78.94% 0.16 80)",
 				violet,
 			},
 			fontFamily: {
