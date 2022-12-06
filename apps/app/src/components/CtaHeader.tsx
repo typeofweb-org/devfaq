@@ -1,12 +1,12 @@
-import { ComponentProps } from "react";
+import { ComponentProps, ReactNode } from "react";
 import { ActiveLink } from "./ActiveLink";
 import { Button } from "./Button/Button";
 import { Container } from "./Container";
 
-type CtaHeaderActiveLinkProps = Omit<
-	ComponentProps<typeof ActiveLink>,
-	"activeClassName" | "className"
->;
+type CtaHeaderActiveLinkProps = Readonly<{
+	href: string;
+	children: ReactNode;
+}>;
 
 const CtaHeaderActiveLink = (props: CtaHeaderActiveLinkProps) => (
 	<ActiveLink
