@@ -1,6 +1,6 @@
 import { AnalyticsWrapper } from "../components/analytics";
+import { Header } from "../components/Header/Header";
 import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
 
 import "../styles/globals.css";
 
