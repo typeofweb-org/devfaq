@@ -20,6 +20,10 @@ module.exports = {
 				primary: violet[700],
 				violet,
 			},
+			fontFamily: {
+				sans: ["var(--font-fira-sans)"],
+				mono: ["var(--font-fira-code)"],
+			},
 		},
 	},
 	plugins: [],
