@@ -9,7 +9,7 @@ export default function FooPage() {
 				level="junior"
 				creationDate={new Date("2023-01-01")}
 				votes={1}
-				isVoted={false}
+				voted={false}
 			/>
 			<QuestionItem
 				title="Co się stanie gdy EventEmitter wyemituje event 'error', a nic na niego nie
@@ -17,7 +17,7 @@ export default function FooPage() {
 				level="mid"
 				creationDate={new Date("2023-01-01")}
 				votes={2}
-				isVoted={true}
+				voted={true}
 			/>
 			<QuestionItem
 				title="Co się stanie gdy EventEmitter wyemituje event 'error', a nic na niego nie
@@ -25,7 +25,7 @@ export default function FooPage() {
 				level="senior"
 				creationDate={new Date("2023-01-01")}
 				votes={3}
-				isVoted={true}
+				voted={true}
 			/>
 		</div>
 	);
