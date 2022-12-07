@@ -1,4 +1,11 @@
-const rules = new Intl.PluralRules("pl-PL");
+const LOCALE = "pl-PL";
+
+const dateFormat = new Intl.DateTimeFormat(LOCALE, {
+	day: "numeric",
+	month: "long",
+	year: "numeric",
+});
+const rules = new Intl.PluralRules(LOCALE);
 
 export const pluralize = (one: string, few: string, many: string) => (count: number) => {
 	return {
@@ -9,4 +16,8 @@ export const pluralize = (one: string, few: string, many: string) => (count: num
 		many,
 		other: many,
 	}[rules.select(count)];
+};
+
+export const format = (date: Date) => {
+	return dateFormat.format(date);
 };
