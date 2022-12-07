@@ -3,13 +3,12 @@
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import type { ReactNode, MouseEvent } from "react";
-import { usePageScroll } from "../../hooks/usePageScroll";
+import { lockScroll, unlockScroll } from "../../utils/pageScroll";
 
 const itemStyles = "ease h-0.5 w-6 bg-white transition duration-300";
 
 export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const { lockScroll, unlockScroll } = usePageScroll();
 
 	const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
