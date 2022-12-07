@@ -8,12 +8,11 @@ type QuestionItemProps = Readonly<{
 	votes: number;
 	isVoted: boolean;
 	level: Level;
-	creationDate: string;
+	creationDate: Date;
 }>;
 
 export const QuestionItem = ({ title, votes, isVoted, level, creationDate }: QuestionItemProps) => {
-	const date = new Date(creationDate);
-	const localeDate = date.toLocaleDateString("pl-PL", {
+	const localeDate = creationDate.toLocaleDateString("pl-PL", {
 		day: "numeric",
 		month: "long",
 		year: "numeric",
@@ -26,7 +25,7 @@ export const QuestionItem = ({ title, votes, isVoted, level, creationDate }: Que
 			<div className="ml-4 flex min-w-max flex-col items-end">
 				<QuestionLevel level={level} />
 				<Link href="#" className="mt-3 text-xs underline">
-					<time dateTime={date.toISOString()}>{localeDate}</time>
+					<time dateTime={creationDate.toISOString()}>{localeDate}</time>
 				</Link>
 			</div>
 		</article>

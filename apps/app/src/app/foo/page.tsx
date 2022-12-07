@@ -7,7 +7,7 @@ export default function FooPage() {
 				title="Co się stanie gdy EventEmitter wyemituje event 'error', a nic na niego nie
 				nasłuchuje?"
 				level="junior"
-				creationDate="2023-01-01"
+				creationDate={new Date("2023-01-01")}
 				votes={1}
 				isVoted={false}
 			/>
@@ -15,7 +15,7 @@ export default function FooPage() {
 				title="Co się stanie gdy EventEmitter wyemituje event 'error', a nic na niego nie
 				nasłuchuje?"
 				level="mid"
-				creationDate="2023-01-01"
+				creationDate={new Date("2023-01-01")}
 				votes={2}
 				isVoted={true}
 			/>
@@ -23,7 +23,7 @@ export default function FooPage() {
 				title="Co się stanie gdy EventEmitter wyemituje event 'error', a nic na niego nie
 				nasłuchuje?"
 				level="senior"
-				creationDate="2023-01-01"
+				creationDate={new Date("2023-01-01")}
 				votes={3}
 				isVoted={true}
 			/>
