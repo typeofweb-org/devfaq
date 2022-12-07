@@ -3,6 +3,7 @@ import Logo from "../../../public/devfaq-logo.svg";
 import { Container } from "../Container";
 import { HeaderNavigation } from "./HeaderNavigation";
 import { ActiveNavigationLink } from "./ActiveNagivationLink";
+import { DarkModeSwitch } from "./DarkModeSwitch";
 
 export const Header = () => (
 	<div className="bg-primary">
@@ -22,6 +23,7 @@ export const Header = () => (
 					FaceBook
 				</a>
 				<ActiveNavigationLink href="#">Zaloguj</ActiveNavigationLink>
+				<DarkModeSwitch />
 			</HeaderNavigation>
 		</Container>
 	</div>

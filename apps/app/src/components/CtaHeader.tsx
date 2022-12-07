@@ -1,4 +1,4 @@
-import { ComponentProps, ReactNode } from "react";
+import { ReactNode } from "react";
 import { ActiveLink } from "./ActiveLink";
 import { Button } from "./Button/Button";
 import { Container } from "./Container";

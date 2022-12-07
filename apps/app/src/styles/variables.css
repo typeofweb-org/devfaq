@@ -1,0 +1,7 @@
+:root {
+	--primary: theme("colors.violet.700");
+}
+
+:root.dark {
+	--primary: theme("colors.violet.800");
+}

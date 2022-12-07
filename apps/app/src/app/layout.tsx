@@ -3,6 +3,7 @@ import { AnalyticsWrapper } from "../components/analytics";
 import { CtaHeader } from "../components/CtaHeader";
 import { Header } from "../components/Header/Header";
 import { Footer } from "../components/Footer";
+import { AppProviders } from "../providers/AppProviders";
 
 import "../styles/globals.css";
 
@@ -20,11 +21,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="pl" className={`${firaSans.variable} ${firaCode.variable}`}>
 			<body>
-				<Header />
-				<CtaHeader />
-				{children}
-				<AnalyticsWrapper />
-				<Footer />
+				<AppProviders>
+					<Header />
+					<CtaHeader />
+					{children}
+					<AnalyticsWrapper />
+					<Footer />
+				</AppProviders>
 			</body>
 		</html>
 	);
