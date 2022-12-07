@@ -1,3 +1,5 @@
+import "client-only";
+
 const classes = ["overflow-hidden", "sm:overflow-scroll"];
 
 export const lockScroll = () => {
