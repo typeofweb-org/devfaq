@@ -10,7 +10,7 @@ interface ThemeContextValue {
 	changeTheme: (theme: Theme) => void;
 }
 
-const [useContext, Provider] = createSafeContext<ThemeContextValue>();
+const [useThemeContext, ThemeContextProvider] = createSafeContext<ThemeContextValue>();
 
 const getCurrentTheme = (): Theme => {
 	const localStorageTheme = window.localStorage.getItem("theme");
@@ -22,7 +22,7 @@ const getCurrentTheme = (): Theme => {
 	return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 };
 
-export const ThemeProvider = ({ children }: { readonly children: ReactNode }) => {
+const ThemeProvider = ({ children }: { readonly children: ReactNode }) => {
 	const [theme, setTheme] = useState<Theme>("light");
 
 	const changeTheme = (theme: Theme) => {
@@ -46,15 +46,15 @@ export const ThemeProvider = ({ children }: { readonly children: ReactNode }) =>
 	}, [theme]);
 
 	return (
-		<Provider
+		<ThemeContextProvider
 			value={{
 				theme,
 				changeTheme,
 			}}
 		>
 			{children}
-		</Provider>
+		</ThemeContextProvider>
 	);
 };
 
-export const useThemeContext = useContext;
+export { useThemeContext, ThemeProvider };
