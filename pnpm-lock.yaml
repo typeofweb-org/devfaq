@@ -94,6 +94,7 @@ importers:
       '@types/react': 18.0.26
       '@vercel/analytics': 0.1.5
       autoprefixer: ^10.4.13
+      client-only: 0.0.1
       css-loader: ^6.7.2
       eslint: 8.29.0
       eslint-config-devfaq: workspace:*
@@ -111,6 +112,7 @@ importers:
       typescript: 4.9.3
     dependencies:
       '@next/font': 13.0.6
+      client-only: 0.0.1
       next: 13.0.4_672uxklweod7ene3nqtsh262ca
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
