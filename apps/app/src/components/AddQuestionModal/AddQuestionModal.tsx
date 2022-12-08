@@ -6,7 +6,7 @@ import { CloseAddQuestionModalButton } from "./CloseAddQuestionModalButton";
 
 export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => (
 	<BaseModal {...props}>
-		<h3 className="text-center text-xl font-bold uppercase text-primary">Nowe pytanie</h3>
+		<h2 className="text-center text-xl font-bold uppercase text-primary">Nowe pytanie</h2>
 		<div className="mt-10 flex flex-col gap-y-3 px-5 sm:flex-row sm:justify-evenly sm:gap-x-5">
 			<Select className="w-full">
 				<option>Wybierz Technologię</option>
