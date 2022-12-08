@@ -1,18 +1,20 @@
 "use client";
 
-import { useModal } from "../../hooks/useModal";
-import { AddQuestionModal } from "../AddQuestionModal";
+import { useModalContext } from "../../providers/ModalProvider";
 import { Button } from "../Button/Button";
 
 export const AddQuestionButton = () => {
-	const { isOpen, openModal, closeModal } = useModal();
+	const { openModal } = useModalContext();
 
 	return (
 		<>
-			<Button variant="brandingInverse" className="hidden sm:inline-block" onClick={openModal}>
+			<Button
+				variant="brandingInverse"
+				className="hidden sm:inline-block"
+				onClick={() => openModal("AddQuestionModal")}
+			>
 				Dodaj pytanie
 			</Button>
-			<AddQuestionModal isOpen={isOpen} onClose={closeModal} />
 		</>
 	);
 };
