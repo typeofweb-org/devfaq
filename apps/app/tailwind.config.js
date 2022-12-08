@@ -30,6 +30,24 @@ module.exports = {
 				sans: ["var(--font-fira-sans)", ...defaultTheme.fontFamily.sans],
 				mono: ["var(--font-fira-code)", ...defaultTheme.fontFamily.mono],
 			},
+			keyframes: {
+				show: {
+					from: { transform: "scale(0.95)" },
+					to: { transform: "scale(1)" },
+				},
+			},
+			animation: {
+				show: "show 0.2s",
+			},
+			backgroundImage: {
+				"select-purple": 'url("/select-purple.svg")',
+			},
+			backgroundSize: {
+				"select-purple": "25px",
+			},
+			backgroundPosition: {
+				"select-purple": "100% 50%",
+			},
 		},
 	},
 	plugins: [],

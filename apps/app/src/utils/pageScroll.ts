@@ -1,6 +1,6 @@
 import "client-only";
 
-const classes = ["overflow-hidden", "sm:overflow-scroll"];
+const classes = ["overflow-hidden"];
 
 export const lockScroll = () => {
 	document.body.style.paddingRight = `${window.innerWidth - document.body.offsetWidth}px`;
