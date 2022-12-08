@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import { createSafeContext } from "../lib/createSafeContext";
 
@@ -14,7 +14,7 @@ interface ModalContextValue {
 
 const [useModalContext, ModalContextProvider] = createSafeContext<ModalContextValue>();
 
-const ModalProvider = ({ children }: { children: ReactNode }) => {
+const ModalProvider = ({ children }: { readonly children: ReactNode }) => {
 	const [openedModal, setOpenedModal] = useState<Modal | null>(null);
 
 	const openModal = useCallback((modal: Modal) => {
@@ -25,11 +25,12 @@ const ModalProvider = ({ children }: { children: ReactNode }) => {
 		setOpenedModal(null);
 	}, []);
 
-	return (
-		<ModalContextProvider value={{ openedModal, openModal, closeModal }}>
-			{children}
-		</ModalContextProvider>
+	const value = useMemo(
+		() => ({ openedModal, openModal, closeModal }),
+		[openedModal, openModal, closeModal],
 	);
+
+	return <ModalContextProvider value={value}>{children}</ModalContextProvider>;
 };
 
 export { useModalContext, ModalProvider };
