@@ -10,7 +10,7 @@ export const DarkModeSwitch = () => {
 		<input
 			type="checkbox"
 			role="switch"
-			aria-label="Switch between Dark and Light mode"
+			aria-label="Przełącz pomiędzy ciemnym i jasnym motywem"
 			className={twMerge(
 				"relative h-6 w-10 cursor-pointer appearance-none rounded-full bg-violet-800 dark:bg-violet-700",
 				"before:absolute before:top-1 before:left-1 before:h-[16px] before:w-[16px] before:rounded-full before:bg-white before:transition-all before:duration-200",

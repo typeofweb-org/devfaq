@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { memo, ReactNode, useEffect, useMemo, useState } from "react";
 import { createSafeContext } from "../lib/createSafeContext";
 
 type Theme = "light" | "dark";
@@ -45,16 +45,15 @@ const ThemeProvider = ({ children }: { readonly children: ReactNode }) => {
 		}
 	}, [theme]);
 
-	return (
-		<ThemeContextProvider
-			value={{
-				theme,
-				changeTheme,
-			}}
-		>
-			{children}
-		</ThemeContextProvider>
+	const value = useMemo(
+		() => ({
+			theme,
+			changeTheme,
+		}),
+		[theme],
 	);
+
+	return <ThemeContextProvider value={value}>{children}</ThemeContextProvider>;
 };
 
 export { useThemeContext, ThemeProvider };
