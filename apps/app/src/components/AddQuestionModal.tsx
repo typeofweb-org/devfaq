@@ -31,7 +31,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 						<option value="senior">Senior</option>
 					</Select>
 				</div>
-				<textarea className="mt-4 h-40 w-full border"></textarea>
+				<textarea className="mt-4 h-40 w-full border" aria-label="Wpisz treść pytania"></textarea>
 				<div className="mt-3 flex flex-col gap-2 sm:flex-row-reverse">
 					<Button type="submit" variant="brandingInverse">
 						Dodaj pytanie
