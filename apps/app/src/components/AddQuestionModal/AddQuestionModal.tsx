@@ -10,21 +10,17 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => (
 		<h2 className="text-center text-xl font-bold uppercase text-primary">Nowe pytanie</h2>
 		<AddQuestionForm>
 			<div className="mt-10 flex flex-col gap-y-3 px-5 sm:flex-row sm:justify-evenly sm:gap-x-5">
-				<label className="w-full">
-					<Select className="w-full">
-						<option>Wybierz Technologię</option>
-						<option>HTML5</option>
-						<option>JavaScript</option>
-					</Select>
-				</label>
-				<label className="w-full">
-					<Select className="w-full">
-						<option>Wybierz Poziom</option>
-						<option value="junior">junior</option>
-						<option value="mid">Mid</option>
-						<option value="senior">Senior</option>
-					</Select>
-				</label>
+				<Select className="w-full" aria-label="Wybierz technologię">
+					<option>Wybierz Technologię</option>
+					<option>HTML5</option>
+					<option>JavaScript</option>
+				</Select>
+				<Select className="w-full" aria-label="Wybierz poziom">
+					<option>Wybierz Poziom</option>
+					<option value="junior">junior</option>
+					<option value="mid">Mid</option>
+					<option value="senior">Senior</option>
+				</Select>
 			</div>
 			<textarea className="mt-4 h-40 w-full border"></textarea>
 			<div className="mt-3 flex flex-col gap-2 sm:flex-row-reverse">
