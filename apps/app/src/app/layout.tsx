@@ -1,9 +1,10 @@
 import { Fira_Sans, Fira_Code } from "@next/font/google";
 import { AnalyticsWrapper } from "../components/analytics";
-import { CtaHeader } from "../components/CtaHeader";
+import { CtaHeader } from "../components/CtaHeader/CtaHeader";
 import { Header } from "../components/Header/Header";
 import { Footer } from "../components/Footer";
 import { AppProviders } from "../providers/AppProviders";
+import { AppModals } from "../components/AppModals";
 
 import "../styles/globals.css";
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="pl" className={`${firaSans.variable} ${firaCode.variable}`}>
 			<body>
 				<AppProviders>
+					<AppModals />
 					<Header />
 					<CtaHeader />
 					{children}

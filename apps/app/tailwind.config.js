@@ -54,6 +54,15 @@ module.exports = {
 			screens: {
 				"small-filters": { raw: "screen and (min-width: 640px) and (max-height: 800px)" },
 			},
+			keyframes: {
+				show: {
+					from: { transform: "scale(0.95)" },
+					to: { transform: "scale(1)" },
+				},
+			},
+			animation: {
+				show: "show 0.2s",
+			},
 		},
 	},
 	plugins: [],
