@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { ModalProvider } from "./ModalProvider";
+import { UIProvider } from "./UIProvider";
 import { ThemeProvider } from "./ThemeProvider";
 
 type AppProvidersProps = Readonly<{
@@ -8,6 +8,6 @@ type AppProvidersProps = Readonly<{
 
 export const AppProviders = ({ children }: AppProvidersProps) => (
 	<ThemeProvider>
-		<ModalProvider>{children}</ModalProvider>
+		<UIProvider>{children}</UIProvider>
 	</ThemeProvider>
 );

@@ -34,9 +34,9 @@ export const LevelButton = ({ variant, isActive, children }: LevelButtonProps) =
 		<button
 			className={twMerge(
 				"h-20 w-20 sm:h-8 sm:w-full small-filters:h-14 small-filters:w-14",
-				"rounded-md bg-white text-sm text-neutral-500 shadow-[0px_1px_4px] shadow-neutral-400 active:translate-y-px dark:bg-white-dark dark:text-neutral-200 dark:shadow-neutral-600",
+				"rounded-md bg-white text-sm text-neutral-500 shadow-[0px_1px_4px] shadow-neutral-400 active:translate-y-px dark:text-neutral-200 dark:shadow-neutral-900",
 				isActive && [active, "text-white"],
-				!isActive && notActive,
+				!isActive && [notActive, "dark:bg-white-dark"],
 			)}
 		>
 			{children}

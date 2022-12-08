@@ -1,10 +1,10 @@
 "use client";
 
-import { useModalContext } from "../../providers/ModalProvider";
+import { useUIContext } from "../../providers/UIProvider";
 import { Button } from "../Button/Button";
 
 export const AddQuestionButton = () => {
-	const { openModal } = useModalContext();
+	const { openModal } = useUIContext();
 
 	return (
 		<>
