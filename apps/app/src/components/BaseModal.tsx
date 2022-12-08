@@ -13,7 +13,9 @@ type BaseModalProps = Readonly<{
 
 export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 	useEffect(() => {
-		isOpen && lockScroll();
+		if (isOpen) {
+			lockScroll();
+		}
 	}, [isOpen]);
 
 	return (
@@ -33,7 +35,10 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 		>
 			<div
 				className="relative h-full w-full max-w-3xl animate-show rounded-sm bg-white px-3.5 py-9 sm:h-fit sm:px-11 sm:py-20"
-				onClick={(event) => event.stopPropagation()}
+				onClick={(event) => {
+					// stop triggering click event to higher component
+					event.stopPropagation();
+				}}
 			>
 				<CloseButton
 					type="button"
