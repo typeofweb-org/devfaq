@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
-import { ActiveLink } from "./ActiveLink";
-import { Button } from "./Button/Button";
-import { Container } from "./Container";
+import { ActiveLink } from "../ActiveLink";
+import { Container } from "../Container";
+import { AddQuestionButton } from "./AddQuestionButton";
 
 type CtaHeaderActiveLinkProps = Readonly<{
 	href: string;
@@ -23,9 +23,7 @@ export const CtaHeader = () => (
 				<CtaHeaderActiveLink href="/">Lista pytań</CtaHeaderActiveLink>
 				<CtaHeaderActiveLink href="/foo">Wybrane pytania</CtaHeaderActiveLink>
 			</nav>
-			<Button variant="brandingInverse" className="hidden sm:inline-block">
-				Dodaj pytanie
-			</Button>
+			<AddQuestionButton />
 		</Container>
 	</div>
 );

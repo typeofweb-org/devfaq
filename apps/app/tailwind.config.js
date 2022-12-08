@@ -30,6 +30,15 @@ module.exports = {
 				sans: ["var(--font-fira-sans)", ...defaultTheme.fontFamily.sans],
 				mono: ["var(--font-fira-code)", ...defaultTheme.fontFamily.mono],
 			},
+			keyframes: {
+				show: {
+					from: { transform: "scale(0.95)" },
+					to: { transform: "scale(1)" },
+				},
+			},
+			animation: {
+				show: "show 0.2s",
+			},
 		},
 	},
 	plugins: [],
