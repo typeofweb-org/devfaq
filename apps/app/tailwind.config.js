@@ -13,6 +13,27 @@ module.exports = {
 				"red-branding-dark": "oklch(53.89% 0.198 17)",
 				"yellow-branding": "oklch(82.92% 0.17 80)",
 				"yellow-branding-dark": "oklch(78.94% 0.16 80)",
+				junior: {
+					light: "var(--junior-light-color)",
+					main: "var(--junior-main-color)",
+					"main-dark": "var(--junior-main-color-dark)",
+					"main-darker": "var(--junior-main-color-darker)",
+					"main-light": "var(--junior-main-color-light)",
+				},
+				mid: {
+					light: "var(--mid-light-color)",
+					main: "var(--mid-main-color)",
+					"main-dark": "var(--mid-main-color-dark)",
+					"main-darker": "var(--mid-main-color-darker)",
+					"main-light": "var(--mid-main-color-light)",
+				},
+				senior: {
+					light: "var(--senior-light-color)",
+					main: "var(--senior-main-color)",
+					"main-dark": "var(--senior-main-color-dark)",
+					"main-darker": "var(--senior-main-color-darker)",
+					"main-light": "var(--senior-main-color-light)",
+				},
 				violet: {
 					50: "oklch(95.27% 0.017 295)",
 					100: "oklch(87.14% 0.047 295)",
@@ -29,6 +50,9 @@ module.exports = {
 			fontFamily: {
 				sans: ["var(--font-fira-sans)", ...defaultTheme.fontFamily.sans],
 				mono: ["var(--font-fira-code)", ...defaultTheme.fontFamily.mono],
+			},
+			screens: {
+				"small-filters": { raw: "screen and (min-width: 640px) and (max-height: 800px)" },
 			},
 		},
 	},

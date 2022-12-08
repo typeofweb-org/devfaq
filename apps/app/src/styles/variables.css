@@ -1,7 +1,43 @@
 :root {
 	--primary: theme("colors.violet.700");
+
+	--junior-light-color: #edf3f8;
+	--junior-main-color: #499dff;
+	--junior-main-color-dark: #1682ff;
+	--junior-main-color-darker: #0068e2;
+	--junior-main-color-light: #7cb8ff;
+
+	--mid-light-color: #edf8f2;
+	--mid-main-color: #27be31;
+	--mid-main-color-dark: #1e9426;
+	--mid-main-color-darker: #16691b;
+	--mid-main-color-light: #40d84a;
+
+	--senior-light-color: #fffbf0;
+	--senior-main-color: #ffb90b;
+	--senior-main-color-dark: #d79900;
+	--senior-main-color-darker: #a47500;
+	--senior-main-color-light: #ffc83e;
 }
 
 :root.dark {
 	--primary: theme("colors.violet.800");
+
+	--junior-light-color: #575757;
+	--junior-main-color: #0069e0;
+	--junior-main-color-dark: #0051ad;
+	--junior-main-color-darker: #00397a;
+	--junior-main-color-light: #147eff;
+
+	--mid-light-color: #575757;
+	--mid-main-color: #166a1c;
+	--mid-main-color-dark: #0d3f10;
+	--mid-main-color-darker: #041506;
+	--mid-main-color-light: #1e9426;
+
+	--senior-light-color: #575757;
+	--senior-main-color: #a37500;
+	--senior-main-color-dark: #705000;
+	--senior-main-color-darker: #3d2c00;
+	--senior-main-color-light: #d69900;
 }
