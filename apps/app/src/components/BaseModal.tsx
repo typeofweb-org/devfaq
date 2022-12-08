@@ -3,6 +3,7 @@
 import { ReactNode, useEffect } from "react";
 import { Transition } from "@headlessui/react";
 import { lockScroll, unlockScroll } from "../utils/pageScroll";
+import { CloseButton } from "./CloseButton/CloseButton";
 
 type BaseModalProps = Readonly<{
 	isOpen: boolean;
@@ -34,13 +35,12 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 				className="relative h-full w-full max-w-3xl animate-show rounded-sm bg-white px-3.5 py-9 sm:h-fit sm:px-11 sm:py-20"
 				onClick={(event) => event.stopPropagation()}
 			>
-				<button
+				<CloseButton
 					type="button"
-					className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-yellow-500"
+					aria-label="Zamknij modal"
+					className="absolute right-4 top-4"
 					onClick={onClose}
-				>
-					x
-				</button>
+				/>
 				{children}
 			</div>
 		</Transition>
