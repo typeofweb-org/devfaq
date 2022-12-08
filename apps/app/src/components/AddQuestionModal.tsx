@@ -1,14 +1,17 @@
+"use client";
+
 import { ComponentProps } from "react";
-import type { FormEvent, ReactNode } from "react";
-import { BaseModal } from "../BaseModal";
-import { Button } from "../Button/Button";
-import { Select } from "../Select/Select";
-import { CloseAddQuestionModalButton } from "./CloseAddQuestionModalButton";
+import type { FormEvent } from "react";
+import { useModalContext } from "../providers/ModalProvider";
+import { BaseModal } from "./BaseModal";
+import { Button } from "./Button/Button";
+import { Select } from "./Select/Select";
 
 export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
+	const { closeModal } = useModalContext();
+
 	const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		console.log("submit");
 	};
 
 	return (
@@ -33,7 +36,9 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 					<Button type="submit" variant="brandingInverse">
 						Dodaj pytanie
 					</Button>
-					<CloseAddQuestionModalButton />
+					<Button variant="branding" onClick={closeModal}>
+						Anuluj
+					</Button>
 				</div>
 			</form>
 		</BaseModal>
