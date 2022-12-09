@@ -32,7 +32,7 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 			afterLeave={unlockScroll}
 		>
 			<div
-				className="relative h-full w-full max-w-3xl animate-show rounded-sm bg-white px-3.5 py-9 sm:h-fit sm:px-11 sm:py-20"
+				className="relative h-full w-full max-w-3xl animate-show rounded-sm bg-white px-3.5 py-9 dark:bg-white-dark sm:h-fit sm:px-11 sm:py-20"
 				onClick={(event) => {
 					// stop propagation to avoid triggering `onClick` on the backdrop behind the modal
 					event.stopPropagation();

@@ -16,7 +16,9 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 
 	return (
 		<BaseModal {...props}>
-			<h2 className="text-center text-xl font-bold uppercase text-primary">Nowe pytanie</h2>
+			<h2 className="text-center text-xl font-bold uppercase text-primary dark:text-neutral-200">
+				Nowe pytanie
+			</h2>
 			<form onSubmit={handleFormSubmit}>
 				<div className="mt-10 flex flex-col gap-y-3 px-5 sm:flex-row sm:justify-evenly sm:gap-x-5">
 					<Select className="w-full" aria-label="Wybierz technologię">
@@ -26,12 +28,15 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 					</Select>
 					<Select className="w-full" aria-label="Wybierz poziom">
 						<option>Wybierz Poziom</option>
-						<option value="junior">junior</option>
+						<option value="junior">Junior</option>
 						<option value="mid">Mid</option>
 						<option value="senior">Senior</option>
 					</Select>
 				</div>
-				<textarea className="mt-4 h-40 w-full border" aria-label="Wpisz treść pytania"></textarea>
+				<textarea
+					className="mt-4 h-40 w-full border bg-transparent"
+					aria-label="Wpisz treść pytania"
+				></textarea>
 				<div className="mt-3 flex flex-col gap-2 sm:flex-row-reverse">
 					<Button type="submit" variant="brandingInverse">
 						Dodaj pytanie
