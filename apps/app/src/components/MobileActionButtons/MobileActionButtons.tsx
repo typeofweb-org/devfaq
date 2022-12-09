@@ -10,10 +10,13 @@ export const MobileActionButtons = () => {
 
 	return (
 		<div className="sticky bottom-0 left-1/2 flex w-full justify-center gap-4 pb-7 sm:hidden">
-			<MobileActionButton onClick={openSidebar}>
+			<MobileActionButton aria-label="Otwórz sidebar" onClick={openSidebar}>
 				<ActionIconFilter />
 			</MobileActionButton>
-			<MobileActionButton onClick={() => openModal("AddQuestionModal")}>
+			<MobileActionButton
+				aria-label="Dodaj nowe pytanie"
+				onClick={() => openModal("AddQuestionModal")}
+			>
 				<ActionIconAdd />
 			</MobileActionButton>
 		</div>
