@@ -10,7 +10,7 @@ export default async function FooPage() {
 				<QuestionItem
 					key={id}
 					title={question}
-					level={_levelId as "junior"}
+					level={_levelId}
 					creationDate={new Date(acceptedAt || "")}
 					votes={votesCount}
 					voted={id % 2 === 0}
