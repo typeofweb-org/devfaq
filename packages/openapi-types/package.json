@@ -5,7 +5,7 @@
 	"types": "index.ts",
 	"license": "MIT",
 	"scripts": {
-		"generate": "openapi-typescript https://staging-api.devfaq.pl/documentation/json --output types.ts"
+		"generate": "openapi-typescript http://api.devfaq.localhost:3002/documentation/json --output types.ts"
 	},
 	"devDependencies": {
 		"openapi-typescript": "6.1.0",

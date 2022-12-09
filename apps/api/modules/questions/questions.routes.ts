@@ -2,29 +2,33 @@ import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
 import {
 	deleteQuestionByIdSchema,
-	getQuestionByIdSchema,
-	getQuestionsSchema,
-	patchQuestionByIdSchema,
-	postQuestionsSchema,
+	generateGetQuestionsSchema,
+	generatePatchQuestionByIdSchema,
+	generatePostQuestionsSchema,
+	generateGetQuestionByIdSchema,
 } from "./questions.schemas.js";
-import { validateCategory, validateLevels, validateStatus } from "./questions.validators.js";
 
 const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 	await fastify.register(import("./questions.utils.js"));
 
+	const [categories, levels, statuses] = await Promise.all([
+		fastify.questionsGetCategories(),
+		fastify.questionsGetLevels(),
+		fastify.questionsGetStatuses(),
+	]);
+	const args = {
+		categories,
+		levels,
+		statuses,
+	};
+
 	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
 		url: "/questions",
 		method: "GET",
-		schema: getQuestionsSchema,
+		schema: generateGetQuestionsSchema(args),
 		async handler(request, reply) {
 			const { category, level, status = "accepted", limit, offset, order, orderBy } = request.query;
 			const levels = level?.split(",");
-
-			await Promise.all([
-				validateCategory(fastify, category),
-				validateLevels(fastify, levels),
-				validateStatus(fastify, status),
-			]);
 
 			const where = {
 				...(category && { categoryId: category }),
@@ -98,11 +102,9 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
 		url: "/questions",
 		method: "POST",
-		schema: postQuestionsSchema,
+		schema: generatePostQuestionsSchema(args),
 		async handler(request, reply) {
 			const { question, level, category } = request.body;
-
-			await Promise.all([validateCategory(fastify, category), validateLevels(fastify, [level])]);
 
 			const newQuestion = await fastify.db.question.create({
 				data: {
@@ -131,17 +133,11 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
 		url: "/questions/:id",
 		method: "PATCH",
-		schema: patchQuestionByIdSchema,
+		schema: generatePatchQuestionByIdSchema(args),
 		async handler(request, reply) {
 			const { id } = request.params;
 
 			const { question, level, category, status } = request.body;
-
-			await Promise.all([
-				validateCategory(fastify, category),
-				validateLevels(fastify, [level]),
-				validateStatus(fastify, status),
-			]);
 
 			const q = await fastify.db.question.update({
 				where: { id },
@@ -189,7 +185,7 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
 		url: "/questions/:id",
 		method: "GET",
-		schema: getQuestionByIdSchema,
+		schema: generateGetQuestionByIdSchema(args),
 		async handler(request, reply) {
 			const { id } = request.params;
 
