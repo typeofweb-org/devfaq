@@ -1,32 +1,21 @@
 import { QuestionItem } from "../../components/QuestionItem/QuestionItem";
+import { getAllQuestions } from "../../services/questions.service";
 
-export default function FooPage() {
+export default async function FooPage() {
+	const { data } = await getAllQuestions({ limit: 20 });
+
 	return (
 		<div className="flex flex-col gap-y-10 p-10">
-			<QuestionItem
-				title="Co się stanie gdy EventEmitter wyemituje event 'error', a nic na niego nie
-				nasłuchuje?"
-				level="junior"
-				creationDate={new Date("2023-01-01")}
-				votes={1}
-				voted={false}
-			/>
-			<QuestionItem
-				title="Co się stanie gdy EventEmitter wyemituje event 'error', a nic na niego nie
-				nasłuchuje?"
-				level="mid"
-				creationDate={new Date("2023-01-01")}
-				votes={2}
-				voted={true}
-			/>
-			<QuestionItem
-				title="Co się stanie gdy EventEmitter wyemituje event 'error', a nic na niego nie
-				nasłuchuje?"
-				level="senior"
-				creationDate={new Date("2023-01-01")}
-				votes={3}
-				voted={true}
-			/>
+			{data.data.map(({ id, question, _levelId, acceptedAt, votesCount }) => (
+				<QuestionItem
+					key={id}
+					title={question}
+					level={_levelId as "junior"}
+					creationDate={new Date(acceptedAt || "")}
+					votes={votesCount}
+					voted={id % 2 === 0}
+				/>
+			))}
 		</div>
 	);
 }

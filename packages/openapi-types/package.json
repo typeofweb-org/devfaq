@@ -1,0 +1,14 @@
+{
+	"name": "openapi-types",
+	"version": "0.0.0",
+	"main": "index.ts",
+	"types": "index.ts",
+	"license": "MIT",
+	"scripts": {
+		"generate": "openapi-typescript https://staging-api.devfaq.pl/documentation/json --output types.ts"
+	},
+	"devDependencies": {
+		"openapi-typescript": "6.1.0",
+		"tsconfig": "workspace:*"
+	}
+}
