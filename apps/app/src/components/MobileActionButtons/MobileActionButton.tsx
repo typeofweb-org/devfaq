@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 
 type MobileActionButtonProps = Readonly<{
 	children: ReactNode;
+	"aria-label": string;
 	onClick: () => void;
 }>;
 
