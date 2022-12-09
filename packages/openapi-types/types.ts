@@ -74,8 +74,8 @@ export interface paths {
 		get: {
 			parameters?: {
 				query?: {
-					category?: string;
-					status?: string;
+					category?: "html" | "css" | "js" | "angular" | "react" | "git" | "other";
+					status?: "pending" | "accepted";
 					level?: string;
 					limit?: number;
 					offset?: number;
@@ -91,9 +91,9 @@ export interface paths {
 							data: {
 								id: number;
 								question: string;
-								_categoryId: string;
-								_levelId: string;
-								_statusId: string;
+								_categoryId: "html" | "css" | "js" | "angular" | "react" | "git" | "other";
+								_levelId: "junior" | "mid" | "senior";
+								_statusId: "pending" | "accepted";
 								/** Format: date-time */
 								acceptedAt?: string;
 								votesCount: number;
@@ -112,8 +112,8 @@ export interface paths {
 				content: {
 					"application/json": {
 						question: string;
-						level: string;
-						category: string;
+						level: "junior" | "mid" | "senior";
+						category: "html" | "css" | "js" | "angular" | "react" | "git" | "other";
 					};
 				};
 			};
@@ -125,9 +125,9 @@ export interface paths {
 							data: {
 								id: number;
 								question: string;
-								_categoryId: string;
-								_levelId: string;
-								_statusId: string;
+								_categoryId: "html" | "css" | "js" | "angular" | "react" | "git" | "other";
+								_levelId: "junior" | "mid" | "senior";
+								_statusId: "pending" | "accepted";
 								/** Format: date-time */
 								acceptedAt?: string;
 								votesCount: number;
@@ -154,9 +154,9 @@ export interface paths {
 							data: {
 								id: number;
 								question: string;
-								_categoryId: string;
-								_levelId: string;
-								_statusId: string;
+								_categoryId: "html" | "css" | "js" | "angular" | "react" | "git" | "other";
+								_levelId: "junior" | "mid" | "senior";
+								_statusId: "pending" | "accepted";
 								/** Format: date-time */
 								acceptedAt?: string;
 								votesCount: number;
@@ -188,9 +188,9 @@ export interface paths {
 				content: {
 					"application/json": {
 						question: string;
-						level: string;
-						category: string;
-						status: string;
+						level: "junior" | "mid" | "senior";
+						category: "html" | "css" | "js" | "angular" | "react" | "git" | "other";
+						status: "pending" | "accepted";
 					};
 				};
 			};
@@ -202,9 +202,9 @@ export interface paths {
 							data: {
 								id: number;
 								question: string;
-								_categoryId: string;
-								_levelId: string;
-								_statusId: string;
+								_categoryId: "html" | "css" | "js" | "angular" | "react" | "git" | "other";
+								_levelId: "junior" | "mid" | "senior";
+								_statusId: "pending" | "accepted";
 								/** Format: date-time */
 								acceptedAt?: string;
 								votesCount: number;
