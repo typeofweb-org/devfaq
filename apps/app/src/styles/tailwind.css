@@ -10,22 +10,6 @@
 		background-repeat: no-repeat;
 	}
 
-	.level-button-shadows:focus {
-		box-shadow: inset 0px 0px 3px var(--color-shadow-darker);
-	}
-
-	.level-button-active-shadows {
-		box-shadow: inset 0 2px 3px var(--color-shadow-darker);
-	}
-
-	.level-button-active-shadows:focus {
-		box-shadow: 0 0 10px var(--color-shadow-dark), 0 2px 3px var(--color-shadow-darker);
-	}
-
-	.level-button-active-shadows:hover {
-		box-shadow: inset 0 2px 3px var(--color-shadow-dark);
-	}
-
 	.dark .level-button {
 		background-color: theme("colors.white-dark");
 	}
