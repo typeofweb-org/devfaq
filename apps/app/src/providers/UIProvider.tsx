@@ -19,7 +19,7 @@ const [useUIContext, UIContextProvider] = createSafeContext<UIContextValue>();
 
 const UIProvider = ({ children }: { readonly children: ReactNode }) => {
 	const [openedModal, setOpenedModal] = useState<Modal | null>(null);
-	const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
 	const openModal = useCallback((modal: Modal) => {
 		setOpenedModal(modal);
