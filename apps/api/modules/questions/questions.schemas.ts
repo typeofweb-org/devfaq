@@ -1,83 +1,164 @@
 import { Type, Static } from "@sinclair/typebox";
 
-const getQuestionsQuerySchema = Type.Object({
-	category: Type.Optional(Type.String()),
-	status: Type.Optional(Type.String()),
-	level: Type.Optional(Type.String({ pattern: "^(\\w+,?)+$" })),
-	limit: Type.Optional(Type.Integer()),
-	offset: Type.Optional(Type.Integer()),
-	orderBy: Type.Optional(
-		Type.Union([Type.Literal("acceptedAt"), Type.Literal("level"), Type.Literal("votesCount")]),
-	),
-	order: Type.Optional(Type.Union([Type.Literal("asc"), Type.Literal("desc")])),
-});
-export type GetQuestionsQuery = Static<typeof getQuestionsQuerySchema>;
+const generateGetQuestionsQuerySchema = <
+	Categories extends readonly string[],
+	Levels extends readonly string[],
+	Statuses extends readonly string[],
+>(args: {
+	categories: Categories;
+	levels: Levels;
+	statuses: Statuses;
+}) =>
+	Type.Object({
+		category: Type.Optional(Type.Union(args.categories.map((val) => Type.Literal(val)))),
+		status: Type.Optional(Type.Union(args.statuses.map((val) => Type.Literal(val)))),
+		level: Type.Optional(Type.String({ pattern: `^([${args.levels.join("|")}],?)+$` })),
+		limit: Type.Optional(Type.Integer()),
+		offset: Type.Optional(Type.Integer()),
+		orderBy: Type.Optional(
+			Type.Union([Type.Literal("acceptedAt"), Type.Literal("level"), Type.Literal("votesCount")]),
+		),
+		order: Type.Optional(Type.Union([Type.Literal("asc"), Type.Literal("desc")])),
+	});
+export type GetQuestionsQuery = Static<ReturnType<typeof generateGetQuestionsQuerySchema>>;
 export type GetQuestionsOrderBy = GetQuestionsQuery["orderBy"];
 export type GetQuestionsOrder = GetQuestionsQuery["order"];
 
-const questionShape = {
-	id: Type.Integer(),
-	question: Type.String(),
-	_categoryId: Type.String(),
-	_levelId: Type.String(),
-	_statusId: Type.String(),
-	acceptedAt: Type.Optional(Type.String({ format: "date-time" })),
-} as const;
-
-const createQuestionShape = {
-	question: Type.String(),
-	level: Type.String(),
-	category: Type.String(),
+const generateQuestionShape = <
+	Categories extends readonly string[],
+	Levels extends readonly string[],
+	Statuses extends readonly string[],
+>(args: {
+	categories: Categories;
+	levels: Levels;
+	statuses: Statuses;
+}) => {
+	return {
+		id: Type.Integer(),
+		question: Type.String(),
+		_categoryId: Type.Union(args.categories.map((val) => Type.Literal(val))),
+		_levelId: Type.Union(args.levels.map((val) => Type.Literal(val))),
+		_statusId: Type.Union(args.statuses.map((val) => Type.Literal(val))),
+		acceptedAt: Type.Optional(Type.String({ format: "date-time" })),
+	} as const;
 };
 
-const questionResponseSchema = Type.Object({
-	...questionShape,
-	votesCount: Type.Integer(),
-	currentUserVotedOn: Type.Boolean(),
-});
+const generateCreateQuestionShape = <
+	Categories extends readonly string[],
+	Levels extends readonly string[],
+	Statuses extends readonly string[],
+>(args: {
+	categories: Categories;
+	levels: Levels;
+	statuses: Statuses;
+}) => {
+	return {
+		question: Type.String(),
+		level: Type.Union(args.levels.map((val) => Type.Literal(val))),
+		category: Type.Union(args.categories.map((val) => Type.Literal(val))),
+	};
+};
 
-export const getQuestionsSchema = {
-	querystring: getQuestionsQuerySchema,
-	response: {
-		200: Type.Object({
-			data: Type.Array(questionResponseSchema),
-			meta: Type.Object({
-				total: Type.Integer(),
+const generateQuestionResponseSchema = <
+	Categories extends readonly string[],
+	Levels extends readonly string[],
+	Statuses extends readonly string[],
+>(args: {
+	categories: Categories;
+	levels: Levels;
+	statuses: Statuses;
+}) =>
+	Type.Object({
+		...generateQuestionShape(args),
+		votesCount: Type.Integer(),
+		currentUserVotedOn: Type.Boolean(),
+	});
+
+export const generateGetQuestionsSchema = <
+	Categories extends readonly string[],
+	Levels extends readonly string[],
+	Statuses extends readonly string[],
+>(args: {
+	categories: Categories;
+	levels: Levels;
+	statuses: Statuses;
+}) => {
+	return {
+		querystring: generateGetQuestionsQuerySchema(args),
+		response: {
+			200: Type.Object({
+				data: Type.Array(generateQuestionResponseSchema(args)),
+				meta: Type.Object({
+					total: Type.Integer(),
+				}),
 			}),
-		}),
-	},
-} as const;
-
-export const postQuestionsSchema = {
-	body: Type.Object(createQuestionShape),
-	response: {
-		200: Type.Object({
-			data: questionResponseSchema,
-		}),
-	},
-} as const;
-
-export const patchQuestionByIdSchema = {
-	params: Type.Object({
-		id: Type.Integer(),
-	}),
-	body: Type.Object({ ...createQuestionShape, status: Type.String() }),
-	response: {
-		200: Type.Object({
-			data: questionResponseSchema,
-		}),
-	},
+		},
+	} as const;
 };
 
-export const getQuestionByIdSchema = {
-	params: Type.Object({
-		id: Type.Integer(),
-	}),
-	response: {
-		200: Type.Object({
-			data: questionResponseSchema,
+export const generatePostQuestionsSchema = <
+	Categories extends readonly string[],
+	Levels extends readonly string[],
+	Statuses extends readonly string[],
+>(args: {
+	categories: Categories;
+	levels: Levels;
+	statuses: Statuses;
+}) => {
+	return {
+		body: Type.Object(generateCreateQuestionShape(args)),
+		response: {
+			200: Type.Object({
+				data: generateQuestionResponseSchema(args),
+			}),
+		},
+	} as const;
+};
+
+export const generatePatchQuestionByIdSchema = <
+	Categories extends readonly string[],
+	Levels extends readonly string[],
+	Statuses extends readonly string[],
+>(args: {
+	categories: Categories;
+	levels: Levels;
+	statuses: Statuses;
+}) => {
+	return {
+		params: Type.Object({
+			id: Type.Integer(),
 		}),
-	},
+		body: Type.Object({
+			...generateCreateQuestionShape(args),
+			status: Type.Union(args.statuses.map((val) => Type.Literal(val))),
+		}),
+		response: {
+			200: Type.Object({
+				data: generateQuestionResponseSchema(args),
+			}),
+		},
+	};
+};
+
+export const generateGetQuestionByIdSchema = <
+	Categories extends readonly string[],
+	Levels extends readonly string[],
+	Statuses extends readonly string[],
+>(args: {
+	categories: Categories;
+	levels: Levels;
+	statuses: Statuses;
+}) => {
+	return {
+		params: Type.Object({
+			id: Type.Integer(),
+		}),
+		response: {
+			200: Type.Object({
+				data: generateQuestionResponseSchema(args),
+			}),
+		},
+	};
 };
 
 export const deleteQuestionByIdSchema = {
