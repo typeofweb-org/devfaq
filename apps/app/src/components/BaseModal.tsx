@@ -20,7 +20,7 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 
 	return (
 		<Transition
-			className="fixed top-0 left-0 z-[99] flex h-full w-full items-center justify-center overflow-y-auto bg-black/50 sm:px-2"
+			className="fixed top-0 left-0 z-50 flex h-full w-full items-center justify-center overflow-y-auto bg-black/50 sm:px-2"
 			onClick={onClose}
 			show={isOpen}
 			enter="transition-opacity duration-200"

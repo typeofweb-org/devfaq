@@ -2,13 +2,13 @@
 
 import { ComponentProps } from "react";
 import type { FormEvent } from "react";
-import { useModalContext } from "../providers/ModalProvider";
+import { useUIContext } from "../providers/UIProvider";
 import { BaseModal } from "./BaseModal";
 import { Button } from "./Button/Button";
 import { Select } from "./Select/Select";
 
 export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
-	const { closeModal } = useModalContext();
+	const { closeModal } = useUIContext();
 
 	const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
