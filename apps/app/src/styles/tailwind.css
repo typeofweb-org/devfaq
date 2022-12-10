@@ -9,4 +9,54 @@
 		background-position: 100% 50%;
 		background-repeat: no-repeat;
 	}
+
+	.dark .level-button {
+		background-color: theme("colors.white-dark");
+	}
+
+	.level-button:focus {
+		box-shadow: inset 0px 0px 3px var(--color-shadow-darker);
+	}
+
+	.level-button:hover {
+		background-color: var(--color-light);
+	}
+
+	.level-button-active {
+		background-color: var(--color-main);
+		box-shadow: inset 0 2px 3px var(--color-shadow-darker);
+	}
+
+	.level-button-active:focus {
+		box-shadow: 0 0 10px var(--color-shadow-dark), 0 2px 3px var(--color-shadow-darker);
+	}
+
+	.level-button-active:hover {
+		background-color: var(--color-main-light);
+		box-shadow: inset 0 2px 3px var(--color-shadow-dark);
+	}
+
+	.level-button-junior {
+		--color-shadow-dark: var(--junior-main-color-dark);
+		--color-shadow-darker: var(--junior-main-color-darker);
+		--color-light: var(--junior-light-color);
+		--color-main: var(--junior-main-color);
+		--color-main-light: var(--junior-main-color-light);
+	}
+
+	.level-button-mid {
+		--color-shadow-dark: var(--mid-main-color-dark);
+		--color-shadow-darker: var(--mid-main-color-darker);
+		--color-light: var(--mid-light-color);
+		--color-main: var(--mid-main-color);
+		--color-main-light: var(--mid-main-color-light);
+	}
+
+	.level-button-senior {
+		--color-shadow-dark: var(--senior-main-color-dark);
+		--color-shadow-darker: var(--senior-main-color-darker);
+		--color-light: var(--senior-light-color);
+		--color-main: var(--senior-main-color);
+		--color-main-light: var(--senior-main-color-light);
+	}
 }
