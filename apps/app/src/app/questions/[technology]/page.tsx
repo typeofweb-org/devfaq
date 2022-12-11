@@ -3,7 +3,7 @@ import { QuestionItem } from "../../../components/QuestionItem/QuestionItem";
 import { technologies } from "../../../lib/technologies";
 import { getAllQuestions } from "../../../services/questions.service";
 
-const QuestionsPage = async ({ params }: { params: { technology: string } }) => {
+export default async function QuestionsPage({ params }: { params: { technology: string } }) {
 	if (!technologies.includes(params.technology)) {
 		return redirect("/");
 	}
@@ -25,5 +25,3 @@ const QuestionsPage = async ({ params }: { params: { technology: string } }) => 
 		</div>
 	);
 };
-
-export default QuestionsPage;
