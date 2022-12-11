@@ -10,17 +10,23 @@ import OtherLogo from "../../../../public/icons/other-logo.svg";
 
 import { Technology } from "./Technology";
 
+const technologyFilters = [
+	{ href: "html", title: "HTML", icon: <HTMLLogo /> },
+	{ href: "css", title: "CSS", icon: <CSSLogo /> },
+	{ href: "js", title: "JS", icon: <JavaScriptLogo /> },
+	{ href: "angular", title: "Angular", icon: <AngularLogo /> },
+	{ href: "react", title: "React", icon: <ReactLogo /> },
+	{ href: "git", title: "Git", icon: <GitLogo /> },
+	{ href: "other", title: "Inne", icon: <OtherLogo /> },
+] as const;
+
 export const TechnologyFilter = () => {
 	return (
 		<QuestionsSidebarSection title="Wybierz technologię">
 			<div className="flex justify-between gap-x-4 overflow-x-auto px-4 pb-4 sm:flex-wrap sm:gap-x-0 sm:gap-y-7 sm:overflow-x-visible sm:p-0 small-filters:gap-y-4">
-				<Technology title="HTML5" icon={<HTMLLogo />} isActive />
-				<Technology title="CSS3" icon={<CSSLogo />} />
-				<Technology title="JS" icon={<JavaScriptLogo />} />
-				<Technology title="Angular" icon={<AngularLogo />} />
-				<Technology title="React" icon={<ReactLogo />} />
-				<Technology title="Git" icon={<GitLogo />} />
-				<Technology title="Inne" icon={<OtherLogo />} />
+				{technologyFilters.map((tech) => (
+					<Technology key={tech.href} {...tech} />
+				))}
 			</div>
 		</QuestionsSidebarSection>
 	);
