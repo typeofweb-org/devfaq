@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, ReactNode, useEffect, useMemo, useState } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import { createSafeContext } from "../lib/createSafeContext";
 
 type Theme = "light" | "dark";

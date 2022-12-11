@@ -13,13 +13,7 @@ import { Technology } from "./Technology";
 export const TechnologyFilter = () => {
 	return (
 		<QuestionsSidebarSection title="Wybierz technologię">
-			<div
-				className={twMerge(
-					"flex gap-5 overflow-x-auto p-1 pb-4",
-					"small-filters:flex-wrap small-filters:gap-4 small-filters:overflow-x-visible",
-					"sm:flex-wrap sm:gap-7 sm:overflow-x-visible sm:p-0",
-				)}
-			>
+			<div className="flex justify-between gap-x-4 overflow-x-auto px-4 pb-4 sm:flex-wrap sm:gap-x-0 sm:gap-y-7 sm:overflow-x-visible sm:p-0 small-filters:gap-y-4">
 				<Technology title="HTML5" icon={<HTMLLogo />} isActive />
 				<Technology title="CSS3" icon={<CSSLogo />} />
 				<Technology title="JS" icon={<JavaScriptLogo />} />

@@ -30,6 +30,6 @@ module.exports = {
 		"@typescript-eslint/no-empty-interface": "off",
 		"@typescript-eslint/no-unused-vars": "off",
 		"@next/next/no-html-link-for-pages": "off",
-		"import/order": ["error"],
+		"import/order": "error",
 	},
 };
