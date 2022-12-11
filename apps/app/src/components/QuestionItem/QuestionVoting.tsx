@@ -12,8 +12,8 @@ export const QuestionVoting = ({ votes, voted }: QuestionVotingProps) => {
 	return (
 		<button
 			className={twMerge(
-				"mr-4 flex h-fit items-center gap-x-1.5 text-gray-300 transition-colors",
-				voted && "text-primary",
+				"mr-4 flex h-fit items-center gap-x-1.5 text-neutral-200 transition-colors",
+				voted && "text-violet-700 dark:text-violet-300",
 			)}
 			type="button"
 			aria-label={`To pytanie ma ${votes} ${votesPluralize(votes)}. Kliknij, aby ${

@@ -1,9 +1,9 @@
 import { twMerge } from "tailwind-merge";
 
 const levelStyles = {
-	junior: "bg-[#499dff]",
-	mid: "bg-[#27be31]",
-	senior: "bg-[#ffb90b]",
+	junior: "bg-junior-main",
+	mid: "bg-mid-main",
+	senior: "bg-senior-main",
 };
 
 export type Level = keyof typeof levelStyles;
