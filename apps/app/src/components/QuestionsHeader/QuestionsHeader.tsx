@@ -1,5 +1,6 @@
 "use client";
 
+import { DEFAULT_ORDER_QUERY } from "../../lib/order";
 import { technologiesLabel, Technology } from "../../lib/technologies";
 import { pluralize } from "../../utils/intl";
 import { Select } from "../Select/Select";
@@ -13,7 +14,7 @@ type QuestionsHeaderProps = Readonly<{
 }>;
 
 export const QuestionsHeader = ({ technology, total }: QuestionsHeaderProps) => {
-	const { value, handleSelectChange } = useQuestionsHeader();
+	const { handleSelectChange } = useQuestionsHeader();
 
 	return (
 		<header className="flex justify-between text-neutral-400">
@@ -23,7 +24,12 @@ export const QuestionsHeader = ({ technology, total }: QuestionsHeaderProps) => 
 			</output>
 			<label>
 				Sortuj według:
-				<Select variant="default" value={value} onChange={handleSelectChange} className="ml-3">
+				<Select
+					variant="default"
+					defaultValue={DEFAULT_ORDER_QUERY}
+					onChange={handleSelectChange}
+					className="ml-3"
+				>
 					<option value="acceptedAt*desc">od najnowszych</option>
 					<option value="acceptedAt*asc">od najstarszych</option>
 					<option value="votesCount*asc">od najmniej popularnych</option>
