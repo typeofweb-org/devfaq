@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
 export default function QuestionsPage() {
-	return redirect("/questions/js");
+	return redirect("/questions/js/1");
 }
