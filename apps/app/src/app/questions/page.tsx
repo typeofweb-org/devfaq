@@ -1,5 +1,5 @@
-const QuestionsPage = () => {
-	return <strong>Questions</strong>;
-};
+import { redirect } from "next/navigation";
 
-export default QuestionsPage;
+export default function QuestionsPage() {
+	return redirect("/questions/js");
+}
