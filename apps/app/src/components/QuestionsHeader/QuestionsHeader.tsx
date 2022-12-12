@@ -1,10 +1,11 @@
 "use client";
 
+import { ChangeEvent } from "react";
 import { DEFAULT_ORDER_QUERY } from "../../lib/order";
 import { technologiesLabel, Technology } from "../../lib/technologies";
 import { pluralize } from "../../utils/intl";
 import { Select } from "../Select/Select";
-import { useQuestionsHeader } from "./useQuestionsHeader";
+import { useQuestionsOrderBy } from "../../hooks/useQuestionsOrderBy";
 
 const questionsPluralize = pluralize("pytanie", "pytania", "pytań");
 
@@ -14,7 +15,12 @@ type QuestionsHeaderProps = Readonly<{
 }>;
 
 export const QuestionsHeader = ({ technology, total }: QuestionsHeaderProps) => {
-	const { handleSelectChange } = useQuestionsHeader();
+	const { setOrderBy } = useQuestionsOrderBy();
+
+	const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
+		event.preventDefault();
+		setOrderBy(event.target.value);
+	};
 
 	return (
 		<header className="flex justify-between text-neutral-400">
