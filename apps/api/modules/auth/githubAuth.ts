@@ -16,6 +16,12 @@ declare module "fastify" {
 }
 
 const authRoutesPlugin: FastifyPluginAsync = async (fastify) => {
+	const protocol = getConfig("ENV") === "development" ? "http" : "https";
+	const subdomain = getConfig("ENV") === "staging" ? "staging-api" : "api";
+	const domain = getConfig("COOKIE_DOMAIN");
+	const port = getConfig("ENV") === "development" ? `:${getConfig("PORT")}` : "";
+	const callbackUri = `${protocol}://${subdomain}.${domain}${port}/oauth/github`;
+
 	await fastify.register(FastifyOauth, {
 		name: "githubOAuth2",
 		credentials: {
@@ -30,7 +36,7 @@ const authRoutesPlugin: FastifyPluginAsync = async (fastify) => {
 			tags: ["auth"],
 		},
 		startRedirectPath: "/oauth/github/login",
-		callbackUri: `http://api.${getConfig("COOKIE_DOMAIN")}:${getConfig("PORT")}/oauth/github`,
+		callbackUri,
 	});
 
 	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
