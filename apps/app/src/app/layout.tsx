@@ -1,4 +1,5 @@
 import { Fira_Sans, Fira_Code } from "@next/font/google";
+import { AnalyticsWrapper } from "../components/analytics";
 import { AppProviders } from "../providers/AppProviders";
 
 import "../styles/globals.css";
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="pl" className={`${firaSans.variable} ${firaCode.variable}`}>
 			<body>
 				<AppProviders>{children}</AppProviders>
+				<AnalyticsWrapper />
 			</body>
 		</html>
 	);
