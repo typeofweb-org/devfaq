@@ -11,7 +11,7 @@ export default async function QuestionsPage({
 	params,
 	searchParams,
 }: {
-	params: { technology: Technology; page: string };
+	params: { technology: string; page: string };
 	searchParams?: { sortBy?: string };
 }) {
 	const page = parseInt(params.page);
