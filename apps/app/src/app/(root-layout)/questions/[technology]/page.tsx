@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
-import { QuestionItem } from "../../../components/QuestionItem/QuestionItem";
-import { technologies } from "../../../lib/technologies";
-import { getAllQuestions } from "../../../services/questions.service";
+import { QuestionItem } from "../../../../components/QuestionItem/QuestionItem";
+import { technologies } from "../../../../lib/technologies";
+import { getAllQuestions } from "../../../../services/questions.service";
 
 export default async function QuestionsPage({ params }: { params: { technology: string } }) {
 	if (!technologies.includes(params.technology)) {
@@ -24,4 +24,4 @@ export default async function QuestionsPage({ params }: { params: { technology: 
 			))}
 		</div>
 	);
-};
+}
