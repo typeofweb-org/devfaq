@@ -18,7 +18,7 @@ export const ActiveLink = ({
 	...rest
 }: ActiveLinkProps) => {
 	const pathname = usePathname();
-	const isActive = href === pathname;
+	const isActive = pathname?.startsWith(href.toString());
 
 	return (
 		<Link href={href} className={twMerge(className, isActive && activeClassName)} {...rest}>
