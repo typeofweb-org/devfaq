@@ -28,6 +28,8 @@ await fastify.register(import("@fastify/sensible"));
 
 await fastify.register(import("./modules/db/db.js"));
 
+await fastify.register(import("@fastify/cors"), { credentials: true, origin: true });
+
 await fastify.register(import("@fastify/swagger"), {
 	mode: "dynamic",
 	openapi: {
