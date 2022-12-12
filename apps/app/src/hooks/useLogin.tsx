@@ -1,4 +1,6 @@
 import { useCallback } from "react";
+import { getLoggedInUser } from "../services/users.service";
+import { UserData } from "../types";
 
 export const useLogin = () => {
 	const loginWithGitHub = useCallback(() => {
@@ -14,7 +16,7 @@ export const useLogin = () => {
 			`width=${width},height=${height},top=${top},left=${left}`,
 		);
 
-		return new Promise<void>((resolve, reject) => {
+		return new Promise<UserData>((resolve, reject) => {
 			if (!popup) {
 				return reject(new Error("Window not created!"));
 			}
@@ -22,7 +24,9 @@ export const useLogin = () => {
 			const intervalId = setInterval(() => {
 				if (popup.closed) {
 					clearInterval(intervalId);
-					resolve();
+					getLoggedInUser({})
+						.then(({ data: { data } }) => resolve(data["_user"]))
+						.catch(reject);
 				}
 			}, 100);
 		});
