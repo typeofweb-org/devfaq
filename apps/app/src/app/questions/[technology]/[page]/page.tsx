@@ -34,7 +34,7 @@ export default async function QuestionsPage({
 					voted={id % 2 === 0}
 				/>
 			))}
-			<QuestionsPagination total={data.meta.total} />
+			<QuestionsPagination technology={params.technology} total={data.meta.total} />
 		</div>
 	);
 }
