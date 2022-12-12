@@ -19,4 +19,14 @@ export default meta;
 
 type Story = StoryObj<typeof Select>;
 
-export const Default: Story = {};
+export const Default: Story = {
+	args: {
+		variant: "default",
+	},
+};
+
+export const Purple: Story = {
+	args: {
+		variant: "purple",
+	},
+};
