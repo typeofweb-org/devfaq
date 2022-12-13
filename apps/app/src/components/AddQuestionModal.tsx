@@ -21,12 +21,12 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 			</h2>
 			<form onSubmit={handleFormSubmit}>
 				<div className="mt-10 flex flex-col gap-y-3 px-5 sm:flex-row sm:justify-evenly sm:gap-x-5">
-					<Select className="w-full" aria-label="Wybierz technologię">
+					<Select variant="purple" className="w-full" aria-label="Wybierz technologię">
 						<option>Wybierz Technologię</option>
 						<option>HTML5</option>
 						<option>JavaScript</option>
 					</Select>
-					<Select className="w-full" aria-label="Wybierz poziom">
+					<Select variant="purple" className="w-full" aria-label="Wybierz poziom">
 						<option>Wybierz Poziom</option>
 						<option value="junior">Junior</option>
 						<option value="mid">Mid</option>

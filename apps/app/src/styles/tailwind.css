@@ -10,6 +10,13 @@
 		background-repeat: no-repeat;
 	}
 
+	.select {
+		background-image: url("/select.svg");
+		background-size: 12px 6px;
+		background-repeat: no-repeat;
+		background-position: calc(100% - 5px) 50%;
+	}
+
 	.dark .level-button {
 		background-color: theme("colors.white-dark");
 	}
