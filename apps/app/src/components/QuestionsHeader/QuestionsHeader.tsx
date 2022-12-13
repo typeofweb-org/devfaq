@@ -1,7 +1,6 @@
 "use client";
 
 import { ChangeEvent } from "react";
-import { DEFAULT_ORDER_QUERY } from "../../lib/order";
 import { technologiesLabel, Technology } from "../../lib/technologies";
 import { pluralize } from "../../utils/intl";
 import { Select } from "../Select/Select";
@@ -15,7 +14,7 @@ type QuestionsHeaderProps = Readonly<{
 }>;
 
 export const QuestionsHeader = ({ technology, total }: QuestionsHeaderProps) => {
-	const { setOrderBy } = useQuestionsOrderBy();
+	const { orderBy, setOrderBy } = useQuestionsOrderBy();
 
 	const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
 		event.preventDefault();
@@ -30,12 +29,7 @@ export const QuestionsHeader = ({ technology, total }: QuestionsHeaderProps) => 
 			</output>
 			<label>
 				Sortuj według:
-				<Select
-					variant="default"
-					defaultValue={DEFAULT_ORDER_QUERY}
-					onChange={handleSelectChange}
-					className="ml-3"
-				>
+				<Select variant="default" value={orderBy} onChange={handleSelectChange} className="ml-3">
 					<option value="acceptedAt*desc">od najnowszych</option>
 					<option value="acceptedAt*asc">od najstarszych</option>
 					<option value="votesCount*asc">od najmniej popularnych</option>
