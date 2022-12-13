@@ -2,7 +2,7 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
-[![All Contributors](https://img.shields.io/badge/Contributors-12-673ab7.svg)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/Contributors-13-673ab7.svg)](#contributors-)
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
@@ -42,6 +42,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/KonradNojman"><img src="https://avatars2.githubusercontent.com/u/60238331?v=4?s=70" width="70px;" alt="KonradNojman"/><br /><sub><b>KonradNojman</b></sub></a><br /><a href="https://github.com/typeofweb/devfaq/pulls?q=is%3Apr+reviewed-by%3AKonradNojman" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/PatrykBuniX"><img src="https://avatars.githubusercontent.com/u/45733298?v=4?s=70" width="70px;" alt="Patryk Górka"/><br /><sub><b>Patryk Górka</b></sub></a><br /><a href="https://github.com/typeofweb/devfaq/commits?author=PatrykBuniX" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://projectcode.pl/"><img src="https://avatars.githubusercontent.com/u/27779154?v=4?s=70" width="70px;" alt="Adrian Polak"/><br /><sub><b>Adrian Polak</b></sub></a><br /><a href="https://github.com/typeofweb/devfaq/commits?author=AdiPol1359" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/xStrixU"><img src="https://avatars.githubusercontent.com/u/41890821?v=4?s=70" width="70px;" alt="xStrixU"/><br /><sub><b>xStrixU</b></sub></a><br /><a href="https://github.com/typeofweb/devfaq/commits?author=xStrixU" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
