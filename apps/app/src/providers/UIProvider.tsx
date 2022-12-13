@@ -1,5 +1,3 @@
-"use client";
-
 import { useCallback, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import { createSafeContext } from "../lib/createSafeContext";

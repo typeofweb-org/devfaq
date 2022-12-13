@@ -8,6 +8,14 @@ const nextConfig = {
 		esmExternals: true,
 		fontLoaders: [{ loader: "@next/font/google", options: { subsets: ["latin", "latin-ext"] } }],
 	},
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "avatars.githubusercontent.com",
+			},
+		],
+	},
 	webpack(config) {
 		config.module.rules.push({
 			test: /\.svg$/,
