@@ -7,10 +7,14 @@ import { ActiveNavigationLink } from "./ActiveNagivationLink";
 
 export const LoginNavigationLink = () => {
 	const pathname = usePathname();
-	const { user } = useUser();
+	const { userData, isLoading } = useUser();
 
-	if (user) {
-		return <UserAvatar user={user} />;
+	if (isLoading) {
+		return null;
+	}
+
+	if (userData) {
+		return <UserAvatar userData={userData} />;
 	}
 
 	return (

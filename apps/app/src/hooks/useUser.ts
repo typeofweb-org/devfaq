@@ -6,36 +6,41 @@ const USER_QUERY_KEY = ["user"];
 
 export const useUser = () => {
 	const queryClient = useQueryClient();
-	const { data: user, ...rest } = useQuery({
+	const { data: userData, ...rest } = useQuery({
 		queryKey: USER_QUERY_KEY,
 		queryFn: async () => {
 			try {
 				const { data } = await getLoggedInUser({});
 
-				return data["data"]["_user"];
+				return data["data"];
 			} catch (err) {
-				return null;
+				if (err instanceof getLoggedInUser.Error) {
+					const { status } = err.getActualType();
+
+					if (status >= 400 && status <= 499) {
+						return null;
+					}
+				}
+
+				throw err;
 			}
 		},
 		staleTime: Infinity,
-		retry: false,
 	});
 
-	const setUser = (user: UserData | null) => {
-		queryClient.setQueryData(USER_QUERY_KEY, user);
+	const refetchUser = async () => {
+		await queryClient.refetchQueries({
+			queryKey: USER_QUERY_KEY,
+		});
+
+		return queryClient.getQueryData<UserData>(USER_QUERY_KEY);
 	};
-
-	const updateLoggedInUser = useMutation(getLoggedInUser, {
-		onSuccess: ({ data }) => {
-			setUser(data["data"]["_user"]);
-		},
-	});
 
 	const logout = useMutation(logoutUser, {
 		onSuccess: () => {
-			setUser(null);
+			queryClient.setQueryData(USER_QUERY_KEY, null);
 		},
 	});
 
-	return { user, updateLoggedInUser, logout, ...rest };
+	return { userData, refetchUser, logout, ...rest };
 };

@@ -2,20 +2,23 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import GitHubLogo from "../../../public/icons/github-logo.svg";
-import { useLogin } from "../../hooks/useLogin";
+import { useUser } from "../../hooks/useUser";
+import { openGitHubLoginPopup } from "../../lib/loginPopup";
 
 export const GitHubLoginButton = () => {
 	const searchParams = useSearchParams();
 	const router = useRouter();
-	const { loginWithGitHub } = useLogin();
+	const { refetchUser } = useUser();
 
 	const previousPath = searchParams.get("previousPath") || "/";
 
 	const handleClick = async () => {
 		try {
-			await loginWithGitHub();
+			await openGitHubLoginPopup();
 
-			router.push(previousPath);
+			if (await refetchUser()) {
+				router.push(previousPath);
+			}
 		} catch (err) {
 			console.error(err);
 		}
