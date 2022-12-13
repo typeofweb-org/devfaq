@@ -14,11 +14,11 @@ type QuestionsHeaderProps = Readonly<{
 }>;
 
 export const QuestionsHeader = ({ technology, total }: QuestionsHeaderProps) => {
-	const { orderBy, setOrderBy } = useQuestionsOrderBy();
+	const { sortBy, setSortByFromString } = useQuestionsOrderBy();
 
 	const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
 		event.preventDefault();
-		setOrderBy(event.target.value);
+		setSortByFromString(event.target.value);
 	};
 
 	return (
@@ -29,7 +29,7 @@ export const QuestionsHeader = ({ technology, total }: QuestionsHeaderProps) => 
 			</output>
 			<label>
 				Sortuj według:
-				<Select variant="default" value={orderBy} onChange={handleSelectChange} className="ml-3">
+				<Select variant="default" value={sortBy} onChange={handleSelectChange} className="ml-3">
 					<option value="acceptedAt*desc">od najnowszych</option>
 					<option value="acceptedAt*asc">od najstarszych</option>
 					<option value="votesCount*asc">od najmniej popularnych</option>
