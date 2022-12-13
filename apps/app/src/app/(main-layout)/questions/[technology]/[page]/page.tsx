@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
-import { QuestionItem } from "../../../../components/QuestionItem/QuestionItem";
-import { QuestionsPagination } from "../../../../components/QuestionsPagination";
-import { PAGE_SIZE } from "../../../../lib/constants";
-import { technologies } from "../../../../lib/technologies";
-import { getAllQuestions } from "../../../../services/questions.service";
+import { QuestionItem } from "../../../../../components/QuestionItem/QuestionItem";
+import { QuestionsPagination } from "../../../../../components/QuestionsPagination";
+import { PAGE_SIZE } from "../../../../../lib/constants";
+import { technologies } from "../../../../../lib/technologies";
+import { getAllQuestions } from "../../../../../services/questions.service";
 
 export default async function QuestionsPage({
 	params,
