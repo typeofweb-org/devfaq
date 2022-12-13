@@ -112,6 +112,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "AdiPol1359",
+      "name": "Adrian Polak",
+      "avatar_url": "https://avatars.githubusercontent.com/u/27779154?v=4",
+      "profile": "https://projectcode.pl/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
