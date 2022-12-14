@@ -43,7 +43,6 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 					: { statusId: "accepted" }),
 			};
 
-			// @todo also get votes
 			const [total, questions] = await Promise.all([
 				fastify.db.question.count({
 					where,
