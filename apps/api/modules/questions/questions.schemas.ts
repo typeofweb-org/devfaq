@@ -16,7 +16,7 @@ const generateGetQuestionsQuerySchema = <
 		limit: Type.Optional(Type.Integer()),
 		offset: Type.Optional(Type.Integer()),
 		orderBy: Type.Optional(
-			Type.Union([Type.Literal("acceptedAt"), Type.Literal("levelId"), Type.Literal("votesCount")]),
+			Type.Union([Type.Literal("acceptedAt"), Type.Literal("level"), Type.Literal("votesCount")]),
 		),
 		order: Type.Optional(Type.Union([Type.Literal("asc"), Type.Literal("desc")])),
 	});
