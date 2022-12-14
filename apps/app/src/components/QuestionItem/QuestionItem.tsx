@@ -5,16 +5,15 @@ import { QuestionVoting } from "./QuestionVoting";
 import type { Level } from "./QuestionLevel";
 
 type QuestionItemProps = Readonly<{
+	id: number;
 	title: string;
-	votes: number;
-	voted: boolean;
 	level: Level;
 	creationDate: Date;
 }>;
 
-export const QuestionItem = ({ title, votes, voted, level, creationDate }: QuestionItemProps) => (
+export const QuestionItem = ({ id, title, level, creationDate }: QuestionItemProps) => (
 	<article className="flex bg-white p-5 text-sm text-neutral-500 shadow-md dark:bg-white-dark dark:text-neutral-200">
-		<QuestionVoting votes={votes} voted={voted} />
+		<QuestionVoting questionId={id} />
 		<h3 className="grow">{title}</h3>
 		<div className="ml-4 flex min-w-max flex-col items-end">
 			<QuestionLevel level={level} />

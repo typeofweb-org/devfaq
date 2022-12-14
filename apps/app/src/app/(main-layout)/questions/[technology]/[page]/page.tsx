@@ -32,14 +32,13 @@ export default async function QuestionsPage({
 	return (
 		<div className="flex flex-col gap-y-10">
 			<QuestionsHeader technology={params.technology} total={data.meta.total} />
-			{data.data.map(({ id, question, _levelId, acceptedAt, votesCount }) => (
+			{data.data.map(({ id, question, _levelId, acceptedAt }) => (
 				<QuestionItem
 					key={id}
+					id={id}
 					title={question}
 					level={_levelId}
 					creationDate={new Date(acceptedAt || "")}
-					votes={votesCount}
-					voted={id % 2 === 0}
 				/>
 			))}
 			<QuestionsPagination technology={params.technology} total={data.meta.total} />

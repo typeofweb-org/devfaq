@@ -14,5 +14,9 @@ export const useDevFAQRouter = () => {
 		}
 	};
 
-	return { mergeQueryParams };
+	const redirectToLoginPage = () => {
+		router.push(`/login?previousPath=${pathname || "/"}`);
+	};
+
+	return { mergeQueryParams, redirectToLoginPage };
 };
