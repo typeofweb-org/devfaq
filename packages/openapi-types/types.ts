@@ -97,7 +97,6 @@ export interface paths {
 								/** Format: date-time */
 								acceptedAt?: string;
 								votesCount: number;
-								currentUserVotedOn: boolean;
 							}[];
 							meta: {
 								total: number;
@@ -131,8 +130,36 @@ export interface paths {
 								/** Format: date-time */
 								acceptedAt?: string;
 								votesCount: number;
-								currentUserVotedOn: boolean;
 							};
+						};
+					};
+				};
+			};
+		};
+	};
+	"/questions/votes": {
+		get: {
+			parameters?: {
+				query?: {
+					category?: "html" | "css" | "js" | "angular" | "react" | "git" | "other";
+					status?: "pending" | "accepted";
+					level?: string;
+					limit?: number;
+					offset?: number;
+					orderBy?: "acceptedAt" | "level" | "votesCount";
+					order?: "asc" | "desc";
+				};
+			};
+			responses: {
+				/** @description Default Response */
+				200: {
+					content: {
+						"application/json": {
+							data: {
+								id: number;
+								votesCount: number;
+								currentUserVotedOn: boolean;
+							}[];
 						};
 					};
 				};
@@ -160,7 +187,6 @@ export interface paths {
 								/** Format: date-time */
 								acceptedAt?: string;
 								votesCount: number;
-								currentUserVotedOn: boolean;
 							};
 						};
 					};
@@ -208,9 +234,45 @@ export interface paths {
 								/** Format: date-time */
 								acceptedAt?: string;
 								votesCount: number;
-								currentUserVotedOn: boolean;
 							};
 						};
+					};
+				};
+			};
+		};
+	};
+	"/questions/{id}/votes": {
+		post: {
+			parameters: {
+				path: {
+					id: number;
+				};
+			};
+			responses: {
+				/** @description Default Response */
+				200: {
+					content: {
+						"application/json": {
+							data: {
+								userId: number;
+								questionId: number;
+							};
+						};
+					};
+				};
+			};
+		};
+		delete: {
+			parameters: {
+				path: {
+					id: number;
+				};
+			};
+			responses: {
+				/** @description Default Response */
+				204: {
+					content: {
+						"application/json": boolean & true;
 					};
 				};
 			};
