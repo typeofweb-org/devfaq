@@ -1,5 +1,5 @@
 import { useSearchParams } from "next/navigation";
-import { parseQueryLevels, Level } from "../lib/order";
+import { parseQueryLevels, Level } from "../lib/level";
 import { useDevFAQRouter } from "./useDevFAQRouter";
 
 export const useQuestionsLevels = () => {

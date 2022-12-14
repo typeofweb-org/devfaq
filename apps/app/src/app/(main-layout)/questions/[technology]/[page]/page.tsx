@@ -1,13 +1,10 @@
 import { redirect } from "next/navigation";
 import { QuestionItem } from "../../../../../components/QuestionItem/QuestionItem";
-import { QuestionsHeader } from "../../../../../components/QuestionsHeader/QuestionsHeader";
+import { QuestionsHeader } from "../../../../../components/QuestionsHeader";
 import { QuestionsPagination } from "../../../../../components/QuestionsPagination";
 import { PAGE_SIZE } from "../../../../../lib/constants";
-import {
-	DEFAULT_SORT_BY_QUERY,
-	parseQuerySortBy,
-	parseQueryLevels,
-} from "../../../../../lib/order";
+import { DEFAULT_SORT_BY_QUERY, parseQuerySortBy } from "../../../../../lib/order";
+import { parseQueryLevels } from "../../../../../lib/level";
 import { technologies } from "../../../../../lib/technologies";
 import { getAllQuestions } from "../../../../../services/questions.service";
 import { Params, SearchParams } from "../../../../../types";

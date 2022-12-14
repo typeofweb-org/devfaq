@@ -2,7 +2,7 @@
 
 import { useQuestionsLevels } from "../../../hooks/useQuestionsLevels";
 import { QuestionsSidebarSection } from "../QuestionsSidebarSection";
-import { levels } from "../../../lib/order";
+import { levels } from "../../../lib/level";
 import { LevelButton } from "./LevelButton";
 
 export const LevelFilter = () => {

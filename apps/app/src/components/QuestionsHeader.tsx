@@ -1,10 +1,11 @@
 "use client";
 
-import { ChangeEvent } from "react";
-import { technologiesLabel, Technology } from "../../lib/technologies";
-import { pluralize } from "../../utils/intl";
-import { Select } from "../Select/Select";
-import { useQuestionsOrderBy } from "../../hooks/useQuestionsOrderBy";
+import { ChangeEvent, Fragment } from "react";
+import { technologiesLabel, Technology } from "../lib/technologies";
+import { pluralize } from "../utils/intl";
+import { useQuestionsOrderBy } from "../hooks/useQuestionsOrderBy";
+import { ordersBy, orders, sortByLabels } from "../lib/order";
+import { Select } from "./Select/Select";
 
 const questionsPluralize = pluralize("pytanie", "pytania", "pytań");
 
@@ -30,10 +31,17 @@ export const QuestionsHeader = ({ technology, total }: QuestionsHeaderProps) => 
 			<label>
 				Sortuj według:
 				<Select variant="default" value={sortBy} onChange={handleSelectChange} className="ml-3">
-					<option value="acceptedAt*desc">od najnowszych</option>
-					<option value="acceptedAt*asc">od najstarszych</option>
-					<option value="votesCount*asc">od najmniej popularnych</option>
-					<option value="votesCount*desc">od najpopularniejszych</option>
+					{ordersBy.map((orderBy) =>
+						orders.map((order, i) => {
+							const value = `${orderBy}*${order}` as const;
+
+							return (
+								<option key={i} value={value}>
+									{sortByLabels[value]}
+								</option>
+							);
+						}),
+					)}
 				</Select>
 			</label>
 		</header>
