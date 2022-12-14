@@ -1,5 +1,5 @@
 import { useSearchParams } from "next/navigation";
-import { validateSortByQuery, DEFAULT_SORT_BY_QUERY } from "../lib/order";
+import { parseQuerySortBy, DEFAULT_SORT_BY_QUERY } from "../lib/order";
 import { useDevFAQRouter } from "./useDevFAQRouter";
 
 export const useQuestionsOrderBy = () => {
@@ -9,7 +9,7 @@ export const useQuestionsOrderBy = () => {
 	const sortBy = searchParams.get("sortBy") || DEFAULT_SORT_BY_QUERY;
 
 	const setSortByFromString = (sortBy: string) => {
-		if (validateSortByQuery(sortBy)) {
+		if (parseQuerySortBy(sortBy)) {
 			mergeQueryParams({ sortBy });
 		}
 	};
