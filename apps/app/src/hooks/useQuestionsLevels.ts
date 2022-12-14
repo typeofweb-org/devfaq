@@ -1,5 +1,5 @@
 import { useSearchParams } from "next/navigation";
-import { getQueryLevels, Level } from "../lib/order";
+import { parseQueryLevels, Level } from "../lib/order";
 import { useDevFAQRouter } from "./useDevFAQRouter";
 
 export const useQuestionsLevels = () => {
@@ -7,7 +7,7 @@ export const useQuestionsLevels = () => {
 	const { mergeQueryParams } = useDevFAQRouter();
 
 	const queryLevel = searchParams.get("level");
-	const queryLevels = getQueryLevels(queryLevel);
+	const queryLevels = parseQueryLevels(queryLevel);
 
 	const addLevel = (level: Level) => {
 		mergeQueryParams({ level: [...(queryLevels || []), level].join(",") });
