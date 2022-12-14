@@ -71,7 +71,6 @@ const generateQuestionResponseSchema = <
 	Type.Object({
 		...generateQuestionShape(args),
 		votesCount: Type.Integer(),
-		currentUserVotedOn: Type.Boolean(),
 	});
 
 export const generateGetQuestionsSchema = <
@@ -113,6 +112,31 @@ export const generatePostQuestionsSchema = <
 			}),
 		},
 	} as const;
+};
+
+export const generateGetQuestionsVotesSchema = <
+	Categories extends readonly string[],
+	Levels extends readonly string[],
+	Statuses extends readonly string[],
+>(args: {
+	categories: Categories;
+	levels: Levels;
+	statuses: Statuses;
+}) => {
+	return {
+		querystring: generateGetQuestionsQuerySchema(args),
+		response: {
+			200: Type.Object({
+				data: Type.Array(
+					Type.Object({
+						id: Type.Integer(),
+						votesCount: Type.Integer(),
+						currentUserVotedOn: Type.Boolean(),
+					}),
+				),
+			}),
+		},
+	};
 };
 
 export const generatePatchQuestionByIdSchema = <
@@ -165,4 +189,27 @@ export const deleteQuestionByIdSchema = {
 	params: Type.Object({
 		id: Type.Integer(),
 	}),
+};
+
+export const upvoteQuestionSchema = {
+	params: Type.Object({
+		id: Type.Integer(),
+	}),
+	response: {
+		200: Type.Object({
+			data: Type.Object({
+				userId: Type.Integer(),
+				questionId: Type.Integer(),
+			}),
+		}),
+	},
+};
+
+export const downvoteQuestionSchema = {
+	params: Type.Object({
+		id: Type.Integer(),
+	}),
+	response: {
+		204: Type.Never(),
+	},
 };
