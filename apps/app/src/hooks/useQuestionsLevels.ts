@@ -15,10 +15,9 @@ export const useQuestionsLevels = () => {
 
 	const removeLevel = (level: Level) => {
 		if (queryLevels) {
-			const index = queryLevels.indexOf(level);
+			const newQueryLevels = queryLevels.filter((l) => l !== level);
 
-			queryLevels.splice(index, 1);
-			mergeQueryParams({ level: queryLevels.join(",") });
+			mergeQueryParams({ level: newQueryLevels.join(",") });
 		}
 	};
 
