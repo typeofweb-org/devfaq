@@ -21,8 +21,9 @@ export default async function QuestionsPage({
 		return redirect("/");
 	}
 
+	const { technology } = params;
 	const { data } = await getAllQuestions({
-		category: params.technology,
+		category: technology,
 		limit: PAGE_SIZE,
 		offset: (page - 1) * PAGE_SIZE,
 		orderBy: querySortBy?.orderBy,
@@ -39,6 +40,8 @@ export default async function QuestionsPage({
 					title={question}
 					level={_levelId}
 					creationDate={new Date(acceptedAt || "")}
+					technology={technology}
+					page={page}
 				/>
 			))}
 			<QuestionsPagination technology={params.technology} total={data.meta.total} />

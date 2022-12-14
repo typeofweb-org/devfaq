@@ -2,26 +2,43 @@
 
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { twMerge } from "tailwind-merge";
+import { useSearchParams } from "next/navigation";
 import { useDevFAQRouter } from "../../hooks/useDevFAQRouter";
 import { useUser } from "../../hooks/useUser";
 import {
 	downvoteQuestion,
-	getAllQuestions,
+	getQuestionsVotes,
 	upvoteQuestion,
 } from "../../services/questions.service";
 import { pluralize } from "../../utils/intl";
+import { Technology } from "../../lib/technologies";
+import { PAGE_SIZE } from "../../lib/constants";
+import { DEFAULT_SORT_BY_QUERY, getQuerySortBy } from "../../lib/order";
 
 type QuestionVotingProps = Readonly<{
 	questionId: number;
+	page: number;
+	technology: Technology;
 }>;
 
 const votesPluralize = pluralize("głos", "głosy", "głosów");
 
-export const QuestionVoting = ({ questionId }: QuestionVotingProps) => {
+export const QuestionVoting = ({ questionId, page, technology }: QuestionVotingProps) => {
+	const searchParams = useSearchParams();
+	const querySortBy = getQuerySortBy(searchParams.get("sortBy") || DEFAULT_SORT_BY_QUERY);
+
 	const { data, refetch } = useQuery({
-		queryKey: ["questions"],
-		queryFn: () => getAllQuestions({}),
+		queryKey: ["votes"],
+		queryFn: () =>
+			getQuestionsVotes({
+				category: technology,
+				limit: PAGE_SIZE,
+				offset: (page - 1) * PAGE_SIZE,
+				orderBy: querySortBy?.orderBy,
+				order: querySortBy?.order,
+			}),
 	});
+
 	const upvoteQuestionMutation = useMutation(upvoteQuestion);
 	const downvoteQuestionMutation = useMutation(downvoteQuestion);
 	const { userData } = useUser();
