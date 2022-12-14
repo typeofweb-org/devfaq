@@ -1,9 +1,9 @@
 import { QueryParam } from "../types";
 
-export const ordersBy = ["acceptedAt", "level", "votesCount"] as const;
-export const orders = ["asc", "desc"] as const;
-export const DEFAULT_SORT_BY_QUERY = "acceptedAt*desc";
+const ordersBy = ["acceptedAt", "level", "votesCount"] as const;
+const orders = ["asc", "desc"] as const;
 
+export const DEFAULT_SORT_BY_QUERY = "acceptedAt*desc";
 export const sortByLabels: Record<`${OrderBy}*${Order}`, string> = {
 	"acceptedAt*asc": "od najstarszych",
 	"acceptedAt*desc": "od najnowszych",
