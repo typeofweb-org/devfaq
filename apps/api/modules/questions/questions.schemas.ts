@@ -185,4 +185,7 @@ export const downvoteQuestionSchema = {
 	params: Type.Object({
 		id: Type.Integer(),
 	}),
+	response: {
+		204: Type.Never(),
+	},
 };

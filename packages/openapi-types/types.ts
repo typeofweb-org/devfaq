@@ -216,6 +216,43 @@ export interface paths {
 			};
 		};
 	};
+	"/questions/{id}/votes": {
+		post: {
+			parameters: {
+				path: {
+					id: number;
+				};
+			};
+			responses: {
+				/** @description Default Response */
+				200: {
+					content: {
+						"application/json": {
+							data: {
+								userId: number;
+								questionId: number;
+							};
+						};
+					};
+				};
+			};
+		};
+		delete: {
+			parameters: {
+				path: {
+					id: number;
+				};
+			};
+			responses: {
+				/** @description Default Response */
+				204: {
+					content: {
+						"application/json": boolean & true;
+					};
+				};
+			};
+		};
+	};
 	"/": {
 		get: {
 			responses: {
@@ -233,7 +270,7 @@ export interface paths {
 export type webhooks = Record<string, never>;
 
 export interface components {
-	schemas: {};
+	schemas: never;
 	responses: never;
 	parameters: never;
 	requestBodies: never;
