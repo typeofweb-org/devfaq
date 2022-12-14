@@ -3,19 +3,25 @@ import { QuestionItem } from "../../../../../components/QuestionItem/QuestionIte
 import { QuestionsHeader } from "../../../../../components/QuestionsHeader/QuestionsHeader";
 import { QuestionsPagination } from "../../../../../components/QuestionsPagination";
 import { PAGE_SIZE } from "../../../../../lib/constants";
-import { getQuerySortBy, DEFAULT_SORT_BY_QUERY } from "../../../../../lib/order";
+import {
+	getQuerySortBy,
+	DEFAULT_SORT_BY_QUERY,
+	validateLevelQuery,
+} from "../../../../../lib/order";
 import { technologies } from "../../../../../lib/technologies";
 import { getAllQuestions } from "../../../../../services/questions.service";
+import { SearchParams } from "../../../../../types";
 
 export default async function QuestionsPage({
 	params,
 	searchParams,
 }: {
 	params: { technology: string; page: string };
-	searchParams?: { sortBy?: string };
+	searchParams?: SearchParams<"sortBy" | "level">;
 }) {
 	const page = parseInt(params.page);
 	const querySortBy = getQuerySortBy(searchParams?.sortBy || DEFAULT_SORT_BY_QUERY);
+	const level = searchParams?.level;
 
 	if (!technologies.includes(params.technology) || isNaN(page)) {
 		return redirect("/");
@@ -27,6 +33,7 @@ export default async function QuestionsPage({
 		offset: (page - 1) * PAGE_SIZE,
 		orderBy: querySortBy?.orderBy,
 		order: querySortBy?.order,
+		...(validateLevelQuery(level) && { level }),
 	});
 
 	return (
