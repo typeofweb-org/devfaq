@@ -1,14 +1,24 @@
 "use client";
 
+import { useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 import { useUIContext } from "../../providers/UIProvider";
 import { Button } from "../Button/Button";
 import { CloseButton } from "../CloseButton/CloseButton";
+import { lockScroll, unlockScroll } from "../../utils/pageScroll";
 import { LevelFilter } from "./LevelFilter/LevelFilter";
 import { TechnologyFilter } from "./TechnologyFilter/TechnologyFilter";
 
 export const QuestionsSidebar = () => {
 	const { isSidebarOpen, closeSidebar } = useUIContext();
+
+	useEffect(() => {
+		if (isSidebarOpen) {
+			lockScroll();
+		} else {
+			unlockScroll();
+		}
+	}, [isSidebarOpen]);
 
 	return (
 		<aside
@@ -19,7 +29,7 @@ export const QuestionsSidebar = () => {
 		>
 			<TechnologyFilter />
 			<LevelFilter />
-			<Button variant="brandingInverse" className="mt-auto sm:hidden">
+			<Button variant="brandingInverse" className="mt-auto sm:hidden" onClick={closeSidebar}>
 				Pokaż wyniki
 			</Button>
 			<CloseButton className="absolute top-1 right-1 sm:hidden" onClick={closeSidebar} />

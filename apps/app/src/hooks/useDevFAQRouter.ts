@@ -5,8 +5,10 @@ export const useDevFAQRouter = () => {
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
 
+	const queryParams = Object.fromEntries(searchParams.entries());
+
 	const mergeQueryParams = (data: Record<string, string>) => {
-		const params = { ...Object.fromEntries(searchParams.entries()), ...data };
+		const params = { ...queryParams, ...data };
 		const query = new URLSearchParams(params).toString();
 
 		if (pathname) {
@@ -14,5 +16,5 @@ export const useDevFAQRouter = () => {
 		}
 	};
 
-	return { mergeQueryParams };
+	return { queryParams, mergeQueryParams };
 };
