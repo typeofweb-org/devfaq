@@ -10,13 +10,13 @@ import {
 } from "../../../../../lib/order";
 import { technologies } from "../../../../../lib/technologies";
 import { getAllQuestions } from "../../../../../services/questions.service";
-import { SearchParams } from "../../../../../types";
+import { Params, SearchParams } from "../../../../../types";
 
 export default async function QuestionsPage({
 	params,
 	searchParams,
 }: {
-	params: { technology: string; page: string };
+	params: Params<"technology" | "page">;
 	searchParams?: SearchParams<"sortBy" | "level">;
 }) {
 	const page = parseInt(params.page);
