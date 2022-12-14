@@ -166,3 +166,26 @@ export const deleteQuestionByIdSchema = {
 		id: Type.Integer(),
 	}),
 };
+
+export const upvoteQuestionSchema = {
+	params: Type.Object({
+		id: Type.Integer(),
+	}),
+	response: {
+		200: Type.Object({
+			data: Type.Object({
+				userId: Type.Integer(),
+				questionId: Type.Integer(),
+			}),
+		}),
+	},
+};
+
+export const downvoteQuestionSchema = {
+	params: Type.Object({
+		id: Type.Integer(),
+	}),
+	response: {
+		204: Type.Never(),
+	},
+};

@@ -1,11 +1,15 @@
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
-import { FastifyInstance, FastifyPluginAsync } from "fastify";
+import { FastifyPluginAsync } from "fastify";
+import { isPrismaError } from "../db/prismaErrors.util.js";
+import { PrismaErrorCode } from "../db/prismaErrors.js";
 import {
 	deleteQuestionByIdSchema,
 	generateGetQuestionsSchema,
 	generatePatchQuestionByIdSchema,
 	generatePostQuestionsSchema,
 	generateGetQuestionByIdSchema,
+	upvoteQuestionSchema,
+	downvoteQuestionSchema,
 } from "./questions.schemas.js";
 
 const questionsPlugin: FastifyPluginAsync = async (fastify) => {
@@ -249,6 +253,89 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 			await fastify.db.question.delete({ where: { id } });
 
 			return reply.status(204);
+		},
+	});
+
+	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
+		url: "/questions/:id/votes",
+		method: "POST",
+		schema: upvoteQuestionSchema,
+		async handler(request, reply) {
+			const {
+				params: { id },
+				session: { data: sessionData },
+			} = request;
+
+			if (!sessionData) {
+				throw fastify.httpErrors.unauthorized();
+			}
+
+			try {
+				const questionVote = await fastify.db.questionVote.upsert({
+					where: {
+						userId_questionId: {
+							userId: sessionData._user.id,
+							questionId: id,
+						},
+					},
+					update: {},
+					create: {
+						userId: sessionData._user.id,
+						questionId: id,
+					},
+				});
+
+				return {
+					data: {
+						userId: questionVote.userId,
+						questionId: questionVote.questionId,
+					},
+				};
+			} catch (err) {
+				if (isPrismaError(err)) {
+					switch (err.code) {
+						case PrismaErrorCode.ForeignKeyViolation:
+							throw fastify.httpErrors.notFound(`Question with id: ${id} not found!`);
+					}
+				}
+
+				throw err;
+			}
+		},
+	});
+
+	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
+		url: "/questions/:id/votes",
+		method: "DELETE",
+		schema: downvoteQuestionSchema,
+		async handler(request, reply) {
+			const {
+				params: { id },
+				session: { data: sessionData },
+			} = request;
+
+			if (!sessionData) {
+				throw fastify.httpErrors.unauthorized();
+			}
+
+			const question = await fastify.db.question.findFirst({
+				where: {
+					id,
+				},
+			});
+
+			if (!question) {
+				throw fastify.httpErrors.notFound(`Question with id: ${id} not found!`);
+			}
+
+			await fastify.db.questionVote.deleteMany({
+				where: {
+					userId: sessionData._user.id,
+					questionId: id,
+				},
+			});
+
+			return reply.status(204).send();
 		},
 	});
 };
