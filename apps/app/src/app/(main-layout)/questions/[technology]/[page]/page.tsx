@@ -17,7 +17,7 @@ export default async function QuestionsPage({
 	searchParams?: SearchParams<"sortBy" | "level">;
 }) {
 	const page = parseInt(params.page);
-	const querySortBy = parseQuerySortBy(searchParams?.sortBy || DEFAULT_SORT_BY_QUERY);
+	const sortBy = parseQuerySortBy(searchParams?.sortBy || DEFAULT_SORT_BY_QUERY);
 	const levels = parseQueryLevels(searchParams?.level);
 
 	if (!technologies.includes(params.technology) || isNaN(page)) {
@@ -28,8 +28,8 @@ export default async function QuestionsPage({
 		category: params.technology,
 		limit: PAGE_SIZE,
 		offset: (page - 1) * PAGE_SIZE,
-		orderBy: querySortBy?.orderBy,
-		order: querySortBy?.order,
+		orderBy: sortBy?.orderBy,
+		order: sortBy?.order,
 		level: levels?.join(","),
 	});
 
