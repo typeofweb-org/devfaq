@@ -79,7 +79,7 @@ export interface paths {
 					level?: string;
 					limit?: number;
 					offset?: number;
-					orderBy?: "acceptedAt" | "level" | "votesCount";
+					orderBy?: "acceptedAt" | "levelId" | "votesCount";
 					order?: "asc" | "desc";
 				};
 			};
@@ -146,7 +146,7 @@ export interface paths {
 					level?: string;
 					limit?: number;
 					offset?: number;
-					orderBy?: "acceptedAt" | "level" | "votesCount";
+					orderBy?: "acceptedAt" | "levelId" | "votesCount";
 					order?: "asc" | "desc";
 				};
 			};
