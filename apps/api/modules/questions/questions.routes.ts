@@ -1,5 +1,7 @@
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
-import { FastifyInstance, FastifyPluginAsync } from "fastify";
+import { FastifyPluginAsync } from "fastify";
+import { isPrismaError } from "../db/prismaErrors.util.js";
+import { PrismaErrorCode } from "../db/prismaErrors.js";
 import {
 	deleteQuestionByIdSchema,
 	generateGetQuestionsSchema,
@@ -268,36 +270,37 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 				throw fastify.httpErrors.unauthorized();
 			}
 
-			const question = await fastify.db.question.findFirst({
-				where: {
-					id,
-				},
-			});
-
-			if (!question) {
-				throw fastify.httpErrors.notFound(`Question with id: ${id} not found!`);
-			}
-
-			const questionVote = await fastify.db.questionVote.upsert({
-				where: {
-					userId_questionId: {
+			try {
+				const questionVote = await fastify.db.questionVote.upsert({
+					where: {
+						userId_questionId: {
+							userId: sessionData._user.id,
+							questionId: id,
+						},
+					},
+					update: {},
+					create: {
 						userId: sessionData._user.id,
 						questionId: id,
 					},
-				},
-				update: {},
-				create: {
-					userId: sessionData._user.id,
-					questionId: id,
-				},
-			});
+				});
 
-			return {
-				data: {
-					userId: questionVote.userId,
-					questionId: questionVote.questionId,
-				},
-			};
+				return {
+					data: {
+						userId: questionVote.userId,
+						questionId: questionVote.questionId,
+					},
+				};
+			} catch (err) {
+				if (isPrismaError(err)) {
+					switch (err.code) {
+						case PrismaErrorCode.ForeignKeyViolation:
+							throw fastify.httpErrors.notFound(`Question with id: ${id} not found!`);
+					}
+				}
+
+				throw err;
+			}
 		},
 	});
 
