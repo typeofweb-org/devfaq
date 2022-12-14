@@ -16,11 +16,11 @@ export default async function QuestionsPage({
 	params: Params<"technology" | "page">;
 	searchParams?: SearchParams<"sortBy" | "level">;
 }) {
-	const page = parseInt(params.page);
+	const page = Number.parseInt(params.page);
 	const sortBy = parseQuerySortBy(searchParams?.sortBy || DEFAULT_SORT_BY_QUERY);
 	const levels = parseQueryLevels(searchParams?.level);
 
-	if (!technologies.includes(params.technology) || isNaN(page)) {
+	if (!technologies.includes(params.technology) || Number.isNaN(page)) {
 		return redirect("/");
 	}
 
