@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { QuestionItem } from "../../../../../components/QuestionItem/QuestionItem";
 import { QuestionsHeader } from "../../../../../components/QuestionsHeader";
 import { QuestionsPagination } from "../../../../../components/QuestionsPagination";
 import { PAGE_SIZE } from "../../../../../lib/constants";
@@ -8,7 +7,8 @@ import { parseQueryLevels } from "../../../../../lib/level";
 import { technologies } from "../../../../../lib/technologies";
 import { getAllQuestions } from "../../../../../services/questions.service";
 import { Params, QuestionFilter, SearchParams } from "../../../../../types";
-import { serializeSource } from "../../../../../lib/markdown";
+import { QuestionsList } from "../../../../../components/QuestionsList/QuestionsList";
+import { serializeQuestionToMarkdown } from "../../../../../lib/question";
 
 export default async function QuestionsPage({
 	params,
@@ -34,29 +34,17 @@ export default async function QuestionsPage({
 		level: levels?.join(","),
 	};
 
-	const { data } = await getAllQuestions(questionFilter);
+	const {
+		data: { data, meta },
+	} = await getAllQuestions(questionFilter);
 
-	const questions = await Promise.all(
-		data.data.map(async ({ question, ...rest }) => {
-			const mdxContent = await serializeSource(question);
-			return { mdxContent, ...rest };
-		}),
-	);
+	const questions = await Promise.all(data.map(serializeQuestionToMarkdown));
 
 	return (
 		<div className="flex flex-col gap-y-10">
-			<QuestionsHeader technology={params.technology} total={data.meta.total} />
-			{questions.map(({ id, mdxContent, _levelId, acceptedAt }) => (
-				<QuestionItem
-					key={id}
-					id={id}
-					mdxContent={mdxContent}
-					level={_levelId}
-					creationDate={new Date(acceptedAt || "")}
-					questionFilter={questionFilter}
-				/>
-			))}
-			<QuestionsPagination technology={params.technology} total={data.meta.total} />
+			<QuestionsHeader technology={params.technology} total={meta.total} />
+			<QuestionsList questions={questions} questionFilter={questionFilter} />
+			<QuestionsPagination technology={params.technology} total={meta.total} />
 		</div>
 	);
 }

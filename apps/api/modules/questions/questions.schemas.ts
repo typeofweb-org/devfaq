@@ -1,5 +1,11 @@
 import { Type, Static } from "@sinclair/typebox";
 
+const questionVotes = Type.Object({
+	id: Type.Integer(),
+	votesCount: Type.Integer(),
+	currentUserVotedOn: Type.Boolean(),
+});
+
 const generateGetQuestionsQuerySchema = <
 	Categories extends readonly string[],
 	Levels extends readonly string[],
@@ -127,13 +133,7 @@ export const generateGetQuestionsVotesSchema = <
 		querystring: generateGetQuestionsQuerySchema(args),
 		response: {
 			200: Type.Object({
-				data: Type.Array(
-					Type.Object({
-						id: Type.Integer(),
-						votesCount: Type.Integer(),
-						currentUserVotedOn: Type.Boolean(),
-					}),
-				),
+				data: Type.Array(questionVotes),
 			}),
 		},
 	};
@@ -183,6 +183,17 @@ export const generateGetQuestionByIdSchema = <
 			}),
 		},
 	};
+};
+
+export const getQuestionVotesSchema = {
+	params: Type.Object({
+		id: Type.Integer(),
+	}),
+	response: {
+		200: Type.Object({
+			data: questionVotes,
+		}),
+	},
 };
 
 export const deleteQuestionByIdSchema = {
