@@ -5,11 +5,6 @@ import Link from "next/link";
 import { ComponentProps } from "react";
 import { useDevFAQRouter } from "../hooks/useDevFAQRouter";
 
-type LinkWithQueryProps = Readonly<{
-	mergeQuery?: boolean;
-}> &
-	ComponentProps<typeof Link>;
-
 type Url = string | UrlObject;
 
 const createQueryHref = (href: Url, query: Record<string, string>): Url => {
@@ -26,6 +21,11 @@ const createQueryHref = (href: Url, query: Record<string, string>): Url => {
 
 	return { ...href, query: newHrefQuery };
 };
+
+type LinkWithQueryProps = Readonly<{
+	mergeQuery?: boolean;
+}> &
+	ComponentProps<typeof Link>;
 
 export const LinkWithQuery = ({ href, mergeQuery, ...props }: LinkWithQueryProps) => {
 	const { queryParams } = useDevFAQRouter();
