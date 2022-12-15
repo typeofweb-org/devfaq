@@ -13,6 +13,7 @@ export const Technology = ({ href, title, icon }: TechnologyProps) => (
 		activeClassName="border border-primary bg-violet-50 dark:bg-violet-900"
 		title={title}
 		href={`/questions/${href}`}
+		mergeQuery
 	>
 		<span className="text-sm text-neutral-500 dark:text-neutral-200 small-filters:text-xs">
 			{title}
