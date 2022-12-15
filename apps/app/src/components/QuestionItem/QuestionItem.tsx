@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { serialize } from "next-mdx-remote/serialize";
-import remarkPrism from "remark-prism";
 import { format } from "../../utils/intl";
+import { serializeSource } from "../../lib/markdown";
 import { QuestionLevel } from "./QuestionLevel";
 import { QuestionVoting } from "./QuestionVoting";
 import type { Level } from "./QuestionLevel";
@@ -22,11 +21,7 @@ export const QuestionItem = async ({
 	level,
 	creationDate,
 }: QuestionItemProps) => {
-	const source = await serialize(title, {
-		mdxOptions: {
-			remarkPlugins: [remarkPrism],
-		},
-	});
+	const source = await serializeSource(title);
 
 	return (
 		<article className="flex bg-white p-5 text-sm text-neutral-500 shadow-md dark:bg-white-dark dark:text-neutral-200">

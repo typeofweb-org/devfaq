@@ -2,6 +2,8 @@
 
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 
+import "prismjs/themes/prism-coy.min.css";
+
 type QuestionContentProps = Readonly<{
 	source: MDXRemoteSerializeResult;
 }>;
