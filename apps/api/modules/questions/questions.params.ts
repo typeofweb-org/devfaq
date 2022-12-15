@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
-import { kv } from "../../utils";
-import { GetQuestionsQuery } from "./questions.schemas";
+import { kv } from "../../utils.js";
+import { GetQuestionsQuery } from "./questions.schemas.js";
 
 export const getQuestionsPrismaParams = (
 	{ category, level, status = "accepted", limit, offset, order, orderBy }: GetQuestionsQuery,

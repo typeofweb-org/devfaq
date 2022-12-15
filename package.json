@@ -11,6 +11,10 @@
 		"check-types": "turbo run check-types --parallel",
 		"prepare": "husky install"
 	},
+	"resolutions": {
+		"@mdx-js/mdx": "2.1.5",
+		"@mdx-js/react": "2.1.5"
+	},
 	"devDependencies": {
 		"eslint-config-devfaq": "workspace:*",
 		"husky": "8.0.2",
