@@ -7,8 +7,6 @@ const meta: Meta<typeof QuestionItem> = {
 	args: {
 		title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 		creationDate: new Date(),
-		votes: 1,
-		voted: true,
 	},
 };
 
