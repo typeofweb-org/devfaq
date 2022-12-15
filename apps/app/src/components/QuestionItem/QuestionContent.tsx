@@ -10,8 +10,8 @@ type QuestionContentProps = Readonly<{
 
 export const QuestionContent = ({ source }: QuestionContentProps) => {
 	return (
-		<h3 className="prism-coy grow">
+		<div className="prism-coy grow">
 			<MDXRemote {...source} />
-		</h3>
+		</div>
 	);
 };
