@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+import { kv } from "../../utils.js";
 import { GetQuestionsQuery } from "./questions.schemas";
 
 export const getQuestionsPrismaParams = (
@@ -24,9 +25,9 @@ export const getQuestionsPrismaParams = (
 									_count: order,
 								},
 						  }
-						: {
-								[orderBy]: order,
-						  }),
+						: orderBy === "level"
+						? { levelId: order }
+						: kv(orderBy, order)),
 				},
 			}),
 	} satisfies Prisma.QuestionFindManyArgs;
