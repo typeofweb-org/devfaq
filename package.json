@@ -5,6 +5,7 @@
 	"scripts": {
 		"build": "turbo run build",
 		"dev": "turbo run dev --parallel",
+		"test": "FORCE_COLOR=1 turbo run test",
 		"lint": "turbo run lint --parallel",
 		"lint:fix": "turbo run lint:fix --parallel",
 		"format": "prettier --write .",

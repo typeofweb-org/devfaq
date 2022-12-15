@@ -7,7 +7,7 @@ import { useDevFAQRouter } from "../hooks/useDevFAQRouter";
 
 type Url = string | UrlObject;
 
-const createQueryHref = (href: Url, query: Record<string, string>): Url => {
+export const createQueryHref = (href: Url, query: Record<string, string>): Url => {
 	if (typeof href === "string") {
 		return { pathname: href, query };
 	}
