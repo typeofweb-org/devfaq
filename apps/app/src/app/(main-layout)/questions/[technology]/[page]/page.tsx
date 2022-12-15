@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { QuestionItem } from "../../../../../components/QuestionItem/QuestionItem";
+import { QuestionItem } from "../../../../../components/QuestionsList/QuestionItem/QuestionItem";
 import { QuestionsHeader } from "../../../../../components/QuestionsHeader";
 import { QuestionsPagination } from "../../../../../components/QuestionsPagination";
 import { PAGE_SIZE } from "../../../../../lib/constants";
@@ -8,6 +8,7 @@ import { parseQueryLevels } from "../../../../../lib/level";
 import { technologies } from "../../../../../lib/technologies";
 import { getAllQuestions } from "../../../../../services/questions.service";
 import { Params, QuestionFilter, SearchParams } from "../../../../../types";
+import { QuestionsList } from "../../../../../components/QuestionsList/QuestionsList";
 
 export default async function QuestionsPage({
 	params,
@@ -38,16 +39,7 @@ export default async function QuestionsPage({
 	return (
 		<div className="flex flex-col gap-y-10">
 			<QuestionsHeader technology={params.technology} total={data.meta.total} />
-			{data.data.map(({ id, question, _levelId, acceptedAt }) => (
-				<QuestionItem
-					key={id}
-					id={id}
-					title={question}
-					level={_levelId}
-					creationDate={new Date(acceptedAt || "")}
-					questionFilter={questionFilter}
-				/>
-			))}
+			<QuestionsList questions={data.data} questionFilter={questionFilter} />
 			<QuestionsPagination technology={params.technology} total={data.meta.total} />
 		</div>
 	);
