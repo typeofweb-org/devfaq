@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { Fragment } from "react";
 import { QuestionItem } from "../../../../../components/QuestionItem/QuestionItem";
 import { QuestionsHeader } from "../../../../../components/QuestionsHeader";
 import { QuestionsPagination } from "../../../../../components/QuestionsPagination";
@@ -37,14 +38,16 @@ export default async function QuestionsPage({
 		<div className="flex flex-col gap-y-10">
 			<QuestionsHeader technology={params.technology} total={data.meta.total} />
 			{data.data.map(({ id, question, _levelId, acceptedAt, votesCount }) => (
-				<QuestionItem
-					key={id}
-					title={question}
-					level={_levelId}
-					creationDate={new Date(acceptedAt || "")}
-					votes={votesCount}
-					voted={id % 2 === 0}
-				/>
+				<Fragment key={id}>
+					{/* @ts-expect-error Server Component */}
+					<QuestionItem
+						title={question}
+						level={_levelId}
+						creationDate={new Date(acceptedAt || "")}
+						votes={votesCount}
+						voted={id % 2 === 0}
+					/>
+				</Fragment>
 			))}
 			<QuestionsPagination technology={params.technology} total={data.meta.total} />
 		</div>

@@ -1,8 +1,11 @@
 import Link from "next/link";
+import { serialize } from "next-mdx-remote/serialize";
+import remarkPrism from "remark-prism";
 import { format } from "../../utils/intl";
 import { QuestionLevel } from "./QuestionLevel";
 import { QuestionVoting } from "./QuestionVoting";
 import type { Level } from "./QuestionLevel";
+import { QuestionContent } from "./QuestionContent";
 
 type QuestionItemProps = Readonly<{
 	title: string;
@@ -12,15 +15,29 @@ type QuestionItemProps = Readonly<{
 	creationDate: Date;
 }>;
 
-export const QuestionItem = ({ title, votes, voted, level, creationDate }: QuestionItemProps) => (
-	<article className="flex bg-white p-5 text-sm text-neutral-500 shadow-md dark:bg-white-dark dark:text-neutral-200">
-		<QuestionVoting votes={votes} voted={voted} />
-		<h3 className="grow">{title}</h3>
-		<div className="ml-4 flex min-w-max flex-col items-end">
-			<QuestionLevel level={level} />
-			<Link href="#" className="mt-3 text-xs underline">
-				<time dateTime={creationDate.toISOString()}>{format(creationDate)}</time>
-			</Link>
-		</div>
-	</article>
-);
+export const QuestionItem = async ({
+	title,
+	votes,
+	voted,
+	level,
+	creationDate,
+}: QuestionItemProps) => {
+	const source = await serialize(title, {
+		mdxOptions: {
+			remarkPlugins: [remarkPrism],
+		},
+	});
+
+	return (
+		<article className="flex bg-white p-5 text-sm text-neutral-500 shadow-md dark:bg-white-dark dark:text-neutral-200">
+			<QuestionVoting votes={votes} voted={voted} />
+			<QuestionContent source={source} />
+			<div className="ml-4 flex min-w-max flex-col items-end">
+				<QuestionLevel level={level} />
+				<Link href="#" className="mt-3 text-xs underline">
+					<time dateTime={creationDate.toISOString()}>{format(creationDate)}</time>
+				</Link>
+			</div>
+		</article>
+	);
+};
