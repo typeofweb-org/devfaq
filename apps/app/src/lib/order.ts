@@ -1,31 +1,31 @@
-const orderBy = ["acceptedAt", "level", "votesCount"] as const;
-const order = ["asc", "desc"] as const;
+import { QueryParam } from "../types";
 
-type OrderBy = typeof orderBy[number];
-type Order = typeof order[number];
+const ordersBy = ["acceptedAt", "level", "votesCount"] as const;
+const orders = ["asc", "desc"] as const;
 
 export const DEFAULT_SORT_BY_QUERY = "acceptedAt*desc";
-
-export const validateOrderBy = (data: string): data is OrderBy => {
-	return orderBy.includes(data);
+export const sortByLabels: Record<`${OrderBy}*${Order}`, string> = {
+	"acceptedAt*asc": "od najstarszych",
+	"acceptedAt*desc": "od najnowszych",
+	"level*asc": "od najprostszych",
+	"level*desc": "od najtrudniejszych",
+	"votesCount*asc": "od najmniej popularnych",
+	"votesCount*desc": "od najpopularniejszych",
 };
 
-export const validateOrder = (data: string): data is Order => {
-	return order.includes(data);
-};
+type OrderBy = typeof ordersBy[number];
+type Order = typeof orders[number];
 
-export const validateSortByQuery = (query?: string): query is `${OrderBy}*${Order}` => {
-	const [orderBy, order] = query?.split("*") || [];
-
-	return Boolean(orderBy && order && validateOrderBy(orderBy) && validateOrder(order));
-};
-
-export const getQuerySortBy = (query?: string) => {
-	if (!validateSortByQuery(query)) {
+export const parseQuerySortBy = (query: QueryParam) => {
+	if (typeof query !== "string") {
 		return null;
 	}
 
-	const [orderBy, order] = query.split("*") as [OrderBy, Order];
+	const [orderBy, order] = query.split("*");
+
+	if (!orderBy || !order || !ordersBy.includes(orderBy) || !orders.includes(order)) {
+		return null;
+	}
 
 	return { orderBy, order };
 };
