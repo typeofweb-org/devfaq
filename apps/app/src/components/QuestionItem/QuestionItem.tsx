@@ -25,7 +25,7 @@ export const QuestionItem = ({
 		<h3 className="grow">{title}</h3>
 		<div className="ml-4 flex min-w-max flex-col items-end">
 			<QuestionLevel level={level} />
-			<Link href="#" className="mt-3 text-xs underline">
+			<Link href={`/questions/p/${id}`} className="mt-3 text-xs underline">
 				<time dateTime={creationDate.toISOString()}>{format(creationDate)}</time>
 			</Link>
 		</div>
