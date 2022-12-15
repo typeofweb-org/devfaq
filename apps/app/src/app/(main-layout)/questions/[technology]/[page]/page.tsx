@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { Fragment } from "react";
 import { QuestionItem } from "../../../../../components/QuestionItem/QuestionItem";
 import { QuestionsHeader } from "../../../../../components/QuestionsHeader";
 import { QuestionsPagination } from "../../../../../components/QuestionsPagination";
@@ -9,6 +8,7 @@ import { parseQueryLevels } from "../../../../../lib/level";
 import { technologies } from "../../../../../lib/technologies";
 import { getAllQuestions } from "../../../../../services/questions.service";
 import { Params, SearchParams } from "../../../../../types";
+import { serializeSource } from "../../../../../lib/markdown";
 
 export default async function QuestionsPage({
 	params,
@@ -34,20 +34,25 @@ export default async function QuestionsPage({
 		level: levels?.join(","),
 	});
 
+	const questions = await Promise.all(
+		data.data.map(async ({ question, ...rest }) => {
+			const mdxContent = await serializeSource(question);
+			return { mdxContent, ...rest };
+		}),
+	);
+
 	return (
 		<div className="flex flex-col gap-y-10">
 			<QuestionsHeader technology={params.technology} total={data.meta.total} />
-			{data.data.map(({ id, question, _levelId, acceptedAt, votesCount }) => (
-				<Fragment key={id}>
-					{/* @ts-expect-error Server Component */}
-					<QuestionItem
-						title={question}
-						level={_levelId}
-						creationDate={new Date(acceptedAt || "")}
-						votes={votesCount}
-						voted={id % 2 === 0}
-					/>
-				</Fragment>
+			{questions.map(({ id, mdxContent, _levelId, acceptedAt, votesCount }) => (
+				<QuestionItem
+					key={id}
+					mdxContent={mdxContent}
+					level={_levelId}
+					creationDate={new Date(acceptedAt || "")}
+					votes={votesCount}
+					voted={id % 2 === 0}
+				/>
 			))}
 			<QuestionsPagination technology={params.technology} total={data.meta.total} />
 		</div>
