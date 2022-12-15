@@ -1,7 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { getQuestionsVotes } from "../../services/questions.service";
+import { useGetQuestionsVotes } from "../../hooks/useGetQuestionsVotes";
 import { Question, QuestionFilter } from "../../types";
 import { QuestionItem } from "./QuestionItem/QuestionItem";
 
@@ -11,10 +10,7 @@ type QuestionsListProps = Readonly<{
 }>;
 
 export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps) => {
-	const { data, refetch } = useQuery({
-		queryKey: ["votes", questionFilter],
-		queryFn: () => getQuestionsVotes(questionFilter),
-	});
+	const { questionsVotes, refetch } = useGetQuestionsVotes(questionFilter);
 
 	const onQuestionVote = () => {
 		void refetch();
@@ -23,7 +19,7 @@ export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps)
 	return (
 		<>
 			{questions.map(({ id, question, _levelId, acceptedAt }) => {
-				const questionVote = data?.data.data.find((questionVote) => questionVote.id === id);
+				const questionVote = questionsVotes?.find((questionVote) => questionVote.id === id);
 				const [votes, voted] = questionVote
 					? [questionVote.votesCount, questionVote.currentUserVotedOn]
 					: [0, false];

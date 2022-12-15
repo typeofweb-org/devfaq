@@ -1,9 +1,8 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { getQuestionVotesById } from "../services/questions.service";
 import { Question } from "../types";
 import { QuestionItem } from "./QuestionsList/QuestionItem/QuestionItem";
+import { useGetQuestionVotesById } from "./useGetQuestionVotesById";
 
 type SingleQuestionProps = Readonly<{
 	question: Question;
@@ -12,17 +11,7 @@ type SingleQuestionProps = Readonly<{
 export const SingleQuestion = ({
 	question: { id, question, _levelId, acceptedAt },
 }: SingleQuestionProps) => {
-	const { data, refetch } = useQuery({
-		queryKey: ["votes", id],
-		queryFn: () =>
-			getQuestionVotesById({
-				id,
-			}),
-	});
-
-	const [votes, voted] = data?.data.data
-		? [data.data.data.votesCount, data.data.data.currentUserVotedOn]
-		: [0, false];
+	const { votes, voted, refetch } = useGetQuestionVotesById(id);
 
 	return (
 		<QuestionItem
