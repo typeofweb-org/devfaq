@@ -7,7 +7,7 @@ import { DEFAULT_SORT_BY_QUERY, parseQuerySortBy } from "../../../../../lib/orde
 import { parseQueryLevels } from "../../../../../lib/level";
 import { technologies } from "../../../../../lib/technologies";
 import { getAllQuestions } from "../../../../../services/questions.service";
-import { Params, SearchParams } from "../../../../../types";
+import { Params, QuestionFilter, SearchParams } from "../../../../../types";
 import { serializeSource } from "../../../../../lib/markdown";
 
 export default async function QuestionsPage({
@@ -25,14 +25,16 @@ export default async function QuestionsPage({
 		return redirect("/");
 	}
 
-	const { data } = await getAllQuestions({
+	const questionFilter: QuestionFilter = {
 		category: params.technology,
 		limit: PAGE_SIZE,
 		offset: (page - 1) * PAGE_SIZE,
 		orderBy: sortBy?.orderBy,
 		order: sortBy?.order,
 		level: levels?.join(","),
-	});
+	};
+
+	const { data } = await getAllQuestions(questionFilter);
 
 	const questions = await Promise.all(
 		data.data.map(async ({ question, ...rest }) => {
@@ -44,14 +46,14 @@ export default async function QuestionsPage({
 	return (
 		<div className="flex flex-col gap-y-10">
 			<QuestionsHeader technology={params.technology} total={data.meta.total} />
-			{questions.map(({ id, mdxContent, _levelId, acceptedAt, votesCount }) => (
+			{questions.map(({ id, mdxContent, _levelId, acceptedAt }) => (
 				<QuestionItem
 					key={id}
+					id={id}
 					mdxContent={mdxContent}
 					level={_levelId}
 					creationDate={new Date(acceptedAt || "")}
-					votes={votesCount}
-					voted={id % 2 === 0}
+					questionFilter={questionFilter}
 				/>
 			))}
 			<QuestionsPagination technology={params.technology} total={data.meta.total} />
