@@ -11,6 +11,7 @@ import {
 	upvoteQuestionSchema,
 	downvoteQuestionSchema,
 	generateGetQuestionsVotesSchema,
+	getQuestionVotesSchema,
 } from "./questions.schemas.js";
 import { getQuestionsPrismaParams } from "./questions.params.js";
 
@@ -134,6 +135,46 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 			}));
 
 			return { data };
+		},
+	});
+
+	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
+		url: "/questions/:id/votes",
+		method: "GET",
+		schema: getQuestionVotesSchema,
+		async handler(request, reply) {
+			const { id } = request.params;
+
+			const question = await fastify.db.question.findFirst({
+				where: {
+					id,
+				},
+				select: {
+					id: true,
+					_count: {
+						select: {
+							QuestionVote: true,
+						},
+					},
+					QuestionVote: {
+						where: {
+							userId: request.session.data?._user.id || 0,
+						},
+					},
+				},
+			});
+
+			if (!question) {
+				throw fastify.httpErrors.notFound(`Question with id: ${id} not found!`);
+			}
+
+			return {
+				data: {
+					id: question.id,
+					votesCount: question._count.QuestionVote,
+					currentUserVotedOn: question.QuestionVote.length > 0,
+				},
+			};
 		},
 	});
 

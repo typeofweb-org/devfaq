@@ -166,6 +166,64 @@ export interface paths {
 			};
 		};
 	};
+	"/questions/{id}/votes": {
+		get: {
+			parameters: {
+				path: {
+					id: number;
+				};
+			};
+			responses: {
+				/** @description Default Response */
+				200: {
+					content: {
+						"application/json": {
+							data: {
+								id: number;
+								votesCount: number;
+								currentUserVotedOn: boolean;
+							};
+						};
+					};
+				};
+			};
+		};
+		post: {
+			parameters: {
+				path: {
+					id: number;
+				};
+			};
+			responses: {
+				/** @description Default Response */
+				200: {
+					content: {
+						"application/json": {
+							data: {
+								userId: number;
+								questionId: number;
+							};
+						};
+					};
+				};
+			};
+		};
+		delete: {
+			parameters: {
+				path: {
+					id: number;
+				};
+			};
+			responses: {
+				/** @description Default Response */
+				204: {
+					content: {
+						"application/json": boolean & true;
+					};
+				};
+			};
+		};
+	};
 	"/questions/{id}": {
 		get: {
 			parameters: {
@@ -236,43 +294,6 @@ export interface paths {
 								votesCount: number;
 							};
 						};
-					};
-				};
-			};
-		};
-	};
-	"/questions/{id}/votes": {
-		post: {
-			parameters: {
-				path: {
-					id: number;
-				};
-			};
-			responses: {
-				/** @description Default Response */
-				200: {
-					content: {
-						"application/json": {
-							data: {
-								userId: number;
-								questionId: number;
-							};
-						};
-					};
-				};
-			};
-		};
-		delete: {
-			parameters: {
-				path: {
-					id: number;
-				};
-			};
-			responses: {
-				/** @description Default Response */
-				204: {
-					content: {
-						"application/json": boolean & true;
 					};
 				};
 			};

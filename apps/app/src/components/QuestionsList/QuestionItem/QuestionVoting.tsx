@@ -1,21 +1,25 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-import { useDevFAQRouter } from "../../hooks/useDevFAQRouter";
-import { pluralize } from "../../utils/intl";
-import { QuestionFilter } from "../../types";
-import { useQuestionVoting } from "../../hooks/useQuestionVoting";
-import { useGetQuestionVotes } from "../../hooks/useGetQuestionVotes";
+import { useDevFAQRouter } from "../../../hooks/useDevFAQRouter";
+import { pluralize } from "../../../utils/intl";
+import { useQuestionVoting } from "../../../hooks/useQuestionVoting";
 
 type QuestionVotingProps = Readonly<{
 	questionId: number;
-	questionFilter: QuestionFilter;
+	votes: number;
+	voted: boolean;
+	onQuestionVote: () => void;
 }>;
 
 const votesPluralize = pluralize("głos", "głosy", "głosów");
 
-export const QuestionVoting = ({ questionId, questionFilter }: QuestionVotingProps) => {
-	const { votes, voted, refetch } = useGetQuestionVotes({ questionId, questionFilter });
+export const QuestionVoting = ({
+	questionId,
+	votes,
+	voted,
+	onQuestionVote,
+}: QuestionVotingProps) => {
 	const { upvote, downvote } = useQuestionVoting();
 	const { requireLoggedIn } = useDevFAQRouter();
 
@@ -27,9 +31,7 @@ export const QuestionVoting = ({ questionId, questionFilter }: QuestionVotingPro
 				id: questionId,
 			},
 			{
-				onSuccess: () => {
-					void refetch();
-				},
+				onSuccess: onQuestionVote,
 			},
 		);
 	};
