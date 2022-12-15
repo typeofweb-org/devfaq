@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { QuestionItem } from "../../../../../components/QuestionItem/QuestionItem";
+import { SingleQuestion } from "../../../../../components/SingleQuestion";
 import { getQuestionById } from "../../../../../services/questions.service";
 import { Params } from "../../../../../types";
 
@@ -16,13 +16,5 @@ export default async function SingleQuestionPage({ params }: { params: Params<"q
 		id: questionId,
 	});
 
-	return (
-		<QuestionItem
-			id={data.id}
-			title={data.question}
-			level={data._levelId}
-			creationDate={new Date(data.acceptedAt || "")}
-			questionFilter={{}}
-		/>
-	);
+	return <SingleQuestion question={data} />;
 }

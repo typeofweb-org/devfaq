@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { format } from "../../utils/intl";
-import { QuestionFilter } from "../../types";
+import { format } from "../../../utils/intl";
 import { QuestionLevel } from "./QuestionLevel";
 import { QuestionVoting } from "./QuestionVoting";
 import type { Level } from "./QuestionLevel";
@@ -10,7 +9,9 @@ type QuestionItemProps = Readonly<{
 	title: string;
 	level: Level;
 	creationDate: Date;
-	questionFilter: QuestionFilter;
+	votes: number;
+	voted: boolean;
+	onQuestionVote: () => void;
 }>;
 
 export const QuestionItem = ({
@@ -18,10 +19,12 @@ export const QuestionItem = ({
 	title,
 	level,
 	creationDate,
-	questionFilter,
+	votes,
+	voted,
+	onQuestionVote,
 }: QuestionItemProps) => (
 	<article className="flex bg-white p-5 text-sm text-neutral-500 shadow-md dark:bg-white-dark dark:text-neutral-200">
-		<QuestionVoting questionId={id} questionFilter={questionFilter} />
+		<QuestionVoting questionId={id} votes={votes} voted={voted} onQuestionVote={onQuestionVote} />
 		<h3 className="grow">{title}</h3>
 		<div className="ml-4 flex min-w-max flex-col items-end">
 			<QuestionLevel level={level} />
