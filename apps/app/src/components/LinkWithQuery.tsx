@@ -1,11 +1,10 @@
 "use client";
 
-import type { UrlObject } from "url";
-import Link from "next/link";
+import Link, { LinkProps } from "next/link";
 import { ComponentProps } from "react";
 import { useDevFAQRouter } from "../hooks/useDevFAQRouter";
 
-type Url = string | UrlObject;
+type Url = LinkProps["href"];
 
 export const createQueryHref = (href: Url, query: Record<string, string>): Url => {
 	if (typeof href === "string") {
