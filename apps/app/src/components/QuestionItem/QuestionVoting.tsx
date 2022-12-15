@@ -1,14 +1,11 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { twMerge } from "tailwind-merge";
-import { MouseEvent } from "react";
 import { useDevFAQRouter } from "../../hooks/useDevFAQRouter";
-import { getQuestionsVotes } from "../../services/questions.service";
 import { pluralize } from "../../utils/intl";
 import { QuestionFilter } from "../../types";
 import { useQuestionVoting } from "../../hooks/useQuestionVoting";
-import { useUser } from "../../hooks/useUser";
+import { useGetQuestionVotes } from "../../hooks/useGetQuestionVotes";
 
 type QuestionVotingProps = Readonly<{
 	questionId: number;
@@ -18,17 +15,9 @@ type QuestionVotingProps = Readonly<{
 const votesPluralize = pluralize("głos", "głosy", "głosów");
 
 export const QuestionVoting = ({ questionId, questionFilter }: QuestionVotingProps) => {
-	const { data, refetch } = useQuery({
-		queryKey: ["votes", questionFilter],
-		queryFn: () => getQuestionsVotes(questionFilter),
-	});
+	const { votes, voted, refetch } = useGetQuestionVotes({ questionId, questionFilter });
 	const { upvote, downvote } = useQuestionVoting();
 	const { requireLoggedIn } = useDevFAQRouter();
-	const { userData } = useUser();
-
-	const question = data?.data.data.find(({ id }) => id === questionId);
-	const votes = question ? question.votesCount : 0;
-	const voted = userData && question ? question.currentUserVotedOn : false;
 
 	const handleClick = () => {
 		const mutation = !voted ? upvote : downvote;
