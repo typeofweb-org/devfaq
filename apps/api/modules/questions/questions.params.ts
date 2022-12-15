@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { kv } from "../../utils";
+import { kv } from "../../utils.js";
 import { GetQuestionsQuery } from "./questions.schemas";
 
 export const getQuestionsPrismaParams = (

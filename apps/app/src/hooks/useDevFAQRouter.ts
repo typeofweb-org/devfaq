@@ -1,9 +1,11 @@
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { useUser } from "./useUser";
 
 export const useDevFAQRouter = () => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
+	const { userData } = useUser();
 
 	const mergeQueryParams = (data: Record<string, string>) => {
 		const params = { ...Object.fromEntries(searchParams.entries()), ...data };
@@ -14,9 +16,13 @@ export const useDevFAQRouter = () => {
 		}
 	};
 
-	const redirectToLoginPage = () => {
-		router.push(`/login?previousPath=${pathname || "/"}`);
+	const requireLoggedIn = <T>(callback: (...args: T[]) => unknown) => {
+		if (!userData) {
+			return () => router.push(`/login?previousPath=${pathname || "/"}`);
+		}
+
+		return callback;
 	};
 
-	return { mergeQueryParams, redirectToLoginPage };
+	return { mergeQueryParams, requireLoggedIn };
 };

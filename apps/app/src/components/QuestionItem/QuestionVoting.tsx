@@ -1,59 +1,37 @@
 "use client";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { twMerge } from "tailwind-merge";
-import { useSearchParams } from "next/navigation";
+import { MouseEvent } from "react";
 import { useDevFAQRouter } from "../../hooks/useDevFAQRouter";
-import { useUser } from "../../hooks/useUser";
-import {
-	downvoteQuestion,
-	getQuestionsVotes,
-	upvoteQuestion,
-} from "../../services/questions.service";
+import { getQuestionsVotes } from "../../services/questions.service";
 import { pluralize } from "../../utils/intl";
-import { Technology } from "../../lib/technologies";
-import { PAGE_SIZE } from "../../lib/constants";
-import { DEFAULT_SORT_BY_QUERY, getQuerySortBy } from "../../lib/order";
+import { QuestionFilter } from "../../types";
+import { useQuestionVoting } from "../../hooks/useQuestionVoting";
+import { useUser } from "../../hooks/useUser";
 
 type QuestionVotingProps = Readonly<{
 	questionId: number;
-	page: number;
-	technology: Technology;
+	questionFilter: QuestionFilter;
 }>;
 
 const votesPluralize = pluralize("głos", "głosy", "głosów");
 
-export const QuestionVoting = ({ questionId, page, technology }: QuestionVotingProps) => {
-	const searchParams = useSearchParams();
-	const querySortBy = getQuerySortBy(searchParams.get("sortBy") || DEFAULT_SORT_BY_QUERY);
-
+export const QuestionVoting = ({ questionId, questionFilter }: QuestionVotingProps) => {
 	const { data, refetch } = useQuery({
-		queryKey: ["votes"],
-		queryFn: () =>
-			getQuestionsVotes({
-				category: technology,
-				limit: PAGE_SIZE,
-				offset: (page - 1) * PAGE_SIZE,
-				orderBy: querySortBy?.orderBy,
-				order: querySortBy?.order,
-			}),
+		queryKey: ["votes", questionFilter],
+		queryFn: () => getQuestionsVotes(questionFilter),
 	});
-
-	const upvoteQuestionMutation = useMutation(upvoteQuestion);
-	const downvoteQuestionMutation = useMutation(downvoteQuestion);
+	const { upvote, downvote } = useQuestionVoting();
+	const { requireLoggedIn } = useDevFAQRouter();
 	const { userData } = useUser();
-	const { redirectToLoginPage } = useDevFAQRouter();
 
 	const question = data?.data.data.find(({ id }) => id === questionId);
 	const votes = question ? question.votesCount : 0;
 	const voted = userData && question ? question.currentUserVotedOn : false;
 
 	const handleClick = () => {
-		if (!userData) {
-			return redirectToLoginPage();
-		}
-
-		const mutation = voted ? downvoteQuestionMutation : upvoteQuestionMutation;
+		const mutation = !voted ? upvote : downvote;
 
 		mutation.mutate(
 			{
@@ -77,7 +55,7 @@ export const QuestionVoting = ({ questionId, page, technology }: QuestionVotingP
 			aria-label={`To pytanie ma ${votes} ${votesPluralize(votes)}. Kliknij, aby ${
 				voted ? "usunąć" : "dodać"
 			} swój głos.`}
-			onClick={handleClick}
+			onClick={requireLoggedIn(handleClick)}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
