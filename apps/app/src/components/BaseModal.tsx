@@ -23,7 +23,7 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 
 	return (
 		<Transition
-			className="fixed top-0 left-0 z-50 flex h-full w-full items-center justify-center overflow-y-auto bg-black/50 sm:px-2"
+			className="fixed top-0 left-0 z-50 flex h-full w-full items-start justify-center overflow-y-auto bg-black/50 sm:p-2"
 			onClick={onClose}
 			show={isOpen}
 			enter="transition-opacity duration-200"
@@ -39,7 +39,7 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 			}}
 		>
 			<div
-				className="relative h-full w-full max-w-3xl animate-show rounded-sm bg-white px-3.5 py-9 dark:bg-white-dark sm:h-fit sm:px-11 sm:py-20"
+				className="relative min-h-full w-full max-w-3xl animate-show rounded-sm bg-white px-3.5 py-9 dark:bg-white-dark sm:min-h-fit sm:px-11 sm:py-20"
 				onClick={(event) => {
 					// stop propagation to avoid triggering `onClick` on the backdrop behind the modal
 					event.stopPropagation();
