@@ -12,7 +12,7 @@ export const AddQuestionConfirmationModal = (props: ComponentProps<typeof BaseMo
 	return (
 		<BaseModal {...props}>
 			<div className="flex flex-col items-center text-center text-primary">
-				<p id="text-primary">
+				<p>
 					Jeszcze momencik… a Twoje pytanie pojawi się na liście dostępnych pytań. Najpierw musimy
 					rzucić na nie okiem i zatwierdzić.
 					<br /> W międzyczasie zajrzyj na bloga ❤️
