@@ -24,24 +24,24 @@ export const Author = ({
 	);
 
 	return (
-		<a
-			key={login}
-			href={profile}
-			target="_blank"
-			className="flex flex-col items-center rounded-lg bg-neutral-100 px-3.5 py-6 shadow-[0px_1px_4px] shadow-neutral-400 active:translate-y-px dark:bg-neutral-700 dark:shadow-neutral-900"
-			rel="noreferrer"
-		>
-			<Image
-				src={avatar_url}
-				alt={`${login}-avatar`}
-				width={125}
-				height={125}
-				className="mb-5 rounded-full"
-			/>
-			<strong className="mb-1 font-semibold">{name}</strong>
-			<strong className="text-center font-semibold leading-tight text-violet-600 dark:text-violet-400">
-				{translatedContributions.join(", ")}
-			</strong>
+		<a href={profile} target="_blank" rel="noreferrer">
+			<article className="flex flex-col items-center rounded-lg bg-neutral-100 px-3.5 py-6 shadow-[0px_1px_4px] shadow-neutral-400 active:translate-y-px dark:bg-neutral-700 dark:shadow-neutral-900">
+				<Image
+					src={avatar_url}
+					alt={`Avatar użytkownika o loginie ${login}`}
+					width={125}
+					height={125}
+					className="mb-5 rounded-full"
+				/>
+				<h3 className="mb-1 font-semibold">
+					<span className="sr-only">Imię:</span>
+					{name}
+				</h3>
+				<p className="text-center font-semibold leading-tight text-violet-600 dark:text-violet-400">
+					<span className="sr-only">Zasługi:</span>
+					{translatedContributions.join(", ")}
+				</p>
+			</article>
 		</a>
 	);
 };

@@ -7,12 +7,14 @@ export default async function AuthorsPage() {
 
 	return (
 		<StaticPageContainer>
-			<h1 className="mb-8 text-4xl font-bold">Autorzy</h1>
-			<div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+			<h2 className="mb-8 text-4xl font-bold">Autorzy</h2>
+			<ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
 				{contributors.map((contributor) => (
-					<Author key={contributor.login} contributor={contributor} />
+					<li key={contributor.login}>
+						<Author contributor={contributor} />
+					</li>
 				))}
-			</div>
+			</ul>
 		</StaticPageContainer>
 	);
 }
