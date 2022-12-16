@@ -2,9 +2,15 @@
 
 import dynamic from "next/dynamic";
 
-const WysiwygEditor = dynamic(() => import("../WysiwygEditor").then((mod) => mod.WysiwygEditor), {
-	ssr: false,
-});
+const WysiwygEditor = dynamic(
+	() =>
+		import(/* webpackChunkName: "WysiwygEditor" */ "../WysiwygEditor").then(
+			(mod) => mod.WysiwygEditor,
+		),
+	{
+		ssr: false,
+	},
+);
 
 const options = {
 	maxHeight: "300px",
