@@ -16,8 +16,8 @@ export const Header = () => (
 				<AppLogo />
 			</Link>
 			<HeaderNavigation>
-				<ActiveNavigationLink href="/">Jak korzystać?</ActiveNavigationLink>
-				<ActiveNavigationLink href="/foo">Autorzy</ActiveNavigationLink>
+				<ActiveNavigationLink href="/about">Jak korzystać?</ActiveNavigationLink>
+				<ActiveNavigationLink href="/authors">Autorzy</ActiveNavigationLink>
 				<a href="https://www.facebook.com/DevFAQ" target="_blank" rel="noreferrer">
 					FaceBook
 				</a>

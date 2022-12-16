@@ -37,6 +37,7 @@
 		"@storybook/react": "^7.0.0-alpha.54",
 		"@storybook/testing-library": "^0.0.13",
 		"@svgr/webpack": "6.5.1",
+		"@tailwindcss/typography": "0.5.8",
 		"@types/node": "18.11.15",
 		"@types/prismjs": "1.26.0",
 		"@types/react": "18.0.26",
