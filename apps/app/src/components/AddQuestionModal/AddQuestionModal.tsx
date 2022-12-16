@@ -19,6 +19,7 @@ type SelectDataState = Readonly<{
 export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 	const [selectData, setSelectData] = useState<SelectDataState>({});
 	const [content, setContent] = useState("");
+	const [isError, setIsError] = useState(false);
 
 	const { openModal, closeModal } = useUIContext();
 	const { createQuestionMutation } = useCreateQuestion();
@@ -47,6 +48,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 						setContent("");
 						openModal("AddQuestionConfirmationModal");
 					},
+					onError: () => setIsError(true),
 				},
 			);
 		}
@@ -113,6 +115,20 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 						Anuluj
 					</Button>
 				</div>
+				{isError && (
+					<p className="mt-3 text-red-600" role="alert">
+						⚠️ Wystąpił nieoczekiwany błąd przy dodawaniu pytania. Spróbuj ponownie, a jeśli problem
+						będzie się powtarzał,{" "}
+						<a
+							href="https://discord.com/invite/va2NhBv"
+							className="underline"
+							target="_blank"
+							rel="noreferrer"
+						>
+							skontaktuj się z administracją.
+						</a>
+					</p>
+				)}
 			</form>
 		</BaseModal>
 	);
