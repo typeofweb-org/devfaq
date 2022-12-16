@@ -67,3 +67,7 @@
 		--color-main-light: var(--senior-main-color-light);
 	}
 }
+.prism-coy pre[class*="language-"]::before,
+.prism-coy pre[class*="language-"]::after {
+	display: none;
+}

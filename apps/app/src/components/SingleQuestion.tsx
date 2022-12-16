@@ -9,14 +9,14 @@ type SingleQuestionProps = Readonly<{
 }>;
 
 export const SingleQuestion = ({
-	question: { id, question, _levelId, acceptedAt },
+	question: { id, mdxContent, _levelId, acceptedAt },
 }: SingleQuestionProps) => {
 	const { votes, voted, refetch } = useGetQuestionVotesById(id);
 
 	return (
 		<QuestionItem
 			id={id}
-			title={question}
+			mdxContent={mdxContent}
 			level={_levelId}
 			creationDate={new Date(acceptedAt || "")}
 			votes={votes}

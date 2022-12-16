@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { SingleQuestion } from "../../../../../components/SingleQuestion";
+import { serializeQuestionToMarkdown } from "../../../../../lib/question";
 import { getQuestionById } from "../../../../../services/questions.service";
 import { Params } from "../../../../../types";
 
@@ -16,5 +17,7 @@ export default async function SingleQuestionPage({ params }: { params: Params<"q
 		id: questionId,
 	});
 
-	return <SingleQuestion question={data} />;
+	const question = await serializeQuestionToMarkdown(data);
+
+	return <SingleQuestion question={question} />;
 }
