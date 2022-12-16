@@ -2,6 +2,7 @@
 
 import { ChangeEvent, ComponentProps, useState } from "react";
 import type { FormEvent } from "react";
+import { twMerge } from "tailwind-merge";
 import { useUIContext } from "../../providers/UIProvider";
 import { technologiesLabel, Technology, validateTechnology } from "../../lib/technologies";
 import { Level, levels, validateLevel } from "../../lib/level";
@@ -115,20 +116,21 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 						Anuluj
 					</Button>
 				</div>
-				{isError && (
-					<p className="mt-3 text-red-600" role="alert">
-						⚠️ Wystąpił nieoczekiwany błąd przy dodawaniu pytania. Spróbuj ponownie, a jeśli problem
-						będzie się powtarzał,{" "}
-						<a
-							href="https://discord.com/invite/va2NhBv"
-							className="underline"
-							target="_blank"
-							rel="noreferrer"
-						>
-							skontaktuj się z administracją.
-						</a>
-					</p>
-				)}
+				<p
+					className={twMerge("-mb-10 mt-3 text-red-600", isError ? "visible" : "invisible")}
+					role="alert"
+				>
+					⚠️ Wystąpił nieoczekiwany błąd przy dodawaniu pytania. Spróbuj ponownie, a jeśli problem
+					będzie się powtarzał,{" "}
+					<a
+						href="https://discord.com/invite/va2NhBv"
+						className="underline"
+						target="_blank"
+						rel="noreferrer"
+					>
+						skontaktuj się z administracją.
+					</a>
+				</p>
 			</form>
 		</BaseModal>
 	);

@@ -28,7 +28,7 @@ type QuestionEditorProps = Readonly<{
 }>;
 
 export const QuestionEditor = ({ value, onChange }: QuestionEditorProps) => (
-	<div className="mt-5">
+	<div className="mt-5 h-[371px] w-full">
 		<WysiwygEditor
 			label="Wpisz treść pytania"
 			value={value}
