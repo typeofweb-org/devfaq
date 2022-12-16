@@ -18,7 +18,7 @@ export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps)
 
 	return (
 		<>
-			{questions.map(({ id, question, _levelId, acceptedAt }) => {
+			{questions.map(({ id, mdxContent, _levelId, acceptedAt }) => {
 				const questionVote = questionsVotes?.find((questionVote) => questionVote.id === id);
 				const [votes, voted] = questionVote
 					? [questionVote.votesCount, questionVote.currentUserVotedOn]
@@ -28,7 +28,7 @@ export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps)
 					<QuestionItem
 						key={id}
 						id={id}
-						title={question}
+						mdxContent={mdxContent}
 						level={_levelId}
 						creationDate={new Date(acceptedAt || "")}
 						votes={votes}

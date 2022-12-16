@@ -42,15 +42,15 @@ describe("LinkWithQuery", () => {
 		});
 		it("should merge queries when href is a string", () => {
 			expect(
-				createQueryHref("/test4?q1=href1&q2=href2&q3=href3#fragment", {
+				createQueryHref("test4?q1=href1&q2=href2&q3=href3#fragment", {
 					q0: "query0",
 					q1: "query1",
 					q2: "query2",
 					q3: "href3",
 				}),
 			).toEqual({
-				pathname: "test3",
-				hash: "fragment",
+				pathname: "test4",
+				hash: "#fragment",
 				query: { q0: "query0", q1: "query1", q2: "query2", q3: "href3" },
 			});
 		});

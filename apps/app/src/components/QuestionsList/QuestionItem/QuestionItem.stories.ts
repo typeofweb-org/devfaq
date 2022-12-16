@@ -5,7 +5,6 @@ const meta: Meta<typeof QuestionItem> = {
 	title: "QuestionItem",
 	component: QuestionItem,
 	args: {
-		title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 		creationDate: new Date(),
 	},
 };

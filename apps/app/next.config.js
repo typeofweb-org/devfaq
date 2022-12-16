@@ -7,6 +7,8 @@ const nextConfig = {
 		transpilePackages: [],
 		esmExternals: true,
 		fontLoaders: [{ loader: "@next/font/google", options: { subsets: ["latin", "latin-ext"] } }],
+		serverComponentsExternalPackages: ["remark-gfm", "remark-prism"],
+		legacyBrowsers: false,
 	},
 	images: {
 		remotePatterns: [
