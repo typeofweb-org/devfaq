@@ -10,3 +10,7 @@ export const technologiesLabel: Record<Technology, string> = {
 	git: "Git",
 	other: "Inne",
 };
+
+export const validateTechnology = (technology: string): technology is Technology => {
+	return technologies.includes(technology);
+};

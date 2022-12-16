@@ -11,3 +11,5 @@ export const getQuestionById = fetcher.path("/questions/{id}").method("get").cre
 export const upvoteQuestion = fetcher.path("/questions/{id}/votes").method("post").create();
 
 export const downvoteQuestion = fetcher.path("/questions/{id}/votes").method("delete").create();
+
+export const createQuestion = fetcher.path("/questions").method("post").create();

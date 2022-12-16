@@ -3,6 +3,7 @@
 import { ReactNode, useEffect } from "react";
 import { Transition } from "@headlessui/react";
 import { lockScroll, unlockScroll } from "../utils/pageScroll";
+import { useUIContext } from "../providers/UIProvider";
 import { CloseButton } from "./CloseButton/CloseButton";
 
 type BaseModalProps = Readonly<{
@@ -12,6 +13,8 @@ type BaseModalProps = Readonly<{
 }>;
 
 export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
+	const { openedModal } = useUIContext();
+
 	useEffect(() => {
 		if (isOpen) {
 			lockScroll();
@@ -29,7 +32,11 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 			leave="transition-opacity duration-100"
 			leaveFrom="opacity-100"
 			leaveTo="opacity-0"
-			afterLeave={unlockScroll}
+			afterLeave={() => {
+				if (!openedModal) {
+					unlockScroll();
+				}
+			}}
 		>
 			<div
 				className="relative h-full w-full max-w-3xl animate-show rounded-sm bg-white px-3.5 py-9 dark:bg-white-dark sm:h-fit sm:px-11 sm:py-20"
