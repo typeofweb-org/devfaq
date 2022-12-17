@@ -12,3 +12,7 @@ body {
 .CodeMirror-code .cm-comment {
 	@apply font-mono;
 }
+
+code[class*="language-"] {
+	@apply px-0;
+}
