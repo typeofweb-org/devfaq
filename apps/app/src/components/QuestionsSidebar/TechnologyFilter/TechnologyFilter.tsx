@@ -23,11 +23,13 @@ const technologyFilters = [
 export const TechnologyFilter = () => {
 	return (
 		<QuestionsSidebarSection title="Wybierz technologię">
-			<div className="flex justify-between gap-x-4 overflow-x-auto px-4 pb-4 sm:flex-wrap sm:gap-x-0 sm:gap-y-7 sm:overflow-x-visible sm:p-0 small-filters:gap-y-4">
+			<ul className="flex justify-between gap-x-4 overflow-x-auto px-4 pb-4 sm:flex-wrap sm:gap-x-0 sm:gap-y-7 sm:overflow-x-visible sm:p-0 small-filters:gap-y-4">
 				{technologyFilters.map((tech) => (
-					<Technology key={tech.href} {...tech} />
+					<li key={tech.href}>
+						<Technology {...tech} />
+					</li>
 				))}
-			</div>
+			</ul>
 		</QuestionsSidebarSection>
 	);
 };

@@ -10,23 +10,20 @@ export const LevelFilter = () => {
 
 	return (
 		<QuestionsSidebarSection title="Wybierz poziom">
-			<div className="flex justify-center gap-3 sm:flex-col small-filters:flex-row">
+			<ul className="flex justify-center gap-3 sm:flex-col small-filters:flex-row">
 				{levels.map((level) => {
 					const isActive = Boolean(queryLevels?.includes(level));
 					const handleClick = isActive ? removeLevel : addLevel;
 
 					return (
-						<LevelButton
-							key={level}
-							variant={level}
-							isActive={isActive}
-							onClick={() => handleClick(level)}
-						>
-							{level}
-						</LevelButton>
+						<li key={level}>
+							<LevelButton variant={level} isActive={isActive} onClick={() => handleClick(level)}>
+								{level}
+							</LevelButton>
+						</li>
 					);
 				})}
-			</div>
+			</ul>
 		</QuestionsSidebarSection>
 	);
 };
