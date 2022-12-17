@@ -75,11 +75,11 @@ export const WysiwygEditor = ({ value, label, onChange }: EditorProps) => {
 		};
 	}, [onChangeEvent]);
 
-	useEffect(() => {
-		if (value !== editorRef.current?.codemirror.getValue()) {
-			editorRef.current?.codemirror.setValue(value);
-		}
-	}, [value]);
+	// useEffect(() => {
+	// 	if (value !== editorRef.current?.codemirror.getValue()) {
+	// 		editorRef.current?.codemirror.setValue(value);
+	// 	}
+	// }, [value]);
 
 	return <textarea aria-label={label} ref={textAreaRef} />;
 };
