@@ -49,7 +49,7 @@ jobs:
       - name: Check linters
         run: pnpm run lint --cache-dir=".turbo"
 
-      - name: Check linters
+      - name: Run tests
         run: pnpm run test --cache-dir=".turbo"
 
       - name: Check TypeScript

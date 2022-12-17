@@ -1,41 +1,52 @@
 "use client";
 
+import { UrlObject } from "url";
 import Link, { LinkProps } from "next/link";
 import { ComponentProps } from "react";
 import { useDevFAQRouter } from "../../hooks/useDevFAQRouter";
 
 type Url = LinkProps["href"];
 
-export const createQueryHref = (href: Url, query: Record<string, string>): Url => {
-	if (typeof href === "string") {
-		const { pathname, searchParams, hash } = new URL(href, "http://app.devfaq.localhost:3000");
-		const params = Object.fromEntries(searchParams.entries());
-		const newQuery = { ...params, ...query };
+const isURL = (value: string) =>
+	/^[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/.test(
+		value,
+	);
 
-		return {
-			pathname: href.startsWith("/") ? pathname : pathname.slice(1),
-			query: newQuery,
-			...(hash && { hash }),
-		};
-	}
+const isProtocolURL = (value: string) =>
+	/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(
+		value,
+	);
 
-	const hrefQuery = !href.query
-		? {}
-		: typeof href.query === "string"
-		? Object.fromEntries(new URLSearchParams(href.query).entries())
-		: href.query;
-	const newHrefQuery = { ...hrefQuery, ...query };
+const hrefToUrlObject = (linkHref: string): UrlObject => {
+	const url = new URL(linkHref, "http://app.devfaq.localhost:3000");
+	const { searchParams, hash, host, hostname, href, pathname, protocol, port } = url;
+	const query = Object.fromEntries(searchParams.entries());
 
-	return { ...href, query: newHrefQuery };
+	return {
+		query,
+		hash,
+		port,
+		pathname:
+			(isURL(linkHref) && !isProtocolURL(linkHref)) || !linkHref.startsWith("/")
+				? pathname.substring(1)
+				: pathname,
+		...(isProtocolURL(linkHref) && { host, hostname, href, protocol }),
+	};
 };
 
-const res = createQueryHref("test4?q1=href1&q2=href2&q3=href3#fragment", {
-	q0: "query0",
-	q1: "query1",
-	q2: "query2",
-	q3: "href3",
-});
-console.log(res);
+export const createQueryHref = (href: Url, query: Record<string, string>): UrlObject => {
+	const url = typeof href === "string" ? hrefToUrlObject(href) : href;
+
+	const hrefQuery = !url.query
+		? {}
+		: typeof url.query === "string"
+		? Object.fromEntries(new URLSearchParams(url.query).entries())
+		: url.query;
+
+	const newHrefQuery = { ...hrefQuery, ...query };
+
+	return { ...url, query: newHrefQuery };
+};
 
 type LinkWithQueryProps = Readonly<{
 	mergeQuery?: boolean;
