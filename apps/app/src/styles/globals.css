@@ -8,3 +8,7 @@ body {
 * {
 	@apply antialiased;
 }
+
+.CodeMirror-code .cm-comment {
+	@apply font-mono;
+}
