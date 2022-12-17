@@ -29,9 +29,14 @@ const nextConfig = {
 	async redirects() {
 		return [
 			{
+				source: "/",
+				destination: "/questions/js/1",
+				permanent: false,
+			},
+			{
 				source: "/questions",
 				destination: "/questions/js/1",
-				permanent: true,
+				permanent: false,
 			},
 			{
 				source: "/questions/:technology",
