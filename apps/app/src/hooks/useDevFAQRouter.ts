@@ -7,8 +7,10 @@ export const useDevFAQRouter = () => {
 	const pathname = usePathname();
 	const { userData } = useUser();
 
+	const queryParams = Object.fromEntries(searchParams.entries());
+
 	const mergeQueryParams = (data: Record<string, string>) => {
-		const params = { ...Object.fromEntries(searchParams.entries()), ...data };
+		const params = { ...queryParams, ...data };
 		const query = new URLSearchParams(params).toString();
 
 		if (pathname) {
@@ -24,5 +26,5 @@ export const useDevFAQRouter = () => {
 		return callback;
 	};
 
-	return { mergeQueryParams, requireLoggedIn };
+	return { queryParams, mergeQueryParams, requireLoggedIn };
 };

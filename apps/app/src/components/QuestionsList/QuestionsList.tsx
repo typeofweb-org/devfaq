@@ -17,7 +17,7 @@ export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps)
 	};
 
 	return (
-		<>
+		<ul className="space-y-10">
 			{questions.map(({ id, mdxContent, _levelId, acceptedAt }) => {
 				const questionVote = questionsVotes?.find((questionVote) => questionVote.id === id);
 				const [votes, voted] = questionVote
@@ -25,18 +25,19 @@ export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps)
 					: [0, false];
 
 				return (
-					<QuestionItem
-						key={id}
-						id={id}
-						mdxContent={mdxContent}
-						level={_levelId}
-						creationDate={new Date(acceptedAt || "")}
-						votes={votes}
-						voted={voted}
-						onQuestionVote={onQuestionVote}
-					/>
+					<li key={id}>
+						<QuestionItem
+							id={id}
+							mdxContent={mdxContent}
+							level={_levelId}
+							creationDate={new Date(acceptedAt || "")}
+							votes={votes}
+							voted={voted}
+							onQuestionVote={onQuestionVote}
+						/>
+					</li>
 				);
 			})}
-		</>
+		</ul>
 	);
 };

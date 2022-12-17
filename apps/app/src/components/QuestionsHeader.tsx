@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, Fragment } from "react";
+import { ChangeEvent } from "react";
 import { technologiesLabel, Technology } from "../lib/technologies";
 import { pluralize } from "../utils/intl";
 import { useQuestionsOrderBy } from "../hooks/useQuestionsOrderBy";

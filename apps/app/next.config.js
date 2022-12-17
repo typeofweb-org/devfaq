@@ -26,6 +26,20 @@ const nextConfig = {
 
 		return config;
 	},
+	async redirects() {
+		return [
+			{
+				source: "/questions",
+				destination: "/questions/js/1",
+				permanent: true,
+			},
+			{
+				source: "/questions/:technology",
+				destination: "/questions/:technology/1",
+				permanent: true,
+			},
+		];
+	},
 };
 
 module.exports = nextConfig;
