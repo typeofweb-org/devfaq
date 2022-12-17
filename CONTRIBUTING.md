@@ -18,7 +18,7 @@ DevFAQ is organised into a monorepo with Turborepo. You'll find frontend ([www](
 2. Run `pnpm install` inside the repo to install all the dependencies.
 3. Run `pnpm dev` to start both frontend and backend locally.
 4. In order for everything to work smoothly, you'll need to add two entries to your `/etc/hosts`. See [Configuring localhost domain](#configuring-localhost-domain) section.
-5. Remember to add `.env*` files to each app in `apps` directory. For `api` it will be `.env` – example file with variables is named `.env-example` and you can find them in `apps/api`. For `app` the example file with env variables is named `.env.local-example` and is located in `apps/app`.
+5. Remember to add `.env*` files to each app located in `apps` directory. For `apps/api` it will be `.env` - example file with variables is named `.env-example` and you can find it in `apps/api`. For `apps/app`, example env file is named `.env.local-example` and it is located in `apps/app`.
 
 ### Configuring localhost domain
 
