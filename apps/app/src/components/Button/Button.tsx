@@ -6,9 +6,9 @@ const variants = {
 	branding:
 		"text-violet-700 dark:text-neutral-200 border-violet-700 dark:border-neutral-200 bg-transparent hover:bg-violet-50 hover:dark:bg-violet-900 focus:shadow-[0_0_10px] focus:shadow-primary",
 	brandingInverse:
-		"border-white bg-primary text-white transition-opacity hover:bg-violet-200 focus:shadow-[0_0_10px] focus:shadow-white disabled:opacity-50 hover:dark:bg-violet-700",
+		"border-white bg-primary text-white hover:text-violet-700 dark:hover:text-white transition-opacity hover:bg-violet-200 focus:shadow-[0_0_10px] focus:shadow-white disabled:opacity-50 hover:dark:bg-violet-700",
 	alternative:
-		"text-white border-white bg-yellow-branding hover:bg-yellow-branding-dark focus:shadow-[0_0_10px] focus:shadow-yellow-branding",
+		"text-white-dark border-white-dark bg-yellow-branding hover:bg-yellow-branding-dark focus:shadow-[0_0_10px] focus:shadow-yellow-branding",
 };
 
 type ButtonProps = Readonly<{
