@@ -2,7 +2,7 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
-[![All Contributors](https://img.shields.io/badge/Contributors-13-673ab7.svg)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/Contributors-14-673ab7.svg)](#contributors-)
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
@@ -49,6 +49,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="33.33%"><a href="https://github.com/xStrixU"><img src="https://avatars.githubusercontent.com/u/41890821?v=4?s=70" width="70px;" alt="xStrixU"/><br /><sub><b>xStrixU</b></sub></a><br /><a href="https://github.com/typeofweb/devfaq/commits?author=xStrixU" title="Code">💻</a></td>
+      <td align="center" valign="top" width="33.33%"><a href="https://github.com/grzegorzpokorski"><img src="https://avatars.githubusercontent.com/u/27455716?v=4?s=70" width="70px;" alt="Grzegorz Pokorski"/><br /><sub><b>Grzegorz Pokorski</b></sub></a><br /><a href="https://github.com/typeofweb/devfaq/commits?author=grzegorzpokorski" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
