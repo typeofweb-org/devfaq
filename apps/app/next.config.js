@@ -12,10 +12,10 @@ const nextConfig = {
 	},
 	images: {
 		remotePatterns: [
-			{
+			...["", 0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => ({
 				protocol: "https",
-				hostname: "avatars.githubusercontent.com",
-			},
+				hostname: `avatars${number}.githubusercontent.com`,
+			})),
 		],
 	},
 	webpack(config) {

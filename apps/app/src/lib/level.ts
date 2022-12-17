@@ -17,3 +17,7 @@ export const parseQueryLevels = (query?: QueryParam | null) => {
 
 	return splittedQuery as Level[];
 };
+
+export const validateLevel = (level: string): level is Level => {
+	return levels.includes(level);
+};

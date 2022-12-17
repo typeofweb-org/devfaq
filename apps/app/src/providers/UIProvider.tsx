@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import { createSafeContext } from "../lib/createSafeContext";
 
-export type Modal = "AddQuestionModal";
+export type Modal = "AddQuestionModal" | "AddQuestionConfirmationModal";
 
 interface UIContextValue {
 	openedModal: Modal | null;
