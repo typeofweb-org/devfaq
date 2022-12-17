@@ -1,51 +1,45 @@
 "use client";
-
 import { UrlObject } from "url";
 import Link, { LinkProps } from "next/link";
 import { ComponentProps } from "react";
 import { useDevFAQRouter } from "../../hooks/useDevFAQRouter";
+import { escapeStringRegexp } from "../../lib/escapeStringRegex";
 
 type Url = LinkProps["href"];
 
-const isURL = (value: string) =>
-	/^[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/.test(
-		value,
-	);
+const origin = process.env.NEXT_PUBLIC_APP_URL || "http://dummy.localhost:8080";
 
-const isProtocolURL = (value: string) =>
-	/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/.test(
-		value,
-	);
+const urlObjectToUrl = (urlObject: UrlObject, origin: string): URL => {
+	const url = new URL(origin);
+	if (urlObject.protocol) url.protocol = urlObject.protocol;
+	if (urlObject.auth) {
+		const auth = urlObject.auth.split(":");
+		url.username = auth[0] || url.username;
+		url.password = auth[1] || url.password;
+	}
+	if (urlObject.host) url.host = urlObject.host;
+	if (urlObject.hostname) url.hostname = urlObject.hostname;
+	if (urlObject.port) url.port = urlObject.port.toString();
+	if (urlObject.hash) url.hash = urlObject.hash;
+	if (urlObject.search) url.search = urlObject.search;
+	if (urlObject.query)
+		url.search = new URLSearchParams(urlObject.query as Record<string, string> | string).toString();
+	if (urlObject.pathname) url.pathname = urlObject.pathname;
 
-const hrefToUrlObject = (linkHref: string): UrlObject => {
-	const url = new URL(linkHref, "http://app.devfaq.localhost:3000");
-	const { searchParams, hash, host, hostname, href, pathname, protocol, port } = url;
-	const query = Object.fromEntries(searchParams.entries());
-
-	return {
-		query,
-		hash,
-		port,
-		pathname:
-			(isURL(linkHref) && !isProtocolURL(linkHref)) || !linkHref.startsWith("/")
-				? pathname.substring(1)
-				: pathname,
-		...(isProtocolURL(linkHref) && { host, hostname, href, protocol }),
-	};
+	return url;
 };
 
-export const createQueryHref = (href: Url, query: Record<string, string>): UrlObject => {
-	const url = typeof href === "string" ? hrefToUrlObject(href) : href;
+export const createQueryHref = (href: Url, query: Record<string, string>): string => {
+	const url = typeof href === "string" ? new URL(href, origin) : urlObjectToUrl(href, origin);
+	Object.entries(query).forEach(([key, value]) => url.searchParams.set(key, value));
 
-	const hrefQuery = !url.query
-		? {}
-		: typeof url.query === "string"
-		? Object.fromEntries(new URLSearchParams(url.query).entries())
-		: url.query;
+	const newHref = url.toString().replace(new RegExp("^" + escapeStringRegexp(origin)), "");
 
-	const newHrefQuery = { ...hrefQuery, ...query };
-
-	return { ...url, query: newHrefQuery };
+	if (newHref.startsWith("/") && typeof href === "string" && !href.startsWith("/")) {
+		// trim slash
+		return newHref.slice(1);
+	}
+	return newHref;
 };
 
 type LinkWithQueryProps = Readonly<{
@@ -56,7 +50,7 @@ type LinkWithQueryProps = Readonly<{
 export const LinkWithQuery = ({ href, mergeQuery, ...props }: LinkWithQueryProps) => {
 	const { queryParams } = useDevFAQRouter();
 
-	const linkHref = mergeQuery ? createQueryHref(href, queryParams) : href;
+	const linkHref = mergeQuery ? createQueryHref(href, queryParams) : createQueryHref(href, {});
 
 	return <Link href={linkHref} {...props} />;
 };
