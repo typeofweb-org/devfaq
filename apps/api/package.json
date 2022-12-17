@@ -7,7 +7,7 @@
 		"build": "pnpm tsc",
 		"start": "node index.js",
 		"dev": "pnpm run dev:ts-node",
-		"dev:ts-node": "wait-on tcp:54321 --interval 1000 && prisma generate && prisma migrate dev && nodemon index.ts",
+		"dev:ts-node": "wait-on tcp:54421 --interval 1000 && prisma generate && prisma migrate dev && nodemon index.ts",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix --quiet",
 		"check-types": "tsc --noEmit",
@@ -15,7 +15,7 @@
 	},
 	"devDependencies": {
 		"@types/ms": "0.7.31",
-		"@types/node": "18.11.15",
+		"@types/node": "18.11.16",
 		"eslint-config-devfaq": "workspace:*",
 		"pino-pretty": "9.1.1",
 		"tsconfig": "workspace:*",
@@ -34,7 +34,7 @@
 		"@sinclair/typebox": "0.25.13",
 		"@swc/core": "1.3.23",
 		"concurrently": "7.6.0",
-		"eslint": "8.29.0",
+		"eslint": "8.30.0",
 		"fastify": "4.10.2",
 		"fastify-plugin": "4.4.0",
 		"lru-cache": "7.14.1",
@@ -43,6 +43,6 @@
 		"prisma": "4.7.1",
 		"ts-node": "10.9.1",
 		"undici": "5.14.0",
-		"wait-on": "6.0.1"
+		"wait-on": "7.0.1"
 	}
 }
