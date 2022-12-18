@@ -23,14 +23,14 @@ export const QuestionsHeader = ({ technology, total }: QuestionsHeaderProps) => 
 	};
 
 	return (
-		<header className="flex justify-between text-neutral-400">
-			<output>
+		<header className="flex flex-wrap items-baseline justify-between gap-3 text-neutral-400">
+			<output className="flex gap-1.5 md:gap-3">
 				<strong>{technologiesLabel[technology]}: </strong>
 				{total} {questionsPluralize(total)}
 			</output>
-			<label>
+			<label className="flex flex-wrap items-baseline gap-1.5 md:gap-3">
 				Sortuj według:
-				<Select variant="default" value={sortBy} onChange={handleSelectChange} className="ml-3">
+				<Select variant="default" value={sortBy} onChange={handleSelectChange}>
 					{Object.entries(sortByLabels).map(([sortBy, label]) => (
 						<option key={sortBy} value={sortBy}>
 							{label}
