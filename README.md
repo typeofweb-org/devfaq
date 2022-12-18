@@ -49,7 +49,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="33.33%"><a href="https://github.com/xStrixU"><img src="https://avatars.githubusercontent.com/u/41890821?v=4?s=70" width="70px;" alt="xStrixU"/><br /><sub><b>xStrixU</b></sub></a><br /><a href="https://github.com/typeofweb/devfaq/commits?author=xStrixU" title="Code">💻</a></td>
-      <td align="center" valign="top" width="33.33%"><a href="https://github.com/grzegorzpokorski"><img src="https://avatars.githubusercontent.com/u/27455716?v=4?s=70" width="70px;" alt="Grzegorz Pokorski"/><br /><sub><b>Grzegorz Pokorski</b></sub></a><br /><a href="https://github.com/typeofweb/devfaq/commits?author=grzegorzpokorski" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="33.33%"><a href="https://github.com/grzegorzpokorski"><img src="https://avatars.githubusercontent.com/u/27455716?v=4?s=70" width="70px;" alt="Grzegorz Pokorski"/><br /><sub><b>Grzegorz Pokorski</b></sub></a><br /><a href="https://github.com/typeofweb/devfaq/commits?author=grzegorzpokorski" title="Documentation">📖</a> <a href="https://github.com/typeofweb/devfaq/issues?q=author%3Agrzegorzpokorski" title="Bug reports">🐛</a> <a href="https://github.com/typeofweb/devfaq/commits?author=grzegorzpokorski" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>

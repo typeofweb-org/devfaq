@@ -137,7 +137,9 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/27455716?v=4",
       "profile": "https://github.com/grzegorzpokorski",
       "contributions": [
-        "doc"
+        "doc",
+        "bug",
+        "code"
       ]
     }
   ],
