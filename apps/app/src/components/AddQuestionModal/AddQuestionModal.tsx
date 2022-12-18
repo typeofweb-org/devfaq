@@ -76,7 +76,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 				<div className="mt-10 flex flex-col gap-y-3 px-5 sm:flex-row sm:justify-evenly sm:gap-x-5">
 					<label className="flex w-full flex-col gap-2">
 						<span className="text-sm text-violet-700 dark:text-neutral-200">
-							Wybierz technologie:
+							Wybierz technologię:
 						</span>
 						<Select
 							variant="purple"
