@@ -7,8 +7,7 @@ import { AppLogo } from "./AppLogo";
 type TitleTag = keyof Pick<JSX.IntrinsicElements, "h1" | "span">;
 
 export const AppTitle = () => {
-	const { isHome } = useIsHome();
-
+	const isHome = useIsHome();
 	const Tag: TitleTag = isHome ? "h1" : "span";
 
 	return (
