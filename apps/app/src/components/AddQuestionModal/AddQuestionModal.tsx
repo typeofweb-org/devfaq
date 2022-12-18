@@ -74,38 +74,42 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 			</h2>
 			<form onSubmit={handleFormSubmit}>
 				<div className="mt-10 flex flex-col gap-y-3 px-5 sm:flex-row sm:justify-evenly sm:gap-x-5">
-					<Select
-						variant="purple"
-						className="w-full"
-						aria-label="Wybierz technologię"
-						value={selectData.technology || ""}
-						onChange={handleSelectChange("technology", validateTechnology)}
-					>
-						<option value="" disabled>
-							Wybierz Technologię
-						</option>
-						{Object.entries(technologiesLabel).map(([technology, label]) => (
-							<option key={technology} value={technology}>
-								{label}
+					<label className="flex w-full flex-col gap-2">
+						<span className="text-sm text-violet-700 dark:text-neutral-200">
+							Wybierz technologie:
+						</span>
+						<Select
+							variant="purple"
+							value={selectData.technology || ""}
+							onChange={handleSelectChange("technology", validateTechnology)}
+						>
+							<option value="" disabled hidden selected>
+								-
 							</option>
-						))}
-					</Select>
-					<Select
-						variant="purple"
-						className="w-full"
-						aria-label="Wybierz poziom"
-						value={selectData.level || ""}
-						onChange={handleSelectChange("level", validateLevel)}
-					>
-						<option value="" disabled>
-							Wybierz Poziom
-						</option>
-						{levels.map((level) => (
-							<option key={level} value={level}>
-								{level}
+							{Object.entries(technologiesLabel).map(([technology, label]) => (
+								<option key={technology} value={technology}>
+									{label}
+								</option>
+							))}
+						</Select>
+					</label>
+					<label className="flex w-full flex-col gap-2">
+						<span className="text-sm text-violet-700 dark:text-neutral-200">Wybierz poziom:</span>
+						<Select
+							variant="purple"
+							value={selectData.level || ""}
+							onChange={handleSelectChange("level", validateLevel)}
+						>
+							<option value="" disabled hidden selected>
+								-
 							</option>
-						))}
-					</Select>
+							{levels.map((level) => (
+								<option key={level} value={level}>
+									{level}
+								</option>
+							))}
+						</Select>
+					</label>
 				</div>
 				<QuestionEditor value={content} onChange={setContent} />
 				<div className="mt-3 flex flex-col gap-2 sm:flex-row-reverse">
