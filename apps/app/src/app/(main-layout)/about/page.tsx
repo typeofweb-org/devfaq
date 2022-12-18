@@ -4,8 +4,8 @@ export default function AboutPage() {
 	return (
 		<StaticPageContainer>
 			<article className="prose dark:prose-invert">
-				<h2>Jak korzystać? FAQ</h2>
-				<h3>Co to jest DevFAQ.pl?</h3>
+				<h1>Jak korzystać? FAQ</h1>
+				<h2>Co to jest DevFAQ.pl?</h2>
 				<p>
 					DevFAQ.pl jest serwisem internetowym służącym do udostępniania i wymiany pytań
 					rekrutacyjnych na stanowiska developerów oraz inne pokrewne. Został stworzony przez
@@ -13,14 +13,14 @@ export default function AboutPage() {
 					przygotowania się do rozmów rekrutacyjnych.
 				</p>
 
-				<h3>Jak można dodać pytanie?</h3>
+				<h2>Jak można dodać pytanie?</h2>
 				<p>
 					Każdy użytkownik DevFAQ może dodać treść pytania, przydzielić mu kategorię oraz poziom
 					trudności. Następnie po kliknięciu „Dodaj” pytanie trafia do moderacji. Po zaakceptowaniu
 					przez administratorów, pojawi się na stronie. Może to zająć kilka dni!
 				</p>
 
-				<h3>Jakie są ogólne zasady korzystania z serwisu?</h3>
+				<h2>Jakie są ogólne zasady korzystania z serwisu?</h2>
 				<ul>
 					<li>W treści nie podawaj nazwy firmy, w której padło pytanie.</li>
 					<li>
@@ -37,7 +37,7 @@ export default function AboutPage() {
 					</li>
 				</ul>
 
-				<h3>Czy mogę formatować jakoś treść dodawanych pytań?</h3>
+				<h2>Czy mogę formatować jakoś treść dodawanych pytań?</h2>
 				<p>Tak! Możesz skorzystać z powszechnie znanego Markdown:</p>
 				<ul>
 					<li>``` Code block ```</li>
