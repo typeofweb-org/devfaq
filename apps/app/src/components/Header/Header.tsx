@@ -18,7 +18,7 @@ export const Header = () => (
 				<a href="https://www.facebook.com/DevFAQ" target="_blank" rel="noreferrer">
 					FaceBook
 				</a>
-				<div className="md:w-14">
+				<div className="sm:w-14">
 					<LoginNavigationLink />
 				</div>
 				<DarkModeSwitch />
