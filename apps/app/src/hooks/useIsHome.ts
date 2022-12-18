@@ -6,10 +6,10 @@ export const useIsHome = (home = "questions") => {
 	const pathname = usePathname();
 
 	useEffect(() => {
-		if (pathname && pathname.split("/")[1] === "questions") {
+		if (pathname && pathname.split("/")[1] === home) {
 			setIsHome(true);
 		}
-	}, [pathname]);
+	}, [pathname, home]);
 
 	return { isHome };
 };
