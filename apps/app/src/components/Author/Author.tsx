@@ -25,7 +25,7 @@ export const Author = ({
 
 	return (
 		<a href={profile} target="_blank" rel="noreferrer">
-			<article className="flex flex-col items-center rounded-lg bg-neutral-100 px-3.5 py-6 shadow-[0px_1px_4px] shadow-neutral-400 active:translate-y-px dark:bg-neutral-700 dark:shadow-neutral-900">
+			<article className="flex h-full flex-col items-center rounded-lg bg-neutral-100 px-3.5 py-6 text-center shadow-[0px_1px_4px] shadow-neutral-400 active:translate-y-px dark:bg-neutral-700 dark:shadow-neutral-900">
 				<Image
 					src={avatar_url}
 					alt={`Avatar użytkownika o loginie ${login}`}
