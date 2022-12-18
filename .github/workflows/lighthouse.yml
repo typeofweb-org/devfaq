@@ -1,0 +1,22 @@
+name: Lighthouse
+on: [pull_request]
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Wait for Vercel preview deployment
+        uses: patrickedqvist/wait-for-vercel-preview@master
+        id: waitForVercelPreviewDeployment
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 120
+
+      - name: Lighthouse
+        uses: foo-software/lighthouse-check-action@master
+        with:
+          urls: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
+          gitHubAccessToken: ${{ secrets.GITHUB_TOKEN }}
+          locale: pl
+          prCommentEnabled: true
