@@ -16,7 +16,7 @@ jobs:
         id: waitForVercelPreviewDeployment
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 120
+          max_timeout: 600
           check_interval: 15
 
       - name: Lighthouse

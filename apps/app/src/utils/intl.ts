@@ -6,7 +6,7 @@ const dateFormat = new Intl.DateTimeFormat(LOCALE, {
 	year: "numeric",
 });
 const rules = new Intl.PluralRules(LOCALE);
-//
+
 export const pluralize = (one: string, few: string, many: string) => (count: number) => {
 	return {
 		zero: many,
