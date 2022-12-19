@@ -83,7 +83,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 							value={selectData.technology || ""}
 							onChange={handleSelectChange("technology", validateTechnology)}
 						>
-							<option value="" disabled hidden selected>
+							<option value="" disabled hidden>
 								-
 							</option>
 							{Object.entries(technologiesLabel).map(([technology, label]) => (
@@ -100,7 +100,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 							value={selectData.level || ""}
 							onChange={handleSelectChange("level", validateLevel)}
 						>
-							<option value="" disabled hidden selected>
+							<option value="" disabled hidden>
 								-
 							</option>
 							{levels.map((level) => (
