@@ -17,7 +17,6 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 	};
 
 	const handleClickInsideNav = (event: MouseEvent) => {
-		console.log("hello");
 		if (event.target instanceof HTMLAnchorElement) {
 			setIsOpen(false);
 		}
