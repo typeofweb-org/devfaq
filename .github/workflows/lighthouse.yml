@@ -17,6 +17,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 120
+          check_interval: 15
 
       - name: Lighthouse
         uses: foo-software/lighthouse-check-action@v9.1.0
