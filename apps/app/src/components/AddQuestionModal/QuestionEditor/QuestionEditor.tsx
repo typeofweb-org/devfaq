@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, Suspense } from "react";
+import { twMerge } from "tailwind-merge";
 import dynamic from "next/dynamic";
 import BoldIcon from "../../../../public/icons/toolbar-bold.svg";
 import ItalicIcon from "../../../../public/icons/toolbar-italic.svg";
