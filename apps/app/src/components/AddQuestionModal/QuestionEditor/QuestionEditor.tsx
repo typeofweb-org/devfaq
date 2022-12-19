@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, Suspense } from "react";
 import { twMerge } from "tailwind-merge";
+import dynamic from "next/dynamic";
 import BoldIcon from "../../../../public/icons/toolbar-bold.svg";
 import ItalicIcon from "../../../../public/icons/toolbar-italic.svg";
 import HeadingIcon from "../../../../public/icons/toolbar-heading.svg";
@@ -11,8 +12,12 @@ import OlIcon from "../../../../public/icons/toolbar-ol.svg";
 import EyeIcon from "../../../../public/icons/toolbar-eye.svg";
 import { handleAction, Action } from "../../../lib/actions";
 import { ActionsGroup } from "./ActionsGroup";
-import { QuestionPreview } from "./QuestionPreview";
 import { ActionItem } from "./ActionItem";
+
+const QuestionPreview = dynamic(
+	() => import("./QuestionPreview").then((mod) => mod.QuestionPreview),
+	{ ssr: false },
+);
 
 const actionIcons: Record<Action, JSX.Element> = {
 	BOLD: <BoldIcon viewBox="0 0 32 32" />,
