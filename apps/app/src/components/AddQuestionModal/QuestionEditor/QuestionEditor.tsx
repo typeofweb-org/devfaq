@@ -11,14 +11,20 @@ import OlIcon from "../../../../public/icons/toolbar-ol.svg";
 import EyeIcon from "../../../../public/icons/toolbar-eye.svg";
 import { ActionsGroup } from "./ActionsGroup";
 import { QuestionPreview } from "./QuestionPreview";
+import { Action } from "./Action";
 
 const actions = {
-	BOLD: { open: "**", close: "**", icon: <BoldIcon viewBox="0 0 32 32" /> },
-	ITALIC: { open: "_", close: "_", icon: <ItalicIcon viewBox="0 0 32 32" /> },
-	HEADING: { open: "# ", close: "", icon: <HeadingIcon viewBox="0 0 24 24" /> },
-	CODEBLOCK: { open: "```javascript\n", close: "\n```", icon: <CodeIcon viewBox="0 0 32 32" /> },
-	UL: { open: "* ", close: "", icon: <OlIcon viewBox="0 0 32 32" /> },
-	OL: { open: "1. ", close: "", icon: <UlIcon viewBox="0 0 32 32" /> },
+	BOLD: { open: "**", close: "**", newLine: false, icon: <BoldIcon viewBox="0 0 32 32" /> },
+	ITALIC: { open: "_", close: "_", newLine: false, icon: <ItalicIcon viewBox="0 0 32 32" /> },
+	HEADING: { open: "# ", close: "", newLine: true, icon: <HeadingIcon viewBox="0 0 24 24" /> },
+	CODEBLOCK: {
+		open: "```javascript\n",
+		close: "\n```",
+		newLine: true,
+		icon: <CodeIcon viewBox="0 0 32 32" />,
+	},
+	UL: { open: "* ", close: "", newLine: true, icon: <UlIcon viewBox="0 0 32 32" /> },
+	OL: { open: "1. ", close: "", newLine: true, icon: <OlIcon viewBox="0 0 32 32" /> },
 };
 
 const hierarchy: Action[][] = [
@@ -41,24 +47,42 @@ export const QuestionEditor = ({ value, onChange }: QuestionEditorProps) => {
 
 	const handleActionClick = (action: Action) => () => {
 		const { current: textarea } = textAreaRef;
-		const { open, close } = actions[action];
+		const { open, close, newLine } = actions[action];
 
 		if (textarea) {
 			const { selectionStart, selectionEnd } = textarea;
 
+			const prevChar = value.substring(selectionStart - 1, selectionStart);
+			const insertNewLine = newLine && prevChar !== "" && prevChar !== "\n";
+
 			const newValue =
 				value.substring(0, selectionStart) +
-				open +
+				`${insertNewLine ? "\n" : ""}${open}` +
 				value.substring(selectionStart, selectionEnd) +
 				close +
 				value.substring(selectionEnd);
 
+			const selection = open.length + (insertNewLine ? 1 : 0);
+
 			selectionRef.current = {
-				start: open.length + selectionStart,
-				end: open.length + selectionEnd,
+				start: selection + selectionStart,
+				end: selection + selectionEnd,
 			};
 
 			onChange(newValue);
+		}
+	};
+
+	const handlePreviewButtonClick = () => {
+		const { current: textarea } = textAreaRef;
+
+		setIsPreview((prev) => !prev);
+
+		if (textarea && !isPreview) {
+			selectionRef.current = {
+				start: textarea.selectionStart,
+				end: textarea.selectionEnd,
+			};
 		}
 	};
 
@@ -71,7 +95,7 @@ export const QuestionEditor = ({ value, onChange }: QuestionEditorProps) => {
 			textarea.setSelectionRange(selection.start, selection.end);
 			selectionRef.current = null;
 		}
-	}, [value]);
+	}, [value, isPreview]);
 
 	return (
 		<div className="mt-4 rounded-md border">
@@ -79,7 +103,7 @@ export const QuestionEditor = ({ value, onChange }: QuestionEditorProps) => {
 				{hierarchy.map((item, i) => (
 					<ActionsGroup key={i} separator={i !== 0}>
 						{item.map((action) => (
-							<ActionsGroup.Action
+							<Action
 								key={action}
 								icon={actions[action].icon}
 								onClick={handleActionClick(action)}
@@ -89,7 +113,7 @@ export const QuestionEditor = ({ value, onChange }: QuestionEditorProps) => {
 					</ActionsGroup>
 				))}
 				<ActionsGroup>
-					<ActionsGroup.Action icon={<EyeIcon />} onClick={() => setIsPreview((prev) => !prev)} />
+					<Action icon={<EyeIcon />} onClick={handlePreviewButtonClick} />
 				</ActionsGroup>
 			</div>
 			<div className={twMerge("h-72 p-2", isPreview && "bg-neutral-50")}>
