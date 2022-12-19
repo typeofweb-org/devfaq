@@ -16,7 +16,7 @@ export const Header = () => (
 				<ActiveNavigationLink href="/about">Jak korzystać?</ActiveNavigationLink>
 				<ActiveNavigationLink href="/authors">Autorzy</ActiveNavigationLink>
 				<a href="https://www.facebook.com/DevFAQ" target="_blank" rel="noreferrer">
-					FaceBook
+					Facebook
 				</a>
 				<div className="sm:w-14">
 					<LoginNavigationLink />
