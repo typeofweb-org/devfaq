@@ -27,6 +27,15 @@ const actionIcons: Record<Action, JSX.Element> = {
 	OL: <OlIcon viewBox="0 0 32 32" />,
 };
 
+const actionLabels: Record<Action, string> = {
+	BOLD: "wstaw pogrubienie",
+	ITALIC: "wstaw italik",
+	HEADING: "wstaw nagłówek",
+	CODEBLOCK: "wstaw blok kodu",
+	UL: "wstaw listę nieuporządkowaną",
+	OL: "wstaw listę uporządkowaną",
+};
+
 const hierarchy: Action[][] = [
 	["BOLD", "ITALIC", "HEADING"],
 	["CODEBLOCK", "UL", "OL"],
@@ -88,13 +97,18 @@ export const QuestionEditor = ({ value, onChange }: QuestionEditorProps) => {
 								key={action}
 								onClick={handleActionClick(action)}
 								icon={actionIcons[action]}
+								label={actionLabels[action]}
 								disabled={isPreview}
 							/>
 						))}
 					</ActionsGroup>
 				))}
 				<ActionsGroup>
-					<ActionItem icon={<EyeIcon />} onClick={handlePreviewButtonClick} />
+					<ActionItem
+						icon={<EyeIcon />}
+						label="zobacz podgląd"
+						onClick={handlePreviewButtonClick}
+					/>
 				</ActionsGroup>
 			</div>
 			<div className="h-72">
