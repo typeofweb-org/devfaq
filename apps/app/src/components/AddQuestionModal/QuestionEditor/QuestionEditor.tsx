@@ -116,7 +116,7 @@ export const QuestionEditor = ({ value, onChange }: QuestionEditorProps) => {
 					<Action icon={<EyeIcon />} onClick={handlePreviewButtonClick} />
 				</ActionsGroup>
 			</div>
-			<div className={twMerge("h-72 p-2", isPreview && "bg-neutral-50")}>
+			<div className={twMerge("h-72 p-2", isPreview && "bg-neutral-50 dark:bg-neutral-700")}>
 				{isPreview ? (
 					<Suspense>
 						<QuestionPreview content={value} />
@@ -124,7 +124,7 @@ export const QuestionEditor = ({ value, onChange }: QuestionEditorProps) => {
 				) : (
 					<textarea
 						aria-label="Wpisz treść pytania"
-						className="h-full w-full resize-none focus:outline-0"
+						className="h-full w-full resize-none bg-transparent focus:outline-0 dark:text-white"
 						ref={textAreaRef}
 						value={value}
 						onChange={(event) => onChange(event.target.value)}
