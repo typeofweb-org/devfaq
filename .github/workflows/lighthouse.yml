@@ -19,6 +19,11 @@ jobs:
           max_timeout: 600
           check_interval: 15
 
+      - name: Warm-up devfaq cache
+        run: |
+          curl ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
+          curl ${{ steps.waitForVercelPreviewDeployment.outputs.url }}/questions/1
+
       - name: Lighthouse
         uses: foo-software/lighthouse-check-action@v9.1.0
         with:
