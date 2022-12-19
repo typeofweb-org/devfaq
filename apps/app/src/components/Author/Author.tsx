@@ -14,6 +14,7 @@ const contributionTranslations: Record<string, string> = {
 	maintenance: "Utrzymanie",
 	platform: "Platforma",
 	review: "Code Review",
+	bug: "Bugi",
 };
 
 export const Author = ({
