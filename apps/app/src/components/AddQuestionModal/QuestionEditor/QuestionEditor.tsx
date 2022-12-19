@@ -57,8 +57,14 @@ export const QuestionEditor = ({ value, onChange }: QuestionEditorProps) => {
 			return;
 		}
 
-		const { selectionStart, selectionEnd } = textAreaRef.current;
-		const { start, end, newValue } = handleAction({ selectionStart, selectionEnd, value, action });
+		const { start, end, newValue } = handleAction({
+			selection: {
+				start: textAreaRef.current.selectionStart,
+				end: textAreaRef.current.selectionEnd,
+			},
+			value,
+			action,
+		});
 
 		selectionRef.current = {
 			start,

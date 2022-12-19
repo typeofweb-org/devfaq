@@ -14,31 +14,32 @@ export const actions = {
 export type Action = keyof typeof actions;
 
 export const handleAction = ({
-	selectionStart,
-	selectionEnd,
+	selection: { start, end },
 	value,
 	action,
 }: {
-	selectionStart: number;
-	selectionEnd: number;
+	selection: {
+		start: number;
+		end: number;
+	};
 	value: string;
 	action: Action;
 }) => {
 	const { open, close, newLine } = actions[action];
 
-	const prevChar = value.substring(selectionStart - 1, selectionStart);
+	const prevChar = value.substring(start - 1, start);
 	const insertNewLine = newLine && prevChar !== "" && prevChar !== "\n";
 	const newValue =
-		value.substring(0, selectionStart) +
+		value.substring(0, start) +
 		`${insertNewLine ? "\n" : ""}${open}` +
-		value.substring(selectionStart, selectionEnd) +
+		value.substring(start, end) +
 		close +
-		value.substring(selectionEnd);
+		value.substring(end);
 	const selection = open.length + (insertNewLine ? 1 : 0);
 
 	return {
-		start: selection + selectionStart,
-		end: selection + selectionEnd,
+		start: selection + start,
+		end: selection + end,
 		newValue,
 	};
 };

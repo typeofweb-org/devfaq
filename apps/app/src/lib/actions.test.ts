@@ -5,7 +5,7 @@ describe("actions", () => {
 	describe("handleAction", () => {
 		it("should return bold word", () => {
 			expect(
-				handleAction({ selectionStart: 0, selectionEnd: 5, action: "BOLD", value: "test1" }),
+				handleAction({ selection: { start: 0, end: 5 }, action: "BOLD", value: "test1" }),
 			).toStrictEqual({
 				start: 2,
 				end: 7,
@@ -14,7 +14,7 @@ describe("actions", () => {
 		});
 		it("should return an empty italic word", () => {
 			expect(
-				handleAction({ selectionStart: 0, selectionEnd: 0, action: "ITALIC", value: "test2" }),
+				handleAction({ selection: { start: 0, end: 0 }, action: "ITALIC", value: "test2" }),
 			).toStrictEqual({
 				start: 1,
 				end: 1,
@@ -24,8 +24,7 @@ describe("actions", () => {
 		it("should return bold 'test3' word", () => {
 			expect(
 				handleAction({
-					selectionStart: 8,
-					selectionEnd: 13,
+					selection: { start: 8, end: 13 },
 					action: "BOLD",
 					value: "example test3 text",
 				}),
@@ -38,8 +37,7 @@ describe("actions", () => {
 		it("should create a new line", () => {
 			expect(
 				handleAction({
-					selectionStart: 14,
-					selectionEnd: 48,
+					selection: { start: 14, end: 48 },
 					action: "HEADING",
 					value: "example test4 this line should be inside header",
 				}),
@@ -52,8 +50,7 @@ describe("actions", () => {
 		it("should not create a new line", () => {
 			expect(
 				handleAction({
-					selectionStart: 0,
-					selectionEnd: 34,
+					selection: { start: 0, end: 34 },
 					action: "HEADING",
 					value: "test5 this line should be inside header",
 				}),
