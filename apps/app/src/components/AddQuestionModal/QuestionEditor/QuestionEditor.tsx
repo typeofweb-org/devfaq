@@ -98,7 +98,12 @@ export const QuestionEditor = ({ value, onChange }: QuestionEditorProps) => {
 					<ActionItem icon={<EyeIcon />} onClick={handlePreviewButtonClick} />
 				</ActionsGroup>
 			</div>
-			<div className={twMerge("h-72 p-2", isPreview && "bg-neutral-50 dark:bg-neutral-700")}>
+			<div
+				className={twMerge(
+					"h-72 p-2",
+					isPreview && "overflow-auto bg-neutral-50 dark:bg-neutral-700",
+				)}
+			>
 				{isPreview ? (
 					<Suspense>
 						<QuestionPreview content={value} />
