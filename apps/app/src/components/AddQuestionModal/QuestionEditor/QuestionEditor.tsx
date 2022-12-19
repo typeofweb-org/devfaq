@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, Suspense } from "react";
+import { useEffect, useRef, useState, Suspense, memo } from "react";
 import dynamic from "next/dynamic";
 import BoldIcon from "../../../../public/icons/toolbar-bold.svg";
 import ItalicIcon from "../../../../public/icons/toolbar-italic.svg";
@@ -46,7 +46,7 @@ type QuestionEditorProps = Readonly<{
 	onChange: (value: string) => void;
 }>;
 
-export const QuestionEditor = ({ value, onChange }: QuestionEditorProps) => {
+export const QuestionEditor = memo(({ value, onChange }: QuestionEditorProps) => {
 	const [isPreview, setIsPreview] = useState(false);
 
 	const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -57,7 +57,10 @@ export const QuestionEditor = ({ value, onChange }: QuestionEditorProps) => {
 			return;
 		}
 
-		const { start, end, newValue } = handleAction({
+		const {
+			selection: { start, end },
+			newValue,
+		} = handleAction({
 			selection: {
 				start: textAreaRef.current.selectionStart,
 				end: textAreaRef.current.selectionEnd,
@@ -134,4 +137,6 @@ export const QuestionEditor = ({ value, onChange }: QuestionEditorProps) => {
 			</div>
 		</div>
 	);
-};
+});
+
+QuestionEditor.displayName = "QuestionEditor";

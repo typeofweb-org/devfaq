@@ -7,8 +7,10 @@ describe("actions", () => {
 			expect(
 				handleAction({ selection: { start: 0, end: 5 }, action: "BOLD", value: "test1" }),
 			).toStrictEqual({
-				start: 2,
-				end: 7,
+				selection: {
+					start: 2,
+					end: 7,
+				},
 				newValue: "**test1**",
 			});
 		});
@@ -16,8 +18,10 @@ describe("actions", () => {
 			expect(
 				handleAction({ selection: { start: 0, end: 0 }, action: "ITALIC", value: "test2" }),
 			).toStrictEqual({
-				start: 1,
-				end: 1,
+				selection: {
+					start: 1,
+					end: 1,
+				},
 				newValue: "__test2",
 			});
 		});
@@ -29,8 +33,10 @@ describe("actions", () => {
 					value: "example test3 text",
 				}),
 			).toStrictEqual({
-				start: 10,
-				end: 15,
+				selection: {
+					start: 10,
+					end: 15,
+				},
 				newValue: "example **test3** text",
 			});
 		});
@@ -42,8 +48,10 @@ describe("actions", () => {
 					value: "example test4 this line should be inside header",
 				}),
 			).toStrictEqual({
-				start: 17,
-				end: 51,
+				selection: {
+					start: 17,
+					end: 51,
+				},
 				newValue: "example test4 \n# this line should be inside header",
 			});
 		});
@@ -55,8 +63,10 @@ describe("actions", () => {
 					value: "test5 this line should be inside header",
 				}),
 			).toStrictEqual({
-				start: 2,
-				end: 36,
+				selection: {
+					start: 2,
+					end: 36,
+				},
 				newValue: "# test5 this line should be inside header",
 			});
 		});

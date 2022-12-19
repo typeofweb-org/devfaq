@@ -38,8 +38,10 @@ export const handleAction = ({
 	const selection = open.length + (insertNewLine ? 1 : 0);
 
 	return {
-		start: selection + start,
-		end: selection + end,
+		selection: {
+			start: selection + start,
+			end: selection + end,
+		},
 		newValue,
 	};
 };
