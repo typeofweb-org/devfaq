@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, Suspense } from "react";
-import { twMerge } from "tailwind-merge";
 import dynamic from "next/dynamic";
 import BoldIcon from "../../../../public/icons/toolbar-bold.svg";
 import ItalicIcon from "../../../../public/icons/toolbar-italic.svg";
@@ -61,25 +60,20 @@ export const QuestionEditor = ({ value, onChange }: QuestionEditorProps) => {
 	};
 
 	const handlePreviewButtonClick = () => {
-		const { current } = textAreaRef;
-
 		setIsPreview((prev) => !prev);
 
-		if (current && !isPreview) {
+		if (textAreaRef.current && !isPreview) {
 			selectionRef.current = {
-				start: current.selectionStart,
-				end: current.selectionEnd,
+				start: textAreaRef.current.selectionStart,
+				end: textAreaRef.current.selectionEnd,
 			};
 		}
 	};
 
 	useEffect(() => {
-		const { current: textarea } = textAreaRef;
-		const { current: selection } = selectionRef;
-
-		if (textarea && selection) {
-			textarea.focus();
-			textarea.setSelectionRange(selection.start, selection.end);
+		if (textAreaRef.current && selectionRef.current) {
+			textAreaRef.current.focus();
+			textAreaRef.current.setSelectionRange(selectionRef.current.start, selectionRef.current.end);
 			selectionRef.current = null;
 		}
 	}, [value, isPreview]);
