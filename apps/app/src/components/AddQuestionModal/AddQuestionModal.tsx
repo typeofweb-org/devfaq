@@ -10,7 +10,7 @@ import { BaseModal } from "../BaseModal";
 import { Button } from "../Button/Button";
 import { Select } from "../Select/Select";
 import { useCreateQuestion } from "../../hooks/useCreateQuestion";
-import { QuestionEditor } from "./QuestionEditor";
+import { QuestionEditor } from "./QuestionEditor/QuestionEditor";
 
 type SelectDataState = Readonly<{
 	technology?: Technology;
