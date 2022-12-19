@@ -17,6 +17,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 	};
 
 	const handleClickInsideNav = (event: MouseEvent) => {
+		console.log("hello");
 		if (event.target instanceof HTMLAnchorElement) {
 			setIsOpen(false);
 		}
@@ -31,7 +32,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 					"sm:relative sm:flex sm:h-fit sm:w-fit sm:flex-row",
 					isOpen ? "flex" : "hidden",
 				)}
-				onClick={(e) => handleClickInsideNav(e)}
+				onClick={handleClickInsideNav}
 			>
 				{children}
 			</nav>
