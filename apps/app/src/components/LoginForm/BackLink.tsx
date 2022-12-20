@@ -8,7 +8,7 @@ export const BackLink = () => {
 	const previousPath = searchParams.get("previousPath") || "/";
 
 	return (
-		<Link href={previousPath} className="mt-12 text-sm text-white underline">
+		<Link href={previousPath} className="text-sm text-white underline">
 			Powrót do strony głównej
 		</Link>
 	);

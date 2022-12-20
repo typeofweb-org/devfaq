@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
 
 export default function LoginPageLayout({ children }: { readonly children: ReactNode }) {
-	return <div className="absolute top-0 bottom-0 left-0 right-0 bg-primary">{children}</div>;
+	return <div className="flex min-h-screen items-center bg-primary">{children}</div>;
 }
