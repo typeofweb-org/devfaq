@@ -4,6 +4,8 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import type { ReactNode, MouseEvent } from "react";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
+import { ActiveNavigationLink } from "./ActiveNagivationLink";
+import { LoginNavigationLink } from "./LoginNavigationLink";
 
 const itemStyles = "ease h-0.5 w-6 bg-white transition duration-300";
 
@@ -16,17 +18,50 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 		setIsOpen((prev) => !prev);
 	};
 
+	const handleClickLink = () => {
+		setIsOpen(false);
+		unlockScroll();
+	};
+
 	return (
 		<>
 			<nav
 				id="header-navigation"
 				className={twMerge(
-					"fixed top-0 left-0 z-30 h-full w-full flex-col items-center justify-center gap-10 bg-primary text-xl uppercase sm:gap-5 sm:text-sm",
-					"sm:relative sm:flex sm:h-fit sm:w-fit sm:flex-row",
+					"fixed inset-0 z-30 flex flex-col items-center overflow-y-auto bg-primary py-20 text-xl uppercase sm:relative sm:flex sm:flex-row sm:items-center sm:gap-5 sm:py-0 sm:text-sm",
 					isOpen ? "flex" : "hidden",
 				)}
 			>
-				{children}
+				<div className="mt-auto mb-auto flex flex-col items-center gap-10 sm:flex-row sm:gap-5">
+					<ul className="flex list-none flex-col items-center gap-10 text-center sm:flex-row sm:gap-5">
+						<li>
+							<ActiveNavigationLink href="/about" onClick={handleClickLink}>
+								Jak korzystać?
+							</ActiveNavigationLink>
+						</li>
+						<li>
+							<ActiveNavigationLink href="/authors" onClick={handleClickLink}>
+								Autorzy
+							</ActiveNavigationLink>
+						</li>
+						<li>
+							<a
+								href="https://www.facebook.com/DevFAQ"
+								target="_blank"
+								rel="noreferrer"
+								onClick={handleClickLink}
+							>
+								Facebook
+							</a>
+						</li>
+						<li>
+							<div className="sm:w-14">
+								<LoginNavigationLink />
+							</div>
+						</li>
+					</ul>
+					{children}
+				</div>
 			</nav>
 			<button
 				className={twMerge(
