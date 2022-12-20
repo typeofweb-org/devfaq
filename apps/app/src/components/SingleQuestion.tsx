@@ -1,8 +1,8 @@
 "use client";
 
 import { Question } from "../types";
+import { useGetQuestionVotesById } from "../hooks/useGetQuestionVotesById";
 import { QuestionItem } from "./QuestionsList/QuestionItem/QuestionItem";
-import { useGetQuestionVotesById } from "./useGetQuestionVotesById";
 
 type SingleQuestionProps = Readonly<{
 	question: Question;
