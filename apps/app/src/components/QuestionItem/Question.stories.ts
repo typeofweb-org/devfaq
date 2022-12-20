@@ -4,9 +4,6 @@ import { QuestionItem } from "./QuestionItem";
 const meta: Meta<typeof QuestionItem> = {
 	title: "QuestionItem",
 	component: QuestionItem,
-	args: {
-		creationDate: new Date(),
-	},
 };
 
 export default meta;

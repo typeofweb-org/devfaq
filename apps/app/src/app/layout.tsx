@@ -15,7 +15,6 @@ const firaCode = Fira_Code({
 });
 
 export const revalidate = 60;
-export const dynamic = "error";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (

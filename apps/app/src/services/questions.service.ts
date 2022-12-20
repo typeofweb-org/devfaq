@@ -13,3 +13,7 @@ export const upvoteQuestion = fetcher.path("/questions/{id}/votes").method("post
 export const downvoteQuestion = fetcher.path("/questions/{id}/votes").method("delete").create();
 
 export const createQuestion = fetcher.path("/questions").method("post").create();
+
+export const deleteQuestion = fetcher.path("/questions/{id}").method("delete").create();
+
+export const patchQuestion = fetcher.path("/questions/{id}").method("patch").create();

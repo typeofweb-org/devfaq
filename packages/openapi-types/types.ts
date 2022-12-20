@@ -268,13 +268,13 @@ export interface paths {
 					id: number;
 				};
 			};
-			requestBody: {
+			requestBody?: {
 				content: {
 					"application/json": {
-						question: string;
-						level: "junior" | "mid" | "senior";
-						category: "html" | "css" | "js" | "angular" | "react" | "git" | "other";
-						status: "pending" | "accepted";
+						question?: string;
+						level?: "junior" | "mid" | "senior";
+						category?: "html" | "css" | "js" | "angular" | "react" | "git" | "other";
+						status?: "pending" | "accepted";
 					};
 				};
 			};
