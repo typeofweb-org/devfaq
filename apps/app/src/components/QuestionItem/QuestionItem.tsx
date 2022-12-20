@@ -5,7 +5,7 @@ import { format } from "../../utils/intl";
 import { QuestionContent } from "./QuestionContent";
 import { Level, QuestionLevel } from "./QuestionLevel";
 
-type QuestionProps = Readonly<{
+type QuestionItemProps = Readonly<{
 	id: number;
 	mdxContent: MDXRemoteSerializeResult;
 	level: Level;
@@ -13,7 +13,13 @@ type QuestionProps = Readonly<{
 	leftSection?: ReactNode;
 }>;
 
-export const Question = ({ id, mdxContent, level, acceptedAt, leftSection }: QuestionProps) => {
+export const QuestionItem = ({
+	id,
+	mdxContent,
+	level,
+	acceptedAt,
+	leftSection,
+}: QuestionItemProps) => {
 	const creationDate = acceptedAt ? new Date(acceptedAt) : null;
 
 	return (

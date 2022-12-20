@@ -46,7 +46,7 @@ export default async function QuestionsPage({
 			<QuestionsList questions={questions} questionFilter={questionFilter} />
 			<QuestionsPagination
 				total={meta.total}
-				getHref={(i) => `/questions/${params.technology}/${i + 1}`}
+				getHref={(i) => `/questions/${params.technology}/${i}`}
 			/>
 		</div>
 	);

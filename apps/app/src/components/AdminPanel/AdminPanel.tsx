@@ -1,13 +1,11 @@
 "use client";
 
-import { isError, useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { Suspense } from "react";
-import { PAGE_SIZE } from "../../lib/constants";
+import { useGetAllQuestions } from "../../hooks/useGetAllQuestions";
 import { Level } from "../../lib/level";
 import { QuestionStatus } from "../../lib/question";
 import { Technology } from "../../lib/technologies";
-import { getAllQuestions } from "../../services/questions.service";
 import { QuestionsPagination } from "../QuestionsPagination";
 import { AdminPanelHeader } from "./AdminPanelHeader";
 import { AdminPanelQuestionsList } from "./AdminPanelQuestionsList";
@@ -20,16 +18,11 @@ type AdminPanelProps = Readonly<{
 }>;
 
 export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps) => {
-	const { isSuccess, isLoading, data, refetch } = useQuery({
-		queryKey: ["questions", { page, status, technology, levels }],
-		queryFn: () =>
-			getAllQuestions({
-				limit: PAGE_SIZE,
-				offset: (page - 1) * PAGE_SIZE,
-				status,
-				...(technology && { category: technology }),
-				...(levels && { level: levels.join(",") }),
-			}),
+	const { isSuccess, isLoading, data, refetch } = useGetAllQuestions({
+		page,
+		status,
+		technology,
+		levels,
 	});
 	const pathname = usePathname();
 
@@ -52,7 +45,7 @@ export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps
 						total={data.data.meta.total}
 						getHref={(i) => ({
 							pathname,
-							query: { page: i + 1 },
+							query: { page: i },
 						})}
 					/>
 				</>

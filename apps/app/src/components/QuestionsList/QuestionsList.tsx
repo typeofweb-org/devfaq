@@ -1,12 +1,12 @@
 "use client";
 
 import { useGetQuestionsVotes } from "../../hooks/useGetQuestionsVotes";
-import { Question as QuestionType, QuestionFilter } from "../../types";
-import { Question } from "../Question/Question";
+import { Question, QuestionFilter } from "../../types";
+import { QuestionItem } from "../QuestionItem/QuestionItem";
 import { QuestionVoting } from "./QuestionVoting";
 
 type QuestionsListProps = Readonly<{
-	questions: QuestionType[];
+	questions: Question[];
 	questionFilter: QuestionFilter;
 }>;
 
@@ -27,7 +27,7 @@ export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps)
 
 				return (
 					<li key={id}>
-						<Question
+						<QuestionItem
 							id={id}
 							mdxContent={mdxContent}
 							level={_levelId}

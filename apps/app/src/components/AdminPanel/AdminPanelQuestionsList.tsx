@@ -1,6 +1,6 @@
 import { use } from "react";
 import { APIQuestion, serializeQuestionToMarkdown } from "../../lib/question";
-import { Question } from "../Question/Question";
+import { QuestionItem } from "../QuestionItem/QuestionItem";
 import { AdminPanelQuestionLeftSection } from "./AdminPanelQuestionLeftSection";
 
 type AdminPanelQuestionsListProps = Readonly<{
@@ -20,7 +20,7 @@ export const AdminPanelQuestionsList = ({
 		<ul className="w-full space-y-5">
 			{serializedQuestions.map(({ _levelId, ...question }) => (
 				<li key={question.id}>
-					<Question
+					<QuestionItem
 						level={_levelId}
 						leftSection={
 							<AdminPanelQuestionLeftSection

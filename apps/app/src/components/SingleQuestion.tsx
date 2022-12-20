@@ -1,12 +1,12 @@
 "use client";
 
-import { Question as QuestionType } from "../types";
+import { Question } from "../types";
 import { useGetQuestionVotesById } from "../hooks/useGetQuestionVotesById";
-import { Question } from "./Question/Question";
+import { QuestionItem } from "./QuestionItem/QuestionItem";
 import { QuestionVoting } from "./QuestionsList/QuestionVoting";
 
 type SingleQuestionProps = Readonly<{
-	question: QuestionType;
+	question: Question;
 }>;
 
 export const SingleQuestion = ({
@@ -15,7 +15,7 @@ export const SingleQuestion = ({
 	const { votes, voted, refetch } = useGetQuestionVotesById(id);
 
 	return (
-		<Question
+		<QuestionItem
 			id={id}
 			mdxContent={mdxContent}
 			level={_levelId}

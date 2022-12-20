@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { Question } from "./Question";
+import { QuestionItem } from "./QuestionItem";
 
-const meta: Meta<typeof Question> = {
+const meta: Meta<typeof QuestionItem> = {
 	title: "QuestionItem",
-	component: Question,
+	component: QuestionItem,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Question>;
+type Story = StoryObj<typeof QuestionItem>;
 
 export const Junior: Story = {
 	args: {

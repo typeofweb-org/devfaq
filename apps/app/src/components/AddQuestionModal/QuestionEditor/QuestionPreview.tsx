@@ -1,6 +1,6 @@
 import { use } from "react";
 import { serializeSource } from "../../../lib/markdown";
-import { QuestionContent } from "../../Question/QuestionContent";
+import { QuestionContent } from "../../QuestionItem/QuestionContent";
 
 export const QuestionPreview = ({ content }: { readonly content: string }) => {
 	const source = use(serializeSource(content));

@@ -3,7 +3,7 @@ import { useDevFAQRouter } from "../../hooks/useDevFAQRouter";
 import { levels } from "../../lib/level";
 import { QuestionStatus, statuses } from "../../lib/question";
 import { technologies, technologiesLabel, Technology } from "../../lib/technologies";
-import { Level } from "../Question/QuestionLevel";
+import { Level } from "../QuestionItem/QuestionLevel";
 import { Select } from "../Select/Select";
 
 type AdminPanelHeaderProps = Readonly<{

@@ -1,14 +1,14 @@
 import { redirect } from "next/navigation";
 
-import { AdminPanel } from "../../../components/AdminPanel/AdminPanel";
 import { PrivateRoute } from "../../../components/PrivateRoute";
 import { parsePageQuery } from "../../../lib/queryParsers";
 import { parseQueryLevels } from "../../../lib/level";
 import { SearchParams } from "../../../types";
 import { parseStatusQuery } from "../../../lib/question";
 import { parseTechnologyQuery } from "../../../lib/technologies";
+import { AdminPanel } from "../../../components/AdminPanel/AdminPanel";
 
-export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 export default function AdminPage({
 	searchParams,
