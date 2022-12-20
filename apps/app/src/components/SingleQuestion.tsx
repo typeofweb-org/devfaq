@@ -1,11 +1,12 @@
 "use client";
 
-import { Question } from "../types";
-import { QuestionItem } from "./QuestionsList/QuestionItem/QuestionItem";
+import { Question as QuestionType } from "../types";
+import { Question } from "./Question/Question";
+import { QuestionVoting } from "./QuestionsList/QuestionVoting";
 import { useGetQuestionVotesById } from "./useGetQuestionVotesById";
 
 type SingleQuestionProps = Readonly<{
-	question: Question;
+	question: QuestionType;
 }>;
 
 export const SingleQuestion = ({
@@ -14,16 +15,21 @@ export const SingleQuestion = ({
 	const { votes, voted, refetch } = useGetQuestionVotesById(id);
 
 	return (
-		<QuestionItem
+		<Question
 			id={id}
 			mdxContent={mdxContent}
 			level={_levelId}
-			creationDate={new Date(acceptedAt || "")}
-			votes={votes}
-			voted={voted}
-			onQuestionVote={() => {
-				void refetch();
-			}}
+			acceptedAt={acceptedAt}
+			leftSection={
+				<QuestionVoting
+					questionId={id}
+					votes={votes}
+					voted={voted}
+					onQuestionVote={() => {
+						void refetch();
+					}}
+				/>
+			}
 		/>
 	);
 };

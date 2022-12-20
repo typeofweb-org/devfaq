@@ -44,7 +44,10 @@ export default async function QuestionsPage({
 		<div className="flex flex-col gap-y-10">
 			<QuestionsHeader technology={params.technology} total={meta.total} />
 			<QuestionsList questions={questions} questionFilter={questionFilter} />
-			<QuestionsPagination technology={params.technology} total={meta.total} />
+			<QuestionsPagination
+				total={meta.total}
+				getHref={(i) => `/questions/${params.technology}/${i + 1}`}
+			/>
 		</div>
 	);
 }

@@ -18,13 +18,15 @@ export const useDevFAQRouter = () => {
 		}
 	};
 
+	const getLoginPageHref = () => `/login?previousPath=${pathname || "/"}`;
+
 	const requireLoggedIn = <T>(callback: (...args: T[]) => unknown) => {
 		if (!userData) {
-			return () => router.push(`/login?previousPath=${pathname || "/"}`);
+			return () => router.push(getLoginPageHref());
 		}
 
 		return callback;
 	};
 
-	return { queryParams, mergeQueryParams, requireLoggedIn };
+	return { queryParams, mergeQueryParams, getLoginPageHref, requireLoggedIn };
 };

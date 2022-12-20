@@ -1,11 +1,12 @@
 "use client";
 
 import { useGetQuestionsVotes } from "../../hooks/useGetQuestionsVotes";
-import { Question, QuestionFilter } from "../../types";
-import { QuestionItem } from "./QuestionItem/QuestionItem";
+import { Question as QuestionType, QuestionFilter } from "../../types";
+import { Question } from "../Question/Question";
+import { QuestionVoting } from "./QuestionVoting";
 
 type QuestionsListProps = Readonly<{
-	questions: Question[];
+	questions: QuestionType[];
 	questionFilter: QuestionFilter;
 }>;
 
@@ -26,14 +27,19 @@ export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps)
 
 				return (
 					<li key={id}>
-						<QuestionItem
+						<Question
 							id={id}
 							mdxContent={mdxContent}
 							level={_levelId}
-							creationDate={new Date(acceptedAt || "")}
-							votes={votes}
-							voted={voted}
-							onQuestionVote={onQuestionVote}
+							acceptedAt={acceptedAt}
+							leftSection={
+								<QuestionVoting
+									questionId={id}
+									votes={votes}
+									voted={voted}
+									onQuestionVote={onQuestionVote}
+								/>
+							}
 						/>
 					</li>
 				);

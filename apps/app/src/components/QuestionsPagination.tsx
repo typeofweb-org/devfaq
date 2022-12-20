@@ -1,12 +1,13 @@
+import { LinkProps } from "next/link";
 import { PAGE_SIZE } from "../lib/constants";
 import { ActiveLink } from "./ActiveLink";
 
 type QuestionsPaginationProps = Readonly<{
-	technology: string;
 	total: number;
+	getHref: (i: number) => LinkProps["href"];
 }>;
 
-export const QuestionsPagination = ({ technology, total }: QuestionsPaginationProps) => {
+export const QuestionsPagination = ({ total, getHref }: QuestionsPaginationProps) => {
 	const pages = Math.ceil(total / PAGE_SIZE);
 
 	return (
@@ -14,7 +15,7 @@ export const QuestionsPagination = ({ technology, total }: QuestionsPaginationPr
 			{Array.from({ length: pages }).map((_, i) => (
 				<ActiveLink
 					key={i}
-					href={`/questions/${technology}/${i + 1}`}
+					href={getHref(i)}
 					className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border-2 border-primary text-primary transition-colors duration-300 hover:bg-violet-100 dark:text-white dark:hover:bg-violet-800"
 					activeClassName="bg-primary text-white hover:bg-primary"
 					mergeQuery

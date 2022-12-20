@@ -152,10 +152,12 @@ export const generatePatchQuestionByIdSchema = <
 		params: Type.Object({
 			id: Type.Integer(),
 		}),
-		body: Type.Object({
-			...generateCreateQuestionShape(args),
-			status: Type.Union(args.statuses.map((val) => Type.Literal(val))),
-		}),
+		body: Type.Partial(
+			Type.Object({
+				...generateCreateQuestionShape(args),
+				status: Type.Union(args.statuses.map((val) => Type.Literal(val))),
+			}),
+		),
 		response: {
 			200: Type.Object({
 				data: generateQuestionResponseSchema(args),
