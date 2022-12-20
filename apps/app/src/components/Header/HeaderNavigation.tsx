@@ -28,38 +28,40 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 			<nav
 				id="header-navigation"
 				className={twMerge(
-					"fixed inset-0 z-30 flex flex-col items-center gap-10 overflow-y-auto bg-primary py-20 text-xl uppercase sm:relative sm:flex sm:flex-row sm:items-center sm:gap-5 sm:py-0 sm:text-sm",
+					"fixed inset-0 z-30 flex flex-col items-center overflow-y-auto bg-primary py-20 text-xl uppercase sm:relative sm:flex sm:flex-row sm:items-center sm:gap-5 sm:py-0 sm:text-sm",
 					isOpen ? "flex" : "hidden",
 				)}
 			>
-				<ul className="flex list-none flex-col items-center gap-10 text-center sm:flex-row sm:gap-5">
-					<li>
-						<ActiveNavigationLink href="/about" onClick={handleClickLink}>
-							Jak korzystać?
-						</ActiveNavigationLink>
-					</li>
-					<li>
-						<ActiveNavigationLink href="/authors" onClick={handleClickLink}>
-							Autorzy
-						</ActiveNavigationLink>
-					</li>
-					<li>
-						<a
-							href="https://www.facebook.com/DevFAQ"
-							target="_blank"
-							rel="noreferrer"
-							onClick={handleClickLink}
-						>
-							Facebook
-						</a>
-					</li>
-					<li>
-						<div className="sm:w-14">
-							<LoginNavigationLink />
-						</div>
-					</li>
-				</ul>
-				{children}
+				<div className="mt-auto mb-auto flex flex-col items-center gap-10 sm:flex-row sm:gap-5">
+					<ul className="flex list-none flex-col items-center gap-10 text-center sm:flex-row sm:gap-5">
+						<li>
+							<ActiveNavigationLink href="/about" onClick={handleClickLink}>
+								Jak korzystać?
+							</ActiveNavigationLink>
+						</li>
+						<li>
+							<ActiveNavigationLink href="/authors" onClick={handleClickLink}>
+								Autorzy
+							</ActiveNavigationLink>
+						</li>
+						<li>
+							<a
+								href="https://www.facebook.com/DevFAQ"
+								target="_blank"
+								rel="noreferrer"
+								onClick={handleClickLink}
+							>
+								Facebook
+							</a>
+						</li>
+						<li>
+							<div className="sm:w-14">
+								<LoginNavigationLink />
+							</div>
+						</li>
+					</ul>
+					{children}
+				</div>
 			</nav>
 			<button
 				className={twMerge(
