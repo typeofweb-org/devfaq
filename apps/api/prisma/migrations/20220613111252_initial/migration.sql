@@ -114,7 +114,7 @@ ALTER TABLE "Question" ADD CONSTRAINT "Question__levelId_fkey" FOREIGN KEY ("_le
 ALTER TABLE "Question" ADD CONSTRAINT "Question__statusId_fkey" FOREIGN KEY ("_statusId") REFERENCES "QuestionStatus"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Question" ADD CONSTRAINT "Question__userId_fkey" FOREIGN KEY ("_userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Question" ADD CONSTRAINT "Question__userId_fkey" FOREIGN KEY ("_userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "QuestionVote" ADD CONSTRAINT "QuestionVote__questionId_fkey" FOREIGN KEY ("_questionId") REFERENCES "Question"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;

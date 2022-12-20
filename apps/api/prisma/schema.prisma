@@ -20,7 +20,7 @@ model Question {
   QuestionCategory QuestionCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   QuestionLevel    QuestionLevel    @relation(fields: [levelId], references: [id], onDelete: Cascade)
   QuestionStatus   QuestionStatus   @relation(fields: [statusId], references: [id], onDelete: Cascade)
-  User             User             @relation(fields: [userId], references: [id])
+  User             User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   QuestionVote     QuestionVote[]
 }
 
