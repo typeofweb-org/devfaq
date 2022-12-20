@@ -7,13 +7,20 @@ import { LinkWithQuery } from "./LinkWithQuery/LinkWithQuery";
 
 type ActiveLinkProps = Readonly<{
 	activeClassName: string;
+	activeHref?: string;
 }> &
 	ComponentProps<typeof LinkWithQuery>;
 
-export const ActiveLink = ({ href, className, activeClassName, ...props }: ActiveLinkProps) => {
+export const ActiveLink = ({
+	href,
+	className,
+	activeClassName,
+	activeHref,
+	...props
+}: ActiveLinkProps) => {
 	const pathname = usePathname();
 
-	const isActive = pathname?.startsWith(href.toString());
+	const isActive = pathname?.startsWith(activeHref ? activeHref.toString() : href.toString());
 
 	return (
 		<LinkWithQuery
