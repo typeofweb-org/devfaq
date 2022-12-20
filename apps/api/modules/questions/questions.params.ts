@@ -3,7 +3,16 @@ import { kv } from "../../utils.js";
 import { GetQuestionsQuery } from "./questions.schemas.js";
 
 export const getQuestionsPrismaParams = (
-	{ category, level, status = "accepted", limit, offset, order, orderBy }: GetQuestionsQuery,
+	{
+		category,
+		level,
+		status = "accepted",
+		limit,
+		offset,
+		order,
+		orderBy,
+		content,
+	}: GetQuestionsQuery,
 	userRole: string | undefined,
 ) => {
 	const levels = level?.split(",");
@@ -13,6 +22,7 @@ export const getQuestionsPrismaParams = (
 			...(category && { categoryId: category }),
 			...(levels && { levelId: { in: levels } }),
 			...(status && userRole === "admin" ? { statusId: status } : { statusId: "accepted" }),
+			...(content && { question: { contains: content } }),
 		},
 		take: limit,
 		skip: offset,
