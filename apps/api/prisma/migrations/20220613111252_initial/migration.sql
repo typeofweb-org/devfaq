@@ -5,9 +5,8 @@ CREATE TABLE "Question" (
     "acceptedAt" TIMESTAMPTZ(6),
     "_categoryId" TEXT NOT NULL,
     "_levelId" TEXT NOT NULL,
-    "_statusId" TEXT NOT NULL DEFAULT 'pending',
-    "_userId" INTEGER NOT NULL,
-    "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "_statusId" TEXT NOT NULL DEFAULT E'pending',
+    "createdAt" TIMESTAMPTZ(6) NOT NULL,
     "updatedAt" TIMESTAMPTZ(6) NOT NULL,
     "version" INTEGER DEFAULT 0,
 
@@ -17,7 +16,7 @@ CREATE TABLE "Question" (
 -- CreateTable
 CREATE TABLE "QuestionCategory" (
     "id" TEXT NOT NULL,
-    "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMPTZ(6) NOT NULL,
     "updatedAt" TIMESTAMPTZ(6) NOT NULL,
     "version" INTEGER DEFAULT 0,
 
@@ -27,7 +26,7 @@ CREATE TABLE "QuestionCategory" (
 -- CreateTable
 CREATE TABLE "QuestionLevel" (
     "id" TEXT NOT NULL,
-    "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMPTZ(6) NOT NULL,
     "updatedAt" TIMESTAMPTZ(6) NOT NULL,
     "version" INTEGER DEFAULT 0,
 
@@ -37,7 +36,7 @@ CREATE TABLE "QuestionLevel" (
 -- CreateTable
 CREATE TABLE "QuestionStatus" (
     "id" TEXT NOT NULL,
-    "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMPTZ(6) NOT NULL,
     "updatedAt" TIMESTAMPTZ(6) NOT NULL,
     "version" INTEGER DEFAULT 0,
 
@@ -48,7 +47,7 @@ CREATE TABLE "QuestionStatus" (
 CREATE TABLE "QuestionVote" (
     "_userId" INTEGER NOT NULL,
     "_questionId" INTEGER NOT NULL,
-    "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMPTZ(6) NOT NULL,
 
     CONSTRAINT "QuestionVote_pkey" PRIMARY KEY ("_userId","_questionId")
 );
@@ -66,7 +65,7 @@ CREATE TABLE "Session" (
     "keepMeSignedIn" BOOLEAN NOT NULL DEFAULT false,
     "validUntil" TIMESTAMPTZ(6) NOT NULL,
     "_userId" INTEGER NOT NULL,
-    "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMPTZ(6) NOT NULL,
     "updatedAt" TIMESTAMPTZ(6) NOT NULL,
     "version" INTEGER DEFAULT 0,
 
@@ -79,8 +78,8 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "firstName" TEXT,
     "lastName" TEXT,
-    "_roleId" TEXT NOT NULL DEFAULT 'user',
-    "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "_roleId" TEXT NOT NULL DEFAULT E'user',
+    "createdAt" TIMESTAMPTZ(6) NOT NULL,
     "updatedAt" TIMESTAMPTZ(6) NOT NULL,
     "version" INTEGER DEFAULT 0,
     "socialLogin" JSONB NOT NULL DEFAULT '{}',
@@ -91,7 +90,7 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "UserRole" (
     "id" TEXT NOT NULL,
-    "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMPTZ(6) NOT NULL,
     "updatedAt" TIMESTAMPTZ(6) NOT NULL,
     "version" INTEGER DEFAULT 0,
 
@@ -112,9 +111,6 @@ ALTER TABLE "Question" ADD CONSTRAINT "Question__levelId_fkey" FOREIGN KEY ("_le
 
 -- AddForeignKey
 ALTER TABLE "Question" ADD CONSTRAINT "Question__statusId_fkey" FOREIGN KEY ("_statusId") REFERENCES "QuestionStatus"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Question" ADD CONSTRAINT "Question__userId_fkey" FOREIGN KEY ("_userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "QuestionVote" ADD CONSTRAINT "QuestionVote__questionId_fkey" FOREIGN KEY ("_questionId") REFERENCES "Question"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
