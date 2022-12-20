@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build",
+		"build": "cp ../../.all-contributorsrc ./src/all-contributorsrc.json && next build",
 		"start": "next start",
 		"test": "vitest",
 		"lint": "next lint --dir .",
@@ -20,7 +20,7 @@
 		"@tanstack/react-query-devtools": "4.20.4",
 		"client-only": "0.0.1",
 		"easymde": "2.18.0",
-		"next": "13.0.8-canary.0",
+		"next": "13.0.8-canary.1",
 		"next-mdx-remote": "4.2.0",
 		"openapi-typescript-fetch": "1.1.3",
 		"prismjs": "1.29.0",

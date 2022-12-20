@@ -15,17 +15,21 @@ const generateGetQuestionsQuerySchema = <
 	levels: Levels;
 	statuses: Statuses;
 }) =>
-	Type.Object({
-		category: Type.Optional(Type.Union(args.categories.map((val) => Type.Literal(val)))),
-		status: Type.Optional(Type.Union(args.statuses.map((val) => Type.Literal(val)))),
-		level: Type.Optional(Type.String({ pattern: `^([${args.levels.join("|")}],?)+$` })),
-		limit: Type.Optional(Type.Integer()),
-		offset: Type.Optional(Type.Integer()),
-		orderBy: Type.Optional(
-			Type.Union([Type.Literal("acceptedAt"), Type.Literal("level"), Type.Literal("votesCount")]),
-		),
-		order: Type.Optional(Type.Union([Type.Literal("asc"), Type.Literal("desc")])),
-	});
+	Type.Partial(
+		Type.Object({
+			category: Type.Union(args.categories.map((val) => Type.Literal(val))),
+			status: Type.Union(args.statuses.map((val) => Type.Literal(val))),
+			level: Type.String({ pattern: `^([${args.levels.join("|")}],?)+$` }),
+			limit: Type.Integer(),
+			offset: Type.Integer(),
+			orderBy: Type.Union([
+				Type.Literal("acceptedAt"),
+				Type.Literal("level"),
+				Type.Literal("votesCount"),
+			]),
+			order: Type.Union([Type.Literal("asc"), Type.Literal("desc")]),
+		}),
+	);
 export type GetQuestionsQuery = Static<ReturnType<typeof generateGetQuestionsQuerySchema>>;
 export type GetQuestionsOrderBy = GetQuestionsQuery["orderBy"];
 export type GetQuestionsOrder = GetQuestionsQuery["order"];
@@ -152,10 +156,12 @@ export const generatePatchQuestionByIdSchema = <
 		params: Type.Object({
 			id: Type.Integer(),
 		}),
-		body: Type.Object({
-			...generateCreateQuestionShape(args),
-			status: Type.Union(args.statuses.map((val) => Type.Literal(val))),
-		}),
+		body: Type.Partial(
+			Type.Object({
+				...generateCreateQuestionShape(args),
+				status: Type.Union(args.statuses.map((val) => Type.Literal(val))),
+			}),
+		),
 		response: {
 			200: Type.Object({
 				data: generateQuestionResponseSchema(args),

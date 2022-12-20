@@ -1,9 +1,9 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-import { useDevFAQRouter } from "../../../hooks/useDevFAQRouter";
-import { pluralize } from "../../../utils/intl";
-import { useQuestionVoting } from "../../../hooks/useQuestionVoting";
+import { useDevFAQRouter } from "../../hooks/useDevFAQRouter";
+import { pluralize } from "../../utils/intl";
+import { useQuestionVoting } from "../../hooks/useQuestionVoting";
 
 type QuestionVotingProps = Readonly<{
 	questionId: number;

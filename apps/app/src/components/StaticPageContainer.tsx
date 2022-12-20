@@ -7,8 +7,8 @@ type StaticPageContainerProps = Readonly<{
 
 export const StaticPageContainer = ({ children }: StaticPageContainerProps) => (
 	<Container
-		as="section"
-		className="static-page-shadow my-3 bg-white p-4 text-neutral-800 dark:bg-white-dark dark:text-neutral-200 sm:p-4"
+		as="article"
+		className="static-page-shadow prose my-3 bg-white p-4 pb-16 text-neutral-800 dark:bg-white-dark dark:prose-invert dark:text-neutral-200 sm:p-8 sm:pb-16"
 	>
 		{children}
 	</Container>

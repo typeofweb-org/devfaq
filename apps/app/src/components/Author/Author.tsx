@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Contributor } from "../../lib/github";
+import { Contributor } from "../../lib/contributors";
 
 type AuthorProps = Readonly<{
 	contributor: Contributor;

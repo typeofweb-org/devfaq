@@ -20,6 +20,9 @@
 			]
 		},
 		"lint": {},
+		"start": {
+			"dependsOn": ["build"]
+		},
 		"test": {},
 		"check-types": {},
 		"lint:fix": {

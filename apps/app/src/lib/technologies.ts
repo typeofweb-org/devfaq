@@ -1,3 +1,5 @@
+import { QueryParam } from "../types";
+
 export const technologies = ["html", "css", "js", "angular", "react", "git", "other"] as const;
 export type Technology = typeof technologies[number];
 
@@ -13,4 +15,12 @@ export const technologiesLabel: Record<Technology, string> = {
 
 export const validateTechnology = (technology: string): technology is Technology => {
 	return technologies.includes(technology);
+};
+
+export const parseTechnologyQuery = (query: QueryParam | null) => {
+	if (typeof query !== "string" || !validateTechnology(query)) {
+		return null;
+	}
+
+	return query;
 };

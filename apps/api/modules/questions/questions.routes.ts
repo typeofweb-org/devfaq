@@ -79,28 +79,44 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 		method: "POST",
 		schema: generatePostQuestionsSchema(args),
 		async handler(request, reply) {
-			const { question, level, category } = request.body;
+			const {
+				body: { question, level, category },
+				session: { data: sessionData },
+			} = request;
 
-			const newQuestion = await fastify.db.question.create({
-				data: {
-					question,
-					levelId: level,
-					categoryId: category,
-					statusId: "pending",
-				},
-			});
+			if (!sessionData) {
+				throw fastify.httpErrors.unauthorized();
+			}
 
-			const data = {
-				id: newQuestion.id,
-				question: newQuestion.question,
-				_categoryId: newQuestion.categoryId,
-				_levelId: newQuestion.levelId,
-				_statusId: newQuestion.statusId,
-				acceptedAt: newQuestion.acceptedAt?.toISOString(),
-				votesCount: 0,
-			};
+			try {
+				const newQuestion = await fastify.db.question.create({
+					data: {
+						question,
+						levelId: level,
+						categoryId: category,
+						statusId: "pending",
+						createdById: sessionData._user.id,
+					},
+				});
 
-			return { data };
+				const data = {
+					id: newQuestion.id,
+					question: newQuestion.question,
+					_categoryId: newQuestion.categoryId,
+					_levelId: newQuestion.levelId,
+					_statusId: newQuestion.statusId,
+					acceptedAt: newQuestion.acceptedAt?.toISOString(),
+					votesCount: 0,
+				};
+
+				return { data };
+			} catch (err) {
+				if (isPrismaError(err) && err.code === "P2002") {
+					throw fastify.httpErrors.conflict(`Question with content: ${question} already exists!`);
+				}
+
+				throw err;
+			}
 		},
 	});
 
@@ -182,6 +198,12 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 		url: "/questions/:id",
 		method: "PATCH",
 		schema: generatePatchQuestionByIdSchema(args),
+		preValidation(request, reply, done) {
+			if (request.session.data?._user._roleId !== "admin") {
+				throw fastify.httpErrors.unauthorized();
+			}
+			done();
+		},
 		async handler(request, reply) {
 			const { id } = request.params;
 
@@ -191,9 +213,9 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 				where: { id },
 				data: {
 					question,
-					QuestionLevel: { connect: { id: level } },
-					QuestionCategory: { connect: { id: category } },
-					QuestionStatus: { connect: { id: status } },
+					...(level && { QuestionLevel: { connect: { id: level } } }),
+					...(category && { QuestionCategory: { connect: { id: category } } }),
+					...(status && { QuestionStatus: { connect: { id: status } } }),
 				},
 				select: {
 					id: true,
@@ -282,9 +304,20 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 		async handler(request, reply) {
 			const { id } = request.params;
 
-			await fastify.db.question.delete({ where: { id } });
+			try {
+				await fastify.db.question.delete({ where: { id } });
+			} catch (err) {
+				if (isPrismaError(err)) {
+					switch (err.code) {
+						case PrismaErrorCode.RecordRequiredButNotFound:
+							throw fastify.httpErrors.notFound(`Question with id: ${id} not found!`);
+					}
 
-			return reply.status(204);
+					throw err;
+				}
+			}
+
+			return reply.status(204).send();
 		},
 	});
 

@@ -2,7 +2,8 @@
 
 import { useGetQuestionsVotes } from "../../hooks/useGetQuestionsVotes";
 import { Question, QuestionFilter } from "../../types";
-import { QuestionItem } from "./QuestionItem/QuestionItem";
+import { QuestionItem } from "../QuestionItem/QuestionItem";
+import { QuestionVoting } from "./QuestionVoting";
 
 type QuestionsListProps = Readonly<{
 	questions: Question[];
@@ -30,10 +31,15 @@ export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps)
 							id={id}
 							mdxContent={mdxContent}
 							level={_levelId}
-							creationDate={new Date(acceptedAt || "")}
-							votes={votes}
-							voted={voted}
-							onQuestionVote={onQuestionVote}
+							acceptedAt={acceptedAt}
+							leftSection={
+								<QuestionVoting
+									questionId={id}
+									votes={votes}
+									voted={voted}
+									onQuestionVote={onQuestionVote}
+								/>
+							}
 						/>
 					</li>
 				);
