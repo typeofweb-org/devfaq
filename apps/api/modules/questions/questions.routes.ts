@@ -95,6 +95,7 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 						levelId: level,
 						categoryId: category,
 						statusId: "pending",
+						userId: sessionData._user.id,
 					},
 				});
 
