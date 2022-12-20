@@ -6,10 +6,10 @@
 
 ## Introduction
 
-DevFAQ is organised into a monorepo with Turborepo. You'll find frontend ([www](./apps/www)) and backend ([api](./apps/api)) in the [apps](./apps) directory.
+DevFAQ is organised into a monorepo with Turborepo. You'll find frontend ([app](./apps/app)) and backend ([api](./apps/api)) in the [apps](./apps) directory.
 
 - Frontend is written in **Next.js (React) with TypeScript**.
-- Backend is a REST API, and uses **HapiJS, PostgreSQL, and TypeScript**.
+- Backend is a REST API, and uses **Fastify, PostgreSQL, and TypeScript**.
 
 ## Project setup
 
