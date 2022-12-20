@@ -81,7 +81,6 @@ export interface paths {
 					offset?: number;
 					orderBy?: "acceptedAt" | "level" | "votesCount";
 					order?: "asc" | "desc";
-					content?: string;
 				};
 			};
 			responses: {
@@ -149,7 +148,6 @@ export interface paths {
 					offset?: number;
 					orderBy?: "acceptedAt" | "level" | "votesCount";
 					order?: "asc" | "desc";
-					content?: string;
 				};
 			};
 			responses: {

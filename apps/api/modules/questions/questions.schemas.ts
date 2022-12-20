@@ -28,7 +28,6 @@ const generateGetQuestionsQuerySchema = <
 				Type.Literal("votesCount"),
 			]),
 			order: Type.Union([Type.Literal("asc"), Type.Literal("desc")]),
-			content: Type.String(),
 		}),
 	);
 export type GetQuestionsQuery = Static<ReturnType<typeof generateGetQuestionsQuerySchema>>;
