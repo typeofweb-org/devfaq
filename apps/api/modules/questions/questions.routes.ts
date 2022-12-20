@@ -81,26 +81,34 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 		async handler(request, reply) {
 			const { question, level, category } = request.body;
 
-			const newQuestion = await fastify.db.question.create({
-				data: {
-					question,
-					levelId: level,
-					categoryId: category,
-					statusId: "pending",
-				},
-			});
+			try {
+				const newQuestion = await fastify.db.question.create({
+					data: {
+						question,
+						levelId: level,
+						categoryId: category,
+						statusId: "pending",
+					},
+				});
 
-			const data = {
-				id: newQuestion.id,
-				question: newQuestion.question,
-				_categoryId: newQuestion.categoryId,
-				_levelId: newQuestion.levelId,
-				_statusId: newQuestion.statusId,
-				acceptedAt: newQuestion.acceptedAt?.toISOString(),
-				votesCount: 0,
-			};
+				const data = {
+					id: newQuestion.id,
+					question: newQuestion.question,
+					_categoryId: newQuestion.categoryId,
+					_levelId: newQuestion.levelId,
+					_statusId: newQuestion.statusId,
+					acceptedAt: newQuestion.acceptedAt?.toISOString(),
+					votesCount: 0,
+				};
 
-			return { data };
+				return { data };
+			} catch (err) {
+				if (isPrismaError(err) && err.code === "P2002") {
+					throw fastify.httpErrors.conflict(`Question with content: ${question} already exists!`);
+				}
+
+				throw err;
+			}
 		},
 	});
 
