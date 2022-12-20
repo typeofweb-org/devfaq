@@ -10,7 +10,7 @@ type QuestionContentProps = Readonly<{
 
 export const QuestionContent = ({ source }: QuestionContentProps) => {
 	return (
-		<div className="prism-coy prose min-w-0 grow px-2 prose-code:px-0 prose-pre:bg-transparent prose-pre:px-0 dark:prose-invert">
+		<div className="prism-coy prose min-w-0 max-w-full grow px-2 prose-code:px-0 prose-pre:bg-transparent prose-pre:px-0 dark:prose-invert">
 			<MDXRemote {...source} />
 		</div>
 	);
