@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import { ChangeEvent, ReactNode } from "react";
 import { useDevFAQRouter } from "../../hooks/useDevFAQRouter";
 import { levels } from "../../lib/level";
@@ -22,6 +23,7 @@ export const AdminPanelHeader = ({
 	levels: selectedLevels,
 }: AdminPanelHeaderProps) => {
 	const { mergeQueryParams } = useDevFAQRouter();
+	const router = useRouter();
 
 	const handleSelectChange = (param: string) => (event: ChangeEvent<HTMLSelectElement>) => {
 		event.preventDefault();
@@ -62,7 +64,11 @@ export const AdminPanelHeader = ({
 			</SelectLabel>
 			<SelectLabel>
 				Status:
-				<Select variant="default" value={status} onChange={handleSelectChange("status")}>
+				<Select
+					variant="default"
+					value={status}
+					onChange={({ target }) => router.push(`/admin/${target.value}/1`)}
+				>
 					{statuses.map((status) => (
 						<option key={status} value={status}>
 							{status}
