@@ -28,28 +28,37 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 			<nav
 				id="header-navigation"
 				className={twMerge(
-					"fixed top-0 left-0 z-30 h-full w-full flex-col items-center justify-center gap-10 bg-primary text-xl uppercase sm:gap-5 sm:text-sm",
-					"sm:relative sm:flex sm:h-fit sm:w-fit sm:flex-row",
+					"fixed inset-0 z-30 flex flex-col items-center gap-10 overflow-y-auto bg-primary py-20 text-xl uppercase sm:relative sm:flex sm:flex-row sm:items-center sm:gap-5 sm:py-0 sm:text-sm",
 					isOpen ? "flex" : "hidden",
 				)}
 			>
-				<ActiveNavigationLink href="/about" onClick={handleClickLink}>
-					Jak korzystać?
-				</ActiveNavigationLink>
-				<ActiveNavigationLink href="/authors" onClick={handleClickLink}>
-					Autorzy
-				</ActiveNavigationLink>
-				<a
-					href="https://www.facebook.com/DevFAQ"
-					target="_blank"
-					rel="noreferrer"
-					onClick={handleClickLink}
-				>
-					Facebook
-				</a>
-				<div className="sm:w-14">
-					<LoginNavigationLink />
-				</div>
+				<ul className="flex list-none flex-col items-center gap-10 text-center sm:flex-row sm:gap-5">
+					<li>
+						<ActiveNavigationLink href="/about" onClick={handleClickLink}>
+							Jak korzystać?
+						</ActiveNavigationLink>
+					</li>
+					<li>
+						<ActiveNavigationLink href="/authors" onClick={handleClickLink}>
+							Autorzy
+						</ActiveNavigationLink>
+					</li>
+					<li>
+						<a
+							href="https://www.facebook.com/DevFAQ"
+							target="_blank"
+							rel="noreferrer"
+							onClick={handleClickLink}
+						>
+							Facebook
+						</a>
+					</li>
+					<li>
+						<div className="sm:w-14">
+							<LoginNavigationLink />
+						</div>
+					</li>
+				</ul>
 				{children}
 			</nav>
 			<button
