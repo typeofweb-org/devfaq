@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build",
+		"build": "cp ../../.all-contributorsrc ./src/all-contributorsrc.json && next build",
 		"start": "next start",
 		"test": "vitest",
 		"lint": "next lint --dir .",
