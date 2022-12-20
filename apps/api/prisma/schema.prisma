@@ -14,13 +14,13 @@ model Question {
   categoryId       String           @map("_categoryId")
   levelId          String           @map("_levelId")
   statusId         String           @default("pending") @map("_statusId")
-  userId           Int              @map("_userId")
+  createdById      Int              @map("createdById")
   createdAt        DateTime         @default(now()) @db.Timestamptz(6)
   updatedAt        DateTime         @updatedAt() @db.Timestamptz(6)
   QuestionCategory QuestionCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   QuestionLevel    QuestionLevel    @relation(fields: [levelId], references: [id], onDelete: Cascade)
   QuestionStatus   QuestionStatus   @relation(fields: [statusId], references: [id], onDelete: Cascade)
-  User             User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  CreatedBy        User             @relation(fields: [createdById], references: [id], onDelete: Cascade)
   QuestionVote     QuestionVote[]
 }
 
