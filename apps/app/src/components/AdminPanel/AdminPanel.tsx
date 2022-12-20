@@ -43,9 +43,9 @@ export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps
 					</Suspense>
 					<QuestionsPagination
 						total={data.data.meta.total}
-						getHref={(i) => ({
+						getHref={(page) => ({
 							pathname,
-							query: { page: i },
+							query: { page },
 						})}
 					/>
 				</>
