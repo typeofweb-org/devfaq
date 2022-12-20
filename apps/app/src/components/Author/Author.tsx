@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Contributor } from "../../lib/github";
+import { Contributor } from "../../lib/contributors";
 
 type AuthorProps = Readonly<{
 	contributor: Contributor;
@@ -14,6 +14,7 @@ const contributionTranslations: Record<string, string> = {
 	maintenance: "Utrzymanie",
 	platform: "Platforma",
 	review: "Code Review",
+	bug: "Bugi",
 };
 
 export const Author = ({

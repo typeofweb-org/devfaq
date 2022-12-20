@@ -15,7 +15,7 @@
 	},
 	"devDependencies": {
 		"@types/ms": "0.7.31",
-		"@types/node": "18.11.16",
+		"@types/node": "18.11.17",
 		"eslint-config-devfaq": "workspace:*",
 		"pino-pretty": "9.1.1",
 		"tsconfig": "workspace:*",

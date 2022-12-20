@@ -1,9 +1,9 @@
 "use client";
 
 import { Question as QuestionType } from "../types";
+import { useGetQuestionVotesById } from "../hooks/useGetQuestionVotesById";
 import { Question } from "./Question/Question";
 import { QuestionVoting } from "./QuestionsList/QuestionVoting";
-import { useGetQuestionVotesById } from "./useGetQuestionVotesById";
 
 type SingleQuestionProps = Readonly<{
 	question: QuestionType;

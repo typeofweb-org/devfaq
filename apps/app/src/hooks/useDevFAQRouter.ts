@@ -9,12 +9,12 @@ export const useDevFAQRouter = () => {
 
 	const queryParams = Object.fromEntries(searchParams.entries());
 
-	const mergeQueryParams = (data: Record<string, string>) => {
+	const mergeQueryParams = (data: Record<string, string>, href?: string) => {
 		const params = { ...queryParams, ...data };
 		const query = new URLSearchParams(params).toString();
 
 		if (pathname) {
-			router.push(`${pathname}?${query}`);
+			router.push(`${href || pathname}?${query}`);
 		}
 	};
 

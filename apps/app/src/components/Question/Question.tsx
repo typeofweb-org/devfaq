@@ -20,7 +20,7 @@ export const Question = ({ id, mdxContent, level, acceptedAt, leftSection }: Que
 		<article className="flex items-center bg-white p-5 text-sm text-neutral-500 shadow-md dark:bg-white-dark dark:text-neutral-200">
 			{leftSection}
 			<QuestionContent source={mdxContent} />
-			<div className="ml-4 flex min-w-max flex-col items-end">
+			<div className="ml-4 mt-2 flex min-w-max flex-col items-end">
 				<QuestionLevel level={level} />
 				{creationDate && (
 					<Link href={`/questions/p/${id}`} className="mt-3 text-xs underline">
