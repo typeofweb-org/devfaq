@@ -79,7 +79,14 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 		method: "POST",
 		schema: generatePostQuestionsSchema(args),
 		async handler(request, reply) {
-			const { question, level, category } = request.body;
+			const {
+				body: { question, level, category },
+				session: { data: sessionData },
+			} = request;
+
+			if (!sessionData) {
+				throw fastify.httpErrors.unauthorized();
+			}
 
 			try {
 				const newQuestion = await fastify.db.question.create({
