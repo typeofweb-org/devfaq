@@ -4,6 +4,8 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import type { ReactNode, MouseEvent } from "react";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
+import { ActiveNavigationLink } from "./ActiveNagivationLink";
+import { LoginNavigationLink } from "./LoginNavigationLink";
 
 const itemStyles = "ease h-0.5 w-6 bg-white transition duration-300";
 
@@ -16,10 +18,9 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 		setIsOpen((prev) => !prev);
 	};
 
-	const handleClickInsideNav = (event: MouseEvent) => {
-		if (event.target instanceof HTMLAnchorElement) {
-			setIsOpen(false);
-		}
+	const handleClickLink = () => {
+		setIsOpen(false);
+		unlockScroll();
 	};
 
 	return (
@@ -31,8 +32,24 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 					"sm:relative sm:flex sm:h-fit sm:w-fit sm:flex-row",
 					isOpen ? "flex" : "hidden",
 				)}
-				onClick={handleClickInsideNav}
 			>
+				<ActiveNavigationLink href="/about" onClick={handleClickLink}>
+					Jak korzystać?
+				</ActiveNavigationLink>
+				<ActiveNavigationLink href="/authors" onClick={handleClickLink}>
+					Autorzy
+				</ActiveNavigationLink>
+				<a
+					href="https://www.facebook.com/DevFAQ"
+					target="_blank"
+					rel="noreferrer"
+					onClick={handleClickLink}
+				>
+					Facebook
+				</a>
+				<div className="sm:w-14">
+					<LoginNavigationLink />
+				</div>
 				{children}
 			</nav>
 			<button
