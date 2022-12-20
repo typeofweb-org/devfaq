@@ -14,6 +14,9 @@ const firaCode = Fira_Code({
 	variable: "--font-fira-code",
 });
 
+export const revalidate = 60;
+export const dynamic = "error";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="pl" className={`${firaSans.variable} ${firaCode.variable}`}>

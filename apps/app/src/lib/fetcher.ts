@@ -7,5 +7,9 @@ fetcher.configure({
 	baseUrl: process.env.NEXT_PUBLIC_API_URL,
 	init: {
 		credentials: "include",
+		next: {
+			revalidate: 60,
+		},
+		cache: "force-cache",
 	},
 });
