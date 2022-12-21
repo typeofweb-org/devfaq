@@ -209,6 +209,11 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 
 			const { question, level, category, status } = request.body;
 
+			const selectedQuestion = await fastify.db.question.findUnique({
+				where: { id },
+				select: { acceptedAt: true },
+			});
+
 			const q = await fastify.db.question.update({
 				where: { id },
 				data: {
@@ -216,6 +221,7 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 					...(level && { QuestionLevel: { connect: { id: level } } }),
 					...(category && { QuestionCategory: { connect: { id: category } } }),
 					...(status && { QuestionStatus: { connect: { id: status } } }),
+					...(status === "accepted" && !selectedQuestion?.acceptedAt && { acceptedAt: new Date() }),
 				},
 				select: {
 					id: true,

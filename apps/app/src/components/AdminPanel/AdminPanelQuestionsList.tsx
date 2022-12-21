@@ -1,6 +1,7 @@
-import { use } from "react";
-import { APIQuestion, serializeQuestionToMarkdown } from "../../lib/question";
+import { memo, use } from "react";
+import { serializeQuestionToMarkdown } from "../../lib/question";
 import { QuestionItem } from "../QuestionItem/QuestionItem";
+import type { APIQuestion } from "../../types";
 import { AdminPanelQuestionLeftSection } from "./AdminPanelQuestionLeftSection";
 
 type AdminPanelQuestionsListProps = Readonly<{
@@ -8,31 +9,36 @@ type AdminPanelQuestionsListProps = Readonly<{
 	refetchQuestions: () => void;
 }>;
 
-export const AdminPanelQuestionsList = ({
-	questions,
-	refetchQuestions,
-}: AdminPanelQuestionsListProps) => {
-	const serializedQuestions = questions.map((question) =>
-		use(serializeQuestionToMarkdown(question)),
-	);
+export const AdminPanelQuestionsList = memo(
+	({ questions, refetchQuestions }: AdminPanelQuestionsListProps) => {
+		const serializedQuestions = questions.map((question) =>
+			use(
+				(async () => {
+					const { mdxContent } = await serializeQuestionToMarkdown(question);
+					return { ...question, mdxContent };
+				})(),
+			),
+		);
 
-	return (
-		<ul className="w-full space-y-5">
-			{serializedQuestions.map(({ _levelId, ...question }) => (
-				<li key={question.id}>
-					<QuestionItem
-						level={_levelId}
-						leftSection={
-							<AdminPanelQuestionLeftSection
-								id={question.id}
-								status={question._statusId}
-								refetchQuestions={refetchQuestions}
-							/>
-						}
-						{...question}
-					/>
-				</li>
-			))}
-		</ul>
-	);
-};
+		return (
+			<ul className="w-full space-y-5">
+				{serializedQuestions.map((question) => (
+					<li key={question.id}>
+						<QuestionItem
+							level={question._levelId}
+							leftSection={
+								<AdminPanelQuestionLeftSection
+									question={question}
+									refetchQuestions={refetchQuestions}
+								/>
+							}
+							{...question}
+						/>
+					</li>
+				))}
+			</ul>
+		);
+	},
+);
+
+AdminPanelQuestionsList.displayName = "AdminPanelQuestionsList";
