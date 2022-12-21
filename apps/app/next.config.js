@@ -39,6 +39,11 @@ const nextConfig = {
 				permanent: false,
 			},
 			{
+				source: "/admin",
+				destination: "/admin/pending/1",
+				permanent: false,
+			},
+			{
 				source: "/questions/:technology",
 				destination: "/questions/:technology/1",
 				permanent: true,

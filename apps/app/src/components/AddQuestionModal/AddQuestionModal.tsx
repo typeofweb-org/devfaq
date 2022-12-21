@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, ComponentProps, useState } from "react";
+import { ChangeEvent, ComponentProps, useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { twMerge } from "tailwind-merge";
 import { useUIContext } from "../../providers/UIProvider";
@@ -9,7 +9,7 @@ import { Level, levels, validateLevel } from "../../lib/level";
 import { BaseModal } from "../BaseModal";
 import { Button } from "../Button/Button";
 import { Select } from "../Select/Select";
-import { useCreateQuestion } from "../../hooks/useCreateQuestion";
+import { useQuestionMutation } from "../../hooks/useQuestionMutation";
 import { QuestionEditor } from "./QuestionEditor/QuestionEditor";
 
 type SelectDataState = Readonly<{
@@ -22,8 +22,8 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 	const [content, setContent] = useState("");
 	const [isError, setIsError] = useState(false);
 
-	const { openModal, closeModal } = useUIContext();
-	const { createQuestionMutation } = useCreateQuestion();
+	const { openModal, closeModal, modalData, openedModal } = useUIContext<"AddQuestionModal">();
+	const { createQuestionMutation, patchQuestionMutation } = useQuestionMutation();
 
 	const disabled =
 		!selectData.technology ||
@@ -31,27 +31,39 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 		content.length === 0 ||
 		createQuestionMutation.isLoading;
 
+	useEffect(() => {
+		if (openedModal && modalData) {
+			setSelectData({
+				level: modalData._levelId,
+				technology: modalData._categoryId,
+			});
+			setContent(modalData.question);
+		}
+	}, [openedModal, modalData]);
+
 	const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
 		const { technology, level } = selectData;
 
 		event.preventDefault();
 
-		if (technology && level) {
-			createQuestionMutation.mutate(
-				{
-					category: technology,
-					question: content,
-					level,
-				},
-				{
-					onSuccess: () => {
-						setSelectData({});
-						setContent("");
-						openModal("AddQuestionConfirmationModal");
-					},
-					onError: () => setIsError(true),
-				},
-			);
+		if (!technology || !level) {
+			return;
+		}
+
+		const data = { category: technology, question: content, level };
+		const options = {
+			onSuccess: () => {
+				setSelectData({});
+				setContent("");
+				modalData ? closeModal() : openModal("AddQuestionConfirmationModal");
+			},
+			onError: () => setIsError(true),
+		};
+
+		if (modalData) {
+			patchQuestionMutation.mutate({ id: modalData.id, ...data }, options);
+		} else {
+			createQuestionMutation.mutate(data, options);
 		}
 	};
 
@@ -70,7 +82,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 	return (
 		<BaseModal {...props}>
 			<h2 className="text-center text-xl font-bold uppercase text-primary dark:text-neutral-200">
-				Nowe pytanie
+				{modalData ? "Edytuj" : "Nowe"} pytanie
 			</h2>
 			<form onSubmit={handleFormSubmit}>
 				<div className="mt-10 flex flex-col gap-y-3 px-5 sm:flex-row sm:justify-evenly sm:gap-x-5">
@@ -114,7 +126,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 				<QuestionEditor value={content} onChange={setContent} />
 				<div className="mt-3 flex flex-col gap-2 sm:flex-row-reverse">
 					<Button type="submit" variant="brandingInverse" disabled={disabled}>
-						Dodaj pytanie
+						{modalData ? "Edytuj" : "Dodaj"} pytanie
 					</Button>
 					<Button type="button" variant="branding" onClick={closeModal}>
 						Anuluj
