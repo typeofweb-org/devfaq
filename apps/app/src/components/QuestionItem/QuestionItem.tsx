@@ -1,7 +1,7 @@
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { format } from "../../utils/intl";
+import { formatDate } from "../../utils/intl";
 import { QuestionContent } from "./QuestionContent";
 import { Level, QuestionLevel } from "./QuestionLevel";
 
@@ -23,14 +23,29 @@ export const QuestionItem = ({
 	const creationDate = acceptedAt ? new Date(acceptedAt) : null;
 
 	return (
-		<article className="flex items-center bg-white p-5 text-sm text-neutral-500 shadow-md dark:bg-white-dark dark:text-neutral-200">
+		<article className="flex bg-white p-3 text-sm text-neutral-500 shadow-md dark:bg-white-dark dark:text-neutral-200 md:p-5">
 			{leftSection}
 			<QuestionContent source={mdxContent} />
-			<div className="ml-4 mt-2 flex min-w-max flex-col items-end">
+			<div className="mt-1 flex min-w-max flex-col items-center md:ml-4 md:items-end">
 				<QuestionLevel level={level} />
 				{creationDate && (
 					<Link href={`/questions/p/${id}`} className="mt-3 text-xs underline">
-						<time dateTime={creationDate.toISOString()}>{format(creationDate)}</time>
+						<time
+							dateTime={creationDate.toISOString()}
+							aria-label={`Pytanie dodano ${formatDate(creationDate, "long")}`}
+							title={`Pytanie dodano ${formatDate(creationDate, "long")}`}
+							className="hidden md:block"
+						>
+							{formatDate(creationDate, "long")}
+						</time>
+						<time
+							dateTime={creationDate.toISOString()}
+							aria-label={`Pytanie dodano ${formatDate(creationDate, "long")}`}
+							title={`Pytanie dodano ${formatDate(creationDate, "long")}`}
+							className="block md:hidden"
+						>
+							{formatDate(creationDate, "short")}
+						</time>
 					</Link>
 				)}
 			</div>

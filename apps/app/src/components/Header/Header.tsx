@@ -1,9 +1,7 @@
 import { Container } from "../Container";
 import { AppTitle } from "../AppTitle";
 import { HeaderNavigation } from "./HeaderNavigation";
-import { ActiveNavigationLink } from "./ActiveNagivationLink";
 import { DarkModeSwitch } from "./DarkModeSwitch";
-import { LoginNavigationLink } from "./LoginNavigationLink";
 
 export const Header = () => (
 	<div className="bg-primary">
@@ -13,14 +11,6 @@ export const Header = () => (
 		>
 			<AppTitle />
 			<HeaderNavigation>
-				<ActiveNavigationLink href="/about">Jak korzystać?</ActiveNavigationLink>
-				<ActiveNavigationLink href="/authors">Autorzy</ActiveNavigationLink>
-				<a href="https://www.facebook.com/DevFAQ" target="_blank" rel="noreferrer">
-					FaceBook
-				</a>
-				<div className="sm:w-14">
-					<LoginNavigationLink />
-				</div>
 				<DarkModeSwitch />
 			</HeaderNavigation>
 		</Container>
