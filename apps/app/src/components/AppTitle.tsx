@@ -10,7 +10,7 @@ export const AppTitle = () => {
 
 	return (
 		<Tag>
-			<Link href={`${isHome ? "#" : "/"}`}>
+			<Link href="/">
 				<span className="sr-only">DevFAQ</span>
 				<AppLogo />
 			</Link>
