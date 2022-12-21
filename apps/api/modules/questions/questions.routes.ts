@@ -254,6 +254,51 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 
 	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
 		url: "/questions/:id",
+		method: "GET",
+		schema: generateGetQuestionByIdSchema(args),
+		async handler(request, reply) {
+			const { id } = request.params;
+
+			const q = await fastify.db.question.findFirst({
+				where: {
+					id,
+					statusId: "accepted",
+				},
+				select: {
+					id: true,
+					question: true,
+					categoryId: true,
+					levelId: true,
+					statusId: true,
+					acceptedAt: true,
+					_count: {
+						select: {
+							QuestionVote: true,
+						},
+					},
+				},
+			});
+
+			if (!q) {
+				return reply.notFound();
+			}
+
+			const data = {
+				id: q.id,
+				question: q.question,
+				_categoryId: q.categoryId,
+				_levelId: q.levelId,
+				_statusId: q.statusId,
+				acceptedAt: q.acceptedAt?.toISOString(),
+				votesCount: q._count.QuestionVote,
+			};
+
+			return { data };
+		},
+	});
+
+	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
+		url: "/questions/:id",
 		method: "DELETE",
 		schema: deleteQuestionByIdSchema,
 		preValidation(request, reply, done) {
