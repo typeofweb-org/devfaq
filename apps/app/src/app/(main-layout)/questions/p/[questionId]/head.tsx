@@ -15,5 +15,5 @@ export default async function Head({ params }: { params: Params<"questionId"> })
 		id: questionId,
 	});
 
-	return <HeadTags title={`Pytanie ${questionId}: ${data.question}`} />;
+	return <HeadTags title={data.question} />;
 }
