@@ -61,7 +61,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 		};
 
 		if (modalData) {
-			patchQuestionMutation.mutate({ id: modalData.id, status: "accepted", ...data }, options);
+			patchQuestionMutation.mutate({ id: modalData.id, ...data }, options);
 		} else {
 			createQuestionMutation.mutate(data, options);
 		}
