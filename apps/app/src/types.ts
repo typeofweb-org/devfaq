@@ -9,9 +9,9 @@ export type UserData =
 export type APIQuestion =
 	paths["/questions/{id}"]["get"]["responses"][200]["content"]["application/json"]["data"];
 
-export type Question = Omit<APIQuestion, "question"> & { mdxContent: MDXRemoteSerializeResult };
+export type AdminQuestion = APIQuestion & { mdxContent: MDXRemoteSerializeResult };
 
-export type AdminQuestion = APIQuestion & Question;
+export type Question = Omit<AdminQuestion, "question">;
 
 export type QuestionFilter = ExcludeUndefined<
 	ExcludeUndefined<paths["/questions"]["get"]["parameters"]>["query"]
