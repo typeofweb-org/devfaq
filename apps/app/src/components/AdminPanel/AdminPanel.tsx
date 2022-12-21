@@ -31,7 +31,7 @@ export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps
 	return (
 		<>
 			<AdminPanelHeader status={status} technology={technology} levels={levels} />
-			{isSuccess ? (
+			{isSuccess && (
 				<>
 					<Suspense>
 						<AdminPanelQuestionsList
@@ -44,7 +44,7 @@ export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps
 						getHref={(page) => `/admin/${status}/${page}`}
 					/>
 				</>
-			) : null}
+			)}
 		</>
 	);
 };

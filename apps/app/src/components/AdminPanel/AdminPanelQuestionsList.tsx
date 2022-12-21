@@ -1,6 +1,7 @@
 import { memo, use } from "react";
-import { APIQuestion, serializeQuestionToMarkdown } from "../../lib/question";
+import { serializeQuestionToMarkdown } from "../../lib/question";
 import { QuestionItem } from "../QuestionItem/QuestionItem";
+import type { APIQuestion } from "../../types";
 import { AdminPanelQuestionLeftSection } from "./AdminPanelQuestionLeftSection";
 
 type AdminPanelQuestionsListProps = Readonly<{
@@ -13,8 +14,8 @@ export const AdminPanelQuestionsList = memo(
 		const serializedQuestions = questions.map((question) =>
 			use(
 				(async () => {
-					const serializedQuestion = await serializeQuestionToMarkdown(question);
-					return { content: question.question, ...serializedQuestion };
+					const { mdxContent } = await serializeQuestionToMarkdown(question);
+					return { ...question, mdxContent };
 				})(),
 			),
 		);

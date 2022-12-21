@@ -32,12 +32,12 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 		createQuestionMutation.isLoading;
 
 	useEffect(() => {
-		if (modalData) {
+		if (openedModal && modalData) {
 			setSelectData({
 				level: modalData._levelId,
 				technology: modalData._categoryId,
 			});
-			setContent(modalData.content);
+			setContent(modalData.question);
 		}
 	}, [openedModal, modalData]);
 

@@ -31,7 +31,7 @@ export const AdminPanelHeader = ({
 	};
 
 	return (
-		<header className="flex h-12 w-full flex-wrap items-center justify-between gap-6 text-neutral-400">
+		<header className="flex w-full flex-wrap items-center justify-between gap-6 text-neutral-400">
 			<SelectLabel>
 				Technologia:
 				<Select
