@@ -20,6 +20,7 @@ export const LevelButton = ({ variant, isActive, onClick, children }: LevelButto
 			variant === "mid" && "level-button-mid",
 			variant === "senior" && "level-button-senior",
 		)}
+		title={`Wyświetl pytania z kategorii ${variant}`}
 		onClick={onClick}
 	>
 		{children}

@@ -39,7 +39,7 @@ export const QuestionVoting = ({
 	return (
 		<button
 			className={twMerge(
-				"mr-4 mt-1 flex h-fit items-center gap-x-1.5 text-neutral-200 transition-colors",
+				"mr-1 mt-1 flex h-fit items-center gap-x-1.5 text-neutral-200 transition-colors md:mr-4",
 				voted && "text-violet-700 dark:text-violet-300",
 			)}
 			type="button"
