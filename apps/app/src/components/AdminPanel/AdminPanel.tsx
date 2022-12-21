@@ -17,7 +17,7 @@ type AdminPanelProps = Readonly<{
 }>;
 
 export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps) => {
-	const { isSuccess, isLoading, data, refetch } = useGetAllQuestions({
+	const { isSuccess, data, refetch } = useGetAllQuestions({
 		page,
 		status,
 		technology,
@@ -44,8 +44,6 @@ export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps
 						getHref={(page) => `/admin/${status}/${page}`}
 					/>
 				</>
-			) : isLoading ? (
-				<p>Loading...</p>
 			) : null}
 		</>
 	);

@@ -27,7 +27,7 @@ export default function AdminPage({
 	}
 
 	return (
-		<PrivateRoute>
+		<PrivateRoute loginPreviousPath="/">
 			<AdminPanel page={page} technology={technology} status={params.status} levels={levels} />
 		</PrivateRoute>
 	);
