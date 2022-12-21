@@ -209,6 +209,11 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 
 			const { question, level, category, status } = request.body;
 
+			const selectedQuestion = await fastify.db.question.findUnique({
+				where: { id },
+				select: { acceptedAt: true },
+			});
+
 			const q = await fastify.db.question.update({
 				where: { id },
 				data: {
@@ -216,6 +221,7 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 					...(level && { QuestionLevel: { connect: { id: level } } }),
 					...(category && { QuestionCategory: { connect: { id: category } } }),
 					...(status && { QuestionStatus: { connect: { id: status } } }),
+					...(status === "accepted" && !selectedQuestion?.acceptedAt && { acceptedAt: new Date() }),
 				},
 				select: {
 					id: true,
@@ -231,51 +237,6 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 					},
 				},
 			});
-
-			const data = {
-				id: q.id,
-				question: q.question,
-				_categoryId: q.categoryId,
-				_levelId: q.levelId,
-				_statusId: q.statusId,
-				acceptedAt: q.acceptedAt?.toISOString(),
-				votesCount: q._count.QuestionVote,
-			};
-
-			return { data };
-		},
-	});
-
-	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
-		url: "/questions/:id",
-		method: "GET",
-		schema: generateGetQuestionByIdSchema(args),
-		async handler(request, reply) {
-			const { id } = request.params;
-
-			const q = await fastify.db.question.findFirst({
-				where: {
-					id,
-					statusId: "accepted",
-				},
-				select: {
-					id: true,
-					question: true,
-					categoryId: true,
-					levelId: true,
-					statusId: true,
-					acceptedAt: true,
-					_count: {
-						select: {
-							QuestionVote: true,
-						},
-					},
-				},
-			});
-
-			if (!q) {
-				return reply.notFound();
-			}
 
 			const data = {
 				id: q.id,

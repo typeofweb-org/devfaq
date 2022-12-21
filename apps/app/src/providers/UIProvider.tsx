@@ -1,29 +1,42 @@
-import { useCallback, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import { createSafeContext } from "../lib/createSafeContext";
+import type { AdminQuestion } from "../types";
 
-export type Modal = "AddQuestionModal" | "AddQuestionConfirmationModal";
+interface ModalData {
+	AddQuestionModal: AdminQuestion;
+	AddQuestionConfirmationModal: never;
+}
 
-interface UIContextValue {
+export type Modal = keyof ModalData;
+
+interface UIContextValue<D extends Modal = Modal> {
 	openedModal: Modal | null;
-	openModal: (modal: Modal) => void;
+	openModal: <T extends Modal>(modal: T, data?: ModalData[T]) => void;
 	closeModal: () => void;
+	modalData: ModalData[D] | null;
 	isSidebarOpen: boolean;
 	openSidebar: () => void;
 	closeSidebar: () => void;
 }
 
-const [useUIContext, UIContextProvider] = createSafeContext<UIContextValue>();
+const UIContext = createContext<UIContextValue | null>(null);
 
-const UIProvider = ({ children }: { readonly children: ReactNode }) => {
+export const UIProvider = ({ children }: { readonly children: ReactNode }) => {
 	const [openedModal, setOpenedModal] = useState<Modal | null>(null);
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-	const openModal = useCallback((modal: Modal) => {
+	const modalDataRef = useRef<ModalData[Modal] | null>(null);
+
+	const openModal = useCallback(<T extends Modal>(modal: T, data?: ModalData[T]) => {
+		if (data) {
+			modalDataRef.current = data;
+		}
+
 		setOpenedModal(modal);
 	}, []);
 
 	const closeModal = useCallback(() => {
+		modalDataRef.current = null;
 		setOpenedModal(null);
 	}, []);
 
@@ -36,11 +49,27 @@ const UIProvider = ({ children }: { readonly children: ReactNode }) => {
 	}, []);
 
 	const value = useMemo(
-		() => ({ openedModal, openModal, closeModal, isSidebarOpen, openSidebar, closeSidebar }),
+		() => ({
+			openedModal,
+			openModal,
+			closeModal,
+			isSidebarOpen,
+			openSidebar,
+			closeSidebar,
+			modalData: modalDataRef.current,
+		}),
 		[openedModal, openModal, closeModal, isSidebarOpen, openSidebar, closeSidebar],
 	);
 
-	return <UIContextProvider value={value}>{children}</UIContextProvider>;
+	return <UIContext.Provider value={value}>{children}</UIContext.Provider>;
 };
 
-export { useUIContext, UIProvider };
+export const useUIContext = <T extends Modal>() => {
+	const ctx = useContext(UIContext);
+
+	if (!ctx) {
+		throw new Error("useContext must be use inside Provider!");
+	}
+
+	return ctx as UIContextValue<T>;
+};

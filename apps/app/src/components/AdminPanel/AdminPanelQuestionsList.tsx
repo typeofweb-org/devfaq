@@ -13,19 +13,23 @@ export const AdminPanelQuestionsList = ({
 	refetchQuestions,
 }: AdminPanelQuestionsListProps) => {
 	const serializedQuestions = questions.map((question) =>
-		use(serializeQuestionToMarkdown(question)),
+		use(
+			(async () => {
+				const serializedQuestion = await serializeQuestionToMarkdown(question);
+				return { content: question.question, ...serializedQuestion };
+			})(),
+		),
 	);
 
 	return (
 		<ul className="w-full space-y-5">
-			{serializedQuestions.map(({ _levelId, ...question }) => (
+			{serializedQuestions.map((question) => (
 				<li key={question.id}>
 					<QuestionItem
-						level={_levelId}
+						level={question._levelId}
 						leftSection={
 							<AdminPanelQuestionLeftSection
-								id={question.id}
-								status={question._statusId}
+								question={question}
 								refetchQuestions={refetchQuestions}
 							/>
 						}

@@ -1,10 +1,15 @@
 import { redirect } from "next/navigation";
-import { AdminPanel } from "../../../../../components/AdminPanel/AdminPanel";
+import dynamic from "next/dynamic";
 import { PrivateRoute } from "../../../../../components/PrivateRoute";
 import { parseQueryLevels } from "../../../../../lib/level";
 import { statuses } from "../../../../../lib/question";
 import { parseTechnologyQuery } from "../../../../../lib/technologies";
 import { Params, SearchParams } from "../../../../../types";
+
+const AdminPanel = dynamic(
+	() => import("../../../../../components/AdminPanel/AdminPanel").then((mod) => mod.AdminPanel),
+	{ ssr: false },
+);
 
 export default function AdminPage({
 	params,

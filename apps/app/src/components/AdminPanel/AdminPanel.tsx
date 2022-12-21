@@ -1,7 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useCallback } from "react";
 import { useGetAllQuestions } from "../../hooks/useGetAllQuestions";
 import { Level } from "../../lib/level";
 import { QuestionStatus } from "../../lib/question";
@@ -24,11 +23,10 @@ export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps
 		technology,
 		levels,
 	});
-	const pathname = usePathname();
 
-	const refetchQuestions = () => {
+	const refetchQuestions = useCallback(() => {
 		void refetch();
-	};
+	}, [refetch]);
 
 	return (
 		<>

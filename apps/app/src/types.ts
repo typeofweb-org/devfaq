@@ -11,6 +11,8 @@ export type Question = Omit<
 	"question"
 > & { mdxContent: MDXRemoteSerializeResult };
 
+export type AdminQuestion = Question & { content: string };
+
 export type QuestionFilter = ExcludeUndefined<
 	ExcludeUndefined<paths["/questions"]["get"]["parameters"]>["query"]
 >;
