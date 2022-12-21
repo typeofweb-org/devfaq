@@ -10,6 +10,8 @@ import { Params, QuestionFilter, SearchParams } from "../../../../../types";
 import { QuestionsList } from "../../../../../components/QuestionsList/QuestionsList";
 import { serializeQuestionToMarkdown } from "../../../../../lib/question";
 
+export const revalidate = 0;
+
 export default async function QuestionsPage({
 	params,
 	searchParams,
