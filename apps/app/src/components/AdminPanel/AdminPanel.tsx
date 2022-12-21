@@ -1,7 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useCallback } from "react";
 import { useGetAllQuestions } from "../../hooks/useGetAllQuestions";
 import { Level } from "../../lib/level";
 import { QuestionStatus } from "../../lib/question";
@@ -18,17 +17,16 @@ type AdminPanelProps = Readonly<{
 }>;
 
 export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps) => {
-	const { isSuccess, isLoading, data, refetch } = useGetAllQuestions({
+	const { isSuccess, data, refetch } = useGetAllQuestions({
 		page,
 		status,
 		technology,
 		levels,
 	});
-	const pathname = usePathname();
 
-	const refetchQuestions = () => {
+	const refetchQuestions = useCallback(() => {
 		void refetch();
-	};
+	}, [refetch]);
 
 	return (
 		<>
@@ -46,8 +44,6 @@ export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps
 						getHref={(page) => `/admin/${status}/${page}`}
 					/>
 				</>
-			) : isLoading ? (
-				<p>Loading...</p>
 			) : null}
 		</>
 	);
