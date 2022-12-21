@@ -10,7 +10,7 @@ export const LevelFilter = () => {
 
 	return (
 		<QuestionsSidebarSection title="Wybierz poziom">
-			<ul className="flex justify-center gap-3 sm:flex-col small-filters:flex-row">
+			<ul className="flex justify-center gap-3 overflow-x-auto sm:flex-col small-filters:flex-row">
 				{levels.map((level) => {
 					const isActive = Boolean(queryLevels?.includes(level));
 					const handleClick = isActive ? removeLevel : addLevel;
