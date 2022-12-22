@@ -27,7 +27,8 @@
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"rehype-prism-plus": "1.5.0",
-		"tailwind-merge": "1.8.0"
+		"tailwind-merge": "1.8.0",
+		"xss": "1.0.14"
 	},
 	"devDependencies": {
 		"@csstools/postcss-oklab-function": "1.1.1",

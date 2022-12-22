@@ -47,7 +47,7 @@ export default function AboutPage() {
 				<li>* List</li>
 			</ul>
 
-			<h4>Przykład użycia</h4>
+			<h3>Przykład użycia</h3>
 			<p>Przykładowe pytanie napisane w Markdown może wyglądać tak:</p>
 
 			<pre>
