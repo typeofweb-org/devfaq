@@ -2,7 +2,7 @@
 
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 
-import "../../styles/prism-one-light.css";
+import "../../styles/prism-material.css";
 
 type QuestionContentProps = Readonly<{
 	source: MDXRemoteSerializeResult;

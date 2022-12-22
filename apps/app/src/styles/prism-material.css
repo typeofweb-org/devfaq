@@ -1,0 +1,129 @@
+code[class*="language-"],
+pre[class*="language-"] {
+	@apply text-[#90a4ae] dark:text-[#eeffff];
+	background: none;
+	border-radius: 0.3em;
+	font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+pre[class*="language-"] {
+	padding: 2em;
+	margin: 0.5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	@apply bg-[#fafafa] dark:bg-[#212121];
+}
+
+:not(pre) > code[class*="language-"] {
+	padding: 0.1em;
+	white-space: normal;
+}
+
+.token.script.language-javascript {
+	@apply text-[#90a4ae] dark:text-[#eeffff];
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	@apply text-[#90a4ae] dark:text-[#545454];
+}
+
+.token.attr-name,
+.token.namespace,
+.token.deleted {
+	@apply text-[#945eb8] dark:text-[#bb80b3];
+}
+
+.token.function,
+.token.function-name {
+	@apply text-[#6182b8] dark:text-[#82aaff];
+}
+
+.token.unit,
+.token.url,
+.token.boolean,
+.token.number {
+	@apply text-[#f76d47] dark:text-[#f78c6c];
+}
+
+.token.color,
+.token.hexcode,
+.token.builtin,
+.token.property,
+.token.class,
+.token.class-name,
+.token.constant,
+.token.symbol {
+	@apply text-[#ffb62c] dark:text-[#ffcb6b];
+}
+
+.token.id,
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword {
+	@apply text-[#7c4dff] dark:text-[#c792ea];
+}
+
+.token.pseudo-class,
+.token.pseudo-element,
+.token.inserted,
+.token.attribute,
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+	@apply text-[#91b859] dark:text-[#c3e88d];
+}
+
+.token.punctuation,
+.token.operator,
+.token.entity,
+.token.url {
+	@apply text-[#39adb5] dark:text-[#89ddff];
+}
+
+.token.tag {
+	@apply text-[#ff5370] dark:text-[#f07178];
+}
+
+.token.parameter,
+.token.deleted {
+	@apply text-[#e53935] dark:text-[#ff5370];
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
