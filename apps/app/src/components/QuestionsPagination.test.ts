@@ -2,38 +2,19 @@ import { describe, expect, it } from "vitest";
 import { getPages } from "./QuestionsPagination";
 
 describe("QuestionsPagination", () => {
-	const first = 1;
-	const last = 8;
-
-	it(`should return pages: ${first}, 2, 3, 4, ${last}`, () => {
-		expect(getPages({ first, current: 1, last })).toEqual([first, 2, 3, 4, last]);
-	});
-
-	it(`should return pages: ${first}, 2, 3, 4, ${last}`, () => {
-		expect(getPages({ first, current: 2, last })).toEqual([first, 2, 3, 4, last]);
-	});
-
-	it(`should return pages: ${first}, 2, 3, 4, ${last}`, () => {
-		expect(getPages({ first, current: 3, last })).toEqual([first, 2, 3, 4, last]);
-	});
-
-	it(`should return pages: ${first}, 3, 4, 5, ${last}`, () => {
-		expect(getPages({ first, current: 4, last })).toEqual([first, 3, 4, 5, last]);
-	});
-
-	it(`should return pages: ${first}, 4, 5, 6, ${last}`, () => {
-		expect(getPages({ first, current: 5, last })).toEqual([first, 4, 5, 6, last]);
-	});
-
-	it(`should return pages: ${first}, 5, 6, 7, ${last}`, () => {
-		expect(getPages({ first, current: 6, last })).toEqual([first, 5, 6, 7, last]);
-	});
-
-	it(`should return pages: ${first}, 5, 6, 7, ${last}`, () => {
-		expect(getPages({ first, current: 7, last })).toEqual([first, 5, 6, 7, last]);
-	});
-
-	it(`should return pages: ${first}, 5, 6, 7, ${last}`, () => {
-		expect(getPages({ first, current: 8, last })).toEqual([first, 5, 6, 7, last]);
-	});
+	it.each([
+		{ first: 1, last: 6, current: 1, expected: [1, 2, 3, 4, 6] },
+		{ first: 1, last: 6, current: 2, expected: [1, 2, 3, 4, 6] },
+		{ first: 1, last: 6, current: 3, expected: [1, 2, 3, 4, 6] },
+		{ first: 1, last: 6, current: 4, expected: [1, 3, 4, 5, 6] },
+		{ first: 1, last: 7, current: 5, expected: [1, 4, 5, 6, 7] },
+		{ first: 1, last: 5, current: 3, expected: [1, 2, 3, 4, 5] },
+		{ first: 1, last: 5, current: 4, expected: [1, 2, 3, 4, 5] },
+		{ first: 1, last: 5, current: 5, expected: [1, 2, 3, 4, 5] },
+	])(
+		`getPages({first: $first, last: $last, current: $current}) returns $expected`,
+		({ first, last, current, expected }) => {
+			expect(getPages({ first, last, current })).toEqual(expected);
+		},
+	);
 });
