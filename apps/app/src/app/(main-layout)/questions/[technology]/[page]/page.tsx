@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { QuestionsHeader } from "../../../../../components/QuestionsHeader";
-import { QuestionsPagination } from "../../../../../components/QuestionsPagination";
+import { QuestionsPagination } from "../../../../../components/QuestionsPagination/QuestionsPagination";
 import { PAGE_SIZE } from "../../../../../lib/constants";
 import { DEFAULT_SORT_BY_QUERY, parseQuerySortBy } from "../../../../../lib/order";
 import { parseQueryLevels } from "../../../../../lib/level";

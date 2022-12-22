@@ -1,6 +1,6 @@
 import { LinkProps } from "next/link";
-import { PAGE_SIZE } from "../lib/constants";
-import { ActiveLink } from "./ActiveLink";
+import { PAGE_SIZE } from "../../lib/constants";
+import { ActiveLink } from "../ActiveLink";
 
 type QuestionsPaginationProps = Readonly<{
 	current: number;

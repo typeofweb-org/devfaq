@@ -11,6 +11,10 @@ describe("QuestionsPagination", () => {
 		{ first: 1, last: 5, current: 3, expected: [1, 2, 3, 4, 5] },
 		{ first: 1, last: 5, current: 4, expected: [1, 2, 3, 4, 5] },
 		{ first: 1, last: 5, current: 5, expected: [1, 2, 3, 4, 5] },
+		{ first: 1, last: 871, current: 412, expected: [1, 411, 412, 413, 871] },
+		{ first: 1, last: 872, current: 313, expected: [1, 312, 313, 314, 872] },
+		{ first: 1, last: 872, current: 2, expected: [1, 2, 3, 4, 872] },
+		{ first: 1, last: 872, current: 871, expected: [1, 869, 870, 871, 872] },
 	])(
 		`getPages({first: $first, last: $last, current: $current}) returns $expected`,
 		({ first, last, current, expected }) => {

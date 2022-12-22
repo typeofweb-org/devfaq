@@ -5,7 +5,7 @@ import { useGetAllQuestions } from "../../hooks/useGetAllQuestions";
 import { Level } from "../../lib/level";
 import { QuestionStatus } from "../../lib/question";
 import { Technology } from "../../lib/technologies";
-import { QuestionsPagination } from "../QuestionsPagination";
+import { QuestionsPagination } from "../QuestionsPagination/QuestionsPagination";
 import { AdminPanelHeader } from "./AdminPanelHeader";
 import { AdminPanelQuestionsList } from "./AdminPanelQuestionsList";
 
