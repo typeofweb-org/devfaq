@@ -1,7 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useCallback } from "react";
 import { useGetAllQuestions } from "../../hooks/useGetAllQuestions";
 import { Level } from "../../lib/level";
 import { QuestionStatus } from "../../lib/question";
@@ -18,22 +17,21 @@ type AdminPanelProps = Readonly<{
 }>;
 
 export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps) => {
-	const { isSuccess, isLoading, data, refetch } = useGetAllQuestions({
+	const { isSuccess, data, refetch } = useGetAllQuestions({
 		page,
 		status,
 		technology,
 		levels,
 	});
-	const pathname = usePathname();
 
-	const refetchQuestions = () => {
+	const refetchQuestions = useCallback(() => {
 		void refetch();
-	};
+	}, [refetch]);
 
 	return (
 		<>
 			<AdminPanelHeader status={status} technology={technology} levels={levels} />
-			{isSuccess ? (
+			{isSuccess && data.data.data.length > 0 ? (
 				<>
 					<Suspense>
 						<AdminPanelQuestionsList
@@ -43,15 +41,16 @@ export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps
 					</Suspense>
 					<QuestionsPagination
 						total={data.data.meta.total}
-						getHref={(page) => ({
-							pathname,
-							query: { page },
-						})}
+						getHref={(page) => `/admin/${status}/${page}`}
 					/>
 				</>
-			) : isLoading ? (
-				<p>Loading...</p>
-			) : null}
+			) : (
+				<p className="mt-10 text-2xl font-bold uppercase text-primary">
+					{status === "accepted"
+						? "Nie znaleziono żadnego pytania"
+						: "Brak pytań do zaakceptowania"}
+				</p>
+			)}
 		</>
 	);
 };

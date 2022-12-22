@@ -1,9 +1,5 @@
-import type { paths } from "openapi-types";
-import { QueryParam } from "../types";
+import type { APIQuestion, QueryParam } from "../types";
 import { serializeSource } from "./markdown";
-
-export type APIQuestion =
-	paths["/questions/{id}"]["get"]["responses"][200]["content"]["application/json"]["data"];
 
 export const statuses = ["accepted", "pending"] as const;
 
