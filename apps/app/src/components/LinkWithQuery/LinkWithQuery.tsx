@@ -31,7 +31,11 @@ const urlObjectToUrl = (urlObject: UrlObject, origin: string): URL => {
 
 export const createQueryHref = (href: Url, query: Record<string, string>): string => {
 	const url = typeof href === "string" ? new URL(href, origin) : urlObjectToUrl(href, origin);
-	Object.entries(query).forEach(([key, value]) => url.searchParams.set(key, value));
+	Object.entries(query).forEach(([key, value]) => {
+		if (url.searchParams.get(key) === null) {
+			url.searchParams.set(key, value);
+		}
+	});
 
 	const newHref = url.toString().replace(new RegExp("^" + escapeStringRegexp(origin)), "");
 
