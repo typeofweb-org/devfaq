@@ -2,7 +2,7 @@ import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { FastifyPluginAsync } from "fastify";
 import { deleteAnswerSchema, updateAnswerSchema } from "./answers.schemas.js";
 
-const answersRoutes: FastifyPluginAsync = async (fastify) => {
+const answersPlugin: FastifyPluginAsync = async (fastify) => {
 	fastify.addHook("preHandler", async (request) => {
 		const {
 			session: { data: sessionData },
@@ -52,4 +52,4 @@ const answersRoutes: FastifyPluginAsync = async (fastify) => {
 	});
 };
 
-export default answersRoutes;
+export default answersPlugin;
