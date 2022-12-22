@@ -16,7 +16,7 @@ export const Technology = ({ href, title, icon }: TechnologyProps) => (
 		activeHref={`/questions/${href}`}
 		mergeQuery
 	>
-		<span className="text-sm text-neutral-500 dark:text-neutral-200 small-filters:text-xs">
+		<span className="text-sm text-neutral-600 dark:text-neutral-200 small-filters:text-xs">
 			{title}
 		</span>
 		{icon}

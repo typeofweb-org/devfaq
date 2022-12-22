@@ -34,11 +34,11 @@ export const Author = ({
 					height={125}
 					className="mb-5 rounded-full"
 				/>
-				<h3 className="mb-1 font-semibold">
+				<h2 className="mb-1 font-semibold">
 					<span className="sr-only">Imię:</span>
 					{name}
-				</h3>
-				<p className="text-center font-semibold leading-tight text-violet-600 dark:text-violet-400">
+				</h2>
+				<p className="text-center font-semibold leading-tight text-violet-600 dark:text-violet-300">
 					<span className="sr-only">Zasługi:</span>
 					{translatedContributions.join(", ")}
 				</p>
