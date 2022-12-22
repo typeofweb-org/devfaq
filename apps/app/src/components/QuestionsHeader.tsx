@@ -23,7 +23,7 @@ export const QuestionsHeader = ({ technology, total }: QuestionsHeaderProps) => 
 	};
 
 	return (
-		<header className="flex flex-wrap items-baseline justify-between gap-3 text-neutral-400">
+		<header className="flex flex-wrap items-baseline justify-between gap-3 text-neutral-500 dark:text-neutral-400">
 			<output className="flex gap-1.5 md:gap-3">
 				<strong>{technologiesLabel[technology]}: </strong>
 				{total} {questionsPluralize(total)}
