@@ -45,7 +45,7 @@ export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps
 					/>
 				</>
 			) : (
-				<p className="mt-10 text-2xl font-bold uppercase text-primary">
+				<p className="mt-10 text-2xl font-bold uppercase text-primary dark:text-neutral-200">
 					{status === "accepted"
 						? "Nie znaleziono żadnego pytania"
 						: "Brak pytań do zaakceptowania"}
