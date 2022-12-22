@@ -6,5 +6,6 @@ export const serializeSource = (source: string) =>
 	serialize(xss(source, { whiteList: {} }), {
 		mdxOptions: {
 			rehypePlugins: [rehypePrism],
+			format: "md",
 		},
 	});
