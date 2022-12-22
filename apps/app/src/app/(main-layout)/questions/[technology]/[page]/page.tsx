@@ -47,6 +47,7 @@ export default async function QuestionsPage({
 			<QuestionsHeader technology={params.technology} total={meta.total} />
 			<QuestionsList questions={questions} questionFilter={questionFilter} />
 			<QuestionsPagination
+				current={page}
 				total={meta.total}
 				getHref={(page) => `/questions/${params.technology}/${page}`}
 			/>

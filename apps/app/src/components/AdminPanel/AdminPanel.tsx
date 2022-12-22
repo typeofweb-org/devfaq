@@ -40,6 +40,7 @@ export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps
 						/>
 					</Suspense>
 					<QuestionsPagination
+						current={page}
 						total={data.data.meta.total}
 						getHref={(page) => `/admin/${status}/${page}`}
 					/>
