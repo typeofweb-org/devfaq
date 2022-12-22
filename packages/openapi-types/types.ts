@@ -299,6 +299,105 @@ export interface paths {
 			};
 		};
 	};
+	"/questions/{id}/answers": {
+		get: {
+			parameters: {
+				path: {
+					id: number;
+				};
+			};
+			responses: {
+				/** @description Default Response */
+				200: {
+					content: {
+						"application/json": {
+							id: number;
+							content: string;
+							user: {
+								id: number;
+								email: string;
+								firstName: string | null;
+								lastName: string | null;
+								socialLogin: {
+									[key: string]: (string | number) | undefined;
+								};
+							};
+						}[];
+					};
+				};
+			};
+		};
+		post: {
+			parameters: {
+				path: {
+					id: number;
+				};
+			};
+			requestBody: {
+				content: {
+					"application/json": {
+						content: string;
+					};
+				};
+			};
+			responses: {
+				/** @description Default Response */
+				200: {
+					content: {
+						"application/json": {
+							id: number;
+							content: string;
+						};
+					};
+				};
+			};
+		};
+	};
+	"/answers/{id}": {
+		delete: {
+			parameters: {
+				path: {
+					id: number;
+				};
+			};
+			responses: {
+				/** @description Default Response */
+				200: {
+					content: {
+						"application/json": {
+							id: number;
+							content: string;
+						};
+					};
+				};
+			};
+		};
+		patch: {
+			parameters: {
+				path: {
+					id: number;
+				};
+			};
+			requestBody?: {
+				content: {
+					"application/json": {
+						content?: string;
+					};
+				};
+			};
+			responses: {
+				/** @description Default Response */
+				200: {
+					content: {
+						"application/json": {
+							id: number;
+							content: string;
+						};
+					};
+				};
+			};
+		};
+	};
 	"/": {
 		get: {
 			responses: {
