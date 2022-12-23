@@ -22,6 +22,7 @@ model Question {
   QuestionStatus   QuestionStatus   @relation(fields: [statusId], references: [id], onDelete: Cascade)
   CreatedBy        User?            @relation(fields: [createdById], references: [id], onDelete: Cascade)
   QuestionVote     QuestionVote[]
+  QuestionAnswer   QuestionAnswer[]
 }
 
 model QuestionCategory {
@@ -55,6 +56,17 @@ model QuestionVote {
   @@id([userId, questionId])
 }
 
+model QuestionAnswer {
+  id          Int      @id @default(autoincrement())
+  createdById Int      @map("_createdById")
+  questionId  Int      @map("_questionId")
+  content     String
+  createdAt   DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt() @db.Timestamptz(6)
+  CreatedBy   User     @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  Question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+
 model SequelizeMeta {
   name String @id @db.VarChar(255)
 }
@@ -70,18 +82,19 @@ model Session {
 }
 
 model User {
-  id           Int            @id @default(autoincrement())
-  email        String         @unique
-  firstName    String?
-  lastName     String?
-  roleId       String         @default("user") @map("_roleId")
-  createdAt    DateTime       @default(now()) @db.Timestamptz(6)
-  updatedAt    DateTime       @updatedAt() @db.Timestamptz(6)
-  socialLogin  Json           @default("{}")
-  UserRole     UserRole       @relation(fields: [roleId], references: [id], onDelete: Cascade)
-  QuestionVote QuestionVote[]
-  Session      Session[]
-  Question     Question[]
+  id             Int              @id @default(autoincrement())
+  email          String           @unique
+  firstName      String?
+  lastName       String?
+  roleId         String           @default("user") @map("_roleId")
+  createdAt      DateTime         @default(now()) @db.Timestamptz(6)
+  updatedAt      DateTime         @updatedAt() @db.Timestamptz(6)
+  socialLogin    Json             @default("{}")
+  UserRole       UserRole         @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  QuestionVote   QuestionVote[]
+  Session        Session[]
+  Question       Question[]
+  QuestionAnswer QuestionAnswer[]
 }
 
 model UserRole {
