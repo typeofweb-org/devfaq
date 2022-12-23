@@ -10,7 +10,6 @@ export const dbAnswerToDto = ({
 		createdAt: createdAt.toISOString(),
 		createdBy: {
 			socialLogin: socialLogin as Record<string, string | number>,
-			createdAt: createdAt.toISOString(),
 			...createdBy,
 		},
 		...rest,
