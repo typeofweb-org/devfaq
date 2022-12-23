@@ -3,6 +3,7 @@ import { Type } from "@sinclair/typebox";
 const answerSchema = Type.Object({
 	id: Type.Number(),
 	content: Type.String(),
+	createdAt: Type.String({ format: "date-time" }),
 	createdBy: Type.Object({
 		id: Type.Integer(),
 		firstName: Type.Union([Type.String(), Type.Null()]),

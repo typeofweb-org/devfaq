@@ -314,9 +314,10 @@ export interface paths {
 							data: {
 								id: number;
 								content: string;
-								user: {
+								/** Format: date-time */
+								createdAt: string;
+								createdBy: {
 									id: number;
-									email: string;
 									firstName: string | null;
 									lastName: string | null;
 									socialLogin: {
@@ -350,6 +351,16 @@ export interface paths {
 							data: {
 								id: number;
 								content: string;
+								/** Format: date-time */
+								createdAt: string;
+								createdBy: {
+									id: number;
+									firstName: string | null;
+									lastName: string | null;
+									socialLogin: {
+										[key: string]: (string | number) | undefined;
+									};
+								};
 							};
 						};
 					};
@@ -366,14 +377,9 @@ export interface paths {
 			};
 			responses: {
 				/** @description Default Response */
-				200: {
+				204: {
 					content: {
-						"application/json": {
-							data: {
-								id: number;
-								content: string;
-							};
-						};
+						"application/json": boolean & true;
 					};
 				};
 			};
@@ -399,6 +405,16 @@ export interface paths {
 							data: {
 								id: number;
 								content: string;
+								/** Format: date-time */
+								createdAt: string;
+								createdBy: {
+									id: number;
+									firstName: string | null;
+									lastName: string | null;
+									socialLogin: {
+										[key: string]: (string | number) | undefined;
+									};
+								};
 							};
 						};
 					};

@@ -2,16 +2,17 @@ import { Prisma } from "@prisma/client";
 import { answerSelect } from "./answers.routes";
 
 export const dbAnswerToDto = ({
-	id,
-	content,
+	createdAt,
 	CreatedBy: { socialLogin, ...createdBy },
+	...rest
 }: Prisma.QuestionAnswerGetPayload<{ select: typeof answerSelect }>) => {
 	return {
-		id,
-		content,
+		createdAt: createdAt.toISOString(),
 		createdBy: {
 			socialLogin: socialLogin as Record<string, string | number>,
+			createdAt: createdAt.toISOString(),
 			...createdBy,
 		},
+		...rest,
 	};
 };

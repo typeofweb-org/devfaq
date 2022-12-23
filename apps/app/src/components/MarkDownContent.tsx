@@ -2,13 +2,13 @@
 
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 
-import "../../styles/devfaq-theme.css";
+import "../styles/devfaq-theme.css";
 
-type QuestionContentProps = Readonly<{
+type MarkDownContentProps = Readonly<{
 	source: MDXRemoteSerializeResult;
 }>;
 
-export const QuestionContent = ({ source }: QuestionContentProps) => {
+export const MarkDownContent = ({ source }: MarkDownContentProps) => {
 	return (
 		<div className="question-content prose prose-sm min-w-0 max-w-full grow px-2 prose-code:px-0 prose-pre:bg-transparent prose-pre:px-0 prose-pre:text-base dark:prose-invert md:prose-base md:prose-pre:text-base">
 			<MDXRemote {...source} />

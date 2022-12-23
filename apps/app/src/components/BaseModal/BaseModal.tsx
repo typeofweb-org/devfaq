@@ -2,9 +2,12 @@
 
 import { ReactNode, useEffect } from "react";
 import { Transition } from "@headlessui/react";
-import { lockScroll, unlockScroll } from "../utils/pageScroll";
-import { useUIContext } from "../providers/UIProvider";
-import { CloseButton } from "./CloseButton/CloseButton";
+import { lockScroll, unlockScroll } from "../../utils/pageScroll";
+import { useUIContext } from "../../providers/UIProvider";
+import { CloseButton } from "../CloseButton/CloseButton";
+import { Title } from "./Title";
+import { Footer } from "./Footer";
+import { Error } from "./Error";
 
 type BaseModalProps = Readonly<{
 	isOpen: boolean;
@@ -58,3 +61,7 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 		</Transition>
 	);
 };
+
+BaseModal.Title = Title;
+BaseModal.Footer = Footer;
+BaseModal.Error = Error;

@@ -14,6 +14,7 @@ import {
 export const answerSelect = {
 	id: true,
 	content: true,
+	createdAt: true,
 	CreatedBy: {
 		select: { id: true, firstName: true, lastName: true, socialLogin: true },
 	},
