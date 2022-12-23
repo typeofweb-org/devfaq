@@ -8,21 +8,21 @@ datasource db {
 }
 
 model Question {
-  id               Int                @id @default(autoincrement())
-  question         String             @unique
-  acceptedAt       DateTime?          @db.Timestamptz(6)
-  categoryId       String             @map("_categoryId")
-  levelId          String             @map("_levelId")
-  statusId         String             @default("pending") @map("_statusId")
-  createdById      Int?               @map("_createdById")
-  createdAt        DateTime           @default(now()) @db.Timestamptz(6)
-  updatedAt        DateTime           @updatedAt() @db.Timestamptz(6)
-  QuestionCategory QuestionCategory   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  QuestionLevel    QuestionLevel      @relation(fields: [levelId], references: [id], onDelete: Cascade)
-  QuestionStatus   QuestionStatus     @relation(fields: [statusId], references: [id], onDelete: Cascade)
-  CreatedBy        User?              @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  id               Int              @id @default(autoincrement())
+  question         String           @unique
+  acceptedAt       DateTime?        @db.Timestamptz(6)
+  categoryId       String           @map("_categoryId")
+  levelId          String           @map("_levelId")
+  statusId         String           @default("pending") @map("_statusId")
+  createdById      Int?             @map("_createdById")
+  createdAt        DateTime         @default(now()) @db.Timestamptz(6)
+  updatedAt        DateTime         @updatedAt() @db.Timestamptz(6)
+  QuestionCategory QuestionCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  QuestionLevel    QuestionLevel    @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  QuestionStatus   QuestionStatus   @relation(fields: [statusId], references: [id], onDelete: Cascade)
+  CreatedBy        User?            @relation(fields: [createdById], references: [id], onDelete: Cascade)
   QuestionVote     QuestionVote[]
-  QuestionsAnswers QuestionsAnswers[]
+  QuestionAnswer   QuestionAnswer[]
 }
 
 model QuestionCategory {
@@ -56,15 +56,15 @@ model QuestionVote {
   @@id([userId, questionId])
 }
 
-model QuestionsAnswers {
-  id         Int      @id @default(autoincrement())
-  userId     Int      @map("_userId")
-  questionId Int      @map("_questionId")
-  content    String
-  createdAt  DateTime @default(now()) @db.Timestamptz(6)
-  updatedAt  DateTime @updatedAt() @db.Timestamptz(6)
-  User       User     @relation(fields: [userId], references: [id])
-  Question   Question @relation(fields: [questionId], references: [id])
+model QuestionAnswer {
+  id          Int      @id @default(autoincrement())
+  createdById Int      @map("_createdById")
+  questionId  Int      @map("_questionId")
+  content     String
+  createdAt   DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt() @db.Timestamptz(6)
+  CreatedBy   User     @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  Question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 }
 
 model SequelizeMeta {
@@ -82,19 +82,19 @@ model Session {
 }
 
 model User {
-  id               Int                @id @default(autoincrement())
-  email            String             @unique
-  firstName        String?
-  lastName         String?
-  roleId           String             @default("user") @map("_roleId")
-  createdAt        DateTime           @default(now()) @db.Timestamptz(6)
-  updatedAt        DateTime           @updatedAt() @db.Timestamptz(6)
-  socialLogin      Json               @default("{}")
-  UserRole         UserRole           @relation(fields: [roleId], references: [id], onDelete: Cascade)
-  QuestionVote     QuestionVote[]
-  Session          Session[]
-  Question         Question[]
-  QuestionsAnswers QuestionsAnswers[]
+  id             Int              @id @default(autoincrement())
+  email          String           @unique
+  firstName      String?
+  lastName       String?
+  roleId         String           @default("user") @map("_roleId")
+  createdAt      DateTime         @default(now()) @db.Timestamptz(6)
+  updatedAt      DateTime         @updatedAt() @db.Timestamptz(6)
+  socialLogin    Json             @default("{}")
+  UserRole       UserRole         @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  QuestionVote   QuestionVote[]
+  Session        Session[]
+  Question       Question[]
+  QuestionAnswer QuestionAnswer[]
 }
 
 model UserRole {

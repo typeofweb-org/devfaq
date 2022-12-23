@@ -311,18 +311,20 @@ export interface paths {
 				200: {
 					content: {
 						"application/json": {
-							id: number;
-							content: string;
-							user: {
+							data: {
 								id: number;
-								email: string;
-								firstName: string | null;
-								lastName: string | null;
-								socialLogin: {
-									[key: string]: (string | number) | undefined;
+								content: string;
+								user: {
+									id: number;
+									email: string;
+									firstName: string | null;
+									lastName: string | null;
+									socialLogin: {
+										[key: string]: (string | number) | undefined;
+									};
 								};
-							};
-						}[];
+							}[];
+						};
 					};
 				};
 			};
@@ -345,8 +347,10 @@ export interface paths {
 				200: {
 					content: {
 						"application/json": {
-							id: number;
-							content: string;
+							data: {
+								id: number;
+								content: string;
+							};
 						};
 					};
 				};
@@ -365,8 +369,10 @@ export interface paths {
 				200: {
 					content: {
 						"application/json": {
-							id: number;
-							content: string;
+							data: {
+								id: number;
+								content: string;
+							};
 						};
 					};
 				};
@@ -390,8 +396,10 @@ export interface paths {
 				200: {
 					content: {
 						"application/json": {
-							id: number;
-							content: string;
+							data: {
+								id: number;
+								content: string;
+							};
 						};
 					};
 				};

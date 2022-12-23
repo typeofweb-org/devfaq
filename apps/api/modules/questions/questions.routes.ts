@@ -12,8 +12,6 @@ import {
 	downvoteQuestionSchema,
 	generateGetQuestionsVotesSchema,
 	getQuestionVotesSchema,
-	getQuestionAnswersSchema,
-	createQuestionAnswerSchema,
 } from "./questions.schemas.js";
 import { getQuestionsPrismaParams } from "./questions.params.js";
 
@@ -113,7 +111,7 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 
 				return { data };
 			} catch (err) {
-				if (isPrismaError(err) && err.code === "P2002") {
+				if (isPrismaError(err) && err.code === PrismaErrorCode.UniqueKeyViolation) {
 					throw fastify.httpErrors.conflict(`Question with content: ${question} already exists!`);
 				}
 
@@ -409,58 +407,6 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 			});
 
 			return reply.status(204).send();
-		},
-	});
-
-	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
-		url: "/questions/:id/answers",
-		method: "GET",
-		schema: getQuestionAnswersSchema,
-		async handler(request, reply) {
-			const {
-				params: { id },
-			} = request;
-
-			const answers = await fastify.db.questionsAnswers.findMany({
-				where: { questionId: id },
-				include: { User: true },
-			});
-
-			return answers.map(({ User: { socialLogin, ...user }, ...rest }) => ({
-				user: { socialLogin: socialLogin as Record<string, string | number>, ...user },
-				...rest,
-			}));
-		},
-	});
-
-	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
-		url: "/questions/:id/answers",
-		method: "POST",
-		schema: createQuestionAnswerSchema,
-		async handler(request, reply) {
-			const {
-				session: { data: sessionData },
-				params: { id },
-				body: { content },
-			} = request;
-
-			if (!sessionData) {
-				throw fastify.httpErrors.unauthorized();
-			}
-
-			try {
-				return await fastify.db.questionsAnswers.create({
-					data: { content, questionId: id, userId: sessionData._user.id },
-				});
-			} catch (err) {
-				if (isPrismaError(err) && err.code === "P2002") {
-					throw fastify.httpErrors.conflict(
-						`You have already answered on question with id: ${id}!`,
-					);
-				}
-
-				throw err;
-			}
 		},
 	});
 };

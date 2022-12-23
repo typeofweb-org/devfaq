@@ -1,5 +1,4 @@
 import { Type, Static } from "@sinclair/typebox";
-import { answerSchema } from "../answers/answers.schemas.js";
 
 const questionVotes = Type.Object({
 	id: Type.Integer(),
@@ -229,39 +228,5 @@ export const downvoteQuestionSchema = {
 	}),
 	response: {
 		204: Type.Never(),
-	},
-};
-
-export const getQuestionAnswersSchema = {
-	params: Type.Object({
-		id: Type.Integer(),
-	}),
-	response: {
-		200: Type.Array(
-			Type.Intersect([
-				answerSchema,
-				Type.Object({
-					user: Type.Object({
-						id: Type.Integer(),
-						email: Type.String(),
-						firstName: Type.Union([Type.String(), Type.Null()]),
-						lastName: Type.Union([Type.String(), Type.Null()]),
-						socialLogin: Type.Record(Type.String(), Type.Union([Type.String(), Type.Number()])),
-					}),
-				}),
-			]),
-		),
-	},
-};
-
-export const createQuestionAnswerSchema = {
-	params: Type.Object({
-		id: Type.Integer(),
-	}),
-	body: Type.Object({
-		content: Type.String(),
-	}),
-	response: {
-		200: answerSchema,
 	},
 };
