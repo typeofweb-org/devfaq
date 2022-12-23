@@ -19,13 +19,11 @@ export const getPages = ({
 }) => {
 	const previous = current - (1 + Math.max(0, current - (last - 2)));
 	const next = current + (1 + Math.max(0, 3 - current));
-	const pages = [first];
+	const firstMiddle = Math.max(first + 1, previous);
+	const lastMiddle = Math.min(last - 1, next);
+	const middle = Array.from({ length: lastMiddle - firstMiddle + 1 }, (_, i) => firstMiddle + i);
 
-	for (let i = Math.max(first + 1, previous); i <= Math.min(last - 1, next); i++) {
-		pages.push(i);
-	}
-
-	return [...pages, last];
+	return [first, ...middle, last];
 };
 
 export const QuestionsPagination = ({ current, total, getHref }: QuestionsPaginationProps) => {
@@ -36,7 +34,7 @@ export const QuestionsPagination = ({ current, total, getHref }: QuestionsPagina
 	});
 
 	return (
-		<nav aria-label="pagination" className="flex justify-center gap-x-3">
+		<nav aria-label="Paginacja" className="flex justify-center gap-x-3">
 			{pages.map((i) => (
 				<ActiveLink
 					key={i}
