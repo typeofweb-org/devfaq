@@ -1,5 +1,5 @@
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
-import { FastifyPluginAsync } from "fastify";
+import { FastifyPluginAsync, preHandlerAsyncHookHandler, preHandlerHookHandler } from "fastify";
 import { PrismaErrorCode } from "../db/prismaErrors.js";
 import { isPrismaError } from "../db/prismaErrors.util.js";
 import {
@@ -12,7 +12,29 @@ import {
 const answerSelect = { id: true, content: true } as const;
 
 const answersPlugin: FastifyPluginAsync = async (fastify) => {
-	await fastify.register(import("./answers.hooks.js"));
+	const checkAnswerUserHook: preHandlerAsyncHookHandler = async (request) => {
+		const {
+			session: { data: sessionData },
+		} = request;
+		const { id } = request.params as { id: number };
+
+		if (!sessionData) {
+			throw fastify.httpErrors.unauthorized();
+		}
+
+		const answer = await fastify.db.questionAnswer.findFirst({
+			where: { id },
+			select: { createdById: true },
+		});
+
+		if (!answer) {
+			throw fastify.httpErrors.notFound(`Answer with id: ${id} not found!`);
+		}
+
+		if (sessionData._user._roleId !== "admin" && answer.createdById !== sessionData._user.id) {
+			throw fastify.httpErrors.forbidden();
+		}
+	};
 
 	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
 		url: "/questions/:id/answers",
@@ -79,7 +101,7 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 		url: "/answers/:id",
 		method: "PATCH",
 		schema: updateAnswerSchema,
-		preHandler: fastify.preAnswerHook,
+		preHandler: checkAnswerUserHook as preHandlerHookHandler,
 		async handler(request) {
 			const {
 				params: { id },
@@ -100,7 +122,7 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 		url: "/answers/:id",
 		method: "DELETE",
 		schema: deleteAnswerSchema,
-		preHandler: fastify.preAnswerHook,
+		preHandler: checkAnswerUserHook as preHandlerHookHandler,
 		async handler(request) {
 			const {
 				params: { id },
