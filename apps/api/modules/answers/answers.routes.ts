@@ -1,7 +1,9 @@
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
+import { Prisma } from "@prisma/client";
 import { FastifyPluginAsync, preHandlerAsyncHookHandler, preHandlerHookHandler } from "fastify";
 import { PrismaErrorCode } from "../db/prismaErrors.js";
 import { isPrismaError } from "../db/prismaErrors.util.js";
+import { dbAnswerToDto } from "./answers.mapper.js";
 import {
 	getAnswersSchema,
 	createAnswerSchema,
@@ -9,7 +11,13 @@ import {
 	updateAnswerSchema,
 } from "./answers.schemas.js";
 
-const answerSelect = { id: true, content: true } as const;
+export const answerSelect = {
+	id: true,
+	content: true,
+	CreatedBy: {
+		select: { id: true, firstName: true, lastName: true, socialLogin: true },
+	},
+} satisfies Prisma.QuestionAnswerSelect;
 
 const answersPlugin: FastifyPluginAsync = async (fastify) => {
 	const checkAnswerUserHook: preHandlerAsyncHookHandler = async (request) => {
@@ -47,19 +55,11 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 
 			const answers = await fastify.db.questionAnswer.findMany({
 				where: { questionId: id },
-				select: {
-					CreatedBy: {
-						select: { id: true, email: true, firstName: true, lastName: true, socialLogin: true },
-					},
-					...answerSelect,
-				},
+				select: answerSelect,
 			});
 
 			return {
-				data: answers.map(({ CreatedBy: { socialLogin, ...user }, ...rest }) => ({
-					user: { socialLogin: socialLogin as Record<string, string | number>, ...user },
-					...rest,
-				})),
+				data: answers.map(dbAnswerToDto),
 			};
 		},
 	});
@@ -80,11 +80,12 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 			}
 
 			try {
-				const data = await fastify.db.questionAnswer.create({
+				const answer = await fastify.db.questionAnswer.create({
 					data: { content, questionId: id, createdById: sessionData._user.id },
 					select: answerSelect,
 				});
-				return { data };
+
+				return { data: dbAnswerToDto(answer) };
 			} catch (err) {
 				if (isPrismaError(err) && err.code === PrismaErrorCode.UniqueKeyViolation) {
 					throw fastify.httpErrors.conflict(
@@ -108,13 +109,13 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 				body: { content },
 			} = request;
 
-			const data = await fastify.db.questionAnswer.update({
+			const answer = await fastify.db.questionAnswer.update({
 				where: { id },
 				data: { content },
 				select: answerSelect,
 			});
 
-			return { data };
+			return { data: dbAnswerToDto(answer) };
 		},
 	});
 
@@ -123,17 +124,16 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 		method: "DELETE",
 		schema: deleteAnswerSchema,
 		preHandler: checkAnswerUserHook as preHandlerHookHandler,
-		async handler(request) {
+		async handler(request, reply) {
 			const {
 				params: { id },
 			} = request;
 
-			const data = await fastify.db.questionAnswer.delete({
+			await fastify.db.questionAnswer.delete({
 				where: { id },
-				select: answerSelect,
 			});
 
-			return { data };
+			return reply.status(204).send();
 		},
 	});
 };

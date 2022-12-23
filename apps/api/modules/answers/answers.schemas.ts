@@ -3,6 +3,12 @@ import { Type } from "@sinclair/typebox";
 const answerSchema = Type.Object({
 	id: Type.Number(),
 	content: Type.String(),
+	createdBy: Type.Object({
+		id: Type.Integer(),
+		firstName: Type.Union([Type.String(), Type.Null()]),
+		lastName: Type.Union([Type.String(), Type.Null()]),
+		socialLogin: Type.Record(Type.String(), Type.Union([Type.String(), Type.Number()])),
+	}),
 });
 
 export const getAnswersSchema = {
@@ -11,20 +17,7 @@ export const getAnswersSchema = {
 	}),
 	response: {
 		200: Type.Object({
-			data: Type.Array(
-				Type.Intersect([
-					answerSchema,
-					Type.Object({
-						user: Type.Object({
-							id: Type.Integer(),
-							email: Type.String(),
-							firstName: Type.Union([Type.String(), Type.Null()]),
-							lastName: Type.Union([Type.String(), Type.Null()]),
-							socialLogin: Type.Record(Type.String(), Type.Union([Type.String(), Type.Number()])),
-						}),
-					}),
-				]),
-			),
+			data: Type.Array(answerSchema),
 		}),
 	},
 };
@@ -62,8 +55,6 @@ export const deleteAnswerSchema = {
 		id: Type.Integer(),
 	}),
 	response: {
-		200: Type.Object({
-			data: answerSchema,
-		}),
+		204: Type.Never(),
 	},
 };
