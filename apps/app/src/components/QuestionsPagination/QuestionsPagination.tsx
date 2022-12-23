@@ -17,6 +17,10 @@ export const getPages = ({
 	last: number;
 	current: number;
 }) => {
+	if (first === last) {
+		return [1];
+	}
+
 	const previous = current - (1 + Math.max(0, current - (last - 2)));
 	const next = current + (1 + Math.max(0, 3 - current));
 	const firstMiddle = Math.max(first + 1, previous);
