@@ -83,6 +83,9 @@ module.exports = {
 				loader: "loader 2s infinite ease",
 				"loader-inner": "loader-inner 2s infinite ease-in",
 			},
+			spacing: {
+				62: "15.5rem",
+			},
 		},
 	},
 	plugins: [require("@tailwindcss/typography")],
