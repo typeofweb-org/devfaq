@@ -4,6 +4,7 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import type { ReactNode, MouseEvent } from "react";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
+import { OpacityElement } from "../OpacityElement";
 import { ActiveNavigationLink } from "./ActiveNagivationLink";
 import { LoginNavigationLink } from "./LoginNavigationLink";
 
@@ -35,29 +36,37 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 				<div className="mt-auto mb-auto flex flex-col items-center gap-10 sm:flex-row sm:gap-5">
 					<ul className="flex list-none flex-col items-center gap-10 text-center sm:flex-row sm:gap-5">
 						<li>
-							<ActiveNavigationLink href="/about" onClick={handleClickLink}>
-								Jak korzystać?
-							</ActiveNavigationLink>
+							<OpacityElement>
+								<ActiveNavigationLink href="/about" onClick={handleClickLink}>
+									Jak korzystać?
+								</ActiveNavigationLink>
+							</OpacityElement>
 						</li>
 						<li>
-							<ActiveNavigationLink href="/authors" onClick={handleClickLink}>
-								Autorzy
-							</ActiveNavigationLink>
+							<OpacityElement>
+								<ActiveNavigationLink href="/authors" onClick={handleClickLink}>
+									Autorzy
+								</ActiveNavigationLink>
+							</OpacityElement>
 						</li>
 						<li>
-							<a
-								href="https://www.facebook.com/DevFAQ"
-								target="_blank"
-								rel="noreferrer"
-								onClick={handleClickLink}
-							>
-								Facebook
-							</a>
+							<OpacityElement>
+								<a
+									href="https://www.facebook.com/DevFAQ"
+									target="_blank"
+									rel="noreferrer"
+									onClick={handleClickLink}
+								>
+									Facebook
+								</a>
+							</OpacityElement>
 						</li>
 						<li>
-							<div className="sm:w-14">
-								<LoginNavigationLink />
-							</div>
+							<OpacityElement>
+								<div className="sm:w-14">
+									<LoginNavigationLink />
+								</div>
+							</OpacityElement>
 						</li>
 					</ul>
 					{children}
