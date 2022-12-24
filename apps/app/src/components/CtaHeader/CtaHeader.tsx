@@ -11,10 +11,10 @@ type CtaHeaderActiveLinkProps = Readonly<{
 }>;
 
 const CtaHeaderActiveLink = (props: CtaHeaderActiveLinkProps) => (
-	<OpacityElement>
+	<OpacityElement className="grow">
 		<ActiveLink
 			activeClassName="font-bold border-white"
-			className="flex h-12 grow items-center justify-center border-b-2 border-transparent px-7"
+			className="flex h-12 items-center justify-center border-b-2 border-transparent px-7"
 			{...props}
 		/>
 	</OpacityElement>
