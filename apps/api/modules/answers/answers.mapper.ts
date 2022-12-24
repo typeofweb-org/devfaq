@@ -6,13 +6,17 @@ export const dbAnswerToDto = ({
 	content,
 	sources,
 	createdAt,
+	QuestionAnswerVote,
 	CreatedBy: { socialLogin, ...createdBy },
-}: Prisma.QuestionAnswerGetPayload<{ select: typeof answerSelect }>) => {
+	_count,
+}: Prisma.QuestionAnswerGetPayload<{ select: ReturnType<typeof answerSelect> }>) => {
 	return {
 		id,
 		content,
 		sources,
 		createdAt: createdAt.toISOString(),
+		votesCount: _count.QuestionAnswerVote,
+		currentUserVotedOn: QuestionAnswerVote.length > 0,
 		createdBy: {
 			socialLogin: socialLogin as Record<string, string | number>,
 			...createdBy,
