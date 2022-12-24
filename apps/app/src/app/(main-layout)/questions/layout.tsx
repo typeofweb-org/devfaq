@@ -7,7 +7,7 @@ const QuestionsPageLayout = ({ children }: { readonly children: ReactNode }) => 
 	<>
 		<Container className="flex">
 			<QuestionsSidebar />
-			<main className="w-full min-w-0 flex-1 grow py-4 pl-0 sm:py-8 sm:pl-8">{children}</main>
+			<main className="w-full min-w-0 flex-1 grow py-4 pl-0 sm:py-8 sm:pl-9">{children}</main>
 		</Container>
 		<MobileActionButtons />
 	</>
