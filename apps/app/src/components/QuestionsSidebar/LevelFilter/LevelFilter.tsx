@@ -6,9 +6,10 @@ import { LevelFilterItem } from "./LevelFilterItem";
 
 export const LevelFilter = () => (
 	<QuestionsSidebarSection title="Wybierz poziom">
-		<ul className="flex justify-center gap-3 sm:flex-col small-filters:flex-row">
+		<ul className="flex justify-center gap-x-4 overflow-x-auto px-4 pb-4 sm:flex-col sm:flex-wrap sm:justify-between sm:gap-x-0 sm:gap-y-3 sm:overflow-x-visible sm:p-0 small-filters:flex-row small-filters:gap-y-4">
+			{/* <ul className="flex flex-wrap justify-center gap-3 sm:flex-col small-filters:flex-row"> */}
 			{levels.map((level) => (
-				<li key={level}>
+				<li key={level} className="pt-1">
 					<LevelFilterItem variant={level}>{level}</LevelFilterItem>
 				</li>
 			))}

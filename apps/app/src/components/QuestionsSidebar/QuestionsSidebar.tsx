@@ -21,9 +21,15 @@ export const QuestionsSidebar = () => {
 	}, [isSidebarOpen]);
 
 	return (
+		// <aside
+		// 	className={twMerge(
+		// 		"fixed top-0 left-0 bottom-0 right-0 z-50 flex shrink-0 -translate-x-full transform-gpu flex-col bg-gray-50 px-2.5 pb-4 transition-transform duration-200 after:absolute after:top-0 after:bottom-0 after:right-0 after:hidden after:w-px after:shadow-[4px_0px_4px_rgba(0,0,0,0.23)] dark:bg-neutral-800 sm:sticky sm:top-[56px] sm:z-auto sm:h-screen sm:w-60 sm:translate-x-0 sm:p-0 sm:pr-10 sm:transition-none sm:after:inline",
+		// 		isSidebarOpen && "translate-x-0",
+		// 	)}
+		// >
 		<aside
 			className={twMerge(
-				"fixed top-0 left-0 bottom-0 right-0 z-50 flex shrink-0 -translate-x-full transform-gpu flex-col bg-gray-50 px-2.5 pb-4 transition-transform duration-200 after:absolute after:top-0 after:bottom-0 after:right-0 after:hidden after:w-px after:shadow-[4px_0px_4px_rgba(0,0,0,0.23)] dark:bg-neutral-800 sm:sticky sm:top-[56px] sm:z-auto sm:h-screen sm:w-60 sm:translate-x-0 sm:p-0 sm:pr-10 sm:transition-none sm:after:inline",
+				"border-aside fixed inset-0 z-50 flex shrink-0 -translate-x-full transform-gpu flex-col overflow-y-auto bg-gray-50 px-2.5 py-6 pb-4 transition-transform duration-200 dark:bg-neutral-800 sm:sticky sm:top-[56px] sm:z-auto sm:h-[calc(100vh-56px)] sm:w-60 sm:translate-x-0 sm:border-r-8 sm:pl-0 sm:pr-10 sm:transition-none sm:after:inline",
 				isSidebarOpen && "translate-x-0",
 			)}
 		>
@@ -32,7 +38,10 @@ export const QuestionsSidebar = () => {
 			<Button variant="brandingInverse" className="mt-auto sm:hidden" onClick={closeSidebar}>
 				Pokaż wyniki
 			</Button>
-			<CloseButton className="absolute top-1 right-1 sm:hidden" onClick={closeSidebar} />
+			<CloseButton
+				className="absolute top-1 right-1 sm:invisible sm:hidden"
+				onClick={closeSidebar}
+			/>
 		</aside>
 	);
 };
