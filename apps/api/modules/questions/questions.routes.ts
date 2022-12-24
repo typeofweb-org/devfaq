@@ -111,7 +111,7 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 
 				return { data };
 			} catch (err) {
-				if (isPrismaError(err) && err.code === "P2002") {
+				if (isPrismaError(err) && err.code === PrismaErrorCode.UniqueKeyViolation) {
 					throw fastify.httpErrors.conflict(`Question with content: ${question} already exists!`);
 				}
 
@@ -389,7 +389,7 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 				throw fastify.httpErrors.unauthorized();
 			}
 
-			const question = await fastify.db.question.findFirst({
+			const question = await fastify.db.question.findUnique({
 				where: {
 					id,
 				},

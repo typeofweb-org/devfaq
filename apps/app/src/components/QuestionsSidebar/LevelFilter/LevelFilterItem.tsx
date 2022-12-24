@@ -1,6 +1,6 @@
-import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
+import { useDefaultQuestionsPathname } from "../../../hooks/useDefaultQuestionsPathname";
 import { useQuestionsLevels } from "../../../hooks/useQuestionsLevels";
 import { LinkWithQuery } from "../../LinkWithQuery/LinkWithQuery";
 
@@ -11,15 +11,14 @@ type LevelFilterItemProps = Readonly<{
 
 export const LevelFilterItem = ({ variant, children }: LevelFilterItemProps) => {
 	const { queryLevels, addLevel, removeLevel } = useQuestionsLevels();
-	const pathname = usePathname();
-
+	const { defaultPathname } = useDefaultQuestionsPathname();
 	const isActive = Boolean(queryLevels.includes(variant));
 	const level = !isActive ? addLevel(variant) : removeLevel(variant);
 
 	return (
 		<LinkWithQuery
 			href={{
-				pathname: pathname || "",
+				pathname: defaultPathname,
 				query: {
 					level,
 				},

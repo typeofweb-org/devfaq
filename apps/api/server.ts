@@ -48,6 +48,7 @@ await fastify.register(import("@fastify/swagger-ui"), {
 
 await fastify.register(import("./modules/auth/auth.js"));
 await fastify.register(import("./modules/questions/questions.routes.js"));
+await fastify.register(import("./modules/answers/answers.routes.js"));
 
 fastify.get(
 	"/",
