@@ -8,9 +8,5 @@ type MobileActionButtonProps = Readonly<{
 }>;
 
 export const MobileActionButton = (props: MobileActionButtonProps) => (
-	<Button
-		variant="brandingInverse"
-		className="flex h-11 w-11 items-center justify-center rounded-full border-none p-0 shadow-md shadow-neutral-600 dark:shadow-neutral-900"
-		{...props}
-	/>
+	<Button variant="mobileAction" {...props} />
 );
