@@ -97,8 +97,8 @@ export const QuestionEditor = memo(({ value, onChange }: QuestionEditorProps) =>
 	}, [value, isPreview]);
 
 	return (
-		<div className="mt-4 rounded-md border">
-			<div className="flex border-b p-2.5">
+		<div className="mt-4 rounded-md border border-primary dark:border-neutral-300">
+			<div className="flex border-b border-primary p-2.5 dark:border-neutral-300">
 				{hierarchy.map((actions, i) => (
 					<ActionsGroup key={i} separator={i !== 0}>
 						{actions.map((action) => (
