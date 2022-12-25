@@ -40,7 +40,7 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 		>
 			<div className="m-auto flex min-h-full w-fit sm:items-center">
 				<div
-					className="relative w-full max-w-3xl animate-show rounded-md bg-white px-3.5 py-9 dark:bg-white-dark sm:px-11 sm:py-20"
+					className="relative w-full max-w-3xl animate-show rounded-none bg-white px-3.5 py-9 dark:bg-white-dark sm:rounded-md sm:px-11 sm:py-20"
 					onClick={(event) => {
 						// stop propagation to avoid triggering `onClick` on the backdrop behind the modal
 						event.stopPropagation();
