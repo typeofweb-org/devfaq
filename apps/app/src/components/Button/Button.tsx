@@ -20,7 +20,7 @@ type ButtonProps = Readonly<{
 export const Button = ({ variant, className, ...props }: ButtonProps) => (
 	<button
 		className={twMerge(
-			"min-w-[160px] appearance-none rounded-md border border-transparent px-8 py-1 text-sm leading-8 transition-colors duration-100 disabled:cursor-not-allowed sm:py-0",
+			"appearance-none rounded-md border border-transparent px-8 py-1 text-sm leading-8 transition-colors duration-100 disabled:cursor-not-allowed sm:py-0",
 			variants[variant],
 			className,
 		)}
