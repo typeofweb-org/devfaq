@@ -3,6 +3,7 @@ import { Type } from "@sinclair/typebox";
 const answerSchema = Type.Object({
 	id: Type.Number(),
 	content: Type.String(),
+	sources: Type.Array(Type.String()),
 	createdAt: Type.String({ format: "date-time" }),
 	createdBy: Type.Object({
 		id: Type.Integer(),
@@ -29,6 +30,7 @@ export const createAnswerSchema = {
 	}),
 	body: Type.Object({
 		content: Type.String(),
+		sources: Type.Array(Type.String()),
 	}),
 	response: {
 		200: Type.Object({
@@ -41,9 +43,12 @@ export const updateAnswerSchema = {
 	params: Type.Object({
 		id: Type.Integer(),
 	}),
-	body: Type.Object({
-		content: Type.Optional(Type.String()),
-	}),
+	body: Type.Partial(
+		Type.Object({
+			content: Type.String(),
+			sources: Type.Array(Type.String()),
+		}),
+	),
 	response: {
 		200: Type.Object({
 			data: answerSchema,

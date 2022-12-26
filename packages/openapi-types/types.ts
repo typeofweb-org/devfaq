@@ -314,6 +314,7 @@ export interface paths {
 							data: {
 								id: number;
 								content: string;
+								sources: string[];
 								/** Format: date-time */
 								createdAt: string;
 								createdBy: {
@@ -340,6 +341,7 @@ export interface paths {
 				content: {
 					"application/json": {
 						content: string;
+						sources: string[];
 					};
 				};
 			};
@@ -351,6 +353,7 @@ export interface paths {
 							data: {
 								id: number;
 								content: string;
+								sources: string[];
 								/** Format: date-time */
 								createdAt: string;
 								createdBy: {
@@ -394,6 +397,7 @@ export interface paths {
 				content: {
 					"application/json": {
 						content?: string;
+						sources?: string[];
 					};
 				};
 			};
@@ -405,6 +409,7 @@ export interface paths {
 							data: {
 								id: number;
 								content: string;
+								sources: string[];
 								/** Format: date-time */
 								createdAt: string;
 								createdBy: {

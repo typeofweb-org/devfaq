@@ -6,12 +6,10 @@ import type { Modal } from "../providers/UIProvider";
 import { AddQuestionModal } from "./AddQuestionModal";
 import { AddQuestionConfirmationModal } from "./AddQuestionConfirmationModal";
 import { BaseModal } from "./BaseModal/BaseModal";
-import { AddAnswerModal } from "./AddAnswerModal";
 
 const modals: Record<Modal, ComponentType<ComponentProps<typeof BaseModal>>> = {
 	AddQuestionModal,
 	AddQuestionConfirmationModal,
-	AddAnswerModal,
 };
 
 export const AppModals = () => {

@@ -27,7 +27,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 	const disabled =
 		!selectData.technology ||
 		!selectData.level ||
-		content.length === 0 ||
+		content.trim().length === 0 ||
 		createQuestionMutation.isLoading;
 
 	useEffect(() => {
@@ -129,18 +129,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 						Anuluj
 					</Button>
 				</BaseModal.Footer>
-				<BaseModal.Error visible={isError}>
-					⚠️ Wystąpił nieoczekiwany błąd przy dodawaniu pytania. Spróbuj ponownie, a jeśli problem
-					będzie się powtarzał,{" "}
-					<a
-						href="https://discord.com/invite/va2NhBv"
-						className="underline"
-						target="_blank"
-						rel="noreferrer"
-					>
-						skontaktuj się z administracją.
-					</a>
-				</BaseModal.Error>
+				<BaseModal.Error visible={isError} />
 			</form>
 		</BaseModal>
 	);

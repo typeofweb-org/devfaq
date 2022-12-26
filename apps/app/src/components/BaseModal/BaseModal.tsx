@@ -5,9 +5,9 @@ import { Transition } from "@headlessui/react";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
 import { useUIContext } from "../../providers/UIProvider";
 import { CloseButton } from "../CloseButton/CloseButton";
-import { Title } from "./Title";
-import { Footer } from "./Footer";
-import { Error } from "./Error";
+import { ModalTitle } from "./ModalTitle";
+import { ModalFooter } from "./ModalFooter";
+import { ModalError } from "./ModalError";
 
 type BaseModalProps = Readonly<{
 	isOpen: boolean;
@@ -62,6 +62,6 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 	);
 };
 
-BaseModal.Title = Title;
-BaseModal.Footer = Footer;
-BaseModal.Error = Error;
+BaseModal.Title = ModalTitle;
+BaseModal.Footer = ModalFooter;
+BaseModal.Error = ModalError;

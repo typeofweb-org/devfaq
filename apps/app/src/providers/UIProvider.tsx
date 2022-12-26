@@ -5,7 +5,6 @@ import type { AdminQuestion } from "../types";
 interface ModalData {
 	AddQuestionModal: AdminQuestion;
 	AddQuestionConfirmationModal: never;
-	AddAnswerModal: { questionId: number };
 }
 
 export type Modal = keyof ModalData;

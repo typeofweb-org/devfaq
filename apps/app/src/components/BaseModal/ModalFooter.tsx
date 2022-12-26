@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 
-type FooterProps = Readonly<{
+type ModalFooterProps = Readonly<{
 	children: ReactNode;
 }>;
 
-export const Footer = ({ children }: FooterProps) => (
+export const ModalFooter = ({ children }: ModalFooterProps) => (
 	<div className="mt-3 flex flex-col gap-2 sm:flex-row-reverse">{children}</div>
 );

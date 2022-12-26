@@ -61,6 +61,7 @@ model QuestionAnswer {
   createdById Int      @map("_createdById")
   questionId  Int      @map("_questionId")
   content     String
+  sources     String[] @default([])
   createdAt   DateTime @default(now()) @db.Timestamptz(6)
   updatedAt   DateTime @updatedAt() @db.Timestamptz(6)
   CreatedBy   User     @relation(fields: [createdById], references: [id], onDelete: Cascade)
