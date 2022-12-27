@@ -52,13 +52,14 @@ export const AnswerSources = ({ sources, onChange }: AnswerSourcesProps) => {
 							onChange={handleInputChange(i)}
 							className="flex-1 rounded-md border border-primary bg-transparent p-1.5 text-primary focus:outline-0 dark:border-white dark:text-neutral-200"
 						/>
-						<div
+						<button
+							type="button"
 							className="w-6 cursor-pointer fill-primary dark:fill-purple-300"
 							onClick={handleDeleteIconClick(i)}
 							aria-label="usuń źródło"
 						>
 							<BinIcon className="h-full w-full" viewBox="0 0 24 24" />
-						</div>
+						</button>
 					</div>
 				))}
 			</div>
