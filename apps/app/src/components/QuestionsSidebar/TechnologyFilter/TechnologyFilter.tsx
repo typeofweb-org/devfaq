@@ -23,9 +23,9 @@ const technologyFilters = [
 export const TechnologyFilter = () => {
 	return (
 		<QuestionsSidebarSection title="Wybierz technologię">
-			<ul className="flex justify-between gap-x-4 overflow-x-auto px-4 pb-4 sm:flex-wrap sm:gap-x-0 sm:gap-y-7 sm:overflow-x-visible sm:p-0 small-filters:gap-y-4">
+			<ul className="flex justify-between gap-x-4 overflow-x-auto px-4 pb-4 sm:flex-wrap sm:gap-x-0 sm:gap-y-5 sm:overflow-x-visible sm:p-0 small-filters:gap-y-2">
 				{technologyFilters.map((tech) => (
-					<li key={tech.href}>
+					<li key={tech.href} className="pt-1">
 						<Technology {...tech} />
 					</li>
 				))}
