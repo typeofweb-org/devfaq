@@ -47,7 +47,7 @@ export const QuestionsPagination = ({ current, total, getHref }: QuestionsPagina
 							className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border-2 border-primary text-primary transition-colors duration-300 hover:bg-violet-100 dark:text-white dark:hover:bg-violet-800"
 							activeClassName="bg-primary text-white hover:bg-primary"
 							aria-label={`Strona ${i}${
-								current - 1 === i ? ", poprzednia" : current + 1 == i ? ", kolejna" : ""
+								current - 1 === i ? ", poprzednia" : current + 1 === i ? ", kolejna" : ""
 							}`}
 							activeAttributes={{
 								"aria-current": "page",
