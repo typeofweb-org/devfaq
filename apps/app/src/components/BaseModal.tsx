@@ -13,11 +13,14 @@ type BaseModalProps = Readonly<{
 }>;
 
 export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
-	const { openedModal } = useUIContext();
+	const { openedModal, isMenuOpen } = useUIContext();
 
 	useEffect(() => {
 		if (isOpen) {
 			lockScroll();
+			if (document.body.classList.contains("sm:overflow-auto")) {
+				document.body.classList.remove("sm:overflow-auto");
+			}
 		}
 	}, [isOpen]);
 
@@ -35,6 +38,9 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 			afterLeave={() => {
 				if (!openedModal) {
 					unlockScroll();
+					if (isMenuOpen) {
+						document.body.classList.add("overflow-hidden", "sm:overflow-auto");
+					}
 				}
 			}}
 		>

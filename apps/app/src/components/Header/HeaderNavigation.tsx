@@ -4,23 +4,27 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import type { ReactNode, MouseEvent } from "react";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
+import { useUIContext } from "../../providers/UIProvider";
 import { ActiveNavigationLink } from "./ActiveNagivationLink";
 import { LoginNavigationLink } from "./LoginNavigationLink";
 
 const itemStyles = "ease h-0.5 w-6 bg-white transition duration-300";
 
 export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
+	const { setIsMenuOpen } = useUIContext();
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
-		isOpen ? unlockScroll() : lockScroll();
+		isOpen ? unlockScroll(["sm:overflow-auto"]) : lockScroll(["sm:overflow-auto"]);
 		setIsOpen((prev) => !prev);
+		setIsMenuOpen((prev) => !prev);
 	};
 
 	const handleClickLink = () => {
 		setIsOpen(false);
-		unlockScroll();
+		unlockScroll(["sm:overflow-auto"]);
+		setIsMenuOpen(false);
 	};
 
 	return (
