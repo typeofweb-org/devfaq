@@ -1,4 +1,13 @@
-import { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
+import {
+	createContext,
+	Dispatch,
+	SetStateAction,
+	useCallback,
+	useContext,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import type { ReactNode } from "react";
 import type { AdminQuestion } from "../types";
 
@@ -17,6 +26,8 @@ interface UIContextValue<D extends Modal = Modal> {
 	isSidebarOpen: boolean;
 	openSidebar: () => void;
 	closeSidebar: () => void;
+	isMenuOpen: boolean;
+	setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const UIContext = createContext<UIContextValue | null>(null);
@@ -24,6 +35,7 @@ const UIContext = createContext<UIContextValue | null>(null);
 export const UIProvider = ({ children }: { readonly children: ReactNode }) => {
 	const [openedModal, setOpenedModal] = useState<Modal | null>(null);
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const modalDataRef = useRef<ModalData[Modal] | null>(null);
 
@@ -57,8 +69,10 @@ export const UIProvider = ({ children }: { readonly children: ReactNode }) => {
 			openSidebar,
 			closeSidebar,
 			modalData: modalDataRef.current,
+			isMenuOpen,
+			setIsMenuOpen,
 		}),
-		[openedModal, openModal, closeModal, isSidebarOpen, openSidebar, closeSidebar],
+		[openedModal, openModal, closeModal, isSidebarOpen, openSidebar, closeSidebar, isMenuOpen],
 	);
 
 	return <UIContext.Provider value={value}>{children}</UIContext.Provider>;
