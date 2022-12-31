@@ -72,7 +72,16 @@ export const UIProvider = ({ children }: { readonly children: ReactNode }) => {
 			isMenuOpen,
 			setIsMenuOpen,
 		}),
-		[openedModal, openModal, closeModal, isSidebarOpen, openSidebar, closeSidebar, isMenuOpen],
+		[
+			openedModal,
+			openModal,
+			closeModal,
+			isSidebarOpen,
+			openSidebar,
+			closeSidebar,
+			isMenuOpen,
+			setIsMenuOpen,
+		],
 	);
 
 	return <UIContext.Provider value={value}>{children}</UIContext.Provider>;
