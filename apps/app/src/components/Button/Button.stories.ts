@@ -39,7 +39,7 @@ export const Alternative: Story = {
 
 export const MobileAction: Story = {
 	args: {
-		variant: "alternative",
+		variant: "mobileAction",
 		children: "+",
 	},
 };
