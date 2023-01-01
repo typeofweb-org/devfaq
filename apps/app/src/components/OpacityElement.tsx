@@ -3,15 +3,12 @@ import { twMerge } from "tailwind-merge";
 
 type OpacityElementProps = {
 	children: ReactNode;
-	permanent?: boolean;
 	className?: string;
 };
 
-export const OpacityElement = ({ children, permanent, className }: OpacityElementProps) => {
+export const OpacityElement = ({ children, className }: OpacityElementProps) => {
 	return (
-		<div
-			className={twMerge("transition", permanent ? "opacity-80" : "hover:opacity-80", className)}
-		>
+		<div className={twMerge("transition hover:opacity-80", className)}>
 			<>{children}</>
 		</div>
 	);
