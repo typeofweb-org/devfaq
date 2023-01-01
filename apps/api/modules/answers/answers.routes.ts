@@ -14,6 +14,8 @@ import {
 export const answerSelect = {
 	id: true,
 	content: true,
+	sources: true,
+	createdAt: true,
 	CreatedBy: {
 		select: { id: true, firstName: true, lastName: true, socialLogin: true },
 	},
@@ -72,7 +74,7 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 			const {
 				session: { data: sessionData },
 				params: { id },
-				body: { content },
+				body: { content, sources },
 			} = request;
 
 			if (!sessionData) {
@@ -81,7 +83,7 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 
 			try {
 				const answer = await fastify.db.questionAnswer.create({
-					data: { content, questionId: id, createdById: sessionData._user.id },
+					data: { questionId: id, createdById: sessionData._user.id, content, sources },
 					select: answerSelect,
 				});
 
@@ -106,12 +108,12 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 		async handler(request) {
 			const {
 				params: { id },
-				body: { content },
+				body: { content, sources },
 			} = request;
 
 			const answer = await fastify.db.questionAnswer.update({
 				where: { id },
-				data: { content },
+				data: { content, sources },
 				select: answerSelect,
 			});
 

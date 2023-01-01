@@ -3,7 +3,7 @@
 import { ComponentProps } from "react";
 import Logo from "../../public/typeofweb-logo.svg";
 import { useUIContext } from "../providers/UIProvider";
-import { BaseModal } from "./BaseModal";
+import { BaseModal } from "./BaseModal/BaseModal";
 import { Button } from "./Button/Button";
 
 export const AddQuestionConfirmationModal = (props: ComponentProps<typeof BaseModal>) => {

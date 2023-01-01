@@ -2,7 +2,7 @@ import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { formatDate } from "../../utils/intl";
-import { QuestionContent } from "./QuestionContent";
+import { MarkdownContent } from "../MarkdownContent";
 import { Level, QuestionLevel } from "./QuestionLevel";
 
 type QuestionItemProps = Readonly<{
@@ -25,7 +25,7 @@ export const QuestionItem = ({
 	return (
 		<article className="flex bg-white p-3 text-sm text-neutral-500 shadow-md dark:bg-white-dark dark:text-neutral-200 md:p-5">
 			{leftSection}
-			<QuestionContent source={mdxContent} />
+			<MarkdownContent source={mdxContent} />
 			<div className="mt-1 flex min-w-max flex-col items-center md:ml-4 md:items-end">
 				<QuestionLevel level={level} />
 				{creationDate && (

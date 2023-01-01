@@ -17,3 +17,7 @@ export const createQuestion = fetcher.path("/questions").method("post").create()
 export const deleteQuestion = fetcher.path("/questions/{id}").method("delete").create();
 
 export const patchQuestion = fetcher.path("/questions/{id}").method("patch").create();
+
+export const getQuestionAnswers = fetcher.path("/questions/{id}/answers").method("get").create();
+
+export const createQuestionAnswer = fetcher.path("/questions/{id}/answers").method("post").create();
