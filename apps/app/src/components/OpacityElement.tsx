@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 type OpacityElementProps = {
 	children: ReactNode;
-	pernament?: boolean;
+	permanent?: boolean;
 	className?: string;
 };
 
