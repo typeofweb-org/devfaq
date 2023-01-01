@@ -14,13 +14,13 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 
 	const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
-		isOpen ? unlockScroll() : lockScroll();
+		isOpen ? unlockScroll(true) : lockScroll(true);
 		setIsOpen((prev) => !prev);
 	};
 
 	const handleClickLink = () => {
 		setIsOpen(false);
-		unlockScroll();
+		unlockScroll(true);
 	};
 
 	return (
