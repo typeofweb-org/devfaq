@@ -3,9 +3,9 @@
 import type { ComponentProps, ComponentType } from "react";
 import { useUIContext } from "../providers/UIProvider";
 import type { Modal } from "../providers/UIProvider";
-import { AddQuestionModal } from "./AddQuestionModal/AddQuestionModal";
+import { AddQuestionModal } from "./AddQuestionModal";
 import { AddQuestionConfirmationModal } from "./AddQuestionConfirmationModal";
-import { BaseModal } from "./BaseModal";
+import { BaseModal } from "./BaseModal/BaseModal";
 
 const modals: Record<Modal, ComponentType<ComponentProps<typeof BaseModal>>> = {
 	AddQuestionModal,
