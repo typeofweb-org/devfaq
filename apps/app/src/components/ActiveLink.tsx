@@ -28,8 +28,8 @@ export const ActiveLink = ({
 		<LinkWithQuery
 			href={href}
 			className={twMerge(className, isActive && activeClassName)}
-			{...(isActive && activeAttributes)}
 			{...props}
+			{...(isActive && activeAttributes)}
 		/>
 	);
 };
