@@ -2,21 +2,20 @@
 
 import { useEffect, useRef, useState, Suspense, memo } from "react";
 import dynamic from "next/dynamic";
-import BoldIcon from "../../../../public/icons/toolbar-bold.svg";
-import ItalicIcon from "../../../../public/icons/toolbar-italic.svg";
-import HeadingIcon from "../../../../public/icons/toolbar-heading.svg";
-import CodeIcon from "../../../../public/icons/toolbar-code.svg";
-import UlIcon from "../../../../public/icons/toolbar-ul.svg";
-import OlIcon from "../../../../public/icons/toolbar-ol.svg";
-import EyeIcon from "../../../../public/icons/toolbar-eye.svg";
-import { handleAction, Action } from "../../../lib/actions";
+import BoldIcon from "../../../public/icons/toolbar-bold.svg";
+import ItalicIcon from "../../../public/icons/toolbar-italic.svg";
+import HeadingIcon from "../../../public/icons/toolbar-heading.svg";
+import CodeIcon from "../../../public/icons/toolbar-code.svg";
+import UlIcon from "../../../public/icons/toolbar-ul.svg";
+import OlIcon from "../../../public/icons/toolbar-ol.svg";
+import EyeIcon from "../../../public/icons/toolbar-eye.svg";
+import { handleAction, Action } from "../../lib/actions";
 import { ActionsGroup } from "./ActionsGroup";
 import { ActionItem } from "./ActionItem";
 
-const QuestionPreview = dynamic(
-	() => import("./QuestionPreview").then((mod) => mod.QuestionPreview),
-	{ ssr: false },
-);
+const ContentPreview = dynamic(() => import("./ContentPreview").then((mod) => mod.ContentPreview), {
+	ssr: false,
+});
 
 const actionIcons: Record<Action, JSX.Element> = {
 	BOLD: <BoldIcon viewBox="0 0 32 32" />,
@@ -41,12 +40,12 @@ const hierarchy: Action[][] = [
 	["CODEBLOCK", "UL", "OL"],
 ];
 
-type QuestionEditorProps = Readonly<{
+type WysiwygEditorProps = Readonly<{
 	value: string;
 	onChange: (value: string) => void;
 }>;
 
-export const QuestionEditor = memo(({ value, onChange }: QuestionEditorProps) => {
+export const WysiwygEditor = memo(({ value, onChange }: WysiwygEditorProps) => {
 	const [isPreview, setIsPreview] = useState(false);
 
 	const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -123,7 +122,7 @@ export const QuestionEditor = memo(({ value, onChange }: QuestionEditorProps) =>
 			<div className="h-72">
 				{isPreview ? (
 					<Suspense>
-						<QuestionPreview content={value} />
+						<ContentPreview content={value} />
 					</Suspense>
 				) : (
 					<textarea
@@ -139,4 +138,4 @@ export const QuestionEditor = memo(({ value, onChange }: QuestionEditorProps) =>
 	);
 });
 
-QuestionEditor.displayName = "QuestionEditor";
+WysiwygEditor.displayName = "QuestionEditor";

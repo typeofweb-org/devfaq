@@ -2,15 +2,14 @@
 
 import { ChangeEvent, ComponentProps, useEffect, useState } from "react";
 import type { FormEvent } from "react";
-import { twMerge } from "tailwind-merge";
-import { useUIContext } from "../../providers/UIProvider";
-import { technologiesLabel, Technology, validateTechnology } from "../../lib/technologies";
-import { Level, levels, validateLevel } from "../../lib/level";
-import { BaseModal } from "../BaseModal";
-import { Button } from "../Button/Button";
-import { Select } from "../Select/Select";
-import { useQuestionMutation } from "../../hooks/useQuestionMutation";
-import { QuestionEditor } from "./QuestionEditor/QuestionEditor";
+import { useUIContext } from "../providers/UIProvider";
+import { technologiesLabel, Technology, validateTechnology } from "../lib/technologies";
+import { Level, levels, validateLevel } from "../lib/level";
+import { useQuestionMutation } from "../hooks/useQuestionMutation";
+import { BaseModal } from "./BaseModal/BaseModal";
+import { Button } from "./Button/Button";
+import { Select } from "./Select/Select";
+import { WysiwygEditor } from "./WysiwygEditor/WysiwygEditor";
 
 type SelectDataState = Readonly<{
 	technology?: Technology;
@@ -28,7 +27,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 	const disabled =
 		!selectData.technology ||
 		!selectData.level ||
-		content.length === 0 ||
+		content.trim().length === 0 ||
 		createQuestionMutation.isLoading;
 
 	useEffect(() => {
@@ -81,9 +80,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 
 	return (
 		<BaseModal {...props}>
-			<h2 className="text-center text-xl font-bold uppercase text-primary dark:text-neutral-200">
-				{modalData ? "Edytuj" : "Nowe"} pytanie
-			</h2>
+			<BaseModal.Title>{modalData ? "Edytuj" : "Nowe"} pytanie</BaseModal.Title>
 			<form onSubmit={handleFormSubmit}>
 				<div className="mt-10 flex flex-col gap-y-3 px-5 sm:flex-row sm:justify-evenly sm:gap-x-5">
 					<label className="flex w-full flex-col gap-2">
@@ -123,30 +120,16 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 						</Select>
 					</label>
 				</div>
-				<QuestionEditor value={content} onChange={setContent} />
-				<div className="mt-3 flex flex-col gap-2 sm:flex-row-reverse">
+				<WysiwygEditor value={content} onChange={setContent} />
+				<BaseModal.Footer>
 					<Button type="submit" variant="brandingInverse" disabled={disabled}>
 						{modalData ? "Edytuj" : "Dodaj"} pytanie
 					</Button>
 					<Button type="button" variant="branding" onClick={closeModal}>
 						Anuluj
 					</Button>
-				</div>
-				<p
-					className={twMerge("-mb-10 mt-3 text-red-600", isError ? "visible" : "invisible")}
-					role="alert"
-				>
-					⚠️ Wystąpił nieoczekiwany błąd przy dodawaniu pytania. Spróbuj ponownie, a jeśli problem
-					będzie się powtarzał,{" "}
-					<a
-						href="https://discord.com/invite/va2NhBv"
-						className="underline"
-						target="_blank"
-						rel="noreferrer"
-					>
-						skontaktuj się z administracją.
-					</a>
-				</p>
+				</BaseModal.Footer>
+				<BaseModal.Error visible={isError} />
 			</form>
 		</BaseModal>
 	);
