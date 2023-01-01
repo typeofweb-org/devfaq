@@ -5,7 +5,6 @@ type ActiveNavigationLinkProps = Readonly<{
 	href: string;
 	children: ReactNode;
 	onClick?: MouseEventHandler<HTMLAnchorElement>;
-	className?: string;
 }>;
 
 export const ActiveNavigationLink = (props: ActiveNavigationLinkProps) => (
