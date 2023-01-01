@@ -17,8 +17,7 @@ export const AnswerSources = ({ sources, onChange }: AnswerSourcesProps) => {
 			return;
 		}
 
-		const newSources = [...sources];
-		newSources[index] = value;
+		const newSources = sources.map((source, i) => (i === index ? value : source));
 
 		onChange(newSources);
 	};

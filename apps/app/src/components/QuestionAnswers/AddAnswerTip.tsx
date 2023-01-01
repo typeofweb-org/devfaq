@@ -23,7 +23,7 @@ export const AddAnswerTip = ({ children }: AddAnswerTipProps) => {
 		return (
 			<Tip className="mt-6 flex items-center justify-between gap-x-2">
 				<p>
-					<b>Chcesz dodać odpowiedź?</b> Najpierw musisz się zalogować!
+					<strong>Chcesz dodać odpowiedź?</strong> Najpierw musisz się zalogować!
 				</p>
 				<Link href={`/login?previousPath=${pathname || ""}`}>
 					<Button variant="branding">Zaloguj się</Button>

@@ -74,7 +74,7 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 			const {
 				session: { data: sessionData },
 				params: { id },
-				body,
+				body: { content, sources },
 			} = request;
 
 			if (!sessionData) {
@@ -83,7 +83,7 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 
 			try {
 				const answer = await fastify.db.questionAnswer.create({
-					data: { questionId: id, createdById: sessionData._user.id, ...body },
+					data: { questionId: id, createdById: sessionData._user.id, content, sources },
 					select: answerSelect,
 				});
 
@@ -108,12 +108,12 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 		async handler(request) {
 			const {
 				params: { id },
-				body,
+				body: { content, sources },
 			} = request;
 
 			const answer = await fastify.db.questionAnswer.update({
 				where: { id },
-				data: body,
+				data: { content, sources },
 				select: answerSelect,
 			});
 

@@ -1,7 +1,7 @@
 import { QuestionAnswer } from "../../types";
 import { formatDate } from "../../utils/intl";
 import { GitHubAvatar } from "../GitHubAvatar";
-import { MarkDownContent } from "../MarkDownContent";
+import { MarkdownContent } from "../MarkdownContent";
 
 type AnswerProps = Readonly<{
 	answer: QuestionAnswer;
@@ -29,7 +29,7 @@ export const Answer = ({ answer: { mdxContent, createdBy, createdAt, sources } }
 				</div>
 			</div>
 			<div className="mt-4 text-justify">
-				<MarkDownContent source={mdxContent} />
+				<MarkdownContent source={mdxContent} />
 			</div>
 			{sources.length > 0 && (
 				<div className="mt-4 text-sm italic text-neutral-500 dark:text-neutral-400">
