@@ -1,6 +1,5 @@
 import { ButtonHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
-import { BrandingInverse } from "./Button.stories";
 
 const defaultStyles =
 	"min-w-[160px] appearance-none rounded-md border border-transparent px-8 py-1 text-sm leading-8 transition-colors duration-100 disabled:cursor-not-allowed sm:py-0";
