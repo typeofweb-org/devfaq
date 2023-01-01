@@ -10,7 +10,7 @@ type OpacityElementProps = {
 export const OpacityElement = ({ children, permanent, className }: OpacityElementProps) => {
 	return (
 		<div
-			className={twMerge("transition", pernament ? "opacity-80" : "hover:opacity-80", className)}
+			className={twMerge("transition", permanent ? "opacity-80" : "hover:opacity-80", className)}
 		>
 			<>{children}</>
 		</div>
