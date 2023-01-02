@@ -15,8 +15,7 @@ export const unlockScroll = (mobileOnly = false) => {
 
 	if (mobileOnly) {
 		document.body.classList.remove("overflow-hidden", "sm:overflow-auto");
-		return;
+	} else {
+		document.body.classList.remove("!overflow-hidden");
 	}
-
-	document.body.classList.remove("forceLockScroll");
 };
