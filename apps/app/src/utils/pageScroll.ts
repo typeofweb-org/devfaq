@@ -10,7 +10,7 @@ export const lockScroll = ({ mobileOnly }: { mobileOnly: boolean }) => {
 	}
 };
 
-export const unlockScroll = (mobileOnly = false) => {
+export const unlockScroll = ({ mobileOnly }: { mobileOnly: boolean }) => {
 	document.body.style.paddingRight = "";
 
 	if (mobileOnly) {
