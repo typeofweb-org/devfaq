@@ -16,7 +16,12 @@ const firaCode = Fira_Code({
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="pl" className={`${firaSans.variable} ${firaCode.variable}`}>
+		<html
+			lang="pl-PL"
+			prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#"
+			itemType="http://schema.org/WebPage"
+			className={`${firaSans.variable} ${firaCode.variable}`}
+		>
 			<body>
 				<AppProviders>{children}</AppProviders>
 				<AnalyticsWrapper />

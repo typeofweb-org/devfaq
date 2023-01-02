@@ -26,6 +26,7 @@ export const AdminPanelQuestionsList = memo(
 					<li key={question.id}>
 						<QuestionItem
 							level={question._levelId}
+							technology={question._categoryId}
 							leftSection={
 								<AdminPanelQuestionLeftSection
 									question={question}

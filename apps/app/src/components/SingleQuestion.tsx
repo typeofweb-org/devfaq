@@ -10,7 +10,7 @@ type SingleQuestionProps = Readonly<{
 }>;
 
 export const SingleQuestion = ({
-	question: { id, mdxContent, _levelId, acceptedAt },
+	question: { id, mdxContent, _levelId, _categoryId, acceptedAt },
 }: SingleQuestionProps) => {
 	const { votes, voted, refetch } = useGetQuestionVotesById(id);
 
@@ -19,6 +19,7 @@ export const SingleQuestion = ({
 			id={id}
 			mdxContent={mdxContent}
 			level={_levelId}
+			technology={_categoryId}
 			acceptedAt={acceptedAt}
 			leftSection={
 				<QuestionVoting
