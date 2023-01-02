@@ -75,10 +75,6 @@
 	.border-aside {
 		border-image: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.08) 50%, transparent) 100;
 	}
-
-	.forceLockScroll {
-		overflow: hidden !important;
-	}
 }
 .question-content pre[class*="language-"]::before,
 .question-content pre[class*="language-"]::after {
