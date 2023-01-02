@@ -26,6 +26,7 @@ export const useGetAllQuestions = ({
 				...(technology && { category: technology }),
 				...(levels && { level: levels.join(",") }),
 			}),
+		keepPreviousData: true,
 	});
 
 	return query;

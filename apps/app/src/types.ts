@@ -12,6 +12,9 @@ export type User = UserData["_user"];
 export type APIQuestion =
 	paths["/questions/{id}"]["get"]["responses"][200]["content"]["application/json"]["data"];
 
+export type QuestionsVotes =
+	paths["/questions/votes"]["get"]["responses"][200]["content"]["application/json"];
+
 export type AdminQuestion = APIQuestion & MdxContent;
 
 export type Question = Omit<AdminQuestion, "question">;

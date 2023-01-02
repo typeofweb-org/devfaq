@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetQuestionsVotes } from "../../hooks/useGetQuestionsVotes";
+import { useGetQuestionsVotes } from "../../hooks/useQuestionVoting";
 import { Question, QuestionFilter } from "../../types";
 import { QuestionItem } from "../QuestionItem/QuestionItem";
 import { QuestionVoting } from "./QuestionVoting";
