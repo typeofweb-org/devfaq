@@ -7,7 +7,10 @@ import { parseTechnologyQuery } from "../../../../../lib/technologies";
 import { Params, SearchParams } from "../../../../../types";
 
 const AdminPanel = dynamic(
-	() => import("../../../../../components/AdminPanel/AdminPanel").then((mod) => mod.AdminPanel),
+	() =>
+		import(
+			/* webpackChunkName: "AdminPanel" */ "../../../../../components/AdminPanel/AdminPanel"
+		).then((mod) => mod.AdminPanel),
 	{ ssr: false },
 );
 
