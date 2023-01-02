@@ -7,21 +7,37 @@ export const Footer = () => (
 			<nav className="flex text-sm text-white">
 				<ul className="flex list-none flex-wrap justify-center gap-y-4 gap-x-7">
 					<li>
-						<Link href="/about">Jak korzystać?</Link>
+						<Link href="/about" className="transition-opacity hover:opacity-80">
+							Jak korzystać?
+						</Link>
 					</li>
 					<li>
-						<Link href="/regulations">Regulamin</Link>
+						<Link href="/regulations" className="transition-opacity hover:opacity-80">
+							Regulamin
+						</Link>
 					</li>
 					<li>
-						<Link href="/authors">Autorzy</Link>
+						<Link href="/authors" className="transition-opacity hover:opacity-80">
+							Autorzy
+						</Link>
 					</li>
 					<li>
-						<a href="https://www.facebook.com/DevFAQ" target="_blank" rel="noreferrer">
+						<a
+							href="https://www.facebook.com/DevFAQ"
+							target="_blank"
+							rel="noreferrer"
+							className="transition-opacity hover:opacity-80"
+						>
 							Facebook
 						</a>
 					</li>
 					<li>
-						<a href="https://typeofweb.com" target="_blank" rel="noreferrer">
+						<a
+							href="https://typeofweb.com"
+							target="_blank"
+							rel="noreferrer"
+							className="transition-opacity hover:opacity-80"
+						>
 							Type of Web
 						</a>
 					</li>

@@ -19,7 +19,7 @@ export const UserAvatar = ({ userData }: UserAvatarProps) => {
 			height={38}
 			title="Kliknij, aby się wylogować"
 			onClick={() => logout.mutate({})}
-			className="mx-auto cursor-pointer rounded-full"
+			className="mx-auto cursor-pointer rounded-full transition-opacity hover:opacity-80"
 		/>
 	);
 };
