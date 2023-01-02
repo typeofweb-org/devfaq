@@ -1,6 +1,6 @@
 import "client-only";
 
-export const lockScroll = (mobileOnly = false) => {
+export const lockScroll = ({ mobileOnly }: { mobileOnly: boolean }) => {
 	document.body.style.paddingRight = `${window.innerWidth - document.body.offsetWidth}px`;
 
 	if (mobileOnly) {
