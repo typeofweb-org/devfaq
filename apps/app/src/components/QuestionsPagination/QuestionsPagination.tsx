@@ -1,5 +1,4 @@
 import { LinkProps } from "next/link";
-import { e } from "vitest/dist/index-c3f83a58";
 import { PAGE_SIZE } from "../../lib/constants";
 import { range } from "../../utils/utils";
 import { ActiveLink } from "../ActiveLink";

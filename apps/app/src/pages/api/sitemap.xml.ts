@@ -5,7 +5,7 @@ import { APIQuestion, Question } from "../../types";
 import { range } from "../../utils/utils";
 
 export const config = {
-	runtime: "edge",
+	runtime: "experimental-edge",
 };
 
 type Item = {
@@ -67,14 +67,12 @@ export default async function SitemapHandler(req: Request) {
 				} as const;
 			});
 		}),
-		...Object.entries(questionsByTechnology).flatMap(([technology, questions]) => {
-			return questions.map((question) => {
-				return {
-					path: `/questions/p/${question.id}`,
-					changefreq: "daily",
-					priority: 0.8,
-				} as const;
-			});
+		...questions.data.data.flatMap((question) => {
+			return {
+				path: `/questions/p/${question.id}`,
+				changefreq: "daily",
+				priority: 0.8,
+			} as const;
 		}),
 	] as const;
 

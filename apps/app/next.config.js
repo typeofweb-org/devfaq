@@ -2,9 +2,9 @@
 const nextConfig = {
 	reactStrictMode: true,
 	swcMinify: true,
+	transpilePackages: [],
 	experimental: {
 		appDir: true,
-		transpilePackages: [],
 		esmExternals: true,
 		fontLoaders: [{ loader: "@next/font/google", options: { subsets: ["latin", "latin-ext"] } }],
 		serverComponentsExternalPackages: ["remark-gfm", "remark-prism"],
