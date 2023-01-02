@@ -46,7 +46,22 @@ const nextConfig = {
 			{
 				source: "/questions/:technology",
 				destination: "/questions/:technology/1",
-				permanent: true,
+				permanent: false,
+			},
+			{
+				source: "/authors",
+				destination: "/autorzy",
+				permanent: false,
+			},
+			{
+				source: "/regulations",
+				destination: "/regulamin",
+				permanent: false,
+			},
+			{
+				source: "/about",
+				destination: "/jak-korzystac",
+				permanent: false,
 			},
 		];
 	},

@@ -17,8 +17,8 @@ export const GitHubAvatar = ({
 
 	const avatarUrl = `https://avatars.githubusercontent.com/u/${socialLogin.github}`;
 	const alt = firstName
-		? `Avatar of ${firstName} ${lastName || ""}`.trim()
-		: `Avatar of user ${id}`;
+		? `Zdjęcie użytkownika ${firstName} ${lastName || ""}`.trim()
+		: `Zdjęcie użytkownika ${id}`;
 
 	return <Image src={avatarUrl} alt={alt} {...props} />;
 };

@@ -2,6 +2,7 @@
 
 import { ReactNode, useEffect } from "react";
 import { Transition } from "@headlessui/react";
+import FocusLock from "react-focus-lock";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
 import { useUIContext } from "../../providers/UIProvider";
 import { CloseButton } from "../CloseButton/CloseButton";
@@ -43,19 +44,21 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 		>
 			<div className="m-auto flex min-h-full w-fit sm:items-center">
 				<div
-					className="relative w-full max-w-3xl animate-show rounded-sm bg-white px-3.5 py-9 dark:bg-white-dark sm:px-11 sm:py-20"
+					className="relative w-full max-w-3xl animate-show rounded-none bg-white px-3.5 py-9 dark:bg-white-dark sm:rounded-md sm:px-11 sm:py-20"
 					onClick={(event) => {
 						// stop propagation to avoid triggering `onClick` on the backdrop behind the modal
 						event.stopPropagation();
 					}}
 				>
-					<CloseButton
-						type="button"
-						aria-label="Zamknij modal"
-						className="absolute right-4 top-4"
-						onClick={onClose}
-					/>
-					{children}
+					<FocusLock>
+						<CloseButton
+							type="button"
+							aria-label="Zamknij modal"
+							className="absolute right-4 top-4"
+							onClick={onClose}
+						/>
+						{children}
+					</FocusLock>
 				</div>
 			</div>
 		</Transition>

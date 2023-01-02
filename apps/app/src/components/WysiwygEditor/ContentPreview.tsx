@@ -6,7 +6,7 @@ export const ContentPreview = ({ content }: { readonly content: string }) => {
 	const source = use(serializeSource(content));
 
 	return (
-		<div className="h-full overflow-auto bg-neutral-50 p-2 dark:bg-neutral-700">
+		<div className="relative z-10 h-full overflow-auto bg-neutral-50 p-2 dark:bg-neutral-700">
 			<MarkdownContent source={source} />
 		</div>
 	);

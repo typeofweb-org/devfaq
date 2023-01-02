@@ -1,4 +1,4 @@
-import { StaticPageContainer } from "../../../components/StaticPageContainer";
+import { StaticPageContainer } from "../../../../components/StaticPageContainer";
 
 export default function AboutPage() {
 	return (

@@ -35,12 +35,12 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 				<div className="mt-auto mb-auto flex flex-col items-center gap-10 sm:flex-row sm:gap-5">
 					<ul className="flex list-none flex-col items-center gap-10 text-center sm:flex-row sm:gap-5">
 						<li>
-							<ActiveNavigationLink href="/about" onClick={handleClickLink}>
+							<ActiveNavigationLink href="/jak-korzystac" onClick={handleClickLink}>
 								Jak korzystać?
 							</ActiveNavigationLink>
 						</li>
 						<li>
-							<ActiveNavigationLink href="/authors" onClick={handleClickLink}>
+							<ActiveNavigationLink href="/autorzy" onClick={handleClickLink}>
 								Autorzy
 							</ActiveNavigationLink>
 						</li>
