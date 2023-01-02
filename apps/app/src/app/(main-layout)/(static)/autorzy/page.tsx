@@ -1,6 +1,6 @@
-import { Author } from "../../../components/Author/Author";
-import { StaticPageContainer } from "../../../components/StaticPageContainer";
-import { getAllContributors } from "../../../lib/contributors";
+import { Author } from "../../../../components/Author/Author";
+import { StaticPageContainer } from "../../../../components/StaticPageContainer";
+import { getAllContributors } from "../../../../lib/contributors";
 
 export default function AuthorsPage() {
 	return (
