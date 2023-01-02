@@ -12,12 +12,16 @@ export const Answer = ({ answer: { mdxContent, createdBy, createdAt, sources } }
 
 	return (
 		<div className="bg-white p-4 shadow-md dark:bg-white-dark">
-			<div className="flex gap-x-3.5">
+			<header className="flex gap-x-3.5">
 				<GitHubAvatar user={createdBy} width={40} height={40} className="rounded-full" />
-				<div className="flex flex-col items-end justify-center leading-4">
-					<p className="font-bold text-black dark:text-neutral-200">
+				<div
+					className="flex flex-col items-end justify-center leading-4"
+					title="Autor(-ka) pytania"
+				>
+					<span className="font-bold text-black dark:text-neutral-200">
+						<span className="sr-only">Autor(-ka) pytania: </span>
 						{createdBy.firstName} {createdBy.lastName}
-					</p>
+					</span>
 					<time
 						dateTime={creationDate.toISOString()}
 						aria-label={`Odpowiedź dodano ${formatDate(creationDate, "long")}`}
@@ -27,8 +31,8 @@ export const Answer = ({ answer: { mdxContent, createdBy, createdAt, sources } }
 						{formatDate(creationDate, "short")}
 					</time>
 				</div>
-			</div>
-			<div className="mt-4 text-justify">
+			</header>
+			<div className="-mx-2 mt-4">
 				<MarkdownContent source={mdxContent} />
 			</div>
 			{sources.length > 0 && (

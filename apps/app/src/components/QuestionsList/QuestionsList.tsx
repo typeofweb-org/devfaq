@@ -19,7 +19,7 @@ export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps)
 
 	return (
 		<ul className="space-y-10">
-			{questions.map(({ id, mdxContent, _levelId, acceptedAt }) => {
+			{questions.map(({ id, mdxContent, _levelId, _categoryId, acceptedAt }) => {
 				const questionVote = questionsVotes?.find((questionVote) => questionVote.id === id);
 				const [votes, voted] = questionVote
 					? [questionVote.votesCount, questionVote.currentUserVotedOn]
@@ -31,6 +31,7 @@ export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps)
 							id={id}
 							mdxContent={mdxContent}
 							level={_levelId}
+							technology={_categoryId}
 							acceptedAt={acceptedAt}
 							leftSection={
 								<QuestionVoting

@@ -1,4 +1,5 @@
 import { LinkProps } from "next/link";
+import { e } from "vitest/dist/index-c3f83a58";
 import { PAGE_SIZE } from "../../lib/constants";
 import { ActiveLink } from "../ActiveLink";
 
@@ -8,6 +9,8 @@ type QuestionsPaginationProps = Readonly<{
 	getHref: (i: number) => LinkProps["href"];
 }>;
 
+export const QUESTIONS_PAGINATION_SEPARATOR = Symbol("QUESTIONS_PAGINATION_SEPARATOR");
+
 export const getPages = ({
 	first,
 	last,
@@ -16,7 +19,7 @@ export const getPages = ({
 	first: number;
 	last: number;
 	current: number;
-}) => {
+}): ReadonlyArray<number | typeof QUESTIONS_PAGINATION_SEPARATOR> => {
 	if (first === last) {
 		return [1];
 	}
@@ -27,7 +30,13 @@ export const getPages = ({
 	const lastMiddle = Math.min(last - 1, next);
 	const middle = Array.from({ length: lastMiddle - firstMiddle + 1 }, (_, i) => firstMiddle + i);
 
-	return [first, ...middle, last];
+	return [
+		first,
+		firstMiddle === first + 1 ? undefined : QUESTIONS_PAGINATION_SEPARATOR,
+		...middle,
+		lastMiddle === last - 1 ? undefined : QUESTIONS_PAGINATION_SEPARATOR,
+		last,
+	].filter((el): el is number | typeof QUESTIONS_PAGINATION_SEPARATOR => el !== undefined);
 };
 
 export const QuestionsPagination = ({ current, total, getHref }: QuestionsPaginationProps) => {
@@ -40,25 +49,31 @@ export const QuestionsPagination = ({ current, total, getHref }: QuestionsPagina
 	return (
 		<nav aria-label="Paginacja" role="navigation">
 			<ul className="flex justify-center gap-x-3">
-				{pages.map((i) => (
-					<li key={i}>
-						<ActiveLink
-							href={getHref(i)}
-							className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border-2 border-primary text-primary transition-colors duration-300 hover:bg-violet-100 dark:text-white dark:hover:bg-violet-800"
-							activeClassName="bg-primary text-white hover:bg-primary"
-							aria-label={`Strona ${i}${
-								current - 1 === i ? ", poprzednia" : current + 1 === i ? ", kolejna" : ""
-							}`}
-							activeAttributes={{
-								"aria-current": "page",
-								"aria-label": `Strona ${i}, bieżąca`,
-							}}
-							mergeQuery
-						>
-							{i}
-						</ActiveLink>
-					</li>
-				))}
+				{pages.map((page, idx) =>
+					page === QUESTIONS_PAGINATION_SEPARATOR ? (
+						<li key={`${page.toString()}_${idx}`} aria-hidden="true">
+							<span className="-mx-2 flex h-7 w-7 cursor-default items-center justify-center text-primary after:content-['…'] dark:text-white"></span>
+						</li>
+					) : (
+						<li key={page}>
+							<ActiveLink
+								href={getHref(page)}
+								className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border-2 border-primary text-primary transition-colors duration-300 hover:bg-violet-100 dark:text-white dark:hover:bg-violet-800"
+								activeClassName="bg-primary text-white hover:bg-primary"
+								aria-label={`Strona ${page}${
+									current - 1 === page ? ", poprzednia" : current + 1 === page ? ", kolejna" : ""
+								}`}
+								activeAttributes={{
+									"aria-current": "page",
+									"aria-label": `Strona ${page}, bieżąca`,
+								}}
+								mergeQuery
+							>
+								{page}
+							</ActiveLink>
+						</li>
+					),
+				)}
 			</ul>
 		</nav>
 	);

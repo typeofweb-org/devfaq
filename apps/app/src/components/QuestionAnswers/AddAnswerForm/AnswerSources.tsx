@@ -49,7 +49,7 @@ export const AnswerSources = ({ sources, onChange }: AnswerSourcesProps) => {
 							placeholder="Link do źródła"
 							value={source}
 							onChange={handleInputChange(i)}
-							className="flex-1 rounded-md border border-primary bg-transparent p-1.5 text-primary focus:outline-0 dark:border-white dark:text-neutral-200"
+							className="flex-1 rounded-md border border-primary bg-transparent px-2 py-1.5 text-primary focus:outline-0 dark:border-white dark:text-neutral-200"
 						/>
 						<button
 							type="button"

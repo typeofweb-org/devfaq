@@ -10,12 +10,19 @@ import UlIcon from "../../../public/icons/toolbar-ul.svg";
 import OlIcon from "../../../public/icons/toolbar-ol.svg";
 import EyeIcon from "../../../public/icons/toolbar-eye.svg";
 import { handleAction, Action } from "../../lib/actions";
+import { Loading } from "../Loading";
 import { ActionsGroup } from "./ActionsGroup";
 import { ActionItem } from "./ActionItem";
 
-const ContentPreview = dynamic(() => import("./ContentPreview").then((mod) => mod.ContentPreview), {
-	ssr: false,
-});
+const ContentPreview = dynamic(
+	() =>
+		import(/* webpackChunkName: "ContentPreview" */ "./ContentPreview").then(
+			(mod) => mod.ContentPreview,
+		),
+	{
+		ssr: false,
+	},
+);
 
 const actionIcons: Record<Action, JSX.Element> = {
 	BOLD: <BoldIcon viewBox="0 0 32 32" />,
@@ -119,20 +126,28 @@ export const WysiwygEditor = memo(({ value, onChange }: WysiwygEditorProps) => {
 					/>
 				</ActionsGroup>
 			</div>
-			<div className="h-72">
+			<div className="relative h-72">
 				{isPreview ? (
-					<Suspense>
+					<Suspense
+						fallback={
+							<Loading
+								label="Ładowanie podglądu…"
+								className="absolute top-0 left-1/2 -translate-x-1/2"
+							/>
+						}
+					>
 						<ContentPreview content={value} />
 					</Suspense>
 				) : (
 					<textarea
 						aria-label="Wpisz treść pytania"
-						className="h-full w-full resize-none bg-transparent p-2 focus:outline-0 dark:text-white"
+						className="relative z-10 h-full w-full resize-none bg-white py-2 px-4 focus:outline-0 dark:bg-white-dark dark:text-white"
 						ref={textAreaRef}
 						value={value}
 						onChange={(event) => onChange(event.target.value)}
 					/>
 				)}
+				<Loading label="Ładowanie podglądu…" className="absolute top-0 left-1/2 -translate-x-1/2" />
 			</div>
 		</div>
 	);

@@ -2,6 +2,7 @@
 
 import { ReactNode, useEffect } from "react";
 import { Transition } from "@headlessui/react";
+import FocusLock from "react-focus-lock";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
 import { useUIContext } from "../../providers/UIProvider";
 import { CloseButton } from "../CloseButton/CloseButton";
@@ -49,13 +50,15 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 						event.stopPropagation();
 					}}
 				>
-					<CloseButton
-						type="button"
-						aria-label="Zamknij modal"
-						className="absolute right-4 top-4"
-						onClick={onClose}
-					/>
-					{children}
+					<FocusLock>
+						<CloseButton
+							type="button"
+							aria-label="Zamknij modal"
+							className="absolute right-4 top-4"
+							onClick={onClose}
+						/>
+						{children}
+					</FocusLock>
 				</div>
 			</div>
 		</Transition>
