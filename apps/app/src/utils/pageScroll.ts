@@ -1,13 +1,21 @@
 import "client-only";
 
-const classes = ["overflow-hidden"];
-
-export const lockScroll = () => {
+export const lockScroll = ({ mobileOnly }: { mobileOnly: boolean }) => {
 	document.body.style.paddingRight = `${window.innerWidth - document.body.offsetWidth}px`;
-	document.body.classList.add(...classes);
+
+	if (mobileOnly) {
+		document.body.classList.add("overflow-hidden", "sm:overflow-auto");
+	} else {
+		document.body.classList.add("!overflow-hidden");
+	}
 };
 
-export const unlockScroll = () => {
+export const unlockScroll = ({ mobileOnly }: { mobileOnly: boolean }) => {
 	document.body.style.paddingRight = "";
-	document.body.classList.remove(...classes);
+
+	if (mobileOnly) {
+		document.body.classList.remove("overflow-hidden", "sm:overflow-auto");
+	} else {
+		document.body.classList.remove("!overflow-hidden");
+	}
 };
