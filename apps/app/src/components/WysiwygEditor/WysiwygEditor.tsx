@@ -103,8 +103,8 @@ export const WysiwygEditor = memo(({ value, onChange }: WysiwygEditorProps) => {
 	}, [value, isPreview]);
 
 	return (
-		<div className="mt-4 rounded-md border">
-			<div className="flex border-b p-2.5">
+		<div className="mt-4 rounded-md border border-violet-300">
+			<div className="flex border-b border-violet-300 p-2.5">
 				{hierarchy.map((actions, i) => (
 					<ActionsGroup key={i} separator={i !== 0}>
 						{actions.map((action) => (
