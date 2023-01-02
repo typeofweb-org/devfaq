@@ -3,7 +3,7 @@
 import { ChangeEvent, ComponentProps, useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { useUIContext } from "../providers/UIProvider";
-import { technologiesLabel, Technology, validateTechnology } from "../lib/technologies";
+import { technologiesLabels, Technology, validateTechnology } from "../lib/technologies";
 import { Level, levels, validateLevel } from "../lib/level";
 import { useQuestionMutation } from "../hooks/useQuestionMutation";
 import { BaseModal } from "./BaseModal/BaseModal";
@@ -95,7 +95,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 							<option value="" disabled hidden>
 								-
 							</option>
-							{Object.entries(technologiesLabel).map(([technology, label]) => (
+							{Object.entries(technologiesLabels).map(([technology, label]) => (
 								<option key={technology} value={technology}>
 									{label}
 								</option>

@@ -3,7 +3,7 @@ import { ChangeEvent, ReactNode } from "react";
 import { useDevFAQRouter } from "../../hooks/useDevFAQRouter";
 import { levels } from "../../lib/level";
 import { QuestionStatus, statuses } from "../../lib/question";
-import { technologies, technologiesLabel, Technology } from "../../lib/technologies";
+import { technologies, technologiesLabels, Technology } from "../../lib/technologies";
 import { Level } from "../QuestionItem/QuestionLevel";
 import { Select } from "../Select/Select";
 
@@ -42,7 +42,7 @@ export const AdminPanelHeader = ({
 					<option value="">Wszystkie</option>
 					{technologies.map((technology) => (
 						<option key={technology} value={technology}>
-							{technologiesLabel[technology]}
+							{technologiesLabels[technology]}
 						</option>
 					))}
 				</Select>

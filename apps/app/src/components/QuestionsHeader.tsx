@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent } from "react";
-import { technologiesLabel, Technology } from "../lib/technologies";
+import { technologiesLabels, Technology } from "../lib/technologies";
 import { pluralize } from "../utils/intl";
 import { useQuestionsOrderBy } from "../hooks/useQuestionsOrderBy";
 import { sortByLabels } from "../lib/order";
@@ -25,7 +25,7 @@ export const QuestionsHeader = ({ technology, total }: QuestionsHeaderProps) => 
 	return (
 		<header className="flex flex-wrap items-baseline justify-between gap-3 text-neutral-500 dark:text-neutral-400">
 			<output className="flex gap-1.5 md:gap-3">
-				<strong>{technologiesLabel[technology]}: </strong>
+				<strong>{technologiesLabels[technology]}: </strong>
 				{total} {questionsPluralize(total)}
 			</output>
 			<label className="flex flex-wrap items-baseline gap-1.5 md:gap-3">

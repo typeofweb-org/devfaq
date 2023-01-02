@@ -1,6 +1,7 @@
 import { LinkProps } from "next/link";
 import { e } from "vitest/dist/index-c3f83a58";
 import { PAGE_SIZE } from "../../lib/constants";
+import { range } from "../../utils/utils";
 import { ActiveLink } from "../ActiveLink";
 
 type QuestionsPaginationProps = Readonly<{
@@ -28,7 +29,7 @@ export const getPages = ({
 	const next = current + (1 + Math.max(0, 3 - current));
 	const firstMiddle = Math.max(first + 1, previous);
 	const lastMiddle = Math.min(last - 1, next);
-	const middle = Array.from({ length: lastMiddle - firstMiddle + 1 }, (_, i) => firstMiddle + i);
+	const middle = range(firstMiddle, lastMiddle + 1);
 
 	return [
 		first,
