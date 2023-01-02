@@ -141,7 +141,7 @@ export const WysiwygEditor = memo(({ value, onChange }: WysiwygEditorProps) => {
 				) : (
 					<textarea
 						aria-label="Wpisz treść pytania"
-						className="relative z-10 h-full w-full resize-none bg-white py-2 px-4 focus:outline-0 dark:bg-white-dark dark:text-white"
+						className="prose prose-sm relative z-10 h-full w-full max-w-full resize-none bg-white py-2 px-4 focus:outline-0 dark:bg-white-dark dark:prose-invert md:prose-base"
 						ref={textAreaRef}
 						value={value}
 						onChange={(event) => onChange(event.target.value)}
