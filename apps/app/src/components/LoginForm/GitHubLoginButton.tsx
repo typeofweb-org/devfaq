@@ -29,7 +29,7 @@ export const GitHubLoginButton = () => {
 			onClick={() => {
 				void handleClick();
 			}}
-			className="flex w-fit items-center rounded-lg border-2 border-neutral-300 bg-white p-2 text-zinc-800"
+			className="flex w-fit items-center rounded-lg border-2 border-neutral-300 bg-white p-2 text-zinc-800 transition-colors hover:bg-neutral-200"
 		>
 			<GitHubLogo className="mr-3" />
 			Zaloguj się przez GitHuba

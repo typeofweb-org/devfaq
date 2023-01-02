@@ -50,6 +50,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 								target="_blank"
 								rel="noreferrer"
 								onClick={handleClickLink}
+								className="transition-opacity hover:opacity-80"
 							>
 								Facebook
 							</a>
