@@ -31,6 +31,7 @@ const urlObjectToUrl = (urlObject: UrlObject, origin: string): URL => {
 
 export const createQueryHref = (href: Url, query: Record<string, string>): string => {
 	const url = typeof href === "string" ? new URL(href, origin) : urlObjectToUrl(href, origin);
+
 	Object.entries(query).forEach(([key, value]) => {
 		if (url.searchParams.get(key) === null) {
 			url.searchParams.set(key, value);
@@ -54,7 +55,12 @@ type LinkWithQueryProps = Readonly<{
 export const LinkWithQuery = ({ href, mergeQuery, ...props }: LinkWithQueryProps) => {
 	const { queryParams } = useDevFAQRouter();
 
-	const linkHref = mergeQuery ? createQueryHref(href, queryParams) : createQueryHref(href, {});
+	const hrefStr = href.toString();
+	const isAbsoluteHttpUrl = hrefStr.startsWith("http://") || hrefStr.startsWith("https://");
+	const isExternalUrl = isAbsoluteHttpUrl && !hrefStr.startsWith(origin);
+
+	const linkHref =
+		mergeQuery && !isExternalUrl ? createQueryHref(href, queryParams) : createQueryHref(href, {});
 
 	return <Link href={linkHref} {...props} />;
 };

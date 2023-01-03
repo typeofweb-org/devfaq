@@ -32,7 +32,7 @@ export const TechnologyFilter = () => {
 				))}
 				<li className="pt-1">
 					<TechnologyLink
-						href="https://github.com/typeofweb/devfaq/issues/new"
+						href="https://github.com/typeofweb/devfaq/issues/new?title=[NOWA%20TECHNOLOGIA]:"
 						icon={<AddIcon className="text-green-700" />}
 						title="Czegoś brakuje? Zasugeruj dodanie nowej technologii"
 						label="Dodaj"
