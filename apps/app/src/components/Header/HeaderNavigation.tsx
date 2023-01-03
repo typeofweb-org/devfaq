@@ -72,7 +72,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 				className={twMerge(
 					"right-4 z-40 flex h-8 w-8 flex-col items-center justify-center gap-1.5",
 					isOpen
-						? "fixed sm:absolute sm:-top-full sm:focus-within:static sm:focus-within:top-1/2"
+						? "fixed sm:absolute sm:-top-[200%] sm:focus-within:static sm:focus-within:top-1/2"
 						: "absolute sm:hidden",
 				)}
 				onClick={handleButtonClick}
