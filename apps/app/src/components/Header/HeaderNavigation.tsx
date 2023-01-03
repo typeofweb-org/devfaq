@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import type { ReactNode, MouseEvent } from "react";
+import FocusLock from "react-focus-lock";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
 import { ActiveNavigationLink } from "./ActiveNagivationLink";
 import { LoginNavigationLink } from "./LoginNavigationLink";
@@ -24,7 +25,10 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 	};
 
 	return (
-		<>
+		<FocusLock
+			disabled={!isOpen}
+			className={twMerge("relative flex items-center", isOpen ? "gap-5" : "")}
+		>
 			<nav
 				id="header-navigation"
 				className={twMerge(
@@ -66,8 +70,10 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 			</nav>
 			<button
 				className={twMerge(
-					"right-4 z-40 flex h-8 w-8 flex-col items-center justify-center gap-1.5 sm:hidden",
-					isOpen ? "fixed" : "absolute",
+					"right-4 z-40 flex h-8 w-8 flex-col items-center justify-center gap-1.5",
+					isOpen
+						? "fixed sm:absolute sm:-top-full sm:focus-within:static sm:focus-within:top-1/2"
+						: "absolute sm:hidden",
 				)}
 				onClick={handleButtonClick}
 				type="button"
@@ -79,6 +85,6 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 				<div className={twMerge(itemStyles, isOpen ? "opacity-0" : "opacity-100")} />
 				<div className={twMerge(itemStyles, isOpen && "-translate-y-2 -rotate-45")} />
 			</button>
-		</>
+		</FocusLock>
 	);
 };
