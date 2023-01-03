@@ -17,11 +17,9 @@ export const AppModals = () => {
 
 	return (
 		<>
-			{Object.entries(modals).map(([type, Modal]) => {
-				return (
-					<Modal key={type} isOpen={type === openedModal} onClose={closeModal} modalId={type} />
-				);
-			})}
+			{Object.entries(modals).map(([type, Modal]) => (
+				<Modal key={type} isOpen={type === openedModal} onClose={closeModal} modalId={type} />
+			))}
 		</>
 	);
 };
