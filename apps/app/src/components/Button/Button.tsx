@@ -11,11 +11,11 @@ const variants = {
 	),
 	branding: twMerge(
 		defaultStyles,
-		"text-violet-700 dark:text-neutral-200 border-violet-700 dark:border-neutral-200 bg-transparent enabled:hover:bg-violet-50 enabled:hover:dark:bg-violet-900 focus:shadow-[0_0_10px] focus:shadow-primary dark:focus:shadow-white",
+		"text-violet-700 dark:text-neutral-200 border-violet-700 dark:border-neutral-200 bg-transparent enabled:hover:bg-violet-50 enabled:hover:dark:bg-violet-900 focus:shadow-[0_0_10px] focus:shadow-primary dark:focus:shadow-w",
 	),
 	brandingInverse: twMerge(
 		defaultStyles,
-		"border-white bg-primary text-white enabled:hover:text-violet-700 enabled:dark:hover:text-white transition-opacity enabled:hover:bg-violet-200 focus:shadow-[0_0_10px] focus:shadow-primary dark:focus:shadow-white disabled:opacity-50 enabled:hover:dark:bg-violet-700",
+		"border-white bg-primary text-white enabled:hover:text-violet-700 enabled:dark:hover:text-white transition-opacity enabled:hover:bg-violet-200 focus:shadow-[0_0_10px] focus:shadow-white disabled:opacity-50 enabled:hover:dark:bg-violet-700",
 	),
 	alternative: twMerge(
 		defaultStyles,
