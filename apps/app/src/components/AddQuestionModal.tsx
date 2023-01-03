@@ -128,7 +128,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 						type="submit"
 						variant="brandingInverse"
 						disabled={disabled}
-						className="focus:shadow-primary"
+						className="focus:shadow-primary dark:focus:shadow-white"
 					>
 						{modalData ? "Edytuj" : "Dodaj"} pytanie
 					</Button>
