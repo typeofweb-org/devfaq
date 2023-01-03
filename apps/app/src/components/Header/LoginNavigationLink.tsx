@@ -19,7 +19,12 @@ export const LoginNavigationLink = ({
 	}
 
 	if (userData) {
-		return <UserAvatar userData={userData} />;
+		return (
+			<button type="button" className="mx-auto flex">
+				<UserAvatar userData={userData} />
+				<span className="sr-only">wyloguj się</span>
+			</button>
+		);
 	}
 
 	return (
