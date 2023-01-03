@@ -11,7 +11,7 @@ const variants = {
 	),
 	branding: twMerge(
 		defaultStyles,
-		"text-violet-700 dark:text-neutral-200 border-violet-700 dark:border-neutral-200 bg-transparent enabled:hover:bg-violet-50 enabled:hover:dark:bg-violet-900 focus:shadow-[0_0_10px] focus:shadow-primary dark:focus:shadow-w",
+		"text-violet-700 dark:text-neutral-200 border-violet-700 dark:border-neutral-200 bg-transparent enabled:hover:bg-violet-50 enabled:hover:dark:bg-violet-900 focus:shadow-[0_0_10px] focus:shadow-primary",
 	),
 	brandingInverse: twMerge(
 		defaultStyles,
