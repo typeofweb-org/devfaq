@@ -10,7 +10,7 @@ export const AddQuestionConfirmationModal = (props: ComponentProps<typeof BaseMo
 	const { closeModal } = useUIContext();
 
 	return (
-		<BaseModal {...props} modalId={props.modalId}>
+		<BaseModal {...props}>
 			<div className="flex flex-col items-center text-center text-violet-700 dark:text-violet-300">
 				<BaseModal.Title modalId={props.modalId} className="sr-only">
 					Potwierdznie przekazania pytania do zatwierdzenia.

@@ -79,7 +79,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 		};
 
 	return (
-		<BaseModal {...props} modalId={props.modalId}>
+		<BaseModal {...props}>
 			<BaseModal.Title modalId={props.modalId}>
 				{modalData ? "Edytuj" : "Nowe"} pytanie
 			</BaseModal.Title>
