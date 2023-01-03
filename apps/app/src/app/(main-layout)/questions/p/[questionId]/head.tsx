@@ -1,4 +1,5 @@
 import { HeadTags } from "../../../../../components/HeadTags";
+import { stripMarkdown } from "../../../../../lib/markdown";
 import { getQuestionById } from "../../../../../services/questions.service";
 import { Params } from "../../../../../types";
 
@@ -15,5 +16,8 @@ export default async function Head({ params }: { params: Params<"questionId"> })
 		id: questionId,
 	});
 
-	return <HeadTags title={data.question} />;
+	const textForTitle = await stripMarkdown(data.question, { stripCode: true });
+	const textForDescription = await stripMarkdown(data.question, { stripCode: false });
+
+	return <HeadTags title={textForTitle} description={textForDescription} />;
 }
