@@ -1,7 +1,8 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-import { ReactNode, MouseEvent, useEffect } from "react";
+import type { ReactNode, MouseEvent } from "react";
+import { useEffect } from "react";
 import FocusLock from "react-focus-lock";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
 import { useMobleMenu } from "../../hooks/useMobileMenu";
