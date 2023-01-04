@@ -1,17 +1,27 @@
+import { hellip } from "../utils/utils";
+
 type HeadTagsProps = Readonly<{
 	title?: string;
 	description?: string;
 }>;
 
+const titleSuffix = ` • DevFAQ.pl`;
+const maxTitleLength = 60 - titleSuffix.length;
+const maxDescriptionLength = 160;
+
 export const HeadTags = ({
 	title = "",
 	description = "DevFAQ.pl — największa baza pytań z programowania tworzona przez społeczność. DevFAQ.pl jest serwisem internetowym służącym do udostępniania i wymiany pytań rekrutacyjnych na stanowiska developerów.",
 }: HeadTagsProps) => {
-	const formattedTitle = title.trim() ? `${title} • DevFAQ.pl` : `DevFAQ.pl`;
+	const shortTitle = hellip(title, maxTitleLength);
+	const shortDescription = hellip(description, maxDescriptionLength);
+
+	const formattedShortTitle = shortTitle.trim() ? `${shortTitle}${titleSuffix}` : `DevFAQ.pl`;
+
 	return (
 		<>
-			<title>{formattedTitle}</title>
-			<meta name="description" content={description} />
+			<title>{formattedShortTitle}</title>
+			<meta name="description" itemProp="description" content={description} />
 			<meta name="viewport" content="width=device-width, initial-scale=1" />
 			<meta property="og:type" content="website" />
 			<meta
@@ -35,8 +45,8 @@ export const HeadTags = ({
 			<meta name="format-detection" content="telephone=no" />
 			<meta name="apple-mobile-web-app-title" content="DevFAQ.pl" />
 
-			<meta property="og:title" itemProp="title name" content={formattedTitle} />
-			<meta property="og:description" itemProp="description" content={description} />
+			<meta property="og:title" itemProp="title name" content={formattedShortTitle} />
+			<meta property="og:description" content={shortDescription} />
 		</>
 	);
 };
