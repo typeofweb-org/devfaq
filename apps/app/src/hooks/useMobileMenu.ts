@@ -11,13 +11,16 @@ export const useMobleMenu = ({ initialMenuOpen, maxMobileWidth }: UseMobleMenuPr
 	const handleResize = useCallback(() => {
 		if (window.innerWidth > maxMobileWidth) {
 			setIsOpen(false);
+			console.log("hello");
 		}
 	}, [maxMobileWidth]);
 
 	useEffect(() => {
-		window.addEventListener("resize", handleResize);
+		if (isOpen) {
+			window.addEventListener("resize", handleResize);
+		}
 		return () => window.removeEventListener("resize", handleResize);
-	}, [handleResize]);
+	}, [handleResize, isOpen]);
 
 	return { isOpen, setIsOpen };
 };
