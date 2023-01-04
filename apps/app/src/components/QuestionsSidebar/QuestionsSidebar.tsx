@@ -14,9 +14,9 @@ export const QuestionsSidebar = () => {
 
 	useEffect(() => {
 		if (isSidebarOpen) {
-			lockScroll({ mobileOnly: true });
+			lockScroll();
 		} else {
-			unlockScroll({ mobileOnly: true });
+			unlockScroll();
 		}
 	}, [isSidebarOpen]);
 
