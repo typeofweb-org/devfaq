@@ -33,6 +33,7 @@ export const AdminPanelQuestionsList = memo(
 									refetchQuestions={refetchQuestions}
 								/>
 							}
+							withTechnology
 							{...question}
 						/>
 					</li>

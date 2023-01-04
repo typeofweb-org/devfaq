@@ -31,6 +31,7 @@ export const SingleQuestion = ({
 					}}
 				/>
 			}
+			withTechnology
 		/>
 	);
 };
