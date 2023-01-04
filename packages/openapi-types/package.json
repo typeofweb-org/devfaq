@@ -1,6 +1,6 @@
 {
 	"name": "openapi-types",
-	"version": "0.0.0",
+	"version": "6.0.1",
 	"main": "index.ts",
 	"types": "index.ts",
 	"license": "MIT",
