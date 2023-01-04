@@ -12,14 +12,22 @@ export const LoginNavigationLink = ({
 	onClick?: MouseEventHandler<HTMLAnchorElement>;
 }) => {
 	const pathname = usePathname();
-	const { userData, isLoading } = useUser();
+	const { userData, isLoading, logout } = useUser();
 
 	if (isLoading) {
 		return null;
 	}
 
 	if (userData) {
-		return <UserAvatar userData={userData} />;
+		return (
+			<button
+				type="button"
+				className="mx-auto flex transition-opacity hover:opacity-80"
+				onClick={() => logout.mutate({})}
+			>
+				<UserAvatar userData={userData} />
+			</button>
+		);
 	}
 
 	return (

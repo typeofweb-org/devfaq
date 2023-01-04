@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "../../hooks/useUser";
 import { UserData } from "../../types";
 import { GitHubAvatar } from "../GitHubAvatar";
 
@@ -9,7 +8,6 @@ type UserAvatarProps = Readonly<{
 }>;
 
 export const UserAvatar = ({ userData }: UserAvatarProps) => {
-	const { logout } = useUser();
 	const { _user } = userData;
 
 	return (
@@ -18,8 +16,7 @@ export const UserAvatar = ({ userData }: UserAvatarProps) => {
 			width={38}
 			height={38}
 			title="Kliknij, aby się wylogować"
-			onClick={() => logout.mutate({})}
-			className="mx-auto cursor-pointer rounded-full transition-opacity hover:opacity-80"
+			className="mx-auto cursor-pointer rounded-full"
 		/>
 	);
 };
