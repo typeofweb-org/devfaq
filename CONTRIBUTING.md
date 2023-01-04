@@ -6,18 +6,19 @@
 
 ## Introduction
 
-DevFAQ is organised into a monorepo with lerna and yarn workspaces. You'll find frontend ([www](./apps/www)) and backend ([api](./apps/api)) in the [apps](./apps) directory.
+DevFAQ is organised into a monorepo with Turborepo. You'll find frontend ([app](./apps/app)) and backend ([api](./apps/api)) in the [apps](./apps) directory.
 
 - Frontend is written in **Next.js (React) with TypeScript**.
-- Backend is a REST API, and uses **HapiJS, PostgreSQL, and TypeScript**.
+- Backend is a REST API, and uses **Fastify, PostgreSQL, and TypeScript**.
 
 ## Project setup
 
-0. Make sure you have Docker installed and `docker-compose` command is available.
+0. Make sure you have Docker installed and `docker compose` command is available.
 1. Fork and clone the repo. `develop` is the default branch and you should base your work off of it.
-2. Run `yarn` inside the repo to install all the dependencies.
-3. Run `yarn dev` to start both frontend and backend locally.
+2. Run `pnpm install` inside the repo to install all the dependencies.
+3. Run `pnpm dev` to start both frontend and backend locally.
 4. In order for everything to work smoothly, you'll need to add two entries to your `/etc/hosts`. See [Configuring localhost domain](#configuring-localhost-domain) section.
+5. Remember to add `.env*` files to each app located in `apps` directory. For `apps/api` it will be `.env` - example file with variables is named `.env-example` and you can find it in `apps/api`. For `apps/app`, example env file is named `.env.local-example` and it is located in `apps/app`.
 
 ### Configuring localhost domain
 
@@ -35,14 +36,14 @@ Now you should be able to access your app at [app.devfaq.localhost:3000](http://
 There are only a few tests and we definitely need more! To run all tests execute the following command:
 
 ```
-yarn test
+pnpm test
 ```
 
 If you need to run only www or only api tests, you can do it as follows:
 
 ```
-yarn workspace www test
-yarn workspace api test
+pnpm test --filter=www
+pnpm test --filter=api
 ```
 
 ## Creating a PR

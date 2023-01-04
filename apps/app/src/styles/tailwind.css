@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.static-page-shadow {
+		box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+			0 1px 5px 0 rgba(0, 0, 0, 0.12);
+	}
+
+	.select-purple {
+		background-image: url("/select-purple.svg");
+		background-size: 25px;
+		background-position: 100% 50%;
+		background-repeat: no-repeat;
+	}
+
+	.select {
+		background-image: url("/select.svg");
+		background-size: 12px 6px;
+		background-repeat: no-repeat;
+		background-position: calc(100% - 5px) 50%;
+	}
+
+	.dark .level-button {
+		background-color: theme("colors.white-dark");
+	}
+
+	.level-button:focus {
+		box-shadow: inset 0px 0px 3px var(--color-shadow-darker);
+	}
+
+	.level-button:hover {
+		background-color: var(--color-light);
+	}
+
+	.level-button-active {
+		background-color: var(--color-main);
+		box-shadow: inset 0 2px 3px var(--color-shadow-darker);
+	}
+
+	.level-button-active:focus {
+		box-shadow: 0 0 10px var(--color-shadow-dark), 0 2px 3px var(--color-shadow-darker);
+	}
+
+	.level-button-active:hover {
+		background-color: var(--color-main-light);
+		box-shadow: inset 0 2px 3px var(--color-shadow-dark);
+	}
+
+	.level-button-junior {
+		--color-shadow-dark: var(--junior-main-color-dark);
+		--color-shadow-darker: var(--junior-main-color-darker);
+		--color-light: var(--junior-light-color);
+		--color-main: var(--junior-main-color);
+		--color-main-light: var(--junior-main-color-light);
+	}
+
+	.level-button-mid {
+		--color-shadow-dark: var(--mid-main-color-dark);
+		--color-shadow-darker: var(--mid-main-color-darker);
+		--color-light: var(--mid-light-color);
+		--color-main: var(--mid-main-color);
+		--color-main-light: var(--mid-main-color-light);
+	}
+
+	.level-button-senior {
+		--color-shadow-dark: var(--senior-main-color-dark);
+		--color-shadow-darker: var(--senior-main-color-darker);
+		--color-light: var(--senior-light-color);
+		--color-main: var(--senior-main-color);
+		--color-main-light: var(--senior-main-color-light);
+	}
+
+	.border-aside {
+		border-image: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.08) 50%, transparent) 100;
+	}
+}
+.question-content pre[class*="language-"]::before,
+.question-content pre[class*="language-"]::after {
+	display: none;
+}
+
+.question-content pre[class*="language-"] {
+	@apply bg-gray-50 p-2 dark:bg-neutral-700;
+	font-feature-settings: "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "zero", "onum";
+}
+
+.question-content :first-child {
+	@apply mt-0;
+}
+
+.question-content pre:first-child {
+	@apply mt-1;
+}

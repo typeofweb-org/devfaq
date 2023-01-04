@@ -1,0 +1,14 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"extends": "tsconfig/nextjs.json",
+	"include": ["next-env.d.ts", "lib.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+	"exclude": ["node_modules"],
+	"compilerOptions": {
+		"paths": {},
+		"plugins": [
+			{
+				"name": "next"
+			}
+		]
+	}
+}

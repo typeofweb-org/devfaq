@@ -1,0 +1,5 @@
+.vscode
+.vercel
+storybook-static
+.env*.local
+all-contributorsrc.json

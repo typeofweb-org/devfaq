@@ -112,9 +112,38 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "AdiPol1359",
+      "name": "Adrian Polak",
+      "avatar_url": "https://avatars.githubusercontent.com/u/27779154?v=4",
+      "profile": "https://projectcode.pl/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "xStrixU",
+      "name": "xStrixU",
+      "avatar_url": "https://avatars.githubusercontent.com/u/41890821?v=4",
+      "profile": "https://github.com/xStrixU",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "grzegorzpokorski",
+      "name": "Grzegorz Pokorski",
+      "avatar_url": "https://avatars.githubusercontent.com/u/27455716?v=4",
+      "profile": "https://github.com/grzegorzpokorski",
+      "contributions": [
+        "doc",
+        "bug",
+        "code"
+      ]
     }
   ],
-  "contributorsPerLine": 7,
+  "contributorsPerLine": 3,
   "skipCi": true,
   "badgeTemplate": "[![All Contributors](https://img.shields.io/badge/Contributors-<%= contributors.length %>-673ab7.svg)](#contributors-)"
 }

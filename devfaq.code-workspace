@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			"path": "apps/api"
+		},
+		{
+			"path": "apps/app"
+		}
+	],
+	"settings": {
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": true
+		},
+		"workbench.colorCustomizations": {
+			"titleBar.activeBackground": "#673ab7",
+			"titleBar.inactiveBackground": "#401886",
+			"titleBar.activeForeground": "#ffffff",
+			"titleBar.inactiveForeground": "#ffffff"
+		},
+		"typescript.tsdk": "app/node_modules/typescript/lib"
+	},
+	"extensions": {
+		"recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+	}
+}

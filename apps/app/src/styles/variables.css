@@ -1,0 +1,43 @@
+:root {
+	--primary: theme("colors.violet.700");
+
+	--junior-light-color: oklch(99.9% 0.2 255);
+	--junior-main-color: oklch(70% 0.2 255);
+	--junior-main-color-dark: oklch(62% 0.2 255);
+	--junior-main-color-darker: oklch(54% 0.2 255);
+	--junior-main-color-light: oklch(78% 0.2 255);
+
+	--mid-light-color: oklch(99.9% 0.22 143);
+	--mid-main-color: oklch(70% 0.22 143);
+	--mid-main-color-dark: oklch(57.5% 0.22 143);
+	--mid-main-color-darker: oklch(45% 0.22 143);
+	--mid-main-color-light: oklch(77.5% 0.22 143);
+
+	--senior-light-color: oklch(99.9% 0.18 85);
+	--senior-main-color: oklch(82.5% 0.18 85);
+	--senior-main-color-dark: oklch(72.5% 0.18 85);
+	--senior-main-color-darker: oklch(59.5% 0.18 85);
+	--senior-main-color-light: oklch(88.5% 0.18 85);
+}
+
+:root.dark {
+	--primary: theme("colors.violet.800");
+
+	--junior-light-color: oklch(45.5% 0 0);
+	--junior-main-color: oklch(54.5% 0.18 255);
+	--junior-main-color-dark: oklch(44.5% 0.18 255);
+	--junior-main-color-darker: oklch(34% 0.18 255);
+	--junior-main-color-light: oklch(60% 0.18 255);
+
+	--mid-light-color: oklch(45.5% 0 0);
+	--mid-main-color: oklch(45% 0.8 144);
+	--mid-main-color-dark: oklch(31.5% 0.8 144);
+	--mid-main-color-darker: oklch(16.5% 0.8 144);
+	--mid-main-color-light: oklch(58.5% 0.8 144);
+
+	--senior-light-color: oklch(45.5% 0 0);
+	--senior-main-color: oklch(58.5% 0.8 82);
+	--senior-main-color-dark: oklch(45% 0.8 82);
+	--senior-main-color-darker: oklch(29% 0.8 82);
+	--senior-main-color-light: oklch(71.5% 0.8 82);
+}

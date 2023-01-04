@@ -1,0 +1,66 @@
+name: Fly Deploy
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+jobs:
+  deploy:
+    name: Deploy API
+    runs-on: ubuntu-latest
+    environment: staging-api
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Fail if branch is not main
+        if: github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/develop'
+        run: |
+          echo "This workflow should not be triggered with workflow_dispatch on a branch other than develop"
+          exit 1
+
+      - name: Verify if deploy is needed
+        id: should_run
+        if: github.event_name != 'workflow_dispatch'
+        shell: bash
+        run: |
+          HAS_CHANGES=$(npx -y turbo run build --filter='api...[HEAD^]' --dry=json | jq '.packages | length > 0')
+          echo "HAS_CHANGES=$HAS_CHANGES" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub deployment
+        if: steps.should_run.outputs.HAS_CHANGES != 'false'
+        uses: chrnorm/deployment-action@v2
+        id: deployment
+        with:
+          token: "${{ github.token }}"
+          environment-url: https://staging-api.devfaq.pl
+          environment: staging-api
+
+      - name: Prepare flyctl
+        if: steps.should_run.outputs.HAS_CHANGES != 'false'
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy to fly.io
+        if: steps.should_run.outputs.HAS_CHANGES != 'false'
+        run: flyctl deploy --config apps/api/fly.toml --remote-only -e GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD) -e GIT_COMMIT_HASH=$(git rev-parse HEAD)
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: Update deployment status (success)
+        if: steps.should_run.outputs.HAS_CHANGES != 'false' && success()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: "${{ github.token }}"
+          environment-url: ${{ steps.deployment.outputs.environment_url }}
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          state: "success"
+
+      - name: Update deployment status (failure)
+        if: steps.should_run.outputs.HAS_CHANGES != 'false' && failure()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: "${{ github.token }}"
+          environment-url: ${{ steps.deployment.outputs.environment_url }}
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          state: "failure"

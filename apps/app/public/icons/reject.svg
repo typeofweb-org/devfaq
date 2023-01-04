@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="16"
+   height="16"
+   viewBox="0 0 16 16"
+   xml:space="preserve"
+   id="svg341"
+   sodipodi:docname="reject.svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+   id="namedview343"
+   pagecolor="#505050"
+   bordercolor="#eeeeee"
+   borderopacity="1"
+   showgrid="false" />
+
+<defs
+   id="defs333">
+</defs>
+<g
+   style="opacity:1;fill:none;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+   transform="matrix(0.1777763,0,0,0.1777763,1.3333222e-4,0)"
+   id="g339">
+	<path
+   d="m 8,90 c -2.047,0 -4.095,-0.781 -5.657,-2.343 -3.125,-3.125 -3.125,-8.189 0,-11.314 l 74,-74 c 3.125,-3.124 8.189,-3.124 11.314,0 3.124,3.124 3.124,8.189 0,11.313 l -74,74 C 12.095,89.219 10.047,90 8,90 Z"
+   style="opacity:1;fill:#ffffff;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+   stroke-linecap="round"
+   id="path335" />
+	<path
+   d="m 82,90 c -2.048,0 -4.095,-0.781 -5.657,-2.343 l -74,-74 c -3.125,-3.124 -3.125,-8.189 0,-11.313 3.124,-3.124 8.189,-3.124 11.313,0 l 74,74 c 3.124,3.125 3.124,8.189 0,11.314 C 86.095,89.219 84.048,90 82,90 Z"
+   style="opacity:1;fill:#ffffff;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+   stroke-linecap="round"
+   id="path337" />
+</g>
+</svg>

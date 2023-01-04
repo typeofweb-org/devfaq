@@ -1,0 +1,18 @@
+@import url("./tailwind.css");
+@import url("./variables.css");
+
+body {
+	@apply flex min-h-screen flex-col bg-gray-50 dark:bg-neutral-800;
+}
+
+* {
+	@apply antialiased;
+}
+
+.CodeMirror-code .cm-comment {
+	@apply font-mono;
+}
+
+code[class*="language-"] {
+	@apply px-0;
+}
