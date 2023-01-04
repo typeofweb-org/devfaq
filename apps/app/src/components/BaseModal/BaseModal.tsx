@@ -21,7 +21,7 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 
 	useEffect(() => {
 		if (isOpen) {
-			lockScroll({ mobileOnly: false });
+			lockScroll();
 		}
 	}, [isOpen]);
 
@@ -38,7 +38,7 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 			leaveTo="opacity-0"
 			afterLeave={() => {
 				if (!openedModal) {
-					unlockScroll({ mobileOnly: false });
+					unlockScroll();
 				}
 			}}
 		>
