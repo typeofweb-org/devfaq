@@ -27,7 +27,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 	return (
 		<FocusLock
 			disabled={!isOpen}
-			className={twMerge("relative flex items-center", isOpen ? "gap-5" : "")}
+			className={twMerge("flex items-center", isOpen ? "relative gap-5" : "")}
 		>
 			<nav
 				id="header-navigation"
