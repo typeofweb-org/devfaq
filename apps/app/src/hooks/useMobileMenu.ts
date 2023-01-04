@@ -11,7 +11,6 @@ export const useMobleMenu = ({ initialMenuOpen, maxMobileWidth }: UseMobleMenuPr
 	const handleResize = useCallback(() => {
 		if (window.innerWidth > maxMobileWidth) {
 			setIsOpen(false);
-			console.log("hello");
 		}
 	}, [maxMobileWidth]);
 
