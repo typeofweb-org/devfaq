@@ -13,7 +13,7 @@ export const AddQuestionConfirmationModal = (props: ComponentProps<typeof BaseMo
 		<BaseModal {...props}>
 			<div className="flex flex-col items-center text-center text-violet-700 dark:text-violet-300">
 				<BaseModal.Title modalId={props.modalId} className="sr-only">
-					Potwierdznie przekazania pytania do zatwierdzenia.
+					Potwierdzenie przekazania pytania do zatwierdzenia.
 				</BaseModal.Title>
 
 				<p>
