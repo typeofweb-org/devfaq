@@ -12,7 +12,7 @@ export const LoginNavigationLink = ({
 	onClick?: MouseEventHandler<HTMLAnchorElement>;
 }) => {
 	const pathname = usePathname();
-	const { userData, isLoading } = useUser();
+	const { userData, isLoading, logout } = useUser();
 
 	if (isLoading) {
 		return null;
@@ -20,7 +20,7 @@ export const LoginNavigationLink = ({
 
 	if (userData) {
 		return (
-			<button type="button" className="mx-auto flex">
+			<button type="button" className="mx-auto flex" onClick={() => logout.mutate({})}>
 				<UserAvatar userData={userData} />
 				<span className="sr-only">wyloguj się</span>
 			</button>
