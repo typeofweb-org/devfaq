@@ -7,41 +7,25 @@ import { useUIContext } from "../../providers/UIProvider";
 import { Button } from "../Button/Button";
 import { CloseButton } from "../CloseButton/CloseButton";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
-import { useCloseOnBreakpoint } from "../../hooks/useCloseOnBreakpoint";
+import { useIsAboveBreakpoint } from "../../hooks/useIsAboveBreakpoint";
 import { LevelFilter } from "./LevelFilter/LevelFilter";
 import { TechnologyFilter } from "./TechnologyFilter/TechnologyFilter";
 
 export const QuestionsSidebar = () => {
 	const { isSidebarOpen, closeSidebar } = useUIContext();
-	const [trapFocus, setTrapFocus] = useCloseOnBreakpoint({
-		initialState: isSidebarOpen,
-		breakpoint: 640,
-	});
+	const [isAboveBreakpoint] = useIsAboveBreakpoint({ breakpoint: 640 });
+	console.log({ isAboveBreakpoint });
 
 	useEffect(() => {
-		if (isSidebarOpen) {
-			setTrapFocus(true);
-		} else {
-			setTrapFocus(false);
-		}
-	}, [isSidebarOpen, setTrapFocus]);
-
-	useEffect(() => {
-		if (!trapFocus) {
-			closeSidebar();
-		}
-	}, [closeSidebar, trapFocus]);
-
-	useEffect(() => {
-		if (isSidebarOpen) {
+		if (isSidebarOpen && !isAboveBreakpoint) {
 			lockScroll();
 		} else {
 			unlockScroll();
 		}
-	}, [isSidebarOpen]);
+	}, [isAboveBreakpoint, isSidebarOpen]);
 
 	return (
-		<FocusLock disabled={!trapFocus}>
+		<FocusLock disabled={isAboveBreakpoint || !isSidebarOpen}>
 			<aside
 				className={twMerge(
 					"border-aside fixed inset-0 z-50 flex shrink-0 -translate-x-full transform-gpu flex-col overflow-y-auto bg-gray-50 px-2.5 py-6 pb-4 transition-transform duration-200 dark:bg-neutral-800 sm:sticky sm:top-[56px] sm:z-auto sm:h-[calc(100vh-56px)] sm:w-62 sm:translate-x-0 sm:border-r-8 sm:pl-0 sm:pr-10 sm:transition-none sm:after:inline",

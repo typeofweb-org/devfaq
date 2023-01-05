@@ -1,44 +1,52 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-import type { ReactNode, MouseEvent } from "react";
-import { useEffect } from "react";
+import { ReactNode, MouseEvent, useState, useEffect } from "react";
 import FocusLock from "react-focus-lock";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
-import { useCloseOnBreakpoint } from "../../hooks/useCloseOnBreakpoint";
+import { useIsAboveBreakpoint } from "../../hooks/useIsAboveBreakpoint";
 import { ActiveNavigationLink } from "./ActiveNagivationLink";
 import { LoginNavigationLink } from "./LoginNavigationLink";
 
 const itemStyles = "ease h-0.5 w-6 bg-white transition duration-300";
 
 export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
-	const [isMobileMenuOpen, setIsMobileMenuOpen] = useCloseOnBreakpoint({
-		initialState: false,
-		breakpoint: 640,
-	});
+	const [isAboveBreakpoint] = useIsAboveBreakpoint({ breakpoint: 640 });
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const [isMenuManuallyOpen, setIsMenuManuallyOpen] = useState(false);
 
 	const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 		isMobileMenuOpen ? unlockScroll() : lockScroll();
 		setIsMobileMenuOpen((prev) => !prev);
+		setIsMenuManuallyOpen((prev) => !prev);
 	};
 
 	const handleClickLink = () => {
 		setIsMobileMenuOpen(false);
+		setIsMenuManuallyOpen(false);
 		unlockScroll();
 	};
 
 	useEffect(() => {
-		isMobileMenuOpen ? lockScroll() : unlockScroll();
-	}, [isMobileMenuOpen]);
+		if (isMobileMenuOpen && isAboveBreakpoint) {
+			setIsMobileMenuOpen(false);
+			unlockScroll();
+		}
+
+		if (!isAboveBreakpoint && isMenuManuallyOpen) {
+			setIsMobileMenuOpen(true);
+			lockScroll();
+		}
+	}, [isAboveBreakpoint, isMenuManuallyOpen, isMobileMenuOpen]);
 
 	return (
-		<FocusLock disabled={!isMobileMenuOpen} className={twMerge("flex items-center")}>
+		<FocusLock disabled={isAboveBreakpoint || !isMobileMenuOpen} className="flex items-center">
 			<nav
 				id="header-navigation"
 				className={twMerge(
 					"fixed inset-0 z-30 flex flex-col items-center overflow-y-auto bg-primary py-20 text-xl uppercase sm:relative sm:flex sm:flex-row sm:items-center sm:gap-5 sm:py-0 sm:text-sm",
-					isMobileMenuOpen ? "flex" : "hidden",
+					isMobileMenuOpen && !isAboveBreakpoint ? "flex" : "hidden",
 				)}
 			>
 				<div className="mt-auto mb-auto flex flex-col items-center gap-10 sm:flex-row sm:gap-5">
@@ -75,8 +83,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 			</nav>
 			<button
 				className={twMerge(
-					"right-4 z-40 flex h-8 w-8 flex-col items-center justify-center gap-1.5 sm:hidden",
-					isMobileMenuOpen ? "fixed" : "absolute",
+					"right-4 z-40 flex flex h-8 w-8 flex-col items-center justify-center gap-1.5 sm:hidden",
 				)}
 				onClick={handleButtonClick}
 				type="button"
