@@ -80,7 +80,9 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 
 	return (
 		<BaseModal {...props}>
-			<BaseModal.Title>{modalData ? "Edytuj" : "Nowe"} pytanie</BaseModal.Title>
+			<BaseModal.Title modalId={props.modalId}>
+				{modalData ? "Edytuj" : "Nowe"} pytanie
+			</BaseModal.Title>
 			<form onSubmit={handleFormSubmit}>
 				<div className="mt-10 flex flex-col gap-y-3 sm:flex-row sm:justify-evenly sm:gap-x-5">
 					<label className="flex w-full flex-col gap-2">
