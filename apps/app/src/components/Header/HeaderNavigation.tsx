@@ -45,7 +45,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 			<nav
 				id="header-navigation"
 				className={twMerge(
-					"fixed inset-0 z-30 flex flex-col items-center overflow-y-auto bg-primary py-20 text-xl uppercase sm:relative sm:flex sm:flex-row sm:items-center sm:gap-5 sm:py-0 sm:text-sm",
+					"fixed inset-0 z-30 flex-col items-center overflow-y-auto bg-primary py-20 text-xl uppercase sm:relative sm:flex sm:flex-row sm:items-center sm:gap-5 sm:py-0 sm:text-sm",
 					isMobileMenuOpen ? "flex" : "hidden",
 				)}
 			>
@@ -84,6 +84,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 			<button
 				className={twMerge(
 					"right-4 z-40 flex flex h-8 w-8 flex-col items-center justify-center gap-1.5 sm:hidden",
+					isMobileMenuOpen ? "fixed" : "absolute",
 				)}
 				onClick={handleButtonClick}
 				type="button"
