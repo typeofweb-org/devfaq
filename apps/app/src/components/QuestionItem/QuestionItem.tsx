@@ -5,7 +5,6 @@ import { Technology } from "../../lib/technologies";
 import { formatDate } from "../../utils/intl";
 import { MarkdownContent } from "../MarkdownContent";
 import { Level, QuestionLevel } from "./QuestionLevel";
-import { QuestionTechnology } from "./QuestionTechnology";
 
 type QuestionItemProps = Readonly<{
 	id: number;
@@ -14,7 +13,7 @@ type QuestionItemProps = Readonly<{
 	technology: Technology;
 	acceptedAt?: string;
 	leftSection?: ReactNode;
-	withTechnology?: boolean;
+	rightSection?: ReactNode;
 }>;
 
 export const QuestionItem = ({
@@ -24,7 +23,7 @@ export const QuestionItem = ({
 	technology,
 	acceptedAt,
 	leftSection,
-	withTechnology,
+	rightSection,
 }: QuestionItemProps) => {
 	const creationDate = acceptedAt ? new Date(acceptedAt) : null;
 
@@ -36,7 +35,7 @@ export const QuestionItem = ({
 			{leftSection}
 			<MarkdownContent source={mdxContent} />
 			<div className="mt-1 flex min-w-max flex-col items-center md:ml-4 md:items-end">
-				{withTechnology && <QuestionTechnology technology={technology} />}
+				{rightSection}
 				<QuestionLevel level={level} />
 				<meta itemProp="keywords" content={[level, technology].join(", ")} />
 				{creationDate && (
