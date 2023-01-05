@@ -11,18 +11,18 @@ export const useCloseOnBreakpoint = ({
 }: UseCloseOnBreakpointProps): [boolean, Dispatch<SetStateAction<boolean>>] => {
 	const [isOpen, setIsOpen] = useState(initialState);
 
-	const handleResize = useCallback(() => {
-		if (window.innerWidth >= breakpoint) {
-			setIsOpen(false);
-		}
-	}, [breakpoint]);
-
 	useEffect(() => {
+		const handleResize = () => {
+			if (window.innerWidth >= breakpoint) {
+				setIsOpen(false);
+			}
+		};
+
 		if (isOpen) {
 			window.addEventListener("resize", handleResize);
 		}
 		return () => window.removeEventListener("resize", handleResize);
-	}, [handleResize, isOpen]);
+	}, [breakpoint, isOpen]);
 
 	return [isOpen, setIsOpen];
 };
