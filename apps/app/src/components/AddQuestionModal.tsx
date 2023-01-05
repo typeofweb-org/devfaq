@@ -122,10 +122,20 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 				</div>
 				<WysiwygEditor value={content} onChange={setContent} />
 				<BaseModal.Footer>
-					<Button type="submit" variant="brandingInverse" disabled={disabled}>
+					<Button
+						type="submit"
+						variant="brandingInverse"
+						disabled={disabled}
+						className="focus:shadow-primary dark:focus:shadow-white"
+					>
 						{modalData ? "Edytuj" : "Dodaj"} pytanie
 					</Button>
-					<Button type="button" variant="branding" onClick={closeModal}>
+					<Button
+						type="button"
+						variant="branding"
+						onClick={closeModal}
+						className="dark:focus:shadow-white"
+					>
 						Anuluj
 					</Button>
 				</BaseModal.Footer>
