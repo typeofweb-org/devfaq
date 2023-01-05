@@ -46,7 +46,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 				id="header-navigation"
 				className={twMerge(
 					"fixed inset-0 z-30 flex flex-col items-center overflow-y-auto bg-primary py-20 text-xl uppercase sm:relative sm:flex sm:flex-row sm:items-center sm:gap-5 sm:py-0 sm:text-sm",
-					isMobileMenuOpen && !isAboveBreakpoint ? "flex" : "hidden",
+					isMobileMenuOpen ? "flex" : "hidden",
 				)}
 			>
 				<div className="mt-auto mb-auto flex flex-col items-center gap-10 sm:flex-row sm:gap-5">
