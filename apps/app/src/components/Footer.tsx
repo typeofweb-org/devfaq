@@ -1,9 +1,10 @@
 import Link from "next/link";
+import VercelIcon from "../../public/powered-by-vercel.svg";
 import { Container } from "./Container";
 
 export const Footer = () => (
 	<footer className="bg-primary">
-		<Container className="flex items-center justify-center py-5 sm:justify-end">
+		<Container className="flex flex-col items-center justify-center py-5 sm:justify-end">
 			<nav className="flex text-sm text-white">
 				<ul className="flex list-none flex-wrap justify-center gap-y-4 gap-x-7">
 					<li>
@@ -43,6 +44,16 @@ export const Footer = () => (
 					</li>
 				</ul>
 			</nav>
+			<p className="mt-3 text-lg font-bold not-italic">
+				<a
+					href="https://vercel.com?utm_source=typeofweb&utm_campaign=oss"
+					target="_blank"
+					rel="noopener noreferrer"
+					className="mt-10 inline-block"
+				>
+					<VercelIcon className="mx-auto" width={209} height={40} />
+				</a>
+			</p>
 		</Container>
 	</footer>
 );
