@@ -16,7 +16,7 @@ export const UserAvatar = ({ userData }: UserAvatarProps) => {
 			width={38}
 			height={38}
 			title="Kliknij, aby się wylogować"
-			className="mx-auto cursor-pointer rounded-full"
+			className="mx-auto rounded-full"
 		/>
 	);
 };
