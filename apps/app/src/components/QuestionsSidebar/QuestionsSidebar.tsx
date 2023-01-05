@@ -13,7 +13,7 @@ import { TechnologyFilter } from "./TechnologyFilter/TechnologyFilter";
 
 export const QuestionsSidebar = () => {
 	const { isSidebarOpen, closeSidebar } = useUIContext();
-	const [isAboveBreakpoint] = useIsAboveBreakpoint({ breakpoint: 640 });
+	const isAboveBreakpoint = useIsAboveBreakpoint({ breakpoint: 640 });
 
 	useEffect(() => {
 		if (isSidebarOpen && !isAboveBreakpoint) {
