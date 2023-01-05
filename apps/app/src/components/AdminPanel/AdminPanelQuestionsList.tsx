@@ -2,6 +2,7 @@ import { memo, use } from "react";
 import { serializeQuestionToMarkdown } from "../../lib/question";
 import { QuestionItem } from "../QuestionItem/QuestionItem";
 import type { APIQuestion } from "../../types";
+import { QuestionTechnology } from "../QuestionItem/QuestionTechnology";
 import { AdminPanelQuestionLeftSection } from "./AdminPanelQuestionLeftSection";
 
 type AdminPanelQuestionsListProps = Readonly<{
@@ -33,6 +34,7 @@ export const AdminPanelQuestionsList = memo(
 									refetchQuestions={refetchQuestions}
 								/>
 							}
+							rightSection={<QuestionTechnology technology={question._categoryId} />}
 							{...question}
 						/>
 					</li>

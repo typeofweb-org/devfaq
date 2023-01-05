@@ -4,6 +4,7 @@ import { Question } from "../types";
 import { useGetQuestionVotesById } from "../hooks/useGetQuestionVotesById";
 import { QuestionItem } from "./QuestionItem/QuestionItem";
 import { QuestionVoting } from "./QuestionsList/QuestionVoting";
+import { QuestionTechnology } from "./QuestionItem/QuestionTechnology";
 
 type SingleQuestionProps = Readonly<{
 	question: Question;
@@ -31,6 +32,7 @@ export const SingleQuestion = ({
 					}}
 				/>
 			}
+			rightSection={<QuestionTechnology technology={_categoryId} />}
 		/>
 	);
 };

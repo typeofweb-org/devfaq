@@ -1,20 +1,20 @@
 import { ReactElement } from "react";
 import { twMerge } from "tailwind-merge";
+import { technologiesLabels, Technology as TechnologyType } from "../../../lib/technologies";
 import { ActiveLink } from "../../ActiveLink";
+import { TechnologyIcon } from "../../TechnologyIcon";
 
 type TechnologyProps = Readonly<{
-	technology: string;
-	technologyTitle: string;
-	icon: ReactElement;
+	technology: TechnologyType;
 }>;
 
-export const Technology = ({ technology, technologyTitle, icon }: TechnologyProps) => (
+export const Technology = ({ technology }: TechnologyProps) => (
 	<TechnologyLink
-		label={technologyTitle}
-		title={`Wyświetl pytania z kategorii ${technologyTitle}`}
+		label={technologiesLabels[technology]}
+		title={`Wyświetl pytania z kategorii ${technologiesLabels[technology]}`}
 		href={`/questions/${technology}/1`}
 		activeHref={`/questions/${technology}`}
-		icon={icon}
+		icon={<TechnologyIcon technology={technology} />}
 	/>
 );
 

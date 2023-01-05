@@ -13,6 +13,7 @@ type QuestionItemProps = Readonly<{
 	technology: Technology;
 	acceptedAt?: string;
 	leftSection?: ReactNode;
+	rightSection?: ReactNode;
 }>;
 
 export const QuestionItem = ({
@@ -22,6 +23,7 @@ export const QuestionItem = ({
 	technology,
 	acceptedAt,
 	leftSection,
+	rightSection,
 }: QuestionItemProps) => {
 	const creationDate = acceptedAt ? new Date(acceptedAt) : null;
 
@@ -33,6 +35,7 @@ export const QuestionItem = ({
 			{leftSection}
 			<MarkdownContent source={mdxContent} />
 			<div className="mt-1 flex min-w-max flex-col items-center md:ml-4 md:items-end">
+				{rightSection}
 				<QuestionLevel level={level} />
 				<meta itemProp="keywords" content={[level, technology].join(", ")} />
 				{creationDate && (
