@@ -26,7 +26,7 @@ export const LoginNavigationLink = ({
 				onClick={() => logout.mutate({})}
 			>
 				<UserAvatar userData={userData} />
-				<span className="sr-onlu">wyloguj się</span>
+				<span className="sr-only">wyloguj się</span>
 			</button>
 		);
 	}
