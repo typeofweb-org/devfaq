@@ -80,7 +80,9 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 
 	return (
 		<BaseModal {...props}>
-			<BaseModal.Title>{modalData ? "Edytuj" : "Nowe"} pytanie</BaseModal.Title>
+			<BaseModal.Title modalId={props.modalId}>
+				{modalData ? "Edytuj" : "Nowe"} pytanie
+			</BaseModal.Title>
 			<form onSubmit={handleFormSubmit}>
 				<div className="mt-10 flex flex-col gap-y-3 sm:flex-row sm:justify-evenly sm:gap-x-5">
 					<label className="flex w-full flex-col gap-2">
@@ -122,10 +124,20 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 				</div>
 				<WysiwygEditor value={content} onChange={setContent} />
 				<BaseModal.Footer>
-					<Button type="submit" variant="brandingInverse" disabled={disabled}>
+					<Button
+						type="submit"
+						variant="brandingInverse"
+						disabled={disabled}
+						className="focus:shadow-primary dark:focus:shadow-white"
+					>
 						{modalData ? "Edytuj" : "Dodaj"} pytanie
 					</Button>
-					<Button type="button" variant="branding" onClick={closeModal}>
+					<Button
+						type="button"
+						variant="branding"
+						onClick={closeModal}
+						className="dark:focus:shadow-white"
+					>
 						Anuluj
 					</Button>
 				</BaseModal.Footer>

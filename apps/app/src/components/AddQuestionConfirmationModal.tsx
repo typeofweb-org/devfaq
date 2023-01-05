@@ -12,12 +12,14 @@ export const AddQuestionConfirmationModal = (props: ComponentProps<typeof BaseMo
 	return (
 		<BaseModal {...props}>
 			<div className="flex flex-col items-center text-center text-violet-700 dark:text-violet-300">
+				<BaseModal.Title modalId={props.modalId} className="sr-only">
+					Potwierdzenie przekazania pytania do zatwierdzenia.
+				</BaseModal.Title>
 				<p>
 					Jeszcze momencik… a Twoje pytanie pojawi się na liście dostępnych pytań. Najpierw musimy
 					rzucić na nie okiem i zatwierdzić.
 					<br /> W międzyczasie zajrzyj na bloga ❤️
 				</p>
-
 				<a
 					href="https://typeofweb.com/"
 					target="_blank"
@@ -28,7 +30,6 @@ export const AddQuestionConfirmationModal = (props: ComponentProps<typeof BaseMo
 						<Logo className="h-full w-full" viewBox="0 0 400 400" />
 					</div>
 				</a>
-
 				<Button type="button" variant="alternative" className="mt-8" onClick={closeModal}>
 					OK!
 				</Button>

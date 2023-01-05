@@ -14,9 +14,10 @@ type BaseModalProps = Readonly<{
 	isOpen: boolean;
 	onClose: () => void;
 	children?: ReactNode;
+	modalId: string;
 }>;
 
-export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
+export const BaseModal = ({ isOpen, onClose, children, modalId }: BaseModalProps) => {
 	const { openedModal } = useUIContext();
 
 	useEffect(() => {
@@ -41,6 +42,10 @@ export const BaseModal = ({ isOpen, onClose, children }: BaseModalProps) => {
 					unlockScroll({ mobileOnly: false });
 				}
 			}}
+			role="dialog"
+			aria-modal={true}
+			aria-labelledby={`${modalId}-title`}
+			id={modalId}
 		>
 			<div className="m-auto flex min-h-full w-fit sm:items-center">
 				<div
