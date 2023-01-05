@@ -12,7 +12,7 @@ export const useCloseOnBreakpoint = ({
 	const [isOpen, setIsOpen] = useState(initialState);
 
 	const handleResize = useCallback(() => {
-		if (window.innerWidth > breakpoint) {
+		if (window.innerWidth >= breakpoint) {
 			setIsOpen(false);
 		}
 	}, [breakpoint]);
