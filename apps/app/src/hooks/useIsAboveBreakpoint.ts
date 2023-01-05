@@ -4,7 +4,7 @@ type UseuseIsAboveBreakpointType = {
 	breakpoint: number;
 };
 
-export const useIsAboveBreakpoint = ({ breakpoint }: UseuseIsAboveBreakpointType): [boolean] => {
+export const useIsAboveBreakpoint = ({ breakpoint }: UseuseIsAboveBreakpointType): boolean => {
 	const [state, setState] = useState(false);
 
 	useEffect(() => {
@@ -21,5 +21,5 @@ export const useIsAboveBreakpoint = ({ breakpoint }: UseuseIsAboveBreakpointType
 		return () => window.removeEventListener("resize", handleReasize);
 	}, [breakpoint]);
 
-	return [state];
+	return state;
 };

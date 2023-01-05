@@ -11,7 +11,7 @@ import { LoginNavigationLink } from "./LoginNavigationLink";
 const itemStyles = "ease h-0.5 w-6 bg-white transition duration-300";
 
 export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
-	const [isAboveBreakpoint] = useIsAboveBreakpoint({ breakpoint: 640 });
+	const isAboveBreakpoint = useIsAboveBreakpoint({ breakpoint: 640 });
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 	const [isMenuManuallyOpen, setIsMenuManuallyOpen] = useState(false);
 
