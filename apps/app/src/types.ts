@@ -23,11 +23,9 @@ export type QuestionFilter = ExcludeUndefined<
 	ExcludeUndefined<paths["/questions"]["get"]["parameters"]>["query"]
 >;
 
-export type QuestionAnswer = Omit<
-	paths["/questions/{id}/answers"]["get"]["responses"]["200"]["content"]["application/json"]["data"][0],
-	"content"
-> &
-	MdxContent;
+export type QuestionAnswer =
+	paths["/questions/{id}/answers"]["get"]["responses"]["200"]["content"]["application/json"]["data"][0] &
+		MdxContent;
 
 export type Params<T extends string> = {
 	readonly [K in T]: string;
