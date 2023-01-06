@@ -57,15 +57,26 @@ model QuestionVote {
 }
 
 model QuestionAnswer {
-  id          Int      @id @default(autoincrement())
-  createdById Int      @map("_createdById")
-  questionId  Int      @map("_questionId")
-  content     String
-  sources     String[] @default([])
-  createdAt   DateTime @default(now()) @db.Timestamptz(6)
-  updatedAt   DateTime @updatedAt() @db.Timestamptz(6)
-  CreatedBy   User     @relation(fields: [createdById], references: [id], onDelete: Cascade)
-  Question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  id                 Int                  @id @default(autoincrement())
+  createdById        Int                  @map("_createdById")
+  questionId         Int                  @map("_questionId")
+  content            String
+  sources            String[]             @default([])
+  createdAt          DateTime             @default(now()) @db.Timestamptz(6)
+  updatedAt          DateTime             @updatedAt() @db.Timestamptz(6)
+  CreatedBy          User                 @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  Question           Question             @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  QuestionAnswerVote QuestionAnswerVote[]
+}
+
+model QuestionAnswerVote {
+  userId           Int            @map("_userId")
+  questionAnswerId Int            @map("_questionAnswerId")
+  createdAt        DateTime       @default(now()) @db.Timestamptz(6)
+  QuestionAnswer   QuestionAnswer @relation(fields: [questionAnswerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  User             User           @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@id([userId, questionAnswerId])
 }
 
 model SequelizeMeta {
@@ -83,19 +94,20 @@ model Session {
 }
 
 model User {
-  id             Int              @id @default(autoincrement())
-  email          String           @unique
-  firstName      String?
-  lastName       String?
-  roleId         String           @default("user") @map("_roleId")
-  createdAt      DateTime         @default(now()) @db.Timestamptz(6)
-  updatedAt      DateTime         @updatedAt() @db.Timestamptz(6)
-  socialLogin    Json             @default("{}")
-  UserRole       UserRole         @relation(fields: [roleId], references: [id], onDelete: Cascade)
-  QuestionVote   QuestionVote[]
-  Session        Session[]
-  Question       Question[]
-  QuestionAnswer QuestionAnswer[]
+  id                 Int                  @id @default(autoincrement())
+  email              String               @unique
+  firstName          String?
+  lastName           String?
+  roleId             String               @default("user") @map("_roleId")
+  createdAt          DateTime             @default(now()) @db.Timestamptz(6)
+  updatedAt          DateTime             @updatedAt() @db.Timestamptz(6)
+  socialLogin        Json                 @default("{}")
+  UserRole           UserRole             @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  QuestionVote       QuestionVote[]
+  Session            Session[]
+  Question           Question[]
+  QuestionAnswer     QuestionAnswer[]
+  QuestionAnswerVote QuestionAnswerVote[]
 }
 
 model UserRole {
