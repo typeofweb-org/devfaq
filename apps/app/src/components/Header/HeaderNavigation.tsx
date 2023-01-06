@@ -29,7 +29,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 	};
 
 	return (
-		<ReactFocusLock disabled={!isMobileMenuOpen || isAboveBreakpoint}>
+		<ReactFocusLock disabled={!isMobileMenuOpen || isAboveBreakpoint} className="flex items-center">
 			<nav
 				id="header-navigation"
 				className={twMerge(
