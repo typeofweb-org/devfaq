@@ -36,25 +36,31 @@ export const QuestionVoting = ({
 		);
 	};
 
+	const label = [
+		`To pytanie ma ${votes} ${votesPluralize(votes)}.`,
+		`Kliknij, aby ${voted ? "usunąć" : "dodać"} swój głos.`,
+	].join(" ");
+
 	return (
 		<button
 			className={twMerge(
-				"mr-1 mt-1 flex h-fit items-center gap-x-1.5 text-neutral-200 transition-colors md:mr-4",
+				"mr-1 flex h-fit items-center gap-x-1.5 text-lg tabular-nums text-neutral-400 transition-colors md:mr-4",
 				voted && "text-violet-700 dark:text-violet-300",
 			)}
 			type="button"
-			aria-label={`To pytanie ma ${votes} ${votesPluralize(votes)}. Kliknij, aby ${
-				voted ? "usunąć" : "dodać"
-			} swój głos.`}
+			aria-label={label}
+			title={label}
 			onClick={requireLoggedIn(handleClick)}
 		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				version="1.1"
-				width="15"
-				height="13"
+				viewBox="0 0 15 15"
 				fill="currentColor"
-				className={twMerge("transition-transform duration-300", voted ? "rotate-180" : "rotate-0")}
+				className={twMerge(
+					"h-4 w-4 transition-transform duration-300",
+					voted ? "rotate-180" : "rotate-0",
+				)}
 			>
 				<polygon points="7.5,0 15,13 0,13" />
 			</svg>
