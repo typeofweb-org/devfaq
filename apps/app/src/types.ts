@@ -15,6 +15,9 @@ export type APIQuestion =
 export type QuestionsVotes =
 	paths["/questions/votes"]["get"]["responses"][200]["content"]["application/json"];
 
+export type QuestionVotes =
+	paths["/questions/{id}/votes"]["get"]["responses"][200]["content"]["application/json"];
+
 export type AdminQuestion = APIQuestion & MdxContent;
 
 export type Question = Omit<AdminQuestion, "question">;

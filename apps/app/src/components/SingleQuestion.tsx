@@ -1,7 +1,7 @@
 "use client";
 
 import { Question } from "../types";
-import { useGetQuestionVotesById } from "../hooks/useGetQuestionVotesById";
+import { useGetQuestionVotesById } from "../hooks/useQuestionVoting";
 import { QuestionItem } from "./QuestionItem/QuestionItem";
 import { QuestionVoting } from "./QuestionsList/QuestionVoting";
 import { QuestionTechnology } from "./QuestionItem/QuestionTechnology";
