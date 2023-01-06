@@ -22,7 +22,7 @@ export const BaseModal = ({ isOpen, onClose, children, modalId }: BaseModalProps
 
 	useEffect(() => {
 		if (isOpen) {
-			lockScroll({ mobileOnly: false });
+			lockScroll({ mobileOnly: false, preventLayoutShift: true });
 		}
 	}, [isOpen]);
 
@@ -39,7 +39,7 @@ export const BaseModal = ({ isOpen, onClose, children, modalId }: BaseModalProps
 			leaveTo="opacity-0"
 			afterLeave={() => {
 				if (!openedModal) {
-					unlockScroll({ mobileOnly: false });
+					unlockScroll({ mobileOnly: false, preventLayoutShift: true });
 				}
 			}}
 			role="dialog"
