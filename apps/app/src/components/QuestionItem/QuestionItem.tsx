@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import { Technology } from "../../lib/technologies";
 import { formatDate } from "../../utils/intl";
+import { Box } from "../Box";
 import { MarkdownContent } from "../MarkdownContent";
 import { Level, QuestionLevel } from "./QuestionLevel";
 
@@ -28,15 +29,11 @@ export const QuestionItem = ({
 	const creationDate = acceptedAt ? new Date(acceptedAt) : null;
 
 	return (
-		<article
-			itemType="http://schema.org/Question"
-			className="flex bg-white p-3 text-sm text-neutral-500 shadow-md dark:bg-white-dark dark:text-neutral-200 md:p-5"
-		>
+		<Box as="article" itemType="http://schema.org/Question">
 			{leftSection}
 			<MarkdownContent source={mdxContent} />
 			<div className="mt-1 flex min-w-max flex-col items-center md:ml-4 md:items-end">
 				{rightSection}
-				<QuestionLevel level={level} />
 				<meta itemProp="keywords" content={[level, technology].join(", ")} />
 				{creationDate && (
 					<Link href={`/questions/p/${id}`} className="mt-3 text-xs underline">
@@ -60,6 +57,6 @@ export const QuestionItem = ({
 					</Link>
 				)}
 			</div>
-		</article>
+		</Box>
 	);
 };

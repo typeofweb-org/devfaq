@@ -3,6 +3,7 @@ import { serializeQuestionToMarkdown } from "../../lib/question";
 import { QuestionItem } from "../QuestionItem/QuestionItem";
 import type { APIQuestion } from "../../types";
 import { QuestionTechnology } from "../QuestionItem/QuestionTechnology";
+import { QuestionLevel } from "../QuestionItem/QuestionLevel";
 import { AdminPanelQuestionLeftSection } from "./AdminPanelQuestionLeftSection";
 
 type AdminPanelQuestionsListProps = Readonly<{
@@ -34,7 +35,12 @@ export const AdminPanelQuestionsList = memo(
 									refetchQuestions={refetchQuestions}
 								/>
 							}
-							rightSection={<QuestionTechnology technology={question._categoryId} />}
+							rightSection={
+								<div className="flex flex-col items-center">
+									<QuestionTechnology technology={question._categoryId} />
+									<QuestionLevel level={question._levelId} />
+								</div>
+							}
 							{...question}
 						/>
 					</li>
