@@ -3,6 +3,7 @@
 import { useGetQuestionsVotes } from "../../hooks/useQuestionVoting";
 import { Question, QuestionFilter } from "../../types";
 import { QuestionItem } from "../QuestionItem/QuestionItem";
+import { QuestionLevel } from "../QuestionItem/QuestionLevel";
 import { QuestionVoting } from "./QuestionVoting";
 
 type QuestionsListProps = Readonly<{
@@ -41,6 +42,7 @@ export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps)
 									onQuestionVote={onQuestionVote}
 								/>
 							}
+							rightSection={<QuestionLevel level={_levelId} />}
 						/>
 					</li>
 				);
