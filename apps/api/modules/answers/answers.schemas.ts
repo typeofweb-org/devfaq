@@ -5,6 +5,8 @@ const answerSchema = Type.Object({
 	content: Type.String(),
 	sources: Type.Array(Type.String()),
 	createdAt: Type.String({ format: "date-time" }),
+	votesCount: Type.Integer(),
+	currentUserVotedOn: Type.Boolean(),
 	createdBy: Type.Object({
 		id: Type.Integer(),
 		firstName: Type.Union([Type.String(), Type.Null()]),
@@ -57,6 +59,29 @@ export const updateAnswerSchema = {
 };
 
 export const deleteAnswerSchema = {
+	params: Type.Object({
+		id: Type.Integer(),
+	}),
+	response: {
+		204: Type.Never(),
+	},
+};
+
+export const upvoteAnswerSchema = {
+	params: Type.Object({
+		id: Type.Integer(),
+	}),
+	response: {
+		200: Type.Object({
+			data: Type.Object({
+				userId: Type.Integer(),
+				answerId: Type.Integer(),
+			}),
+		}),
+	},
+};
+
+export const downvoteAnswerSchema = {
 	params: Type.Object({
 		id: Type.Integer(),
 	}),

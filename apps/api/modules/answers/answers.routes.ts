@@ -9,17 +9,30 @@ import {
 	createAnswerSchema,
 	deleteAnswerSchema,
 	updateAnswerSchema,
+	upvoteAnswerSchema,
 } from "./answers.schemas.js";
 
-export const answerSelect = {
-	id: true,
-	content: true,
-	sources: true,
-	createdAt: true,
-	CreatedBy: {
-		select: { id: true, firstName: true, lastName: true, socialLogin: true },
-	},
-} satisfies Prisma.QuestionAnswerSelect;
+export const answerSelect = (userId: number) => {
+	return {
+		id: true,
+		content: true,
+		sources: true,
+		createdAt: true,
+		CreatedBy: {
+			select: { id: true, firstName: true, lastName: true, socialLogin: true },
+		},
+		_count: {
+			select: {
+				QuestionAnswerVote: true,
+			},
+		},
+		QuestionAnswerVote: {
+			where: {
+				userId: userId,
+			},
+		},
+	} satisfies Prisma.QuestionAnswerSelect;
+};
 
 const answersPlugin: FastifyPluginAsync = async (fastify) => {
 	const checkAnswerUserHook: preHandlerAsyncHookHandler = async (request) => {
@@ -53,15 +66,16 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 		async handler(request) {
 			const {
 				params: { id },
+				session: { data: sessionData },
 			} = request;
 
 			const answers = await fastify.db.questionAnswer.findMany({
 				where: { questionId: id },
-				select: answerSelect,
+				select: answerSelect(request.session.data?._user.id || 0),
 			});
 
 			return {
-				data: answers.map(dbAnswerToDto),
+				data: answers.map((answer) => dbAnswerToDto(answer)),
 			};
 		},
 	});
@@ -84,7 +98,7 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 			try {
 				const answer = await fastify.db.questionAnswer.create({
 					data: { questionId: id, createdById: sessionData._user.id, content, sources },
-					select: answerSelect,
+					select: answerSelect(request.session.data?._user.id || 0),
 				});
 
 				return { data: dbAnswerToDto(answer) };
@@ -109,12 +123,13 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 			const {
 				params: { id },
 				body: { content, sources },
+				session: { data: sessionData },
 			} = request;
 
 			const answer = await fastify.db.questionAnswer.update({
 				where: { id },
 				data: { content, sources },
-				select: answerSelect,
+				select: answerSelect(request.session.data?._user.id || 0),
 			});
 
 			return { data: dbAnswerToDto(answer) };
@@ -133,6 +148,89 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 
 			await fastify.db.questionAnswer.delete({
 				where: { id },
+			});
+
+			return reply.status(204).send();
+		},
+	});
+
+	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
+		url: "/answers/:id/votes",
+		method: "POST",
+		schema: upvoteAnswerSchema,
+		async handler(request, reply) {
+			const {
+				params: { id },
+				session: { data: sessionData },
+			} = request;
+
+			if (!sessionData) {
+				throw fastify.httpErrors.unauthorized();
+			}
+
+			try {
+				const questionAnswerVote = await fastify.db.questionAnswerVote.upsert({
+					where: {
+						userId_questionAnswerId: {
+							userId: sessionData._user.id,
+							questionAnswerId: id,
+						},
+					},
+					create: {
+						userId: sessionData._user.id,
+						questionAnswerId: id,
+					},
+					update: {
+						userId: sessionData._user.id,
+						questionAnswerId: id,
+					},
+				});
+
+				return {
+					data: {
+						userId: sessionData._user.id,
+						answerId: id,
+					},
+				};
+			} catch (err) {
+				if (isPrismaError(err) && PrismaErrorCode.ForeignKeyViolation) {
+					throw fastify.httpErrors.notFound(`Answer vote with id: ${id} not found!`);
+				}
+
+				throw err;
+			}
+		},
+	});
+
+	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
+		url: "/answers/:id/votes",
+		method: "DELETE",
+		schema: deleteAnswerSchema,
+		async handler(request, reply) {
+			const {
+				params: { id },
+				session: { data: sessionData },
+			} = request;
+
+			if (!sessionData) {
+				throw fastify.httpErrors.unauthorized();
+			}
+
+			const questionAnswer = await fastify.db.questionAnswer.findFirst({
+				where: {
+					id,
+				},
+			});
+
+			if (!questionAnswer) {
+				throw fastify.httpErrors.notFound(`Answer vote with id: ${id} not found!`);
+			}
+
+			await fastify.db.questionAnswerVote.deleteMany({
+				where: {
+					userId: sessionData._user.id,
+					questionAnswerId: id,
+				},
 			});
 
 			return reply.status(204).send();
