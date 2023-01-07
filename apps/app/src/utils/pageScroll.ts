@@ -2,28 +2,29 @@ import "client-only";
 
 type PropsType = {
 	mobileOnly: boolean;
-	preventLayoutShift: boolean;
 };
 
-export const lockScroll = ({ mobileOnly, preventLayoutShift }: PropsType) => {
-	if (preventLayoutShift) {
+export const lockScroll = ({ mobileOnly }: PropsType) => {
+	// @todo remove this if statement when safari start support 'scrollbar-gutter' css property
+	if (navigator.userAgent.indexOf("Safari") != -1 && navigator.userAgent.indexOf("Chrome") == -1) {
 		document.body.style.paddingRight = `${window.innerWidth - document.body.offsetWidth}px`;
 	}
 
 	if (mobileOnly) {
-		document.body.classList.add("overflow-hidden", "sm:overflow-auto");
+		document.body.classList.add("overflow-hidden", "sm:overflow-y-auto");
 	} else {
 		document.body.classList.add("!overflow-hidden");
 	}
 };
 
-export const unlockScroll = ({ mobileOnly, preventLayoutShift }: PropsType) => {
-	if (preventLayoutShift) {
+export const unlockScroll = ({ mobileOnly }: PropsType) => {
+	// @todo remove this if statement when safari start support 'scrollbar-gutter' css property
+	if (navigator.userAgent.indexOf("Safari") != -1 && navigator.userAgent.indexOf("Chrome") == -1) {
 		document.body.style.paddingRight = "";
 	}
 
 	if (mobileOnly) {
-		document.body.classList.remove("overflow-hidden", "sm:overflow-auto");
+		document.body.classList.remove("overflow-hidden", "sm:overflow-y-auto");
 	} else {
 		document.body.classList.remove("!overflow-hidden");
 	}

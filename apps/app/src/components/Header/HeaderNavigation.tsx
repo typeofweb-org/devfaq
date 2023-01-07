@@ -17,15 +17,13 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 
 	const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
-		isMobileMenuOpen
-			? unlockScroll({ mobileOnly: true, preventLayoutShift: false })
-			: lockScroll({ mobileOnly: true, preventLayoutShift: false });
+		isMobileMenuOpen ? unlockScroll({ mobileOnly: true }) : lockScroll({ mobileOnly: true });
 		setIsMobileMenuOpen((prev) => !prev);
 	};
 
 	const handleClickLink = () => {
 		setIsMobileMenuOpen(false);
-		unlockScroll({ mobileOnly: true, preventLayoutShift: false });
+		unlockScroll({ mobileOnly: true });
 	};
 
 	return (
