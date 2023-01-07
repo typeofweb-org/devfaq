@@ -1,10 +1,11 @@
 "use client";
 
 import { Question } from "../types";
-import { useGetQuestionVotesById } from "../hooks/useGetQuestionVotesById";
+import { useGetQuestionVotesById } from "../hooks/useQuestionVoting";
 import { QuestionItem } from "./QuestionItem/QuestionItem";
 import { QuestionVoting } from "./QuestionsList/QuestionVoting";
 import { QuestionTechnology } from "./QuestionItem/QuestionTechnology";
+import { QuestionLevel } from "./QuestionItem/QuestionLevel";
 
 type SingleQuestionProps = Readonly<{
 	question: Question;
@@ -32,7 +33,12 @@ export const SingleQuestion = ({
 					}}
 				/>
 			}
-			rightSection={<QuestionTechnology technology={_categoryId} />}
+			rightSection={
+				<div className="flex flex-col items-center">
+					<QuestionTechnology technology={_categoryId} />
+					<QuestionLevel level={_levelId} />
+				</div>
+			}
 		/>
 	);
 };

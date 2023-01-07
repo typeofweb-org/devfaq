@@ -6,7 +6,7 @@ type QuestionTechnologyProps = Readonly<{
 }>;
 
 export const QuestionTechnology = ({ technology }: QuestionTechnologyProps) => (
-	<div className="mb-3 flex flex-col items-center">
+	<div className="mb-3 flex flex-col items-center self-center">
 		<span className="text-sm text-neutral-600 dark:text-neutral-200">
 			{technologiesLabels[technology]}
 		</span>

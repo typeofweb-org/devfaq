@@ -1,5 +1,6 @@
 import { QuestionAnswer } from "../../types";
 import { formatDate } from "../../utils/intl";
+import { Box } from "../Box";
 import { GitHubAvatar } from "../GitHubAvatar";
 import { MarkdownContent } from "../MarkdownContent";
 
@@ -11,7 +12,7 @@ export const Answer = ({ answer: { mdxContent, createdBy, createdAt, sources } }
 	const creationDate = new Date(createdAt);
 
 	return (
-		<div className="bg-white p-4 shadow-md dark:bg-white-dark">
+		<Box as="article" className="flex-col">
 			<header className="flex gap-x-3.5">
 				<GitHubAvatar user={createdBy} width={40} height={40} className="rounded-full" />
 				<div
@@ -54,6 +55,6 @@ export const Answer = ({ answer: { mdxContent, createdBy, createdAt, sources } }
 					</ol>
 				</div>
 			)}
-		</div>
+		</Box>
 	);
 };
