@@ -23,7 +23,7 @@ export const EditAnswer = ({
 	const [isError, setIsError] = useState(false);
 
 	const { userData } = useUser();
-	const { updateQuestionAnswerMutation, deleteQuestionAnswerMutation } = useQuestionMutation();
+	const { patchQuestionAnswerMutation, deleteQuestionAnswerMutation } = useQuestionMutation();
 
 	const handleDeleteButtonClick = () => {
 		const confirmed = confirm("Czy na pewno chcesz usunąć tę odpowiedź?");
@@ -48,7 +48,7 @@ export const EditAnswer = ({
 					initSources={sources}
 					error={isError}
 					onSubmit={async ({ content, sources }) => {
-						await updateQuestionAnswerMutation.mutateAsync({ id, content, sources });
+						await patchQuestionAnswerMutation.mutateAsync({ id, content, sources });
 						setIsEditMode(false);
 					}}
 				>

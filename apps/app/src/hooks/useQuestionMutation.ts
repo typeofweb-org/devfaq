@@ -5,7 +5,7 @@ import {
 	deleteQuestion,
 	deleteQuestionAnswer,
 	patchQuestion,
-	updateQuestionAnswer,
+	patchQuestionAnswer,
 } from "../services/questions.service";
 
 export const useQuestionMutation = () => {
@@ -13,7 +13,7 @@ export const useQuestionMutation = () => {
 	const deleteQuestionMutation = useMutation(deleteQuestion);
 	const patchQuestionMutation = useMutation(patchQuestion);
 	const createQuestionAnswerMutation = useMutation(createQuestionAnswer);
-	const updateQuestionAnswerMutation = useMutation(updateQuestionAnswer);
+	const patchQuestionAnswerMutation = useMutation(patchQuestionAnswer);
 	const deleteQuestionAnswerMutation = useMutation(deleteQuestionAnswer);
 
 	return {
@@ -21,7 +21,7 @@ export const useQuestionMutation = () => {
 		deleteQuestionMutation,
 		patchQuestionMutation,
 		createQuestionAnswerMutation,
-		updateQuestionAnswerMutation,
+		patchQuestionAnswerMutation,
 		deleteQuestionAnswerMutation,
 	};
 };
