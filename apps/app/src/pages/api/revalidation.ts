@@ -4,7 +4,7 @@ import { validatePath } from "../../lib/revalidation";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { token, path } = req.query;
 
-	if (token !== process.env.NEXT_PUBLIC_REVALIDATION_SECRET) {
+	if (token !== process.env.REVALIDATION_TOKEN) {
 		return res.status(401).json({ message: "Invalid token" });
 	}
 

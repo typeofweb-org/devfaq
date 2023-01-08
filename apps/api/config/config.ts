@@ -3,6 +3,8 @@ export function getConfig(name: "NODE_ENV"): "production" | "development";
 export function getConfig(name: "ENV"): "production" | "staging" | "development" | "test";
 export function getConfig(name: "GITHUB_CLIENT_ID"): string;
 export function getConfig(name: "GITHUB_CLIENT_SECRET"): string;
+export function getConfig(name: "APP_URL"): string;
+export function getConfig(name: "REVALIDATION_TOKEN"): string;
 export function getConfig(name: "GIT_BRANCH"): string;
 export function getConfig(name: "GIT_COMMIT_HASH"): string;
 export function getConfig(name: "VERSION"): string;
@@ -20,6 +22,10 @@ export function getConfig(name: string): string | number {
 			return val || "development";
 		case "GITHUB_CLIENT_ID":
 		case "GITHUB_CLIENT_SECRET":
+			return val || "";
+		case "APP_URL":
+			return val || "";
+		case "REVALIDATION_TOKEN":
 			return val || "";
 		case "GIT_BRANCH":
 			return val || "(unknown_branch)";

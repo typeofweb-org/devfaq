@@ -7,7 +7,6 @@ import { Button } from "../../Button/Button";
 import { WysiwygEditor } from "../../WysiwygEditor/WysiwygEditor";
 import { URL_REGEX } from "../../../lib/constants";
 import { Error } from "../../Error";
-import { useRevalidation } from "../../../hooks/useRevalidation";
 import { AnswerSources } from "./AnswerSources";
 
 type AddAnswerFormProps = Readonly<{
@@ -22,13 +21,11 @@ export const AddAnswerForm = ({ questionId }: AddAnswerFormProps) => {
 	const [isError, setIsError] = useState(false);
 
 	const { createQuestionAnswerMutation } = useQuestionMutation();
-	const { revalidateMutation } = useRevalidation();
 
 	const disabled =
 		content.trim().length === 0 ||
 		!sources.every((source) => URL_REGEX.test(source)) ||
-		createQuestionAnswerMutation.isLoading ||
-		revalidateMutation.isLoading;
+		createQuestionAnswerMutation.isLoading;
 
 	const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -41,14 +38,9 @@ export const AddAnswerForm = ({ questionId }: AddAnswerFormProps) => {
 			},
 			{
 				onSuccess: () => {
-					revalidateMutation.mutate(`/questions/p/${questionId}`, {
-						onSuccess: () => {
-							router.refresh();
-							setContent("");
-							setSources([]);
-						},
-						onError: () => setIsError(true),
-					});
+					router.refresh();
+					setContent("");
+					setSources([]);
 				},
 				onError: () => setIsError(true),
 			},

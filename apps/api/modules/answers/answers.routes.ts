@@ -1,6 +1,7 @@
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { Prisma } from "@prisma/client";
 import { FastifyPluginAsync, preHandlerAsyncHookHandler, preHandlerHookHandler } from "fastify";
+import { revalidate } from "../../services/revalidation.service.js";
 import { PrismaErrorCode } from "../db/prismaErrors.js";
 import { isPrismaError } from "../db/prismaErrors.util.js";
 import { dbAnswerToDto } from "./answers.mapper.js";
@@ -15,6 +16,7 @@ import {
 export const answerSelect = (userId: number) => {
 	return {
 		id: true,
+		questionId: true,
 		content: true,
 		sources: true,
 		createdAt: true,
@@ -33,6 +35,8 @@ export const answerSelect = (userId: number) => {
 		},
 	} satisfies Prisma.QuestionAnswerSelect;
 };
+
+const revalidateQuestion = (id: number) => revalidate(`/questions/p/${id}`);
 
 const answersPlugin: FastifyPluginAsync = async (fastify) => {
 	const checkAnswerUserHook: preHandlerAsyncHookHandler = async (request) => {
@@ -101,6 +105,8 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 					select: answerSelect(request.session.data?._user.id || 0),
 				});
 
+				await revalidateQuestion(id);
+
 				return { data: dbAnswerToDto(answer) };
 			} catch (err) {
 				if (isPrismaError(err) && err.code === PrismaErrorCode.UniqueKeyViolation) {
@@ -132,6 +138,8 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 				select: answerSelect(request.session.data?._user.id || 0),
 			});
 
+			await revalidateQuestion(answer.questionId);
+
 			return { data: dbAnswerToDto(answer) };
 		},
 	});
@@ -146,9 +154,11 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 				params: { id },
 			} = request;
 
-			await fastify.db.questionAnswer.delete({
+			const { questionId } = await fastify.db.questionAnswer.delete({
 				where: { id },
 			});
+
+			await revalidateQuestion(questionId);
 
 			return reply.status(204).send();
 		},
