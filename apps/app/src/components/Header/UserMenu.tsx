@@ -33,11 +33,11 @@ export const UserMenu = ({ userData }: UserMenuProps) => {
 		<div ref={dropdownRef} className="flex flex-col items-center gap-0">
 			<button
 				type="button"
-				className="relative mx-auto flex flex flex-row items-center gap-2 rounded-full bg-violet-800 pr-4 text-sm uppercase transition-opacity hover:opacity-80 dark:bg-violet-700 sm:pr-0"
+				className="relative mx-auto flex flex flex-row items-center gap-2 rounded-full bg-violet-800 pr-4 text-sm uppercase transition-opacity hover:opacity-80 dark:bg-violet-700"
 				onClick={() => setIsDropdownVisible((prev) => !prev)}
 			>
 				<UserAvatar userData={userData} />
-				<span className="not-sr-only sm:sr-only">konto</span>
+				<span className="">konto</span>
 			</button>
 			<Transition
 				show={isDropdownVisible}

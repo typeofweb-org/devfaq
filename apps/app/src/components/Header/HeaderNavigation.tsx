@@ -55,7 +55,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 								Facebook
 							</a>
 						</li>
-						<li className="group relative sm:w-14">
+						<li className="group relative sm:min-w-[97px]">
 							<LoginNavigationLink />
 						</li>
 					</ul>
