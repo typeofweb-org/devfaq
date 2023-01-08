@@ -3,8 +3,8 @@
 import { usePathname } from "next/navigation";
 import { MouseEventHandler } from "react";
 import { useUser } from "../../hooks/useUser";
-import { UserAvatar } from "./UserAvatar";
 import { ActiveNavigationLink } from "./ActiveNagivationLink";
+import { UserMenu } from "./UserMenu";
 
 export const LoginNavigationLink = ({
 	onClick,
@@ -12,23 +12,14 @@ export const LoginNavigationLink = ({
 	onClick?: MouseEventHandler<HTMLAnchorElement>;
 }) => {
 	const pathname = usePathname();
-	const { userData, isLoading, logout } = useUser();
+	const { userData, isLoading } = useUser();
 
 	if (isLoading) {
 		return null;
 	}
 
 	if (userData) {
-		return (
-			<button
-				type="button"
-				className="mx-auto flex transition-opacity hover:opacity-80"
-				onClick={() => logout.mutate({})}
-			>
-				<UserAvatar userData={userData} />
-				<span className="sr-only">wyloguj się</span>
-			</button>
-		);
+		return <UserMenu userData={userData} />;
 	}
 
 	return (
