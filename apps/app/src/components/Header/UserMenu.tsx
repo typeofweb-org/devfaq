@@ -1,11 +1,9 @@
 import { Transition } from "@headlessui/react";
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import ReactFocusLock from "react-focus-lock";
 import { UserData } from "../../types";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import { useUser } from "../../hooks/useUser";
-import { useIsAboveBreakpoint } from "../../hooks/useIsAboveBreakpoint";
 import { UserAvatar } from "./UserAvatar";
 
 type UserMenuProps = {
@@ -15,7 +13,6 @@ type UserMenuProps = {
 export const UserMenu = ({ userData }: UserMenuProps) => {
 	const { logout } = useUser();
 	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-	const isAboveBreakpoint = useIsAboveBreakpoint({ breakpoint: 640 });
 
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	useOnClickOutside(dropdownRef, () => isDropdownVisible && setIsDropdownVisible(false));
@@ -35,6 +32,9 @@ export const UserMenu = ({ userData }: UserMenuProps) => {
 				type="button"
 				className="relative mx-auto flex flex flex-row items-center gap-2 rounded-full bg-violet-800 pr-4 text-sm uppercase transition-opacity hover:opacity-80 dark:bg-violet-700"
 				onClick={() => setIsDropdownVisible((prev) => !prev)}
+				aria-label={`${isDropdownVisible ? "Zamknij" : "Otwórz"} menu użytkownika`}
+				aria-expanded={isDropdownVisible}
+				aria-controls="user-menu"
 			>
 				<UserAvatar userData={userData} />
 				<span className="">konto</span>
@@ -48,19 +48,21 @@ export const UserMenu = ({ userData }: UserMenuProps) => {
 				leaveFrom="opacity-100 scale-100 "
 				leaveTo="opacity-0 scale-95"
 			>
-				<ReactFocusLock
-					as="ul"
-					className={`absolute right-[50%] z-40 mt-1 flex w-48 translate-x-[50%] flex-col items-start items-center gap-4 rounded-md border-violet-600 bg-violet-800 p-4 shadow-xl dark:bg-violet-700 sm:gap-2`}
-				>
-					<li>
-						<button
-							type="button"
-							onClick={() => logout.mutate({})}
-							className="uppercase transition-opacity hover:opacity-80"
-						>
-							Wyloguj się
-						</button>
-					</li>
+				<ReactFocusLock>
+					<ul
+						className={`absolute right-[50%] z-40 mt-1 flex w-48 translate-x-[50%] flex-col items-start items-center gap-4 rounded-md border-violet-600 bg-violet-800 p-4 shadow-xl dark:bg-violet-700 sm:gap-2`}
+						id="user-menu"
+					>
+						<li>
+							<button
+								type="button"
+								onClick={() => logout.mutate({})}
+								className="uppercase transition-opacity hover:opacity-80"
+							>
+								Wyloguj się
+							</button>
+						</li>
+					</ul>
 				</ReactFocusLock>
 			</Transition>
 		</div>
