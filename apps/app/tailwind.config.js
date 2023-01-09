@@ -7,15 +7,15 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				"white-dark": "oklch(31% 0 0)",
+				"white-dark": "var(--white-dark)",
 				primary: "var(--primary)",
 				red: {
-					branding: "oklch(58% 0.21 17)",
-					"branding-dark": "oklch(54% 0.21 17)",
+					branding: "var(--red-branding)",
+					"branding-dark": "var(--red-branding-dark)",
 				},
 				yellow: {
-					branding: "oklch(83% 0.17 80)",
-					"branding-dark": "oklch(79% 0.17 80)",
+					branding: "var(--yellow-branding)",
+					"branding-dark": "var(--yellow-branding-dark)",
 				},
 				junior: {
 					light: "var(--junior-light-color)",
@@ -39,16 +39,16 @@ module.exports = {
 					"main-light": "var(--senior-main-color-light)",
 				},
 				violet: {
-					50: "oklch(95% 0.017 295)",
-					100: "oklch(87% 0.047 295)",
-					200: "oklch(85.5% 0.045 295)",
-					300: "oklch(78% 0.091 295)",
-					400: "oklch(68% 0.137 295)",
-					500: "oklch(59% 0.179 295)",
-					600: "oklch(50.5% 0.212 295)",
-					700: "oklch(47.5% 0.186 295)",
-					800: "oklch(34.5% 0.166 295)",
-					900: "oklch(34% 0.09 295)",
+					50: "var(--violet-50)",
+					100: "var(--violet-100)",
+					200: "var(--violet-200)",
+					300: "var(--violet-300)",
+					400: "var(--violet-400)",
+					500: "var(--violet-500)",
+					600: "var(--violet-600)",
+					700: "var(--violet-700)",
+					800: "var(--violet-800)",
+					900: "var(--violet-900)",
 				},
 			},
 			fontFamily: {
