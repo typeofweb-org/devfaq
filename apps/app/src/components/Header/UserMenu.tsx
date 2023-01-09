@@ -1,6 +1,6 @@
 import { Transition } from "@headlessui/react";
 import { useEffect, useRef, useState } from "react";
-import ReactFocusLock from "react-focus-lock";
+import FocusLock from "react-focus-lock";
 import { UserData } from "../../types";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import { useUser } from "../../hooks/useUser";
@@ -50,22 +50,21 @@ export const UserMenu = ({ userData }: UserMenuProps) => {
 				leaveFrom="opacity-100 scale-100 "
 				leaveTo="opacity-0 scale-95"
 			>
-				<ReactFocusLock>
-					<ul
-						className={`absolute right-[50%] z-40 mt-1 flex w-48 translate-x-[50%] flex-col items-start items-center gap-4 rounded-md border-violet-600 bg-violet-800 p-4 shadow-xl dark:bg-violet-700 sm:gap-2`}
-						id="user-menu"
-					>
-						<li>
-							<button
-								type="button"
-								onClick={() => logout.mutate({})}
-								className="uppercase transition-opacity hover:opacity-80"
-							>
-								Wyloguj się
-							</button>
-						</li>
-					</ul>
-				</ReactFocusLock>
+				<FocusLock
+					as="ul"
+					className={`absolute right-[50%] z-40 mt-1 flex w-48 translate-x-[50%] flex-col items-start items-center gap-4 rounded-md border-violet-600 bg-violet-800 p-4 shadow-xl dark:bg-violet-700 sm:gap-2`}
+					lockProps={{ id: "user-menu" }}
+				>
+					<li>
+						<button
+							type="button"
+							onClick={() => logout.mutate({})}
+							className="uppercase transition-opacity hover:opacity-80"
+						>
+							Wyloguj się
+						</button>
+					</li>
+				</FocusLock>
 			</Transition>
 		</div>
 	);
