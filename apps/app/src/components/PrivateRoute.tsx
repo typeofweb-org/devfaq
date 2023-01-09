@@ -6,11 +6,12 @@ import { useDevFAQRouter } from "../hooks/useDevFAQRouter";
 import { useUser } from "../hooks/useUser";
 
 type PrivateRouteProps = Readonly<{
-	children: ReactNode;
+	role?: string;
 	loginPreviousPath?: string;
+	children: ReactNode;
 }>;
 
-export const PrivateRoute = ({ children, loginPreviousPath }: PrivateRouteProps) => {
+export const PrivateRoute = ({ role, loginPreviousPath, children }: PrivateRouteProps) => {
 	const { isLoading, userData } = useUser();
 	const router = useRouter();
 	const { getLoginPageHref } = useDevFAQRouter();
@@ -25,12 +26,12 @@ export const PrivateRoute = ({ children, loginPreviousPath }: PrivateRouteProps)
 			return;
 		}
 
-		if (userData._user._roleId !== "admin") {
+		if (role && userData._user._roleId !== role) {
 			router.replace("/");
 		}
-	}, [getLoginPageHref, isLoading, loginPreviousPath, router, userData]);
+	}, [getLoginPageHref, isLoading, loginPreviousPath, role, router, userData]);
 
-	if (isLoading || !userData || userData._user._roleId !== "admin") {
+	if (isLoading || !userData || (role && userData._user._roleId !== role)) {
 		return null;
 	}
 
