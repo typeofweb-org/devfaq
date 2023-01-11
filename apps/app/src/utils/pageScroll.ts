@@ -19,7 +19,7 @@ export const lockScroll = ({ mobileOnly }: PropsType) => {
 
 export const unlockScroll = ({ mobileOnly }: PropsType) => {
 	// @todo remove this if statement when safari start support 'scrollbar-gutter' css property
-	if (navigator.userAgent.indexOf("Safari") != -1 && navigator.userAgent.indexOf("Chrome") == -1) {
+	if (navigator.userAgent.includes("Safari") && !navigator.userAgent.includes("Chrome")) {
 		document.body.style.paddingRight = "";
 	}
 
