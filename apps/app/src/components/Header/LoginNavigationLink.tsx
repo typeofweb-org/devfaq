@@ -28,7 +28,7 @@ export const LoginNavigationLink = ({
 				type="button"
 				className="relative mx-auto flex flex min-h-[48px] flex-row items-center rounded-full bg-violet-800 px-6 uppercase transition-opacity hover:opacity-80 dark:bg-violet-700 sm:min-h-[24px] sm:px-4"
 			>
-				<span className="">Zaloguj</span>
+				Zaloguj
 			</button>
 		</ActiveNavigationLink>
 	);
