@@ -26,6 +26,8 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 		unlockScroll({ mobileOnly: true });
 	};
 
+const isOpen = isMobileMenuOpen && !isAboveBreakpoint;
+
 	return (
 		<ReactFocusLock disabled={!isMobileMenuOpen || isAboveBreakpoint} className="flex items-center">
 			<nav
