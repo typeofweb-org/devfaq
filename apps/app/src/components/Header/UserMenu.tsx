@@ -18,8 +18,11 @@ export const UserMenu = ({ userData }: UserMenuProps) => {
 	useOnClickOutside(dropdownRef, () => isDropdownVisible && setIsDropdownVisible(false));
 
 	useEffect(() => {
-		const handleEscapeKeyPress = ({ key }: KeyboardEvent) =>
-			isDropdownVisible && key === "Escape" && setIsDropdownVisible(false);
+		const handleEscapeKeyPress = ({ key }: KeyboardEvent) => {
+			if (isDropdownVisible && key === "Escape") {
+				setIsDropdownVisible(false);
+			}
+		}
 
 		window.addEventListener("keydown", handleEscapeKeyPress);
 
