@@ -15,7 +15,7 @@ export const UserMenu = ({ userData }: UserMenuProps) => {
 	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
 	const dropdownRef = useRef<HTMLDivElement>(null);
-	useOnClickOutside(dropdownRef, () => isDropdownVisible && setIsDropdownVisible(false));
+	useOnClickOutside(dropdownRef, () => setIsDropdownVisible(false));
 
 	useEffect(() => {
 		const handleEscapeKeyPress = ({ key }: KeyboardEvent) => {
