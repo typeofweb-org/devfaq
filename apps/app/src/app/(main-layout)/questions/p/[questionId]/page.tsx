@@ -29,9 +29,9 @@ export default async function SingleQuestionPage({ params }: { params: Params<"q
 	}
 
 	const answers = await Promise.all(
-		answersData.data.data.map(async ({ content, ...rest }) => {
-			const mdxContent = await serializeSource(content);
-			return { mdxContent, ...rest };
+		answersData.data.data.map(async (answer) => {
+			const mdxContent = await serializeSource(answer.content);
+			return { mdxContent, ...answer };
 		}),
 	);
 
