@@ -39,7 +39,7 @@ export const UserMenu = ({ userData }: UserMenuProps) => {
 				<div className="relative h-12 w-12 sm:h-6 sm:w-6">
 					<UserAvatar userData={userData} />
 				</div>
-				<span className="">konto</span>
+				<span>konto</span>
 			</button>
 			<Transition
 				show={isDropdownVisible}
