@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			lang="pl-PL"
 			prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#"
 			itemType="http://schema.org/WebPage"
-			className={`${firaSans.variable} ${firaCode.variable}`}
+			className={`${firaSans.variable} ${firaCode.variable} sm:scrollbar-gutter-stable`}
 		>
 			<body>
 				<AppProviders>{children}</AppProviders>
