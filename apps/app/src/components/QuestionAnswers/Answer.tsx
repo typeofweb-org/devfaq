@@ -3,12 +3,14 @@ import { formatDate } from "../../utils/intl";
 import { Box } from "../Box";
 import { GitHubAvatar } from "../GitHubAvatar";
 import { MarkdownContent } from "../MarkdownContent";
+import { EditAnswer } from "./EditAnswer";
 
 type AnswerProps = Readonly<{
 	answer: QuestionAnswer;
 }>;
 
-export const Answer = ({ answer: { mdxContent, createdBy, createdAt, sources } }: AnswerProps) => {
+export const Answer = ({ answer }: AnswerProps) => {
+	const { mdxContent, createdBy, createdAt, sources } = answer;
 	const creationDate = new Date(createdAt);
 
 	return (
@@ -33,28 +35,30 @@ export const Answer = ({ answer: { mdxContent, createdBy, createdAt, sources } }
 					</time>
 				</div>
 			</header>
-			<div className="-mx-2 mt-4">
-				<MarkdownContent source={mdxContent} />
-			</div>
-			{sources.length > 0 && (
-				<div className="mt-4 text-sm italic text-neutral-500 dark:text-neutral-400">
-					Źródła:
-					<ol className="list-decimal px-3 underline">
-						{sources.map((source, i) => (
-							<li key={i}>
-								<a
-									href={source}
-									target="_blank"
-									rel="noreferrer"
-									className="block w-full overflow-hidden text-ellipsis"
-								>
-									{source}
-								</a>
-							</li>
-						))}
-					</ol>
+			<EditAnswer answer={answer}>
+				<div className="-mx-2 mt-4">
+					<MarkdownContent source={mdxContent} />
 				</div>
-			)}
+				{sources.length > 0 && (
+					<div className="mt-4 text-sm italic text-neutral-500 dark:text-neutral-400">
+						Źródła:
+						<ol className="list-decimal px-3 underline">
+							{sources.map((source, i) => (
+								<li key={i}>
+									<a
+										href={source}
+										target="_blank"
+										rel="noreferrer"
+										className="block w-full overflow-hidden text-ellipsis"
+									>
+										{source}
+									</a>
+								</li>
+							))}
+						</ol>
+					</div>
+				)}
+			</EditAnswer>
 		</Box>
 	);
 };

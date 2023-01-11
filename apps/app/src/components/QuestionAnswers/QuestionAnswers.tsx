@@ -1,7 +1,7 @@
 import type { QuestionAnswer } from "../../types";
-import { AddAnswerForm } from "./AddAnswerForm/AddAnswerForm";
 import { AddAnswerTip } from "./AddAnswerTip";
 import { Answer } from "./Answer";
+import { AddAnswer } from "./AddAnswer";
 
 type QuestionAnswersProps = Readonly<{
 	questionId: number;
@@ -21,7 +21,7 @@ export const QuestionAnswers = ({ questionId, answers }: QuestionAnswersProps) =
 			)}
 		</div>
 		<AddAnswerTip>
-			<AddAnswerForm questionId={questionId} />
+			<AddAnswer questionId={questionId} />
 		</AddAnswerTip>
 	</div>
 );
