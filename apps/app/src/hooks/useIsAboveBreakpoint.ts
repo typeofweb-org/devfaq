@@ -4,7 +4,7 @@ type UseuseIsAboveBreakpointType = {
 	breakpoint: number;
 };
 
-export const useIsAboveBreakpoint = ({ breakpoint }: UseuseIsAboveBreakpointType): boolean => {
+export const useIsAboveBreakpoint = ({ breakpoint }: UseIsAboveBreakpointArg): boolean => {
 	const [state, setState] = useState(false);
 
 	useEffect(() => {
