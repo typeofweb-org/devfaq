@@ -76,10 +76,8 @@
 		border-image: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.08) 50%, transparent) 100;
 	}
 
-	@supports (scrollbar-gutter: stable) {
-		.scrollbar-gutter-stable {
-			scrollbar-gutter: stable;
-		}
+	.scrollbar-gutter-stable {
+		scrollbar-gutter: stable;
 	}
 }
 .question-content pre[class*="language-"]::before,
