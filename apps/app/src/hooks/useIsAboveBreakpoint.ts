@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-type UseuseIsAboveBreakpointType = {
+type UseIsAboveBreakpointArg = {
 	breakpoint: number;
 };
 
-export const useIsAboveBreakpoint = ({ breakpoint }: UseuseIsAboveBreakpointType): boolean => {
+export const useIsAboveBreakpoint = ({ breakpoint }: UseIsAboveBreakpointArg): boolean => {
 	const [state, setState] = useState(false);
 
 	useEffect(() => {
