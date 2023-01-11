@@ -22,7 +22,7 @@ export const UserMenu = ({ userData }: UserMenuProps) => {
 			if (isDropdownVisible && key === "Escape") {
 				setIsDropdownVisible(false);
 			}
-		}
+		};
 
 		window.addEventListener("keydown", handleEscapeKeyPress);
 
@@ -42,7 +42,7 @@ export const UserMenu = ({ userData }: UserMenuProps) => {
 				<div className="relative h-12 w-12 sm:h-6 sm:w-6">
 					<UserAvatar userData={userData} />
 				</div>
-				<span>konto</span>
+				konto
 			</button>
 			<Transition
 				show={isDropdownVisible}
