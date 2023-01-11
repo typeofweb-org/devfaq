@@ -26,7 +26,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 		unlockScroll({ mobileOnly: true });
 	};
 
-const isOpen = isMobileMenuOpen && !isAboveBreakpoint;
+	const isOpen = isMobileMenuOpen && !isAboveBreakpoint;
 
 	return (
 		<ReactFocusLock disabled={!isMobileMenuOpen || isAboveBreakpoint} className="flex items-center">
@@ -76,28 +76,13 @@ const isOpen = isMobileMenuOpen && !isAboveBreakpoint;
 				)}
 				onClick={handleButtonClick}
 				type="button"
-				aria-label={`${isMobileMenuOpen && !isAboveBreakpoint ? "Zamknij" : "Otwórz"} menu`}
-				aria-expanded={isMobileMenuOpen && !isAboveBreakpoint}
+				aria-label={`${isOpen ? "Zamknij" : "Otwórz"} menu`}
+				aria-expanded={isOpen}
 				aria-controls="header-navigation"
 			>
-				<div
-					className={twMerge(
-						itemStyles,
-						isMobileMenuOpen && !isAboveBreakpoint && "translate-y-2 rotate-45",
-					)}
-				/>
-				<div
-					className={twMerge(
-						itemStyles,
-						isMobileMenuOpen && !isAboveBreakpoint ? "opacity-0" : "opacity-100",
-					)}
-				/>
-				<div
-					className={twMerge(
-						itemStyles,
-						isMobileMenuOpen && !isAboveBreakpoint && "-translate-y-2 -rotate-45",
-					)}
-				/>
+				<div className={twMerge(itemStyles, isOpen && "translate-y-2 rotate-45")} />
+				<div className={twMerge(itemStyles, isOpen ? "opacity-0" : "opacity-100")} />
+				<div className={twMerge(itemStyles, isOpen && "-translate-y-2 -rotate-45")} />
 			</button>
 		</ReactFocusLock>
 	);
