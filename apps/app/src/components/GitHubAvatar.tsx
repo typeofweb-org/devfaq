@@ -20,5 +20,16 @@ export const GitHubAvatar = ({
 		? `Zdjęcie użytkownika ${firstName} ${lastName || ""}`.trim()
 		: `Zdjęcie użytkownika ${id}`;
 
+	if (!props.width || !props.height) {
+		return (
+			<Image
+				src={avatarUrl}
+				alt={alt}
+				{...props}
+				fill={!props.width && !props.height}
+				sizes="(max-width: 639px) 48px, (min-width: 640px) 24px"
+			/>
+		);
+	}
 	return <Image src={avatarUrl} alt={alt} {...props} />;
 };

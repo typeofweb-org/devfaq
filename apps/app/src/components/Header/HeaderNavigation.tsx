@@ -33,8 +33,8 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 			<nav
 				id="header-navigation"
 				className={twMerge(
-					"fixed inset-0 z-30 flex flex-col items-center overflow-y-auto bg-primary py-20 text-xl uppercase sm:relative sm:flex sm:flex-row sm:items-center sm:gap-5 sm:py-0 sm:text-sm",
-					isMobileMenuOpen ? "flex" : "hidden",
+					"fixed inset-0 z-30 flex flex-col items-center overflow-y-auto bg-primary py-20 text-xl uppercase sm:relative sm:flex sm:flex-row sm:items-center sm:gap-5 sm:overflow-y-visible sm:py-0 sm:text-sm",
+					isOpen ? "flex" : "hidden",
 				)}
 			>
 				<div className="mt-auto mb-auto flex flex-col items-center gap-10 sm:flex-row sm:gap-5">
@@ -60,10 +60,8 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 								Facebook
 							</a>
 						</li>
-						<li>
-							<div className="sm:w-14">
-								<LoginNavigationLink />
-							</div>
+						<li className="group relative sm:min-w-[97px]">
+							<LoginNavigationLink />
 						</li>
 					</ul>
 					{children}
