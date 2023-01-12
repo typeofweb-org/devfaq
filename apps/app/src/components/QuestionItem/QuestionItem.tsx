@@ -29,10 +29,10 @@ export const QuestionItem = ({
 	const creationDate = acceptedAt ? new Date(acceptedAt) : null;
 
 	return (
-		<Box as="article" itemType="http://schema.org/Question">
+		<Box as="article" itemType="http://schema.org/Question" className="gap-3">
 			{leftSection}
 			<MarkdownContent source={mdxContent} />
-			<div className="mt-1 flex min-w-max flex-col items-center md:ml-4 md:items-end">
+			<div className="mt-1 flex min-w-max flex-col items-center md:items-end">
 				{rightSection}
 				<meta itemProp="keywords" content={[level, technology].join(", ")} />
 				{creationDate && (
