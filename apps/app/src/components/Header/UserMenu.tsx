@@ -1,9 +1,10 @@
 import { Transition } from "@headlessui/react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import FocusLock from "react-focus-lock";
 import { UserData } from "../../types";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 import { useUser } from "../../hooks/useUser";
+import { useOnKeydown } from "../../hooks/useOnKeydown";
 import { UserAvatar } from "./UserAvatar";
 
 type UserMenuProps = {
@@ -17,17 +18,14 @@ export const UserMenu = ({ userData }: UserMenuProps) => {
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	useOnClickOutside(dropdownRef, () => setIsDropdownVisible(false));
 
-	useEffect(() => {
-		const handleEscapeKeyPress = ({ key }: KeyboardEvent) => {
-			if (isDropdownVisible && key === "Escape") {
+	useOnKeydown(
+		"Escape",
+		useCallback(() => {
+			if (isDropdownVisible) {
 				setIsDropdownVisible(false);
 			}
-		};
-
-		window.addEventListener("keydown", handleEscapeKeyPress);
-
-		return () => window.removeEventListener("keydown", handleEscapeKeyPress);
-	}, [isDropdownVisible]);
+		}, [isDropdownVisible]),
+	);
 
 	return (
 		<div ref={dropdownRef} className="flex flex-col items-center gap-0">
