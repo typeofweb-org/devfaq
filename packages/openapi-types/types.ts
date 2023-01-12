@@ -81,6 +81,7 @@ export interface paths {
 					offset?: number;
 					orderBy?: "acceptedAt" | "level" | "votesCount";
 					order?: "asc" | "desc";
+					userId?: number;
 				};
 			};
 			responses: {
@@ -148,6 +149,7 @@ export interface paths {
 					offset?: number;
 					orderBy?: "acceptedAt" | "level" | "votesCount";
 					order?: "asc" | "desc";
+					userId?: number;
 				};
 			};
 			responses: {
@@ -317,6 +319,8 @@ export interface paths {
 								sources: string[];
 								/** Format: date-time */
 								createdAt: string;
+								votesCount: number;
+								currentUserVotedOn: boolean;
 								createdBy: {
 									id: number;
 									firstName: string | null;
@@ -356,6 +360,8 @@ export interface paths {
 								sources: string[];
 								/** Format: date-time */
 								createdAt: string;
+								votesCount: number;
+								currentUserVotedOn: boolean;
 								createdBy: {
 									id: number;
 									firstName: string | null;
@@ -412,6 +418,8 @@ export interface paths {
 								sources: string[];
 								/** Format: date-time */
 								createdAt: string;
+								votesCount: number;
+								currentUserVotedOn: boolean;
 								createdBy: {
 									id: number;
 									firstName: string | null;
@@ -422,6 +430,43 @@ export interface paths {
 								};
 							};
 						};
+					};
+				};
+			};
+		};
+	};
+	"/answers/{id}/votes": {
+		post: {
+			parameters: {
+				path: {
+					id: number;
+				};
+			};
+			responses: {
+				/** @description Default Response */
+				200: {
+					content: {
+						"application/json": {
+							data: {
+								userId: number;
+								answerId: number;
+							};
+						};
+					};
+				};
+			};
+		};
+		delete: {
+			parameters: {
+				path: {
+					id: number;
+				};
+			};
+			responses: {
+				/** @description Default Response */
+				204: {
+					content: {
+						"application/json": boolean & true;
 					};
 				};
 			};
