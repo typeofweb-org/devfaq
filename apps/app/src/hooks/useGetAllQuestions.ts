@@ -9,7 +9,8 @@ export const useGetAllQuestions = ({
 	page,
 	technology,
 	levels,
-	...rest
+	status,
+	userId,
 }: {
 	page: number;
 	technology: Technology | null;
@@ -18,14 +19,15 @@ export const useGetAllQuestions = ({
 	userId?: number;
 }) => {
 	const query = useQuery({
-		queryKey: ["questions", { page, technology, levels, ...rest }],
+		queryKey: ["questions", { page, technology, levels, status, userId }],
 		queryFn: () =>
 			getAllQuestions({
 				limit: PAGE_SIZE,
 				offset: (page - 1) * PAGE_SIZE,
 				...(technology && { category: technology }),
 				...(levels && { level: levels.join(",") }),
-				...rest,
+				status,
+				userId,
 			}),
 		keepPreviousData: true,
 	});
