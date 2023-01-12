@@ -46,6 +46,8 @@ export const QuestionsPagination = ({ current, total, getHref }: QuestionsPagina
 		last: Math.ceil(total / PAGE_SIZE),
 	});
 
+	if (total <= PAGE_SIZE) return null;
+
 	return (
 		<nav aria-label="Paginacja" role="navigation">
 			<ul className="flex justify-center gap-x-3">

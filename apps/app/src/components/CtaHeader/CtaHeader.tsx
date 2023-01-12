@@ -26,6 +26,9 @@ export const CtaHeader = () => (
 					Lista pytań
 				</CtaHeaderActiveLink>
 				<PrivateElement>
+					<CtaHeaderActiveLink href="/user/questions">Twoje pytania</CtaHeaderActiveLink>
+				</PrivateElement>
+				<PrivateElement role="admin">
 					<CtaHeaderActiveLink href="/admin">Admin</CtaHeaderActiveLink>
 				</PrivateElement>
 			</nav>

@@ -5,8 +5,7 @@ import { useGetAllQuestions } from "../../hooks/useGetAllQuestions";
 import { Level } from "../../lib/level";
 import { QuestionStatus } from "../../lib/question";
 import { Technology } from "../../lib/technologies";
-import { QuestionsPagination } from "../QuestionsPagination/QuestionsPagination";
-import { AdminPanelHeader } from "./AdminPanelHeader";
+import { FilterableQuestionsList } from "../FilterableQuestionsList/FilterableQuestionsList";
 import { AdminPanelQuestionsList } from "./AdminPanelQuestionsList";
 
 type AdminPanelProps = Readonly<{
@@ -29,22 +28,16 @@ export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps
 	}, [refetch]);
 
 	return (
-		<>
-			<AdminPanelHeader status={status} technology={technology} levels={levels} />
+		<FilterableQuestionsList
+			page={page}
+			total={data?.data.meta.total || 0}
+			getHref={(page) => `/admin/${status}/${page}`}
+			data={{ status, technology, levels }}
+		>
 			{isSuccess && data.data.data.length > 0 ? (
-				<>
-					<Suspense>
-						<AdminPanelQuestionsList
-							questions={data.data.data}
-							refetchQuestions={refetchQuestions}
-						/>
-					</Suspense>
-					<QuestionsPagination
-						current={page}
-						total={data.data.meta.total}
-						getHref={(page) => `/admin/${status}/${page}`}
-					/>
-				</>
+				<Suspense>
+					<AdminPanelQuestionsList questions={data.data.data} refetchQuestions={refetchQuestions} />
+				</Suspense>
 			) : (
 				<p className="mt-10 text-2xl font-bold uppercase text-primary dark:text-neutral-200">
 					{status === "accepted"
@@ -52,6 +45,6 @@ export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps
 						: "Brak pytań do zaakceptowania"}
 				</p>
 			)}
-		</>
+		</FilterableQuestionsList>
 	);
 };

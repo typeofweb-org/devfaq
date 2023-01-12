@@ -1,37 +1,28 @@
 import { redirect } from "next/navigation";
-import dynamic from "next/dynamic";
 import { PrivateRoute } from "../../../../../components/PrivateRoute";
+import { UserQuestions } from "../../../../../components/UserQuestions/UserQuestions";
 import { parseQueryLevels } from "../../../../../lib/level";
-import { statuses } from "../../../../../lib/question";
 import { parseTechnologyQuery } from "../../../../../lib/technologies";
 import { Params, SearchParams } from "../../../../../types";
 
-const AdminPanel = dynamic(
-	() =>
-		import(
-			/* webpackChunkName: "AdminPanel" */ "../../../../../components/AdminPanel/AdminPanel"
-		).then((mod) => mod.AdminPanel),
-	{ ssr: false },
-);
-
-export default function AdminPage({
+export default function UserQuestionsPage({
 	params,
 	searchParams,
 }: {
-	params: Params<"status" | "page">;
+	params: Params<"page">;
 	searchParams?: SearchParams<"technology" | "level">;
 }) {
 	const page = Number.parseInt(params.page);
 	const technology = parseTechnologyQuery(searchParams?.technology);
 	const levels = parseQueryLevels(searchParams?.level);
 
-	if (Number.isNaN(page) || !statuses.includes(params.status)) {
-		return redirect("/admin");
+	if (Number.isNaN(page)) {
+		return redirect("/user/questions");
 	}
 
 	return (
-		<PrivateRoute role="admin" loginPreviousPath="/">
-			<AdminPanel page={page} technology={technology} status={params.status} levels={levels} />
+		<PrivateRoute loginPreviousPath="/">
+			<UserQuestions page={page} technology={technology} levels={levels} />
 		</PrivateRoute>
 	);
 }

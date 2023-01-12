@@ -71,6 +71,16 @@ const nextConfig = {
 				destination: "/jak-korzystac",
 				permanent: false,
 			},
+			{
+				source: "/user",
+				destination: "/user/questions/1",
+				permanent: false,
+			},
+			{
+				source: "/user/questions",
+				destination: "/user/questions/1",
+				permanent: false,
+			},
 		];
 	},
 };
