@@ -27,7 +27,7 @@ export const BaseModal = ({ isOpen, onClose, children, modalId }: BaseModalProps
 		}
 	}, [isOpen]);
 
-	useOnPressKey(
+	useOnKeydown(
 		"Escape",
 		useCallback(() => {
 			if (openedModal) {
