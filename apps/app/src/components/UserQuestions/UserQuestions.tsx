@@ -36,7 +36,7 @@ export const UserQuestions = ({ page, technology, levels }: UserQuestionsProps) 
 				</Suspense>
 			) : (
 				<p className="mt-10 text-2xl font-bold uppercase text-primary dark:text-neutral-200">
-					Nie dodano żandego pytania
+					Nie dodano żadnego pytania
 				</p>
 			)}
 		</FilterableQuestionsList>
