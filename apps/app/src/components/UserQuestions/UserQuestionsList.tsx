@@ -1,21 +1,18 @@
 "use client";
 
-import { use } from "react";
+import { memo, use } from "react";
 import { serializeQuestionToMarkdown } from "../../lib/question";
 import { APIQuestion } from "../../types";
-import { Button } from "../Button/Button";
 import { QuestionItem } from "../QuestionItem/QuestionItem";
 import { QuestionLevel } from "../QuestionItem/QuestionLevel";
 import { QuestionTechnology } from "../QuestionItem/QuestionTechnology";
-import PencilIcon from "../../../public/icons/pencil.svg";
-import { useUIContext } from "../../providers/UIProvider";
+import { UserQuestionLeftSection } from "./UserQuestionLeftSection";
 
 type UserQuestionsListProps = Readonly<{
 	questions: APIQuestion[];
 }>;
 
-export const UserQuestionsList = ({ questions }: UserQuestionsListProps) => {
-	const { openModal } = useUIContext();
+export const UserQuestionsList = memo(({ questions }: UserQuestionsListProps) => {
 	const serializedQuestions = questions.map((question) =>
 		use(
 			(async () => {
@@ -32,16 +29,7 @@ export const UserQuestionsList = ({ questions }: UserQuestionsListProps) => {
 					<QuestionItem
 						level={question._levelId}
 						technology={question._categoryId}
-						leftSection={
-							<Button
-								variant="branding"
-								className="m-px my-auto flex h-fit w-24 min-w-0 items-center justify-center gap-2 p-0"
-								onClick={() => openModal("AddQuestionModal", question)}
-							>
-								<PencilIcon className="fill-violet-700 dark:fill-neutral-200" />
-								Edytuj
-							</Button>
-						}
+						leftSection={<UserQuestionLeftSection question={question} />}
 						rightSection={
 							<div className="flex flex-col items-center">
 								<QuestionTechnology technology={question._categoryId} />
@@ -54,4 +42,6 @@ export const UserQuestionsList = ({ questions }: UserQuestionsListProps) => {
 			))}
 		</ul>
 	);
-};
+});
+
+UserQuestionsList.displayName = "UserQuestionsList";
