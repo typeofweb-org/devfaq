@@ -8,6 +8,7 @@ import RejectIcon from "../../../public/icons/reject.svg";
 import { useQuestionMutation } from "../../hooks/useQuestionMutation";
 import { useUIContext } from "../../providers/UIProvider";
 import { AdminQuestion } from "../../types";
+import SelectIcon from "../../../public/select.svg";
 
 type AdminPanelQuestionLeftSectionProps = Readonly<{
 	question: AdminQuestion;
@@ -52,8 +53,9 @@ export const AdminPanelQuestionLeftSection = ({
 	return (
 		<Menu as="div" className="relative inline-block text-left">
 			<div>
-				<Menu.Button className="inline-flex w-full justify-center rounded-md bg-violet-600 px-4 py-2 text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 dark:bg-violet-700">
+				<Menu.Button className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-violet-600 px-4 py-2 text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 dark:bg-violet-700">
 					Opcje
+					<SelectIcon />
 				</Menu.Button>
 			</div>
 			<Transition
