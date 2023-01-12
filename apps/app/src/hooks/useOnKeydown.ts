@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export const useOnPressKey = (triggerKey: string, handler: () => void) => {
+export const useOnKeydown = (triggerKey: string, handler: () => void) => {
 	useEffect(() => {
 		const handlePressKey = ({ key }: KeyboardEvent) => {
 			if (key === triggerKey) {

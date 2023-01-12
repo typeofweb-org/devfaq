@@ -6,7 +6,7 @@ import FocusLock from "react-focus-lock";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
 import { useUIContext } from "../../providers/UIProvider";
 import { CloseButton } from "../CloseButton/CloseButton";
-import { useOnPressKey } from "../../hooks/useOnPressKey";
+import { useOnKeydown } from "../../hooks/useOnKeydown";
 import { ModalTitle } from "./ModalTitle";
 import { ModalFooter } from "./ModalFooter";
 import { ModalError } from "./ModalError";
