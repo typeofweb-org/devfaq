@@ -26,6 +26,18 @@ export const BaseModal = ({ isOpen, onClose, children, modalId }: BaseModalProps
 		}
 	}, [isOpen]);
 
+	useEffect(() => {
+		const handleEscapeKeyPress = ({ key }: KeyboardEvent) => {
+			if (openedModal && key === "Escape") {
+				onClose();
+			}
+		};
+
+		window.addEventListener("keydown", handleEscapeKeyPress);
+
+		return () => window.removeEventListener("keydown", handleEscapeKeyPress);
+	}, [onClose, openedModal]);
+
 	return (
 		<Transition
 			className="fixed top-0 left-0 z-50 h-full w-full overflow-y-auto bg-black/50 sm:p-2"
