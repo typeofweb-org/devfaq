@@ -1,11 +1,12 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useCallback, useEffect } from "react";
 import { Transition } from "@headlessui/react";
 import FocusLock from "react-focus-lock";
 import { lockScroll, unlockScroll } from "../../utils/pageScroll";
 import { useUIContext } from "../../providers/UIProvider";
 import { CloseButton } from "../CloseButton/CloseButton";
+import { useOnKeydown } from "../../hooks/useOnKeydown";
 import { ModalTitle } from "./ModalTitle";
 import { ModalFooter } from "./ModalFooter";
 import { ModalError } from "./ModalError";
@@ -26,17 +27,14 @@ export const BaseModal = ({ isOpen, onClose, children, modalId }: BaseModalProps
 		}
 	}, [isOpen]);
 
-	useEffect(() => {
-		const handleEscapeKeyPress = ({ key }: KeyboardEvent) => {
-			if (openedModal && key === "Escape") {
+	useOnKeydown(
+		"Escape",
+		useCallback(() => {
+			if (openedModal) {
 				onClose();
 			}
-		};
-
-		window.addEventListener("keydown", handleEscapeKeyPress);
-
-		return () => window.removeEventListener("keydown", handleEscapeKeyPress);
-	}, [onClose, openedModal]);
+		}, [onClose, openedModal]),
+	);
 
 	return (
 		<Transition
