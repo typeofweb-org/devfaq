@@ -15,7 +15,7 @@ export const UserQuestionLeftSection = ({ question }: UserQuestionLeftSectionPro
 	return (
 		<Menu as="div" className="relative inline-block text-left">
 			<div>
-				<Menu.Button className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-violet-600 px-4 py-2 text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 dark:bg-violet-700">
+				<Menu.Button className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-violet-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-violet-700 focus:bg-violet-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 dark:bg-violet-700 dark:hover:bg-violet-600 dark:focus:bg-violet-600">
 					Opcje
 					<SelectIcon />
 				</Menu.Button>
