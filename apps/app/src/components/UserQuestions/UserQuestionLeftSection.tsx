@@ -3,7 +3,6 @@ import { Fragment } from "react";
 import { useUIContext } from "../../providers/UIProvider";
 import { AdminQuestion } from "../../types";
 import PencilIcon from "../../../public/icons/pencil.svg";
-import { Button } from "../Button/Button";
 import SelectIcon from "../../../public/select.svg";
 
 type UserQuestionLeftSectionProps = Readonly<{
