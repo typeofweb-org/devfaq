@@ -1,13 +1,15 @@
 "use client";
 
 import { useGetQuestionsVotes } from "../../hooks/useQuestionVoting";
-import { Question, QuestionFilter } from "../../types";
+import { useUIContext } from "../../providers/UIProvider";
+import { AdminQuestion, Question, QuestionFilter } from "../../types";
 import { QuestionItem } from "../QuestionItem/QuestionItem";
 import { QuestionLevel } from "../QuestionItem/QuestionLevel";
 import { QuestionVoting } from "./QuestionVoting";
+import { QuestionsManagement } from "./QuestionsManagment";
 
 type QuestionsListProps = Readonly<{
-	questions: Question[];
+	questions: AdminQuestion[];
 	questionFilter: QuestionFilter;
 }>;
 
@@ -20,8 +22,11 @@ export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps)
 
 	return (
 		<ul className="space-y-10">
-			{questions.map(({ id, mdxContent, _levelId, _categoryId, acceptedAt }) => {
-				const questionVote = questionsVotes?.find((questionVote) => questionVote.id === id);
+			{questions.map((question) => {
+				const { id, mdxContent, _levelId, _categoryId, acceptedAt } = question;
+				const questionVote = questionsVotes?.find(
+					(questionVote) => questionVote.id === question.id,
+				);
 				const [votes, voted] = questionVote
 					? [questionVote.votesCount, questionVote.currentUserVotedOn]
 					: [0, false];
@@ -35,12 +40,15 @@ export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps)
 							technology={_categoryId}
 							acceptedAt={acceptedAt}
 							leftSection={
-								<QuestionVoting
-									questionId={id}
-									votes={votes}
-									voted={voted}
-									onQuestionVote={onQuestionVote}
-								/>
+								<>
+									<QuestionsManagement question={question} />
+									<QuestionVoting
+										questionId={id}
+										votes={votes}
+										voted={voted}
+										onQuestionVote={onQuestionVote}
+									/>
+								</>
 							}
 							rightSection={<QuestionLevel level={_levelId} />}
 						/>
