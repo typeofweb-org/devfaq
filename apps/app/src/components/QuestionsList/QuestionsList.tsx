@@ -1,8 +1,7 @@
 "use client";
 
 import { useGetQuestionsVotes } from "../../hooks/useQuestionVoting";
-import { useUIContext } from "../../providers/UIProvider";
-import { AdminQuestion, Question, QuestionFilter } from "../../types";
+import { AdminQuestion, QuestionFilter } from "../../types";
 import { QuestionItem } from "../QuestionItem/QuestionItem";
 import { QuestionLevel } from "../QuestionItem/QuestionLevel";
 import { QuestionVoting } from "./QuestionVoting";
@@ -40,15 +39,15 @@ export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps)
 							technology={_categoryId}
 							acceptedAt={acceptedAt}
 							leftSection={
-								<>
-									<QuestionsManagement question={question} />
+								<div className="flex flex-col gap-1.5">
 									<QuestionVoting
 										questionId={id}
 										votes={votes}
 										voted={voted}
 										onQuestionVote={onQuestionVote}
 									/>
-								</>
+									<QuestionsManagement question={question} />
+								</div>
 							}
 							rightSection={<QuestionLevel level={_levelId} />}
 						/>
