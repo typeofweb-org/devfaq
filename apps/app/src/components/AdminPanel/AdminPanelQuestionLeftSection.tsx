@@ -1,10 +1,8 @@
-import { twMerge } from "tailwind-merge";
 import { Fragment, useEffect } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import TrashIcon from "../../../public/icons/trash.svg";
 import PencilIcon from "../../../public/icons/pencil.svg";
 import CheckIcon from "../../../public/icons/check.svg";
-import RejectIcon from "../../../public/icons/reject.svg";
 import { useQuestionMutation } from "../../hooks/useQuestionMutation";
 import { useUIContext } from "../../providers/UIProvider";
 import { AdminQuestion } from "../../types";
@@ -67,74 +65,52 @@ export const AdminPanelQuestionLeftSection = ({
 				leaveFrom="transform opacity-100 scale-100"
 				leaveTo="transform opacity-0 scale-95"
 			>
-				<Menu.Items className="absolute left-0 z-10 mt-1 w-56 origin-top-right divide-y divide-gray-100 rounded-md border-2 border-violet-100 bg-white text-violet-600 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:border-violet-700 dark:bg-violet-700">
+				<Menu.Items className="absolute left-0 z-10 mt-1 w-36 origin-top-right divide-y divide-gray-100 rounded-md border-2 border-violet-100 bg-white text-violet-600 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:border-violet-700 dark:bg-violet-700">
 					<div className="px-1 py-1 ">
 						<Menu.Item>
-							<button
-								className={`group flex w-full items-center gap-3 rounded-md px-2 py-2 text-sm hover:bg-violet-100 dark:text-white dark:hover:bg-violet-800`}
-								onClick={handleEditQuestionClick}
-							>
-								<PencilIcon className="fill-violet-600 dark:fill-neutral-200" />
-								Edytuj
-							</button>
+							{({ active }) => (
+								<button
+									className={`group flex w-full items-center gap-3 rounded-md px-2 py-2 text-sm hover:bg-violet-100 focus:bg-violet-100 dark:text-white dark:hover:bg-violet-800 ${
+										active ? "bg-violet-100" : ""
+									}`}
+									onClick={handleEditQuestionClick}
+								>
+									<PencilIcon className="fill-violet-600 dark:fill-neutral-200" />
+									Edytuj
+								</button>
+							)}
 						</Menu.Item>
+						{status === "pending" && (
+							<Menu.Item>
+								{({ active }) => (
+									<button
+										className={`group flex w-full items-center gap-3 rounded-md px-2 py-2 text-sm text-green-500 hover:bg-green-100 dark:hover:bg-violet-800 ${
+											active ? "bg-green-100" : ""
+										}`}
+										onClick={handleAcceptQuestionClick}
+									>
+										<CheckIcon />
+										Akceptuj
+									</button>
+								)}
+							</Menu.Item>
+						)}
 						<Menu.Item>
-							<button
-								className={`group flex w-full items-center gap-3 rounded-md px-2 py-2 text-sm text-green-500 hover:bg-green-100 dark:hover:bg-violet-800`}
-							>
-								<CheckIcon />
-								Akceptuj
-							</button>
-						</Menu.Item>
-						<Menu.Item>
-							<button
-								className={`group flex w-full items-center gap-3 rounded-md px-2 py-2 text-sm text-red-500 hover:bg-red-100 dark:hover:bg-violet-800`}
-							>
-								<TrashIcon className="fill-red-500" />
-								Odrzuć
-							</button>
+							{({ active }) => (
+								<button
+									className={`group flex w-full items-center gap-3 rounded-md px-2 py-2 text-sm text-red-500 hover:bg-red-100 dark:hover:bg-violet-800 ${
+										active ? "bg-red-100" : ""
+									}`}
+									onClick={() => handleDeleteQuestionClick(status === "pending")}
+								>
+									<TrashIcon className="fill-red-500" />
+									{status === "pending" ? "Odrzuć" : "Usuń"}
+								</button>
+							)}
 						</Menu.Item>
 					</div>
 				</Menu.Items>
 			</Transition>
 		</Menu>
-		// <div className="mr-3 flex flex-col justify-between">
-		// 	<div className={twMerge("flex", status === "accepted" && "flex-col")}>
-		// 		<Button variant="branding" className={buttonStyles} onClick={handleEditQuestionClick}>
-		// 			<PencilIcon className="fill-violet-700 dark:fill-neutral-200" />
-		// 			Edytuj
-		// 		</Button>
-		// 		{status === "accepted" && (
-		// 			<Button
-		// 				variant="brandingInverse"
-		// 				onClick={() => handleDeleteQuestionClick()}
-		// 				className={buttonStyles}
-		// 			>
-		// 				<TrashIcon className="fill-white" />
-		// 				Usuń
-		// 			</Button>
-		// 		)}
-		// 	</div>
-		// 	{status == "pending" && (
-		// 		<div className="flex">
-		// 			<Button
-		// 				variant="brandingInverse"
-		// 				onClick={handleAcceptQuestionClick}
-		// 				className={buttonStyles}
-		// 			>
-		// 				<CheckIcon />
-		// 				Akceptuj
-		// 			</Button>
-		// 			<Button
-		// 				variant="alert"
-		// 				onClick={() => handleDeleteQuestionClick(true)}
-		// 				className={buttonStyles}
-		// 			>
-		// 				<RejectIcon />
-		// 				Odrzuć
-		// 			</Button>
-		// 		</div>
-		// 	)}
-		// </div>
 	);
 };
