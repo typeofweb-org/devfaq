@@ -70,8 +70,8 @@ export const AdminPanelQuestionLeftSection = ({
 						<Menu.Item>
 							{({ active }) => (
 								<button
-									className={`group flex w-full items-center gap-3 rounded-md px-2 py-2 text-sm transition-colors hover:bg-violet-100 focus:bg-violet-100 dark:text-white dark:hover:bg-violet-800 ${
-										active ? "bg-violet-100" : ""
+									className={`group flex w-full items-center gap-3 rounded-md px-2 py-2 text-sm transition-colors hover:bg-violet-100 dark:text-white dark:hover:bg-violet-800 ${
+										active ? "bg-violet-100 dark:bg-violet-800" : ""
 									}`}
 									onClick={handleEditQuestionClick}
 								>
@@ -85,7 +85,7 @@ export const AdminPanelQuestionLeftSection = ({
 								{({ active }) => (
 									<button
 										className={`group flex w-full items-center gap-3 rounded-md px-2 py-2 text-sm text-green-500 transition-colors hover:bg-green-100 dark:hover:bg-violet-800 ${
-											active ? "bg-green-100" : ""
+											active ? "bg-green-100 dark:bg-violet-800" : ""
 										}`}
 										onClick={handleAcceptQuestionClick}
 									>
@@ -99,7 +99,7 @@ export const AdminPanelQuestionLeftSection = ({
 							{({ active }) => (
 								<button
 									className={`group flex w-full items-center gap-3 rounded-md px-2 py-2 text-sm text-red-500 transition-colors hover:bg-red-100 dark:hover:bg-violet-800 ${
-										active ? "bg-red-100" : ""
+										active ? "bg-red-100 dark:bg-violet-800" : ""
 									}`}
 									onClick={() => handleDeleteQuestionClick(status === "pending")}
 								>
