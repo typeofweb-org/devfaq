@@ -1,6 +1,6 @@
 "use client";
 
-import { AdminQuestion, Question } from "../types";
+import { AdminQuestion } from "../types";
 import { useGetQuestionVotesById } from "../hooks/useQuestionVoting";
 import { QuestionItem } from "./QuestionItem/QuestionItem";
 import { QuestionVoting } from "./QuestionsList/QuestionVoting";
