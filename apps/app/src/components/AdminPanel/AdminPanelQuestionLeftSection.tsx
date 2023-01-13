@@ -52,25 +52,23 @@ export const AdminPanelQuestionLeftSection = ({
 	};
 
 	return (
-		<div className="mr-3 flex flex-col justify-between">
-			<div className={twMerge("flex", status === "accepted" && "flex-col")}>
-				<Button variant="branding" className={buttonStyles} onClick={handleEditQuestionClick}>
-					<PencilIcon className="fill-violet-700 dark:fill-neutral-200" />
-					Edytuj
+		<div className="mr-3 flex flex-col justify-start gap-1.5">
+			<Button variant="branding" className={buttonStyles} onClick={handleEditQuestionClick}>
+				<PencilIcon className="fill-violet-700 dark:fill-neutral-200" />
+				Edytuj
+			</Button>
+			{status === "accepted" && (
+				<Button
+					variant="brandingInverse"
+					onClick={() => handleDeleteQuestionClick()}
+					className={buttonStyles}
+				>
+					<TrashIcon className="fill-white" />
+					Usuń
 				</Button>
-				{status === "accepted" && (
-					<Button
-						variant="brandingInverse"
-						onClick={() => handleDeleteQuestionClick()}
-						className={buttonStyles}
-					>
-						<TrashIcon className="fill-white" />
-						Usuń
-					</Button>
-				)}
-			</div>
+			)}
 			{status == "pending" && (
-				<div className="flex">
+				<>
 					<Button
 						variant="brandingInverse"
 						onClick={handleAcceptQuestionClick}
@@ -87,7 +85,7 @@ export const AdminPanelQuestionLeftSection = ({
 						<RejectIcon />
 						Odrzuć
 					</Button>
-				</div>
+				</>
 			)}
 		</div>
 	);
