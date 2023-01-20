@@ -54,7 +54,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 			onSuccess: () => {
 				setSelectData({});
 				setContent("");
-				modalData ? closeModal() : openModal("AddQuestionConfirmationModal");
+				modalData ? handleCloseModal() : openModal("AddQuestionConfirmationModal");
 			},
 			onError: () => setIsError(true),
 		};
@@ -78,8 +78,15 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 			}
 		};
 
+	const handleCloseModal = () => {
+		closeModal();
+		if (modalData?.customOnClose) {
+			modalData.customOnClose();
+		}
+	};
+
 	return (
-		<BaseModal {...props}>
+		<BaseModal {...props} onClose={handleCloseModal}>
 			<BaseModal.Title modalId={props.modalId}>
 				{modalData ? "Edytuj" : "Nowe"} pytanie
 			</BaseModal.Title>
@@ -135,7 +142,7 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 					<Button
 						type="button"
 						variant="branding"
-						onClick={closeModal}
+						onClick={handleCloseModal}
 						className="dark:focus:shadow-white"
 					>
 						Anuluj
