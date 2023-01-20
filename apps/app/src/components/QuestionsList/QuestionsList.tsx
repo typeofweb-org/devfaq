@@ -13,7 +13,10 @@ type QuestionsListProps = Readonly<{
 }>;
 
 const QuestionsManagement = dynamic(
-	() => import("./QuestionsManagment").then((mod) => mod.QuestionsManagement),
+	() =>
+		import(/* webpackChunkName: "QuestionsManagement" */ "./QuestionsManagment").then(
+			(mod) => mod.QuestionsManagement,
+		),
 	{
 		ssr: false,
 	},

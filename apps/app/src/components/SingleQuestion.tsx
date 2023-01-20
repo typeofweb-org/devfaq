@@ -10,7 +10,9 @@ import { QuestionLevel } from "./QuestionItem/QuestionLevel";
 
 const QuestionsManagement = dynamic(
 	() =>
-		import("../components/QuestionsList/QuestionsManagment").then((mod) => mod.QuestionsManagement),
+		import(
+			/* webpackChunkName: "QuestionsManagement" */ "../components/QuestionsList/QuestionsManagment"
+		).then((mod) => mod.QuestionsManagement),
 	{
 		ssr: false,
 	},
