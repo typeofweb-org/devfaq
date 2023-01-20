@@ -13,5 +13,6 @@
 	},
 	"[prisma]": {
 		"editor.defaultFormatter": "Prisma.prisma"
-	}
+	},
+	"prettier.configPath": "prettier.config.js"
 }
