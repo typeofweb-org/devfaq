@@ -80,8 +80,8 @@ export const AddQuestionModal = (props: ComponentProps<typeof BaseModal>) => {
 
 	const handleCloseModal = () => {
 		closeModal();
-		if (modalData?.customOnClose) {
-			modalData.customOnClose();
+		if (modalData?.additionalActionOnClose) {
+			modalData.additionalActionOnClose();
 		}
 	};
 

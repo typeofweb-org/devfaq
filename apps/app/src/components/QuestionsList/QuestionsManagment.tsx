@@ -21,7 +21,10 @@ export const QuestionsManagement = ({ question }: { question: AdminQuestion }) =
 					variant="branding"
 					className="m-px flex w-24 min-w-0 items-center justify-center gap-2 p-0"
 					onClick={() =>
-						openModal("AddQuestionModal", { ...question, customOnClose: onQuestionUpdate })
+						openModal("AddQuestionModal", {
+							...question,
+							additionalActionOnClose: onQuestionUpdate,
+						})
 					}
 				>
 					<PencilIcon className="fill-violet-700 dark:fill-neutral-200" />
