@@ -1,16 +1,23 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useGetQuestionsVotes } from "../../hooks/useQuestionVoting";
 import { AdminQuestion, QuestionFilter } from "../../types";
 import { QuestionItem } from "../QuestionItem/QuestionItem";
 import { QuestionLevel } from "../QuestionItem/QuestionLevel";
 import { QuestionVoting } from "./QuestionVoting";
-import { QuestionsManagement } from "./QuestionsManagment";
 
 type QuestionsListProps = Readonly<{
 	questions: AdminQuestion[];
 	questionFilter: QuestionFilter;
 }>;
+
+const QuestionsManagement = dynamic(
+	() => import("./QuestionsManagment").then((mod) => mod.QuestionsManagement),
+	{
+		ssr: false,
+	},
+);
 
 export const QuestionsList = ({ questions, questionFilter }: QuestionsListProps) => {
 	const { questionsVotes, refetch } = useGetQuestionsVotes(questionFilter);

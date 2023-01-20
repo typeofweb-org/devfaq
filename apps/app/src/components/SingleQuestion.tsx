@@ -1,12 +1,20 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { AdminQuestion } from "../types";
 import { useGetQuestionVotesById } from "../hooks/useQuestionVoting";
 import { QuestionItem } from "./QuestionItem/QuestionItem";
 import { QuestionVoting } from "./QuestionsList/QuestionVoting";
 import { QuestionTechnology } from "./QuestionItem/QuestionTechnology";
 import { QuestionLevel } from "./QuestionItem/QuestionLevel";
-import { QuestionsManagement } from "./QuestionsList/QuestionsManagment";
+
+const QuestionsManagement = dynamic(
+	() =>
+		import("../components/QuestionsList/QuestionsManagment").then((mod) => mod.QuestionsManagement),
+	{
+		ssr: false,
+	},
+);
 
 type SingleQuestionProps = Readonly<{
 	question: AdminQuestion;
