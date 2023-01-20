@@ -19,11 +19,11 @@ export const Loading = ({
 		return (
 			<div role="status" aria-label={label} className="flex w-full flex-col gap-10">
 				{withFilters && (
-					<div className="flex animate-pulse flex-wrap items-baseline justify-between gap-3 text-neutral-500 dark:text-neutral-400">
-						<span className="h-8 w-28 bg-neutral-100 dark:bg-neutral-700 md:gap-3"></span>
+					<div className="flex animate-pulse flex-wrap items-baseline justify-between gap-3">
+						<span className="h-8 w-28 bg-white shadow-md dark:bg-neutral-700 md:gap-3"></span>
 						<div className="flex flex-wrap items-baseline gap-1.5 md:gap-3">
-							<span className="h-8 w-28 bg-neutral-100 dark:bg-neutral-700 md:gap-3"></span>
-							<span className="hidden h-8 w-52 bg-neutral-100 dark:bg-neutral-700 md:flex md:gap-3"></span>
+							<span className="h-8 w-28 bg-white shadow-md dark:bg-neutral-700 md:gap-3"></span>
+							<span className="hidden h-8 w-52 bg-white shadow-md dark:bg-neutral-700 md:flex md:gap-3"></span>
 						</div>
 					</div>
 				)}
