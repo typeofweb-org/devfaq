@@ -36,7 +36,7 @@ export const UserQuestions = ({ page, technology, levels }: UserQuestionsProps) 
 			data={{ technology, levels }}
 		>
 			{isSuccess && data.data.data.length > 0 ? (
-				<Suspense fallback={<Loading label="ładowanie pytań" />}>
+				<Suspense fallback={<Loading label="ładowanie pytań" type="article" withTechnology />}>
 					<UserQuestionsList questions={data.data.data} refetchQuestions={refetchQuestions} />
 				</Suspense>
 			) : (
