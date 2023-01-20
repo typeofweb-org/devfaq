@@ -5,6 +5,7 @@ import { useGetAllQuestions } from "../../hooks/useGetAllQuestions";
 import { useUser } from "../../hooks/useUser";
 import { Technology } from "../../lib/technologies";
 import { FilterableQuestionsList } from "../FilterableQuestionsList/FilterableQuestionsList";
+import { Loading } from "../Loading";
 import { Level } from "../QuestionItem/QuestionLevel";
 import { UserQuestionsList } from "./UserQuestionsList";
 
@@ -35,7 +36,7 @@ export const UserQuestions = ({ page, technology, levels }: UserQuestionsProps) 
 			data={{ technology, levels }}
 		>
 			{isSuccess && data.data.data.length > 0 ? (
-				<Suspense>
+				<Suspense fallback={<Loading label="ładowanie pytań" />}>
 					<UserQuestionsList questions={data.data.data} refetchQuestions={refetchQuestions} />
 				</Suspense>
 			) : (
