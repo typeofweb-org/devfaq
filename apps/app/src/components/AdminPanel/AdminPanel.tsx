@@ -17,7 +17,7 @@ type AdminPanelProps = Readonly<{
 }>;
 
 export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps) => {
-	const { isSuccess, data, refetch, isLoading } = useGetAllQuestions({
+	const { isSuccess, data, refetch } = useGetAllQuestions({
 		page,
 		status,
 		technology,
