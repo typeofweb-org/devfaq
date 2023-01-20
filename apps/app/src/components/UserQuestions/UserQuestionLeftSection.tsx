@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useUIContext } from "../../providers/UIProvider";
 import { AdminQuestion } from "../../types";
 import PencilIcon from "../../../public/icons/pencil.svg";
@@ -5,10 +6,20 @@ import { Button } from "../Button/Button";
 
 type UserQuestionLeftSectionProps = Readonly<{
 	question: AdminQuestion;
+	refetchQuestions: () => void;
 }>;
 
-export const UserQuestionLeftSection = ({ question }: UserQuestionLeftSectionProps) => {
-	const { openModal } = useUIContext();
+export const UserQuestionLeftSection = ({
+	question,
+	refetchQuestions,
+}: UserQuestionLeftSectionProps) => {
+	const { openModal, openedModal } = useUIContext();
+
+	useEffect(() => {
+		if (!openedModal) {
+			refetchQuestions();
+		}
+	}, [openedModal, refetchQuestions]);
 
 	return (
 		<div className="mr-3 flex flex-col justify-start gap-1.5">

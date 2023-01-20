@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useCallback } from "react";
 import { useGetAllQuestions } from "../../hooks/useGetAllQuestions";
 import { useUser } from "../../hooks/useUser";
 import { Technology } from "../../lib/technologies";
@@ -16,12 +16,16 @@ type UserQuestionsProps = Readonly<{
 
 export const UserQuestions = ({ page, technology, levels }: UserQuestionsProps) => {
 	const { userData } = useUser();
-	const { isSuccess, data } = useGetAllQuestions({
+	const { isSuccess, data, refetch } = useGetAllQuestions({
 		page,
 		technology,
 		levels,
 		userId: userData?._user.id,
 	});
+
+	const refetchQuestions = useCallback(() => {
+		void refetch();
+	}, [refetch]);
 
 	return (
 		<FilterableQuestionsList
@@ -32,7 +36,7 @@ export const UserQuestions = ({ page, technology, levels }: UserQuestionsProps) 
 		>
 			{isSuccess && data.data.data.length > 0 ? (
 				<Suspense>
-					<UserQuestionsList questions={data.data.data} />
+					<UserQuestionsList questions={data.data.data} refetchQuestions={refetchQuestions} />
 				</Suspense>
 			) : (
 				<p className="mt-10 text-2xl font-bold uppercase text-primary dark:text-neutral-200">
