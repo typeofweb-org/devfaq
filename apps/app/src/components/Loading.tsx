@@ -37,7 +37,7 @@ export const Loading = ({
 								style={{ animationDelay: `${i * 0.25}s` }}
 							>
 								<div className="mr-3 flex flex-col justify-start gap-1.5">
-									<span className="block h-8 w-20 bg-neutral-100 dark:bg-neutral-700"></span>
+									<span className="block h-8 w-20 rounded-md bg-neutral-100 dark:bg-neutral-700"></span>
 								</div>
 								<div className="question-content flex max-w-full grow flex-col gap-1.5 px-2">
 									<span className="block h-3.5 w-full bg-neutral-100 dark:bg-neutral-700"></span>
