@@ -23,7 +23,7 @@ export const Loading = ({
 						<span className="h-8 w-28 bg-white shadow-md dark:bg-neutral-700 md:gap-3"></span>
 						<div className="flex flex-wrap items-baseline gap-1.5 md:gap-3">
 							<span className="h-8 w-28 bg-white shadow-md dark:bg-neutral-700 md:gap-3"></span>
-							<span className="hidden h-8 w-52 bg-white shadow-md dark:bg-neutral-700 md:flex md:gap-3"></span>
+							<span className="h-8 w-52 bg-white shadow-md dark:bg-neutral-700 md:gap-3"></span>
 						</div>
 					</div>
 				)}
