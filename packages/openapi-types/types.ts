@@ -79,7 +79,7 @@ export interface paths {
 					level?: string;
 					limit?: number;
 					offset?: number;
-					orderBy?: "acceptedAt" | "level" | "votesCount";
+					orderBy?: "acceptedAt" | "level" | "votesCount" | "updatedAt";
 					order?: "asc" | "desc";
 					userId?: number;
 				};
@@ -97,6 +97,8 @@ export interface paths {
 								_statusId: "pending" | "accepted";
 								/** Format: date-time */
 								acceptedAt?: string;
+								/** Format: date-time */
+								updatedAt?: string;
 								votesCount: number;
 							}[];
 							meta: {
@@ -130,6 +132,8 @@ export interface paths {
 								_statusId: "pending" | "accepted";
 								/** Format: date-time */
 								acceptedAt?: string;
+								/** Format: date-time */
+								updatedAt?: string;
 								votesCount: number;
 							};
 						};
@@ -147,7 +151,7 @@ export interface paths {
 					level?: string;
 					limit?: number;
 					offset?: number;
-					orderBy?: "acceptedAt" | "level" | "votesCount";
+					orderBy?: "acceptedAt" | "level" | "votesCount" | "updatedAt";
 					order?: "asc" | "desc";
 					userId?: number;
 				};
@@ -246,6 +250,8 @@ export interface paths {
 								_statusId: "pending" | "accepted";
 								/** Format: date-time */
 								acceptedAt?: string;
+								/** Format: date-time */
+								updatedAt?: string;
 								votesCount: number;
 							};
 						};
@@ -293,6 +299,8 @@ export interface paths {
 								_statusId: "pending" | "accepted";
 								/** Format: date-time */
 								acceptedAt?: string;
+								/** Format: date-time */
+								updatedAt?: string;
 								votesCount: number;
 							};
 						};
