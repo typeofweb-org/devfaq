@@ -5,14 +5,14 @@ const orders = ["asc", "desc"] as const;
 
 export const DEFAULT_SORT_BY_QUERY = "acceptedAt*desc";
 export const sortByLabels: Record<`${OrderBy}*${Order}`, string> = {
-	"acceptedAt*asc": "od najstarszych",
-	"acceptedAt*desc": "od najnowszych",
-	"level*asc": "od najprostszych",
-	"level*desc": "od najtrudniejszych",
-	"votesCount*asc": "od najmniej popularnych",
-	"votesCount*desc": "od najpopularniejszych",
-	"updatedAt*desc": "daty edycji (najnowsze)",
-	"updatedAt*asc": "daty edycji (najstarsze)",
+	"acceptedAt*asc": "data dodania: najstarsze",
+	"acceptedAt*desc": "data dodania: najnowsze",
+	"level*asc": "trudność: od najtrudniejszych",
+	"level*desc": "trudność: od najprostszych",
+	"votesCount*asc": "popularność: najmniejsza",
+	"votesCount*desc": "popularność: największa",
+	"updatedAt*asc": "data edycji: najstarsze",
+	"updatedAt*desc": "data edycji: najnowsze",
 };
 
 export type OrderBy = typeof ordersBy[number];
