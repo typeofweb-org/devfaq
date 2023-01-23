@@ -36,7 +36,7 @@ export const AdminPanel = ({ page, technology, levels, status }: AdminPanelProps
 			data={{ status, technology, levels }}
 		>
 			{isSuccess && data.data.data.length > 0 ? (
-				<Suspense fallback={<Loading label="ładowanie pytań" type="article" />}>
+				<Suspense fallback={<Loading label="ładowanie pytań" type="article" admin />}>
 					<AdminPanelQuestionsList questions={data.data.data} refetchQuestions={refetchQuestions} />
 				</Suspense>
 			) : (

@@ -7,6 +7,7 @@ export const Loading = ({
 	type = "spinner",
 	withTechnology = false,
 	withFilters = false,
+	admin = false,
 	className,
 }: {
 	label: string;
@@ -14,6 +15,7 @@ export const Loading = ({
 	type?: LoaderType;
 	withFilters?: boolean;
 	className?: string;
+	admin?: boolean;
 }) => {
 	if (type === "article") {
 		return (
@@ -37,7 +39,11 @@ export const Loading = ({
 								style={{ animationDelay: `${i * 0.25}s` }}
 							>
 								<div className="mr-3 flex flex-col justify-start gap-1.5">
-									<span className="block h-8 w-20 rounded-md bg-neutral-100 dark:bg-neutral-700"></span>
+									{admin ? (
+										<span className="block h-8 w-20 rounded-md bg-neutral-100 dark:bg-neutral-700"></span>
+									) : (
+										<span className="block h-7 w-8 rounded-md bg-neutral-100 dark:bg-neutral-700"></span>
+									)}
 								</div>
 								<div className="question-content flex max-w-full grow flex-col gap-1.5 px-2">
 									<span className="block h-3.5 w-full bg-neutral-100 dark:bg-neutral-700"></span>
@@ -45,8 +51,7 @@ export const Loading = ({
 									<span className="block h-3.5 w-full bg-neutral-100 dark:bg-neutral-700"></span>
 									<span className="block h-3.5 w-full bg-neutral-100 dark:bg-neutral-700"></span>
 									<span className="block h-3.5 w-full bg-neutral-100 dark:bg-neutral-700"></span>
-									<span className="block h-3.5 w-full bg-neutral-100 dark:bg-neutral-700"></span>
-									<span className="block h-3.5 w-full bg-neutral-100 dark:bg-neutral-700"></span>
+									<span className="block h-3.5 w-[80%] bg-neutral-100 dark:bg-neutral-700"></span>
 								</div>
 								<div className="flex min-w-max flex-col items-center md:ml-4 md:items-end">
 									<div className="flex flex-col items-center">
