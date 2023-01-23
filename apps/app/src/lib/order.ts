@@ -15,8 +15,8 @@ export const sortByLabels: Record<`${OrderBy}*${Order}`, string> = {
 	"updatedAt*asc": "daty edycji (najstarsze)",
 };
 
-type OrderBy = typeof ordersBy[number];
-type Order = typeof orders[number];
+export type OrderBy = typeof ordersBy[number];
+export type Order = typeof orders[number];
 
 export const parseQuerySortBy = (query: QueryParam) => {
 	if (typeof query !== "string") {
