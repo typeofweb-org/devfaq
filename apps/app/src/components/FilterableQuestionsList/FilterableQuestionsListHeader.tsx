@@ -2,11 +2,13 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, ReactNode } from "react";
 import { useDevFAQRouter } from "../../hooks/useDevFAQRouter";
 import { levels } from "../../lib/level";
-import { Order, OrderBy, sortByLabels } from "../../lib/order";
+import { Order, OrderBy } from "../../lib/order";
 import { QuestionStatus, statuses } from "../../lib/question";
 import { technologies, technologiesLabels, Technology } from "../../lib/technologies";
 import { Level } from "../QuestionItem/QuestionLevel";
 import { Select } from "../Select/Select";
+import { SelectLabel } from "../SelectLabel";
+import { SortBySelect } from "../SortBySelect";
 
 type FilterableQuestionsListHeaderProps = Readonly<{
 	status?: QuestionStatus;
@@ -15,10 +17,6 @@ type FilterableQuestionsListHeaderProps = Readonly<{
 	order?: Order;
 	orderBy?: OrderBy;
 }>;
-
-const SelectLabel = ({ children }: { readonly children: ReactNode }) => (
-	<label className="flex flex-wrap items-baseline gap-1.5 md:gap-3">{children}</label>
-);
 
 export const FilterableQuestionsListHeader = ({
 	status,
@@ -72,20 +70,7 @@ export const FilterableQuestionsListHeader = ({
 				</SelectLabel>
 			)}
 			{order && orderBy && (
-				<SelectLabel>
-					Sortuj według:
-					<Select
-						variant="default"
-						value={`${orderBy}*${order}`}
-						onChange={handleSelectChange("sortBy")}
-					>
-						{Object.entries(sortByLabels).map(([sortBy, label]) => (
-							<option key={sortBy} value={sortBy}>
-								{label}
-							</option>
-						))}
-					</Select>
-				</SelectLabel>
+				<SortBySelect order={order} orderBy={orderBy} onChange={handleSelectChange("sortBy")} />
 			)}
 			{status !== undefined && (
 				<SelectLabel>
