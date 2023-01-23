@@ -37,7 +37,11 @@ export const QuestionsSidebar = () => {
 			<Button variant="brandingInverse" className="mt-auto sm:hidden" onClick={closeSidebar}>
 				Pokaż wyniki
 			</Button>
-			<CloseButton className="absolute top-1 right-1 sm:hidden" onClick={closeSidebar} />
+			<CloseButton
+				className="absolute top-1 right-1 sm:hidden"
+				onClick={closeSidebar}
+				aria-label="Zamknij pasek boczny z filtrami"
+			/>
 		</ReactFocusLock>
 	);
 };
