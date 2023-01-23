@@ -33,8 +33,8 @@ export const useGetAllQuestions = ({
 				...(levels && { level: levels.join(",") }),
 				status,
 				userId,
-				order: order,
-				orderBy: orderBy,
+				order,
+				orderBy,
 			}),
 		keepPreviousData: true,
 	});
