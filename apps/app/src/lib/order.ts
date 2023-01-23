@@ -7,8 +7,8 @@ export const DEFAULT_SORT_BY_QUERY = "acceptedAt*desc";
 export const sortByLabels: Record<`${OrderBy}*${Order}`, string> = {
 	"acceptedAt*asc": "data dodania: najstarsze",
 	"acceptedAt*desc": "data dodania: najnowsze",
-	"level*asc": "trudność: od najtrudniejszych",
-	"level*desc": "trudność: od najprostszych",
+	"level*asc": "trudność: od najłatwiejszych",
+	"level*desc": "trudność: od najtrudniejszych",
 	"votesCount*asc": "popularność: najmniejsza",
 	"votesCount*desc": "popularność: największa",
 	"updatedAt*asc": "data edycji: najstarsze",
