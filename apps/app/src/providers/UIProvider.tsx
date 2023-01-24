@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import type { AdminQuestion } from "../types";
 
 interface ModalData {
-	AddQuestionModal: AdminQuestion;
+	AddQuestionModal: AdminQuestion & { additionalActionOnClose?: () => void };
 	AddQuestionConfirmationModal: never;
 }
 

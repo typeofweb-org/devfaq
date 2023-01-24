@@ -10,9 +10,10 @@ import { UserQuestionLeftSection } from "./UserQuestionLeftSection";
 
 type UserQuestionsListProps = Readonly<{
 	questions: APIQuestion[];
+	refetchQuestions: () => void;
 }>;
 
-export const UserQuestionsList = memo(({ questions }: UserQuestionsListProps) => {
+export const UserQuestionsList = memo(({ questions, refetchQuestions }: UserQuestionsListProps) => {
 	const serializedQuestions = questions.map((question) =>
 		use(
 			(async () => {
@@ -29,7 +30,9 @@ export const UserQuestionsList = memo(({ questions }: UserQuestionsListProps) =>
 					<QuestionItem
 						level={question._levelId}
 						technology={question._categoryId}
-						leftSection={<UserQuestionLeftSection question={question} />}
+						leftSection={
+							<UserQuestionLeftSection question={question} refetchQuestions={refetchQuestions} />
+						}
 						rightSection={
 							<div className="flex flex-col items-center">
 								<QuestionTechnology technology={question._categoryId} />

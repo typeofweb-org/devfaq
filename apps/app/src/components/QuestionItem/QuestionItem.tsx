@@ -5,7 +5,7 @@ import { Technology } from "../../lib/technologies";
 import { formatDate } from "../../utils/intl";
 import { Box } from "../Box";
 import { MarkdownContent } from "../MarkdownContent";
-import { Level, QuestionLevel } from "./QuestionLevel";
+import { Level } from "./QuestionLevel";
 
 type QuestionItemProps = Readonly<{
 	id: number;
