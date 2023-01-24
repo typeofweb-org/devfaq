@@ -15,7 +15,7 @@ const answerSchema = Type.Object({
 	}),
 });
 
-export const getAnswersSchema = {
+export const getAnswersRelatedToPostSchema = {
 	params: Type.Object({
 		id: Type.Integer(),
 	}),

@@ -1,11 +1,12 @@
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { Prisma } from "@prisma/client";
+import { Type } from "@sinclair/typebox";
 import { FastifyPluginAsync, preHandlerAsyncHookHandler, preHandlerHookHandler } from "fastify";
 import { PrismaErrorCode } from "../db/prismaErrors.js";
 import { isPrismaError } from "../db/prismaErrors.util.js";
 import { dbAnswerToDto } from "./answers.mapper.js";
 import {
-	getAnswersSchema,
+	getAnswersRelatedToPostSchema,
 	createAnswerSchema,
 	deleteAnswerSchema,
 	updateAnswerSchema,
@@ -60,9 +61,67 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 	};
 
 	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
+		url: "/answers",
+		method: "GET",
+		schema: {
+			response: {
+				200: Type.Object({
+					data: Type.Array(
+						Type.Object({
+							id: Type.Number(),
+							content: Type.String(),
+							sources: Type.Array(Type.String()),
+							createdAt: Type.String({ format: "date-time" }),
+							updatedAt: Type.String({ format: "date-time" }),
+							CreatedBy: Type.Object({
+								id: Type.Integer(),
+								firstName: Type.Union([Type.String(), Type.Null()]),
+								lastName: Type.Union([Type.String(), Type.Null()]),
+							}),
+						}),
+					),
+				}),
+			},
+		},
+		async handler(request) {
+			const answers = await fastify.db.questionAnswer.findMany({
+				select: {
+					id: true,
+					content: true,
+					sources: true,
+					createdAt: true,
+					updatedAt: true,
+					CreatedBy: {
+						select: { id: true, firstName: true, lastName: true },
+					},
+				},
+			});
+
+			console.log(answers);
+
+			return {
+				data: answers.map((a) => {
+					return {
+						id: a.id,
+						content: a.content,
+						sources: a.sources,
+						createdAt: a.createdAt.toISOString(),
+						updatedAt: a.createdAt.toISOString(),
+						CreatedBy: {
+							id: a.CreatedBy.id,
+							firstName: a.CreatedBy.firstName,
+							lastName: a.CreatedBy.lastName,
+						},
+					};
+				}),
+			};
+		},
+	});
+
+	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
 		url: "/questions/:id/answers",
 		method: "GET",
-		schema: getAnswersSchema,
+		schema: getAnswersRelatedToPostSchema,
 		async handler(request) {
 			const {
 				params: { id },
