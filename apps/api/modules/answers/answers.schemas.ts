@@ -104,6 +104,7 @@ export const getAnswersSchema = {
 						id: Type.Integer(),
 						firstName: Type.Union([Type.String(), Type.Null()]),
 						lastName: Type.Union([Type.String(), Type.Null()]),
+						socialLogin: Type.Record(Type.String(), Type.Union([Type.String(), Type.Number()])),
 					}),
 					votesCount: Type.Integer(),
 				}),

@@ -74,7 +74,7 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 					createdAt: true,
 					updatedAt: true,
 					CreatedBy: {
-						select: { id: true, firstName: true, lastName: true },
+						select: { id: true, firstName: true, lastName: true, socialLogin: true },
 					},
 					_count: {
 						select: {
@@ -98,6 +98,7 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 							id: a.CreatedBy.id,
 							firstName: a.CreatedBy.firstName,
 							lastName: a.CreatedBy.lastName,
+							socialLogin: a.CreatedBy.socialLogin as Record<string, string | number>,
 						},
 						votesCount: a._count.QuestionAnswerVote,
 					};
