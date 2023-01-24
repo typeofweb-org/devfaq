@@ -89,3 +89,25 @@ export const downvoteAnswerSchema = {
 		204: Type.Never(),
 	},
 };
+
+export const getAnswersSchema = {
+	response: {
+		200: Type.Object({
+			data: Type.Array(
+				Type.Object({
+					id: Type.Number(),
+					content: Type.String(),
+					sources: Type.Array(Type.String()),
+					createdAt: Type.String({ format: "date-time" }),
+					updatedAt: Type.String({ format: "date-time" }),
+					createdBy: Type.Object({
+						id: Type.Integer(),
+						firstName: Type.Union([Type.String(), Type.Null()]),
+						lastName: Type.Union([Type.String(), Type.Null()]),
+					}),
+					votesCount: Type.Integer(),
+				}),
+			),
+		}),
+	},
+};

@@ -11,6 +11,7 @@ import {
 	deleteAnswerSchema,
 	updateAnswerSchema,
 	upvoteAnswerSchema,
+	getAnswersSchema,
 } from "./answers.schemas.js";
 
 export const answerSelect = (userId: number) => {
@@ -63,27 +64,7 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
 		url: "/answers",
 		method: "GET",
-		schema: {
-			response: {
-				200: Type.Object({
-					data: Type.Array(
-						Type.Object({
-							id: Type.Number(),
-							content: Type.String(),
-							sources: Type.Array(Type.String()),
-							createdAt: Type.String({ format: "date-time" }),
-							updatedAt: Type.String({ format: "date-time" }),
-							createdBy: Type.Object({
-								id: Type.Integer(),
-								firstName: Type.Union([Type.String(), Type.Null()]),
-								lastName: Type.Union([Type.String(), Type.Null()]),
-							}),
-							votesCount: Type.Integer(),
-						}),
-					),
-				}),
-			},
-		},
+		schema: getAnswersSchema,
 		async handler(request) {
 			const answers = await fastify.db.questionAnswer.findMany({
 				select: {
