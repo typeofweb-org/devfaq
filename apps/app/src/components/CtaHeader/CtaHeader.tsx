@@ -13,7 +13,7 @@ type CtaHeaderActiveLinkProps = Readonly<{
 const CtaHeaderActiveLink = (props: CtaHeaderActiveLinkProps) => (
 	<ActiveLink
 		activeClassName="font-bold border-white"
-		className="flex h-12 grow items-center justify-center border-b-2 border-transparent px-7 transition-opacity hover:opacity-80"
+		className="flex h-12 grow items-center justify-center border-b-2 border-transparent px-7 text-center transition-opacity hover:opacity-80"
 		{...props}
 	/>
 );

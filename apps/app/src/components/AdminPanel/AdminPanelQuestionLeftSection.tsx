@@ -24,12 +24,6 @@ export const AdminPanelQuestionLeftSection = ({
 	const { openModal, openedModal } = useUIContext();
 	const { id, _statusId: status } = question;
 
-	useEffect(() => {
-		if (!openedModal) {
-			refetchQuestions();
-		}
-	}, [openedModal, refetchQuestions]);
-
 	const handleAcceptQuestionClick = () => {
 		patchQuestionMutation.mutate(
 			{ id, status: "accepted" },
@@ -48,7 +42,7 @@ export const AdminPanelQuestionLeftSection = ({
 	};
 
 	const handleEditQuestionClick = () => {
-		openModal("AddQuestionModal", question);
+		openModal("AddQuestionModal", { ...question, additionalActionOnClose: refetchQuestions });
 	};
 
 	return (

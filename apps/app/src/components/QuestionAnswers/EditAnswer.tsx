@@ -43,7 +43,7 @@ export const EditAnswer = ({
 		return (
 			<div className="mt-4">
 				<AnswerForm
-					title="Edytuj odpowiedź"
+					title="Zapisz zmiany"
 					initContent={content}
 					initSources={sources}
 					error={isError}
