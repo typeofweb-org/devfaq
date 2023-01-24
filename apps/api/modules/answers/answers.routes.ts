@@ -73,7 +73,7 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 							sources: Type.Array(Type.String()),
 							createdAt: Type.String({ format: "date-time" }),
 							updatedAt: Type.String({ format: "date-time" }),
-							CreatedBy: Type.Object({
+							createdBy: Type.Object({
 								id: Type.Integer(),
 								firstName: Type.Union([Type.String(), Type.Null()]),
 								lastName: Type.Union([Type.String(), Type.Null()]),
@@ -107,7 +107,7 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 						sources: a.sources,
 						createdAt: a.createdAt.toISOString(),
 						updatedAt: a.createdAt.toISOString(),
-						CreatedBy: {
+						createdBy: {
 							id: a.CreatedBy.id,
 							firstName: a.CreatedBy.firstName,
 							lastName: a.CreatedBy.lastName,
