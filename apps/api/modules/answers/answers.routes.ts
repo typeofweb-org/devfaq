@@ -78,6 +78,7 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 								firstName: Type.Union([Type.String(), Type.Null()]),
 								lastName: Type.Union([Type.String(), Type.Null()]),
 							}),
+							votesCount: Type.Integer(),
 						}),
 					),
 				}),
@@ -93,6 +94,11 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 					updatedAt: true,
 					CreatedBy: {
 						select: { id: true, firstName: true, lastName: true },
+					},
+					_count: {
+						select: {
+							QuestionAnswerVote: true,
+						},
 					},
 				},
 			});
@@ -112,6 +118,7 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 							firstName: a.CreatedBy.firstName,
 							lastName: a.CreatedBy.lastName,
 						},
+						votesCount: a._count.QuestionAnswerVote,
 					};
 				}),
 			};
