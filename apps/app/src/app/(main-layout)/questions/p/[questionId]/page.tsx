@@ -42,3 +42,7 @@ export default async function SingleQuestionPage({ params }: { params: Params<"q
 		</>
 	);
 }
+
+export async function generateStaticParams() {
+	return [];
+}

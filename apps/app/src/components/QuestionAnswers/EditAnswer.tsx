@@ -33,10 +33,10 @@ export const EditAnswer = ({
 		deleteQuestionAnswerMutation.mutate(
 			{ id },
 			{
+				onSuccess: () => router.refresh(),
 				onError: () => setIsError(true),
 			},
 		);
-		router.refresh();
 	};
 
 	if (isEditMode) {
