@@ -1,10 +1,10 @@
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { Prisma } from "@prisma/client";
-import { Type } from "@sinclair/typebox";
 import { FastifyPluginAsync, preHandlerAsyncHookHandler, preHandlerHookHandler } from "fastify";
 import { PrismaErrorCode } from "../db/prismaErrors.js";
 import { isPrismaError } from "../db/prismaErrors.util.js";
 import { dbAnswerToDto } from "./answers.mapper.js";
+import { getAnswersPrismaParams } from "./answers.params.js";
 import {
 	getAnswersRelatedToPostSchema,
 	createAnswerSchema,
@@ -66,7 +66,9 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 		method: "GET",
 		schema: getAnswersSchema,
 		async handler(request) {
+			const params = getAnswersPrismaParams(request.query);
 			const answers = await fastify.db.questionAnswer.findMany({
+				...params,
 				select: {
 					id: true,
 					content: true,
