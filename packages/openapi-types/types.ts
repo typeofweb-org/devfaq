@@ -301,6 +301,37 @@ export interface paths {
 			};
 		};
 	};
+	"/answers": {
+		get: {
+			responses: {
+				/** @description Default Response */
+				200: {
+					content: {
+						"application/json": {
+							data: {
+								id: number;
+								content: string;
+								sources: string[];
+								/** Format: date-time */
+								createdAt: string;
+								/** Format: date-time */
+								updatedAt: string;
+								createdBy: {
+									id: number;
+									firstName: string | null;
+									lastName: string | null;
+									socialLogin: {
+										[key: string]: (string | number) | undefined;
+									};
+								};
+								votesCount: number;
+							}[];
+						};
+					};
+				};
+			};
+		};
+	};
 	"/questions/{id}/answers": {
 		get: {
 			parameters: {

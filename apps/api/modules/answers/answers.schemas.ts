@@ -1,4 +1,4 @@
-import { Type } from "@sinclair/typebox";
+import { Static, Type } from "@sinclair/typebox";
 
 const answerSchema = Type.Object({
 	id: Type.Number(),
@@ -15,7 +15,7 @@ const answerSchema = Type.Object({
 	}),
 });
 
-export const getAnswersSchema = {
+export const getAnswersRelatedToPostSchema = {
 	params: Type.Object({
 		id: Type.Integer(),
 	}),
@@ -89,3 +89,42 @@ export const downvoteAnswerSchema = {
 		204: Type.Never(),
 	},
 };
+
+const generateGetAnswersQuerySchema = Type.Partial(
+	Type.Object({
+		limit: Type.Integer(),
+		offset: Type.Integer(),
+		orderBy: Type.Union([
+			Type.Literal("createdAt"),
+			Type.Literal("updatedAt"),
+			Type.Literal("votesCount"),
+		]),
+		order: Type.Union([Type.Literal("asc"), Type.Literal("desc")]),
+	}),
+);
+
+export const getAnswersSchema = {
+	querystring: generateGetAnswersQuerySchema,
+	response: {
+		200: Type.Object({
+			data: Type.Array(
+				Type.Object({
+					id: Type.Number(),
+					content: Type.String(),
+					sources: Type.Array(Type.String()),
+					createdAt: Type.String({ format: "date-time" }),
+					updatedAt: Type.String({ format: "date-time" }),
+					createdBy: Type.Object({
+						id: Type.Integer(),
+						firstName: Type.Union([Type.String(), Type.Null()]),
+						lastName: Type.Union([Type.String(), Type.Null()]),
+						socialLogin: Type.Record(Type.String(), Type.Union([Type.String(), Type.Number()])),
+					}),
+					votesCount: Type.Integer(),
+				}),
+			),
+		}),
+	},
+};
+
+export type GetAnswersQuery = Static<typeof generateGetAnswersQuerySchema>;
