@@ -1,4 +1,5 @@
 import { ComponentProps, ReactNode } from "react";
+import { Order, OrderBy } from "../../lib/order";
 import { QuestionStatus } from "../../lib/question";
 import { Technology } from "../../lib/technologies";
 import { Level } from "../QuestionItem/QuestionLevel";
@@ -11,6 +12,8 @@ type FilterableQuestionsListProps = Readonly<{
 		status?: QuestionStatus;
 		technology?: Technology | null;
 		levels?: Level[] | null;
+		order?: Order;
+		orderBy?: OrderBy;
 	};
 	children: ReactNode;
 }> &
