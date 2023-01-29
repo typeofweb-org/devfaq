@@ -1,4 +1,4 @@
-import { QuestionAnswer } from "../../types";
+import { QuestionAnswer, SingleAnswer } from "../../types";
 import { formatDate } from "../../utils/intl";
 import { Box } from "../Box";
 import { GitHubAvatar } from "../GitHubAvatar";
@@ -6,10 +6,11 @@ import { MarkdownContent } from "../MarkdownContent";
 import { EditAnswer } from "./EditAnswer";
 
 type AnswerProps = Readonly<{
-	answer: QuestionAnswer;
+	answer: QuestionAnswer | SingleAnswer;
+	afterMutate?: () => void;
 }>;
 
-export const Answer = ({ answer }: AnswerProps) => {
+export const Answer = ({ answer, afterMutate }: AnswerProps) => {
 	const { mdxContent, createdBy, createdAt, sources } = answer;
 	const creationDate = new Date(createdAt);
 
@@ -17,10 +18,7 @@ export const Answer = ({ answer }: AnswerProps) => {
 		<Box as="article" className="flex-col">
 			<header className="flex gap-x-3.5">
 				<GitHubAvatar user={createdBy} width={40} height={40} className="rounded-full" />
-				<div
-					className="flex flex-col items-end justify-center leading-4"
-					title="Autor(-ka) pytania"
-				>
+				<div className="flex flex-col justify-center leading-4" title="Autor(-ka) pytania">
 					<span className="font-bold text-black dark:text-neutral-200">
 						<span className="sr-only">Autor(-ka) pytania: </span>
 						{createdBy.firstName} {createdBy.lastName}
@@ -35,7 +33,7 @@ export const Answer = ({ answer }: AnswerProps) => {
 					</time>
 				</div>
 			</header>
-			<EditAnswer answer={answer}>
+			<EditAnswer answer={answer} afterMutate={afterMutate}>
 				<div className="-mx-2 mt-4">
 					<MarkdownContent source={mdxContent} />
 				</div>

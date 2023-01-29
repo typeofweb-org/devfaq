@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FormEvent, ReactNode, useState } from "react";
+import { FormEvent, ReactNode, useEffect, useState } from "react";
 import { Button } from "../../Button/Button";
 import { WysiwygEditor } from "../../WysiwygEditor/WysiwygEditor";
 import { URL_REGEX } from "../../../lib/constants";
@@ -36,9 +36,7 @@ export const AnswerForm = ({
 	const [isError, setIsError] = useState(false);
 
 	const disabled =
-		content.trim().length === 0 ||
-		!sources.every((source) => URL_REGEX.test(source)) ||
-		initContent === content;
+		content.trim().length === 0 || !sources.every((source) => URL_REGEX.test(source));
 
 	const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();

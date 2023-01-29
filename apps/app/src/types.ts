@@ -30,6 +30,11 @@ export type QuestionAnswer =
 	paths["/questions/{id}/answers"]["get"]["responses"]["200"]["content"]["application/json"]["data"][0] &
 		MdxContent;
 
+export type APIAnswers =
+	paths["/answers"]["get"]["responses"][200]["content"]["application/json"]["data"];
+export type SingleAnswer =
+	paths["/answers"]["get"]["responses"][200]["content"]["application/json"]["data"][0] & MdxContent;
+
 export type Params<T extends string> = {
 	readonly [K in T]: string;
 };
