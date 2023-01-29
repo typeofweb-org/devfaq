@@ -84,8 +84,6 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 				},
 			});
 
-			console.log(answers);
-
 			return {
 				data: answers.map((a) => {
 					return {
