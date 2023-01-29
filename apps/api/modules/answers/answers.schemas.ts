@@ -123,6 +123,9 @@ export const getAnswersSchema = {
 					votesCount: Type.Integer(),
 				}),
 			),
+			meta: Type.Object({
+				total: Type.Integer(),
+			}),
 		}),
 	},
 };

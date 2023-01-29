@@ -67,24 +67,27 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 		schema: getAnswersSchema,
 		async handler(request) {
 			const params = getAnswersPrismaParams(request.query);
-			const answers = await fastify.db.questionAnswer.findMany({
-				...params,
-				select: {
-					id: true,
-					content: true,
-					sources: true,
-					createdAt: true,
-					updatedAt: true,
-					CreatedBy: {
-						select: { id: true, firstName: true, lastName: true, socialLogin: true },
-					},
-					_count: {
-						select: {
-							QuestionAnswerVote: true,
+			const [total, answers] = await Promise.all([
+				fastify.db.questionAnswer.count(),
+				fastify.db.questionAnswer.findMany({
+					...params,
+					select: {
+						id: true,
+						content: true,
+						sources: true,
+						createdAt: true,
+						updatedAt: true,
+						CreatedBy: {
+							select: { id: true, firstName: true, lastName: true, socialLogin: true },
+						},
+						_count: {
+							select: {
+								QuestionAnswerVote: true,
+							},
 						},
 					},
-				},
-			});
+				}),
+			]);
 
 			return {
 				data: answers.map((a) => {
@@ -103,6 +106,7 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 						votesCount: a._count.QuestionAnswerVote,
 					};
 				}),
+				meta: { total },
 			};
 		},
 	});
