@@ -3,9 +3,8 @@
 import { Suspense, useCallback } from "react";
 import { useGetAllAnswers } from "../../hooks/useGetAllAnswers";
 import { Loading } from "../Loading";
-import { QuestionsPagination } from "../QuestionsPagination/QuestionsPagination";
-import { AnswersDashboardHeader } from "./AnswersDashboardHeader";
 import { AnswersList } from "./AnswersList";
+import { FilterableAnswersList } from "./FilterableAnswersList";
 
 type AnswersDashboardType = {
 	page: number;
@@ -21,8 +20,11 @@ export const AnswersDashboard = ({ page }: AnswersDashboardType) => {
 	}, [refetch]);
 
 	return (
-		<ul className="my-10 flex flex-col gap-y-10">
-			<AnswersDashboardHeader />
+		<FilterableAnswersList
+			total={data?.data.meta.total || 0}
+			page={page}
+			getHref={(page) => `/answers/${page}`}
+		>
 			{isSuccess && data.data.data.length > 0 ? (
 				<Suspense fallback={<Loading label="ładowanie pytań" type="spinner" />}>
 					<AnswersList answers={data.data.data} refetchAnswers={refetchAnswers} />
@@ -32,11 +34,6 @@ export const AnswersDashboard = ({ page }: AnswersDashboardType) => {
 					Nie znaleziono żadnej odpowiedzi.
 				</p>
 			)}
-			<QuestionsPagination
-				current={page}
-				total={data?.data.meta.total || 0}
-				getHref={(page) => `/answers/${page}`}
-			/>
-		</ul>
+		</FilterableAnswersList>
 	);
 };
