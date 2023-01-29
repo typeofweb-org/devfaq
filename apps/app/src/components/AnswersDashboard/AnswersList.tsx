@@ -19,10 +19,10 @@ export const AnswersList = ({ answers, refetchAnswers }: AnswersListProps) => {
 	);
 
 	return (
-		<div className="w-full space-y-5">
+		<li className="w-full space-y-5">
 			{serializedAnswers.map((answer) => (
 				<Answer key={answer.id} answer={answer} afterMutate={refetchAnswers} />
 			))}
-		</div>
+		</li>
 	);
 };
