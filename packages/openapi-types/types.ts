@@ -303,6 +303,14 @@ export interface paths {
 	};
 	"/answers": {
 		get: {
+			parameters?: {
+				query?: {
+					limit?: number;
+					offset?: number;
+					orderBy?: "createdAt" | "updatedAt" | "votesCount";
+					order?: "asc" | "desc";
+				};
+			};
 			responses: {
 				/** @description Default Response */
 				200: {
@@ -326,6 +334,9 @@ export interface paths {
 								};
 								votesCount: number;
 							}[];
+							meta: {
+								total: number;
+							};
 						};
 					};
 				};
