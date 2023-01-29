@@ -7,6 +7,7 @@ import { Order, OrderBy } from "../../lib/order";
 import { QuestionStatus } from "../../lib/question";
 import { Technology } from "../../lib/technologies";
 import { FilterableQuestionsList } from "../FilterableQuestionsList/FilterableQuestionsList";
+import { Loading } from "../Loading";
 import { AdminPanelQuestionsList } from "./AdminPanelQuestionsList";
 
 type AdminPanelProps = Readonly<{
@@ -47,7 +48,7 @@ export const AdminPanel = ({
 			data={{ status, technology, levels, order, orderBy }}
 		>
 			{isSuccess && data.data.data.length > 0 ? (
-				<Suspense>
+				<Suspense fallback={<Loading label="ładowanie pytań" type="article" admin />}>
 					<AdminPanelQuestionsList questions={data.data.data} refetchQuestions={refetchQuestions} />
 				</Suspense>
 			) : (
