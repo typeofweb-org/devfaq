@@ -12,9 +12,7 @@ export default function ManageQuestionsAnswers({
 	searchParams: SearchParams<"sortBy">;
 }) {
 	const page = Number.parseInt(params.page);
-	// const sortBy = parseAnswersQuerySortBy(searchParams?.sortBy || DEFAULT_ANSWERS_SORT_BY_QUERY);
 	const sortBy = parseSortByQuery(searchParams?.sortBy || DEFAULT_ANSWERS_SORT_BY_QUERY);
-	console.log(sortBy);
 
 	if (Number.isNaN(page)) {
 		return redirect("/answers/1");
