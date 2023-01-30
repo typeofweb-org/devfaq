@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "../Button/Button";
 import { QuestionAnswer, SingleAnswer } from "../../types";
 import { useQuestionMutation } from "../../hooks/useQuestionMutation";
@@ -21,6 +22,7 @@ export const EditAnswer = ({
 	const [isEditMode, setIsEditMode] = useState(false);
 	const [isError, setIsError] = useState(false);
 
+	const router = useRouter();
 	const { userData } = useUser();
 	const { patchQuestionAnswerMutation, deleteQuestionAnswerMutation } = useQuestionMutation();
 
@@ -33,13 +35,16 @@ export const EditAnswer = ({
 			{ id },
 			{
 				onError: () => setIsError(true),
-				onSuccess: () => setIsEditMode(false),
+				onSuccess: () => {
+					setIsEditMode(false);
+					if (afterMutate) {
+						afterMutate();
+					} else {
+						router.refresh();
+					}
+				},
 			},
 		);
-
-		if (afterMutate) {
-			afterMutate();
-		}
 	};
 
 	if (isEditMode) {
@@ -51,10 +56,14 @@ export const EditAnswer = ({
 					initSources={sources}
 					error={isError}
 					onSubmit={async ({ content, sources }) => {
-						await patchQuestionAnswerMutation.mutateAsync({ id, content, sources });
-						setIsEditMode(false);
-						if (afterMutate) {
-							afterMutate();
+						if (content.trim().length > 0) {
+							await patchQuestionAnswerMutation.mutateAsync({ id, content, sources });
+							setIsEditMode(false);
+							if (afterMutate) {
+								afterMutate();
+							}
+						} else {
+							throw new Error("Nie można zapisać pustej odpowiedzi!");
 						}
 					}}
 				>
