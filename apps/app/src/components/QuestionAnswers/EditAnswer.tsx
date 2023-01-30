@@ -33,6 +33,7 @@ export const EditAnswer = ({
 			{ id },
 			{
 				onError: () => setIsError(true),
+				onSuccess: () => setIsEditMode(false),
 			},
 		);
 
