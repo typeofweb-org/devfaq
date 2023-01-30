@@ -36,7 +36,7 @@ export const AnswersDashboard = ({ page, orderBy, order }: AnswersDashboardType)
 					<AnswersList answers={data.data.data} refetchAnswers={refetchAnswers} />
 				</Suspense>
 			) : (
-				<p className="mt-10 text-2xl font-bold uppercase text-primary dark:text-neutral-200">
+				<p className="mt-10 text-center text-2xl font-bold uppercase text-primary dark:text-neutral-200">
 					Nie znaleziono żadnej odpowiedzi.
 				</p>
 			)}

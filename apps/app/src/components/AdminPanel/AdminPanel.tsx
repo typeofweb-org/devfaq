@@ -52,7 +52,7 @@ export const AdminPanel = ({
 					<AdminPanelQuestionsList questions={data.data.data} refetchQuestions={refetchQuestions} />
 				</Suspense>
 			) : (
-				<p className="mt-10 text-2xl font-bold uppercase text-primary dark:text-neutral-200">
+				<p className="mt-10 text-center text-2xl font-bold uppercase text-primary dark:text-neutral-200">
 					{status === "accepted"
 						? "Nie znaleziono żadnego pytania"
 						: "Brak pytań do zaakceptowania"}
