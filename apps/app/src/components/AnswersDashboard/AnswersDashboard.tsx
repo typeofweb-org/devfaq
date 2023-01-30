@@ -2,17 +2,22 @@
 
 import { Suspense, useCallback } from "react";
 import { useGetAllAnswers } from "../../hooks/useGetAllAnswers";
+import { Order, AnswersOrderBy } from "../../lib/order";
 import { Loading } from "../Loading";
 import { AnswersList } from "./AnswersList";
 import { FilterableAnswersList } from "./FilterableAnswersList";
 
 type AnswersDashboardType = {
 	page: number;
+	orderBy?: AnswersOrderBy;
+	order?: Order;
 };
 
-export const AnswersDashboard = ({ page }: AnswersDashboardType) => {
+export const AnswersDashboard = ({ page, orderBy, order }: AnswersDashboardType) => {
 	const { isSuccess, data, refetch } = useGetAllAnswers({
 		page,
+		orderBy,
+		order,
 	});
 
 	const refetchAnswers = useCallback(() => {
@@ -24,6 +29,7 @@ export const AnswersDashboard = ({ page }: AnswersDashboardType) => {
 			total={data?.data.meta.total || 0}
 			page={page}
 			getHref={(page) => `/answers/${page}`}
+			data={{ orderBy, order }}
 		>
 			{isSuccess && data.data.data.length > 0 ? (
 				<Suspense fallback={<Loading label="ładowanie pytań" type="spinner" />}>

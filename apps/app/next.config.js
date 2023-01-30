@@ -81,6 +81,11 @@ const nextConfig = {
 				destination: "/user/questions/1",
 				permanent: false,
 			},
+			{
+				source: "/answers",
+				destination: "/answers/1",
+				permanent: false,
+			},
 		];
 	},
 };

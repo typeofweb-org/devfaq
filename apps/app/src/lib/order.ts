@@ -31,3 +31,33 @@ export const parseQuerySortBy = (query: QueryParam) => {
 
 	return { orderBy, order };
 };
+
+const answersOrdersBy = ["createdAt", "votesCount", "updatedAt"] as const;
+
+export const DEFAULT_ANSWERS_SORT_BY_QUERY = "updatedAt*desc";
+export const answersSortByLabels: Record<`${AnswersOrderBy}*${Order}`, string> = {
+	"createdAt*asc": "data dodania: najstarsze",
+	"createdAt*desc": "data dodania: najnowsze",
+	"votesCount*asc": "popularność: najmniejsza",
+	"votesCount*desc": "popularność: największa",
+	"updatedAt*asc": "data edycji: najstarsze",
+	"updatedAt*desc": "data edycji: najnowsze",
+};
+
+export type AnswersOrderBy = typeof answersOrdersBy[number];
+
+export const parseSortByQuery = (
+	query: QueryParam,
+): null | { orderBy: AnswersOrderBy; order: Order } => {
+	if (typeof query !== "string") {
+		return null;
+	}
+
+	const [orderBy, order] = query.split("*");
+
+	if (!orderBy || !order || !answersOrdersBy.includes(orderBy) || !orders.includes(order)) {
+		return null;
+	}
+
+	return { orderBy, order };
+};
