@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { useUser } from "../../hooks/useUser";
 import { ActiveLink } from "../ActiveLink";
 import { Container } from "../Container";
 import { PrivateElement } from "../PrivateElement";
