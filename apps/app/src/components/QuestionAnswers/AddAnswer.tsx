@@ -15,7 +15,11 @@ export const AddAnswer = ({ questionId }: AddAnswerProps) => {
 			<AnswerForm
 				title="Dodaj odpowiedź"
 				onSubmit={async ({ content, sources }) => {
-					await createQuestionAnswerMutation.mutateAsync({ id: questionId, content, sources });
+					if (content.trim().length > 0) {
+						await createQuestionAnswerMutation.mutateAsync({ id: questionId, content, sources });
+					} else {
+						throw new Error("Nie można dodać pustej odpowiedzi!");
+					}
 				}}
 			/>
 		</div>
