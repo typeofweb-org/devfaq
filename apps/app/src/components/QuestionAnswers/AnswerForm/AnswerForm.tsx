@@ -45,9 +45,9 @@ export const AnswerForm = ({
 			.then(() => {
 				setContent("");
 				setSources([]);
-				router.refresh();
 			})
-			.catch(() => setIsError(true));
+			.catch(() => setIsError(true))
+			.finally(() => router.refresh());
 	};
 
 	return (
