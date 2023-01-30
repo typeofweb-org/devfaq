@@ -6,10 +6,11 @@ import { SelectLabel } from "./SelectLabel";
 type SortBySelectProps = {
 	order: Order;
 	orderBy: OrderBy;
+	sortByLabels: typeof sortByLabels;
 	onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
 };
 
-export const SortBySelect = ({ order, orderBy, onChange }: SortBySelectProps) => (
+export const SortBySelect = ({ order, orderBy, sortByLabels, onChange }: SortBySelectProps) => (
 	<SelectLabel>
 		Sortowanie:
 		<Select variant="default" value={`${orderBy}*${order}`} onChange={onChange}>

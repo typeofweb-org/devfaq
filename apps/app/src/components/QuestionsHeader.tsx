@@ -4,7 +4,7 @@ import { ChangeEvent } from "react";
 import { technologiesLabels, Technology } from "../lib/technologies";
 import { pluralize } from "../utils/intl";
 import { useQuestionsOrderBy } from "../hooks/useQuestionsOrderBy";
-import { parseQuerySortBy } from "../lib/order";
+import { parseQuerySortBy, sortByLabels } from "../lib/order";
 import { SortBySelect } from "./SortBySelect";
 
 const questionsPluralize = pluralize("pytanie", "pytania", "pytań");
@@ -30,7 +30,12 @@ export const QuestionsHeader = ({ technology, total }: QuestionsHeaderProps) => 
 				{total} {questionsPluralize(total)}
 			</output>
 			{sort?.order && sort?.orderBy && (
-				<SortBySelect order={sort.order} orderBy={sort.orderBy} onChange={handleSelectChange} />
+				<SortBySelect
+					order={sort.order}
+					orderBy={sort.orderBy}
+					onChange={handleSelectChange}
+					sortByLabels={sortByLabels}
+				/>
 			)}
 		</header>
 	);

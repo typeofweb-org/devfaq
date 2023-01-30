@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation";
 import { ChangeEvent, ReactNode } from "react";
 import { useDevFAQRouter } from "../../hooks/useDevFAQRouter";
 import { levels } from "../../lib/level";
-import { Order, OrderBy } from "../../lib/order";
+import { Order, OrderBy, sortByLabels } from "../../lib/order";
 import { QuestionStatus, statuses } from "../../lib/question";
 import { technologies, technologiesLabels, Technology } from "../../lib/technologies";
 import { Level } from "../QuestionItem/QuestionLevel";
@@ -70,7 +70,12 @@ export const FilterableQuestionsListHeader = ({
 				</SelectLabel>
 			)}
 			{order && orderBy && (
-				<SortBySelect order={order} orderBy={orderBy} onChange={handleSelectChange("sortBy")} />
+				<SortBySelect
+					order={order}
+					orderBy={orderBy}
+					onChange={handleSelectChange("sortBy")}
+					sortByLabels={sortByLabels}
+				/>
 			)}
 			{status !== undefined && (
 				<SelectLabel>
