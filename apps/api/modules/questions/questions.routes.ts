@@ -49,6 +49,7 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 						levelId: true,
 						statusId: true,
 						acceptedAt: true,
+						updatedAt: true,
 						_count: {
 							select: {
 								QuestionVote: true,
@@ -66,6 +67,7 @@ const questionsPlugin: FastifyPluginAsync = async (fastify) => {
 					_levelId: q.levelId,
 					_statusId: q.statusId,
 					acceptedAt: q.acceptedAt?.toISOString(),
+					updatedAt: q.updatedAt?.toISOString(),
 					votesCount: q._count.QuestionVote,
 				};
 			});
