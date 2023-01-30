@@ -9,7 +9,7 @@ export default function ManageQuestionsAnswers({
 	searchParams,
 }: {
 	params: Params<"page">;
-	searchParams: SearchParams<"sortBy">;
+	searchParams?: SearchParams<"sortBy">;
 }) {
 	const page = Number.parseInt(params.page);
 	const sortBy = parseSortByQuery(searchParams?.sortBy || DEFAULT_ANSWERS_SORT_BY_QUERY);
