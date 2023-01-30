@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { PAGE_SIZE } from "../lib/constants";
 import { Level } from "../lib/level";
-import { Order, OrderBy, sortByLabels } from "../lib/order";
+import { Order, OrderBy } from "../lib/order";
 import { QuestionStatus } from "../lib/question";
 import { Technology } from "../lib/technologies";
 import { getAllQuestions } from "../services/questions.service";

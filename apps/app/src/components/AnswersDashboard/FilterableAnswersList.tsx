@@ -1,5 +1,5 @@
 import { ComponentProps, ReactNode } from "react";
-import { AnswersOrderBy, Order, OrderBy } from "../../lib/order";
+import { AnswersOrderBy, Order } from "../../lib/order";
 import { QuestionsPagination } from "../QuestionsPagination/QuestionsPagination";
 import { FilterableAnswersListHeader } from "./FilterableAnswersListHeader";
 

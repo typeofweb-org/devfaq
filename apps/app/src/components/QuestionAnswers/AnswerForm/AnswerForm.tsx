@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FormEvent, ReactNode, useEffect, useState } from "react";
+import { FormEvent, ReactNode, useState } from "react";
 import { Button } from "../../Button/Button";
 import { WysiwygEditor } from "../../WysiwygEditor/WysiwygEditor";
 import { URL_REGEX } from "../../../lib/constants";

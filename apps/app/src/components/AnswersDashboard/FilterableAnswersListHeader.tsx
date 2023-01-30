@@ -1,5 +1,4 @@
-import { useRouter } from "next/navigation";
-import { ChangeEvent, ReactNode } from "react";
+import { ChangeEvent } from "react";
 import { useDevFAQRouter } from "../../hooks/useDevFAQRouter";
 import { Order, answersSortByLabels, AnswersOrderBy } from "../../lib/order";
 import { SortBySelect } from "../SortBySelect";
@@ -14,7 +13,6 @@ export const FilterableAnswersListHeader = ({
 	orderBy,
 }: FilterableAnswersListHeaderProps) => {
 	const { mergeQueryParams } = useDevFAQRouter();
-	const router = useRouter();
 
 	const handleSelectChange = (param: string) => (event: ChangeEvent<HTMLSelectElement>) => {
 		event.preventDefault();
