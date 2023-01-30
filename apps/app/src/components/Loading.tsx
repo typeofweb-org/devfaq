@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 
-type LoaderType = "spinner" | "article";
+type LoaderType = "spinner" | "article" | "answer-admin";
 
 export const Loading = ({
 	label,
@@ -75,6 +75,36 @@ export const Loading = ({
 		);
 	}
 
+	if (type === "answer-admin") {
+		return (
+			<ul className="flex w-full list-none flex-col gap-5">
+				{[...Array(10).keys()].map((i) => (
+					<li key={i}>
+						<article
+							className={twMerge(
+								`flex animate-pulse bg-white p-3 text-sm text-neutral-500 shadow-md dark:bg-white-dark dark:text-neutral-200 md:p-5`,
+							)}
+							style={{ animationDelay: `${i * 0.25}s` }}
+						>
+							<div className="question-content flex max-w-full grow flex-col gap-1.5 px-2">
+								<div className="mb-1 flex flex-row items-center gap-3.5">
+									<span className="inline h-10 w-10 rounded-full bg-neutral-100 dark:bg-neutral-700"></span>
+									<div className="flex w-full flex-col gap-1">
+										<span className="block h-3.5 w-28 bg-neutral-100 dark:bg-neutral-700"></span>
+										<span className="block h-3.5 w-16 bg-neutral-100 dark:bg-neutral-700"></span>
+									</div>
+								</div>
+								<span className="block h-3.5 w-full bg-neutral-100 dark:bg-neutral-700"></span>
+								<span className="block h-3.5 w-full bg-neutral-100 dark:bg-neutral-700"></span>
+								<span className="block h-3.5 w-[80%] bg-neutral-100 dark:bg-neutral-700"></span>
+								<span className="mt-1 block h-8 w-full rounded-md bg-neutral-100 dark:bg-neutral-700"></span>
+							</div>
+						</article>
+					</li>
+				))}
+			</ul>
+		);
+	}
 	return (
 		<div
 			className={twMerge(`mt-8 flex items-center justify-center`, className)}

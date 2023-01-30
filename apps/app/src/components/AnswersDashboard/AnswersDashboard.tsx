@@ -32,7 +32,7 @@ export const AnswersDashboard = ({ page, orderBy, order }: AnswersDashboardType)
 			data={{ orderBy, order }}
 		>
 			{isSuccess && data.data.data.length > 0 ? (
-				<Suspense fallback={<Loading label="ładowanie pytań" type="spinner" />}>
+				<Suspense fallback={<Loading label="ładowanie odpowiedzi" type="answer-admin" />}>
 					<AnswersList answers={data.data.data} refetchAnswers={refetchAnswers} />
 				</Suspense>
 			) : (
