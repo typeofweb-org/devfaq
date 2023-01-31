@@ -5,6 +5,7 @@ import { parseQueryLevels } from "../../../../../lib/level";
 import { statuses } from "../../../../../lib/question";
 import { parseTechnologyQuery } from "../../../../../lib/technologies";
 import { Params, SearchParams } from "../../../../../types";
+import { DEFAULT_SORT_BY_QUERY, parseQuerySortBy } from "../../../../../lib/order";
 
 const AdminPanel = dynamic(
 	() =>
@@ -19,11 +20,12 @@ export default function AdminPage({
 	searchParams,
 }: {
 	params: Params<"status" | "page">;
-	searchParams?: SearchParams<"technology" | "level">;
+	searchParams?: SearchParams<"technology" | "level" | "sortBy">;
 }) {
 	const page = Number.parseInt(params.page);
 	const technology = parseTechnologyQuery(searchParams?.technology);
 	const levels = parseQueryLevels(searchParams?.level);
+	const sortBy = parseQuerySortBy(searchParams?.sortBy || DEFAULT_SORT_BY_QUERY);
 
 	if (Number.isNaN(page) || !statuses.includes(params.status)) {
 		return redirect("/admin");
@@ -31,7 +33,14 @@ export default function AdminPage({
 
 	return (
 		<PrivateRoute role="admin" loginPreviousPath="/">
-			<AdminPanel page={page} technology={technology} status={params.status} levels={levels} />
+			<AdminPanel
+				page={page}
+				technology={technology}
+				status={params.status}
+				levels={levels}
+				order={sortBy?.order}
+				orderBy={sortBy?.orderBy}
+			/>
 		</PrivateRoute>
 	);
 }

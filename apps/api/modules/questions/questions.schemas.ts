@@ -26,6 +26,7 @@ const generateGetQuestionsQuerySchema = <
 				Type.Literal("acceptedAt"),
 				Type.Literal("level"),
 				Type.Literal("votesCount"),
+				Type.Literal("updatedAt"),
 			]),
 			order: Type.Union([Type.Literal("asc"), Type.Literal("desc")]),
 			userId: Type.Integer(),
@@ -51,6 +52,7 @@ const generateQuestionShape = <
 		_levelId: Type.Union(args.levels.map((val) => Type.Literal(val))),
 		_statusId: Type.Union(args.statuses.map((val) => Type.Literal(val))),
 		acceptedAt: Type.Optional(Type.String({ format: "date-time" })),
+		updatedAt: Type.Optional(Type.String({ format: "date-time" })),
 	} as const;
 };
 

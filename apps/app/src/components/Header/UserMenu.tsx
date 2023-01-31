@@ -31,7 +31,7 @@ export const UserMenu = ({ userData }: UserMenuProps) => {
 		<div ref={dropdownRef} className="flex flex-col items-center gap-0">
 			<button
 				type="button"
-				className="relative mx-auto flex flex flex-row items-center gap-3 rounded-full bg-violet-800 pr-6 uppercase transition-opacity hover:opacity-80 dark:bg-violet-700 sm:gap-2 sm:pr-4"
+				className="relative mx-auto flex flex-row items-center gap-3 rounded-full bg-violet-800 pr-6 uppercase transition-opacity hover:opacity-80 dark:bg-violet-700 sm:gap-2 sm:pr-4"
 				onClick={() => setIsDropdownVisible((prev) => !prev)}
 				aria-label={`${isDropdownVisible ? "Zamknij" : "Otwórz"} menu użytkownika`}
 				aria-expanded={isDropdownVisible}

@@ -4,12 +4,14 @@ import { FastifyPluginAsync, preHandlerAsyncHookHandler, preHandlerHookHandler }
 import { PrismaErrorCode } from "../db/prismaErrors.js";
 import { isPrismaError } from "../db/prismaErrors.util.js";
 import { dbAnswerToDto } from "./answers.mapper.js";
+import { getAnswersPrismaParams } from "./answers.params.js";
 import {
-	getAnswersSchema,
+	getAnswersRelatedToPostSchema,
 	createAnswerSchema,
 	deleteAnswerSchema,
 	updateAnswerSchema,
 	upvoteAnswerSchema,
+	getAnswersSchema,
 } from "./answers.schemas.js";
 
 export const answerSelect = (userId: number) => {
@@ -60,9 +62,59 @@ const answersPlugin: FastifyPluginAsync = async (fastify) => {
 	};
 
 	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
-		url: "/questions/:id/answers",
+		url: "/answers",
 		method: "GET",
 		schema: getAnswersSchema,
+		async handler(request) {
+			const params = getAnswersPrismaParams(request.query);
+			const [total, answers] = await Promise.all([
+				fastify.db.questionAnswer.count(),
+				fastify.db.questionAnswer.findMany({
+					...params,
+					select: {
+						id: true,
+						content: true,
+						sources: true,
+						createdAt: true,
+						updatedAt: true,
+						CreatedBy: {
+							select: { id: true, firstName: true, lastName: true, socialLogin: true },
+						},
+						_count: {
+							select: {
+								QuestionAnswerVote: true,
+							},
+						},
+					},
+				}),
+			]);
+
+			return {
+				data: answers.map((a) => {
+					return {
+						id: a.id,
+						content: a.content,
+						sources: a.sources,
+						createdAt: a.createdAt.toISOString(),
+						updatedAt: a.createdAt.toISOString(),
+						createdBy: {
+							id: a.CreatedBy.id,
+							firstName: a.CreatedBy.firstName,
+							lastName: a.CreatedBy.lastName,
+							socialLogin: a.CreatedBy.socialLogin as Record<string, string | number>,
+						},
+						votesCount: a._count.QuestionAnswerVote,
+					};
+				}),
+				meta: { total },
+			};
+		},
+	});
+
+	fastify.withTypeProvider<TypeBoxTypeProvider>().route({
+		url: "/questions/:id/answers",
+		method: "GET",
+		schema: getAnswersRelatedToPostSchema,
 		async handler(request) {
 			const {
 				params: { id },

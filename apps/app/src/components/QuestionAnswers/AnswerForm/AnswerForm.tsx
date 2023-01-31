@@ -11,6 +11,7 @@ import { AnswerSources } from "./AnswerSources";
 interface SubmitData {
 	readonly content: string;
 	readonly sources: string[];
+	readonly isError: boolean;
 }
 
 type AnswerFormProps = Readonly<{
@@ -34,22 +35,26 @@ export const AnswerForm = ({
 	const [content, setContent] = useState(initContent || "");
 	const [sources, setSources] = useState<string[]>(initSources || []);
 	const [isError, setIsError] = useState(false);
+	const [errorMessage, setErrorMessage] = useState<string>();
 
 	const disabled =
-		content.trim().length === 0 ||
-		!sources.every((source) => URL_REGEX.test(source)) ||
-		initContent === content;
+		content.trim().length === 0 || !sources.every((source) => URL_REGEX.test(source));
 
 	const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		onSubmit({ content, sources })
+		onSubmit({ content, sources, isError })
 			.then(() => {
 				setContent("");
 				setSources([]);
-				router.refresh();
 			})
-			.catch(() => setIsError(true));
+			.catch((e: Error) => {
+				setIsError(true);
+				if (e.message) {
+					setErrorMessage(e.message);
+				}
+			})
+			.finally(() => router.refresh());
 	};
 
 	return (
@@ -70,7 +75,7 @@ export const AnswerForm = ({
 					{children}
 				</div>
 			</form>
-			<Error visible={error || isError} className="mt-2" />
+			<Error visible={error || isError} message={errorMessage} className="mt-2" />
 		</>
 	);
 };

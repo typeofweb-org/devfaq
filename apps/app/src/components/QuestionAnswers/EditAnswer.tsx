@@ -3,25 +3,26 @@
 import { ReactNode, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "../Button/Button";
-import { QuestionAnswer } from "../../types";
+import { QuestionAnswer, SingleAnswer } from "../../types";
 import { useQuestionMutation } from "../../hooks/useQuestionMutation";
 import { useUser } from "../../hooks/useUser";
 import { AnswerForm } from "./AnswerForm/AnswerForm";
 
 type EditAnswerProps = Readonly<{
-	answer: QuestionAnswer;
+	answer: QuestionAnswer | SingleAnswer;
 	children: ReactNode;
+	afterMutate?: () => void;
 }>;
 
 export const EditAnswer = ({
 	answer: { id, content, sources, createdBy },
 	children,
+	afterMutate,
 }: EditAnswerProps) => {
-	const router = useRouter();
-
 	const [isEditMode, setIsEditMode] = useState(false);
 	const [isError, setIsError] = useState(false);
 
+	const router = useRouter();
 	const { userData } = useUser();
 	const { patchQuestionAnswerMutation, deleteQuestionAnswerMutation } = useQuestionMutation();
 
@@ -34,9 +35,16 @@ export const EditAnswer = ({
 			{ id },
 			{
 				onError: () => setIsError(true),
+				onSuccess: () => {
+					setIsEditMode(false);
+					if (afterMutate) {
+						afterMutate();
+					} else {
+						router.refresh();
+					}
+				},
 			},
 		);
-		router.refresh();
 	};
 
 	if (isEditMode) {
@@ -48,11 +56,18 @@ export const EditAnswer = ({
 					initSources={sources}
 					error={isError}
 					onSubmit={async ({ content, sources }) => {
-						await patchQuestionAnswerMutation.mutateAsync({ id, content, sources });
-						setIsEditMode(false);
+						if (content.trim().length > 0) {
+							await patchQuestionAnswerMutation.mutateAsync({ id, content, sources });
+							setIsEditMode(false);
+							if (afterMutate) {
+								afterMutate();
+							}
+						} else {
+							throw new Error("Nie można zapisać pustej odpowiedzi!");
+						}
 					}}
 				>
-					<Button type="button" variant="brandingInverse" onClick={handleDeleteButtonClick}>
+					<Button type="button" variant="alert" onClick={handleDeleteButtonClick}>
 						Usuń odpowiedź
 					</Button>
 					<Button type="button" variant="branding" onClick={() => setIsEditMode(false)}>

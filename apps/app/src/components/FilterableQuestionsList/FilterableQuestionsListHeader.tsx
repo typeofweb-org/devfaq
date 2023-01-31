@@ -1,26 +1,29 @@
 import { useRouter } from "next/navigation";
-import { ChangeEvent, ReactNode } from "react";
+import { ChangeEvent } from "react";
 import { useDevFAQRouter } from "../../hooks/useDevFAQRouter";
 import { levels } from "../../lib/level";
+import { Order, OrderBy, sortByLabels } from "../../lib/order";
 import { QuestionStatus, statuses } from "../../lib/question";
 import { technologies, technologiesLabels, Technology } from "../../lib/technologies";
 import { Level } from "../QuestionItem/QuestionLevel";
 import { Select } from "../Select/Select";
+import { SelectLabel } from "../SelectLabel";
+import { SortBySelect } from "../SortBySelect";
 
 type FilterableQuestionsListHeaderProps = Readonly<{
 	status?: QuestionStatus;
 	technology?: Technology | null;
 	levels?: Level[] | null;
+	order?: Order;
+	orderBy?: OrderBy;
 }>;
-
-const SelectLabel = ({ children }: { readonly children: ReactNode }) => (
-	<label className="flex flex-wrap items-baseline gap-1.5 md:gap-3">{children}</label>
-);
 
 export const FilterableQuestionsListHeader = ({
 	status,
 	technology,
 	levels: selectedLevels,
+	order,
+	orderBy,
 }: FilterableQuestionsListHeaderProps) => {
 	const { mergeQueryParams } = useDevFAQRouter();
 	const router = useRouter();
@@ -65,6 +68,14 @@ export const FilterableQuestionsListHeader = ({
 						))}
 					</Select>
 				</SelectLabel>
+			)}
+			{order && orderBy && (
+				<SortBySelect
+					order={order}
+					orderBy={orderBy}
+					onChange={handleSelectChange("sortBy")}
+					sortByLabels={sortByLabels}
+				/>
 			)}
 			{status !== undefined && (
 				<SelectLabel>
