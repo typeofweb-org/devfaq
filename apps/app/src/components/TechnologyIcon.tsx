@@ -8,24 +8,62 @@ import AngularLogo from "../../public/icons/angularjs-logo.svg";
 import ReactLogo from "../../public/icons/reactjs-logo.svg";
 import GitLogo from "../../public/icons/git-logo.svg";
 import OtherLogo from "../../public/icons/other-logo.svg";
+import OGHTMLLogo from "../../public/icons/og/html5-logo.svg";
+import OGCSSLogo from "../../public/icons/og/css3-logo.svg";
+import OGJavaScriptLogo from "../../public/icons/og/javascript-logo.svg";
+import OGAngularLogo from "../../public/icons/og/angularjs-logo.svg";
+import OGReactLogo from "../../public/icons/og/reactjs-logo.svg";
+import OGGitLogo from "../../public/icons/og/git-logo.svg";
 
-const icons: Record<Technology, ComponentType<HTMLAttributes<HTMLElement>>> = {
-	html: HTMLLogo,
-	css: CSSLogo,
-	js: JavaScriptLogo,
-	angular: AngularLogo,
-	react: ReactLogo,
-	git: GitLogo,
-	other: OtherLogo,
+const icons: Record<
+	Technology,
+	{
+		normal: ComponentType<HTMLAttributes<HTMLElement>>;
+		og?: ComponentType<HTMLAttributes<HTMLElement>>;
+	}
+> = {
+	html: {
+		normal: HTMLLogo,
+		og: OGHTMLLogo,
+	},
+	css: {
+		normal: CSSLogo,
+		og: OGCSSLogo,
+	},
+	js: {
+		normal: JavaScriptLogo,
+		og: OGJavaScriptLogo,
+	},
+	angular: {
+		normal: AngularLogo,
+		og: OGAngularLogo,
+	},
+	react: {
+		normal: ReactLogo,
+		og: OGReactLogo,
+	},
+	git: {
+		normal: GitLogo,
+		og: OGGitLogo,
+	},
+	other: {
+		normal: OtherLogo,
+	},
 };
 
 type TechnologyIconProps = Readonly<{
 	technology: Technology;
+	isOG?: boolean;
 	className?: string;
+	tw?: string;
 }>;
 
-export const TechnologyIcon = ({ technology, className }: TechnologyIconProps) => {
-	const Icon = icons[technology];
+export const TechnologyIcon = ({ technology, isOG, className, tw }: TechnologyIconProps) => {
+	const Icon = icons[technology][isOG ? "og" : "normal"];
 
-	return <Icon className={className} />;
+	if (!Icon) {
+		return null;
+	}
+
+	return <Icon className={className} tw={tw} />;
 };

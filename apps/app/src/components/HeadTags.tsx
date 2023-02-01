@@ -3,6 +3,11 @@ import { hellip } from "../utils/utils";
 type HeadTagsProps = Readonly<{
 	title?: string;
 	description?: string;
+	og?: {
+		technology?: string;
+		questionId?: string;
+		levels?: string;
+	};
 }>;
 
 const titleSuffix = ` • DevFAQ.pl`;
@@ -12,11 +17,18 @@ const maxDescriptionLength = 160;
 export const HeadTags = ({
 	title = "",
 	description = "DevFAQ.pl — największa baza pytań z programowania tworzona przez społeczność. DevFAQ.pl jest serwisem internetowym służącym do udostępniania i wymiany pytań rekrutacyjnych na stanowiska developerów.",
+	og,
 }: HeadTagsProps) => {
 	const shortTitle = hellip(title, maxTitleLength);
 	const shortDescription = hellip(description, maxDescriptionLength);
 
 	const formattedShortTitle = shortTitle.trim() ? `${shortTitle}${titleSuffix}` : `DevFAQ.pl`;
+	const ogParams = new URLSearchParams(og);
+	const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
+
+	if (!APP_URL) {
+		throw new Error(`Missing NEXT_PUBLIC_APP_URL!`);
+	}
 
 	return (
 		<>
@@ -27,7 +39,7 @@ export const HeadTags = ({
 			<meta
 				property="og:image"
 				itemProp="logo image"
-				content="https://app.devfaq.pl/img/devfaq-cover-facebook.png"
+				content={`${APP_URL}/api/og?${ogParams.toString()}`}
 			/>
 			<meta property="og:site_name" content="DevFAQ.pl" />
 			<meta property="fb:app_id" content="2005583769700691" />

@@ -8,6 +8,7 @@ import { Params } from "../../../../../types";
 
 export default function Head({ params: { technology } }: { params: Params<"technology"> }) {
 	const isValid = validateTechnology(technology);
+
 	if (!isValid) {
 		return <HeadTags title="" />;
 	}
@@ -17,5 +18,5 @@ export default function Head({ params: { technology } }: { params: Params<"techn
 
 	const suffix = longLabel ? `${longLabel} (${label})` : label;
 
-	return <HeadTags title={`Pytania ${suffix}`} />;
+	return <HeadTags title={`Pytania ${suffix}`} og={{ technology }} />;
 }

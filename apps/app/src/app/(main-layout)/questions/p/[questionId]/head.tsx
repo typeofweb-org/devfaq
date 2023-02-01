@@ -19,5 +19,11 @@ export default async function Head({ params }: { params: Params<"questionId"> })
 	const textForTitle = await stripMarkdown(data.question, { stripCode: true });
 	const textForDescription = await stripMarkdown(data.question, { stripCode: false });
 
-	return <HeadTags title={textForTitle} description={textForDescription} />;
+	return (
+		<HeadTags
+			title={textForTitle}
+			description={textForDescription}
+			og={{ questionId: questionId.toString() }}
+		/>
+	);
 }
