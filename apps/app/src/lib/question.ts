@@ -7,7 +7,7 @@ export type QuestionStatus = typeof statuses[number];
 
 export const serializeQuestionToMarkdown = async ({ question, ...rest }: APIQuestion) => {
 	const mdxContent = await serializeSource(question);
-	return { mdxContent, ...rest };
+	return { mdxContent, question, ...rest };
 };
 
 export const parseStatusQuery = (query: QueryParam | null): QuestionStatus | null => {

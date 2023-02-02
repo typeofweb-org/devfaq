@@ -36,7 +36,9 @@ export const AnswerForm = ({
 	const [isError, setIsError] = useState(false);
 
 	const disabled =
-		content.trim().length === 0 || !sources.every((source) => URL_REGEX.test(source));
+		content.trim().length === 0 ||
+		!sources.every((source) => URL_REGEX.test(source)) ||
+		initContent === content;
 
 	const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
