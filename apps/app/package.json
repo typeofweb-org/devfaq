@@ -11,7 +11,9 @@
 		"lint:fix": "next lint --dir . --fix --quiet",
 		"check-types": "tsc --noEmit",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"build-storybook": "storybook build",
+		"cypress:open": "cypress open",
+		"cypress:run": "cypress run"
 	},
 	"dependencies": {
 		"@headlessui/react": "1.7.7",
@@ -54,8 +56,10 @@
 		"@vitejs/plugin-react": "3.0.0",
 		"autoprefixer": "^10.4.13",
 		"css-loader": "^6.7.3",
+		"cypress": "12.5.1",
 		"eslint": "8.31.0",
 		"eslint-config-devfaq": "workspace:*",
+		"eslint-plugin-cypress": "2.12.1",
 		"eslint-plugin-storybook": "^0.6.8",
 		"jsdom": "20.0.3",
 		"openapi-types": "workspace:*",

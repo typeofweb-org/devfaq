@@ -13,7 +13,9 @@
 		"lint:fix": "turbo run lint:fix --parallel",
 		"format": "prettier --write .",
 		"check-types": "turbo run check-types --parallel",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"cypress:open": "turbo run cypress:open",
+		"cypress:run": "turbo run cypress:run"
 	},
 	"resolutions": {
 		"@mdx-js/mdx": "2.1.5",

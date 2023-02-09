@@ -30,7 +30,11 @@
 		},
 		"dev": {
 			"cache": false
-		}
+		},
+		"cypress:open": {
+			"persistent": true
+		},
+		"cypress:run": {}
 	},
 	"globalDependencies": ["packages/eslint-config-devfaq/index.js"]
 }
