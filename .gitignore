@@ -33,3 +33,7 @@ yarn-error.log*
 .turbo
 
 *.tsbuildinfo
+
+#cypress screenshots and videos
+apps/app/cypress/screenshots
+apps/app/cypress/videos
