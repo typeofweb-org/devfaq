@@ -59,7 +59,7 @@
 		"eslint-plugin-storybook": "^0.6.8",
 		"jsdom": "20.0.3",
 		"openapi-types": "workspace:*",
-		"postcss": "^8.4.20",
+		"postcss": "^8.4.31",
 		"postcss-loader": "^7.0.2",
 		"storybook": "^7.0.0-alpha.54",
 		"style-loader": "^3.3.1",
