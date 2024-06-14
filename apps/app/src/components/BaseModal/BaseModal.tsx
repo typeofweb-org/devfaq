@@ -28,7 +28,7 @@ export const BaseModal = ({ isOpen, onClose, children, modalId }: BaseModalProps
 
 	return (
 		<Transition
-			className="fixed top-0 left-0 z-50 h-full w-full overflow-y-auto bg-black/50 sm:p-2"
+			className="fixed left-0 top-0 z-50 h-full w-full overflow-y-auto bg-black/50 sm:p-2"
 			onClick={onClose}
 			show={isOpen}
 			enter="transition-opacity duration-200"

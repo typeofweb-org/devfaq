@@ -6,7 +6,7 @@ export const Footer = () => (
 	<footer className="bg-primary">
 		<Container className="flex flex-col items-center justify-center py-5 sm:justify-end">
 			<nav className="flex text-sm text-white">
-				<ul className="flex list-none flex-wrap justify-center gap-y-4 gap-x-7">
+				<ul className="flex list-none flex-wrap justify-center gap-x-7 gap-y-4">
 					<li>
 						<Link href="/jak-korzystac" className="transition-opacity hover:opacity-80">
 							Jak korzystać?

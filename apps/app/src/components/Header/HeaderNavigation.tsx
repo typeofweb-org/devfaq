@@ -32,7 +32,7 @@ export const HeaderNavigation = ({ children }: { children: ReactNode }) => {
 					isOpen ? "flex" : "hidden",
 				)}
 			>
-				<div className="mt-auto mb-auto flex flex-col items-center gap-10 sm:flex-row sm:gap-5">
+				<div className="mb-auto mt-auto flex flex-col items-center gap-10 sm:flex-row sm:gap-5">
 					<ul className="flex list-none flex-col items-center gap-10 text-center sm:flex-row sm:gap-5">
 						<li>
 							<ActiveNavigationLink href="/jak-korzystac" onClick={handleClickLink}>

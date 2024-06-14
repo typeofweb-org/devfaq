@@ -132,7 +132,7 @@ export const WysiwygEditor = memo(({ value, onChange }: WysiwygEditorProps) => {
 						fallback={
 							<Loading
 								label="Ładowanie podglądu…"
-								className="absolute top-0 left-1/2 -translate-x-1/2"
+								className="absolute left-1/2 top-0 -translate-x-1/2"
 							/>
 						}
 					>
@@ -141,13 +141,13 @@ export const WysiwygEditor = memo(({ value, onChange }: WysiwygEditorProps) => {
 				) : (
 					<textarea
 						aria-label="Wpisz treść pytania"
-						className="prose prose-sm relative z-10 h-full w-full max-w-full resize-none bg-white py-2 px-4 focus:outline-0 dark:bg-white-dark dark:prose-invert md:prose-base"
+						className="prose prose-sm relative z-10 h-full w-full max-w-full resize-none bg-white px-4 py-2 dark:prose-invert md:prose-base focus:outline-0 dark:bg-white-dark"
 						ref={textAreaRef}
 						value={value}
 						onChange={(event) => onChange(event.target.value)}
 					/>
 				)}
-				<Loading label="Ładowanie podglądu…" className="absolute top-0 left-1/2 -translate-x-1/2" />
+				<Loading label="Ładowanie podglądu…" className="absolute left-1/2 top-0 -translate-x-1/2" />
 			</div>
 		</div>
 	);

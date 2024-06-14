@@ -12,7 +12,7 @@ pre[class*="language-"] {
 }
 
 pre[class*="language-"] {
-	@apply my-[0.5em] mx-0 overflow-auto p-[2em];
+	@apply mx-0 my-[0.5em] overflow-auto p-[2em];
 }
 
 :not(pre) > code[class*="language-"],
