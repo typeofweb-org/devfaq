@@ -1,9 +1,9 @@
+import type { NextApiRequest, NextApiResponse } from "next";
 import { PAGE_SIZE } from "../../lib/constants";
 import { technologies, Technology } from "../../lib/technologies";
 import { getAllQuestions } from "../../services/questions.service";
 import { APIQuestion, Question } from "../../types";
 import { range } from "../../utils/utils";
-import type { NextApiRequest, NextApiResponse } from "next";
 
 type Item = {
 	path: string;
