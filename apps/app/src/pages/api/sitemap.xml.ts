@@ -3,10 +3,7 @@ import { technologies, Technology } from "../../lib/technologies";
 import { getAllQuestions } from "../../services/questions.service";
 import { APIQuestion, Question } from "../../types";
 import { range } from "../../utils/utils";
-
-export const config = {
-	runtime: "experimental-edge",
-};
+import type { NextApiRequest, NextApiResponse } from "next";
 
 type Item = {
 	path: string;
@@ -43,7 +40,7 @@ const itemsToXml = (items: readonly Item[]): string => {
 		.join("\n");
 };
 
-export default async function SitemapHandler(req: Request) {
+export default async function SitemapHandler(req: NextApiRequest, res: NextApiResponse) {
 	const questions = await getAllQuestions({});
 	const questionsByTechnology = questions.data.data.reduce((acc, question) => {
 		acc[question._categoryId] ??= [];
@@ -76,11 +73,10 @@ export default async function SitemapHandler(req: Request) {
 		}),
 	] as const;
 
-	return new Response(sitemapXml(items), {
-		headers: {
-			"Content-Type": "application/xml",
-			"Cache-Control":
-				"public, maxage=3600, s-maxage=3600, stale-while-revalidate=3600, stale-if-error=86400",
-		},
-	});
+	res.setHeader("Content-Type", "application/xml");
+	res.setHeader(
+		"Cache-Control",
+		"public, maxage=3600, s-maxage=3600, stale-while-revalidate=3600, stale-if-error=86400",
+	);
+	res.status(200).send(sitemapXml(items));
 }
